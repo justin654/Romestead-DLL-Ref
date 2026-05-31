@@ -53,40 +53,13 @@ internal static partial class OutputWriter
         AppendDocumentStart(builder, "Modder Guide - Romestead Assembly Reference", "style.css", "", "guide", diff is not null);
         builder.AppendLine("<p class=\"breadcrumb\"><a href=\"index.html\">Catalog</a></p>");
         builder.AppendLine("<header class=\"site-header\"><div><h1>Modder Guide</h1>");
-        builder.AppendLine("<p class=\"lede\">How to use this generated reference when exploring game types, choosing patch targets, and checking update breakage.</p></div>");
-        builder.AppendLine("<nav class=\"header-actions\"><a class=\"button\" href=\"index.html\">Search catalog</a><a class=\"button\" href=\"namespaces.html\">Namespaces</a><a class=\"button\" href=\"snapshot.json\">Snapshot JSON</a></nav></header>");
+        builder.AppendLine("<p class=\"lede\">Romestead-specific modding notes are coming soon.</p></div>");
+        builder.AppendLine("<nav class=\"header-actions\"><a class=\"button\" href=\"index.html\">Search catalog</a><a class=\"button\" href=\"diff.html\">Patch diff</a><a class=\"button\" href=\"about.html\">About</a></nav></header>");
 
-        builder.AppendLine("<section class=\"panel docs-panel\"><h2>Fast Workflow</h2>");
-        builder.AppendLine("<ol class=\"numbered-list\">");
-        builder.AppendLine("<li><span>Search for a gameplay word, UI label, class name, or known method. Press <kbd>/</kbd> from the home page to jump into search.</span></li>");
-        builder.AppendLine("<li><span>Open the most relevant type page and compare fields, properties, methods, base types, interfaces, and references.</span></li>");
-        builder.AppendLine("<li><span>Use <strong>Copy signature</strong> or <strong>Copy Harmony target</strong> on method rows when preparing a patch.</span></li>");
-        builder.AppendLine("<li><span>Check <strong>Referenced calls</strong> and <strong>Called by</strong> to understand where a method sits in the surrounding code path.</span></li>");
-        builder.AppendLine("<li><span>After game updates, open the diff page and review change badges before assuming old patch targets are still safe.</span></li>");
-        builder.AppendLine("</ol></section>");
-
-        builder.AppendLine("<section class=\"panel docs-panel\"><h2>Choosing Targets</h2><div class=\"guide-grid\">");
-        builder.AppendLine("<article><h3>Prefer public first</h3><p>Public members are usually less volatile than private fields or compiler-generated methods. They are still not guaranteed stable.</p></article>");
-        builder.AppendLine("<article><h3>Watch overloads</h3><p>Names alone are not enough. Copy the full signature when a type has multiple methods with the same name.</p></article>");
-        builder.AppendLine("<article><h3>Use relationships</h3><p>Base types, interfaces, derived types, and referenced-by sections help find adjacent systems without guessing namespace names.</p></article>");
-        builder.AppendLine("<article><h3>Treat internals carefully</h3><p>Private and internal members are useful for patches, but minor updates can rename, remove, or rewrite them.</p></article>");
-        builder.AppendLine("</div></section>");
-
-        builder.AppendLine("<section class=\"panel docs-panel\"><h2>What The Exports Are For</h2>");
-        builder.AppendLine("<ul class=\"list\">");
-        builder.AppendLine("<li><span><code>snapshot.json</code></span><span>Complete generated catalog for scripts, external search, or custom tooling.</span></li>");
-        builder.AppendLine("<li><span>Type JSON files</span><span>Per-type metadata stored next to each generated type page.</span></li>");
-        builder.AppendLine("<li><span><code>site-manifest.json</code></span><span>Small metadata file for publishing, indexing, or linking generated builds.</span></li>");
-        builder.AppendLine("<li><span><code>diff.json</code></span><span>Machine-readable patch comparison when a baseline is available.</span></li>");
-        builder.AppendLine("</ul></section>");
-
-        builder.AppendLine("<section class=\"panel docs-panel\"><h2>Current Snapshot</h2>");
-        builder.AppendLine("<ul class=\"list compact\">");
-        builder.AppendLine("<li><span>Build metadata</span><code>site-manifest.json</code></li>");
-        builder.AppendLine($"<li><span>Assemblies</span><span>{snapshot.Metadata.AssemblyCount:N0}</span></li>");
-        builder.AppendLine($"<li><span>Types</span><span>{snapshot.Metadata.TypeCount:N0}</span></li>");
-        builder.AppendLine($"<li><span>Methods</span><span>{snapshot.Metadata.MethodCount:N0}</span></li>");
-        builder.AppendLine("</ul></section>");
+        builder.AppendLine("<section class=\"panel docs-panel\"><h2>Coming Soon</h2>");
+        builder.AppendLine("<p>This page will collect Romestead-specific modding notes, patching examples, and reference walkthroughs. For now, use the catalog search and patch diff pages directly.</p>");
+        builder.AppendLine("<div class=\"header-actions\"><a class=\"button primary-button\" href=\"index.html\">Search catalog</a><a class=\"button\" href=\"diff.html\">Open patch diff</a><a class=\"button\" href=\"https://romestead.wiki.gg/\">Romestead Wiki</a><a class=\"button\" href=\"https://discord.gg/q7DP3GGrgZ\">Discord</a></div>");
+        builder.AppendLine("</section>");
 
         AppendDocumentEnd(builder, "Modder guide", "", "index.html", "about.html", "README.md", "site-manifest.json");
         return builder.ToString();
