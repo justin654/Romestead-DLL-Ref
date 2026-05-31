@@ -20,6 +20,7 @@ internal static class Program
             {
                 "scan" or "wiki" => RunScan(command),
                 "diff" => RunDiff(command),
+                "commands" => RunCommands(command),
                 "find" => RunFind(command),
                 "inspect" => RunInspect(command),
                 "calls" => RunCalls(command),
@@ -208,6 +209,115 @@ internal static class Program
         else
         {
             Console.WriteLine(OutputWriter.RenderDiffMarkdown(diff));
+        }
+
+        return 0;
+    }
+
+    private static int RunCommands(CommandArguments command)
+    {
+        var currentDirectory = Directory.GetCurrentDirectory();
+        var outputDirectory = command.GetSingle("--out") ??
+            Path.Combine(currentDirectory, "output", "commands");
+
+        var roots = command.GetMany("--root");
+        if (roots.Count == 0)
+        {
+            roots = [currentDirectory];
+        }
+
+        var resolvedRoots = roots.Select(path => Path.GetFullPath(path, currentDirectory)).ToArray();
+        if (!command.HasFlag("--allow-modded"))
+        {
+            var cleanCheck = CheckRomesteadDllState(resolvedRoots);
+            if (!cleanCheck.IsClean)
+            {
+                return Fail(cleanCheck.Message);
+            }
+
+            if (!string.IsNullOrWhiteSpace(cleanCheck.Message))
+            {
+                Console.WriteLine(cleanCheck.Message);
+            }
+        }
+
+        var knownCleanPath = command.GetSingle("--known-clean");
+        if (command.HasFlag("--require-known-clean") && string.IsNullOrWhiteSpace(knownCleanPath))
+        {
+            knownCleanPath = Path.Combine(currentDirectory, "known-clean-romestead.json");
+        }
+
+        if (!string.IsNullOrWhiteSpace(knownCleanPath))
+        {
+            var knownCleanCheck = CheckKnownCleanRomesteadDll(
+                resolvedRoots,
+                Path.GetFullPath(knownCleanPath, currentDirectory),
+                command.GetSingle("--expected-manifest"));
+            if (!knownCleanCheck.IsClean)
+            {
+                return Fail(knownCleanCheck.Message);
+            }
+
+            Console.WriteLine(knownCleanCheck.Message);
+        }
+
+        var buildResult = new CatalogBuilder().Build(new CatalogBuildOptions
+        {
+            BaseDirectory = currentDirectory,
+            InputRoots = resolvedRoots,
+            AssemblyNameFilters = command.GetMany("--assembly"),
+            ExactAssemblyNameFilters = command.GetMany("--assembly-exact"),
+            IncludeSystemAssemblies = command.HasFlag("--include-all-assemblies"),
+            IncludeCompilerGenerated = command.HasFlag("--include-compiler-generated")
+        });
+
+        if (buildResult.Snapshot.Assemblies.Count == 0)
+        {
+            return Fail("No assemblies matched the requested command scan.");
+        }
+
+        var baselinePath = command.GetSingle("--old") ??
+            command.GetSingle("--old-commands") ??
+            command.GetSingle("--baseline");
+        if (string.IsNullOrWhiteSpace(baselinePath))
+        {
+            var previousCommandsPath = Path.Combine(outputDirectory, "commands.json");
+            if (File.Exists(previousCommandsPath))
+            {
+                baselinePath = previousCommandsPath;
+            }
+        }
+
+        TerminalCommandCatalog? previousCommands = null;
+        if (!string.IsNullOrWhiteSpace(baselinePath))
+        {
+            var resolvedBaselinePath = Path.GetFullPath(baselinePath, currentDirectory);
+            if (!File.Exists(resolvedBaselinePath))
+            {
+                return Fail($"Command baseline not found: {resolvedBaselinePath}");
+            }
+
+            previousCommands = LoadTerminalCommands(resolvedBaselinePath);
+        }
+
+        var terminalCommands = new TerminalCommandAnalyzer().Analyze(
+            buildResult.IncludedAssemblyPaths,
+            buildResult.Snapshot.Metadata.GeneratedAtUtc);
+        var terminalCommandDiff = TerminalCommandDiffEngine.Compare(previousCommands, terminalCommands);
+        var commandHistoryPath = OutputWriter.WriteCommandsBundle(outputDirectory, terminalCommands, terminalCommandDiff);
+
+        Console.WriteLine($"Wrote commands: {Path.Combine(outputDirectory, "commands.html")} ({terminalCommands.Metadata.CommandCount} commands)");
+        Console.WriteLine($"Archived commands: {commandHistoryPath}");
+
+        if (terminalCommandDiff is not null)
+        {
+            Console.WriteLine(
+                $"Command diff summary: +{terminalCommandDiff.Summary.Added}/-{terminalCommandDiff.Summary.Removed}/~{terminalCommandDiff.Summary.Changed} commands.");
+        }
+
+        foreach (var skipped in buildResult.SkippedAssemblies)
+        {
+            Console.WriteLine($"SKIP {Path.GetFileName(skipped.Path)}: {skipped.Reason}");
         }
 
         return 0;
@@ -506,6 +616,12 @@ internal static class Program
         return snapshot ?? throw new InvalidOperationException($"Failed to deserialize snapshot '{path}'.");
     }
 
+    private static TerminalCommandCatalog LoadTerminalCommands(string path)
+    {
+        var catalog = JsonSerializer.Deserialize<TerminalCommandCatalog>(File.ReadAllText(path));
+        return catalog ?? throw new InvalidOperationException($"Failed to deserialize terminal command catalog '{path}'.");
+    }
+
     private static DiffMetadata BuildDiffMetadata(
         CatalogSnapshot oldSnapshot,
         CatalogSnapshot newSnapshot,
@@ -703,6 +819,11 @@ internal static class Program
             romestead-ref diff --old <snapshot.json> --new <snapshot.json> [--out <dir>] [--patch-label <label>]
               Compares two snapshots and writes or prints a change report.
 
+            romestead-ref commands [--root <dir-or-dll>] [--out <dir>] [--old <commands.json>] [--known-clean <json>] [--expected-manifest <id>] [--require-known-clean] [--assembly <pattern>] [--assembly-exact <name>] [--allow-modded]
+              Extracts only terminal dot commands and writes commands.html/json/md.
+              If --old is omitted and <out>/commands.json already exists, it diffs against that previous command catalog.
+              This command does not rewrite snapshot.json, diff.html, or the full published catalog.
+
             romestead-ref find <pattern> [--root <dir-or-dll>] [--assembly <pattern>] [--assembly-exact <name>]
             romestead-ref inspect <pattern> [--root <dir-or-dll>] [--assembly <pattern>] [--assembly-exact <name>]
             romestead-ref calls <pattern> [--root <dir-or-dll>] [--assembly <pattern>] [--assembly-exact <name>]
@@ -716,6 +837,7 @@ internal static class Program
               dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- scan --patch-label "0.25.1_5 + 0.25.1_6"
               dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- scan --assembly-exact Romestead --assembly-exact Shared --out .\output\romestead-api
               dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- diff --old .\output\latest\history\snapshot-20260527-180000.json --new .\output\latest\snapshot.json
+              dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- commands --root "C:\Program Files (x86)\Steam\steamapps\common\romestead" --out .\output\commands
               dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- relate RevealAll
             """);
         return 0;

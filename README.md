@@ -12,6 +12,7 @@ This is an unofficial community tool. It does not ship game assemblies or genera
 - Generates `diff.json`, `diff.md`, and `diff.html`
 - Builds a browseable HTML reference site for assemblies, types, and members
 - Produces an API opportunity report aimed at mod-loader surface planning
+- Extracts terminal dot commands on demand without regenerating the full patch diff
 
 ## Requirements
 
@@ -117,6 +118,25 @@ That is useful for publishing clean reference output, but local patch investigat
 .\scripts\scan_steam_build.bat --allow-modded
 ```
 
+## Terminal Commands Only
+
+Use `commands` when you only want to refresh the terminal dot-command reference. It writes `commands.html`, `commands.json`, `commands.md`, optional `commands-diff.json`, and `history/commands-*.json`; it does not touch `snapshot.json`, `diff.html`, or the full generated catalog.
+
+```powershell
+dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- commands `
+  --root "C:\Program Files (x86)\Steam\steamapps\common\romestead" `
+  --out .\output\commands
+```
+
+To compare against a published command catalog explicitly:
+
+```powershell
+dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- commands `
+  --root "C:\Program Files (x86)\Steam\steamapps\common\romestead" `
+  --old .\docs\commands.json `
+  --out .\output\commands
+```
+
 ## Output Files
 
 After a scan, the default output location is `.\output\latest\`.
@@ -157,6 +177,7 @@ In the GitHub repository settings, go to **Settings -> Pages** and set **Build a
 ```powershell
 dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- scan
 dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- diff --old .\output\latest\history\old.json --new .\output\latest\snapshot.json
+dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- commands --root "C:\Program Files (x86)\Steam\steamapps\common\romestead" --out .\output\commands
 dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- find RevealAll
 dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- inspect Candide.Program
 dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- calls RevealAll

@@ -11,6 +11,8 @@ Community links:
 
 - `index.html` - main reference home and search
 - `guide.html` - modder-oriented usage guide
+- `commands.html` - terminal dot-command reference
+- `commands.json` - machine-readable terminal command catalog
 - `namespaces.html` - namespace browser
 - `topics.html` - heuristic topic browser
 - `diff.html` - latest patch diff

@@ -81,6 +81,8 @@ internal static partial class OutputWriter
         builder.AppendLine();
         builder.AppendLine("- `index.html` - main reference home and search");
         builder.AppendLine("- `guide.html` - modder-oriented usage guide");
+        builder.AppendLine("- `commands.html` - terminal dot-command reference");
+        builder.AppendLine("- `commands.json` - machine-readable terminal command catalog");
         builder.AppendLine("- `namespaces.html` - namespace browser");
         builder.AppendLine("- `topics.html` - heuristic topic browser");
         builder.AppendLine("- `diff.html` - latest patch diff");
@@ -170,6 +172,9 @@ internal static partial class OutputWriter
             {
                 "index.html",
                 "guide.html",
+                "commands.html",
+                "commands.json",
+                "commands.md",
                 "about.html",
                 "namespaces.html",
                 "topics.html",

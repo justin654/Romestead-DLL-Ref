@@ -45,6 +45,7 @@ internal static partial class OutputWriter
         builder.AppendLine("<nav class=\"topnav\" aria-label=\"Primary navigation\">");
         builder.AppendLine(BuildTopNavLink(rootPrefix, "index.html", "Home", activePage, "home"));
         builder.AppendLine(BuildTopNavLink(rootPrefix, "guide.html", "Guide", activePage, "guide"));
+        builder.AppendLine(BuildTopNavLink(rootPrefix, "commands.html", "Commands", activePage, "commands"));
         builder.AppendLine(BuildTopNavLink(rootPrefix, "namespaces.html", "Namespaces", activePage, "namespaces"));
         builder.AppendLine(BuildTopNavLink(rootPrefix, "topics.html", "Topics", activePage, "topics"));
         builder.AppendLine(BuildTopNavLink(rootPrefix, "about.html", "About", activePage, "about"));

@@ -36,6 +36,7 @@ internal static partial class OutputWriter
         builder.AppendLine("</div>");
         builder.AppendLine("<nav class=\"header-actions\">");
         builder.AppendLine("<a class=\"button primary-button\" href=\"guide.html\">Read the guide</a>");
+        builder.AppendLine("<a class=\"button\" href=\"commands.html\">Terminal Commands</a>");
         builder.AppendLine("<a class=\"button\" href=\"snapshot.json\">Snapshot JSON</a>");
         builder.AppendLine("<a class=\"button\" href=\"site-manifest.json\">Manifest</a>");
         if (diff is not null)
@@ -67,6 +68,7 @@ internal static partial class OutputWriter
         builder.AppendLine("<article><h3>Find a target</h3><p>Search by gameplay term, namespace, class name, field, or method signature. Start broad, then filter to public members if you want safer integration points.</p></article>");
         builder.AppendLine("<article><h3>Open the type page</h3><p>Type pages collect metadata, relationships, fields, properties, methods, caller/callee hints, and per-type JSON exports in one place.</p></article>");
         builder.AppendLine("<article><h3>Copy the patch target</h3><p>Use copy buttons for full signatures and Harmony-style target strings. Check method metadata before patching overloads or private members.</p></article>");
+        builder.AppendLine("<article><h3>Use dot commands</h3><p>The Commands page lists terminal commands, handlers, autocomplete sources, and debug notes.</p></article>");
         builder.AppendLine("<article><h3>Check the diff</h3><p>When a patch ships, use the diff page and change badges to quickly find moved, added, removed, or changed members.</p></article>");
         builder.AppendLine("</div>");
         builder.AppendLine("</section>");
