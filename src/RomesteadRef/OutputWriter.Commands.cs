@@ -9,9 +9,11 @@ internal static partial class OutputWriter
     public static string WriteCommandsBundle(
         string outputDirectory,
         TerminalCommandCatalog catalog,
-        TerminalCommandDiff? diff)
+        TerminalCommandDiff? diff,
+        CatalogSnapshot? snapshot = null)
     {
         Directory.CreateDirectory(outputDirectory);
+        var linkContext = BuildCommandLinkContext(snapshot);
 
         var stylePath = Path.Combine(outputDirectory, "style.css");
         if (!File.Exists(stylePath))
@@ -21,9 +23,9 @@ internal static partial class OutputWriter
 
         File.WriteAllText(
             Path.Combine(outputDirectory, "commands.html"),
-            BuildCommandsPage(catalog, diff, includeDiff: File.Exists(Path.Combine(outputDirectory, "diff.html"))));
+            BuildCommandsPage(catalog, diff, includeDiff: File.Exists(Path.Combine(outputDirectory, "diff.html")), linkContext));
         File.WriteAllText(Path.Combine(outputDirectory, "commands.json"), JsonSerializer.Serialize(catalog, JsonOptions));
-        File.WriteAllText(Path.Combine(outputDirectory, "commands.md"), RenderCommandsMarkdown(catalog, diff));
+        File.WriteAllText(Path.Combine(outputDirectory, "commands.md"), RenderCommandsMarkdown(catalog, diff, linkContext));
 
         var diffPath = Path.Combine(outputDirectory, "commands-diff.json");
         if (diff is null)
@@ -102,7 +104,13 @@ internal static partial class OutputWriter
         File.WriteAllText(manifestPath, manifest.ToJsonString(JsonOptions));
     }
 
-    public static string RenderCommandsMarkdown(TerminalCommandCatalog catalog, TerminalCommandDiff? diff)
+    public static string RenderCommandsMarkdown(TerminalCommandCatalog catalog, TerminalCommandDiff? diff) =>
+        RenderCommandsMarkdown(catalog, diff, CommandLinkContext.Empty);
+
+    private static string RenderCommandsMarkdown(
+        TerminalCommandCatalog catalog,
+        TerminalCommandDiff? diff,
+        CommandLinkContext linkContext)
     {
         var builder = new StringBuilder();
         builder.AppendLine("# Romestead Terminal Dot Commands");
@@ -130,17 +138,21 @@ internal static partial class OutputWriter
         builder.AppendLine();
         builder.AppendLine("## Full Command List");
         builder.AppendLine();
-        builder.AppendLine("| Command | Usage | Category | Summary | Autocomplete | Handler |");
-        builder.AppendLine("| --- | --- | --- | --- | --- | --- |");
+        builder.AppendLine("| Command | Usage | Category | Summary | Autocomplete |");
+        builder.AppendLine("| --- | --- | --- | --- | --- |");
         foreach (var command in catalog.Commands.OrderBy(command => command.Name, StringComparer.Ordinal))
         {
-            builder.AppendLine($"| `{command.DotName}` | `{command.Usage}` | {command.Category} | {command.Summary} | {command.AutocompleteSource ?? command.SuggestionKind} | `{command.HandlerMethod}` |");
+            builder.AppendLine($"| `{command.DotName}` | `{command.Usage}` | {command.Category} | {LinkReferencesMarkdown(command.Summary, linkContext)} | {FormatAutocompleteMarkdown(command.AutocompleteSource, command.SuggestionKind, linkContext)} |");
         }
 
         return builder.ToString();
     }
 
-    private static string BuildCommandsPage(TerminalCommandCatalog catalog, TerminalCommandDiff? diff, bool includeDiff)
+    private static string BuildCommandsPage(
+        TerminalCommandCatalog catalog,
+        TerminalCommandDiff? diff,
+        bool includeDiff,
+        CommandLinkContext linkContext)
     {
         var builder = new StringBuilder();
         AppendDocumentStart(
@@ -169,16 +181,16 @@ internal static partial class OutputWriter
 
         builder.AppendLine("<section class=\"panel docs-panel\"><div class=\"section-heading\"><h2>How The Terminal Works</h2><a href=\"types/Romestead/Candide_Terminal_GameTerminal.html\">Open GameTerminal type</a></div>");
         builder.AppendLine("<div class=\"docs-grid\">");
-        builder.AppendLine($"<article><h3>Default mode</h3><p>Non-dot input is sent to Lua. Dot input strips the leading <code>.</code> and runs through <code>{Encode(catalog.Metadata.DispatchPath)}</code>.</p></article>");
-        builder.AppendLine($"<article><h3>Registry</h3><p>Commands are registered in <code>{Encode(catalog.Metadata.RegistryMethod)}</code> and stored in <code>{Encode(catalog.Metadata.RegistryStorage)}</code>.</p></article>");
-        builder.AppendLine($"<article><h3>Autocomplete</h3><p>Tab completion uses <code>{Encode(catalog.Metadata.AutocompletePath)}</code>. Argument completion appears only when the command provides a suggestion delegate.</p></article>");
+        builder.AppendLine($"<article><h3>Default mode</h3><p>Non-dot input is sent to Lua. Dot input strips the leading <code>.</code> and runs through {FormatCodeReference(catalog.Metadata.DispatchPath, linkContext)}.</p></article>");
+        builder.AppendLine($"<article><h3>Registry</h3><p>Commands are registered in {FormatCodeReference(catalog.Metadata.RegistryMethod, linkContext)} and stored in {FormatCodeReference(catalog.Metadata.RegistryStorage, linkContext)}.</p></article>");
+        builder.AppendLine($"<article><h3>Autocomplete</h3><p>Tab completion uses {FormatCodeReference(catalog.Metadata.AutocompletePath, linkContext)}. Argument completion appears only when the command provides a suggestion delegate.</p></article>");
         builder.AppendLine("</div></section>");
 
         builder.AppendLine("<section class=\"panel docs-panel\"><h2>Debug Mode Notes</h2>");
         builder.AppendLine("<ul class=\"list compact\">");
-        builder.AppendLine("<li><span><code>.debuggeneral</code> toggles <code>Candide.Globals.Debug</code>.</span></li>");
-        builder.AppendLine("<li><span>Several debug-only UI paths are gated behind <code>Globals.Debug</code>; availability depends on the current game screen and state.</span></li>");
-        builder.AppendLine("<li><span><code>PlayerInventoryWindow</code> creates the debug item browser when <code>Globals.Debug</code>, cheats, and inventory extensions are enabled.</span></li>");
+        builder.AppendLine($"<li><span><code>.debuggeneral</code> toggles {FormatCodeReference("Candide.Globals.Debug", linkContext)}.</span></li>");
+        builder.AppendLine($"<li><span>Several debug-only UI paths are gated behind {FormatCodeReference("Globals.Debug", linkContext)}; availability depends on the current game screen and state.</span></li>");
+        builder.AppendLine($"<li><span>{FormatCodeReference("PlayerInventoryWindow", linkContext)} creates the debug item browser when {FormatCodeReference("Globals.Debug", linkContext)}, cheats, and inventory extensions are enabled.</span></li>");
         builder.AppendLine("</ul></section>");
 
         if (diff is not null)
@@ -187,7 +199,7 @@ internal static partial class OutputWriter
         }
 
         builder.AppendLine("<section id=\"all-commands\" class=\"panel\">");
-        builder.AppendLine("<div class=\"section-heading\"><h2>All Commands</h2><span>Filter by command, category, usage, summary, or handler.</span></div>");
+        builder.AppendLine("<div class=\"section-heading\"><h2>All Commands</h2><span>Filter by command, category, usage, summary, or autocomplete source.</span></div>");
         builder.AppendLine("<div class=\"member-toolbar command-toolbar\">");
         builder.AppendLine("<label for=\"commandSearch\">Filter commands</label>");
         builder.AppendLine("<input id=\"commandSearch\" type=\"search\" placeholder=\"poi, spawn, debug, camera, construction\">");
@@ -198,17 +210,16 @@ internal static partial class OutputWriter
         }
         builder.AppendLine("</select>");
         builder.AppendLine("</div>");
-        builder.AppendLine("<table class=\"reference-table command-table\"><thead><tr><th>Command</th><th>Usage</th><th>Category</th><th>Summary</th><th>Autocomplete</th><th>Handler</th></tr></thead><tbody>");
+        builder.AppendLine("<table class=\"reference-table command-table\"><thead><tr><th>Command</th><th>Usage</th><th>Category</th><th>Summary</th><th>Autocomplete</th></tr></thead><tbody>");
         foreach (var command in catalog.Commands.OrderBy(command => command.Name, StringComparer.Ordinal))
         {
-            var searchText = string.Join(" ", command.Name, command.Usage, command.Category, command.Summary, command.AutocompleteSource, command.HandlerMethod);
+            var searchText = string.Join(" ", command.Name, command.Usage, command.Category, command.Summary, command.AutocompleteSource);
             builder.AppendLine($"<tr id=\"{Encode(BuildAnchor(command.Name))}\" class=\"command-entry\" data-command-text=\"{Encode(searchText)}\" data-command-category=\"{Encode(command.Category)}\">");
             builder.AppendLine($"<td><code>{Encode(command.DotName)}</code></td>");
             builder.AppendLine($"<td><code>{Encode(command.Usage)}</code></td>");
             builder.AppendLine($"<td>{Encode(command.Category)}</td>");
-            builder.AppendLine($"<td>{Encode(command.Summary)}</td>");
-            builder.AppendLine($"<td>{Encode(command.AutocompleteSource ?? command.SuggestionKind)}</td>");
-            builder.AppendLine($"<td><code>{Encode(TrimHandlerName(command.HandlerMethod))}</code></td>");
+            builder.AppendLine($"<td>{LinkReferencesHtml(command.Summary, linkContext, codeFallback: false)}</td>");
+            builder.AppendLine($"<td>{FormatAutocompleteHtml(command.AutocompleteSource, command.SuggestionKind, linkContext)}</td>");
             builder.AppendLine("</tr>");
         }
         builder.AppendLine("</tbody></table></section>");
@@ -272,9 +283,242 @@ internal static partial class OutputWriter
         });
         """;
 
-    private static string TrimHandlerName(string handler)
+    private static CommandLinkContext BuildCommandLinkContext(CatalogSnapshot? snapshot)
     {
-        const string prefix = "System.Object ";
-        return handler.StartsWith(prefix, StringComparison.Ordinal) ? handler[prefix.Length..] : handler;
+        if (snapshot is null)
+        {
+            return CommandLinkContext.Empty;
+        }
+
+        var references = new Dictionary<string, string>(StringComparer.Ordinal);
+        var methodLinks = new Dictionary<string, string>(StringComparer.Ordinal);
+        string? registryMethodLink = null;
+        var displayNameCounts = snapshot.Assemblies
+            .SelectMany(assembly => assembly.Types)
+            .GroupBy(type => type.DisplayName, StringComparer.Ordinal)
+            .ToDictionary(group => group.Key, group => group.Count(), StringComparer.Ordinal);
+
+        foreach (var assembly in snapshot.Assemblies)
+        {
+            foreach (var type in assembly.Types)
+            {
+                var typeLink = $"types/{GetDirectorySafeName(assembly.Name)}/{GetTypeFileName(type)}";
+                AddReference(references, type.FullName, typeLink);
+
+                if (displayNameCounts.GetValueOrDefault(type.DisplayName) == 1)
+                {
+                    AddReference(references, type.DisplayName, typeLink);
+                }
+
+                foreach (var field in type.Fields)
+                {
+                    var link = $"{typeLink}#{BuildAnchor(field.Id)}";
+                    AddMemberReferences(references, type, field.Name, link);
+                }
+
+                foreach (var property in type.Properties)
+                {
+                    var link = $"{typeLink}#{BuildAnchor(property.Id)}";
+                    AddMemberReferences(references, type, property.Name, link);
+                }
+
+                foreach (var method in type.Methods)
+                {
+                    var link = $"{typeLink}#{BuildAnchor(method.Id)}";
+                    var methodKey = BuildMethodReferenceKey(type, method);
+                    methodLinks.TryAdd(methodKey, link);
+                    AddMethodReferences(references, type, method, link);
+
+                    if (string.Equals(type.FullName, "Candide.CandideEngine", StringComparison.Ordinal) &&
+                        string.Equals(method.Name, "AddTerminalCommands", StringComparison.Ordinal))
+                    {
+                        registryMethodLink = link;
+                    }
+                }
+            }
+        }
+
+        return new CommandLinkContext(
+            references
+                .Select(entry => new CommandReferenceLink(entry.Key, entry.Value))
+                .OrderByDescending(entry => entry.Text.Length)
+                .ToArray(),
+            methodLinks,
+            registryMethodLink);
     }
+
+    private static void AddMemberReferences(
+        Dictionary<string, string> references,
+        TypeCatalog type,
+        string memberName,
+        string link)
+    {
+        AddReference(references, $"{type.FullName}.{memberName}", link);
+        AddReference(references, $"{type.DisplayName}.{memberName}", link);
+    }
+
+    private static void AddMethodReferences(
+        Dictionary<string, string> references,
+        TypeCatalog type,
+        MethodCatalog method,
+        string link)
+    {
+        var fullParameters = string.Join(", ", method.Parameters.Select(parameter => parameter.Type));
+        var aliasParameters = string.Join(", ", method.Parameters.Select(parameter => ToCSharpAlias(parameter.Type)));
+        foreach (var typeName in new[] { type.FullName, type.DisplayName })
+        {
+            AddReference(references, $"{typeName}.{method.Name}({fullParameters})", link);
+            AddReference(references, $"{typeName}.{method.Name}({aliasParameters})", link);
+            AddReference(references, $"{typeName}.{method.Name}", link);
+        }
+    }
+
+    private static void AddReference(Dictionary<string, string> references, string text, string link)
+    {
+        if (text.Length < 4 || text.Contains('<', StringComparison.Ordinal) || text.Contains('>', StringComparison.Ordinal))
+        {
+            return;
+        }
+
+        references.TryAdd(text, link);
+    }
+
+    private static string FormatAutocompleteHtml(
+        string? autocompleteSource,
+        string suggestionKind,
+        CommandLinkContext linkContext) =>
+        string.IsNullOrWhiteSpace(autocompleteSource)
+            ? Encode(suggestionKind)
+            : LinkReferencesHtml(autocompleteSource, linkContext, codeFallback: false);
+
+    private static string FormatAutocompleteMarkdown(
+        string? autocompleteSource,
+        string suggestionKind,
+        CommandLinkContext linkContext) =>
+        string.IsNullOrWhiteSpace(autocompleteSource)
+            ? suggestionKind
+            : LinkReferencesMarkdown(autocompleteSource, linkContext);
+
+    private static string FormatCodeReference(string text, CommandLinkContext linkContext) =>
+        LinkReferencesHtml(text, linkContext, codeFallback: true);
+
+    private static string LinkReferencesHtml(
+        string text,
+        CommandLinkContext linkContext,
+        bool codeFallback)
+    {
+        var builder = new StringBuilder();
+        var linkedAny = false;
+        for (var index = 0; index < text.Length;)
+        {
+            var match = FindReferenceMatch(text, index, linkContext);
+            if (match is null)
+            {
+                builder.Append(Encode(text[index].ToString()));
+                index++;
+                continue;
+            }
+
+            linkedAny = true;
+            builder.Append("<code><a href=\"")
+                .Append(Encode(match.Link))
+                .Append("\">")
+                .Append(Encode(match.Text))
+                .Append("</a></code>");
+            index += match.Text.Length;
+        }
+
+        if (!linkedAny && codeFallback)
+        {
+            return $"<code>{Encode(text)}</code>";
+        }
+
+        return builder.ToString();
+    }
+
+    private static string LinkReferencesMarkdown(string text, CommandLinkContext linkContext)
+    {
+        var builder = new StringBuilder();
+        for (var index = 0; index < text.Length;)
+        {
+            var match = FindReferenceMatch(text, index, linkContext);
+            if (match is null)
+            {
+                builder.Append(text[index]);
+                index++;
+                continue;
+            }
+
+            builder.Append('[')
+                .Append(match.Text)
+                .Append("](")
+                .Append(match.Link)
+                .Append(')');
+            index += match.Text.Length;
+        }
+
+        return builder.ToString();
+    }
+
+    private static CommandReferenceLink? FindReferenceMatch(
+        string text,
+        int index,
+        CommandLinkContext linkContext)
+    {
+        foreach (var reference in linkContext.References)
+        {
+            if (index + reference.Text.Length > text.Length)
+            {
+                continue;
+            }
+
+            if (!text.AsSpan(index, reference.Text.Length).Equals(reference.Text, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            if (!IsReferenceBoundary(text, index - 1) ||
+                !IsReferenceBoundary(text, index + reference.Text.Length))
+            {
+                continue;
+            }
+
+            return reference;
+        }
+
+        return null;
+    }
+
+    private static bool IsReferenceBoundary(string text, int index) =>
+        index < 0 ||
+        index >= text.Length ||
+        (!char.IsLetterOrDigit(text[index]) && text[index] != '_');
+
+    private static string ToCSharpAlias(string type) =>
+        type switch
+        {
+            "System.Boolean" => "bool",
+            "System.Byte" => "byte",
+            "System.Char" => "char",
+            "System.Decimal" => "decimal",
+            "System.Double" => "double",
+            "System.Int16" => "short",
+            "System.Int32" => "int",
+            "System.Int64" => "long",
+            "System.Object" => "object",
+            "System.Single" => "float",
+            "System.String" => "string",
+            "System.Void" => "void",
+            _ => type
+        };
+
+    private sealed record CommandLinkContext(
+        IReadOnlyList<CommandReferenceLink> References,
+        IReadOnlyDictionary<string, string> MethodLinks,
+        string? RegistryMethodLink)
+    {
+        public static CommandLinkContext Empty { get; } = new([], new Dictionary<string, string>(StringComparer.Ordinal), null);
+    }
+
+    private sealed record CommandReferenceLink(string Text, string Link);
 }

@@ -304,7 +304,11 @@ internal static class Program
             buildResult.IncludedAssemblyPaths,
             buildResult.Snapshot.Metadata.GeneratedAtUtc);
         var terminalCommandDiff = TerminalCommandDiffEngine.Compare(previousCommands, terminalCommands);
-        var commandHistoryPath = OutputWriter.WriteCommandsBundle(outputDirectory, terminalCommands, terminalCommandDiff);
+        var commandHistoryPath = OutputWriter.WriteCommandsBundle(
+            outputDirectory,
+            terminalCommands,
+            terminalCommandDiff,
+            buildResult.Snapshot);
 
         Console.WriteLine($"Wrote commands: {Path.Combine(outputDirectory, "commands.html")} ({terminalCommands.Metadata.CommandCount} commands)");
         Console.WriteLine($"Archived commands: {commandHistoryPath}");
