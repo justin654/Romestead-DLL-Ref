@@ -110,6 +110,27 @@ Important files:
 
 When a baseline is provided, the site also preserves removed type pages and marks removed methods, properties, and fields on surviving type pages.
 
+## Publishing to GitHub Pages
+
+GitHub Actions does not scan the game. The expected flow is to generate the reference locally, copy the generated site and diff files into `docs/`, then commit and push those published files.
+
+1. Run a scan locally.
+2. Copy `output/latest/` into the committed `docs/` folder.
+3. Commit and push `docs/`, including `diff.html`, `diff.json`, `diff.md`, `snapshot.json`, and any generated history files.
+4. GitHub Actions deploys `docs/` to GitHub Pages.
+
+Commands:
+
+```powershell
+.\scripts\scan_steam_build.bat --allow-modded
+.\scripts\publish_latest_to_docs.bat
+git add docs
+git commit -m "Publish latest reference site"
+git push
+```
+
+In the GitHub repository settings, go to **Settings -> Pages** and set **Build and deployment** to **GitHub Actions**. The included workflow uploads `docs/` with `actions/upload-pages-artifact` and deploys it with `actions/deploy-pages`.
+
 ## Direct Commands
 
 ```powershell
