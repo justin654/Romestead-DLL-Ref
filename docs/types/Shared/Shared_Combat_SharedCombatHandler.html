@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shared.Combat.SharedCombatHandler - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Shared.html">Shared</a></p>
+<div class="title-row">
+<h1>Shared.Combat.SharedCombatHandler</h1>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Shared.Combat.SharedCombatHandler
+
+- Assembly: `Shared`
+- Namespace: `Shared.Combat`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 18 methods, 0 properties, 1 fields, 0 events
+
+## Public Methods
+- `public System.Single ApplyDamage(Shared.Combat.DamageInfo damageInfo)`
+- `public System.Single ApplyDamage(Shared.Entity.EntityWrapper victim, Shared.Combat.HitInfo info, Shared.Entity.EntityWrapper owner, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Shared.Combat.DamageSourceType damageSourceType, System.String skillTypeBonusDamage, Shared.Combat.DamageVfxType damageVfxType, Shared.Combat.DamageVfxModifier damageVfxModifier, Shared.Combat.AttackType attackType, System.String spellId)`
+- `public System.Void ApplyDamageResistToResult(Shared.Combat.DamageResult damageResult, System.Single damageResistance)`
+- `public System.Void ApplyKnockback(Shared.Entity.EntityWrapper victim, Microsoft.Xna.Framework.Vector3 knockBack, System.Single duration, System.Single resistedPercentage)`
+- `public System.Void ApplyKnockback(Shared.Entity.EntityWrapper victim, Shared.Combat.HitInfo hitInfo)`
+- `public System.Void ApplyKnockbackWithoutResist(Shared.Entity.EntityWrapper victim, System.Single strength, Microsoft.Xna.Framework.Vector2 direction)`
+- `public System.Void ApplyKnockbackWithoutResist(Shared.Entity.EntityWrapper victim, System.Single strength, System.Single duration, Microsoft.Xna.Framework.Vector2 direction)`
+- `public System.Single ApplyTrueDamage(Shared.Entity.EntityWrapper victim, System.Single damage, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Shared.Combat.DamageSourceType damageSourceType, Shared.Entity.EntityWrapper source, Shared.Combat.DamageVfxType damageVfxType, Shared.Combat.DamageVfxModifier damageVfxModifier, Shared.Combat.AttackType attackType)`
+- `public System.ValueTuple&lt;System.Single, Shared.Combat.DamageInfo&gt; CalculateAndApplyDamage(Shared.Entity.EntityWrapper owner, Shared.Entity.EntityWrapper victim, Shared.Combat.DamageTypesArray damageTypes, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Shared.Combat.DamageSourceType damageSourceType, Shared.Combat.DamageVfxType damageVfxType, System.Boolean canCrit, System.Single totalKnockbackPower, System.Single totalStunPower, Shared.Combat.DamageVfxModifier damageVfxModifier)`
+- `public System.Void CalculateAndApplyKnockback(Shared.Entity.EntityWrapper victim, System.Single strength, Microsoft.Xna.Framework.Vector3 direction)`
+- `public Shared.Combat.DamageInfo CalculateDamage(Shared.Entity.EntityWrapper owner, Shared.Entity.EntityWrapper victim, Shared.Combat.DamageTypesArray damageTypes, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Shared.Combat.DamageSourceType damageSourceType, System.String associatedSkillId, Shared.Combat.DamageVfxType damageVfxType, System.Boolean canCrit, System.Single totalKnockbackPower, System.Single totalStunPower, Shared.Combat.DamageVfxModifier damageVfxModifier, Shared.Combat.AttackType attackType, System.Boolean unresistable)`
+- `public Shared.Combat.HitInfo CalculateHitInfo(Shared.Entity.EntityWrapper victim, System.Single stunPower, System.Single critChance, System.Single critMultiplier, System.Single totalKnockbackPower, Microsoft.Xna.Framework.Vector3 knockbackDirection, Shared.Combat.AttackType attackType, Shared.Combat.DamageTypesArray damageTypes, Shared.Combat.DamageTypesArray maxDamage, System.Single extraMultiplier, System.Boolean unresistable, System.Single armorPiercing)`
+- `public System.ValueTuple&lt;System.Single, System.Single&gt; CalculateKnockbackResist(Shared.Entity.EntityWrapper victim, System.Single power)`
+- `public System.Void CalculateMinMaxDamageArrays(Shared.Combat.DamageTypesArray min, Shared.Combat.DamageTypesArray max, System.Single multiplier, System.String skillId, Shared.Entity.EntityWrapper entity, Shared.Combat.DamageTypesArray outMin, Shared.Combat.DamageTypesArray outMax)`
+- `public System.Single DoDamage(Shared.Combat.DamageInfo damageInfo)`
+- `public Microsoft.Xna.Framework.Vector3 GetDamageDirection(System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Microsoft.Xna.Framework.Vector3 victimPosition)`
+- `public System.Void SetKnockback(Shared.Entity.EntityWrapper entity, Microsoft.Xna.Framework.Vector3 speed, System.Single duration)`
+">Copy markdown</button>
+<a class="button" href="Shared_Combat_SharedCombatHandler.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Shared.Combat</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>18</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>1</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Shared</code></li>
+<li><span>Namespace</span><code>Shared.Combat</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>F9E1E6DB7160D98E6ADFEBC6B57A774D6B80F82BF467A2CF5639E2AE84A62E28</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="StandardKnockbackDuration public System.Single StandardKnockbackDuration System.Single" id="standardknockbackduration-system-single"><td><span class="member-name-cell"><code>StandardKnockbackDuration</code><a class="permalink" href="#standardknockbackduration-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single StandardKnockbackDuration">Copy</button></span></td><td>public</td><td><code>public System.Single StandardKnockbackDuration</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ApplyDamage public System.Single ApplyDamage(Shared.Combat.DamageInfo damageInfo) System.Single damageInfo Shared.Combat.DamageInfo" id="applydamage-shared-combat-damageinfo---system-single">
+<div class="method-heading">
+<h3><code>ApplyDamage</code></h3>
+<a class="permalink" href="#applydamage-shared-combat-damageinfo---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single ApplyDamage(Shared.Combat.DamageInfo damageInfo)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::ApplyDamage(Shared.Combat.DamageInfo)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single ApplyDamage(<a href="../../types/Shared/Shared_Combat_DamageInfo.html">Shared.Combat.DamageInfo</a> damageInfo)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EEBD64B0467EA30024DD8E59A632A031290638F14B144CDE05B69900F3DC64F3</code></li>
+<li><span>Body hash</span><code>9F8819D03A35332E30CC7E94AAD95C6DBBE95EC5D6911E32E42DF1A695B428DB</code></li>
+<li><span>IL size</span><span>7</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#dodamage-shared-combat-damageinfo---system-single">Shared.Combat.SharedCombatHandler::DoDamage(Shared.Combat.DamageInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Modules_ServerLaserBeam.html#damageentity-shared-entity-entitywrapper--system-nullable-1-system-guid----system-void"><code>CandideServer.Entities.Modules.ServerLaserBeam::DamageEntity</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#applydamage-shared-combat-damageinfo--system-boolean---system-void"><code>CandideServer.ServerManagers.EntityServerManager::ApplyDamage</code></a></li>
+<li><a href="../../types/Romestead/Candide_Combat_CombatHandler.html#makedamageexplosion-microsoft-xna-framework-vector3--system-single--system-single--shared-combat-damagetypesarray--system-boolean--system-boolean--shared-entity-entitywrapper---system-void"><code>Candide.Combat.CombatHandler::MakeDamageExplosion</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Legacy_FireController.html#onentitycollision-shared-entity-entitywrapper--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3----system-boolean"><code>Candide.Entities.Controllers.Legacy.FireController::OnEntityCollision</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ApplyDamage public System.Single ApplyDamage(Shared.Entity.EntityWrapper victim, Shared.Combat.HitInfo info, Shared.Entity.EntityWrapper owner, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Shared.Combat.DamageSourceType damageSourceType, System.String skillTypeBonusDamage, Shared.Combat.DamageVfxType damageVfxType, Shared.Combat.DamageVfxModifier damageVfxModifier, Shared.Combat.AttackType attackType, System.String spellId) System.Single victim Shared.Entity.EntityWrapper info Shared.Combat.HitInfo owner Shared.Entity.EntityWrapper hitPosition System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; damageSourceType Shared.Combat.DamageSourceType skillTypeBonusDamage System.String damageVfxType Shared.Combat.DamageVfxType damageVfxModifier Shared.Combat.DamageVfxModifier attackType Shared.Combat.AttackType spellId System.String" id="applydamage-shared-entity-entitywrapper--shared-combat-hitinfo--shared-entity-entitywrapper--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--system-string--shared-combat-damagevfxtype--shared-combat-damagevfxmodifier--shared-combat-attacktype--system-string---system-single">
+<div class="method-heading">
+<h3><code>ApplyDamage</code></h3>
+<a class="permalink" href="#applydamage-shared-entity-entitywrapper--shared-combat-hitinfo--shared-entity-entitywrapper--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--system-string--shared-combat-damagevfxtype--shared-combat-damagevfxmodifier--shared-combat-attacktype--system-string---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single ApplyDamage(Shared.Entity.EntityWrapper victim, Shared.Combat.HitInfo info, Shared.Entity.EntityWrapper owner, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Shared.Combat.DamageSourceType damageSourceType, System.String skillTypeBonusDamage, Shared.Combat.DamageVfxType damageVfxType, Shared.Combat.DamageVfxModifier damageVfxModifier, Shared.Combat.AttackType attackType, System.String spellId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::ApplyDamage(Shared.Entity.EntityWrapper, Shared.Combat.HitInfo, Shared.Entity.EntityWrapper, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, Shared.Combat.DamageSourceType, System.String, Shared.Combat.DamageVfxType, Shared.Combat.DamageVfxModifier, Shared.Combat.AttackType, System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single ApplyDamage(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> victim, <a href="../../types/Shared/Shared_Combat_HitInfo.html">Shared.Combat.HitInfo</a> info, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> owner, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, <a href="../../types/Shared/Shared_Combat_DamageSourceType.html">Shared.Combat.DamageSourceType</a> damageSourceType, System.String skillTypeBonusDamage, <a href="../../types/Shared/Shared_Combat_DamageVfxType.html">Shared.Combat.DamageVfxType</a> damageVfxType, <a href="../../types/Shared/Shared_Combat_DamageVfxModifier.html">Shared.Combat.DamageVfxModifier</a> damageVfxModifier, <a href="../../types/Shared/Shared_Combat_AttackType.html">Shared.Combat.AttackType</a> attackType, System.String spellId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CF6A30AE4F00D8BE880A2112CE06B066FC771DDDB9F3D071E33E9BFE23CFDF51</code></li>
+<li><span>Body hash</span><code>166B7AD3BE4DEB14DDF56C618489B4BD8039D5BCB530FDFBFBA5EEF9271D51BA</code></li>
+<li><span>IL size</span><span>52</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Combat.DamageInfo::.ctor(Shared.Combat.DamageVfx, Shared.Combat.DamageSourceType, Shared.Entity.EntityWrapper, Shared.Combat.HitInfo, Shared.Entity.EntityWrapper, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, Shared.Combat.AttackType, System.String, System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#dodamage-shared-combat-damageinfo---system-single">Shared.Combat.SharedCombatHandler::DoDamage(Shared.Combat.DamageInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerFrogController.html#onhittheground----system-void"><code>CandideServer.Entities.BehaviorMachine.ServerFrogController::OnHitTheGround</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerGoatController.html#onentitycollision-shared-entity-entitywrapper--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3----system-boolean"><code>CandideServer.Entities.BehaviorMachine.ServerGoatController::OnEntityCollision</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerLizardController.html#onhittheground----system-void"><code>CandideServer.Entities.BehaviorMachine.ServerLizardController::OnHitTheGround</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerMouseController.html#onhittheground----system-void"><code>CandideServer.Entities.BehaviorMachine.ServerMouseController::OnHitTheGround</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerRabbitController.html#onhittheground----system-void"><code>CandideServer.Entities.BehaviorMachine.ServerRabbitController::OnHitTheGround</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerSquirrelController.html#onhittheground----system-void"><code>CandideServer.Entities.BehaviorMachine.ServerSquirrelController::OnHitTheGround</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerBoarController.html#onentitycollision-shared-entity-entitywrapper--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3----system-boolean"><code>CandideServer.Entities.Controllers.Enemies.ServerBoarController::OnEntityCollision</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#onreceive-playerdiecheat-candideserver-messagemodels-playercharacters-playerdiecheatmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.PlayerServerService::OnReceive_PlayerDieCheat</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_Casting_CastSpell.html#hit-shared-entity-entitywrapper--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3---system-void"><code>Shared.Combat.Spells.Casting.CastSpell::Hit</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_Casting_CastSpell.html#projectilehit-shared-combat-projectiles-models-projectilehitdata---system-void"><code>Shared.Combat.Spells.Casting.CastSpell::ProjectileHit</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ApplyDamageResistToResult public System.Void ApplyDamageResistToResult(Shared.Combat.DamageResult damageResult, System.Single damageResistance) System.Void damageResult Shared.Combat.DamageResult damageResistance System.Single" id="applydamageresisttoresult-shared-combat-damageresult--system-single---system-void">
+<div class="method-heading">
+<h3><code>ApplyDamageResistToResult</code></h3>
+<a class="permalink" href="#applydamageresisttoresult-shared-combat-damageresult--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ApplyDamageResistToResult(Shared.Combat.DamageResult damageResult, System.Single damageResistance)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::ApplyDamageResistToResult(Shared.Combat.DamageResult, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ApplyDamageResistToResult(<a href="../../types/Shared/Shared_Combat_DamageResult.html">Shared.Combat.DamageResult</a> damageResult, System.Single damageResistance)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>07FAF5534F135B9CA6BFA1C76D7020A580728670A08E366E47AFD8ADE6425882</code></li>
+<li><span>Body hash</span><code>E6F035BC023C8651B22A8F8EED887202AD862CB593250C2F36E35BDC597E7067</code></li>
+<li><span>IL size</span><span>21</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Citizens_ServerCitizenEntityController.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController::OnDamaged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerWallController.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.Controllers.ServerWallController::OnDamaged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_AutoBallista_ServerAutoBallistaController.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.ControllerSets.AutoBallista.ServerAutoBallistaController::OnDamaged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Catapult_ServerCatapultController.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.ControllerSets.Catapult.ServerCatapultController::OnDamaged</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_AutoBallistaController_AutoBallistaController.html#ondamaged-shared-combat-damageresult---system-void"><code>Candide.Entities.Controllers.AutoBallistaController.AutoBallistaController::OnDamaged</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_CitizenController_CitizenController.html#ondamaged-shared-combat-damageresult---system-void"><code>Candide.Entities.Controllers.CitizenController.CitizenController::OnDamaged</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_CatapultController.html#ondamaged-shared-combat-damageresult---system-void"><code>Candide.Entities.Controllers.Other.CatapultController::OnDamaged</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_WallController.html#ondamaged-shared-combat-damageresult---system-void"><code>Candide.Entities.Controllers.Other.WallController::OnDamaged</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ApplyKnockback public System.Void ApplyKnockback(Shared.Entity.EntityWrapper victim, Microsoft.Xna.Framework.Vector3 knockBack, System.Single duration, System.Single resistedPercentage) System.Void victim Shared.Entity.EntityWrapper knockBack Microsoft.Xna.Framework.Vector3 duration System.Single resistedPercentage System.Single" id="applyknockback-shared-entity-entitywrapper--microsoft-xna-framework-vector3--system-single--system-single---system-void">
+<div class="method-heading">
+<h3><code>ApplyKnockback</code></h3>
+<a class="permalink" href="#applyknockback-shared-entity-entitywrapper--microsoft-xna-framework-vector3--system-single--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ApplyKnockback(Shared.Entity.EntityWrapper victim, Microsoft.Xna.Framework.Vector3 knockBack, System.Single duration, System.Single resistedPercentage)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::ApplyKnockback(Shared.Entity.EntityWrapper, Microsoft.Xna.Framework.Vector3, System.Single, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ApplyKnockback(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> victim, Microsoft.Xna.Framework.Vector3 knockBack, System.Single duration, System.Single resistedPercentage)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DA23AC395ED2A0F2740F631A4420745F59D4440EE415CEC8827E37ECCC623433</code></li>
+<li><span>Body hash</span><code>4ABA2C7F9B26A702AC2EBD995A26CE63810C4CF88B86A0674C3FF5BDE07E451C</code></li>
+<li><span>IL size</span><span>121</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Immovable()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::Length()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#iswonky-microsoft-xna-framework-vector3----system-boolean">CandideCreator.Shared.Helpers.VectorExtension::IsWonky(Microsoft.Xna.Framework.Vector3&amp;)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_MathExtension.html#iswonky-system-single---system-boolean">CandideCreator.Shared.Helpers.MathExtension::IsWonky(System.Single)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#setknockback-system-int32--microsoft-xna-framework-vector3--system-single---system-void">Shared.Entity.EntitySystem::SetKnockback(System.Int32, Microsoft.Xna.Framework.Vector3, System.Single)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Interfaces_Entity_IEntitySystemBridge.html#applyknockback-shared-entity-entitywrapper--microsoft-xna-framework-vector3--system-single---system-void">Shared.Interfaces.Entity.IEntitySystemBridge::ApplyKnockback(Shared.Entity.EntityWrapper, Microsoft.Xna.Framework.Vector3, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Combat_Projectiles_ProjectileSystem.html#onprojectilehitentities-system-collections-generic-list-1-system-valuetuple-2-shared-entity-entitywrapper-candidecreator-shared-collision-collisiondata----system-int32---system-void"><code>Shared.Combat.Projectiles.ProjectileSystem::OnProjectileHitEntities</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#applyknockback-shared-entity-entitywrapper--shared-combat-hitinfo---system-void"><code>Shared.Combat.SharedCombatHandler::ApplyKnockback</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#applyknockbackwithoutresist-shared-entity-entitywrapper--system-single--microsoft-xna-framework-vector2---system-void"><code>Shared.Combat.SharedCombatHandler::ApplyKnockbackWithoutResist</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#applyknockbackwithoutresist-shared-entity-entitywrapper--system-single--system-single--microsoft-xna-framework-vector2---system-void"><code>Shared.Combat.SharedCombatHandler::ApplyKnockbackWithoutResist</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#calculateandapplyknockback-shared-entity-entitywrapper--system-single--microsoft-xna-framework-vector3---system-void"><code>Shared.Combat.SharedCombatHandler::CalculateAndApplyKnockback</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ApplyKnockback public System.Void ApplyKnockback(Shared.Entity.EntityWrapper victim, Shared.Combat.HitInfo hitInfo) System.Void victim Shared.Entity.EntityWrapper hitInfo Shared.Combat.HitInfo" id="applyknockback-shared-entity-entitywrapper--shared-combat-hitinfo---system-void">
+<div class="method-heading">
+<h3><code>ApplyKnockback</code></h3>
+<a class="permalink" href="#applyknockback-shared-entity-entitywrapper--shared-combat-hitinfo---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ApplyKnockback(Shared.Entity.EntityWrapper victim, Shared.Combat.HitInfo hitInfo)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::ApplyKnockback(Shared.Entity.EntityWrapper, Shared.Combat.HitInfo)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ApplyKnockback(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> victim, <a href="../../types/Shared/Shared_Combat_HitInfo.html">Shared.Combat.HitInfo</a> hitInfo)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CD9634DA0A040D23F1AF331CDFD2DA2D32BC1F974A295FA9926DFBC29B05E01B</code></li>
+<li><span>Body hash</span><code>F059EC266F29CC94F0D621731C01014D9BCDBF948659D04BBF0E76D908C9CBAC</code></li>
+<li><span>IL size</span><span>114</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Combat_HitInfo.html#damagesum----system-single">Shared.Combat.HitInfo::DamageSum()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntityWrapper.html#stun-system-single--system-boolean---system-void">Shared.Entity.EntityWrapper::Stun(System.Single, System.Boolean)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(Microsoft.Xna.Framework.Vector3, System.Single)</code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#applyknockback-shared-entity-entitywrapper--microsoft-xna-framework-vector3--system-single--system-single---system-void">Shared.Combat.SharedCombatHandler::ApplyKnockback(Shared.Entity.EntityWrapper, Microsoft.Xna.Framework.Vector3, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#damageentity-candideserver-messagemodels-dealdamagemessage--candideserver-eventbus-eventbusargs--candideserver-syncstrategies-syncstrategy---system-void"><code>CandideServer.ServerManagers.EntityServerManager::DamageEntity</code></a></li>
+<li><a href="../../types/Romestead/Candide_Combat_CombatHandler.html#makedamageexplosion-microsoft-xna-framework-vector3--system-single--system-single--shared-combat-damagetypesarray--system-boolean--system-boolean--shared-entity-entitywrapper---system-void"><code>Candide.Combat.CombatHandler::MakeDamageExplosion</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#dealdamage-candideserver-messagemodels-dealdamagemessage---system-void"><code>Candide.GameModels.Managers.EntityManager::DealDamage</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_Casting_CastSpell.html#hit-shared-entity-entitywrapper--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3---system-void"><code>Shared.Combat.Spells.Casting.CastSpell::Hit</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_Casting_CastSpell.html#projectilehit-shared-combat-projectiles-models-projectilehitdata---system-void"><code>Shared.Combat.Spells.Casting.CastSpell::ProjectileHit</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ApplyKnockbackWithoutResist public System.Void ApplyKnockbackWithoutResist(Shared.Entity.EntityWrapper victim, System.Single strength, Microsoft.Xna.Framework.Vector2 direction) System.Void victim Shared.Entity.EntityWrapper strength System.Single direction Microsoft.Xna.Framework.Vector2" id="applyknockbackwithoutresist-shared-entity-entitywrapper--system-single--microsoft-xna-framework-vector2---system-void">
+<div class="method-heading">
+<h3><code>ApplyKnockbackWithoutResist</code></h3>
+<a class="permalink" href="#applyknockbackwithoutresist-shared-entity-entitywrapper--system-single--microsoft-xna-framework-vector2---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ApplyKnockbackWithoutResist(Shared.Entity.EntityWrapper victim, System.Single strength, Microsoft.Xna.Framework.Vector2 direction)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::ApplyKnockbackWithoutResist(Shared.Entity.EntityWrapper, System.Single, Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ApplyKnockbackWithoutResist(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> victim, System.Single strength, Microsoft.Xna.Framework.Vector2 direction)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F40EC99B1151FEEECFF9DBB17E29B41DDA0F316F557D2926BB839CCE74972789</code></li>
+<li><span>Body hash</span><code>BD5EED73A748E1AE26595034F8047DBB679FBFC6EB06A5D69EA84F0F03952E1C</code></li>
+<li><span>IL size</span><span>29</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector3xy-microsoft-xna-framework-vector2---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.VectorExtension::ToVector3Xy(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(System.Single, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#applyknockback-shared-entity-entitywrapper--microsoft-xna-framework-vector3--system-single--system-single---system-void">Shared.Combat.SharedCombatHandler::ApplyKnockback(Shared.Entity.EntityWrapper, Microsoft.Xna.Framework.Vector3, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Modules_SharedLaserBeam.html#damageentity-shared-entity-entitywrapper--system-nullable-1-system-guid----system-void"><code>CandideServer.Entities.Modules.SharedLaserBeam::DamageEntity</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Legacy_BanditBruteController.html#onentitycollision-shared-entity-entitywrapper--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3----system-boolean"><code>Candide.Entities.Controllers.Legacy.BanditBruteController::OnEntityCollision</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ApplyKnockbackWithoutResist public System.Void ApplyKnockbackWithoutResist(Shared.Entity.EntityWrapper victim, System.Single strength, System.Single duration, Microsoft.Xna.Framework.Vector2 direction) System.Void victim Shared.Entity.EntityWrapper strength System.Single duration System.Single direction Microsoft.Xna.Framework.Vector2" id="applyknockbackwithoutresist-shared-entity-entitywrapper--system-single--system-single--microsoft-xna-framework-vector2---system-void">
+<div class="method-heading">
+<h3><code>ApplyKnockbackWithoutResist</code></h3>
+<a class="permalink" href="#applyknockbackwithoutresist-shared-entity-entitywrapper--system-single--system-single--microsoft-xna-framework-vector2---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ApplyKnockbackWithoutResist(Shared.Entity.EntityWrapper victim, System.Single strength, System.Single duration, Microsoft.Xna.Framework.Vector2 direction)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::ApplyKnockbackWithoutResist(Shared.Entity.EntityWrapper, System.Single, System.Single, Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ApplyKnockbackWithoutResist(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> victim, System.Single strength, System.Single duration, Microsoft.Xna.Framework.Vector2 direction)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9EB6642BF82A2589B9F10997289DE6E857CF2D93677DC13AA6314B85BC21107F</code></li>
+<li><span>Body hash</span><code>BF478C95739486507CC3018E549AC875E224390E800E236F6446F1D825BD559B</code></li>
+<li><span>IL size</span><span>25</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector3xy-microsoft-xna-framework-vector2---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.VectorExtension::ToVector3Xy(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(System.Single, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#applyknockback-shared-entity-entitywrapper--microsoft-xna-framework-vector3--system-single--system-single---system-void">Shared.Combat.SharedCombatHandler::ApplyKnockback(Shared.Entity.EntityWrapper, Microsoft.Xna.Framework.Vector3, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Legacy_BanditController.html#onentitycollision-shared-entity-entitywrapper--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3----system-boolean"><code>Candide.Entities.Controllers.Legacy.BanditController::OnEntityCollision</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ApplyTrueDamage public System.Single ApplyTrueDamage(Shared.Entity.EntityWrapper victim, System.Single damage, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Shared.Combat.DamageSourceType damageSourceType, Shared.Entity.EntityWrapper source, Shared.Combat.DamageVfxType damageVfxType, Shared.Combat.DamageVfxModifier damageVfxModifier, Shared.Combat.AttackType attackType) System.Single victim Shared.Entity.EntityWrapper damage System.Single hitPosition System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; damageSourceType Shared.Combat.DamageSourceType source Shared.Entity.EntityWrapper damageVfxType Shared.Combat.DamageVfxType damageVfxModifier Shared.Combat.DamageVfxModifier attackType Shared.Combat.AttackType" id="applytruedamage-shared-entity-entitywrapper--system-single--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--shared-entity-entitywrapper--shared-combat-damagevfxtype--shared-combat-damagevfxmodifier--shared-combat-attacktype---system-single">
+<div class="method-heading">
+<h3><code>ApplyTrueDamage</code></h3>
+<a class="permalink" href="#applytruedamage-shared-entity-entitywrapper--system-single--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--shared-entity-entitywrapper--shared-combat-damagevfxtype--shared-combat-damagevfxmodifier--shared-combat-attacktype---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single ApplyTrueDamage(Shared.Entity.EntityWrapper victim, System.Single damage, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Shared.Combat.DamageSourceType damageSourceType, Shared.Entity.EntityWrapper source, Shared.Combat.DamageVfxType damageVfxType, Shared.Combat.DamageVfxModifier damageVfxModifier, Shared.Combat.AttackType attackType)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::ApplyTrueDamage(Shared.Entity.EntityWrapper, System.Single, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, Shared.Combat.DamageSourceType, Shared.Entity.EntityWrapper, Shared.Combat.DamageVfxType, Shared.Combat.DamageVfxModifier, Shared.Combat.AttackType)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single ApplyTrueDamage(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> victim, System.Single damage, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, <a href="../../types/Shared/Shared_Combat_DamageSourceType.html">Shared.Combat.DamageSourceType</a> damageSourceType, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> source, <a href="../../types/Shared/Shared_Combat_DamageVfxType.html">Shared.Combat.DamageVfxType</a> damageVfxType, <a href="../../types/Shared/Shared_Combat_DamageVfxModifier.html">Shared.Combat.DamageVfxModifier</a> damageVfxModifier, <a href="../../types/Shared/Shared_Combat_AttackType.html">Shared.Combat.AttackType</a> attackType)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BB7B707CEB093A0447C93A65806ABE23E9FDD3A36C422532B9D00CA6182B2DBD</code></li>
+<li><span>Body hash</span><code>F17B3601C3C7C1CB28388CD161618AC42C7E2859E63FE3942EB896B469751428</code></li>
+<li><span>IL size</span><span>131</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Combat.DamageTypesArray::.ctor(System.Single, System.Single, System.Single, System.Single, System.Single, System.Single, System.Single, System.Single, System.Single)</code></li>
+<li><code>Shared.Combat.DamageTypesArray::.ctor()</code></li>
+<li><code>Shared.Combat.DamageInfo::.ctor(Shared.Combat.DamageVfx, Shared.Combat.DamageSourceType, Shared.Entity.EntityWrapper, Shared.Combat.HitInfo, Shared.Entity.EntityWrapper, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, Shared.Combat.AttackType, System.String, System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#dodamage-shared-combat-damageinfo---system-single">Shared.Combat.SharedCombatHandler::DoDamage(Shared.Combat.DamageInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerController.html#updateplayerresettimer----system-void"><code>Candide.Entities.PlayerState.PlayerController::UpdatePlayerResetTimer</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Projectiles_ProjectileSystem.html#onprojectilehitentities-system-collections-generic-list-1-system-valuetuple-2-shared-entity-entitywrapper-candidecreator-shared-collision-collisiondata----system-int32---system-void"><code>Shared.Combat.Projectiles.ProjectileSystem::OnProjectileHitEntities</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CalculateAndApplyDamage public System.ValueTuple&lt;System.Single, Shared.Combat.DamageInfo&gt; CalculateAndApplyDamage(Shared.Entity.EntityWrapper owner, Shared.Entity.EntityWrapper victim, Shared.Combat.DamageTypesArray damageTypes, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Shared.Combat.DamageSourceType damageSourceType, Shared.Combat.DamageVfxType damageVfxType, System.Boolean canCrit, System.Single totalKnockbackPower, System.Single totalStunPower, Shared.Combat.DamageVfxModifier damageVfxModifier) System.ValueTuple&lt;System.Single, Shared.Combat.DamageInfo&gt; owner Shared.Entity.EntityWrapper victim Shared.Entity.EntityWrapper damageTypes Shared.Combat.DamageTypesArray hitPosition System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; damageSourceType Shared.Combat.DamageSourceType damageVfxType Shared.Combat.DamageVfxType canCrit System.Boolean totalKnockbackPower System.Single totalStunPower System.Single damageVfxModifier Shared.Combat.DamageVfxModifier" id="calculateandapplydamage-shared-entity-entitywrapper--shared-entity-entitywrapper--shared-combat-damagetypesarray--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--shared-combat-damagevfxtype--system-boolean--system-single--system-single--shared-combat-damagevfxmodifier---system-valuetuple-2-system-single-shared-combat-damageinfo-">
+<div class="method-heading">
+<h3><code>CalculateAndApplyDamage</code></h3>
+<a class="permalink" href="#calculateandapplydamage-shared-entity-entitywrapper--shared-entity-entitywrapper--shared-combat-damagetypesarray--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--shared-combat-damagevfxtype--system-boolean--system-single--system-single--shared-combat-damagevfxmodifier---system-valuetuple-2-system-single-shared-combat-damageinfo-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.ValueTuple&lt;System.Single, Shared.Combat.DamageInfo&gt; CalculateAndApplyDamage(Shared.Entity.EntityWrapper owner, Shared.Entity.EntityWrapper victim, Shared.Combat.DamageTypesArray damageTypes, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Shared.Combat.DamageSourceType damageSourceType, Shared.Combat.DamageVfxType damageVfxType, System.Boolean canCrit, System.Single totalKnockbackPower, System.Single totalStunPower, Shared.Combat.DamageVfxModifier damageVfxModifier)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::CalculateAndApplyDamage(Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper, Shared.Combat.DamageTypesArray, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, Shared.Combat.DamageSourceType, Shared.Combat.DamageVfxType, System.Boolean, System.Single, System.Single, Shared.Combat.DamageVfxModifier)">Copy Harmony target</button>
+</div>
+<p><code>public System.ValueTuple&lt;System.Single, <a href="../../types/Shared/Shared_Combat_DamageInfo.html">Shared.Combat.DamageInfo</a>&gt; CalculateAndApplyDamage(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> owner, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> victim, <a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a> damageTypes, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, <a href="../../types/Shared/Shared_Combat_DamageSourceType.html">Shared.Combat.DamageSourceType</a> damageSourceType, <a href="../../types/Shared/Shared_Combat_DamageVfxType.html">Shared.Combat.DamageVfxType</a> damageVfxType, System.Boolean canCrit, System.Single totalKnockbackPower, System.Single totalStunPower, <a href="../../types/Shared/Shared_Combat_DamageVfxModifier.html">Shared.Combat.DamageVfxModifier</a> damageVfxModifier)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.ValueTuple&lt;System.Single, <a href="../../types/Shared/Shared_Combat_DamageInfo.html">Shared.Combat.DamageInfo</a>&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9FABB1F7EDFD7758A1AE0B992D0576F0A08023A335DC87350487E10C89DC1312</code></li>
+<li><span>Body hash</span><code>63C948E4D3306CEFB24A31D79A2CA816CF90232A508D0211AE79772C92B960FA</code></li>
+<li><span>IL size</span><span>40</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#calculatedamage-shared-entity-entitywrapper--shared-entity-entitywrapper--shared-combat-damagetypesarray--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--system-string--shared-combat-damagevfxtype--system-boolean--system-single--system-single--shared-combat-damagevfxmodifier--shared-combat-attacktype--system-boolean---shared-combat-damageinfo">Shared.Combat.SharedCombatHandler::CalculateDamage(Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper, Shared.Combat.DamageTypesArray, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, Shared.Combat.DamageSourceType, System.String, Shared.Combat.DamageVfxType, System.Boolean, System.Single, System.Single, Shared.Combat.DamageVfxModifier, Shared.Combat.AttackType, System.Boolean)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#dodamage-shared-combat-damageinfo---system-single">Shared.Combat.SharedCombatHandler::DoDamage(Shared.Combat.DamageInfo)</a></code></li>
+<li><code>System.ValueTuple&lt;System.Single, Shared.Combat.DamageInfo&gt;::.ctor(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_RobotBoss_ServerRobotBossSlamHandler.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.ControllerSets.RobotBoss.ServerRobotBossSlamHandler::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Legacy_BanditBruteController.html#onentitycollision-shared-entity-entitywrapper--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3----system-boolean"><code>Candide.Entities.Controllers.Legacy.BanditBruteController::OnEntityCollision</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Legacy_BanditController.html#onentitycollision-shared-entity-entitywrapper--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3----system-boolean"><code>Candide.Entities.Controllers.Legacy.BanditController::OnEntityCollision</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_RobotBossController_RobotBossSlamHandler.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Entities.Controllers.RobotBossController.RobotBossSlamHandler::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CalculateAndApplyKnockback public System.Void CalculateAndApplyKnockback(Shared.Entity.EntityWrapper victim, System.Single strength, Microsoft.Xna.Framework.Vector3 direction) System.Void victim Shared.Entity.EntityWrapper strength System.Single direction Microsoft.Xna.Framework.Vector3" id="calculateandapplyknockback-shared-entity-entitywrapper--system-single--microsoft-xna-framework-vector3---system-void">
+<div class="method-heading">
+<h3><code>CalculateAndApplyKnockback</code></h3>
+<a class="permalink" href="#calculateandapplyknockback-shared-entity-entitywrapper--system-single--microsoft-xna-framework-vector3---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CalculateAndApplyKnockback(Shared.Entity.EntityWrapper victim, System.Single strength, Microsoft.Xna.Framework.Vector3 direction)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::CalculateAndApplyKnockback(Shared.Entity.EntityWrapper, System.Single, Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CalculateAndApplyKnockback(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> victim, System.Single strength, Microsoft.Xna.Framework.Vector3 direction)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>36BEC079EA9B6A36670183D489C264629FE9932D7D9ECF1120A17505EDD7B62A</code></li>
+<li><span>Body hash</span><code>35E6E6B75C462AF3F4D0E4B1A0F04529D743734E1B9DC69E56482A089E67C18E</code></li>
+<li><span>IL size</span><span>49</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#calculateknockbackresist-shared-entity-entitywrapper--system-single---system-valuetuple-2-system-single-system-single-">Shared.Combat.SharedCombatHandler::CalculateKnockbackResist(Shared.Entity.EntityWrapper, System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(Microsoft.Xna.Framework.Vector3, System.Single)</code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#applyknockback-shared-entity-entitywrapper--microsoft-xna-framework-vector3--system-single--system-single---system-void">Shared.Combat.SharedCombatHandler::ApplyKnockback(Shared.Entity.EntityWrapper, Microsoft.Xna.Framework.Vector3, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Models_Spells_ServerLinearShockwaveSpell.html#onhit-shared-combat-projectiles-models-projectilehitdata--shared-combat-spells-casting-castspell---system-void"><code>CandideServer.Models.Spells.ServerLinearShockwaveSpell::OnHit</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CalculateDamage public Shared.Combat.DamageInfo CalculateDamage(Shared.Entity.EntityWrapper owner, Shared.Entity.EntityWrapper victim, Shared.Combat.DamageTypesArray damageTypes, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Shared.Combat.DamageSourceType damageSourceType, System.String associatedSkillId, Shared.Combat.DamageVfxType damageVfxType, System.Boolean canCrit, System.Single totalKnockbackPower, System.Single totalStunPower, Shared.Combat.DamageVfxModifier damageVfxModifier, Shared.Combat.AttackType attackType, System.Boolean unresistable) Shared.Combat.DamageInfo owner Shared.Entity.EntityWrapper victim Shared.Entity.EntityWrapper damageTypes Shared.Combat.DamageTypesArray hitPosition System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; damageSourceType Shared.Combat.DamageSourceType associatedSkillId System.String damageVfxType Shared.Combat.DamageVfxType canCrit System.Boolean totalKnockbackPower System.Single totalStunPower System.Single damageVfxModifier Shared.Combat.DamageVfxModifier attackType Shared.Combat.AttackType unresistable System.Boolean" id="calculatedamage-shared-entity-entitywrapper--shared-entity-entitywrapper--shared-combat-damagetypesarray--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--system-string--shared-combat-damagevfxtype--system-boolean--system-single--system-single--shared-combat-damagevfxmodifier--shared-combat-attacktype--system-boolean---shared-combat-damageinfo">
+<div class="method-heading">
+<h3><code>CalculateDamage</code></h3>
+<a class="permalink" href="#calculatedamage-shared-entity-entitywrapper--shared-entity-entitywrapper--shared-combat-damagetypesarray--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--system-string--shared-combat-damagevfxtype--system-boolean--system-single--system-single--shared-combat-damagevfxmodifier--shared-combat-attacktype--system-boolean---shared-combat-damageinfo" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Combat.DamageInfo CalculateDamage(Shared.Entity.EntityWrapper owner, Shared.Entity.EntityWrapper victim, Shared.Combat.DamageTypesArray damageTypes, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Shared.Combat.DamageSourceType damageSourceType, System.String associatedSkillId, Shared.Combat.DamageVfxType damageVfxType, System.Boolean canCrit, System.Single totalKnockbackPower, System.Single totalStunPower, Shared.Combat.DamageVfxModifier damageVfxModifier, Shared.Combat.AttackType attackType, System.Boolean unresistable)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::CalculateDamage(Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper, Shared.Combat.DamageTypesArray, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, Shared.Combat.DamageSourceType, System.String, Shared.Combat.DamageVfxType, System.Boolean, System.Single, System.Single, Shared.Combat.DamageVfxModifier, Shared.Combat.AttackType, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Combat_DamageInfo.html">Shared.Combat.DamageInfo</a> CalculateDamage(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> owner, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> victim, <a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a> damageTypes, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, <a href="../../types/Shared/Shared_Combat_DamageSourceType.html">Shared.Combat.DamageSourceType</a> damageSourceType, System.String associatedSkillId, <a href="../../types/Shared/Shared_Combat_DamageVfxType.html">Shared.Combat.DamageVfxType</a> damageVfxType, System.Boolean canCrit, System.Single totalKnockbackPower, System.Single totalStunPower, <a href="../../types/Shared/Shared_Combat_DamageVfxModifier.html">Shared.Combat.DamageVfxModifier</a> damageVfxModifier, <a href="../../types/Shared/Shared_Combat_AttackType.html">Shared.Combat.AttackType</a> attackType, System.Boolean unresistable)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Combat_DamageInfo.html">Shared.Combat.DamageInfo</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B3272FF10AD5EFFF96C1E66826D37D200BA52B4FFFC416618DB272C5D9F83DB1</code></li>
+<li><span>Body hash</span><code>3ADC2E4C2B1E9D793073B7B43463FA0FFFF2FDB9B8C81FBA4CEB11E314ADFCB4</code></li>
+<li><span>IL size</span><span>187</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Position()</code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#getdamagedirection-system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">Shared.Combat.SharedCombatHandler::GetDamageDirection(System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::get_Zero()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Equality(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Stats()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_EntityStats.html#get-system-string---system-single">Shared.Models.Stats.EntityStats::Get(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#calculatehitinfo-shared-entity-entitywrapper--system-single--system-single--system-single--system-single--microsoft-xna-framework-vector3--shared-combat-attacktype--shared-combat-damagetypesarray--shared-combat-damagetypesarray--system-single--system-boolean--system-single---shared-combat-hitinfo">Shared.Combat.SharedCombatHandler::CalculateHitInfo(Shared.Entity.EntityWrapper, System.Single, System.Single, System.Single, System.Single, Microsoft.Xna.Framework.Vector3, Shared.Combat.AttackType, Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray, System.Single, System.Boolean, System.Single)</a></code></li>
+<li><code>Shared.Combat.DamageInfo::.ctor(Shared.Combat.DamageVfx, Shared.Combat.DamageSourceType, Shared.Entity.EntityWrapper, Shared.Combat.HitInfo, Shared.Entity.EntityWrapper, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, Shared.Combat.AttackType, System.String, System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerActivatedSpikeTrapController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.Controllers.ServerActivatedSpikeTrapController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerSpikeTrapController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.Controllers.ServerSpikeTrapController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_PuzzleMechanics_ServerFlagActivatedSpikeTrapController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.ControllerSets.PuzzleMechanics.ServerFlagActivatedSpikeTrapController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Auras_DamageOverTimeServerAura.html#update-shared-entity-entitywrapper--system-single---system-void"><code>CandideServer.Models.Auras.DamageOverTimeServerAura::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#calculateandapplydamage-shared-entity-entitywrapper--shared-entity-entitywrapper--shared-combat-damagetypesarray--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--system-string--shared-combat-damagevfxtype--system-boolean--system-single--system-single--shared-combat-damagevfxmodifier---system-void"><code>CandideServer.ServerManagers.EntityServerManager::CalculateAndApplyDamage</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_ActivatedSpikeTrapController.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Entities.Controllers.Other.ActivatedSpikeTrapController::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_SpikeTrapController.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Entities.Controllers.Other.SpikeTrapController::Update</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#calculateandapplydamage-shared-entity-entitywrapper--shared-entity-entitywrapper--shared-combat-damagetypesarray--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--shared-combat-damagevfxtype--system-boolean--system-single--system-single--shared-combat-damagevfxmodifier---system-valuetuple-2-system-single-shared-combat-damageinfo-"><code>Shared.Combat.SharedCombatHandler::CalculateAndApplyDamage</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>CritChance</code></li>
+<li><code>CritDamage</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CalculateHitInfo public Shared.Combat.HitInfo CalculateHitInfo(Shared.Entity.EntityWrapper victim, System.Single stunPower, System.Single critChance, System.Single critMultiplier, System.Single totalKnockbackPower, Microsoft.Xna.Framework.Vector3 knockbackDirection, Shared.Combat.AttackType attackType, Shared.Combat.DamageTypesArray damageTypes, Shared.Combat.DamageTypesArray maxDamage, System.Single extraMultiplier, System.Boolean unresistable, System.Single armorPiercing) Shared.Combat.HitInfo victim Shared.Entity.EntityWrapper stunPower System.Single critChance System.Single critMultiplier System.Single totalKnockbackPower System.Single knockbackDirection Microsoft.Xna.Framework.Vector3 attackType Shared.Combat.AttackType damageTypes Shared.Combat.DamageTypesArray maxDamage Shared.Combat.DamageTypesArray extraMultiplier System.Single unresistable System.Boolean armorPiercing System.Single" id="calculatehitinfo-shared-entity-entitywrapper--system-single--system-single--system-single--system-single--microsoft-xna-framework-vector3--shared-combat-attacktype--shared-combat-damagetypesarray--shared-combat-damagetypesarray--system-single--system-boolean--system-single---shared-combat-hitinfo">
+<div class="method-heading">
+<h3><code>CalculateHitInfo</code></h3>
+<a class="permalink" href="#calculatehitinfo-shared-entity-entitywrapper--system-single--system-single--system-single--system-single--microsoft-xna-framework-vector3--shared-combat-attacktype--shared-combat-damagetypesarray--shared-combat-damagetypesarray--system-single--system-boolean--system-single---shared-combat-hitinfo" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Combat.HitInfo CalculateHitInfo(Shared.Entity.EntityWrapper victim, System.Single stunPower, System.Single critChance, System.Single critMultiplier, System.Single totalKnockbackPower, Microsoft.Xna.Framework.Vector3 knockbackDirection, Shared.Combat.AttackType attackType, Shared.Combat.DamageTypesArray damageTypes, Shared.Combat.DamageTypesArray maxDamage, System.Single extraMultiplier, System.Boolean unresistable, System.Single armorPiercing)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::CalculateHitInfo(Shared.Entity.EntityWrapper, System.Single, System.Single, System.Single, System.Single, Microsoft.Xna.Framework.Vector3, Shared.Combat.AttackType, Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray, System.Single, System.Boolean, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Combat_HitInfo.html">Shared.Combat.HitInfo</a> CalculateHitInfo(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> victim, System.Single stunPower, System.Single critChance, System.Single critMultiplier, System.Single totalKnockbackPower, Microsoft.Xna.Framework.Vector3 knockbackDirection, <a href="../../types/Shared/Shared_Combat_AttackType.html">Shared.Combat.AttackType</a> attackType, <a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a> damageTypes, <a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a> maxDamage, System.Single extraMultiplier, System.Boolean unresistable, System.Single armorPiercing)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Combat_HitInfo.html">Shared.Combat.HitInfo</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DE8F42C5C14A9C44ED22AA757F04DEC708CA2D3CF9A7149E64064B942C4531F2</code></li>
+<li><span>Body hash</span><code>586C0EB165BD86BEB624E2BB7B5DB4EAF40BBB9DD95BD537E575469933BA56CA</code></li>
+<li><span>IL size</span><span>378</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Combat.DamageTypesArray::.ctor()</code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#calculateknockbackresist-shared-entity-entitywrapper--system-single---system-valuetuple-2-system-single-system-single-">Shared.Combat.SharedCombatHandler::CalculateKnockbackResist(Shared.Entity.EntityWrapper, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextfloat-system-random---system-single">CandideCreator.Shared.Helpers.RandomHelper::NextFloat(System.Random)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Stats()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_EntityStats.html#get-system-string---system-single">Shared.Models.Stats.EntityStats::Get(System.String)</a></code></li>
+<li><code>Shared.Combat.DamageTypesArray::get_Item(System.Int32)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextfloat-system-random--system-single--system-single---system-single">CandideCreator.Shared.Helpers.RandomHelper::NextFloat(System.Random, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_EntityStats.html#doresistcalculations-destructive-shared-combat-damagetypesarray--shared-combat-damagetypesarray--system-single---system-void">Shared.Models.Stats.EntityStats::DoResistCalculations_Destructive(Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Combat_CombatHandler.html#makedamageexplosion-microsoft-xna-framework-vector3--system-single--system-single--shared-combat-damagetypesarray--system-boolean--system-boolean--shared-entity-entitywrapper---system-void"><code>Candide.Combat.CombatHandler::MakeDamageExplosion</code></a></li>
+<li><a href="../../types/Shared/Shared_Aura_State_DamageOverTimeAuraState.html#gettickdamage-shared-entity-entitywrapper--shared-aura-args-damageovertimeauraargs---shared-combat-damagetypesarray"><code>Shared.Aura.State.DamageOverTimeAuraState::GetTickDamage</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#calculatedamage-shared-entity-entitywrapper--shared-entity-entitywrapper--shared-combat-damagetypesarray--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--system-string--shared-combat-damagevfxtype--system-boolean--system-single--system-single--shared-combat-damagevfxmodifier--shared-combat-attacktype--system-boolean---shared-combat-damageinfo"><code>Shared.Combat.SharedCombatHandler::CalculateDamage</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_Casting_CastSpell.html#hit-shared-entity-entitywrapper--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3---system-void"><code>Shared.Combat.Spells.Casting.CastSpell::Hit</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_Casting_CastSpell.html#projectilehit-shared-combat-projectiles-models-projectilehitdata---system-void"><code>Shared.Combat.Spells.Casting.CastSpell::ProjectileHit</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>SiegeDamageTakenModifier</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CalculateKnockbackResist public System.ValueTuple&lt;System.Single, System.Single&gt; CalculateKnockbackResist(Shared.Entity.EntityWrapper victim, System.Single power) System.ValueTuple&lt;System.Single, System.Single&gt; victim Shared.Entity.EntityWrapper power System.Single" id="calculateknockbackresist-shared-entity-entitywrapper--system-single---system-valuetuple-2-system-single-system-single-">
+<div class="method-heading">
+<h3><code>CalculateKnockbackResist</code></h3>
+<a class="permalink" href="#calculateknockbackresist-shared-entity-entitywrapper--system-single---system-valuetuple-2-system-single-system-single-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.ValueTuple&lt;System.Single, System.Single&gt; CalculateKnockbackResist(Shared.Entity.EntityWrapper victim, System.Single power)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::CalculateKnockbackResist(Shared.Entity.EntityWrapper, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.ValueTuple&lt;System.Single, System.Single&gt; CalculateKnockbackResist(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> victim, System.Single power)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.ValueTuple&lt;System.Single, System.Single&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>98D9EF76EAD3EB56B13C432F48B2068692525C24F90DE2D6D70DA1503B9932F7</code></li>
+<li><span>Body hash</span><code>C3D6A65A989BC670CFBBAE2AAA568080D66DC7E4675DA12C2BDCC4F5D78D908E</code></li>
+<li><span>IL size</span><span>110</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Stats()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_EntityStats.html#get-system-string---system-single">Shared.Models.Stats.EntityStats::Get(System.String)</a></code></li>
+<li><code>System.ValueTuple&lt;System.Single, System.Single&gt;::.ctor(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#calculateandapplyknockback-shared-entity-entitywrapper--system-single--microsoft-xna-framework-vector3---system-void"><code>Shared.Combat.SharedCombatHandler::CalculateAndApplyKnockback</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#calculatehitinfo-shared-entity-entitywrapper--system-single--system-single--system-single--system-single--microsoft-xna-framework-vector3--shared-combat-attacktype--shared-combat-damagetypesarray--shared-combat-damagetypesarray--system-single--system-boolean--system-single---shared-combat-hitinfo"><code>Shared.Combat.SharedCombatHandler::CalculateHitInfo</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>KnockbackResistance</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CalculateMinMaxDamageArrays public System.Void CalculateMinMaxDamageArrays(Shared.Combat.DamageTypesArray min, Shared.Combat.DamageTypesArray max, System.Single multiplier, System.String skillId, Shared.Entity.EntityWrapper entity, Shared.Combat.DamageTypesArray outMin, Shared.Combat.DamageTypesArray outMax) System.Void min Shared.Combat.DamageTypesArray max Shared.Combat.DamageTypesArray multiplier System.Single skillId System.String entity Shared.Entity.EntityWrapper outMin Shared.Combat.DamageTypesArray outMax Shared.Combat.DamageTypesArray" id="calculateminmaxdamagearrays-shared-combat-damagetypesarray--shared-combat-damagetypesarray--system-single--system-string--shared-entity-entitywrapper--shared-combat-damagetypesarray--shared-combat-damagetypesarray---system-void">
+<div class="method-heading">
+<h3><code>CalculateMinMaxDamageArrays</code></h3>
+<a class="permalink" href="#calculateminmaxdamagearrays-shared-combat-damagetypesarray--shared-combat-damagetypesarray--system-single--system-string--shared-entity-entitywrapper--shared-combat-damagetypesarray--shared-combat-damagetypesarray---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CalculateMinMaxDamageArrays(Shared.Combat.DamageTypesArray min, Shared.Combat.DamageTypesArray max, System.Single multiplier, System.String skillId, Shared.Entity.EntityWrapper entity, Shared.Combat.DamageTypesArray outMin, Shared.Combat.DamageTypesArray outMax)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::CalculateMinMaxDamageArrays(Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray, System.Single, System.String, Shared.Entity.EntityWrapper, Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CalculateMinMaxDamageArrays(<a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a> min, <a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a> max, System.Single multiplier, System.String skillId, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, <a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a> outMin, <a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a> outMax)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6BBC5A3AAD58329F2A4505ED1C8D159B75579BEBD65F8755B64CE1606DC5F65F</code></li>
+<li><span>Body hash</span><code>23DF8F5ABE71524773EAE11ECC01353E0A4A4D0411DBC17E5D0EF72B65CD84A9</code></li>
+<li><span>IL size</span><span>91</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Interfaces_Entity_IEntitySystemBridge.html#getskilldamagemultiplier-shared-entity-entitywrapper--system-string---system-single">Shared.Interfaces.Entity.IEntitySystemBridge::GetSkillDamageMultiplier(Shared.Entity.EntityWrapper, System.String)</a></code></li>
+<li><code>Shared.Combat.DamageTypesArray::get_Item(System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Helpers_SharedSpellHelper.html#getdamage-shared-combat-damagetypesarray--shared-combat-damagetypesarray--shared-entity-entitywrapper--system-string--system-single---system-valuetuple-2-shared-combat-damagetypesarray-shared-combat-damagetypesarray-"><code>Shared.Helpers.SharedSpellHelper::GetDamage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="CheckIfKilled private System.Void CheckIfKilled(Shared.Combat.DamageInfo damageInfo, System.Single damage) System.Void damageInfo Shared.Combat.DamageInfo damage System.Single" id="checkifkilled-shared-combat-damageinfo--system-single---system-void">
+<div class="method-heading">
+<h3><code>CheckIfKilled</code></h3>
+<a class="permalink" href="#checkifkilled-shared-combat-damageinfo--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void CheckIfKilled(Shared.Combat.DamageInfo damageInfo, System.Single damage)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::CheckIfKilled(Shared.Combat.DamageInfo, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void CheckIfKilled(<a href="../../types/Shared/Shared_Combat_DamageInfo.html">Shared.Combat.DamageInfo</a> damageInfo, System.Single damage)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AA5202DD10863FB0D61FEE63F2C6F0340C3FB76184CCDC361E9C824F9E35F8D4</code></li>
+<li><span>Body hash</span><code>2F1BB5F2BF5471EEB3E494F0B4D957838091ABDBAA0FCA2841D2C8D844D5CC9A</code></li>
+<li><span>IL size</span><span>283</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Interfaces_Entity_IEntitySystemBridge.html#onentitykilled-shared-combat-damageinfo--shared-entity-base-onkilledbehaviour--system-single---system-void">Shared.Interfaces.Entity.IEntitySystemBridge::OnEntityKilled(Shared.Combat.DamageInfo, Shared.Entity.Base.OnKilledBehaviour, System.Single)</a></code></li>
+<li><code>Shared.Combat.DamageResult::.ctor()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#onoutofhealth-shared-combat-damageresult---system-boolean">Shared.Entity.Base.AbstractController::OnOutOfHealth(Shared.Combat.DamageResult)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#onkilled-shared-entity-entitykillinfo---shared-entity-base-onkilledbehaviour">Shared.Entity.Base.AbstractController::OnKilled(Shared.Entity.EntityKillInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#dodamage-shared-combat-damageinfo---system-single"><code>Shared.Combat.SharedCombatHandler::DoDamage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DoDamage public System.Single DoDamage(Shared.Combat.DamageInfo damageInfo) System.Single damageInfo Shared.Combat.DamageInfo" id="dodamage-shared-combat-damageinfo---system-single">
+<div class="method-heading">
+<h3><code>DoDamage</code></h3>
+<a class="permalink" href="#dodamage-shared-combat-damageinfo---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single DoDamage(Shared.Combat.DamageInfo damageInfo)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::DoDamage(Shared.Combat.DamageInfo)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single DoDamage(<a href="../../types/Shared/Shared_Combat_DamageInfo.html">Shared.Combat.DamageInfo</a> damageInfo)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B9EC412190AA115412A00645E0ACBD395B3FD14568876938DC5C92880A5A8421</code></li>
+<li><span>Body hash</span><code>8BE4E3DAF825AC8D49F1FD253299A01C23B13069C583250772FCAC42E8BECB82</code></li>
+<li><span>IL size</span><span>995</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Interfaces_Entity_IEntitySystemBridge.html#ignoredodamage-shared-combat-damageinfo---system-boolean">Shared.Interfaces.Entity.IEntitySystemBridge::IgnoreDoDamage(Shared.Combat.DamageInfo)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_HitInfo.html#damagesum----system-single">Shared.Combat.HitInfo::DamageSum()</a></code></li>
+<li><code>System.Math::Ceiling(System.Double)</code></li>
+<li><code>Shared.Combat.DamageResult::.ctor()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#ondamaged-shared-combat-damageresult---system-void">Shared.Entity.Base.AbstractController::OnDamaged(Shared.Combat.DamageResult)</a></code></li>
+<li><code>System.Nullable&lt;System.Single&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Single&gt;::get_Value()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_HealthComponent.html#dodamage-system-single--system-boolean---system-boolean">Shared.Entity.Components.HealthComponent::DoDamage(System.Single, System.Boolean)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Interfaces_Entity_IEntitySystemBridge.html#onentitytookdamage-shared-entity-entitywrapper--system-single--system-single--system-single--shared-combat-damageinfo--system-single--system-boolean---system-void">Shared.Interfaces.Entity.IEntitySystemBridge::OnEntityTookDamage(Shared.Entity.EntityWrapper, System.Single, System.Single, System.Single, Shared.Combat.DamageInfo, System.Single, System.Boolean)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;::get_Count()</code></li>
+<li><code>System.Buffers.ArrayPool&lt;Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;::get_Shared()</code></li>
+<li><code>System.Buffers.ArrayPool&lt;Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;::Rent(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;::get_Item(System.Int32)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Auras_AuraTriggerExtension.html#triggersfromhitdealt-shared-models-auras-auratrigger--shared-combat-attacktype--system-boolean---system-boolean">Shared.Models.Auras.AuraTriggerExtension::TriggersFromHitDealt(Shared.Models.Auras.AuraTrigger, Shared.Combat.AttackType, System.Boolean)</a></code></li>
+<li><code>Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;::OnAuraHitDealtTriggerFire(Shared.Combat.DamageInfo)</code></li>
+<li><code>System.Buffers.ArrayPool&lt;Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;::Return(!0[], System.Boolean)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Auras_AuraTriggerExtension.html#triggersfromhittaken-shared-models-auras-auratrigger--shared-combat-attacktype---system-boolean">Shared.Models.Auras.AuraTriggerExtension::TriggersFromHitTaken(Shared.Models.Auras.AuraTrigger, Shared.Combat.AttackType)</a></code></li>
+<li><code>Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;::OnAuraHitTakenTriggerFire(Shared.Combat.DamageInfo)</code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#checkifkilled-shared-combat-damageinfo--system-single---system-void">Shared.Combat.SharedCombatHandler::CheckIfKilled(Shared.Combat.DamageInfo, System.Single)</a></code></li>
+<li><code>System.Enum::HasFlag(System.Enum)</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_AggressiveComponent.html#generatethreat-shared-entity-entitywrapper--system-single--shared-entity-entitywrapper---system-void">Shared.Entity.Components.AggressiveComponent::GenerateThreat(Shared.Entity.EntityWrapper, System.Single, Shared.Entity.EntityWrapper)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_ActivatedSpikeTrapController.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Entities.Controllers.Other.ActivatedSpikeTrapController::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_SpikeTrapController.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Entities.Controllers.Other.SpikeTrapController::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#dealdamage-candideserver-messagemodels-dealdamagemessage---system-void"><code>Candide.GameModels.Managers.EntityManager::DealDamage</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#applydamage-shared-combat-damageinfo---system-single"><code>Shared.Combat.SharedCombatHandler::ApplyDamage</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#applydamage-shared-entity-entitywrapper--shared-combat-hitinfo--shared-entity-entitywrapper--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--system-string--shared-combat-damagevfxtype--shared-combat-damagevfxmodifier--shared-combat-attacktype--system-string---system-single"><code>Shared.Combat.SharedCombatHandler::ApplyDamage</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#applytruedamage-shared-entity-entitywrapper--system-single--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--shared-entity-entitywrapper--shared-combat-damagevfxtype--shared-combat-damagevfxmodifier--shared-combat-attacktype---system-single"><code>Shared.Combat.SharedCombatHandler::ApplyTrueDamage</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#calculateandapplydamage-shared-entity-entitywrapper--shared-entity-entitywrapper--shared-combat-damagetypesarray--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--shared-combat-damagevfxtype--system-boolean--system-single--system-single--shared-combat-damagevfxmodifier---system-valuetuple-2-system-single-shared-combat-damageinfo-"><code>Shared.Combat.SharedCombatHandler::CalculateAndApplyDamage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetDamageDirection public Microsoft.Xna.Framework.Vector3 GetDamageDirection(System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Microsoft.Xna.Framework.Vector3 victimPosition) Microsoft.Xna.Framework.Vector3 hitPosition System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; victimPosition Microsoft.Xna.Framework.Vector3" id="getdamagedirection-system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">
+<div class="method-heading">
+<h3><code>GetDamageDirection</code></h3>
+<a class="permalink" href="#getdamagedirection-system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3---microsoft-xna-framework-vector3" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector3 GetDamageDirection(System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Microsoft.Xna.Framework.Vector3 victimPosition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::GetDamageDirection(System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Vector3 GetDamageDirection(System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; hitVelocity, Microsoft.Xna.Framework.Vector3 victimPosition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector3</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>02F2B0356F5E5F3BB21F0C06EE7B3D27AA6AC0D360E1E060909B3CB872F5CBB1</code></li>
+<li><span>Body hash</span><code>8B061E51036B2812457A87BE97C8DF01C758799BBC9CD7B5D84B56897F8B6008</code></li>
+<li><span>IL size</span><span>76</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#trynormalize-microsoft-xna-framework-vector3--microsoft-xna-framework-vector3----system-boolean">CandideCreator.Shared.Helpers.VectorExtension::TryNormalize(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3&amp;)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#normalizesafe-microsoft-xna-framework-vector2---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::NormalizeSafe(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector3xy-microsoft-xna-framework-vector2---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.VectorExtension::ToVector3Xy(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::get_Zero()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#calculatedamage-shared-entity-entitywrapper--shared-entity-entitywrapper--shared-combat-damagetypesarray--system-nullable-1-microsoft-xna-framework-vector3---system-nullable-1-microsoft-xna-framework-vector3---shared-combat-damagesourcetype--system-string--shared-combat-damagevfxtype--system-boolean--system-single--system-single--shared-combat-damagevfxmodifier--shared-combat-attacktype--system-boolean---shared-combat-damageinfo"><code>Shared.Combat.SharedCombatHandler::CalculateDamage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetKnockback public System.Void SetKnockback(Shared.Entity.EntityWrapper entity, Microsoft.Xna.Framework.Vector3 speed, System.Single duration) System.Void entity Shared.Entity.EntityWrapper speed Microsoft.Xna.Framework.Vector3 duration System.Single" id="setknockback-shared-entity-entitywrapper--microsoft-xna-framework-vector3--system-single---system-void">
+<div class="method-heading">
+<h3><code>SetKnockback</code></h3>
+<a class="permalink" href="#setknockback-shared-entity-entitywrapper--microsoft-xna-framework-vector3--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetKnockback(Shared.Entity.EntityWrapper entity, Microsoft.Xna.Framework.Vector3 speed, System.Single duration)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Combat.SharedCombatHandler::SetKnockback(Shared.Entity.EntityWrapper, Microsoft.Xna.Framework.Vector3, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetKnockback(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, Microsoft.Xna.Framework.Vector3 speed, System.Single duration)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CCDDCA50EFCF2DAAA50B513E2AE8B0F3D6DDEE9F8F507AA4257E882F10BE96D3</code></li>
+<li><span>Body hash</span><code>616E28E7DE367ED3413292BFFBAA7E3DA1DAB2DB67D0D9495C2D135F1CC0E716</code></li>
+<li><span>IL size</span><span>39</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#iswonky-microsoft-xna-framework-vector3----system-boolean">CandideCreator.Shared.Helpers.VectorExtension::IsWonky(Microsoft.Xna.Framework.Vector3&amp;)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_MathExtension.html#iswonky-system-single---system-boolean">CandideCreator.Shared.Helpers.MathExtension::IsWonky(System.Single)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#setknockback-system-int32--microsoft-xna-framework-vector3--system-single---system-void">Shared.Entity.EntitySystem::SetKnockback(System.Int32, Microsoft.Xna.Framework.Vector3, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_EntityServerService.html#onreceive-setknockback-candideserver-messagemodels-entities-setknockbackmessage---system-void"><code>CandideServer.ServerServices.EntityServerService::OnReceive_SetKnockback</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

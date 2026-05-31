@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.Multiplayer.Services.ConnectService - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.Multiplayer.Services.ConnectService</h1>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.Multiplayer.Services.ConnectService
+
+- Assembly: `Romestead`
+- Namespace: `Candide.Multiplayer.Services`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 19 methods, 2 properties, 3 fields, 0 events
+
+## Public Methods
+- `public System.Void Connect()`
+- `public System.Void Connect(System.String name, System.String ipAddress, System.Int32 port, CandideServer.Server.MultiplayerConfiguration config, System.Boolean prepareConnectionOnly)`
+- `public System.Void CreateImgui()`
+- `public System.Void Disconnect(Candide.Multiplayer.Services.PostGameBehaviour postGameBehaviour)`
+- `public System.Void ErrorDisconnect(Candide.Multiplayer.Services.DisconnectReason reason, System.String message)`
+- `public System.Void OnError(System.Byte errorType)`
+- `public System.Void ResetState()`
+- `public System.Void SendLogin(System.String password)`
+- `public System.Void ServerConnected()`
+- `public System.Void ServerDisconnected(CandideServer.Server.Network.DisconnectReason disconnectInfoReason)`
+- `public System.Void Update()`
+- `public System.Void VersionIsCompatible(System.Boolean isPasswordProtected)`
+">Copy markdown</button>
+<a class="button" href="Candide_Multiplayer_Services_ConnectService.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.Multiplayer.Services</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>19</strong></article>
+<article class="metric"><span>Properties</span><strong>2</strong></article>
+<article class="metric"><span>Fields</span><strong>3</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.Multiplayer.Services</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>B8F26E23FBB82FF2AACA1CAB3DAD340B2BA41994656C8C388545159C5D9CFEDF</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="OnConnectionStepChange public System.Action&lt;Candide.Multiplayer.Services.ConnectionStep&gt; OnConnectionStepChange System.Action&lt;Candide.Multiplayer.Services.ConnectionStep&gt;" id="onconnectionstepchange-system-action-1-candide-multiplayer-services-connectionstep-"><td><span class="member-name-cell"><code>OnConnectionStepChange</code><a class="permalink" href="#onconnectionstepchange-system-action-1-candide-multiplayer-services-connectionstep-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Action&lt;Candide.Multiplayer.Services.ConnectionStep&gt; OnConnectionStepChange">Copy</button></span></td><td>public</td><td><code>public System.Action&lt;<a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectionStep.html">Candide.Multiplayer.Services.ConnectionStep</a>&gt; OnConnectionStepChange</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="State public Candide.Multiplayer.Services.ConnectionState State Candide.Multiplayer.Services.ConnectionState" id="state-candide-multiplayer-services-connectionstate"><td><span class="member-name-cell"><code>State</code><a class="permalink" href="#state-candide-multiplayer-services-connectionstate" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.Multiplayer.Services.ConnectionState State">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectionState.html">Candide.Multiplayer.Services.ConnectionState</a> State</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="UiOpen public System.Boolean UiOpen System.Boolean" id="uiopen-system-boolean"><td><span class="member-name-cell"><code>UiOpen</code><a class="permalink" href="#uiopen-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean UiOpen">Copy</button></span></td><td>public</td><td><code>public System.Boolean UiOpen</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="Dots public System.String Dots System.String" id="dots-system-string"><td><span class="member-name-cell"><code>Dots</code><a class="permalink" href="#dots-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String Dots">Copy</button></span></td><td>public</td><td><code>public System.String Dots</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="PostGameBehaviour public Candide.Multiplayer.Services.PostGameBehaviour PostGameBehaviour Candide.Multiplayer.Services.PostGameBehaviour" id="postgamebehaviour-candide-multiplayer-services-postgamebehaviour"><td><span class="member-name-cell"><code>PostGameBehaviour</code><a class="permalink" href="#postgamebehaviour-candide-multiplayer-services-postgamebehaviour" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.Multiplayer.Services.PostGameBehaviour PostGameBehaviour">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_Multiplayer_Services_PostGameBehaviour.html">Candide.Multiplayer.Services.PostGameBehaviour</a> PostGameBehaviour</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="CheckVersion private System.Void CheckVersion() System.Void " id="checkversion----system-void">
+<div class="method-heading">
+<h3><code>CheckVersion</code></h3>
+<a class="permalink" href="#checkversion----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void CheckVersion()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::CheckVersion()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void CheckVersion()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>35E3489AEB5959B90CDBCD76B84FD45E2218C342836FFC290AEF96ADF42C974C</code></li>
+<li><span>Body hash</span><code>BB6660391334AD9762D7FD4CC884B4DE92049B7D8437A1BDCF5792F722A12EA4</code></li>
+<li><span>IL size</span><span>103</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Multiplayer.Services.ConnectionState::set_Step(Candide.Multiplayer.Services.ConnectionStep)</code></li>
+<li><code>CandideServer.MessageModels.CheckVersionRequest::.ctor()</code></li>
+<li><code>ConnectService.&lt;&gt;c::&lt;CheckVersion&gt;b__20_0(CandideServer.MessageModels.CheckVersionResponse)</code></li>
+<li><code>System.Action&lt;CandideServer.MessageModels.CheckVersionResponse&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#onerror-system-byte---system-void">Candide.Multiplayer.Services.ConnectService::OnError(System.Byte)</a></code></li>
+<li><code>System.Action&lt;System.Byte&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.Multiplayer.Network.NetworkManager::Get(System.String, System.Object, System.Action&lt;T&gt;, System.Single, System.Action&lt;System.Byte&gt;, System.Boolean)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#serverconnected----system-void"><code>Candide.Multiplayer.Services.ConnectService::ServerConnected</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>check-version</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Connect public System.Void Connect() System.Void " id="connect----system-void">
+<div class="method-heading">
+<h3><code>Connect</code></h3>
+<a class="permalink" href="#connect----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Connect()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::Connect()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Connect()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1A256A310977E9F660F4F2D4EC18EE2D8BE580723D6CE06A0D2CAD6DC0E95F46</code></li>
+<li><span>Body hash</span><code>9C50D99C4052E800B60D55D8408C46C1F870C5C80A2A6D6E60E817C99196DDF5</code></li>
+<li><span>IL size</span><span>102</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Multiplayer.Services.ConnectService::set_PostGameBehaviour(Candide.Multiplayer.Services.PostGameBehaviour)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_NetworkManager.html#startclient-system-string--system-int32--candideserver-server-multiplayerconfiguration---system-void">Candide.Multiplayer.Network.NetworkManager::StartClient(System.String, System.Int32, CandideServer.Server.MultiplayerConfiguration)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_PlayerManager.html#startclient----system-void">Candide.Multiplayer.PlayerManager::StartClient()</a></code></li>
+<li><code>Candide.Multiplayer.Services.ConnectionState::set_Step(Candide.Multiplayer.Services.ConnectionStep)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Systems_DeadReckoningSystem.html#clearfornewconnection----system-void">Candide.GameModels.Systems.DeadReckoningSystem::ClearForNewConnection()</a></code></li>
+<li><code>System.Net.IPAddress::TryParse(System.String, System.Net.IPAddress&amp;)</code></li>
+<li><code>System.Net.IPAddress::IsLoopback(System.Net.IPAddress)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_LocalHostServerManager.html#stopserver----system-void">Candide.Multiplayer.Network.LocalHostServerManager::StopServer()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_ConnectingStatusWindow.html#onserverstarted----system-void"><code>Candide.MainMenu.Ui.Steps.ConnectingStatusWindow::OnServerStarted</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#connect-system-string--system-string--system-int32--candideserver-server-multiplayerconfiguration--system-boolean---system-void"><code>Candide.Multiplayer.Services.ConnectService::Connect</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Connect public System.Void Connect(System.String name, System.String ipAddress, System.Int32 port, CandideServer.Server.MultiplayerConfiguration config, System.Boolean prepareConnectionOnly) System.Void name System.String ipAddress System.String port System.Int32 config CandideServer.Server.MultiplayerConfiguration prepareConnectionOnly System.Boolean" id="connect-system-string--system-string--system-int32--candideserver-server-multiplayerconfiguration--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>Connect</code></h3>
+<a class="permalink" href="#connect-system-string--system-string--system-int32--candideserver-server-multiplayerconfiguration--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Connect(System.String name, System.String ipAddress, System.Int32 port, CandideServer.Server.MultiplayerConfiguration config, System.Boolean prepareConnectionOnly)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::Connect(System.String, System.String, System.Int32, CandideServer.Server.MultiplayerConfiguration, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Connect(System.String name, System.String ipAddress, System.Int32 port, <a href="../../types/CandideServer/CandideServer_Server_MultiplayerConfiguration.html">CandideServer.Server.MultiplayerConfiguration</a> config, System.Boolean prepareConnectionOnly)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FD3BBD7953F674EBE7851AD2811CAF4D99DB905326A7824E6B409B84E1865D0F</code></li>
+<li><span>Body hash</span><code>7EF83E2FDB757307E2CE2C148D68F56AA5B3364FC649573F0D46B62BFE810295</code></li>
+<li><span>IL size</span><span>169</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::Trim()</code></li>
+<li><code>System.String::Equals(System.String, System.StringComparison)</code></li>
+<li><code>System.String::Equals(System.String, System.String, System.StringComparison)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#connect----system-void">Candide.Multiplayer.Services.ConnectService::Connect()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_ConnectingStatusWindow.html#onwindowshown----system-void"><code>Candide.MainMenu.Ui.Steps.ConnectingStatusWindow::OnWindowShown</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_ConnectingStatusWindow.html#waitforservertostart-candide-mainmenu-ui-joingamestate--candideserver-server-multiplayerconfiguration---system-void"><code>Candide.MainMenu.Ui.Steps.ConnectingStatusWindow::WaitForServerToStart</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>localhost</code></li>
+<li><code>127.0.0.1</code></li>
+<li><code>Can not run network through Steam because it has not been initialized</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateImgui public System.Void CreateImgui() System.Void " id="createimgui----system-void">
+<div class="method-heading">
+<h3><code>CreateImgui</code></h3>
+<a class="permalink" href="#createimgui----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CreateImgui()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::CreateImgui()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CreateImgui()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8A50ADBFCD8AA7C281C01AAECCBFF681882171EA70AB54F1F23B7E9709714238</code></li>
+<li><span>Body hash</span><code>8A6F127E0053EB13AFDA0F394E4CD706376ECB1E15358DC72521A636A4B8AD55</code></li>
+<li><span>IL size</span><span>1</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Disconnect public System.Void Disconnect(Candide.Multiplayer.Services.PostGameBehaviour postGameBehaviour) System.Void postGameBehaviour Candide.Multiplayer.Services.PostGameBehaviour" id="disconnect-candide-multiplayer-services-postgamebehaviour---system-void">
+<div class="method-heading">
+<h3><code>Disconnect</code></h3>
+<a class="permalink" href="#disconnect-candide-multiplayer-services-postgamebehaviour---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Disconnect(Candide.Multiplayer.Services.PostGameBehaviour postGameBehaviour)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::Disconnect(Candide.Multiplayer.Services.PostGameBehaviour)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Disconnect(<a href="../../types/Romestead/Candide_Multiplayer_Services_PostGameBehaviour.html">Candide.Multiplayer.Services.PostGameBehaviour</a> postGameBehaviour)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BF558BB3B22FA21E54D75157BFFCCC39824FF336BAA36E5491BE244012716DB3</code></li>
+<li><span>Body hash</span><code>0430C443AA0593EDCE9CE078F9753687C2A85A199C0CB116EEC665C209E1AF3C</code></li>
+<li><span>IL size</span><span>20</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Multiplayer.Services.ConnectionState::set_Step(Candide.Multiplayer.Services.ConnectionStep)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#onwedisconnected-candide-multiplayer-services-disconnectreason--candide-multiplayer-services-postgamebehaviour--system-string---system-void">Candide.Multiplayer.Services.ConnectService::OnWeDisconnected(Candide.Multiplayer.Services.DisconnectReason, Candide.Multiplayer.Services.PostGameBehaviour, System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideEngine::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_ConnectingStatusWindow.html#cancelconnection----system-void"><code>Candide.MainMenu.Ui.Steps.ConnectingStatusWindow::CancelConnection</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ErrorDisconnect public System.Void ErrorDisconnect(Candide.Multiplayer.Services.DisconnectReason reason, System.String message) System.Void reason Candide.Multiplayer.Services.DisconnectReason message System.String" id="errordisconnect-candide-multiplayer-services-disconnectreason--system-string---system-void">
+<div class="method-heading">
+<h3><code>ErrorDisconnect</code></h3>
+<a class="permalink" href="#errordisconnect-candide-multiplayer-services-disconnectreason--system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ErrorDisconnect(Candide.Multiplayer.Services.DisconnectReason reason, System.String message)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::ErrorDisconnect(Candide.Multiplayer.Services.DisconnectReason, System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ErrorDisconnect(<a href="../../types/Romestead/Candide_Multiplayer_Services_DisconnectReason.html">Candide.Multiplayer.Services.DisconnectReason</a> reason, System.String message)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A90A04F3C884356AEB051657D4DF154A3475890B6BC75B2CBF83D2AF5E2B2997</code></li>
+<li><span>Body hash</span><code>5357786B1BD9D18A342C3E8BD16A3CC053F6EB9BD89A6B4C8AC5CB074BA37B3C</code></li>
+<li><span>IL size</span><span>21</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Multiplayer.Services.ConnectionState::set_Step(Candide.Multiplayer.Services.ConnectionStep)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#onwedisconnected-candide-multiplayer-services-disconnectreason--candide-multiplayer-services-postgamebehaviour--system-string---system-void">Candide.Multiplayer.Services.ConnectService::OnWeDisconnected(Candide.Multiplayer.Services.DisconnectReason, Candide.Multiplayer.Services.PostGameBehaviour, System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_BossController.html#updatebossfight-candideserver-models-boss-bossfightmodel---system-void"><code>Candide.GameModels.Controllers.BossController::UpdateBossFight</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_WorldManager.html#exitdungeon----system-void"><code>Candide.GameModels.Managers.WorldManager::ExitDungeon</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_WorldManager.html#removeworld-system-guid---system-void"><code>Candide.GameModels.Managers.WorldManager::RemoveWorld</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_InteriorService.html#onerror-system-byte---system-void"><code>Candide.GameModels.Services.InteriorService::OnError</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_InteriorService.html#onerror2-system-byte---system-void"><code>Candide.GameModels.Services.InteriorService::OnError2</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_NetworkManager.html#desynced-system-string---system-void"><code>Candide.Multiplayer.Network.NetworkManager::Desynced</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#startclient-candideserver-server-multiplayerconfiguration--candide-multiplayer-network-clientconfiguration---system-void"><code>Candide.Multiplayer.Network.RiptideClientManager::StartClient</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_PlayerManager.html#clientloggedin-candideserver-messagemodels-players-loginresponsemessage---system-void"><code>Candide.Multiplayer.PlayerManager::ClientLoggedIn</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_PlayerManager.html#respawnplayer-system-int32--system-guid--microsoft-xna-framework-vector3---system-void"><code>Candide.Multiplayer.PlayerManager::RespawnPlayer</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#onerror-system-byte---system-void"><code>Candide.Multiplayer.Services.ConnectService::OnError</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldData.html#loadexteriorworlddata-system-string---candide-world-exteriorworlddata"><code>Candide.World.ExteriorWorldData::LoadExteriorWorldData</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_InteriorWorldHandler.html#checktransportnodes-system-single---system-void"><code>Candide.World.InteriorWorldHandler::CheckTransportNodes</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_OldInteriorWorldHandler.html#load-system-string--system-boolean---candide-world-world"><code>Candide.World.OldInteriorWorldHandler::Load</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="GetDisconnectErrorMessage private System.String GetDisconnectErrorMessage(Candide.Multiplayer.Services.DisconnectReason reason) System.String reason Candide.Multiplayer.Services.DisconnectReason" id="getdisconnecterrormessage-candide-multiplayer-services-disconnectreason---system-string">
+<div class="method-heading">
+<h3><code>GetDisconnectErrorMessage</code></h3>
+<a class="permalink" href="#getdisconnecterrormessage-candide-multiplayer-services-disconnectreason---system-string" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.String GetDisconnectErrorMessage(Candide.Multiplayer.Services.DisconnectReason reason)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::GetDisconnectErrorMessage(Candide.Multiplayer.Services.DisconnectReason)">Copy Harmony target</button>
+</div>
+<p><code>private System.String GetDisconnectErrorMessage(<a href="../../types/Romestead/Candide_Multiplayer_Services_DisconnectReason.html">Candide.Multiplayer.Services.DisconnectReason</a> reason)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.String</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>194B4DB527484F4989DE6539CC8A26B442D0605C348AAEB469802F3971E55A8E</code></li>
+<li><span>Body hash</span><code>E8FC39971B749F76AC2EED1460CED147E1860215D75F39F9B8BCC0005A4187C4</code></li>
+<li><span>IL size</span><span>172</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Text_StringDefinitions.html#getstring-system-string---system-string">Shared.Text.StringDefinitions::GetString(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringDefinitions.html#getformatstring-system-string--system-string---system-string">Shared.Text.StringDefinitions::GetFormatString(System.String, System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#onwedisconnected-candide-multiplayer-services-disconnectreason--candide-multiplayer-services-postgamebehaviour--system-string---system-void"><code>Candide.Multiplayer.Services.ConnectService::OnWeDisconnected</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>ConnectionError_ServerStopped</code></li>
+<li><code>ConnectionError_Disconnected</code></li>
+<li><code>ConnectionError_Unknown</code></li>
+<li><code>ConnectionError_Content</code></li>
+<li><code>0x100</code></li>
+<li><code>0x101</code></li>
+<li><code>ConnectionError_InvalidState</code></li>
+<li><code>ConnectionError_ConnectionRejected</code></li>
+<li><code>ConnectionError_InvalidAddress</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="GetErrorMessage private Shared.Text.StringId GetErrorMessage(System.Byte errorType) Shared.Text.StringId errorType System.Byte" id="geterrormessage-system-byte---shared-text-stringid">
+<div class="method-heading">
+<h3><code>GetErrorMessage</code></h3>
+<a class="permalink" href="#geterrormessage-system-byte---shared-text-stringid" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private Shared.Text.StringId GetErrorMessage(System.Byte errorType)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::GetErrorMessage(System.Byte)">Copy Harmony target</button>
+</div>
+<p><code>private <a href="../../types/Shared/Shared_Text_StringId.html">Shared.Text.StringId</a> GetErrorMessage(System.Byte errorType)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Text_StringId.html">Shared.Text.StringId</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D7C79924E28F6A1374557CC3B86866CFD1240E62755AA37D6734C9CE3F9AC04D</code></li>
+<li><span>Body hash</span><code>C81D1B476DC4D25255572D4401842B9B0AB432D0DB411C6102B533AE648AC693</code></li>
+<li><span>IL size</span><span>69</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Text.StringId::op_Implicit(System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#onerror-system-byte---system-void"><code>Candide.Multiplayer.Services.ConnectService::OnError</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>ConnectionError_TimeOut</code></li>
+<li><code>ConnectionError_ClientError</code></li>
+<li><code>ConnectionError_ServerError</code></li>
+<li><code>ConnectionError_Response</code></li>
+<li><code>ConnectionError_Unknown</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="GetLoginErrorMessage private Shared.Text.StringId GetLoginErrorMessage(System.Byte errorType) Shared.Text.StringId errorType System.Byte" id="getloginerrormessage-system-byte---shared-text-stringid">
+<div class="method-heading">
+<h3><code>GetLoginErrorMessage</code></h3>
+<a class="permalink" href="#getloginerrormessage-system-byte---shared-text-stringid" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private Shared.Text.StringId GetLoginErrorMessage(System.Byte errorType)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::GetLoginErrorMessage(System.Byte)">Copy Harmony target</button>
+</div>
+<p><code>private <a href="../../types/Shared/Shared_Text_StringId.html">Shared.Text.StringId</a> GetLoginErrorMessage(System.Byte errorType)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Text_StringId.html">Shared.Text.StringId</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FF639367A45B03C9A3E81D57534EAA240BEAA7E52C1D5A0B081EBF9AF90D1159</code></li>
+<li><span>Body hash</span><code>87B2E17186285F43DD928A7EC8FF5D368C8A5E742408418C7DA039A4F5C1DC16</code></li>
+<li><span>IL size</span><span>95</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Text.StringId::op_Implicit(System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#onloginfail-system-byte---system-void"><code>Candide.Multiplayer.Services.ConnectService::OnLoginFail</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>ConnectionError_TimeOut</code></li>
+<li><code>ConnectionError_Password</code></li>
+<li><code>ConnectionError_ServerError</code></li>
+<li><code>ConnectionError_Response</code></li>
+<li><code>ConnectionError_Character</code></li>
+<li><code>ConnectionError_Unknown</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="LoggedIn private System.Void LoggedIn(CandideServer.MessageModels.Players.LoginResponseMessage message) System.Void message CandideServer.MessageModels.Players.LoginResponseMessage" id="loggedin-candideserver-messagemodels-players-loginresponsemessage---system-void">
+<div class="method-heading">
+<h3><code>LoggedIn</code></h3>
+<a class="permalink" href="#loggedin-candideserver-messagemodels-players-loginresponsemessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void LoggedIn(CandideServer.MessageModels.Players.LoginResponseMessage message)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::LoggedIn(CandideServer.MessageModels.Players.LoginResponseMessage)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void LoggedIn(<a href="../../types/CandideServer/CandideServer_MessageModels_Players_LoginResponseMessage.html">CandideServer.MessageModels.Players.LoginResponseMessage</a> message)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C594D156CEFBC5E37EB1EE94123B48518EF9615FE3679004A4291728289D7CCC</code></li>
+<li><span>Body hash</span><code>9FF21E36F431B9133EF1F988B27854F548DC272AB24CBD9C59A6386780DABBCB</code></li>
+<li><span>IL size</span><span>56</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Multiplayer.Services.ConnectionState::set_Step(Candide.Multiplayer.Services.ConnectionStep)</code></li>
+<li><code>Candide.Scene.GameSceneManager::SetCurrentScene()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_GameStateManager.html#receivefullgamestate-candideserver-serverservices-getfullgamestateresponse---system-void">Candide.GameModels.Managers.GameStateManager::ReceiveFullGameState(CandideServer.ServerServices.GetFullGameStateResponse)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_PlayerManager.html#clientloggedin-candideserver-messagemodels-players-loginresponsemessage---system-void">Candide.Multiplayer.PlayerManager::ClientLoggedIn(CandideServer.MessageModels.Players.LoginResponseMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#sendlogin-system-string---system-void"><code>Candide.Multiplayer.Services.ConnectService::SendLogin</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnError public System.Void OnError(System.Byte errorType) System.Void errorType System.Byte" id="onerror-system-byte---system-void">
+<div class="method-heading">
+<h3><code>OnError</code></h3>
+<a class="permalink" href="#onerror-system-byte---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnError(System.Byte errorType)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::OnError(System.Byte)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnError(System.Byte errorType)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5400E9204E070501BB807C380D8F386BBE5D042CEC4E3037A00CFB0F9F9B06EE</code></li>
+<li><span>Body hash</span><code>90BBDE818B6C1AB72551D63A7D5B8C41C17C5CCD9E5A5EF6CC3881059913670F</code></li>
+<li><span>IL size</span><span>74</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#geterrormessage-system-byte---shared-text-stringid">Candide.Multiplayer.Services.ConnectService::GetErrorMessage(System.Byte)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringExtensions.html#gettranslation-shared-text-stringid---system-string">Shared.Text.StringExtensions::GetTranslation(Shared.Text.StringId)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringDefinitions.html#getformatstring-system-string--system-string--system-string---system-string">Shared.Text.StringDefinitions::GetFormatString(System.String, System.String, System.String)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#errordisconnect-candide-multiplayer-services-disconnectreason--system-string---system-void">Candide.Multiplayer.Services.ConnectService::ErrorDisconnect(Candide.Multiplayer.Services.DisconnectReason, System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#checkversion----system-void"><code>Candide.Multiplayer.Services.ConnectService::CheckVersion</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>ConnectionError_ErrorMessage</code></li>
+<li><code>0x</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="OnLoginFail private System.Void OnLoginFail(System.Byte errorType) System.Void errorType System.Byte" id="onloginfail-system-byte---system-void">
+<div class="method-heading">
+<h3><code>OnLoginFail</code></h3>
+<a class="permalink" href="#onloginfail-system-byte---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void OnLoginFail(System.Byte errorType)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::OnLoginFail(System.Byte)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void OnLoginFail(System.Byte errorType)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FFB62309DD542C587583C38B31E6E4B7777A63DE02AF0FC562A8056C78EEE0BC</code></li>
+<li><span>Body hash</span><code>79683FF7739B82DB7F52341077C4BFCB9DDE59D3AA70375527154E9E95E45A64</code></li>
+<li><span>IL size</span><span>33</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#getloginerrormessage-system-byte---shared-text-stringid">Candide.Multiplayer.Services.ConnectService::GetLoginErrorMessage(System.Byte)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringExtensions.html#gettranslation-shared-text-stringid---system-string">Shared.Text.StringExtensions::GetTranslation(Shared.Text.StringId)</a></code></li>
+<li><code>Candide.Multiplayer.Services.ConnectionState::set_Step(Candide.Multiplayer.Services.ConnectionStep)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#sendlogin-system-string---system-void"><code>Candide.Multiplayer.Services.ConnectService::SendLogin</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="OnWeDisconnected private System.Void OnWeDisconnected(Candide.Multiplayer.Services.DisconnectReason reason, Candide.Multiplayer.Services.PostGameBehaviour postGameBehaviour, System.String message) System.Void reason Candide.Multiplayer.Services.DisconnectReason postGameBehaviour Candide.Multiplayer.Services.PostGameBehaviour message System.String" id="onwedisconnected-candide-multiplayer-services-disconnectreason--candide-multiplayer-services-postgamebehaviour--system-string---system-void">
+<div class="method-heading">
+<h3><code>OnWeDisconnected</code></h3>
+<a class="permalink" href="#onwedisconnected-candide-multiplayer-services-disconnectreason--candide-multiplayer-services-postgamebehaviour--system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void OnWeDisconnected(Candide.Multiplayer.Services.DisconnectReason reason, Candide.Multiplayer.Services.PostGameBehaviour postGameBehaviour, System.String message)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::OnWeDisconnected(Candide.Multiplayer.Services.DisconnectReason, Candide.Multiplayer.Services.PostGameBehaviour, System.String)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void OnWeDisconnected(<a href="../../types/Romestead/Candide_Multiplayer_Services_DisconnectReason.html">Candide.Multiplayer.Services.DisconnectReason</a> reason, <a href="../../types/Romestead/Candide_Multiplayer_Services_PostGameBehaviour.html">Candide.Multiplayer.Services.PostGameBehaviour</a> postGameBehaviour, System.String message)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>99D7D36ECF57AC070C74077BD9BD15BA2CB71CF917977B5ECAD1AF3B2CB6674F</code></li>
+<li><span>Body hash</span><code>69E7ADD53817ED57C5BDE0DBB2C86B733ADA64DEA67DB720AEBD7C96C19AA288</code></li>
+<li><span>IL size</span><span>106</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#getdisconnecterrormessage-candide-multiplayer-services-disconnectreason---system-string">Candide.Multiplayer.Services.ConnectService::GetDisconnectErrorMessage(Candide.Multiplayer.Services.DisconnectReason)</a></code></li>
+<li><code>Candide.Multiplayer.Services.ConnectService::set_PostGameBehaviour(Candide.Multiplayer.Services.PostGameBehaviour)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_GameStateManager.html#ongameend----system-void">Candide.GameModels.Managers.GameStateManager::OnGameEnd()</a></code></li>
+<li><code>Candide.Scene.GameSceneManager::SetCurrentScene()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_EventBus_EventBusManager.html#sendevent-system-string--system-object--system-boolean---system-void">CandideServer.EventBus.EventBusManager::SendEvent(System.String, System.Object, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#disconnect-candide-multiplayer-services-postgamebehaviour---system-void"><code>Candide.Multiplayer.Services.ConnectService::Disconnect</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#errordisconnect-candide-multiplayer-services-disconnectreason--system-string---system-void"><code>Candide.Multiplayer.Services.ConnectService::ErrorDisconnect</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#serverdisconnected-candideserver-server-network-disconnectreason---system-void"><code>Candide.Multiplayer.Services.ConnectService::ServerDisconnected</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>we-disconnected</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ResetState public System.Void ResetState() System.Void " id="resetstate----system-void">
+<div class="method-heading">
+<h3><code>ResetState</code></h3>
+<a class="permalink" href="#resetstate----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ResetState()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::ResetState()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ResetState()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3026D73602B90013D48AA3B58293D551CEBE5062018B6A8823419C124720DC66</code></li>
+<li><span>Body hash</span><code>E58629D10CA6B4ECE7CDD3605F3D5C61BBAD3774588F98BFD46B54FC9E6B0432</code></li>
+<li><span>IL size</span><span>24</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Multiplayer.Services.ConnectService::set_PostGameBehaviour(Candide.Multiplayer.Services.PostGameBehaviour)</code></li>
+<li><code>Candide.Multiplayer.Services.ConnectionState::.ctor()</code></li>
+<li><code>Candide.Multiplayer.Services.ConnectionState::set_Step(Candide.Multiplayer.Services.ConnectionStep)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SendLogin public System.Void SendLogin(System.String password) System.Void password System.String" id="sendlogin-system-string---system-void">
+<div class="method-heading">
+<h3><code>SendLogin</code></h3>
+<a class="permalink" href="#sendlogin-system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SendLogin(System.String password)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::SendLogin(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SendLogin(System.String password)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>732088984FE724FB29B87944436F7464B3EC4B78C73A0E5138CF05E790310729</code></li>
+<li><span>Body hash</span><code>CE0225B129158B34DFE154556CAE7BE47DC935D6893C6C31551669F16CE779D7</code></li>
+<li><span>IL size</span><span>168</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Multiplayer.Services.ConnectionState::set_Step(Candide.Multiplayer.Services.ConnectionStep)</code></li>
+<li><code>CandideServer.MessageModels.Players.LoginModelMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_Players_PlayerLoginModel.html#fromsavemodel-shared-models-player-playercharactersavemodel---candideserver-messagemodels-players-playerloginmodel">CandideServer.MessageModels.Players.PlayerLoginModel::FromSaveModel(Shared.Models.Player.PlayerCharacterSaveModel)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_PlayerManager.html#calculateviewarea----microsoft-xna-framework-point">Candide.Multiplayer.PlayerManager::CalculateViewArea()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#loggedin-candideserver-messagemodels-players-loginresponsemessage---system-void">Candide.Multiplayer.Services.ConnectService::LoggedIn(CandideServer.MessageModels.Players.LoginResponseMessage)</a></code></li>
+<li><code>System.Action&lt;CandideServer.MessageModels.Players.LoginResponseMessage&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#onloginfail-system-byte---system-void">Candide.Multiplayer.Services.ConnectService::OnLoginFail(System.Byte)</a></code></li>
+<li><code>System.Action&lt;System.Byte&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.Multiplayer.Network.NetworkManager::Get(System.String, System.Object, System.Action&lt;T&gt;, System.Single, System.Action&lt;System.Byte&gt;, System.Boolean)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#versioniscompatible-system-boolean---system-void"><code>Candide.Multiplayer.Services.ConnectService::VersionIsCompatible</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>user-login</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ServerConnected public System.Void ServerConnected() System.Void " id="serverconnected----system-void">
+<div class="method-heading">
+<h3><code>ServerConnected</code></h3>
+<a class="permalink" href="#serverconnected----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ServerConnected()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::ServerConnected()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ServerConnected()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>25707E9D977FD0101E83EF25749243124DA5C755A0199D8F2D109835974AD04F</code></li>
+<li><span>Body hash</span><code>C55C20D3C34142A314C1010D5C1D1B00930B0A6A2A507C275DC6DAF99F51ACEF</code></li>
+<li><span>IL size</span><span>6</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#checkversion----system-void">Candide.Multiplayer.Services.ConnectService::CheckVersion()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_LiteNetLibClientManager.html#listeneronpeerconnectedevent-litenetlib-netpeer---system-void"><code>Candide.Multiplayer.Network.LiteNetLibClientManager::ListenerOnPeerConnectedEvent</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#listeneronpeerconnectedevent-system-object--system-eventargs---system-void"><code>Candide.Multiplayer.Network.RiptideClientManager::ListenerOnPeerConnectedEvent</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ServerDisconnected public System.Void ServerDisconnected(CandideServer.Server.Network.DisconnectReason disconnectInfoReason) System.Void disconnectInfoReason CandideServer.Server.Network.DisconnectReason" id="serverdisconnected-candideserver-server-network-disconnectreason---system-void">
+<div class="method-heading">
+<h3><code>ServerDisconnected</code></h3>
+<a class="permalink" href="#serverdisconnected-candideserver-server-network-disconnectreason---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ServerDisconnected(CandideServer.Server.Network.DisconnectReason disconnectInfoReason)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::ServerDisconnected(CandideServer.Server.Network.DisconnectReason)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ServerDisconnected(<a href="../../types/CandideServer/CandideServer_Server_Network_DisconnectReason.html">CandideServer.Server.Network.DisconnectReason</a> disconnectInfoReason)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3F91C69EE07F5E5F46F101BC43F63B1D86A6693DC5685C46DDD29C6FB43370B8</code></li>
+<li><span>Body hash</span><code>291D0EC4CA20C920FA9A37960AA54D6FA99853F03A6698D6A8F5824D0134E9AD</code></li>
+<li><span>IL size</span><span>178</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Multiplayer.Services.ConnectionState::set_Step(Candide.Multiplayer.Services.ConnectionStep)</code></li>
+<li><code>Shared.Text.StringId::op_Implicit(System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringExtensions.html#gettranslation-shared-text-stringid---system-string">Shared.Text.StringExtensions::GetTranslation(Shared.Text.StringId)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#onwedisconnected-candide-multiplayer-services-disconnectreason--candide-multiplayer-services-postgamebehaviour--system-string---system-void">Candide.Multiplayer.Services.ConnectService::OnWeDisconnected(Candide.Multiplayer.Services.DisconnectReason, Candide.Multiplayer.Services.PostGameBehaviour, System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_LiteNetLibClientManager.html#listeneronpeerdisconnectedevent-litenetlib-netpeer--litenetlib-disconnectinfo---system-void"><code>Candide.Multiplayer.Network.LiteNetLibClientManager::ListenerOnPeerDisconnectedEvent</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#listeneronpeerdisconnectedevent-system-object--riptide-disconnectedeventargs---system-void"><code>Candide.Multiplayer.Network.RiptideClientManager::ListenerOnPeerDisconnectedEvent</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>ConnectionError_NeverConnected</code></li>
+<li><code>ConnectionError_ConnectionRejected</code></li>
+<li><code>ConnectionError_TransportError</code></li>
+<li><code>ConnectionError_TimeOut</code></li>
+<li><code>ConnectionError_Kicked</code></li>
+<li><code>ConnectionError_ServerStopped</code></li>
+<li><code>ConnectionError_Disconnected</code></li>
+<li><code>ConnectionError_PoorConnection</code></li>
+<li><code>ConnectionError_NetworkUnreachable</code></li>
+<li><code>ConnectionError_InvalidProtocol</code></li>
+<li><code>ConnectionError_UnknownHost</code></li>
+<li><code>ConnectionError_Unknown</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update() System.Void " id="update----system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::Update()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>635A5CDC73A1E338E6E633A14665C0610706DE1357C2988A46ED4812447B51A3</code></li>
+<li><span>Body hash</span><code>6D0AF41C129F4CE2B61467262B146207B2C26A53E81A73D52998DEB3BAF580AE</code></li>
+<li><span>IL size</span><span>37</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.GameTime::get_ElapsedGameTime()</code></li>
+<li><code>System.TimeSpan::get_TotalSeconds()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideEngine::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_MainMenu.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.MainMenu.MainMenu::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="VersionIsCompatible public System.Void VersionIsCompatible(System.Boolean isPasswordProtected) System.Void isPasswordProtected System.Boolean" id="versioniscompatible-system-boolean---system-void">
+<div class="method-heading">
+<h3><code>VersionIsCompatible</code></h3>
+<a class="permalink" href="#versioniscompatible-system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void VersionIsCompatible(System.Boolean isPasswordProtected)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Services.ConnectService::VersionIsCompatible(System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void VersionIsCompatible(System.Boolean isPasswordProtected)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B94375FF8779CB1E5E711E8F5EC79BCFECF4F6F16494031A24BF2EC74018BEC7</code></li>
+<li><span>Body hash</span><code>11BFCF5F7446A590CE739DB1D0482DCEA9AB18C92DC7A37F7EB31D1E8CFDBB72</code></li>
+<li><span>IL size</span><span>55</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#sendlogin-system-string---system-void">Candide.Multiplayer.Services.ConnectService::SendLogin(System.String)</a></code></li>
+<li><code>Candide.Multiplayer.Services.ConnectionState::set_Step(Candide.Multiplayer.Services.ConnectionStep)</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

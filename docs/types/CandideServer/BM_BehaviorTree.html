@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BM.BehaviorTree - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>BM.BehaviorTree</h1>
+<button class="copy-button" type="button" data-copy="BM.BehaviorTree">Copy type</button>
+<button class="copy-button" type="button" data-copy="# BM.BehaviorTree
+
+- Assembly: `CandideServer`
+- Namespace: `BM`
+- Kind: `public class`
+- Base type: `BM.Node`
+- Members: 7 methods, 0 properties, 4 fields, 0 events
+
+## Public Methods
+- `public System.Void AddResetNode(BM.Node node)`
+- `public System.Void AddRunningNode(BM.Node node)`
+- `public Node.Status Execute(Microsoft.Xna.Framework.GameTime gameTime, Shared.Entity.EntityWrapper entity, CandideServer.Entities.ServerEntityModel serverEntity, BM.Blackboard blackboard, BM.StateMachine stateMachine)`
+- `public System.Void RemoveRunningNode(BM.Node node)`
+- `public System.Void ResetTree(BM.Blackboard blackboard)`
+- `public System.Void SetRoot(BM.Node node)`
+">Copy markdown</button>
+<a class="button" href="BM_BehaviorTree.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>BM</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>7</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>4</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>BM</code></li>
+<li><span>Base type</span><code><a href="../../types/CandideServer/BM_Node.html">BM.Node</a></code></li>
+<li><span>Hash</span><code>1D5E7B9C860B157622E4F88931A5E3C0432800D8626AE485F24BC79440C24D09</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/CandideServer/BM_Node.html">BM.Node</a></code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_BTBuilder.html"><code>BM.BTBuilder</code></a></li>
+<li><a href="../../types/CandideServer/BM_BTCondition.html"><code>BM.BTCondition</code></a></li>
+<li><a href="../../types/CandideServer/BM_BTFactory.html"><code>BM.BTFactory</code></a></li>
+<li><a href="../../types/CandideServer/BM_BTUpdateContext.html"><code>BM.BTUpdateContext</code></a></li>
+<li><a href="../../types/CandideServer/BM_ConditionHelper.html"><code>BM.ConditionHelper</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html"><code>BM.State</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateMachine.html"><code>BM.StateMachine</code></a></li>
+<li><a href="../../types/CandideServer/BM_Transition.html"><code>BM.Transition</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerEngineerController.html"><code>CandideServer.Entities.Controllers.Enemies.ServerEngineerController</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerMasterEngineerController.html"><code>CandideServer.Entities.Controllers.Enemies.ServerMasterEngineerController</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_resetNodes private System.Collections.Generic.HashSet&lt;BM.Node&gt; _resetNodes System.Collections.Generic.HashSet&lt;BM.Node&gt;" id="-resetnodes-system-collections-generic-hashset-1-bm-node-"><td><span class="member-name-cell"><code>_resetNodes</code><a class="permalink" href="#-resetnodes-system-collections-generic-hashset-1-bm-node-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.HashSet&lt;BM.Node&gt; _resetNodes">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.HashSet&lt;<a href="../../types/CandideServer/BM_Node.html">BM.Node</a>&gt; _resetNodes</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_reuseUpdateContext private BM.BTUpdateContext _reuseUpdateContext BM.BTUpdateContext" id="-reuseupdatecontext-bm-btupdatecontext"><td><span class="member-name-cell"><code>_reuseUpdateContext</code><a class="permalink" href="#-reuseupdatecontext-bm-btupdatecontext" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.BTUpdateContext _reuseUpdateContext">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_BTUpdateContext.html">BM.BTUpdateContext</a> _reuseUpdateContext</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_root private BM.Node _root BM.Node" id="-root-bm-node"><td><span class="member-name-cell"><code>_root</code><a class="permalink" href="#-root-bm-node" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.Node _root">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_Node.html">BM.Node</a> _root</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_runningNodes private System.Collections.Generic.HashSet&lt;BM.Node&gt; _runningNodes System.Collections.Generic.HashSet&lt;BM.Node&gt;" id="-runningnodes-system-collections-generic-hashset-1-bm-node-"><td><span class="member-name-cell"><code>_runningNodes</code><a class="permalink" href="#-runningnodes-system-collections-generic-hashset-1-bm-node-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.HashSet&lt;BM.Node&gt; _runningNodes">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.HashSet&lt;<a href="../../types/CandideServer/BM_Node.html">BM.Node</a>&gt; _runningNodes</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddResetNode public System.Void AddResetNode(BM.Node node) System.Void node BM.Node" id="addresetnode-bm-node---system-void">
+<div class="method-heading">
+<h3><code>AddResetNode</code></h3>
+<a class="permalink" href="#addresetnode-bm-node---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddResetNode(BM.Node node)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BehaviorTree::AddResetNode(BM.Node)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddResetNode(<a href="../../types/CandideServer/BM_Node.html">BM.Node</a> node)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BFDF657AFFDD98D4B61A9C9203BD40B9D1D9A49F0FD950F6992145D03423A814</code></li>
+<li><span>Body hash</span><code>30641FD9F42203333CD819586FD1580AFA988B1C5F6D106CD6069B153559B0AA</code></li>
+<li><span>IL size</span><span>14</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;BM.Node&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_Node.html#tick-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.Node::Tick</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddRunningNode public System.Void AddRunningNode(BM.Node node) System.Void node BM.Node" id="addrunningnode-bm-node---system-void">
+<div class="method-heading">
+<h3><code>AddRunningNode</code></h3>
+<a class="permalink" href="#addrunningnode-bm-node---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddRunningNode(BM.Node node)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BehaviorTree::AddRunningNode(BM.Node)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddRunningNode(<a href="../../types/CandideServer/BM_Node.html">BM.Node</a> node)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1DE61D4E4171D0E7BED1460741F3A43BBE05B3C66A3B6D463D13C156F2C3A12C</code></li>
+<li><span>Body hash</span><code>C0D537F472E1AC740A21A148D7F47FA73EB4C2FDDA0272E92B534FBC3E5C0014</code></li>
+<li><span>IL size</span><span>14</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;BM.Node&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_Node.html#tick-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.Node::Tick</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Execute public Node.Status Execute(Microsoft.Xna.Framework.GameTime gameTime, Shared.Entity.EntityWrapper entity, CandideServer.Entities.ServerEntityModel serverEntity, BM.Blackboard blackboard, BM.StateMachine stateMachine) Node.Status gameTime Microsoft.Xna.Framework.GameTime entity Shared.Entity.EntityWrapper serverEntity CandideServer.Entities.ServerEntityModel blackboard BM.Blackboard stateMachine BM.StateMachine" id="execute-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard--bm-statemachine---node-status">
+<div class="method-heading">
+<h3><code>Execute</code></h3>
+<a class="permalink" href="#execute-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard--bm-statemachine---node-status" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Node.Status Execute(Microsoft.Xna.Framework.GameTime gameTime, Shared.Entity.EntityWrapper entity, CandideServer.Entities.ServerEntityModel serverEntity, BM.Blackboard blackboard, BM.StateMachine stateMachine)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BehaviorTree::Execute(Microsoft.Xna.Framework.GameTime, Shared.Entity.EntityWrapper, CandideServer.Entities.ServerEntityModel, BM.Blackboard, BM.StateMachine)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/Node_Status.html">Node.Status</a> Execute(Microsoft.Xna.Framework.GameTime gameTime, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> serverEntity, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard, <a href="../../types/CandideServer/BM_StateMachine.html">BM.StateMachine</a> stateMachine)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/Node_Status.html">Node.Status</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4FC04954B511400EA85AAA2B5FCC9F04FD82CE8CE931D42C683EE21C3FF3B754</code></li>
+<li><span>Body hash</span><code>D6CDD4DC5B644B15D7E15DA7661BBF95BA3A7FE673FC20C130D41559392D29F0</code></li>
+<li><span>IL size</span><span>44</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BTUpdateContext.html#setvalues-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-behaviortree--bm-statemachine---system-void">BM.BTUpdateContext::SetValues(Microsoft.Xna.Framework.GameTime, Shared.Entity.EntityWrapper, CandideServer.Entities.ServerEntityModel, BM.BehaviorTree, BM.StateMachine)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_Node.html#update-bm-btupdatecontext--bm-blackboard---node-status">BM.Node::Update(BM.BTUpdateContext, BM.Blackboard)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_BTCondition.html#test-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard--bm-statemachine---system-boolean"><code>BM.BTCondition::Test</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#enterstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::EnterStatesRecursively</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#exitstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::ExitStatesRecursively</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#update-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::Update</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateMachine.html#update-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard---system-void"><code>BM.StateMachine::Update</code></a></li>
+<li><a href="../../types/CandideServer/BM_Transition.html#update-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard---system-boolean"><code>BM.Transition::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveRunningNode public System.Void RemoveRunningNode(BM.Node node) System.Void node BM.Node" id="removerunningnode-bm-node---system-void">
+<div class="method-heading">
+<h3><code>RemoveRunningNode</code></h3>
+<a class="permalink" href="#removerunningnode-bm-node---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemoveRunningNode(BM.Node node)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BehaviorTree::RemoveRunningNode(BM.Node)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemoveRunningNode(<a href="../../types/CandideServer/BM_Node.html">BM.Node</a> node)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FC5EEC7929216B3CC1153C6325A44D46098CBA103084C1E7F9C73C6AD8607C58</code></li>
+<li><span>Body hash</span><code>2439E64573BC4699F650E9C38957927CB39263E501396ED9F567046050BF04C2</code></li>
+<li><span>IL size</span><span>14</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;BM.Node&gt;::Remove(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_Node.html#tick-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.Node::Tick</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ResetTree public System.Void ResetTree(BM.Blackboard blackboard) System.Void blackboard BM.Blackboard" id="resettree-bm-blackboard---system-void">
+<div class="method-heading">
+<h3><code>ResetTree</code></h3>
+<a class="permalink" href="#resettree-bm-blackboard---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ResetTree(BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BehaviorTree::ResetTree(BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ResetTree(<a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BAFAF29F34F3E44F569ED4103B0E0E29348C4CD7BE27509697678C197C37F705</code></li>
+<li><span>Body hash</span><code>C4826F57A0C1E6EDF8669E290C789AAE95ABCF55184B492AF287928346BD8088</code></li>
+<li><span>IL size</span><span>123</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_Node.html#reset-bm-blackboard---system-void">BM.Node::Reset(BM.Blackboard)</a></code></li>
+<li><code>System.Collections.Generic.HashSet&lt;BM.Node&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;BM.Node&gt;::get_Current()</code></li>
+<li><code>HashSet.Enumerator&lt;BM.Node&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;BM.Node&gt;::Clear()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_BTCondition.html#resetcondition-bm-blackboard---system-void"><code>BM.BTCondition::ResetCondition</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#resetbehaviortreesrecursively-bm-blackboard---system-void"><code>BM.State::ResetBehaviorTreesRecursively</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetRoot public System.Void SetRoot(BM.Node node) System.Void node BM.Node" id="setroot-bm-node---system-void">
+<div class="method-heading">
+<h3><code>SetRoot</code></h3>
+<a class="permalink" href="#setroot-bm-node---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetRoot(BM.Node node)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BehaviorTree::SetRoot(BM.Node)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetRoot(<a href="../../types/CandideServer/BM_Node.html">BM.Node</a> node)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F9787BF5A2E8EB77D61F1575B53E060007A8E7823444AF8426488A0AC2C158C5</code></li>
+<li><span>Body hash</span><code>C168F1E408A29BED36F723C9F36115752E95E9EEB33FC1BB56DFCCC4198D3B89</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree"><code>BM.BTBuilder::Build</code></a></li>
+<li><a href="../../types/CandideServer/BM_ConditionHelper.html#leaf-bm-leaf---bm-ibasecondition"><code>BM.ConditionHelper::Leaf</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="Update protected Node.Status Update(BM.BTUpdateContext updateCtx, BM.Blackboard blackboard) Node.Status updateCtx BM.BTUpdateContext blackboard BM.Blackboard" id="update-bm-btupdatecontext--bm-blackboard---node-status">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-bm-btupdatecontext--bm-blackboard---node-status" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected Node.Status Update(BM.BTUpdateContext updateCtx, BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BehaviorTree::Update(BM.BTUpdateContext, BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>protected <a href="../../types/CandideServer/Node_Status.html">Node.Status</a> Update(<a href="../../types/CandideServer/BM_BTUpdateContext.html">BM.BTUpdateContext</a> updateCtx, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/Node_Status.html">Node.Status</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>5A190A48C2387E782091BDBE0E5384F57167B5B2790661D2FA68273BE85430AF</code></li>
+<li><span>Body hash</span><code>EF307330D934E08FDE936BD5D2D6007327B05A4E2B2DE0D9269B7C5080B2A49B</code></li>
+<li><span>IL size</span><span>14</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_Node.html#tick-bm-btupdatecontext--bm-blackboard---node-status">BM.Node::Tick(BM.BTUpdateContext, BM.Blackboard)</a></code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

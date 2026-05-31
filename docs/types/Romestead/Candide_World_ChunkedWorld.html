@@ -1,0 +1,946 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.World.ChunkedWorld - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.World.ChunkedWorld</h1>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.World.ChunkedWorld
+
+- Assembly: `Romestead`
+- Namespace: `Candide.World`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 29 methods, 0 properties, 15 fields, 0 events
+
+## Public Methods
+- `public System.Boolean CheckBounds(Microsoft.Xna.Framework.Vector2 position)`
+- `public System.Boolean CheckBoundsTile(System.Int32 x, System.Int32 y)`
+- `public System.Void CheckChunks(Microsoft.Xna.Framework.Vector2 worldPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; keepPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; keepPosition2)`
+- `public System.Void ChunkLoaded(Candide.World.WorldChunk chunk)`
+- `public Microsoft.Xna.Framework.Point ChunkToTilePosition(Microsoft.Xna.Framework.Point chunkPosition)`
+- `public Microsoft.Xna.Framework.Point ChunkToWorldPosition(Microsoft.Xna.Framework.Point chunkPosition)`
+- `public Microsoft.Xna.Framework.Vector2 ChunkToWorldPositionVector(Microsoft.Xna.Framework.Point chunkPosition)`
+- `public System.Void Dispose()`
+- `public System.Int32 GetChunkIndex(Microsoft.Xna.Framework.Point chunkPosition)`
+- `public System.Int32 GetChunkIndex(System.Int32 x, System.Int32 y)`
+- `public Microsoft.Xna.Framework.Graphics.RenderTarget2D GetChunkRenderTarget(System.Boolean clear, Microsoft.Xna.Framework.Color clearColor)`
+- `public System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; GetChunksForRectangle(CandideCreator.Shared.Models.RectangleF rectangleF)`
+- `public System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; GetChunksForTileRectangle(Microsoft.Xna.Framework.Rectangle rectangle)`
+- `public System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; GetLoadedChunksForTileRectangle(Microsoft.Xna.Framework.Rectangle rectangle)`
+- `public Microsoft.Xna.Framework.Rectangle GetTileRectangleForChunk(Candide.World.WorldChunk chunk)`
+- `public Candide.World.WorldChunk GetWorldChunk(Microsoft.Xna.Framework.Point chunkPosition)`
+- `public Candide.World.WorldChunk&amp; GetWorldChunk(System.Int32 x, System.Int32 y)`
+- `public System.Void PreCalculate()`
+- `public System.Void PrepareChunks()`
+- `public System.Void ReloadAllChunks()`
+- `public Microsoft.Xna.Framework.Point TileToChunkPosition(Microsoft.Xna.Framework.Point tilePosition)`
+- `public Microsoft.Xna.Framework.Point TileToChunkRelativePosition(Microsoft.Xna.Framework.Point tilePosition)`
+- `public System.Boolean TryGetWorldChunk(System.Int32 x, System.Int32 y, out Candide.World.WorldChunk&amp; chunk)`
+- `public System.Void UnloadAllChunks()`
+- `public Candide.World.WorldChunk WorldPositionToChunk(Microsoft.Xna.Framework.Vector2 worldPosition)`
+- `public Microsoft.Xna.Framework.Point WorldToChunkPosition(Microsoft.Xna.Framework.Vector2 worldPosition)`
+- `public Microsoft.Xna.Framework.Point WorldToTilePosition(Microsoft.Xna.Framework.Vector2 worldPosition)`
+">Copy markdown</button>
+<a class="button" href="Candide_World_ChunkedWorld.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.World</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>29</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>15</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.World</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>D6235990A6FF564DC6524B159BA1F24AE083710F6089F50018CED11F02D01669</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_AutoTile_AutoTilerLayers.html"><code>Candide.World.AutoTile.AutoTilerLayers</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html"><code>Candide.World.ExteriorWorldHandler</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_FogOfWarWorldMap.html"><code>Candide.World.FogOfWarWorldMap</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_WorldChunk.html"><code>Candide.World.WorldChunk</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_WorldMap.html"><code>Candide.World.WorldMap</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ChunkCollisionPool public System.Collections.Generic.Stack&lt;Shared.Collision.CollisionTerrainGroup&gt; ChunkCollisionPool System.Collections.Generic.Stack&lt;Shared.Collision.CollisionTerrainGroup&gt;" id="chunkcollisionpool-system-collections-generic-stack-1-shared-collision-collisionterraingroup-"><td><span class="member-name-cell"><code>ChunkCollisionPool</code><a class="permalink" href="#chunkcollisionpool-system-collections-generic-stack-1-shared-collision-collisionterraingroup-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Stack&lt;Shared.Collision.CollisionTerrainGroup&gt; ChunkCollisionPool">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Stack&lt;<a href="../../types/Shared/Shared_Collision_CollisionTerrainGroup.html">Shared.Collision.CollisionTerrainGroup</a>&gt; ChunkCollisionPool</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ChunkCount public Microsoft.Xna.Framework.Point ChunkCount Microsoft.Xna.Framework.Point" id="chunkcount-microsoft-xna-framework-point"><td><span class="member-name-cell"><code>ChunkCount</code><a class="permalink" href="#chunkcount-microsoft-xna-framework-point" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point ChunkCount">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Point ChunkCount</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ChunkRenderPool public System.Collections.Generic.Stack&lt;Microsoft.Xna.Framework.Graphics.RenderTarget2D&gt; ChunkRenderPool System.Collections.Generic.Stack&lt;Microsoft.Xna.Framework.Graphics.RenderTarget2D&gt;" id="chunkrenderpool-system-collections-generic-stack-1-microsoft-xna-framework-graphics-rendertarget2d-"><td><span class="member-name-cell"><code>ChunkRenderPool</code><a class="permalink" href="#chunkrenderpool-system-collections-generic-stack-1-microsoft-xna-framework-graphics-rendertarget2d-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Stack&lt;Microsoft.Xna.Framework.Graphics.RenderTarget2D&gt; ChunkRenderPool">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Stack&lt;Microsoft.Xna.Framework.Graphics.RenderTarget2D&gt; ChunkRenderPool</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Chunks public Candide.World.WorldChunk[] Chunks Candide.World.WorldChunk[]" id="chunks-candide-world-worldchunk--"><td><span class="member-name-cell"><code>Chunks</code><a class="permalink" href="#chunks-candide-world-worldchunk--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.World.WorldChunk[] Chunks">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a>[] Chunks</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ChunkSize public Microsoft.Xna.Framework.Point ChunkSize Microsoft.Xna.Framework.Point" id="chunksize-microsoft-xna-framework-point"><td><span class="member-name-cell"><code>ChunkSize</code><a class="permalink" href="#chunksize-microsoft-xna-framework-point" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point ChunkSize">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Point ChunkSize</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="DefaultWorld public Candide.World.ChunkedWorld DefaultWorld Candide.World.ChunkedWorld" id="defaultworld-candide-world-chunkedworld"><td><span class="member-name-cell"><code>DefaultWorld</code><a class="permalink" href="#defaultworld-candide-world-chunkedworld" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.World.ChunkedWorld DefaultWorld">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_World_ChunkedWorld.html">Candide.World.ChunkedWorld</a> DefaultWorld</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="GetChunksReuseList private System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; GetChunksReuseList System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt;" id="getchunksreuselist-system-collections-generic-list-1-candide-world-worldchunk-"><td><span class="member-name-cell"><code>GetChunksReuseList</code><a class="permalink" href="#getchunksreuselist-system-collections-generic-list-1-candide-world-worldchunk-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; GetChunksReuseList">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;<a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a>&gt; GetChunksReuseList</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="LoadedChunks public System.Collections.Generic.HashSet&lt;Candide.World.WorldChunk&gt; LoadedChunks System.Collections.Generic.HashSet&lt;Candide.World.WorldChunk&gt;" id="loadedchunks-system-collections-generic-hashset-1-candide-world-worldchunk-"><td><span class="member-name-cell"><code>LoadedChunks</code><a class="permalink" href="#loadedchunks-system-collections-generic-hashset-1-candide-world-worldchunk-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.HashSet&lt;Candide.World.WorldChunk&gt; LoadedChunks">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.HashSet&lt;<a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a>&gt; LoadedChunks</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="MaximumPosition public Microsoft.Xna.Framework.Vector2 MaximumPosition Microsoft.Xna.Framework.Vector2" id="maximumposition-microsoft-xna-framework-vector2"><td><span class="member-name-cell"><code>MaximumPosition</code><a class="permalink" href="#maximumposition-microsoft-xna-framework-vector2" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector2 MaximumPosition">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Vector2 MaximumPosition</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="MinimumPosition public Microsoft.Xna.Framework.Vector2 MinimumPosition Microsoft.Xna.Framework.Vector2" id="minimumposition-microsoft-xna-framework-vector2"><td><span class="member-name-cell"><code>MinimumPosition</code><a class="permalink" href="#minimumposition-microsoft-xna-framework-vector2" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector2 MinimumPosition">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Vector2 MinimumPosition</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="TileSize public Microsoft.Xna.Framework.Point TileSize Microsoft.Xna.Framework.Point" id="tilesize-microsoft-xna-framework-point"><td><span class="member-name-cell"><code>TileSize</code><a class="permalink" href="#tilesize-microsoft-xna-framework-point" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point TileSize">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Point TileSize</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ViewportSize public Microsoft.Xna.Framework.Point ViewportSize Microsoft.Xna.Framework.Point" id="viewportsize-microsoft-xna-framework-point"><td><span class="member-name-cell"><code>ViewportSize</code><a class="permalink" href="#viewportsize-microsoft-xna-framework-point" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point ViewportSize">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Point ViewportSize</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="VisibleChunks public Candide.World.WorldChunk[] VisibleChunks Candide.World.WorldChunk[]" id="visiblechunks-candide-world-worldchunk--"><td><span class="member-name-cell"><code>VisibleChunks</code><a class="permalink" href="#visiblechunks-candide-world-worldchunk--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.World.WorldChunk[] VisibleChunks">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a>[] VisibleChunks</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="VisibleChunksCount public System.Int32 VisibleChunksCount System.Int32" id="visiblechunkscount-system-int32"><td><span class="member-name-cell"><code>VisibleChunksCount</code><a class="permalink" href="#visiblechunkscount-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 VisibleChunksCount">Copy</button></span></td><td>public</td><td><code>public System.Int32 VisibleChunksCount</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="WorldSize public Microsoft.Xna.Framework.Point WorldSize Microsoft.Xna.Framework.Point" id="worldsize-microsoft-xna-framework-point"><td><span class="member-name-cell"><code>WorldSize</code><a class="permalink" href="#worldsize-microsoft-xna-framework-point" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point WorldSize">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Point WorldSize</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CheckBounds public System.Boolean CheckBounds(Microsoft.Xna.Framework.Vector2 position) System.Boolean position Microsoft.Xna.Framework.Vector2" id="checkbounds-microsoft-xna-framework-vector2---system-boolean">
+<div class="method-heading">
+<h3><code>CheckBounds</code></h3>
+<a class="permalink" href="#checkbounds-microsoft-xna-framework-vector2---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean CheckBounds(Microsoft.Xna.Framework.Vector2 position)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::CheckBounds(Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean CheckBounds(Microsoft.Xna.Framework.Vector2 position)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>74705921F7E2E046824525F45BE53CBE6735EE449AF40C9B8B301A8CD665FB7A</code></li>
+<li><span>Body hash</span><code>415AF491F1149D6A787E9DDCEDE46D3346AE2B51D3DA9FA4F314835533BD22FC</code></li>
+<li><span>IL size</span><span>82</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_WorldOverview_WorldOverviewWindow.html#cursorclickonmap-microsoft-xna-framework-vector2---system-boolean"><code>Candide.CandideUI.WorldOverview.WorldOverviewWindow::CursorClickOnMap</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_ClientPathFindManager.html#findpath-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--system-collections-generic-list-1-microsoft-xna-framework-vector2----system-boolean"><code>Candide.GameModels.Managers.ClientPathFindManager::FindPath</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CheckBoundsTile public System.Boolean CheckBoundsTile(System.Int32 x, System.Int32 y) System.Boolean x System.Int32 y System.Int32" id="checkboundstile-system-int32--system-int32---system-boolean">
+<div class="method-heading">
+<h3><code>CheckBoundsTile</code></h3>
+<a class="permalink" href="#checkboundstile-system-int32--system-int32---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean CheckBoundsTile(System.Int32 x, System.Int32 y)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::CheckBoundsTile(System.Int32, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean CheckBoundsTile(System.Int32 x, System.Int32 y)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EEEFAAF2AF0A6D742123C4F1900C8C76452976DF8E4FF057ECE304FCB518F22D</code></li>
+<li><span>Body hash</span><code>C4E933E3C67245890D6F643DAB2D7A543B349AEE46A5B09CAB8B62607C5C5BB1</code></li>
+<li><span>IL size</span><span>46</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CheckChunks public System.Void CheckChunks(Microsoft.Xna.Framework.Vector2 worldPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; keepPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; keepPosition2) System.Void worldPosition Microsoft.Xna.Framework.Vector2 keepPosition System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; keepPosition2 System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;" id="checkchunks-microsoft-xna-framework-vector2--system-nullable-1-microsoft-xna-framework-vector2---system-nullable-1-microsoft-xna-framework-vector2----system-void">
+<div class="method-heading">
+<h3><code>CheckChunks</code></h3>
+<a class="permalink" href="#checkchunks-microsoft-xna-framework-vector2--system-nullable-1-microsoft-xna-framework-vector2---system-nullable-1-microsoft-xna-framework-vector2----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CheckChunks(Microsoft.Xna.Framework.Vector2 worldPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; keepPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; keepPosition2)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::CheckChunks(Microsoft.Xna.Framework.Vector2, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CheckChunks(Microsoft.Xna.Framework.Vector2 worldPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; keepPosition, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; keepPosition2)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2A76B252CC6CA2888E78F7B1C829AB117374410315C6D148F58FAF947F225E27</code></li>
+<li><span>Body hash</span><code>60581EAD5201B3C093A0E598275B0E7A8F5DF36BC2BD1352FEE358A9CFA17624</code></li>
+<li><span>IL size</span><span>633</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#clearchunks----system-void">Candide.World.ChunkedWorld::ClearChunks()</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#clampsafe-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--microsoft-xna-framework-vector2---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ClampSafe(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::ToPoint()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Division(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Subtraction(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Addition(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#getworldchunk-system-int32--system-int32---candide-world-worldchunk-">Candide.World.ChunkedWorld::GetWorldChunk(System.Int32, System.Int32)</a></code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;::GetValueOrDefault()</code></li>
+<li><code><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#keepextrachunk-microsoft-xna-framework-vector2---system-void">Candide.World.ChunkedWorld::KeepExtraChunk(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>System.Collections.Generic.HashSet&lt;Candide.World.WorldChunk&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;Candide.World.WorldChunk&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#chunktoworldpositionvector-microsoft-xna-framework-point---microsoft-xna-framework-vector2">Candide.World.ChunkedWorld::ChunkToWorldPositionVector(Microsoft.Xna.Framework.Point)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Multiply(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Addition(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Distance(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#unload-candide-world-worldchunk---system-void">Candide.World.ExteriorWorldHandler::Unload(Candide.World.WorldChunk)</a></code></li>
+<li><code>System.Collections.Generic.HashSet&lt;Candide.World.WorldChunk&gt;::Remove(!0)</code></li>
+<li><code>HashSet.Enumerator&lt;Candide.World.WorldChunk&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.World.ExteriorWorldHandler::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ChunkLoaded public System.Void ChunkLoaded(Candide.World.WorldChunk chunk) System.Void chunk Candide.World.WorldChunk" id="chunkloaded-candide-world-worldchunk---system-void">
+<div class="method-heading">
+<h3><code>ChunkLoaded</code></h3>
+<a class="permalink" href="#chunkloaded-candide-world-worldchunk---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ChunkLoaded(Candide.World.WorldChunk chunk)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::ChunkLoaded(Candide.World.WorldChunk)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ChunkLoaded(<a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a> chunk)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>331531F77E41BE6D214BD3821BC154A68E15113A38DCE179B73951E4EAB19F0C</code></li>
+<li><span>Body hash</span><code>8213AB2889D2DD227B6E5AB73E5EE199DA523A4C9EA7D6192B6BBABDA5261E9C</code></li>
+<li><span>IL size</span><span>28</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;Candide.World.WorldChunk&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_World_WorldChunk.html#onloaded-candide-world-chunkedworld---system-void">Candide.World.WorldChunk::OnLoaded(Candide.World.ChunkedWorld)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#receivechunkdata-candideserver-messagemodels-chunks-chunkdatamessage---system-void"><code>Candide.World.ExteriorWorldHandler::ReceiveChunkData</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ChunkToTilePosition public Microsoft.Xna.Framework.Point ChunkToTilePosition(Microsoft.Xna.Framework.Point chunkPosition) Microsoft.Xna.Framework.Point chunkPosition Microsoft.Xna.Framework.Point" id="chunktotileposition-microsoft-xna-framework-point---microsoft-xna-framework-point">
+<div class="method-heading">
+<h3><code>ChunkToTilePosition</code></h3>
+<a class="permalink" href="#chunktotileposition-microsoft-xna-framework-point---microsoft-xna-framework-point" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point ChunkToTilePosition(Microsoft.Xna.Framework.Point chunkPosition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::ChunkToTilePosition(Microsoft.Xna.Framework.Point)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Point ChunkToTilePosition(Microsoft.Xna.Framework.Point chunkPosition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Point</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>112785CE710431F6589E9B4812A04185849C443B42C2AB0D802DEF54DC89C448</code></li>
+<li><span>Body hash</span><code>8C30CEB9C3F31A5283A4478A707CD7EF9A82E8DC9E07E8A2A29D6EDECEC0373B</code></li>
+<li><span>IL size</span><span>42</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_AutoTile_AutoTilerLayers.html#scanchunk-candide-world-chunkedworld--candide-world-worldchunk--shared-models-worldtile-----system-int32--system-int32---system-void"><code>Candide.World.AutoTile.AutoTilerLayers::ScanChunk</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#createimgui----system-void"><code>Candide.World.ExteriorWorldHandler::CreateImgui</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ChunkToWorldPosition public Microsoft.Xna.Framework.Point ChunkToWorldPosition(Microsoft.Xna.Framework.Point chunkPosition) Microsoft.Xna.Framework.Point chunkPosition Microsoft.Xna.Framework.Point" id="chunktoworldposition-microsoft-xna-framework-point---microsoft-xna-framework-point">
+<div class="method-heading">
+<h3><code>ChunkToWorldPosition</code></h3>
+<a class="permalink" href="#chunktoworldposition-microsoft-xna-framework-point---microsoft-xna-framework-point" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point ChunkToWorldPosition(Microsoft.Xna.Framework.Point chunkPosition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::ChunkToWorldPosition(Microsoft.Xna.Framework.Point)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Point ChunkToWorldPosition(Microsoft.Xna.Framework.Point chunkPosition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Point</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>30297593C1B8696DAEDCD133523762AD8EF18E05A8865FF6DE09B4A386F947CB</code></li>
+<li><span>Body hash</span><code>E52388BBD9139DCA103A5576C8E1EBC770B8AA2C4562BB961A7AF2633E415754</code></li>
+<li><span>IL size</span><span>66</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ChunkToWorldPositionVector public Microsoft.Xna.Framework.Vector2 ChunkToWorldPositionVector(Microsoft.Xna.Framework.Point chunkPosition) Microsoft.Xna.Framework.Vector2 chunkPosition Microsoft.Xna.Framework.Point" id="chunktoworldpositionvector-microsoft-xna-framework-point---microsoft-xna-framework-vector2">
+<div class="method-heading">
+<h3><code>ChunkToWorldPositionVector</code></h3>
+<a class="permalink" href="#chunktoworldpositionvector-microsoft-xna-framework-point---microsoft-xna-framework-vector2" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector2 ChunkToWorldPositionVector(Microsoft.Xna.Framework.Point chunkPosition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::ChunkToWorldPositionVector(Microsoft.Xna.Framework.Point)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Vector2 ChunkToWorldPositionVector(Microsoft.Xna.Framework.Point chunkPosition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector2</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B8D868101E4EF87FC6FB25EFB561941C449678C0BA8C01E46D76E3BCD049CD0B</code></li>
+<li><span>Body hash</span><code>FDFB46C11C2EEAC9BDAC694D8F6F1BFB07CFAC8454158EB7CDD6B05012228569</code></li>
+<li><span>IL size</span><span>68</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector2::.ctor(System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#checkchunks-microsoft-xna-framework-vector2--system-nullable-1-microsoft-xna-framework-vector2---system-nullable-1-microsoft-xna-framework-vector2----system-void"><code>Candide.World.ChunkedWorld::CheckChunks</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ClearChunks private System.Void ClearChunks() System.Void " id="clearchunks----system-void">
+<div class="method-heading">
+<h3><code>ClearChunks</code></h3>
+<a class="permalink" href="#clearchunks----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void ClearChunks()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::ClearChunks()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void ClearChunks()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>ADF9A99A001228324A1E872860E010A63EC3B1D50C0B79C971AE4985341C17E4</code></li>
+<li><span>Body hash</span><code>CF63A959ECAEF91BE762A92EA5A7685FC05449F3B81497624B824DEEAB6DD3B9</code></li>
+<li><span>IL size</span><span>39</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#checkchunks-microsoft-xna-framework-vector2--system-nullable-1-microsoft-xna-framework-vector2---system-nullable-1-microsoft-xna-framework-vector2----system-void"><code>Candide.World.ChunkedWorld::CheckChunks</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Dispose public System.Void Dispose() System.Void " id="dispose----system-void">
+<div class="method-heading">
+<h3><code>Dispose</code></h3>
+<a class="permalink" href="#dispose----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Dispose()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::Dispose()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Dispose()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9F53E6D8904034FCB05A659751AE4330F4716E3526F943E13994FEE33561719E</code></li>
+<li><span>Body hash</span><code>1E796E750C919E37594DD16454F5A7FD583A6D941F284FE9C2BFE250579D4943</code></li>
+<li><span>IL size</span><span>195</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;Candide.World.WorldChunk&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;Candide.World.WorldChunk&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Romestead/Candide_World_WorldChunk.html#unload-candide-world-chunkedworld---system-void">Candide.World.WorldChunk::Unload(Candide.World.ChunkedWorld)</a></code></li>
+<li><code>HashSet.Enumerator&lt;Candide.World.WorldChunk&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;Candide.World.WorldChunk&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Stack&lt;Microsoft.Xna.Framework.Graphics.RenderTarget2D&gt;::GetEnumerator()</code></li>
+<li><code>Stack.Enumerator&lt;Microsoft.Xna.Framework.Graphics.RenderTarget2D&gt;::get_Current()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsResource::Dispose()</code></li>
+<li><code>Stack.Enumerator&lt;Microsoft.Xna.Framework.Graphics.RenderTarget2D&gt;::MoveNext()</code></li>
+<li><code>System.Collections.Generic.Stack&lt;Microsoft.Xna.Framework.Graphics.RenderTarget2D&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Stack&lt;Shared.Collision.CollisionTerrainGroup&gt;::GetEnumerator()</code></li>
+<li><code>Stack.Enumerator&lt;Shared.Collision.CollisionTerrainGroup&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Shared/Shared_Collision_CollisionTerrainGroup.html#dispose----system-void">Shared.Collision.CollisionTerrainGroup::Dispose()</a></code></li>
+<li><code>Stack.Enumerator&lt;Shared.Collision.CollisionTerrainGroup&gt;::MoveNext()</code></li>
+<li><code>System.Collections.Generic.Stack&lt;Shared.Collision.CollisionTerrainGroup&gt;::Clear()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_PlayerManager.html#updateplayerviewarea-system-boolean---system-void"><code>Candide.Multiplayer.PlayerManager::UpdatePlayerViewArea</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetChunkIndex public System.Int32 GetChunkIndex(Microsoft.Xna.Framework.Point chunkPosition) System.Int32 chunkPosition Microsoft.Xna.Framework.Point" id="getchunkindex-microsoft-xna-framework-point---system-int32">
+<div class="method-heading">
+<h3><code>GetChunkIndex</code></h3>
+<a class="permalink" href="#getchunkindex-microsoft-xna-framework-point---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 GetChunkIndex(Microsoft.Xna.Framework.Point chunkPosition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::GetChunkIndex(Microsoft.Xna.Framework.Point)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 GetChunkIndex(Microsoft.Xna.Framework.Point chunkPosition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>677D810DF8EC234D0A4124D3F146FE9A42A9B174EBEA191A68B094CDBFD28203</code></li>
+<li><span>Body hash</span><code>C79A18976A4B0EFF901A9200F884DE25AE22C5E6A806BAB1237C86DD9EC4E1F6</code></li>
+<li><span>IL size</span><span>26</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetChunkIndex public System.Int32 GetChunkIndex(System.Int32 x, System.Int32 y) System.Int32 x System.Int32 y System.Int32" id="getchunkindex-system-int32--system-int32---system-int32">
+<div class="method-heading">
+<h3><code>GetChunkIndex</code></h3>
+<a class="permalink" href="#getchunkindex-system-int32--system-int32---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 GetChunkIndex(System.Int32 x, System.Int32 y)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::GetChunkIndex(System.Int32, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 GetChunkIndex(System.Int32 x, System.Int32 y)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3676AB7258DC50A5ACF7865BF2D516C94B78D54F541C3B747B2C5C0A4F8B3E20</code></li>
+<li><span>Body hash</span><code>4502E0943058BCDF268C833CA8FB8E449568465DFA669B6311EF8C02AF95CBB3</code></li>
+<li><span>IL size</span><span>16</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#preparechunks----system-void"><code>Candide.World.ChunkedWorld::PrepareChunks</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetChunkRenderTarget public Microsoft.Xna.Framework.Graphics.RenderTarget2D GetChunkRenderTarget(System.Boolean clear, Microsoft.Xna.Framework.Color clearColor) Microsoft.Xna.Framework.Graphics.RenderTarget2D clear System.Boolean clearColor Microsoft.Xna.Framework.Color" id="getchunkrendertarget-system-boolean--microsoft-xna-framework-color---microsoft-xna-framework-graphics-rendertarget2d">
+<div class="method-heading">
+<h3><code>GetChunkRenderTarget</code></h3>
+<a class="permalink" href="#getchunkrendertarget-system-boolean--microsoft-xna-framework-color---microsoft-xna-framework-graphics-rendertarget2d" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Graphics.RenderTarget2D GetChunkRenderTarget(System.Boolean clear, Microsoft.Xna.Framework.Color clearColor)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::GetChunkRenderTarget(System.Boolean, Microsoft.Xna.Framework.Color)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Graphics.RenderTarget2D GetChunkRenderTarget(System.Boolean clear, Microsoft.Xna.Framework.Color clearColor)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Graphics.RenderTarget2D</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F33441194D2B820AA4A784D5FE15542117898BB78034487D7134BEA9C15BD21C</code></li>
+<li><span>Body hash</span><code>F7CA484BC8732E7611EE7FBAF6E5D555034DCBFB0312BF4975613BD2D6DC9E84</code></li>
+<li><span>IL size</span><span>172</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Point::op_Multiply(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>System.Collections.Generic.Stack&lt;Microsoft.Xna.Framework.Graphics.RenderTarget2D&gt;::TryPop(!0&amp;)</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.RenderTarget2D::get_IsContentLost()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsResource::get_IsDisposed()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsDevice::SetRenderTarget(Microsoft.Xna.Framework.Graphics.RenderTarget2D)</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsDevice::Clear(Microsoft.Xna.Framework.Color)</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.RenderTarget2D::.ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice, System.Int32, System.Int32, System.Boolean, Microsoft.Xna.Framework.Graphics.SurfaceFormat, Microsoft.Xna.Framework.Graphics.DepthFormat, System.Int32, Microsoft.Xna.Framework.Graphics.RenderTargetUsage)</code></li>
+<li><code>Microsoft.Xna.Framework.Color::op_Inequality(Microsoft.Xna.Framework.Color, Microsoft.Xna.Framework.Color)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_AutoTile_AutoTilerLayers.html#checkforcanopylayer-candide-world-chunkedworld--candide-world-worldchunk--shared-models-worldtile-----system-int32--system-int32--system-int32--system-int32--system-int32--system-int32--candide-world-autotile-autotileruledata--microsoft-xna-framework-point--system-int32--system-int32--system-int32--candidecreator-shared-tiled-tileeffectenum---system-void"><code>Candide.World.AutoTile.AutoTilerLayers::CheckForCanopyLayer</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_AutoTile_AutoTilerLayers.html#checkfortallbushlayer-candide-world-chunkedworld--candide-world-worldchunk--shared-models-worldtile-----system-int32--system-int32--system-int32--system-int32--system-int32--system-int32--candide-world-autotile-autotileruledata--microsoft-xna-framework-point--system-int32--system-int32--system-int32--candidecreator-shared-tiled-tileeffectenum---system-void"><code>Candide.World.AutoTile.AutoTilerLayers::CheckForTallBushLayer</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_WorldChunk.html#onloaded-candide-world-chunkedworld---system-void"><code>Candide.World.WorldChunk::OnLoaded</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetChunksForRectangle public System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; GetChunksForRectangle(CandideCreator.Shared.Models.RectangleF rectangleF) System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; rectangleF CandideCreator.Shared.Models.RectangleF" id="getchunksforrectangle-candidecreator-shared-models-rectanglef---system-collections-generic-list-1-candide-world-worldchunk-">
+<div class="method-heading">
+<h3><code>GetChunksForRectangle</code></h3>
+<a class="permalink" href="#getchunksforrectangle-candidecreator-shared-models-rectanglef---system-collections-generic-list-1-candide-world-worldchunk-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; GetChunksForRectangle(CandideCreator.Shared.Models.RectangleF rectangleF)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::GetChunksForRectangle(CandideCreator.Shared.Models.RectangleF)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.List&lt;<a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a>&gt; GetChunksForRectangle(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> rectangleF)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.List&lt;<a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a>&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8BB419A8DAF52151CAE8AB1935CC5E0CF71299474474CFC2286449E3AA67664B</code></li>
+<li><span>Body hash</span><code>52B70FEC2B4D2B2EDF1C8507F70DE2CF4B8ACDEED1B5DE73DEE8A9E7A02571A1</code></li>
+<li><span>IL size</span><span>120</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Models.RectangleF::get_TopLeft()</code></li>
+<li><code><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#worldtochunkposition-microsoft-xna-framework-vector2---microsoft-xna-framework-point">Candide.World.ChunkedWorld::WorldToChunkPosition(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_BottomRight()</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#checkentityvsterraincollision-shared-entity-entitywrapper--microsoft-xna-framework-vector2---microsoft-xna-framework-vector3---microsoft-xna-framework-vector2--system-single--candidecreator-shared-collision-collisionmasks--candidecreator-shared-collision-collisionshape---system-void"><code>Candide.World.ExteriorWorldHandler::CheckEntityVsTerrainCollision</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#checkmovableobjectvsterraincollision-system-single--microsoft-xna-framework-vector2---microsoft-xna-framework-vector3---microsoft-xna-framework-vector2--system-single--candidecreator-shared-collision-collisionmasks--candidecreator-shared-collision-collisionshape---system-void"><code>Candide.World.ExteriorWorldHandler::CheckMovableObjectVsTerrainCollision</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#getallcollisions-microsoft-xna-framework-vector3--candidecreator-shared-collision-collisionshape--candidecreator-shared-collision-collisionmasks--system-single--system-collections-generic-list-1-candidecreator-shared-collision-collisiondata----system-void"><code>Candide.World.ExteriorWorldHandler::GetAllCollisions</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#getallstaticcollisions-microsoft-xna-framework-vector3--microsoft-xna-framework-vector2--candidecreator-shared-collision-collisionshape--candidecreator-shared-collision-collisionmasks--system-single--system-collections-generic-list-1-candidecreator-shared-collision-collisiondata----system-void"><code>Candide.World.ExteriorWorldHandler::GetAllStaticCollisions</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetChunksForTileRectangle public System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; GetChunksForTileRectangle(Microsoft.Xna.Framework.Rectangle rectangle) System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; rectangle Microsoft.Xna.Framework.Rectangle" id="getchunksfortilerectangle-microsoft-xna-framework-rectangle---system-collections-generic-list-1-candide-world-worldchunk-">
+<div class="method-heading">
+<h3><code>GetChunksForTileRectangle</code></h3>
+<a class="permalink" href="#getchunksfortilerectangle-microsoft-xna-framework-rectangle---system-collections-generic-list-1-candide-world-worldchunk-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; GetChunksForTileRectangle(Microsoft.Xna.Framework.Rectangle rectangle)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::GetChunksForTileRectangle(Microsoft.Xna.Framework.Rectangle)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.List&lt;<a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a>&gt; GetChunksForTileRectangle(Microsoft.Xna.Framework.Rectangle rectangle)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.List&lt;<a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a>&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7E13DBC8FFDCB4C9E0655FF94831876B196BA3F18264A335DF15D3277C923D89</code></li>
+<li><span>Body hash</span><code>5A8F4615EA99AB1847E43EC69F787FBE1E7261C4B9C30ECE0B1BC8EB3A01F504</code></li>
+<li><span>IL size</span><span>226</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Math::Max(System.Int32, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Right()</code></li>
+<li><code>System.Math::Min(System.Int32, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Bottom()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#tiletochunkposition-microsoft-xna-framework-point---microsoft-xna-framework-point">Candide.World.ChunkedWorld::TileToChunkPosition(Microsoft.Xna.Framework.Point)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#tilesupdated-microsoft-xna-framework-rectangle---system-void"><code>Candide.World.ExteriorWorldHandler::TilesUpdated</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetLoadedChunksForTileRectangle public System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; GetLoadedChunksForTileRectangle(Microsoft.Xna.Framework.Rectangle rectangle) System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; rectangle Microsoft.Xna.Framework.Rectangle" id="getloadedchunksfortilerectangle-microsoft-xna-framework-rectangle---system-collections-generic-list-1-candide-world-worldchunk-">
+<div class="method-heading">
+<h3><code>GetLoadedChunksForTileRectangle</code></h3>
+<a class="permalink" href="#getloadedchunksfortilerectangle-microsoft-xna-framework-rectangle---system-collections-generic-list-1-candide-world-worldchunk-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt; GetLoadedChunksForTileRectangle(Microsoft.Xna.Framework.Rectangle rectangle)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::GetLoadedChunksForTileRectangle(Microsoft.Xna.Framework.Rectangle)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.List&lt;<a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a>&gt; GetLoadedChunksForTileRectangle(Microsoft.Xna.Framework.Rectangle rectangle)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.List&lt;<a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a>&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A610E1B54CFE78F8FCFE7D6E0707D4158CA0E99142AA5A4C485705EBDCBB9726</code></li>
+<li><span>Body hash</span><code>F2D35817E2865EDC6405C967F35E169E9D16563020A64D8474AE8ED237B7CBE4</code></li>
+<li><span>IL size</span><span>240</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Math::Max(System.Int32, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Right()</code></li>
+<li><code>System.Math::Min(System.Int32, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Bottom()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#tiletochunkposition-microsoft-xna-framework-point---microsoft-xna-framework-point">Candide.World.ChunkedWorld::TileToChunkPosition(Microsoft.Xna.Framework.Point)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.World.WorldChunk&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#updatechunkrenders-microsoft-xna-framework-rectangle--system-boolean--system-boolean---system-void"><code>Candide.World.ExteriorWorldHandler::UpdateChunkRenders</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetTileRectangleForChunk public Microsoft.Xna.Framework.Rectangle GetTileRectangleForChunk(Candide.World.WorldChunk chunk) Microsoft.Xna.Framework.Rectangle chunk Candide.World.WorldChunk" id="gettilerectangleforchunk-candide-world-worldchunk---microsoft-xna-framework-rectangle">
+<div class="method-heading">
+<h3><code>GetTileRectangleForChunk</code></h3>
+<a class="permalink" href="#gettilerectangleforchunk-candide-world-worldchunk---microsoft-xna-framework-rectangle" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Rectangle GetTileRectangleForChunk(Candide.World.WorldChunk chunk)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::GetTileRectangleForChunk(Candide.World.WorldChunk)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Rectangle GetTileRectangleForChunk(<a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a> chunk)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Rectangle</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CDF8A2FF6EBE2BD7E3D316173CEEE3AEAEDB3474CD2588371C01BC16EA62E055</code></li>
+<li><span>Body hash</span><code>27573587BCA91C58E190FCDB240E334A66DDF8B9E5BAE7A240CACB446554A236</code></li>
+<li><span>IL size</span><span>74</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Rectangle::.ctor(System.Int32, System.Int32, System.Int32, System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#unload-candide-world-worldchunk---system-void"><code>Candide.World.ExteriorWorldHandler::Unload</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetWorldChunk public Candide.World.WorldChunk GetWorldChunk(Microsoft.Xna.Framework.Point chunkPosition) Candide.World.WorldChunk chunkPosition Microsoft.Xna.Framework.Point" id="getworldchunk-microsoft-xna-framework-point---candide-world-worldchunk">
+<div class="method-heading">
+<h3><code>GetWorldChunk</code></h3>
+<a class="permalink" href="#getworldchunk-microsoft-xna-framework-point---candide-world-worldchunk" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Candide.World.WorldChunk GetWorldChunk(Microsoft.Xna.Framework.Point chunkPosition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::GetWorldChunk(Microsoft.Xna.Framework.Point)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a> GetWorldChunk(Microsoft.Xna.Framework.Point chunkPosition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9EDAFA1E79C1D79EE6EBB982D8CF3AF8CF4CBFF25AFA9DFEA019B37F026930BA</code></li>
+<li><span>Body hash</span><code>A89D2099AB4F55176BDE12217732AE81B69568DCE46D4AD7500AAFE615AB98DC</code></li>
+<li><span>IL size</span><span>33</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#worldpositiontochunk-microsoft-xna-framework-vector2---candide-world-worldchunk"><code>Candide.World.ChunkedWorld::WorldPositionToChunk</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#onreceivechunkdataerror-microsoft-xna-framework-point--system-byte---system-void"><code>Candide.World.ExteriorWorldHandler::OnReceiveChunkDataError</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#receivechunkdata-candideserver-messagemodels-chunks-chunkdatamessage---system-void"><code>Candide.World.ExteriorWorldHandler::ReceiveChunkData</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetWorldChunk public Candide.World.WorldChunk&amp; GetWorldChunk(System.Int32 x, System.Int32 y) Candide.World.WorldChunk&amp; x System.Int32 y System.Int32" id="getworldchunk-system-int32--system-int32---candide-world-worldchunk-">
+<div class="method-heading">
+<h3><code>GetWorldChunk</code></h3>
+<a class="permalink" href="#getworldchunk-system-int32--system-int32---candide-world-worldchunk-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Candide.World.WorldChunk&amp; GetWorldChunk(System.Int32 x, System.Int32 y)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::GetWorldChunk(System.Int32, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a>&amp; GetWorldChunk(System.Int32 x, System.Int32 y)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a>&amp;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>392573527E644338E81204751C6FF08DCD96C337CABDFF575B8F1EC236BA2229</code></li>
+<li><span>Body hash</span><code>D07D67AE898583571C36682971861DAA356925870902E1F1F0D1D60E47A9CFC8</code></li>
+<li><span>IL size</span><span>27</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#checkchunks-microsoft-xna-framework-vector2--system-nullable-1-microsoft-xna-framework-vector2---system-nullable-1-microsoft-xna-framework-vector2----system-void"><code>Candide.World.ChunkedWorld::CheckChunks</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="KeepExtraChunk private System.Void KeepExtraChunk(Microsoft.Xna.Framework.Vector2 extraPosition) System.Void extraPosition Microsoft.Xna.Framework.Vector2" id="keepextrachunk-microsoft-xna-framework-vector2---system-void">
+<div class="method-heading">
+<h3><code>KeepExtraChunk</code></h3>
+<a class="permalink" href="#keepextrachunk-microsoft-xna-framework-vector2---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void KeepExtraChunk(Microsoft.Xna.Framework.Vector2 extraPosition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::KeepExtraChunk(Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void KeepExtraChunk(Microsoft.Xna.Framework.Vector2 extraPosition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D92C40792194D817607658CDF6C73AD8D6B3D06957EB5524E4405EA2283D268B</code></li>
+<li><span>Body hash</span><code>880810D7246D15EAC44A8049F50D6B2BBD26683D133FE3FED7E5BDCD2C563B73</code></li>
+<li><span>IL size</span><span>52</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#worldpositiontochunk-microsoft-xna-framework-vector2---candide-world-worldchunk">Candide.World.ChunkedWorld::WorldPositionToChunk(Microsoft.Xna.Framework.Vector2)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#checkchunks-microsoft-xna-framework-vector2--system-nullable-1-microsoft-xna-framework-vector2---system-nullable-1-microsoft-xna-framework-vector2----system-void"><code>Candide.World.ChunkedWorld::CheckChunks</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="PreCalculate public System.Void PreCalculate() System.Void " id="precalculate----system-void">
+<div class="method-heading">
+<h3><code>PreCalculate</code></h3>
+<a class="permalink" href="#precalculate----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void PreCalculate()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::PreCalculate()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void PreCalculate()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A07F1F939402FE3A64D3F24114E953298A2423244B82E0BCAAC4B536590EB59E</code></li>
+<li><span>Body hash</span><code>27137A55251EEA61D6270BE3229AA72E9F800C23C64ED76E4C86F2C07F6DB211</code></li>
+<li><span>IL size</span><span>76</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector2::get_Zero()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Multiply(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::get_One()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Division(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="PrepareChunks public System.Void PrepareChunks() System.Void " id="preparechunks----system-void">
+<div class="method-heading">
+<h3><code>PrepareChunks</code></h3>
+<a class="permalink" href="#preparechunks----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void PrepareChunks()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::PrepareChunks()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void PrepareChunks()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0F37D7B4A48CD4A3A6915DFFE7283D43A794E5B275A49B203293771B7104DE06</code></li>
+<li><span>Body hash</span><code>6946F72C86AF9258111C114008DB14BBB95504A3DEF25E087035033ACE60B52A</code></li>
+<li><span>IL size</span><span>112</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#getchunkindex-system-int32--system-int32---system-int32">Candide.World.ChunkedWorld::GetChunkIndex(System.Int32, System.Int32)</a></code></li>
+<li><code>Candide.World.WorldChunk::.ctor()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ReloadAllChunks public System.Void ReloadAllChunks() System.Void " id="reloadallchunks----system-void">
+<div class="method-heading">
+<h3><code>ReloadAllChunks</code></h3>
+<a class="permalink" href="#reloadallchunks----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ReloadAllChunks()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::ReloadAllChunks()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ReloadAllChunks()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F036B4CAD32F626DEB21BBFF0DDB068A74D1A678631FFE3AA826F03E3E3963D3</code></li>
+<li><span>Body hash</span><code>CBB504B2866960A989762D8D6A0EAB4058D78AE8998CD292B9B6D9A5D8AEB7A4</code></li>
+<li><span>IL size</span><span>63</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;Candide.World.WorldChunk&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;Candide.World.WorldChunk&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Romestead/Candide_World_WorldChunk.html#reload----system-void">Candide.World.WorldChunk::Reload()</a></code></li>
+<li><code>HashSet.Enumerator&lt;Candide.World.WorldChunk&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;Candide.World.WorldChunk&gt;::Clear()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#reload----system-void"><code>Candide.World.ExteriorWorldHandler::Reload</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TileToChunkPosition public Microsoft.Xna.Framework.Point TileToChunkPosition(Microsoft.Xna.Framework.Point tilePosition) Microsoft.Xna.Framework.Point tilePosition Microsoft.Xna.Framework.Point" id="tiletochunkposition-microsoft-xna-framework-point---microsoft-xna-framework-point">
+<div class="method-heading">
+<h3><code>TileToChunkPosition</code></h3>
+<a class="permalink" href="#tiletochunkposition-microsoft-xna-framework-point---microsoft-xna-framework-point" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point TileToChunkPosition(Microsoft.Xna.Framework.Point tilePosition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::TileToChunkPosition(Microsoft.Xna.Framework.Point)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Point TileToChunkPosition(Microsoft.Xna.Framework.Point tilePosition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Point</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0D21527364EC4D6F25EC7327E34B6AD12E428409D5F7E040A9ED302D461BEF58</code></li>
+<li><span>Body hash</span><code>51DD9EEB2E493922DA46524252F88596F68D907463D2C5B9C388C7B71191CD19</code></li>
+<li><span>IL size</span><span>13</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Point::op_Division(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#getchunksfortilerectangle-microsoft-xna-framework-rectangle---system-collections-generic-list-1-candide-world-worldchunk-"><code>Candide.World.ChunkedWorld::GetChunksForTileRectangle</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#getloadedchunksfortilerectangle-microsoft-xna-framework-rectangle---system-collections-generic-list-1-candide-world-worldchunk-"><code>Candide.World.ChunkedWorld::GetLoadedChunksForTileRectangle</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#tiletochunkrelativeposition-microsoft-xna-framework-point---microsoft-xna-framework-point"><code>Candide.World.ChunkedWorld::TileToChunkRelativePosition</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TileToChunkRelativePosition public Microsoft.Xna.Framework.Point TileToChunkRelativePosition(Microsoft.Xna.Framework.Point tilePosition) Microsoft.Xna.Framework.Point tilePosition Microsoft.Xna.Framework.Point" id="tiletochunkrelativeposition-microsoft-xna-framework-point---microsoft-xna-framework-point">
+<div class="method-heading">
+<h3><code>TileToChunkRelativePosition</code></h3>
+<a class="permalink" href="#tiletochunkrelativeposition-microsoft-xna-framework-point---microsoft-xna-framework-point" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point TileToChunkRelativePosition(Microsoft.Xna.Framework.Point tilePosition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::TileToChunkRelativePosition(Microsoft.Xna.Framework.Point)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Point TileToChunkRelativePosition(Microsoft.Xna.Framework.Point tilePosition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Point</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FD7955B79018D7371FE0FA4DB27083A4316EF906DB53130A8E557CB91D6107B8</code></li>
+<li><span>Body hash</span><code>A007E5118BB9E4BE749F1245A43ADB692716695013515C47369A9E7B6F247B95</code></li>
+<li><span>IL size</span><span>66</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#tiletochunkposition-microsoft-xna-framework-point---microsoft-xna-framework-point">Candide.World.ChunkedWorld::TileToChunkPosition(Microsoft.Xna.Framework.Point)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetWorldChunk public System.Boolean TryGetWorldChunk(System.Int32 x, System.Int32 y, out Candide.World.WorldChunk&amp; chunk) System.Boolean x System.Int32 y System.Int32 chunk Candide.World.WorldChunk&amp;" id="trygetworldchunk-system-int32--system-int32--candide-world-worldchunk----system-boolean">
+<div class="method-heading">
+<h3><code>TryGetWorldChunk</code></h3>
+<a class="permalink" href="#trygetworldchunk-system-int32--system-int32--candide-world-worldchunk----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetWorldChunk(System.Int32 x, System.Int32 y, out Candide.World.WorldChunk&amp; chunk)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::TryGetWorldChunk(System.Int32, System.Int32, Candide.World.WorldChunk&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetWorldChunk(System.Int32 x, System.Int32 y, out <a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a>&amp; chunk)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>298B2270CA8477F23D0FC547F8C4BD36097A0D994DFCAC8542F056536155228F</code></li>
+<li><span>Body hash</span><code>8BB40D8361726FB03B5EACF652B438EA4A8F9EB69157D18ADE4811F876A6E878</code></li>
+<li><span>IL size</span><span>67</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#renderfullchunktiles-shared-models-worldtile-----system-sbyte-----microsoft-xna-framework-point---system-void"><code>Candide.World.ExteriorWorldHandler::RenderFullChunkTiles</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UnloadAllChunks public System.Void UnloadAllChunks() System.Void " id="unloadallchunks----system-void">
+<div class="method-heading">
+<h3><code>UnloadAllChunks</code></h3>
+<a class="permalink" href="#unloadallchunks----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UnloadAllChunks()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::UnloadAllChunks()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UnloadAllChunks()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>77A02C49073C1C0F31E5CCBB67CD932ECCF80F8F5891E67ADDEE1E9B31EC3613</code></li>
+<li><span>Body hash</span><code>CCD27E2322B34CD9E17D56FF44D360AD21C54725BAE45CDFC4F32B910B19CB2B</code></li>
+<li><span>IL size</span><span>75</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;Candide.World.WorldChunk&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;Candide.World.WorldChunk&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Romestead/Candide_World_WorldChunk.html#unload-candide-world-chunkedworld---system-void">Candide.World.WorldChunk::Unload(Candide.World.ChunkedWorld)</a></code></li>
+<li><code>System.Collections.Generic.HashSet&lt;Candide.World.WorldChunk&gt;::Remove(!0)</code></li>
+<li><code>HashSet.Enumerator&lt;Candide.World.WorldChunk&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#clear----system-void"><code>Candide.World.ExteriorWorldHandler::Clear</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="WorldPositionToChunk public Candide.World.WorldChunk WorldPositionToChunk(Microsoft.Xna.Framework.Vector2 worldPosition) Candide.World.WorldChunk worldPosition Microsoft.Xna.Framework.Vector2" id="worldpositiontochunk-microsoft-xna-framework-vector2---candide-world-worldchunk">
+<div class="method-heading">
+<h3><code>WorldPositionToChunk</code></h3>
+<a class="permalink" href="#worldpositiontochunk-microsoft-xna-framework-vector2---candide-world-worldchunk" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Candide.World.WorldChunk WorldPositionToChunk(Microsoft.Xna.Framework.Vector2 worldPosition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::WorldPositionToChunk(Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a> WorldPositionToChunk(Microsoft.Xna.Framework.Vector2 worldPosition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Romestead/Candide_World_WorldChunk.html">Candide.World.WorldChunk</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>68E2E217820AC91F332BD87E112800B97D2C0EE0E0E6A7E2FBB4446E292D7318</code></li>
+<li><span>Body hash</span><code>7B5648FE19189BA99A4EF7BF116C237BE89DCBD52BF1C3668ADFE585CA1C9B7C</code></li>
+<li><span>IL size</span><span>14</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#worldtochunkposition-microsoft-xna-framework-vector2---microsoft-xna-framework-point">Candide.World.ChunkedWorld::WorldToChunkPosition(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#getworldchunk-microsoft-xna-framework-point---candide-world-worldchunk">Candide.World.ChunkedWorld::GetWorldChunk(Microsoft.Xna.Framework.Point)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Systems_EntityNetworkSystem.html#updatecleanup-system-single---system-void"><code>Candide.GameModels.Systems.EntityNetworkSystem::UpdateCleanup</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#keepextrachunk-microsoft-xna-framework-vector2---system-void"><code>Candide.World.ChunkedWorld::KeepExtraChunk</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="WorldToChunkPosition public Microsoft.Xna.Framework.Point WorldToChunkPosition(Microsoft.Xna.Framework.Vector2 worldPosition) Microsoft.Xna.Framework.Point worldPosition Microsoft.Xna.Framework.Vector2" id="worldtochunkposition-microsoft-xna-framework-vector2---microsoft-xna-framework-point">
+<div class="method-heading">
+<h3><code>WorldToChunkPosition</code></h3>
+<a class="permalink" href="#worldtochunkposition-microsoft-xna-framework-vector2---microsoft-xna-framework-point" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point WorldToChunkPosition(Microsoft.Xna.Framework.Vector2 worldPosition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::WorldToChunkPosition(Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Point WorldToChunkPosition(Microsoft.Xna.Framework.Vector2 worldPosition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Point</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BC24EF81CCDF11BBDAAE1F42D6D02E29261CAB29EEAC3B5F68BD19634409F789</code></li>
+<li><span>Body hash</span><code>383F38A965194C268CDD47121CC7E86B968CC8FE47868BC1E2E8B32348BECF96</code></li>
+<li><span>IL size</span><span>49</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#clampsafe-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--microsoft-xna-framework-vector2---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ClampSafe(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::ToPoint()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Multiply(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Division(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#getchunksforrectangle-candidecreator-shared-models-rectanglef---system-collections-generic-list-1-candide-world-worldchunk-"><code>Candide.World.ChunkedWorld::GetChunksForRectangle</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#worldpositiontochunk-microsoft-xna-framework-vector2---candide-world-worldchunk"><code>Candide.World.ChunkedWorld::WorldPositionToChunk</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="WorldToTilePosition public Microsoft.Xna.Framework.Point WorldToTilePosition(Microsoft.Xna.Framework.Vector2 worldPosition) Microsoft.Xna.Framework.Point worldPosition Microsoft.Xna.Framework.Vector2" id="worldtotileposition-microsoft-xna-framework-vector2---microsoft-xna-framework-point">
+<div class="method-heading">
+<h3><code>WorldToTilePosition</code></h3>
+<a class="permalink" href="#worldtotileposition-microsoft-xna-framework-vector2---microsoft-xna-framework-point" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point WorldToTilePosition(Microsoft.Xna.Framework.Vector2 worldPosition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.ChunkedWorld::WorldToTilePosition(Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Point WorldToTilePosition(Microsoft.Xna.Framework.Vector2 worldPosition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Point</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4705D110E705AC9EBD020752E8E1754D4C6FE665B7250E66BC4B0DB75206700E</code></li>
+<li><span>Body hash</span><code>32FDC08E54C02BAB27059F34702282B7D257BD9CEC935B458767C9C47B5B8DE5</code></li>
+<li><span>IL size</span><span>38</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#clampsafe-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--microsoft-xna-framework-vector2---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ClampSafe(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::ToPoint()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Division(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerController.html#getinteraction----shared-models-interaction-interaction"><code>Candide.Entities.PlayerState.PlayerController::GetInteraction</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerController.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Entities.PlayerState.PlayerController::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_ClientPathFindManager.html#addneighbor-microsoft-xna-framework-vector2--candide-gamemodels-managers-pathfindnode2--system-single---system-boolean"><code>Candide.GameModels.Managers.ClientPathFindManager::AddNeighbor</code></a></li>
+<li><a href="../../types/Romestead/Candide_Sound_TileBasedFootstepHandler.html#playfootstepsound-shared-entity-entitywrapper--system-boolean--system-single--system-single--system-single---system-void"><code>Candide.Sound.TileBasedFootstepHandler::PlayFootstepSound</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#createimgui----system-void"><code>Candide.World.ExteriorWorldHandler::CreateImgui</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#createvisualdebug-microsoft-xna-framework-vector2---system-void"><code>Candide.World.ExteriorWorldHandler::CreateVisualDebug</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#heightatpoint-microsoft-xna-framework-vector2--system-single---system-single"><code>Candide.World.ExteriorWorldHandler::HeightAtPoint</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#updatedebug-microsoft-xna-framework-vector2---system-void"><code>Candide.World.ExteriorWorldHandler::UpdateDebug</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_FogOfWarWorldMap.html#update-microsoft-xna-framework-vector2--system-int32---system-void"><code>Candide.World.FogOfWarWorldMap::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_WorldMap.html#updatetilesaroundposition-microsoft-xna-framework-vector2--system-int32---system-void"><code>Candide.World.WorldMap::UpdateTilesAroundPosition</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

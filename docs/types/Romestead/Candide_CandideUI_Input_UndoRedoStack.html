@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.CandideUI.Input.UndoRedoStack - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.CandideUI.Input.UndoRedoStack</h1>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Input.UndoRedoStack">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.CandideUI.Input.UndoRedoStack
+
+- Assembly: `Romestead`
+- Namespace: `Candide.CandideUI.Input`
+- Kind: `internal class`
+- Base type: `System.Object`
+- Members: 4 methods, 1 properties, 1 fields, 0 events
+
+## Public Methods
+- `public System.Void MakeDelete(System.String text, System.Int32 where, System.Int32 length)`
+- `public System.Void MakeInsert(System.Int32 where, System.Int32 length)`
+- `public System.Void MakeReplace(System.String text, System.Int32 where, System.Int32 length, System.Int32 newLength)`
+- `public System.Void Reset()`
+">Copy markdown</button>
+<a class="button" href="Candide_CandideUI_Input_UndoRedoStack.json">Type JSON</a>
+</div>
+<p class="lede">internal class in <code>Candide.CandideUI.Input</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>4</strong></article>
+<article class="metric"><span>Properties</span><strong>1</strong></article>
+<article class="metric"><span>Fields</span><strong>1</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.CandideUI.Input</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>2857E4B4F9192954FB124377C49A7E461EE90981780336EB1F4CD1D8A9FD2FAE</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Input_CandideTextInputBox.html"><code>Candide.CandideUI.Input.CandideTextInputBox</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_stack private System.Collections.Generic.Stack&lt;Candide.CandideUI.Input.UndoRedoRecord&gt; _stack System.Collections.Generic.Stack&lt;Candide.CandideUI.Input.UndoRedoRecord&gt;" id="-stack-system-collections-generic-stack-1-candide-candideui-input-undoredorecord-"><td><span class="member-name-cell"><code>_stack</code><a class="permalink" href="#-stack-system-collections-generic-stack-1-candide-candideui-input-undoredorecord-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Stack&lt;Candide.CandideUI.Input.UndoRedoRecord&gt; _stack">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Stack&lt;<a href="../../types/Romestead/Candide_CandideUI_Input_UndoRedoRecord.html">Candide.CandideUI.Input.UndoRedoRecord</a>&gt; _stack</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="Stack public System.Collections.Generic.Stack&lt;Candide.CandideUI.Input.UndoRedoRecord&gt; Stack System.Collections.Generic.Stack&lt;Candide.CandideUI.Input.UndoRedoRecord&gt;" id="stack-system-collections-generic-stack-1-candide-candideui-input-undoredorecord-"><td><span class="member-name-cell"><code>Stack</code><a class="permalink" href="#stack-system-collections-generic-stack-1-candide-candideui-input-undoredorecord-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Stack&lt;Candide.CandideUI.Input.UndoRedoRecord&gt; Stack">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Stack&lt;<a href="../../types/Romestead/Candide_CandideUI_Input_UndoRedoRecord.html">Candide.CandideUI.Input.UndoRedoRecord</a>&gt; Stack</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MakeDelete public System.Void MakeDelete(System.String text, System.Int32 where, System.Int32 length) System.Void text System.String where System.Int32 length System.Int32" id="makedelete-system-string--system-int32--system-int32---system-void">
+<div class="method-heading">
+<h3><code>MakeDelete</code></h3>
+<a class="permalink" href="#makedelete-system-string--system-int32--system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void MakeDelete(System.String text, System.Int32 where, System.Int32 length)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Input.UndoRedoStack::MakeDelete(System.String, System.Int32, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void MakeDelete(System.String text, System.Int32 where, System.Int32 length)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>703DF9FCA0FC48A98A64E3568198F0C5268E8F2D5B43EA1830B0DA4E4F203A7A</code></li>
+<li><span>Body hash</span><code>C3EDF3DE59DCA2AEECED187E85314704EC23505DB52DCD09AE964BC5502B194A</code></li>
+<li><span>IL size</span><span>59</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.Input.UndoRedoRecord::.ctor()</code></li>
+<li><code>System.String::Substring(System.Int32, System.Int32)</code></li>
+<li><code>System.Collections.Generic.Stack&lt;Candide.CandideUI.Input.UndoRedoRecord&gt;::Push(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Input_CandideTextInputBox.html#delete-system-int32--system-int32---system-int32"><code>Candide.CandideUI.Input.CandideTextInputBox::Delete</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Input_CandideTextInputBox.html#undoredo-candide-candideui-input-undoredostack--candide-candideui-input-undoredostack---system-void"><code>Candide.CandideUI.Input.CandideTextInputBox::UndoRedo</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Input_UndoRedoStack.html#makereplace-system-string--system-int32--system-int32--system-int32---system-void"><code>Candide.CandideUI.Input.UndoRedoStack::MakeReplace</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MakeInsert public System.Void MakeInsert(System.Int32 where, System.Int32 length) System.Void where System.Int32 length System.Int32" id="makeinsert-system-int32--system-int32---system-void">
+<div class="method-heading">
+<h3><code>MakeInsert</code></h3>
+<a class="permalink" href="#makeinsert-system-int32--system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void MakeInsert(System.Int32 where, System.Int32 length)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Input.UndoRedoStack::MakeInsert(System.Int32, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void MakeInsert(System.Int32 where, System.Int32 length)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8CF44EB03823EB57CB99BBC1807236DF62570249A36F0775E68C3CAC8F1B2776</code></li>
+<li><span>Body hash</span><code>5CFEB6DB45B62D26B29AD7FFAC751475C09CC5581203C8A9DFA4EDACFBE57F34</code></li>
+<li><span>IL size</span><span>45</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.Input.UndoRedoRecord::.ctor()</code></li>
+<li><code>System.Collections.Generic.Stack&lt;Candide.CandideUI.Input.UndoRedoRecord&gt;::Push(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Input_CandideTextInputBox.html#inputchar-system-char---system-void"><code>Candide.CandideUI.Input.CandideTextInputBox::InputChar</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Input_CandideTextInputBox.html#insert-system-int32--system-string---system-void"><code>Candide.CandideUI.Input.CandideTextInputBox::Insert</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Input_CandideTextInputBox.html#paste-system-string---system-boolean"><code>Candide.CandideUI.Input.CandideTextInputBox::Paste</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Input_CandideTextInputBox.html#undoredo-candide-candideui-input-undoredostack--candide-candideui-input-undoredostack---system-void"><code>Candide.CandideUI.Input.CandideTextInputBox::UndoRedo</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Input_UndoRedoStack.html#makereplace-system-string--system-int32--system-int32--system-int32---system-void"><code>Candide.CandideUI.Input.UndoRedoStack::MakeReplace</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MakeReplace public System.Void MakeReplace(System.String text, System.Int32 where, System.Int32 length, System.Int32 newLength) System.Void text System.String where System.Int32 length System.Int32 newLength System.Int32" id="makereplace-system-string--system-int32--system-int32--system-int32---system-void">
+<div class="method-heading">
+<h3><code>MakeReplace</code></h3>
+<a class="permalink" href="#makereplace-system-string--system-int32--system-int32--system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void MakeReplace(System.String text, System.Int32 where, System.Int32 length, System.Int32 newLength)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Input.UndoRedoStack::MakeReplace(System.String, System.Int32, System.Int32, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void MakeReplace(System.String text, System.Int32 where, System.Int32 length, System.Int32 newLength)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>870BFCD8A5A8A6CCD5C56CCD74B906EC14D05E0AECFB63EEA5377D6E06A0BDE3</code></li>
+<li><span>Body hash</span><code>4AE3C7605E9885C5EDD73C8D84A0BF84F3A2BD79EC23A695D34914AF304F79D4</code></li>
+<li><span>IL size</span><span>84</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Input_UndoRedoStack.html#makeinsert-system-int32--system-int32---system-void">Candide.CandideUI.Input.UndoRedoStack::MakeInsert(System.Int32, System.Int32)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Input_UndoRedoStack.html#makedelete-system-string--system-int32--system-int32---system-void">Candide.CandideUI.Input.UndoRedoStack::MakeDelete(System.String, System.Int32, System.Int32)</a></code></li>
+<li><code>Candide.CandideUI.Input.UndoRedoRecord::.ctor()</code></li>
+<li><code>System.String::Substring(System.Int32, System.Int32)</code></li>
+<li><code>System.Collections.Generic.Stack&lt;Candide.CandideUI.Input.UndoRedoRecord&gt;::Push(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Input_CandideTextInputBox.html#inputchar-system-char---system-void"><code>Candide.CandideUI.Input.CandideTextInputBox::InputChar</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Input_CandideTextInputBox.html#undoredo-candide-candideui-input-undoredostack--candide-candideui-input-undoredostack---system-void"><code>Candide.CandideUI.Input.CandideTextInputBox::UndoRedo</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Reset public System.Void Reset() System.Void " id="reset----system-void">
+<div class="method-heading">
+<h3><code>Reset</code></h3>
+<a class="permalink" href="#reset----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Reset()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Input.UndoRedoStack::Reset()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Reset()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AD399850BB64A977EB8A4A5B45BB94FB64DA91C00631C7FA1E775FC672C5E91E</code></li>
+<li><span>Body hash</span><code>CF69485DAFB9B558DB5F43F6A73BCF2D517DC4A416163CDB344DB44A44A62587</code></li>
+<li><span>IL size</span><span>12</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Stack&lt;Candide.CandideUI.Input.UndoRedoRecord&gt;::Clear()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Input_CandideTextInputBox.html#settext-system-string--system-boolean---system-boolean"><code>Candide.CandideUI.Input.CandideTextInputBox::SetText</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

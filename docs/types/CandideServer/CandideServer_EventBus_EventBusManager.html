@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.EventBus.EventBusManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.EventBus.EventBusManager</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.EventBus.EventBusManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.EventBus.EventBusManager
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.EventBus`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 8 methods, 0 properties, 2 fields, 0 events
+
+## Public Methods
+- `public System.Void SendEvent(System.String key, System.Object message, CandideServer.EventBus.EventBusArgs args, System.Boolean warnIfNothingSubscribed)`
+- `public System.Void SendEvent(System.String key, System.Object message, System.Boolean warnIfNothingSubscribed)`
+- `public System.Void Subscribe(System.Reflection.Assembly assembly, System.String eventBusName)`
+- `public System.Void Subscribe&lt;T&gt;(System.String key, System.Action&lt;T, CandideServer.EventBus.EventBusArgs&gt; listener)`
+- `public System.Void Subscribe&lt;T&gt;(System.String key, System.Action&lt;T&gt; listener)`
+- `public System.Void SubscribeUnsubscribable&lt;T&gt;(System.String key, System.Action&lt;T&gt; listener)`
+- `public System.Boolean TryGetBus(System.String key, out CandideServer.EventBus.EventBus&amp; eventBus)`
+- `public System.Void Unsubscribe&lt;T&gt;(System.String key, System.Action&lt;T&gt; func)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_EventBus_EventBusManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.EventBus</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>8</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>2</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.EventBus</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>467ACEF0280FCEEB5A7264BE2C4299495EB9AA28E44AD2F0A308B39A9F02E37B</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html"><code>CandideServer.Server.BaseServer</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideEngine.html"><code>Candide.CandideEngine</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Events public System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt; Events System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;" id="events-system-collections-generic-dictionary-2-system-string-candideserver-eventbus-eventbus-"><td><span class="member-name-cell"><code>Events</code><a class="permalink" href="#events-system-collections-generic-dictionary-2-system-string-candideserver-eventbus-eventbus-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt; Events">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.String, <a href="../../types/CandideServer/CandideServer_EventBus_EventBus.html">CandideServer.EventBus.EventBus</a>&gt; Events</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_unsubscribableEventBusListeners private System.Collections.Generic.Dictionary&lt;System.Object, EventBus.EventBusListener&gt; _unsubscribableEventBusListeners System.Collections.Generic.Dictionary&lt;System.Object, EventBus.EventBusListener&gt;" id="-unsubscribableeventbuslisteners-system-collections-generic-dictionary-2-system-object-eventbus-eventbuslistener-"><td><span class="member-name-cell"><code>_unsubscribableEventBusListeners</code><a class="permalink" href="#-unsubscribableeventbuslisteners-system-collections-generic-dictionary-2-system-object-eventbus-eventbuslistener-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;System.Object, EventBus.EventBusListener&gt; _unsubscribableEventBusListeners">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;System.Object, <a href="../../types/CandideServer/EventBus_EventBusListener.html">EventBus.EventBusListener</a>&gt; _unsubscribableEventBusListeners</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SendEvent public System.Void SendEvent(System.String key, System.Object message, CandideServer.EventBus.EventBusArgs args, System.Boolean warnIfNothingSubscribed) System.Void key System.String message System.Object args CandideServer.EventBus.EventBusArgs warnIfNothingSubscribed System.Boolean" id="sendevent-system-string--system-object--candideserver-eventbus-eventbusargs--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>SendEvent</code></h3>
+<a class="permalink" href="#sendevent-system-string--system-object--candideserver-eventbus-eventbusargs--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SendEvent(System.String key, System.Object message, CandideServer.EventBus.EventBusArgs args, System.Boolean warnIfNothingSubscribed)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.EventBus.EventBusManager::SendEvent(System.String, System.Object, CandideServer.EventBus.EventBusArgs, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SendEvent(System.String key, System.Object message, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args, System.Boolean warnIfNothingSubscribed)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>56BFBDA91AE8C5D08B9DD3A233361AEA02B4922B03FF2067AE49A6FACAB94DB8</code></li>
+<li><span>Body hash</span><code>E0741FE11777C3EF671794EA1D52A9D7E2513613B60C30E3D5BCA86B5A7219AF</code></li>
+<li><span>IL size</span><span>51</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_EventBus_EventBus.html#sendevent-system-object--candideserver-eventbus-eventbusargs---system-void">CandideServer.EventBus.EventBus::SendEvent(System.Object, CandideServer.EventBus.EventBusArgs)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#listeneronpeerdisconnectedevent-litenetlib-netpeer--litenetlib-disconnectinfo---system-void"><code>CandideServer.Server.BaseServer::ListenerOnPeerDisconnectedEvent</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#riptidelisteneronpeerdisconnectedevent-system-object--riptide-serverdisconnectedeventargs---system-void"><code>CandideServer.Server.BaseServer::RiptideListenerOnPeerDisconnectedEvent</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Attempted to send event with key &#39;</code></li>
+<li><code>&#39;, but there is nothing subscribed.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SendEvent public System.Void SendEvent(System.String key, System.Object message, System.Boolean warnIfNothingSubscribed) System.Void key System.String message System.Object warnIfNothingSubscribed System.Boolean" id="sendevent-system-string--system-object--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>SendEvent</code></h3>
+<a class="permalink" href="#sendevent-system-string--system-object--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SendEvent(System.String key, System.Object message, System.Boolean warnIfNothingSubscribed)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.EventBus.EventBusManager::SendEvent(System.String, System.Object, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SendEvent(System.String key, System.Object message, System.Boolean warnIfNothingSubscribed)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>557DCD63AF7DF45DD8C2165718060181350671B43038D507270416EA244B37B1</code></li>
+<li><span>Body hash</span><code>B6333EE2F5C6EE83A00BC83567BCC2E6FEDCAB871475D9624D8794FFEE14DF37</code></li>
+<li><span>IL size</span><span>49</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_EventBus_EventBus.html#sendevent-system-object---system-void">CandideServer.EventBus.EventBus::SendEvent(System.Object)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#loadgame-candideserver-gamedescription--system-collections-generic-list-1-system-valuetuple-2-system-string-system-object-----system-void"><code>CandideServer.Saving.GameSaveManager::LoadGame</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#savegamestate-system-boolean---system-collections-generic-list-1-system-valuetuple-2-system-string-system-object--"><code>CandideServer.Saving.GameSaveManager::SaveGameState</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#updatebosslocationstate-system-guid--candideserver-models-boss-bosslocationstate---candideserver-models-boss-bosslocationmodel"><code>CandideServer.ServerControllers.BossServerController::UpdateBossLocationState</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_RewardsSController.html#registerreward-system-string--system-boolean---system-boolean"><code>CandideServer.ServerControllers.RewardsSController::RegisterReward</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#onraidbeaten-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel---system-void"><code>CandideServer.ServerManagers.RaidsServerManager::OnRaidBeaten</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#removeplayer-candideserver-serverservices-serverjoinedplayermodel---system-void"><code>CandideServer.ServerServices.PlayerServerService::RemovePlayer</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Holder_CandideHotBarSlot.html#use----system-boolean"><code>Candide.CandideUI.Components.Holder.CandideHotBarSlot::Use</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Holder_CandideInventorySlot.html#getpickupcontent----candide-candideui-components-holder-icandidedraggableholdercontent"><code>Candide.CandideUI.Components.Holder.CandideInventorySlot::GetPickupContent</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_PlayerUi.html#createplayercharacterui-candide-candideui-candidedesktop---system-void"><code>Candide.CandideUI.PlayerUi::CreatePlayerCharacterUi</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_PlayerUi.html#showfavourswindow----system-void"><code>Candide.CandideUI.PlayerUi::ShowFavoursWindow</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_SkillsAndFavourUi_SkillsAndFavourWindow.html#setcontent-skillsandfavourwindow-skillsandfavourcontenttype---system-void"><code>Candide.CandideUI.SkillsAndFavourUi.SkillsAndFavourWindow::SetContent</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_TownReport_TownReportWindow.html#buildui----system-void"><code>Candide.CandideUI.TownReport.TownReportWindow::BuildUi</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialJournalView.html#settutorial-candide-candideui-tutorial-tutorials---system-void"><code>Candide.CandideUI.Tutorial.TutorialJournalView::SetTutorial</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_PlayerInventoryUserControl.html#onmouserightclickfunc-candide-candideui-usercontrols-inventorycontrolonmouserightclickargs---system-boolean"><code>Candide.CandideUI.UserControls.PlayerInventoryUserControl::OnMouseRightClickFunc</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Windows_CandideStackSplitWindow.html#onwindowshown----system-void"><code>Candide.CandideUI.Windows.CandideStackSplitWindow::OnWindowShown</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Bridge_ClientEntitySystemBridge.html#onentitykilled-shared-combat-damageinfo--shared-entity-base-onkilledbehaviour--system-single---system-void"><code>Candide.Entities.Bridge.ClientEntitySystemBridge::OnEntityKilled</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Legacy_TreeController.html#onserversetstate-system-int32---system-void"><code>Candide.Entities.Controllers.Legacy.TreeController::OnServerSetState</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_FruitTreeController.html#onserversetstate-system-int32---system-void"><code>Candide.Entities.Controllers.Other.FruitTreeController::OnServerSetState</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerStates_DashState.html#onenter----system-void"><code>Candide.Entities.PlayerState.PlayerStates.DashState::OnEnter</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerStates_NormalState.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Entities.PlayerState.PlayerStates.NormalState::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerStates_ShieldDashState.html#onenter----system-void"><code>Candide.Entities.PlayerState.PlayerStates.ShieldDashState::OnEnter</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerStates_SpearDashState.html#onenter----system-void"><code>Candide.Entities.PlayerState.PlayerStates.SpearDashState::OnEnter</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_QuestsController.html#updatepersonalquests-candideserver-messagemodels-quests-updatepersonalquestsmessage---candide-gamemodels-controllers-updatequestsresult"><code>Candide.GameModels.Controllers.QuestsController::UpdatePersonalQuests</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_QuestsController.html#updateworldquests-candideserver-messagemodels-quests-updatequestsmessage---candide-gamemodels-controllers-updatequestsresult"><code>Candide.GameModels.Controllers.QuestsController::UpdateWorldQuests</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_TownReportsController.html#syncregisterreports-candideserver-messagemodels-towns-townsreporttype--system-collections-generic-list-1-shared-models-town-townreportsummarymodel----system-void"><code>Candide.GameModels.Controllers.TownReportsController::SyncRegisterReports</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_WorldFlagsController.html#synchworldflagchanged-candideserver-messagemodels-worldflagchangedmessage---system-void"><code>Candide.GameModels.Controllers.WorldFlagsController::SynchWorldFlagChanged</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_WorldItemController.html#lootworlditem-system-guid--system-guid--system-int32---system-void"><code>Candide.GameModels.Controllers.WorldItemController::LootWorldItem</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_BuildingsManager.html#buildingspawned-candideserver-messagemodels-buildings-buildingspawnedmessage---system-void"><code>Candide.GameModels.Managers.BuildingsManager::BuildingSpawned</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_ConstructionsManager.html#tryplaceconstruction-microsoft-xna-framework-point--shared-models-construction-constructionmodel--shared-models-items-iteminstancemodel---system-void"><code>Candide.GameModels.Managers.ConstructionsManager::TryPlaceConstruction</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_PlayerCharacterManager.html#onlocalplayercharacterloaded----system-void"><code>Candide.GameModels.Managers.PlayerCharacterManager::OnLocalPlayerCharacterLoaded</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_QuestsManager.html#addpersonalquests-candideserver-messagemodels-quests-addpersonalquestsmessage---system-void"><code>Candide.GameModels.Managers.QuestsManager::AddPersonalQuests</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_QuestsManager.html#addworldquests-candideserver-messagemodels-quests-addquestsmessage---system-void"><code>Candide.GameModels.Managers.QuestsManager::AddWorldQuests</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Attempted to send event with key &#39;</code></li>
+<li><code>&#39;, but there is nothing subscribed.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Subscribe public System.Void Subscribe(System.Reflection.Assembly assembly, System.String eventBusName) System.Void assembly System.Reflection.Assembly eventBusName System.String" id="subscribe-system-reflection-assembly--system-string---system-void">
+<div class="method-heading">
+<h3><code>Subscribe</code></h3>
+<a class="permalink" href="#subscribe-system-reflection-assembly--system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Subscribe(System.Reflection.Assembly assembly, System.String eventBusName)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.EventBus.EventBusManager::Subscribe(System.Reflection.Assembly, System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Subscribe(System.Reflection.Assembly assembly, System.String eventBusName)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>075ADBDCB4A8C6A5E28A76F741C929E49E8FFAFDC29B565A5B99347225A255FD</code></li>
+<li><span>Body hash</span><code>BD182FFBE06E5244E08C23743B73A921F600FE73B68910EAD41947EC5BE5E296</code></li>
+<li><span>IL size</span><span>959</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Reflection.Assembly::GetTypes()</code></li>
+<li><code>System.Type::GetMethods(System.Reflection.BindingFlags)</code></li>
+<li><code>System.Reflection.MethodBase::get_IsStatic()</code></li>
+<li><code>System.Reflection.CustomAttributeExtensions::GetCustomAttributes(System.Reflection.MemberInfo)</code></li>
+<li><code>System.Linq.Enumerable::ToArray(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+<li><code>System.Linq.Enumerable::Any(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+<li><code>System.Reflection.MethodBase::GetParameters()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Reflection.ParameterInfo::get_ParameterType()</code></li>
+<li><code>EventBusManager.&lt;&gt;c__DisplayClass2_0::.ctor()</code></li>
+<li><code>System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)</code></li>
+<li><code>System.Linq.Expressions.Expression::Parameter(System.Type, System.String)</code></li>
+<li><code>System.Linq.Expressions.Expression::Convert(System.Linq.Expressions.Expression, System.Type)</code></li>
+<li><code>System.Linq.Expressions.Expression::Call(System.Reflection.MethodInfo, System.Linq.Expressions.Expression, System.Linq.Expressions.Expression)</code></li>
+<li><code>System.Linq.Expressions.Expression::Lambda(System.Linq.Expressions.Expression, System.Linq.Expressions.ParameterExpression[])</code></li>
+<li><code>System.Linq.Expressions.Expression&lt;System.Action&lt;System.Object, CandideServer.EventBus.EventBusArgs&gt;&gt;::Compile()</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>CandideServer.EventBus.EventBus::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;::Add(!0, !1)</code></li>
+<li><code>System.Reflection.MemberInfo::get_Name()</code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String, System.String)</code></li>
+<li><code>EventBusManager.&lt;&gt;c__DisplayClass2_0::&lt;Subscribe&gt;b__0(System.Object, CandideServer.EventBus.EventBusArgs)</code></li>
+<li><code>EventBus.EventBusListener::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;EventBus.EventBusListener&gt;::Add(!0)</code></li>
+<li><code>EventBusManager.&lt;&gt;c__DisplayClass2_1::.ctor()</code></li>
+<li><code>System.Linq.Expressions.Expression::Call(System.Reflection.MethodInfo, System.Linq.Expressions.Expression)</code></li>
+<li><code>System.Linq.Expressions.Expression&lt;System.Action&lt;System.Object&gt;&gt;::Compile()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#initialize----system-void"><code>Candide.CandideEngine::Initialize</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>EventBus: </code></li>
+<li><code>::</code></li>
+<li><code> has too many parameters to subscribe</code></li>
+<li><code> has too few parameters to subscribe</code></li>
+<li><code>param</code></li>
+<li><code>args</code></li>
+<li><code>Event key </code></li>
+<li><code> has mismatched authorization check requirements. Detected in </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Subscribe public System.Void Subscribe&lt;T&gt;(System.String key, System.Action&lt;T, CandideServer.EventBus.EventBusArgs&gt; listener) System.Void key System.String listener System.Action&lt;T, CandideServer.EventBus.EventBusArgs&gt;" id="subscribe-1-system-string--system-action-2--t-candideserver-eventbus-eventbusargs----system-void">
+<div class="method-heading">
+<h3><code>Subscribe</code></h3>
+<a class="permalink" href="#subscribe-1-system-string--system-action-2--t-candideserver-eventbus-eventbusargs----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Subscribe&lt;T&gt;(System.String key, System.Action&lt;T, CandideServer.EventBus.EventBusArgs&gt; listener)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.EventBus.EventBusManager::Subscribe(System.String, System.Action&lt;T, CandideServer.EventBus.EventBusArgs&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Subscribe&lt;T&gt;(System.String key, System.Action&lt;T, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a>&gt; listener)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5A3580C65FF09C321658484562773DF3D341836736333548F38C49A8D9E61EDF</code></li>
+<li><span>Body hash</span><code>3D4C7F495317EE7A9245C2220C7B6B5B0A63DEFF9F3C3B817513B83AB2810610</code></li>
+<li><span>IL size</span><span>96</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>EventBusManager.&lt;&gt;c__DisplayClass3_0&lt;T&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>EventBusManager.&lt;&gt;c__DisplayClass3_0&lt;T&gt;::&lt;Subscribe&gt;b__0(System.Object, CandideServer.EventBus.EventBusArgs)</code></li>
+<li><code>EventBus.EventBusListener::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;EventBus.EventBusListener&gt;::Add(!0)</code></li>
+<li><code>CandideServer.EventBus.EventBus::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;::Add(!0, !1)</code></li>
+<li><code>EventBusManager.&lt;&gt;c__DisplayClass3_0&lt;T&gt;::&lt;Subscribe&gt;b__1(System.Object, CandideServer.EventBus.EventBusArgs)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Subscribe public System.Void Subscribe&lt;T&gt;(System.String key, System.Action&lt;T&gt; listener) System.Void key System.String listener System.Action&lt;T&gt;" id="subscribe-1-system-string--system-action-1--t----system-void">
+<div class="method-heading">
+<h3><code>Subscribe</code></h3>
+<a class="permalink" href="#subscribe-1-system-string--system-action-1--t----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Subscribe&lt;T&gt;(System.String key, System.Action&lt;T&gt; listener)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.EventBus.EventBusManager::Subscribe(System.String, System.Action&lt;T&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Subscribe&lt;T&gt;(System.String key, System.Action&lt;T&gt; listener)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6BC636AAB9B190658F87CB4B758B2A5D17045F82DF4C87D22EBA582CA33B116E</code></li>
+<li><span>Body hash</span><code>DDEE464DD092951EF7E147A592FB896CBE47B12B8B6A9F7E35EC1480A8627B52</code></li>
+<li><span>IL size</span><span>96</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>EventBusManager.&lt;&gt;c__DisplayClass4_0&lt;T&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>EventBusManager.&lt;&gt;c__DisplayClass4_0&lt;T&gt;::&lt;Subscribe&gt;b__0(System.Object, CandideServer.EventBus.EventBusArgs)</code></li>
+<li><code>EventBus.EventBusListener::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;EventBus.EventBusListener&gt;::Add(!0)</code></li>
+<li><code>CandideServer.EventBus.EventBus::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;::Add(!0, !1)</code></li>
+<li><code>EventBusManager.&lt;&gt;c__DisplayClass4_0&lt;T&gt;::&lt;Subscribe&gt;b__1(System.Object, CandideServer.EventBus.EventBusArgs)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SubscribeUnsubscribable public System.Void SubscribeUnsubscribable&lt;T&gt;(System.String key, System.Action&lt;T&gt; listener) System.Void key System.String listener System.Action&lt;T&gt;" id="subscribeunsubscribable-1-system-string--system-action-1--t----system-void">
+<div class="method-heading">
+<h3><code>SubscribeUnsubscribable</code></h3>
+<a class="permalink" href="#subscribeunsubscribable-1-system-string--system-action-1--t----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SubscribeUnsubscribable&lt;T&gt;(System.String key, System.Action&lt;T&gt; listener)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.EventBus.EventBusManager::SubscribeUnsubscribable(System.String, System.Action&lt;T&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SubscribeUnsubscribable&lt;T&gt;(System.String key, System.Action&lt;T&gt; listener)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6D51CD089EE62BDD6A1E0A6BDAFF986E955731071F24CB03F2B03F7F7C798DD8</code></li>
+<li><span>Body hash</span><code>080FDBB0EE13B0E802280893F4DE31B44C0C68ACBC84D0F1201343287333EE2C</code></li>
+<li><span>IL size</span><span>105</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>EventBusManager.&lt;&gt;c__DisplayClass5_0&lt;T&gt;::.ctor()</code></li>
+<li><code>EventBusManager.&lt;&gt;c__DisplayClass5_0&lt;T&gt;::&lt;SubscribeUnsubscribable&gt;b__0(System.Object, CandideServer.EventBus.EventBusArgs)</code></li>
+<li><code>EventBus.EventBusListener::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Object, EventBus.EventBusListener&gt;::Add(!0, !1)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;EventBus.EventBusListener&gt;::Add(!0)</code></li>
+<li><code>CandideServer.EventBus.EventBus::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;::Add(!0, !1)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetBus public System.Boolean TryGetBus(System.String key, out CandideServer.EventBus.EventBus&amp; eventBus) System.Boolean key System.String eventBus CandideServer.EventBus.EventBus&amp;" id="trygetbus-system-string--candideserver-eventbus-eventbus----system-boolean">
+<div class="method-heading">
+<h3><code>TryGetBus</code></h3>
+<a class="permalink" href="#trygetbus-system-string--candideserver-eventbus-eventbus----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetBus(System.String key, out CandideServer.EventBus.EventBus&amp; eventBus)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.EventBus.EventBusManager::TryGetBus(System.String, CandideServer.EventBus.EventBus&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetBus(System.String key, out <a href="../../types/CandideServer/CandideServer_EventBus_EventBus.html">CandideServer.EventBus.EventBus</a>&amp; eventBus)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EB3F9B781ACE2803DC821796090DB264DDACCBE035625C5BE75E5A5773E69FDD</code></li>
+<li><span>Body hash</span><code>BE0FD81C39B03FB09AB710F5FB78569B4F2B3103B1811937A895B875DCF6D96B</code></li>
+<li><span>IL size</span><span>14</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;::TryGetValue(!0, !1&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#listeneronnetworkreceiveevent-litenetlib-netpeer--litenetlib-netpacketreader--system-byte--litenetlib-deliverymethod---system-void"><code>CandideServer.Server.BaseServer::ListenerOnNetworkReceiveEvent</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#riptidelisteneronnetworkreceiveevent-system-object--riptide-messagereceivedeventargs---system-void"><code>CandideServer.Server.BaseServer::RiptideListenerOnNetworkReceiveEvent</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Unsubscribe public System.Void Unsubscribe&lt;T&gt;(System.String key, System.Action&lt;T&gt; func) System.Void key System.String func System.Action&lt;T&gt;" id="unsubscribe-1-system-string--system-action-1--t----system-void">
+<div class="method-heading">
+<h3><code>Unsubscribe</code></h3>
+<a class="permalink" href="#unsubscribe-1-system-string--system-action-1--t----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Unsubscribe&lt;T&gt;(System.String key, System.Action&lt;T&gt; func)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.EventBus.EventBusManager::Unsubscribe(System.String, System.Action&lt;T&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Unsubscribe&lt;T&gt;(System.String key, System.Action&lt;T&gt; func)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>178A7C2E1DF4A2AD6AE27538B5A5B69240F178C03668458B0AA874FC32534B7B</code></li>
+<li><span>Body hash</span><code>E8070103A151F8A5905D59857D5ADEDA5B5F4F4B965791E8A0E9031E88C91911</code></li>
+<li><span>IL size</span><span>74</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Object, EventBus.EventBusListener&gt;::Remove(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;EventBus.EventBusListener&gt;::Remove(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;EventBus.EventBusListener&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.EventBus.EventBus&gt;::Remove(!0)</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

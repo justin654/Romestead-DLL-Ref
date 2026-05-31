@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shared.Entity.EntityCopyHelper - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Shared.html">Shared</a></p>
+<div class="title-row">
+<h1>Shared.Entity.EntityCopyHelper</h1>
+<button class="copy-button" type="button" data-copy="Shared.Entity.EntityCopyHelper">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Shared.Entity.EntityCopyHelper
+
+- Assembly: `Shared`
+- Namespace: `Shared.Entity`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 5 methods, 0 properties, 1 fields, 0 events
+
+## Public Methods
+- `public System.Void CopyEntitiesWithMask(Shared.Entity.EntitySystem source, Shared.Entity.EntitySystem target, Shared.Entity.Components.Component mask, CandideCreator.Shared.Serialization.CandideReflection reflection)`
+- `public System.Void CopySystem(Shared.Entity.EntitySystem source, Shared.Entity.EntitySystem target, CandideCreator.Shared.Serialization.CandideReflection reflection)`
+- `public System.Void DeepCopyEntity(Shared.Entity.EntitySystem sourceSystem, System.Int32 sourceId, Shared.Entity.EntitySystem targetSystem, System.Int32 targetId, System.Boolean initializeControllers, System.Boolean ignoreControllers, CandideCreator.Shared.Serialization.CandideReflection reflection)`
+- `public System.Void ShallowCopyEntity(Shared.Entity.EntitySystem source, System.Int32 sourceId, Shared.Entity.EntitySystem target, System.Int32 targetId)`
+- `public System.Void TransferEntity(Shared.Entity.EntitySystem source, System.Int32 sourceId, Shared.Entity.EntitySystem target, System.Int32 targetId)`
+">Copy markdown</button>
+<a class="button" href="Shared_Entity_EntityCopyHelper.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Shared.Entity</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>5</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>1</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Shared</code></li>
+<li><span>Namespace</span><code>Shared.Entity</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>0C64D509F578D10667B4661394C60D2E81D427232BEC1972B102ACD56A00C9E5</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="FieldInfos private System.Reflection.FieldInfo[] FieldInfos System.Reflection.FieldInfo[]" id="fieldinfos-system-reflection-fieldinfo--"><td><span class="member-name-cell"><code>FieldInfos</code><a class="permalink" href="#fieldinfos-system-reflection-fieldinfo--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Reflection.FieldInfo[] FieldInfos">Copy</button></span></td><td>private</td><td><code>private System.Reflection.FieldInfo[] FieldInfos</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CopyEntitiesWithMask public System.Void CopyEntitiesWithMask(Shared.Entity.EntitySystem source, Shared.Entity.EntitySystem target, Shared.Entity.Components.Component mask, CandideCreator.Shared.Serialization.CandideReflection reflection) System.Void source Shared.Entity.EntitySystem target Shared.Entity.EntitySystem mask Shared.Entity.Components.Component reflection CandideCreator.Shared.Serialization.CandideReflection" id="copyentitieswithmask-shared-entity-entitysystem--shared-entity-entitysystem--shared-entity-components-component--candidecreator-shared-serialization-candidereflection---system-void">
+<div class="method-heading">
+<h3><code>CopyEntitiesWithMask</code></h3>
+<a class="permalink" href="#copyentitieswithmask-shared-entity-entitysystem--shared-entity-entitysystem--shared-entity-components-component--candidecreator-shared-serialization-candidereflection---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CopyEntitiesWithMask(Shared.Entity.EntitySystem source, Shared.Entity.EntitySystem target, Shared.Entity.Components.Component mask, CandideCreator.Shared.Serialization.CandideReflection reflection)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Entity.EntityCopyHelper::CopyEntitiesWithMask(Shared.Entity.EntitySystem, Shared.Entity.EntitySystem, Shared.Entity.Components.Component, CandideCreator.Shared.Serialization.CandideReflection)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CopyEntitiesWithMask(<a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> source, <a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> target, <a href="../../types/Shared/Shared_Entity_Components_Component.html">Shared.Entity.Components.Component</a> mask, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideReflection.html">CandideCreator.Shared.Serialization.CandideReflection</a> reflection)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>82B6DA6F83D67753277489FFA32ADF2F9E2082F448917C4C885C338AA7B1065A</code></li>
+<li><span>Body hash</span><code>4F9733FCE0B901E45164BB5E2E1BA6285BB7D89C43C4D993E2D8C90FE31E7755</code></li>
+<li><span>IL size</span><span>112</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#newentity----system-int32">Shared.Entity.EntitySystem::NewEntity()</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntityCopyHelper.html#deepcopyentity-shared-entity-entitysystem--system-int32--shared-entity-entitysystem--system-int32--system-boolean--system-boolean--candidecreator-shared-serialization-candidereflection---system-void">Shared.Entity.EntityCopyHelper::DeepCopyEntity(Shared.Entity.EntitySystem, System.Int32, Shared.Entity.EntitySystem, System.Int32, System.Boolean, System.Boolean, CandideCreator.Shared.Serialization.CandideReflection)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Could not fully entities, target is full. Ended at index </code></li>
+<li><code>.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CopySystem public System.Void CopySystem(Shared.Entity.EntitySystem source, Shared.Entity.EntitySystem target, CandideCreator.Shared.Serialization.CandideReflection reflection) System.Void source Shared.Entity.EntitySystem target Shared.Entity.EntitySystem reflection CandideCreator.Shared.Serialization.CandideReflection" id="copysystem-shared-entity-entitysystem--shared-entity-entitysystem--candidecreator-shared-serialization-candidereflection---system-void">
+<div class="method-heading">
+<h3><code>CopySystem</code></h3>
+<a class="permalink" href="#copysystem-shared-entity-entitysystem--shared-entity-entitysystem--candidecreator-shared-serialization-candidereflection---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CopySystem(Shared.Entity.EntitySystem source, Shared.Entity.EntitySystem target, CandideCreator.Shared.Serialization.CandideReflection reflection)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Entity.EntityCopyHelper::CopySystem(Shared.Entity.EntitySystem, Shared.Entity.EntitySystem, CandideCreator.Shared.Serialization.CandideReflection)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CopySystem(<a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> source, <a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> target, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideReflection.html">CandideCreator.Shared.Serialization.CandideReflection</a> reflection)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3434E071F89269894FC55777BCAA85682474BF8667BB107680A16DBB6144645C</code></li>
+<li><span>Body hash</span><code>756BB572BDE2601C743A719D86BB222B50394A58A0B4A2A17BED11E253C15BFA</code></li>
+<li><span>IL size</span><span>107</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#newentity----system-int32">Shared.Entity.EntitySystem::NewEntity()</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntityCopyHelper.html#deepcopyentity-shared-entity-entitysystem--system-int32--shared-entity-entitysystem--system-int32--system-boolean--system-boolean--candidecreator-shared-serialization-candidereflection---system-void">Shared.Entity.EntityCopyHelper::DeepCopyEntity(Shared.Entity.EntitySystem, System.Int32, Shared.Entity.EntitySystem, System.Int32, System.Boolean, System.Boolean, CandideCreator.Shared.Serialization.CandideReflection)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Could not fully copy system, target is full. Ended at index </code></li>
+<li><code>.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DeepCopyEntity public System.Void DeepCopyEntity(Shared.Entity.EntitySystem sourceSystem, System.Int32 sourceId, Shared.Entity.EntitySystem targetSystem, System.Int32 targetId, System.Boolean initializeControllers, System.Boolean ignoreControllers, CandideCreator.Shared.Serialization.CandideReflection reflection) System.Void sourceSystem Shared.Entity.EntitySystem sourceId System.Int32 targetSystem Shared.Entity.EntitySystem targetId System.Int32 initializeControllers System.Boolean ignoreControllers System.Boolean reflection CandideCreator.Shared.Serialization.CandideReflection" id="deepcopyentity-shared-entity-entitysystem--system-int32--shared-entity-entitysystem--system-int32--system-boolean--system-boolean--candidecreator-shared-serialization-candidereflection---system-void">
+<div class="method-heading">
+<h3><code>DeepCopyEntity</code></h3>
+<a class="permalink" href="#deepcopyentity-shared-entity-entitysystem--system-int32--shared-entity-entitysystem--system-int32--system-boolean--system-boolean--candidecreator-shared-serialization-candidereflection---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DeepCopyEntity(Shared.Entity.EntitySystem sourceSystem, System.Int32 sourceId, Shared.Entity.EntitySystem targetSystem, System.Int32 targetId, System.Boolean initializeControllers, System.Boolean ignoreControllers, CandideCreator.Shared.Serialization.CandideReflection reflection)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Entity.EntityCopyHelper::DeepCopyEntity(Shared.Entity.EntitySystem, System.Int32, Shared.Entity.EntitySystem, System.Int32, System.Boolean, System.Boolean, CandideCreator.Shared.Serialization.CandideReflection)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DeepCopyEntity(<a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> sourceSystem, System.Int32 sourceId, <a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> targetSystem, System.Int32 targetId, System.Boolean initializeControllers, System.Boolean ignoreControllers, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideReflection.html">CandideCreator.Shared.Serialization.CandideReflection</a> reflection)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C0A8AAE46FF26BC3F7ADA6D6C783636B51D2F56D49586005061F4C9E1AEEA965</code></li>
+<li><span>Body hash</span><code>B9C119C04E75E93E81F0773194C74C5F21611BAC4A1D31A5CEFBBBDBA1993C8C</code></li>
+<li><span>IL size</span><span>408</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Reflection.FieldInfo::GetValue(System.Object)</code></li>
+<li><code>System.Array::GetValue(System.Int32)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideReflection.html#clone-system-object---system-object">CandideCreator.Shared.Serialization.CandideReflection::Clone(System.Object)</a></code></li>
+<li><code>System.Array::SetValue(System.Object, System.Int32)</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#clone-shared-entity-entitywrapper---shared-entity-base-abstractcontroller">Shared.Entity.Base.AbstractController::Clone(Shared.Entity.EntityWrapper)</a></code></li>
+<li><code>CandideCreator.Shared.Helpers.Parameters::.ctor(CandideCreator.Shared.Helpers.Parameters)</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#attachentity-shared-entity-entitywrapper--candidecreator-shared-helpers-parameters---system-void">Shared.Entity.Base.AbstractController::AttachEntity(Shared.Entity.EntityWrapper, CandideCreator.Shared.Helpers.Parameters)</a></code></li>
+<li><code>CandideCreator.Shared.Serialization.CandideReflection::Clone(!!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractAi.html#attachentitycontroller-shared-entity-base-entitycontrollerbase--candidecreator-shared-helpers-parameters---system-void">Shared.Entity.Base.AbstractAi::AttachEntityController(Shared.Entity.Base.EntityControllerBase, CandideCreator.Shared.Helpers.Parameters)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#entityinitialize----system-void">Shared.Entity.Base.AbstractController::EntityInitialize()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ServerEntityDataManager.html#spawndoodad-system-guid--shared-entity-entitysystem--system-boolean--system-boolean---shared-entity-entitywrapper"><code>CandideServer.Entities.ServerEntityDataManager::SpawnDoodad</code></a></li>
+<li><a href="../../types/Romestead/Candide_Database_Doodad_DoodadDatabaseManager.html#spawndoodad-system-guid--shared-entity-entitysystem--system-boolean--system-boolean---shared-entity-entitywrapper"><code>Candide.Database.Doodad.DoodadDatabaseManager::SpawnDoodad</code></a></li>
+<li><a href="../../types/Shared/Shared_Entity_EntityCopyHelper.html#copyentitieswithmask-shared-entity-entitysystem--shared-entity-entitysystem--shared-entity-components-component--candidecreator-shared-serialization-candidereflection---system-void"><code>Shared.Entity.EntityCopyHelper::CopyEntitiesWithMask</code></a></li>
+<li><a href="../../types/Shared/Shared_Entity_EntityCopyHelper.html#copysystem-shared-entity-entitysystem--shared-entity-entitysystem--candidecreator-shared-serialization-candidereflection---system-void"><code>Shared.Entity.EntityCopyHelper::CopySystem</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ShallowCopyEntity public System.Void ShallowCopyEntity(Shared.Entity.EntitySystem source, System.Int32 sourceId, Shared.Entity.EntitySystem target, System.Int32 targetId) System.Void source Shared.Entity.EntitySystem sourceId System.Int32 target Shared.Entity.EntitySystem targetId System.Int32" id="shallowcopyentity-shared-entity-entitysystem--system-int32--shared-entity-entitysystem--system-int32---system-void">
+<div class="method-heading">
+<h3><code>ShallowCopyEntity</code></h3>
+<a class="permalink" href="#shallowcopyentity-shared-entity-entitysystem--system-int32--shared-entity-entitysystem--system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ShallowCopyEntity(Shared.Entity.EntitySystem source, System.Int32 sourceId, Shared.Entity.EntitySystem target, System.Int32 targetId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Entity.EntityCopyHelper::ShallowCopyEntity(Shared.Entity.EntitySystem, System.Int32, Shared.Entity.EntitySystem, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ShallowCopyEntity(<a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> source, System.Int32 sourceId, <a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> target, System.Int32 targetId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D2D537F049EE5F03307902EC5DF9ACB0131C54329DC805B284132A6F158B66BB</code></li>
+<li><span>Body hash</span><code>CF2B5D8D1D4A6691C99055787F6CFA1197E60AFDBC475D2E8ECD772B6D68E6B7</code></li>
+<li><span>IL size</span><span>63</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Reflection.FieldInfo::GetValue(System.Object)</code></li>
+<li><code>System.Array::GetValue(System.Int32)</code></li>
+<li><code>System.Array::SetValue(System.Object, System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Entity_EntityCopyHelper.html#transferentity-shared-entity-entitysystem--system-int32--shared-entity-entitysystem--system-int32---system-void"><code>Shared.Entity.EntityCopyHelper::TransferEntity</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TransferEntity public System.Void TransferEntity(Shared.Entity.EntitySystem source, System.Int32 sourceId, Shared.Entity.EntitySystem target, System.Int32 targetId) System.Void source Shared.Entity.EntitySystem sourceId System.Int32 target Shared.Entity.EntitySystem targetId System.Int32" id="transferentity-shared-entity-entitysystem--system-int32--shared-entity-entitysystem--system-int32---system-void">
+<div class="method-heading">
+<h3><code>TransferEntity</code></h3>
+<a class="permalink" href="#transferentity-shared-entity-entitysystem--system-int32--shared-entity-entitysystem--system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void TransferEntity(Shared.Entity.EntitySystem source, System.Int32 sourceId, Shared.Entity.EntitySystem target, System.Int32 targetId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Entity.EntityCopyHelper::TransferEntity(Shared.Entity.EntitySystem, System.Int32, Shared.Entity.EntitySystem, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void TransferEntity(<a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> source, System.Int32 sourceId, <a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> target, System.Int32 targetId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2C14EAE53FA97CD845B97F13F921EB2DEE69B55A1886652338459482395E9822</code></li>
+<li><span>Body hash</span><code>E1B9B127F93B6A4D0F58EB3B83C2146EE2E75E9005875652AE46E253CEF201F7</code></li>
+<li><span>IL size</span><span>56</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Entity_EntityCopyHelper.html#shallowcopyentity-shared-entity-entitysystem--system-int32--shared-entity-entitysystem--system-int32---system-void">Shared.Entity.EntityCopyHelper::ShallowCopyEntity(Shared.Entity.EntitySystem, System.Int32, Shared.Entity.EntitySystem, System.Int32)</a></code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

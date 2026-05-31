@@ -1,0 +1,950 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BM.BTFactory - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>BM.BTFactory</h1>
+<button class="copy-button" type="button" data-copy="BM.BTFactory">Copy type</button>
+<button class="copy-button" type="button" data-copy="# BM.BTFactory
+
+- Assembly: `CandideServer`
+- Namespace: `BM`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 19 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public BM.BehaviorTree ApproachAndPickUpEntity(System.String pickupEntity, CandideServer.Entities.CommonTasks.PathFindTaskArgs pathfindArgs, System.Single accelerationScaling, System.Int32 moveAnim, System.Int32 liftAnim, System.Single pickupDuration)`
+- `public BM.BehaviorTree ApproachCarryableEntity(System.String carryableEntity, CandideServer.Entities.CommonTasks.PathFindTaskArgs pathfindArgs, System.Single accelerationScaling, System.Int32 moveAnim)`
+- `public BM.BehaviorTree Chase(BM.ChaseBTSettings s)`
+- `public BM.BehaviorTree ExitOnChanceCondition(BM.Blackboard blackboard, BM.BehaviorTree tree, BM.NodeArg&lt;System.Single&gt; initialChance, BM.NodeArg&lt;System.Single&gt; chanceProgression, BM.NodeArg&lt;System.Int32&gt; maxTries)`
+- `public BM.BehaviorTree Flee(BM.FleeBTSettings settings)`
+- `public BM.BehaviorTree Idle(System.Int32 anim, BM.NodeArg&lt;System.Single&gt; duration)`
+- `public BM.BehaviorTree IdleWithRange(System.Int32 anim, System.Single minDuration, System.Single maxDuration)`
+- `public BM.BehaviorTree Jump(BM.JumpBTSettings s)`
+- `public BM.BehaviorTree MoveToEntity(NodeEntityArg entityArg, System.Int32 moveAnim, BM.NodeArg&lt;System.Single&gt; accelerationScaling, System.Single goalStopDistance)`
+- `public BM.BehaviorTree MoveToPosition(System.String position, System.Int32 moveAnim, BM.NodeArg&lt;System.Single&gt; accelerationScaling)`
+- `public BM.BehaviorTree Patrol(BM.PatrolBTSettings s)`
+- `public BM.BehaviorTree PickUpCarryableEntity(System.String pickupEntity, System.Int32 liftAnim, System.Single pickupDuration)`
+- `public BM.BehaviorTree TimerCondition(BM.Blackboard blackboard, System.String writeTimer, BM.NodeArg&lt;System.Single&gt; duration)`
+- `public BM.BehaviorTree TimerConditionWithCondition(BM.TimerConditionWithConditionBTSettings s)`
+- `public BM.BehaviorTree TimerConditionWithInvertedCondition(BM.TimerConditionWithConditionBTSettings s)`
+- `public BM.BehaviorTree VultureFlapMovement(BM.NodeArg&lt;System.Single&gt; targetFlightHeight)`
+- `public BM.BehaviorTree VultureSwoopMovement(BM.VultureSwoopMovementBTSettings s)`
+- `public BM.BehaviorTree Wander(BM.WanderBTSettings s)`
+- `public BM.BehaviorTree WanderWalkHome(BM.WanderWalkHomeBTSettings s)`
+">Copy markdown</button>
+<a class="button" href="BM_BTFactory.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>BM</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>19</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>BM</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>F5F934D9D9ABCDA798C948BC947DA531CB54860EB3447F580913658278729EF7</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ApproachAndPickUpEntity public BM.BehaviorTree ApproachAndPickUpEntity(System.String pickupEntity, CandideServer.Entities.CommonTasks.PathFindTaskArgs pathfindArgs, System.Single accelerationScaling, System.Int32 moveAnim, System.Int32 liftAnim, System.Single pickupDuration) BM.BehaviorTree pickupEntity System.String pathfindArgs CandideServer.Entities.CommonTasks.PathFindTaskArgs accelerationScaling System.Single moveAnim System.Int32 liftAnim System.Int32 pickupDuration System.Single" id="approachandpickupentity-system-string--candideserver-entities-commontasks-pathfindtaskargs--system-single--system-int32--system-int32--system-single---bm-behaviortree">
+<div class="method-heading">
+<h3><code>ApproachAndPickUpEntity</code></h3>
+<a class="permalink" href="#approachandpickupentity-system-string--candideserver-entities-commontasks-pathfindtaskargs--system-single--system-int32--system-int32--system-single---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree ApproachAndPickUpEntity(System.String pickupEntity, CandideServer.Entities.CommonTasks.PathFindTaskArgs pathfindArgs, System.Single accelerationScaling, System.Int32 moveAnim, System.Int32 liftAnim, System.Single pickupDuration)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::ApproachAndPickUpEntity(System.String, CandideServer.Entities.CommonTasks.PathFindTaskArgs, System.Single, System.Int32, System.Int32, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> ApproachAndPickUpEntity(System.String pickupEntity, <a href="../../types/CandideServer/CandideServer_Entities_CommonTasks_PathFindTaskArgs.html">CandideServer.Entities.CommonTasks.PathFindTaskArgs</a> pathfindArgs, System.Single accelerationScaling, System.Int32 moveAnim, System.Int32 liftAnim, System.Single pickupDuration)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>14D59353B4D7BFE85C6D4FD3E9E57FACD91FE3DDB4E1F9DAE12E39A0FA3DBE86</code></li>
+<li><span>Body hash</span><code>A318E5DFA033EAE1AF35051AB914B79D92873188406B26DFA4BE726AB1103689</code></li>
+<li><span>IL size</span><span>232</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BM.ParallelSequence::.ctor(System.Boolean, System.Boolean, System.Boolean)</code></li>
+<li><code>BM.BlackboardRef::op_Implicit(System.String)</code></li>
+<li><code>BM.IsEntityCarried::.ctor(BM.BlackboardRef)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#invertleaf-bm-leaf---bm-btbuilder">BM.BTBuilder::InvertLeaf(BM.Leaf)</a></code></li>
+<li><code>BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(T)</code></li>
+<li><code>BM.NodeArg&lt;System.Int32&gt;::op_Implicit(T)</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;::.ctor(!0)</code></li>
+<li><code>BM.PathFind&lt;Shared.Entity.EntityWrapper&gt;::.ctor(BM.NodeArg&lt;T&gt;, CandideServer.Entities.CommonTasks.PathFindTaskArgs, BM.NodeArg&lt;System.Single&gt;, System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code>NodeEntityArg::op_Implicit(System.String)</code></li>
+<li><code>BM.TryPickUpEntity::.ctor(NodeEntityArg, NodeEntityArg)</code></li>
+<li><code>BM.StringNodeArg::op_Implicit(System.String)</code></li>
+<li><code>System.ValueTuple&lt;System.Single, System.Single&gt;::.ctor(!0, !1)</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;System.Single, System.Single&gt;&gt;::.ctor(!0)</code></li>
+<li><code>System.Nullable&lt;System.Single&gt;::.ctor(!0)</code></li>
+<li><code>BM.PlaySfxOnEntityFromServer::.ctor(BM.StringNodeArg, System.Nullable&lt;System.ValueTuple&lt;System.Single, System.Single&gt;&gt;, System.Nullable&lt;System.Single&gt;)</code></li>
+<li><code>BM.PlayAnimation::.ctor(System.Int32, NodeEntityArg)</code></li>
+<li><code>BM.Wait::.ctor(BM.NodeArg&lt;System.Single&gt;, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTHelper.html#groupvalue-system-string--system-string---bm-blackboardref">BM.BTHelper::GroupValue(System.String, System.String)</a></code></li>
+<li><code>BM.NodeArg&lt;System.Collections.Generic.Dictionary&lt;Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper&gt;&gt;::op_Implicit(BM.BlackboardRef)</code></li>
+<li><code>BM.RemoveDictionaryValue&lt;Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper&gt;::.ctor(BM.NodeArg&lt;System.Collections.Generic.Dictionary&lt;T1, T2&gt;&gt;, BM.NodeArg&lt;T1&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>event:/creature/potman/potman_grunt</code></li>
+<li><code>currentlyDesiredCarryables</code></li>
+<li><code>globalPotmen</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ApproachCarryableEntity public BM.BehaviorTree ApproachCarryableEntity(System.String carryableEntity, CandideServer.Entities.CommonTasks.PathFindTaskArgs pathfindArgs, System.Single accelerationScaling, System.Int32 moveAnim) BM.BehaviorTree carryableEntity System.String pathfindArgs CandideServer.Entities.CommonTasks.PathFindTaskArgs accelerationScaling System.Single moveAnim System.Int32" id="approachcarryableentity-system-string--candideserver-entities-commontasks-pathfindtaskargs--system-single--system-int32---bm-behaviortree">
+<div class="method-heading">
+<h3><code>ApproachCarryableEntity</code></h3>
+<a class="permalink" href="#approachcarryableentity-system-string--candideserver-entities-commontasks-pathfindtaskargs--system-single--system-int32---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree ApproachCarryableEntity(System.String carryableEntity, CandideServer.Entities.CommonTasks.PathFindTaskArgs pathfindArgs, System.Single accelerationScaling, System.Int32 moveAnim)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::ApproachCarryableEntity(System.String, CandideServer.Entities.CommonTasks.PathFindTaskArgs, System.Single, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> ApproachCarryableEntity(System.String carryableEntity, <a href="../../types/CandideServer/CandideServer_Entities_CommonTasks_PathFindTaskArgs.html">CandideServer.Entities.CommonTasks.PathFindTaskArgs</a> pathfindArgs, System.Single accelerationScaling, System.Int32 moveAnim)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6768FE36717EB6A7108C8C9090017BA4CA79A350483B8CEDADCBF7495786D780</code></li>
+<li><span>Body hash</span><code>F52DCD182182EB267B8C4D066E169105CC68C14CEADAAC1A608EF1B4E53FEE7B</code></li>
+<li><span>IL size</span><span>94</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BM.ParallelSequence::.ctor(System.Boolean, System.Boolean, System.Boolean)</code></li>
+<li><code>BM.BlackboardRef::op_Implicit(System.String)</code></li>
+<li><code>BM.IsEntityCarried::.ctor(BM.BlackboardRef)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#invertleaf-bm-leaf---bm-btbuilder">BM.BTBuilder::InvertLeaf(BM.Leaf)</a></code></li>
+<li><code>BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(T)</code></li>
+<li><code>BM.NodeArg&lt;System.Int32&gt;::op_Implicit(T)</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;::.ctor(!0)</code></li>
+<li><code>BM.PathFind&lt;Shared.Entity.EntityWrapper&gt;::.ctor(BM.NodeArg&lt;T&gt;, CandideServer.Entities.CommonTasks.PathFindTaskArgs, BM.NodeArg&lt;System.Single&gt;, System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Chase public BM.BehaviorTree Chase(BM.ChaseBTSettings s) BM.BehaviorTree s BM.ChaseBTSettings" id="chase-bm-chasebtsettings---bm-behaviortree">
+<div class="method-heading">
+<h3><code>Chase</code></h3>
+<a class="permalink" href="#chase-bm-chasebtsettings---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree Chase(BM.ChaseBTSettings s)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::Chase(BM.ChaseBTSettings)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> Chase(<a href="../../types/CandideServer/BM_ChaseBTSettings.html">BM.ChaseBTSettings</a> s)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3D2891613B4EB2BC1757C9EFD34CD8E3B10033786A6C86BB26920D6E0589E924</code></li>
+<li><span>Body hash</span><code>F074F5F22A3A063A3648CA4230CBFB19B898AAFB2FB16B50DDA6497D277BF145</code></li>
+<li><span>IL size</span><span>55</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.NodeArg&lt;System.Int32&gt;::op_Implicit(T)</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;::.ctor(!0)</code></li>
+<li><code>BM.PathFind&lt;Shared.Entity.EntityWrapper&gt;::.ctor(BM.NodeArg&lt;T&gt;, CandideServer.Entities.CommonTasks.PathFindTaskArgs, BM.NodeArg&lt;System.Single&gt;, System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ExitOnChanceCondition public BM.BehaviorTree ExitOnChanceCondition(BM.Blackboard blackboard, BM.BehaviorTree tree, BM.NodeArg&lt;System.Single&gt; initialChance, BM.NodeArg&lt;System.Single&gt; chanceProgression, BM.NodeArg&lt;System.Int32&gt; maxTries) BM.BehaviorTree blackboard BM.Blackboard tree BM.BehaviorTree initialChance BM.NodeArg&lt;System.Single&gt; chanceProgression BM.NodeArg&lt;System.Single&gt; maxTries BM.NodeArg&lt;System.Int32&gt;" id="exitonchancecondition-bm-blackboard--bm-behaviortree--bm-nodearg-1-system-single---bm-nodearg-1-system-single---bm-nodearg-1-system-int32----bm-behaviortree">
+<div class="method-heading">
+<h3><code>ExitOnChanceCondition</code></h3>
+<a class="permalink" href="#exitonchancecondition-bm-blackboard--bm-behaviortree--bm-nodearg-1-system-single---bm-nodearg-1-system-single---bm-nodearg-1-system-int32----bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree ExitOnChanceCondition(BM.Blackboard blackboard, BM.BehaviorTree tree, BM.NodeArg&lt;System.Single&gt; initialChance, BM.NodeArg&lt;System.Single&gt; chanceProgression, BM.NodeArg&lt;System.Int32&gt; maxTries)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::ExitOnChanceCondition(BM.Blackboard, BM.BehaviorTree, BM.NodeArg&lt;System.Single&gt;, BM.NodeArg&lt;System.Single&gt;, BM.NodeArg&lt;System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> ExitOnChanceCondition(<a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard, <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> tree, <a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;System.Single&gt; initialChance, <a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;System.Single&gt; chanceProgression, <a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;System.Int32&gt; maxTries)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D780C0616BCFE880D201C1F8DC779C5149AB8D32AE08A5BC53E1801272432F31</code></li>
+<li><span>Body hash</span><code>477DCD420E8820DC677D32380316EAE450013DB4309B48351E9CDB6D2166B052</code></li>
+<li><span>IL size</span><span>255</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BM.Blackboard::SetValue(System.String, T)</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::Get(BM.Blackboard)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BM.BehaviorTreeSucceeded::.ctor(BM.BehaviorTree)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.NodeArg&lt;System.Int32&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.NodeArg&lt;System.Int32&gt;::op_Implicit(T)</code></li>
+<li><code>BM.AddInt::.ctor(BM.NodeArg&lt;System.Int32&gt;, BM.NodeArg&lt;System.Int32&gt;)</code></li>
+<li><code>BM.Selector::.ctor()</code></li>
+<li><code>BM.NumericalCondition&lt;System.Int32&gt;::.ctor(BM.NodeArg&lt;T&gt;, ComparisonOperators, BM.NodeArg&lt;T&gt;)</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.Chance::.ctor(BM.NodeArg&lt;System.Single&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code>BM.SetVariable&lt;System.Int32&gt;::.ctor(System.String, BM.NodeArg&lt;T&gt;)</code></li>
+<li><code>BM.SetVariable&lt;System.Single&gt;::.ctor(System.String, BM.NodeArg&lt;T&gt;)</code></li>
+<li><code>BM.Failer::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#decorator-bm-decorator---bm-btbuilder">BM.BTBuilder::Decorator(BM.Decorator)</a></code></li>
+<li><code>BM.AddFloat::.ctor(BM.NodeArg&lt;System.Single&gt;, BM.NodeArg&lt;System.Single&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>counter</code></li>
+<li><code>currentChance</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Flee public BM.BehaviorTree Flee(BM.FleeBTSettings settings) BM.BehaviorTree settings BM.FleeBTSettings" id="flee-bm-fleebtsettings---bm-behaviortree">
+<div class="method-heading">
+<h3><code>Flee</code></h3>
+<a class="permalink" href="#flee-bm-fleebtsettings---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree Flee(BM.FleeBTSettings settings)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::Flee(BM.FleeBTSettings)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> Flee(<a href="../../types/CandideServer/BM_FleeBTSettings.html">BM.FleeBTSettings</a> settings)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8CF6FCB014842FF567F639FB4826D7783D19508D173E97C4837F89176BBDDC28</code></li>
+<li><span>Body hash</span><code>E9BF7A10BA9D5B21DCF64DDB2A09CCAC6E5BC44B2012AA6DD7F980ED7C381788</code></li>
+<li><span>IL size</span><span>246</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BTFactory.&lt;&gt;c__DisplayClass4_0::.ctor()</code></li>
+<li><code>BM.BTBuilder::.ctor()</code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;::op_Implicit(T)</code></li>
+<li><code>BM.GetSafestFleeDirection::.ctor(System.String, BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;, System.Nullable&lt;BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(T)</code></li>
+<li><code>BM.RandomRangeFloat::.ctor(System.String, BM.NodeArg&lt;System.Single&gt;, BM.NodeArg&lt;System.Single&gt;)</code></li>
+<li><code>BM.NodeArg&lt;Microsoft.Xna.Framework.Vector2&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.RotateVector2::.ctor(BM.NodeArg&lt;Microsoft.Xna.Framework.Vector2&gt;, BM.NodeArg&lt;System.Single&gt;)</code></li>
+<li><code>BTFactory.&lt;&gt;c__DisplayClass4_0::&lt;Flee&gt;b__0(BM.BTUpdateContext, BM.Blackboard, System.Object[])</code></li>
+<li><code>System.Action&lt;BM.BTUpdateContext, BM.Blackboard, System.Object[]&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Array::Empty()</code></li>
+<li><code>BM.CustomVoid::.ctor(System.Action&lt;BM.BTUpdateContext, BM.Blackboard, System.Object[]&gt;, System.Object[])</code></li>
+<li><code>BM.NodeArg&lt;System.Int32&gt;::op_Implicit(T)</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;::.ctor(!0)</code></li>
+<li><code>BM.PathFind&lt;Microsoft.Xna.Framework.Vector2&gt;::.ctor(BM.NodeArg&lt;T&gt;, CandideServer.Entities.CommonTasks.PathFindTaskArgs, BM.NodeArg&lt;System.Single&gt;, System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>safestFleeDirection</code></li>
+<li><code>offsetAngle</code></li>
+<li><code>fleePosition</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Idle public BM.BehaviorTree Idle(System.Int32 anim, BM.NodeArg&lt;System.Single&gt; duration) BM.BehaviorTree anim System.Int32 duration BM.NodeArg&lt;System.Single&gt;" id="idle-system-int32--bm-nodearg-1-system-single----bm-behaviortree">
+<div class="method-heading">
+<h3><code>Idle</code></h3>
+<a class="permalink" href="#idle-system-int32--bm-nodearg-1-system-single----bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree Idle(System.Int32 anim, BM.NodeArg&lt;System.Single&gt; duration)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::Idle(System.Int32, BM.NodeArg&lt;System.Single&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> Idle(System.Int32 anim, <a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;System.Single&gt; duration)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CD86D9AD61283C431D39E54F1FFE3DC454D606593814EDC7FD98451C68191F79</code></li>
+<li><span>Body hash</span><code>C3BF28CEF71411CC632E1E9EB176BCA73E3EABB0B47E15F44D3BA2DA27ECDFD7</code></li>
+<li><span>IL size</span><span>65</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BM.StopMoving::.ctor(NodeEntityArg)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.PlayAnimation::.ctor(System.Int32, NodeEntityArg)</code></li>
+<li><code>BM.Wait::.ctor(BM.NodeArg&lt;System.Single&gt;, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IdleWithRange public BM.BehaviorTree IdleWithRange(System.Int32 anim, System.Single minDuration, System.Single maxDuration) BM.BehaviorTree anim System.Int32 minDuration System.Single maxDuration System.Single" id="idlewithrange-system-int32--system-single--system-single---bm-behaviortree">
+<div class="method-heading">
+<h3><code>IdleWithRange</code></h3>
+<a class="permalink" href="#idlewithrange-system-int32--system-single--system-single---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree IdleWithRange(System.Int32 anim, System.Single minDuration, System.Single maxDuration)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::IdleWithRange(System.Int32, System.Single, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> IdleWithRange(System.Int32 anim, System.Single minDuration, System.Single maxDuration)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4BB53261C4D953994AAF9AE8AD6ABC7A695510DB4D0F865616C4DA654484A845</code></li>
+<li><span>Body hash</span><code>12BADD1242AA93996B42D5D99C1C4B354D1ECF9731D33A6E9D089D8042A93ADC</code></li>
+<li><span>IL size</span><span>101</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BM.StopMoving::.ctor(NodeEntityArg)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.PlayAnimation::.ctor(System.Int32, NodeEntityArg)</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(T)</code></li>
+<li><code>BM.RandomRangeFloat::.ctor(System.String, BM.NodeArg&lt;System.Single&gt;, BM.NodeArg&lt;System.Single&gt;)</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.Wait::.ctor(BM.NodeArg&lt;System.Single&gt;, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerGoatController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerGoatController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerLizardController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerLizardController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerMouseController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerMouseController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerRabbitController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerRabbitController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerScarabController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerScarabController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerSquirrelController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerSquirrelController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerAshManController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerAshManController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerBearController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerBearController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerBoarController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerBoarController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerEngineerController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerEngineerController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFireElementalController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerFireElementalController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerGhostlyWomanController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerGhostlyWomanController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerMasterEngineerController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerMasterEngineerController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerMedusaController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerMedusaController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerRatController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerRatController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSkeletonWarriorController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSkeletonWarriorController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSmallScorpionController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSmallScorpionController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSnakeController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSnakeController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerWolfController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerWolfController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerWildCitizenEntityController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.ServerWildCitizenEntityController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Bear_ServerBearCubController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.ControllerSets.Bear.ServerBearCubController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Fallen_SkeletonArcher_ServerFallenSpearController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.ControllerSets.Fallen.SkeletonArcher.ServerFallenSpearController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Fallen_SkeletonArcher_ServerSkeletonArcherController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.ControllerSets.Fallen.SkeletonArcher.ServerSkeletonArcherController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_TurtleNew_ServerTurtleController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.ControllerSets.TurtleNew.ServerTurtleController::CreateStateMachine</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>idleDuration</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Jump public BM.BehaviorTree Jump(BM.JumpBTSettings s) BM.BehaviorTree s BM.JumpBTSettings" id="jump-bm-jumpbtsettings---bm-behaviortree">
+<div class="method-heading">
+<h3><code>Jump</code></h3>
+<a class="permalink" href="#jump-bm-jumpbtsettings---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree Jump(BM.JumpBTSettings s)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::Jump(BM.JumpBTSettings)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> Jump(<a href="../../types/CandideServer/BM_JumpBTSettings.html">BM.JumpBTSettings</a> s)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>236D782D3E92790CAD701ACF6D18FEEF8AC2BCA104585D078F8101AFBD59C388</code></li>
+<li><span>Body hash</span><code>4082C50056FE380E3F6967DF20665196F3F6A8D093D1835AD3C274F8D34C43BB</code></li>
+<li><span>IL size</span><span>716</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BTFactory.&lt;&gt;c__DisplayClass7_0::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BM.PlayAnimation::.ctor(System.Int32, NodeEntityArg)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(T)</code></li>
+<li><code>BM.Wait::.ctor(BM.NodeArg&lt;System.Single&gt;, System.String)</code></li>
+<li><code>BM.PlayVfx::.ctor(System.Byte)</code></li>
+<li><code>BM.PlaySfxOnEntityFromServer::.ctor(BM.StringNodeArg, System.Nullable&lt;System.Single&gt;, System.Nullable&lt;System.Single&gt;)</code></li>
+<li><code>BTFactory.&lt;&gt;c__DisplayClass7_0::&lt;Jump&gt;b__0()</code></li>
+<li><code>System.Func&lt;System.Boolean&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>BM.CustomBool::.ctor(System.Func&lt;System.Boolean&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_ConditionHelper.html#leaf-bm-leaf---bm-ibasecondition">BM.ConditionHelper::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.ConditionalDecorator::.ctor(BM.IBaseCondition, System.Boolean, System.Boolean, Node.Status)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#decorator-bm-decorator---bm-btbuilder">BM.BTBuilder::Decorator(BM.Decorator)</a></code></li>
+<li><code>CastSpellNode.Args::.ctor()</code></li>
+<li><code>BM.CastSpellNode::.ctor(CastSpellNode.Args)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code>BM.JumpTowardsTarget::.ctor(JumpTowardsTarget.Args)</code></li>
+<li><code>BTFactory.&lt;&gt;c__DisplayClass7_0::&lt;Jump&gt;b__1(BM.BTUpdateContext, BM.Blackboard, System.Object[])</code></li>
+<li><code>System.Action&lt;BM.BTUpdateContext, BM.Blackboard, System.Object[]&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Array::Empty()</code></li>
+<li><code>BM.CustomVoid::.ctor(System.Action&lt;BM.BTUpdateContext, BM.Blackboard, System.Object[]&gt;, System.Object[])</code></li>
+<li><code>BM.ParallelSequence::.ctor(System.Boolean)</code></li>
+<li><code>BTFactory.&lt;&gt;c__DisplayClass7_0::&lt;Jump&gt;b__2(BM.BTUpdateContext, BM.Blackboard, System.Object[])</code></li>
+<li><code>System.Func&lt;BM.BTUpdateContext, BM.Blackboard, System.Object[], Node.Status&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>BM.Custom::.ctor(System.Func&lt;BM.BTUpdateContext, BM.Blackboard, System.Object[], Node.Status&gt;, System.Object[])</code></li>
+<li><code>BM.MemSequence::.ctor(System.Boolean)</code></li>
+<li><code>BTFactory.&lt;&gt;c::&lt;Jump&gt;b__7_3(BM.BTUpdateContext, BM.Blackboard, System.Object[])</code></li>
+<li><code>System.Func&lt;BM.BTUpdateContext, BM.Blackboard, System.Object[], System.Boolean&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>BM.CustomBool::.ctor(System.Func&lt;BM.BTUpdateContext, BM.Blackboard, System.Object[], System.Boolean&gt;, System.Object[])</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MoveToEntity public BM.BehaviorTree MoveToEntity(NodeEntityArg entityArg, System.Int32 moveAnim, BM.NodeArg&lt;System.Single&gt; accelerationScaling, System.Single goalStopDistance) BM.BehaviorTree entityArg NodeEntityArg moveAnim System.Int32 accelerationScaling BM.NodeArg&lt;System.Single&gt; goalStopDistance System.Single" id="movetoentity-nodeentityarg--system-int32--bm-nodearg-1-system-single---system-single---bm-behaviortree">
+<div class="method-heading">
+<h3><code>MoveToEntity</code></h3>
+<a class="permalink" href="#movetoentity-nodeentityarg--system-int32--bm-nodearg-1-system-single---system-single---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree MoveToEntity(NodeEntityArg entityArg, System.Int32 moveAnim, BM.NodeArg&lt;System.Single&gt; accelerationScaling, System.Single goalStopDistance)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::MoveToEntity(NodeEntityArg, System.Int32, BM.NodeArg&lt;System.Single&gt;, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> MoveToEntity(NodeEntityArg entityArg, System.Int32 moveAnim, <a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;System.Single&gt; accelerationScaling, System.Single goalStopDistance)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7E9BA9F5205EB9E2AA2164B67FA7CBA1FD06D88917096E6234BFB1A4D6D94B12</code></li>
+<li><span>Body hash</span><code>A0F723C96B8C20C22E4E1FFE55876BDAE5D8081E20AFF1BAFF957F409A8B93B8</code></li>
+<li><span>IL size</span><span>117</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BTFactory.&lt;&gt;c__DisplayClass8_0::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BTFactory.&lt;&gt;c__DisplayClass8_0::&lt;MoveToEntity&gt;b__0(BM.BTUpdateContext, BM.Blackboard, System.Object[])</code></li>
+<li><code>System.Func&lt;BM.BTUpdateContext, BM.Blackboard, System.Object[], System.Boolean&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Array::Empty()</code></li>
+<li><code>BM.CustomBool::.ctor(System.Func&lt;BM.BTUpdateContext, BM.Blackboard, System.Object[], System.Boolean&gt;, System.Object[])</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;::op_Implicit(System.String)</code></li>
+<li><code>CandideServer.Entities.CommonTasks.PathFindTaskArgs::.ctor()</code></li>
+<li><code>BM.NodeArg&lt;System.Int32&gt;::op_Implicit(T)</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;::.ctor(!0)</code></li>
+<li><code>BM.PathFind&lt;Shared.Entity.EntityWrapper&gt;::.ctor(BM.NodeArg&lt;T&gt;, CandideServer.Entities.CommonTasks.PathFindTaskArgs, BM.NodeArg&lt;System.Single&gt;, System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>moveToEntity</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MoveToPosition public BM.BehaviorTree MoveToPosition(System.String position, System.Int32 moveAnim, BM.NodeArg&lt;System.Single&gt; accelerationScaling) BM.BehaviorTree position System.String moveAnim System.Int32 accelerationScaling BM.NodeArg&lt;System.Single&gt;" id="movetoposition-system-string--system-int32--bm-nodearg-1-system-single----bm-behaviortree">
+<div class="method-heading">
+<h3><code>MoveToPosition</code></h3>
+<a class="permalink" href="#movetoposition-system-string--system-int32--bm-nodearg-1-system-single----bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree MoveToPosition(System.String position, System.Int32 moveAnim, BM.NodeArg&lt;System.Single&gt; accelerationScaling)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::MoveToPosition(System.String, System.Int32, BM.NodeArg&lt;System.Single&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> MoveToPosition(System.String position, System.Int32 moveAnim, <a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;System.Single&gt; accelerationScaling)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8EF23533A0C887162976D11B6EFF6B278D595180EEC49EF1F03619D7B7D7FD14</code></li>
+<li><span>Body hash</span><code>42B9D34BD398FC14523A21C9E957E1FE3A908C6DE3A47296790B954344A9044C</code></li>
+<li><span>IL size</span><span>66</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.NodeArg&lt;Microsoft.Xna.Framework.Vector2&gt;::op_Implicit(System.String)</code></li>
+<li><code>CandideServer.Entities.CommonTasks.PathFindTaskArgs::.ctor()</code></li>
+<li><code>BM.NodeArg&lt;System.Int32&gt;::op_Implicit(T)</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;::.ctor(!0)</code></li>
+<li><code>BM.OffThreadPathFind&lt;Microsoft.Xna.Framework.Vector2&gt;::.ctor(BM.NodeArg&lt;T&gt;, CandideServer.Entities.CommonTasks.PathFindTaskArgs, BM.NodeArg&lt;System.Single&gt;, System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerGhostlyWomanController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerGhostlyWomanController::CreateStateMachine</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Patrol public BM.BehaviorTree Patrol(BM.PatrolBTSettings s) BM.BehaviorTree s BM.PatrolBTSettings" id="patrol-bm-patrolbtsettings---bm-behaviortree">
+<div class="method-heading">
+<h3><code>Patrol</code></h3>
+<a class="permalink" href="#patrol-bm-patrolbtsettings---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree Patrol(BM.PatrolBTSettings s)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::Patrol(BM.PatrolBTSettings)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> Patrol(<a href="../../types/CandideServer/BM_PatrolBTSettings.html">BM.PatrolBTSettings</a> s)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>12894F99A538CB3EABA1DA6368445DF01FB3E8DBBC7FE60F10BEA686270FFE5C</code></li>
+<li><span>Body hash</span><code>3B56C9679A4B08D08A16CF3ADCF96677EFAF3A81B9D0BC5ED73976A0B0DC3396</code></li>
+<li><span>IL size</span><span>147</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>CandideServer.Entities.BehaviorMachine.Modules.Nodes.Schmovement.Patrol::.ctor(Shared.Entity.EntityWrapper, System.String, System.Int32, System.String, System.String, CandideServer.Entities.BehaviorMachine.Modules.Nodes.Schmovement.PatrolMode)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.NodeArg&lt;Microsoft.Xna.Framework.Vector2&gt;::op_Implicit(System.String)</code></li>
+<li><code>CandideServer.Entities.CommonTasks.PathFindTaskArgs::.ctor()</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(T)</code></li>
+<li><code>BM.NodeArg&lt;System.Int32&gt;::op_Implicit(T)</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;::.ctor(!0)</code></li>
+<li><code>BM.PathFind&lt;Microsoft.Xna.Framework.Vector2&gt;::.ctor(BM.NodeArg&lt;T&gt;, CandideServer.Entities.CommonTasks.PathFindTaskArgs, BM.NodeArg&lt;System.Single&gt;, System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="PickUpCarryableEntity public BM.BehaviorTree PickUpCarryableEntity(System.String pickupEntity, System.Int32 liftAnim, System.Single pickupDuration) BM.BehaviorTree pickupEntity System.String liftAnim System.Int32 pickupDuration System.Single" id="pickupcarryableentity-system-string--system-int32--system-single---bm-behaviortree">
+<div class="method-heading">
+<h3><code>PickUpCarryableEntity</code></h3>
+<a class="permalink" href="#pickupcarryableentity-system-string--system-int32--system-single---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree PickUpCarryableEntity(System.String pickupEntity, System.Int32 liftAnim, System.Single pickupDuration)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::PickUpCarryableEntity(System.String, System.Int32, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> PickUpCarryableEntity(System.String pickupEntity, System.Int32 liftAnim, System.Single pickupDuration)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>44847E082CB3EB73AC636D0BB36D071A58C6FB31BDC39180DC7B165296BC402F</code></li>
+<li><span>Body hash</span><code>55125AC66817E9E8C864E56D08D21E581FAA031535C9DC93512CB8CFFBB01522</code></li>
+<li><span>IL size</span><span>162</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>NodeEntityArg::op_Implicit(System.String)</code></li>
+<li><code>BM.TryPickUpEntity::.ctor(NodeEntityArg, NodeEntityArg)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.StringNodeArg::op_Implicit(System.String)</code></li>
+<li><code>System.ValueTuple&lt;System.Single, System.Single&gt;::.ctor(!0, !1)</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;System.Single, System.Single&gt;&gt;::.ctor(!0)</code></li>
+<li><code>System.Nullable&lt;System.Single&gt;::.ctor(!0)</code></li>
+<li><code>BM.PlaySfxOnEntityFromServer::.ctor(BM.StringNodeArg, System.Nullable&lt;System.ValueTuple&lt;System.Single, System.Single&gt;&gt;, System.Nullable&lt;System.Single&gt;)</code></li>
+<li><code>BM.PlayAnimation::.ctor(System.Int32, NodeEntityArg)</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(T)</code></li>
+<li><code>BM.Wait::.ctor(BM.NodeArg&lt;System.Single&gt;, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTHelper.html#groupvalue-system-string--system-string---bm-blackboardref">BM.BTHelper::GroupValue(System.String, System.String)</a></code></li>
+<li><code>BM.NodeArg&lt;System.Collections.Generic.Dictionary&lt;Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper&gt;&gt;::op_Implicit(BM.BlackboardRef)</code></li>
+<li><code>BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.RemoveDictionaryValue&lt;Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper&gt;::.ctor(BM.NodeArg&lt;System.Collections.Generic.Dictionary&lt;T1, T2&gt;&gt;, BM.NodeArg&lt;T1&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>event:/creature/potman/potman_grunt</code></li>
+<li><code>currentlyDesiredCarryables</code></li>
+<li><code>globalPotmen</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TimerCondition public BM.BehaviorTree TimerCondition(BM.Blackboard blackboard, System.String writeTimer, BM.NodeArg&lt;System.Single&gt; duration) BM.BehaviorTree blackboard BM.Blackboard writeTimer System.String duration BM.NodeArg&lt;System.Single&gt;" id="timercondition-bm-blackboard--system-string--bm-nodearg-1-system-single----bm-behaviortree">
+<div class="method-heading">
+<h3><code>TimerCondition</code></h3>
+<a class="permalink" href="#timercondition-bm-blackboard--system-string--bm-nodearg-1-system-single----bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree TimerCondition(BM.Blackboard blackboard, System.String writeTimer, BM.NodeArg&lt;System.Single&gt; duration)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::TimerCondition(BM.Blackboard, System.String, BM.NodeArg&lt;System.Single&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> TimerCondition(<a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard, System.String writeTimer, <a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;System.Single&gt; duration)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C44456769C2F54CFCBB2CC1D4800F69AD1ED8EA9FE388BA6BF9B09A134217F78</code></li>
+<li><span>Body hash</span><code>AB65B25899FCE91D23F6434CCB7815F9F27415AA0E48F119D4AF9E2A8CCBDC9F</code></li>
+<li><span>IL size</span><span>83</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BM.ResetTimer::.ctor(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.ParallelSequence::.ctor(System.Boolean)</code></li>
+<li><code>BM.Timer::.ctor(BM.Blackboard, System.String)</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.NumericalCondition&lt;System.Single&gt;::.ctor(BM.NodeArg&lt;T&gt;, ComparisonOperators, BM.NodeArg&lt;T&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TimerConditionWithCondition public BM.BehaviorTree TimerConditionWithCondition(BM.TimerConditionWithConditionBTSettings s) BM.BehaviorTree s BM.TimerConditionWithConditionBTSettings" id="timerconditionwithcondition-bm-timerconditionwithconditionbtsettings---bm-behaviortree">
+<div class="method-heading">
+<h3><code>TimerConditionWithCondition</code></h3>
+<a class="permalink" href="#timerconditionwithcondition-bm-timerconditionwithconditionbtsettings---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree TimerConditionWithCondition(BM.TimerConditionWithConditionBTSettings s)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::TimerConditionWithCondition(BM.TimerConditionWithConditionBTSettings)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> TimerConditionWithCondition(<a href="../../types/CandideServer/BM_TimerConditionWithConditionBTSettings.html">BM.TimerConditionWithConditionBTSettings</a> s)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>10EB43FEC6712FDEB2A9C9580CD7EABA1012411C0981E57A0D5C6422F4ABFDC1</code></li>
+<li><span>Body hash</span><code>5DE2795597345752F445EFCA09DB2A3285868936D9DCAF8EB92672B38981D474</code></li>
+<li><span>IL size</span><span>149</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BM.Selector::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.Timer::.ctor(BM.Blackboard, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code>BM.ResetTimer::.ctor(System.String)</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.NumericalCondition&lt;System.Single&gt;::.ctor(BM.NodeArg&lt;T&gt;, ComparisonOperators, BM.NodeArg&lt;T&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TimerConditionWithInvertedCondition public BM.BehaviorTree TimerConditionWithInvertedCondition(BM.TimerConditionWithConditionBTSettings s) BM.BehaviorTree s BM.TimerConditionWithConditionBTSettings" id="timerconditionwithinvertedcondition-bm-timerconditionwithconditionbtsettings---bm-behaviortree">
+<div class="method-heading">
+<h3><code>TimerConditionWithInvertedCondition</code></h3>
+<a class="permalink" href="#timerconditionwithinvertedcondition-bm-timerconditionwithconditionbtsettings---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree TimerConditionWithInvertedCondition(BM.TimerConditionWithConditionBTSettings s)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::TimerConditionWithInvertedCondition(BM.TimerConditionWithConditionBTSettings)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> TimerConditionWithInvertedCondition(<a href="../../types/CandideServer/BM_TimerConditionWithConditionBTSettings.html">BM.TimerConditionWithConditionBTSettings</a> s)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>029E4361C3A4826552FACFDD1450886AFB1F48CCFAB7437EA86DD7960F33006B</code></li>
+<li><span>Body hash</span><code>55E67F26DBA7AC8C3389EC140862873026CCFBA4C7D1B6EEFBC8DF4C0C6C8160</code></li>
+<li><span>IL size</span><span>164</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BM.Selector::.ctor()</code></li>
+<li><code>BM.Inverter::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#decorator-bm-decorator---bm-btbuilder">BM.BTBuilder::Decorator(BM.Decorator)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code>BM.Timer::.ctor(BM.Blackboard, System.String)</code></li>
+<li><code>BM.ResetTimer::.ctor(System.String)</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.NumericalCondition&lt;System.Single&gt;::.ctor(BM.NodeArg&lt;T&gt;, ComparisonOperators, BM.NodeArg&lt;T&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="VultureFlapMovement public BM.BehaviorTree VultureFlapMovement(BM.NodeArg&lt;System.Single&gt; targetFlightHeight) BM.BehaviorTree targetFlightHeight BM.NodeArg&lt;System.Single&gt;" id="vultureflapmovement-bm-nodearg-1-system-single----bm-behaviortree">
+<div class="method-heading">
+<h3><code>VultureFlapMovement</code></h3>
+<a class="permalink" href="#vultureflapmovement-bm-nodearg-1-system-single----bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree VultureFlapMovement(BM.NodeArg&lt;System.Single&gt; targetFlightHeight)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::VultureFlapMovement(BM.NodeArg&lt;System.Single&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> VultureFlapMovement(<a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;System.Single&gt; targetFlightHeight)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A309138D89AB4B88711C44F9AFDADF70D96BA216A3192DADB96180D5CF5136F3</code></li>
+<li><span>Body hash</span><code>1D2A5DB0729B089F55F4F3154B00B3F1DCD7C7CB38B93986B15F79BEF716FA6E</code></li>
+<li><span>IL size</span><span>224</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BM.BTBuilder::.ctor()</code></li>
+<li><code>BM.ParallelSequence::.ctor(System.Boolean)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BM.VultureFlapMovement::.ctor(BM.NodeArg&lt;System.Single&gt;, System.Nullable&lt;BM.NodeArg&lt;System.Single&gt;&gt;, System.Nullable&lt;BM.NodeArg&lt;System.Single&gt;&gt;, System.Nullable&lt;BM.NodeArg&lt;System.Single&gt;&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.Selector::.ctor()</code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code>BM.NodeArg&lt;System.Boolean&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.NodeArg&lt;System.Boolean&gt;::op_Implicit(T)</code></li>
+<li><code>BM.BoolCondition::.ctor(BM.NodeArg&lt;System.Boolean&gt;, BM.NodeArg&lt;System.Boolean&gt;)</code></li>
+<li><code>BM.PlayAnimation::.ctor(System.Int32, NodeEntityArg)</code></li>
+<li><code>BM.StringNodeArg::op_Implicit(System.String)</code></li>
+<li><code>BM.PlaySfxOnEntityFromServer::.ctor(BM.StringNodeArg, System.Nullable&lt;System.Single&gt;, System.Nullable&lt;System.Single&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>isFlapping</code></li>
+<li><code>event:/creature/birds/bird_wingflap</code></li>
+<li><code>isGliding</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="VultureSwoopMovement public BM.BehaviorTree VultureSwoopMovement(BM.VultureSwoopMovementBTSettings s) BM.BehaviorTree s BM.VultureSwoopMovementBTSettings" id="vultureswoopmovement-bm-vultureswoopmovementbtsettings---bm-behaviortree">
+<div class="method-heading">
+<h3><code>VultureSwoopMovement</code></h3>
+<a class="permalink" href="#vultureswoopmovement-bm-vultureswoopmovementbtsettings---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree VultureSwoopMovement(BM.VultureSwoopMovementBTSettings s)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::VultureSwoopMovement(BM.VultureSwoopMovementBTSettings)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> VultureSwoopMovement(<a href="../../types/CandideServer/BM_VultureSwoopMovementBTSettings.html">BM.VultureSwoopMovementBTSettings</a> s)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BACCC096A48C33B3FA6F3E7AEB6199F5285D4D16D0628FAF70A5702F85FAE307</code></li>
+<li><span>Body hash</span><code>CAFA00F869D374C68E5E7DE1291796C3D729423F40C5CAF85EA5602A9B741947</code></li>
+<li><span>IL size</span><span>289</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BTFactory.&lt;&gt;c__DisplayClass12_0::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BTFactory.&lt;&gt;c__DisplayClass12_0::&lt;VultureSwoopMovement&gt;b__0(BM.BTUpdateContext, BM.Blackboard, System.Object[])</code></li>
+<li><code>System.Func&lt;BM.BTUpdateContext, BM.Blackboard, System.Object[], System.Boolean&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Array::Empty()</code></li>
+<li><code>BM.CustomBool::.ctor(System.Func&lt;BM.BTUpdateContext, BM.Blackboard, System.Object[], System.Boolean&gt;, System.Object[])</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.ParallelSequence::.ctor(System.Boolean)</code></li>
+<li><code>BM.VultureSwoopMovement::.ctor(BM.SwoopCompletionTiming)</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.NodeArg&lt;System.Single&gt;::op_Implicit(T)</code></li>
+<li><code>BM.NumericalCondition&lt;System.Single&gt;::.ctor(BM.NodeArg&lt;T&gt;, ComparisonOperators, BM.NodeArg&lt;T&gt;)</code></li>
+<li><code>BM.NodeArg&lt;System.Byte&gt;::op_Implicit(T)</code></li>
+<li><code>BM.PlayAnimationMsg::.ctor(BM.NodeArg&lt;System.Byte&gt;, NodeEntityArg)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code>BM.MoveInForwardDirectionUntilDistance::.ctor(BM.NodeArg&lt;System.Single&gt;, BM.NodeArg&lt;System.Single&gt;)</code></li>
+<li><code>BM.PlayAnimation::.ctor(System.Int32, NodeEntityArg)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>swoopT</code></li>
+<li><code>currentTotalSwoopSpeed</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Wander public BM.BehaviorTree Wander(BM.WanderBTSettings s) BM.BehaviorTree s BM.WanderBTSettings" id="wander-bm-wanderbtsettings---bm-behaviortree">
+<div class="method-heading">
+<h3><code>Wander</code></h3>
+<a class="permalink" href="#wander-bm-wanderbtsettings---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree Wander(BM.WanderBTSettings s)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::Wander(BM.WanderBTSettings)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> Wander(<a href="../../types/CandideServer/BM_WanderBTSettings.html">BM.WanderBTSettings</a> s)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EED3C65023A416FCA0B4A96BE196C29022830C3E6957158FDE057E4E2DD95A4E</code></li>
+<li><span>Body hash</span><code>9D749087BE0FAC27761B7A21AA213FA31F3B7D6973EA664520CA04AED95E12AF</code></li>
+<li><span>IL size</span><span>254</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BM.NodeArg&lt;Microsoft.Xna.Framework.Vector2&gt;::Get(BM.Blackboard)</code></li>
+<li><code>BM.Blackboard::SetValue(System.String, T)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BTFactory.&lt;&gt;c::&lt;Wander&gt;b__13_0(BM.BTUpdateContext, BM.Blackboard, BM.WanderBTSettings)</code></li>
+<li><code>System.Func&lt;BM.BTUpdateContext, BM.Blackboard, BM.WanderBTSettings, System.Boolean&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>BM.Custom&lt;BM.WanderBTSettings&gt;::.ctor(System.Func&lt;BM.BTUpdateContext, BM.Blackboard, T, System.Boolean&gt;, T)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.RunningSucceeder::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#decorator-bm-decorator---bm-btbuilder">BM.BTBuilder::Decorator(BM.Decorator)</a></code></li>
+<li><code>BM.NodeArg&lt;Microsoft.Xna.Framework.Vector2&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.NodeArg&lt;System.Int32&gt;::op_Implicit(T)</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;::.ctor(!0)</code></li>
+<li><code>BM.OffThreadPathFind&lt;Microsoft.Xna.Framework.Vector2&gt;::.ctor(BM.NodeArg&lt;T&gt;, CandideServer.Entities.CommonTasks.PathFindTaskArgs, BM.NodeArg&lt;System.Single&gt;, System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code>BM.Succeeder::.ctor()</code></li>
+<li><code>BM.NodeArg&lt;System.Boolean&gt;::op_Implicit(T)</code></li>
+<li><code>BM.BoolCondition::.ctor(BM.NodeArg&lt;System.Boolean&gt;, BM.NodeArg&lt;System.Boolean&gt;)</code></li>
+<li><code>BM.SetVariable&lt;Microsoft.Xna.Framework.Vector2&gt;::.ctor(System.String, BM.NodeArg&lt;T&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerGoatController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerGoatController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerLizardController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerLizardController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerMouseController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerMouseController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerRabbitController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerRabbitController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerScarabController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerScarabController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerSquirrelController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerSquirrelController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerAshManController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerAshManController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerBearController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerBearController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerBoarController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerBoarController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFireElementalController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerFireElementalController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerGhostlyWomanController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerGhostlyWomanController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerMedusaController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerMedusaController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerRatController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerRatController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSkeletonWarriorController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSkeletonWarriorController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSmallScorpionController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSmallScorpionController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSnakeController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSnakeController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerWolfController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerWolfController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerWildCitizenEntityController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.ServerWildCitizenEntityController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Bear_ServerBearCubController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.ControllerSets.Bear.ServerBearCubController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Fallen_SkeletonArcher_ServerFallenSpearController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.ControllerSets.Fallen.SkeletonArcher.ServerFallenSpearController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Fallen_SkeletonArcher_ServerSkeletonArcherController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.ControllerSets.Fallen.SkeletonArcher.ServerSkeletonArcherController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_TurtleNew_ServerTurtleController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.ControllerSets.TurtleNew.ServerTurtleController::CreateStateMachine</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>wanderCenterPosition</code></li>
+<li><code>randomPointInCircle</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="WanderWalkHome public BM.BehaviorTree WanderWalkHome(BM.WanderWalkHomeBTSettings s) BM.BehaviorTree s BM.WanderWalkHomeBTSettings" id="wanderwalkhome-bm-wanderwalkhomebtsettings---bm-behaviortree">
+<div class="method-heading">
+<h3><code>WanderWalkHome</code></h3>
+<a class="permalink" href="#wanderwalkhome-bm-wanderwalkhomebtsettings---bm-behaviortree" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorTree WanderWalkHome(BM.WanderWalkHomeBTSettings s)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BTFactory::WanderWalkHome(BM.WanderWalkHomeBTSettings)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> WanderWalkHome(<a href="../../types/CandideServer/BM_WanderWalkHomeBTSettings.html">BM.WanderWalkHomeBTSettings</a> s)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E01A3233F4FB330F3F501703DB357A8F0E7ADFBD99743BFE87C5791E74CD1966</code></li>
+<li><span>Body hash</span><code>FB1380910E27372EAD6805D394B0D1D74DB980CEF7871093EE765FDD8CF43737</code></li>
+<li><span>IL size</span><span>131</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BTBuilderPool.html#get----bm-btbuilder">BM.BTBuilderPool::Get()</a></code></li>
+<li><code>BM.Sequence::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#composite-bm-composite---bm-btbuilder">BM.BTBuilder::Composite(BM.Composite)</a></code></li>
+<li><code>BTFactory.&lt;&gt;c::&lt;WanderWalkHome&gt;b__14_0(BM.BTUpdateContext, BM.Blackboard, BM.WanderWalkHomeBTSettings)</code></li>
+<li><code>System.Func&lt;BM.BTUpdateContext, BM.Blackboard, BM.WanderWalkHomeBTSettings, System.Boolean&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>BM.Custom&lt;BM.WanderWalkHomeBTSettings&gt;::.ctor(System.Func&lt;BM.BTUpdateContext, BM.Blackboard, T, System.Boolean&gt;, T)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#leaf-bm-leaf---bm-btbuilder">BM.BTBuilder::Leaf(BM.Leaf)</a></code></li>
+<li><code>BM.RunningSucceeder::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#decorator-bm-decorator---bm-btbuilder">BM.BTBuilder::Decorator(BM.Decorator)</a></code></li>
+<li><code>BM.NodeArg&lt;Microsoft.Xna.Framework.Vector2&gt;::op_Implicit(System.String)</code></li>
+<li><code>BM.NodeArg&lt;System.Int32&gt;::op_Implicit(T)</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;::.ctor(!0)</code></li>
+<li><code>BM.OffThreadPathFind&lt;Microsoft.Xna.Framework.Vector2&gt;::.ctor(BM.NodeArg&lt;T&gt;, CandideServer.Entities.CommonTasks.PathFindTaskArgs, BM.NodeArg&lt;System.Single&gt;, System.Nullable&lt;BM.NodeArg&lt;System.Int32&gt;&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#end----bm-btbuilder">BM.BTBuilder::End()</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BTBuilder.html#build----bm-behaviortree">BM.BTBuilder::Build()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerGoatController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerGoatController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerLizardController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerLizardController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerMouseController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerMouseController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerRabbitController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerRabbitController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerScarabController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerScarabController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerSquirrelController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerSquirrelController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerAshManController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerAshManController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerBearController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerBearController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerBoarController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerBoarController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFireElementalController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerFireElementalController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerGhostlyWomanController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerGhostlyWomanController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerMedusaController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerMedusaController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerRatController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerRatController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSkeletonWarriorController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSkeletonWarriorController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSmallScorpionController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSmallScorpionController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSnakeController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSnakeController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerWildCitizenEntityController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.ServerWildCitizenEntityController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Fallen_SkeletonArcher_ServerFallenSpearController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.ControllerSets.Fallen.SkeletonArcher.ServerFallenSpearController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Fallen_SkeletonArcher_ServerSkeletonArcherController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.ControllerSets.Fallen.SkeletonArcher.ServerSkeletonArcherController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_TurtleNew_ServerTurtleController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.ControllerSets.TurtleNew.ServerTurtleController::CreateStateMachine</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>walkHomePosition</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

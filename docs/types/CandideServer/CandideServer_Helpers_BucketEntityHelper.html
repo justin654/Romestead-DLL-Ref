@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.Helpers.BucketEntityHelper - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.Helpers.BucketEntityHelper</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.Helpers.BucketEntityHelper">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.Helpers.BucketEntityHelper
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.Helpers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 6 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public System.Void CreateBucketMaterialAggregateFromEntityParamters(CandideServer.Entities.ServerEntityModel bucketEntity)`
+- `public System.Boolean IsBucketEmpty(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; entityParameters)`
+- `public System.Void SetEmpty(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;&amp; parametersRef, Shared.Models.Construction.ConstructionMaterialsAggregate&amp; constructionMaterials)`
+- `public System.Boolean TryGetBucketContentFromEntity(CandideServer.Entities.ServerEntityModel bucketEntity, out Shared.Models.Construction.ConstructionMaterialsAggregate&amp; contentAggregate)`
+- `public System.Boolean TryGetBucketContentFromEntity(CandideServer.Entities.ServerEntityModel bucketEntity, out System.String&amp; contentResourceId, out System.Int32&amp; resourceAmount)`
+- `public System.Boolean TrySetBucketParameters(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;&amp; parametersRef, Shared.Models.Construction.ConstructionMaterialsAggregate&amp; constructionMaterials, BucketEntityHelperShared.BucketContentType type, System.String resourceId, System.Int32 amount)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_Helpers_BucketEntityHelper.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.Helpers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>6</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.Helpers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>7D8CD26A36DE06ED00AA9CCA8141E8152B3C48C5E0543894F557921C10AA9447</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateBucketMaterialAggregateFromEntityParamters public System.Void CreateBucketMaterialAggregateFromEntityParamters(CandideServer.Entities.ServerEntityModel bucketEntity) System.Void bucketEntity CandideServer.Entities.ServerEntityModel" id="createbucketmaterialaggregatefromentityparamters-candideserver-entities-serverentitymodel---system-void">
+<div class="method-heading">
+<h3><code>CreateBucketMaterialAggregateFromEntityParamters</code></h3>
+<a class="permalink" href="#createbucketmaterialaggregatefromentityparamters-candideserver-entities-serverentitymodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CreateBucketMaterialAggregateFromEntityParamters(CandideServer.Entities.ServerEntityModel bucketEntity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Helpers.BucketEntityHelper::CreateBucketMaterialAggregateFromEntityParamters(CandideServer.Entities.ServerEntityModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CreateBucketMaterialAggregateFromEntityParamters(<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> bucketEntity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EE9D6FFADADF34B2AA6ECF8A5931B05186DCEABBB2F5DA7563AFA3BDE9089A72</code></li>
+<li><span>Body hash</span><code>FC5C511D033AA19E8E2685DEAA97224EF6A73B645697496FD35570B08AECCF5B</code></li>
+<li><span>IL size</span><span>105</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Helpers.BucketEntityHelperShared::get_GetNewDefaultConstructionMaterials()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.Int32::Parse(System.String)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::set_Item(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#onservergamestateloaded-candideserver-gamedescription---system-void"><code>CandideServer.ServerControllers.EntitySController::OnServerGameStateLoaded</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>bucket_content_resource_id</code></li>
+<li><code>bucket_content_amount</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IsBucketEmpty public System.Boolean IsBucketEmpty(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; entityParameters) System.Boolean entityParameters System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;" id="isbucketempty-system-collections-generic-dictionary-2-system-string-system-string----system-boolean">
+<div class="method-heading">
+<h3><code>IsBucketEmpty</code></h3>
+<a class="permalink" href="#isbucketempty-system-collections-generic-dictionary-2-system-string-system-string----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean IsBucketEmpty(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; entityParameters)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Helpers.BucketEntityHelper::IsBucketEmpty(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean IsBucketEmpty(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; entityParameters)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>86176BF7241D1E14ED1B7AE29F3CADDEB36AA2B9C58CF3CCED104285F63E0A16</code></li>
+<li><span>Body hash</span><code>188796C83AB68B17B0A1A55EB75912398C73469A23A3CBA3544A089DA3743DF2</code></li>
+<li><span>IL size</span><span>34</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#onreceive-gettrybucketdepleteresourcestorageendpoint-candideserver-messagemodels-buildings-getbucketdepleteresourcestorageendpointrequest--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.BuildingsServerService::OnReceive_GetTryBucketDepleteResourceStorageEndpoint</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Legacy_BucketController.html#setcontenttype-bucketentityhelpershared-bucketcontenttype--system-string--system-int32--system-boolean---system-void"><code>Candide.Entities.Controllers.Legacy.BucketController::SetContentType</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>bucket_content_type</code></li>
+<li><code>Empty</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetEmpty public System.Void SetEmpty(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;&amp; parametersRef, Shared.Models.Construction.ConstructionMaterialsAggregate&amp; constructionMaterials) System.Void parametersRef System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;&amp; constructionMaterials Shared.Models.Construction.ConstructionMaterialsAggregate&amp;" id="setempty-system-collections-generic-dictionary-2-system-string-system-string----shared-models-construction-constructionmaterialsaggregate----system-void">
+<div class="method-heading">
+<h3><code>SetEmpty</code></h3>
+<a class="permalink" href="#setempty-system-collections-generic-dictionary-2-system-string-system-string----shared-models-construction-constructionmaterialsaggregate----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetEmpty(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;&amp; parametersRef, Shared.Models.Construction.ConstructionMaterialsAggregate&amp; constructionMaterials)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Helpers.BucketEntityHelper::SetEmpty(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;&amp;, Shared.Models.Construction.ConstructionMaterialsAggregate&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetEmpty(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;&amp; parametersRef, <a href="../../types/Shared/Shared_Models_Construction_ConstructionMaterialsAggregate.html">Shared.Models.Construction.ConstructionMaterialsAggregate</a>&amp; constructionMaterials)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>631F13D2E8D7D6014ABC3147F6F7ABCD567026E7D00CBADC1215BA62E0F09F04</code></li>
+<li><span>Body hash</span><code>6482D99F900EA791FF44FCE0A625AEB46244D7CC24D6D05CD26548CFDF035E63</code></li>
+<li><span>IL size</span><span>64</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::set_Item(!0, !1)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Construction_ConstructionMaterialsAggregate.html#emptyallexcept-system-string---system-void">Shared.Models.Construction.ConstructionMaterialsAggregate::EmptyAllExcept(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Helpers_BucketEntityHelper.html#trysetbucketparameters-system-collections-generic-dictionary-2-system-string-system-string----shared-models-construction-constructionmaterialsaggregate---bucketentityhelpershared-bucketcontenttype--system-string--system-int32---system-boolean"><code>CandideServer.Helpers.BucketEntityHelper::TrySetBucketParameters</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>bucket_content_type</code></li>
+<li><code>Empty</code></li>
+<li><code>bucket_content_resource_id</code></li>
+<li><code>bucket_content_amount</code></li>
+<li><code>0</code></li>
+<li><code>resource:bucket</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetBucketContentFromEntity public System.Boolean TryGetBucketContentFromEntity(CandideServer.Entities.ServerEntityModel bucketEntity, out Shared.Models.Construction.ConstructionMaterialsAggregate&amp; contentAggregate) System.Boolean bucketEntity CandideServer.Entities.ServerEntityModel contentAggregate Shared.Models.Construction.ConstructionMaterialsAggregate&amp;" id="trygetbucketcontentfromentity-candideserver-entities-serverentitymodel--shared-models-construction-constructionmaterialsaggregate----system-boolean">
+<div class="method-heading">
+<h3><code>TryGetBucketContentFromEntity</code></h3>
+<a class="permalink" href="#trygetbucketcontentfromentity-candideserver-entities-serverentitymodel--shared-models-construction-constructionmaterialsaggregate----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetBucketContentFromEntity(CandideServer.Entities.ServerEntityModel bucketEntity, out Shared.Models.Construction.ConstructionMaterialsAggregate&amp; contentAggregate)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Helpers.BucketEntityHelper::TryGetBucketContentFromEntity(CandideServer.Entities.ServerEntityModel, Shared.Models.Construction.ConstructionMaterialsAggregate&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetBucketContentFromEntity(<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> bucketEntity, out <a href="../../types/Shared/Shared_Models_Construction_ConstructionMaterialsAggregate.html">Shared.Models.Construction.ConstructionMaterialsAggregate</a>&amp; contentAggregate)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>911A5D9424B86F8B558A3E0AC8CDC3A367BA95A02718C0743ECDD78FB4B10F9B</code></li>
+<li><span>Body hash</span><code>D635A80BF264D2FADA502CE9CA0A773A43D049278B5275EAC9B68CF5C7C2C5F5</code></li>
+<li><span>IL size</span><span>254</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.Int32::Parse(System.String)</code></li>
+<li><code>Shared.Models.Construction.ConstructionMaterialsAggregate::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::Add(!0, !1)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Construction_ConstructionMaterialsAggregate.html#getamountforresource-system-string---system-int32">Shared.Models.Construction.ConstructionMaterialsAggregate::GetAmountForResource(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Int32&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.Int32&gt;::get_Key()</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.Int32&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::set_Item(!0, !1)</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Int32&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Citizens_GenericServerCitizenController.html#tryfindnearbyemptybucket-candideserver-entities-serverentitymodel----system-boolean"><code>CandideServer.Citizens.GenericServerCitizenController::TryFindNearbyEmptyBucket</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Citizens_GenericServerCitizenController.html#tryfindnearbyresourcetopickup-candideserver-entities-serverentitymodel----system-boolean"><code>CandideServer.Citizens.GenericServerCitizenController::TryFindNearbyResourceToPickUp</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Citizens_GenericServerCitizenController.html#trygetclosestemptybucketintown-candideserver-models-constructionsitemodel--candideserver-entities-serverentitymodel----system-boolean"><code>CandideServer.Citizens.GenericServerCitizenController::TryGetClosestEmptyBucketInTown</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerConcreteMixerController.html#oninteract-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.ServerConcreteMixerController::OnInteract</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#onreceive-gettrybucketdepositresourcestorageendpoint-candideserver-messagemodels-buildings-getbucketdepositresourcestorageendpointrequest--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.BuildingsServerService::OnReceive_GetTryBucketDepositResourceStorageEndpoint</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>bucket_content_resource_id</code></li>
+<li><code>bucket_content_amount</code></li>
+<li><code>resource:bucket</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetBucketContentFromEntity public System.Boolean TryGetBucketContentFromEntity(CandideServer.Entities.ServerEntityModel bucketEntity, out System.String&amp; contentResourceId, out System.Int32&amp; resourceAmount) System.Boolean bucketEntity CandideServer.Entities.ServerEntityModel contentResourceId System.String&amp; resourceAmount System.Int32&amp;" id="trygetbucketcontentfromentity-candideserver-entities-serverentitymodel--system-string---system-int32----system-boolean">
+<div class="method-heading">
+<h3><code>TryGetBucketContentFromEntity</code></h3>
+<a class="permalink" href="#trygetbucketcontentfromentity-candideserver-entities-serverentitymodel--system-string---system-int32----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetBucketContentFromEntity(CandideServer.Entities.ServerEntityModel bucketEntity, out System.String&amp; contentResourceId, out System.Int32&amp; resourceAmount)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Helpers.BucketEntityHelper::TryGetBucketContentFromEntity(CandideServer.Entities.ServerEntityModel, System.String&amp;, System.Int32&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetBucketContentFromEntity(<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> bucketEntity, out System.String&amp; contentResourceId, out System.Int32&amp; resourceAmount)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D5EA469A9C64A4FFFCE090A9B2627205FFFD73B0597E47EA667C85A17E3EA606</code></li>
+<li><span>Body hash</span><code>1D2FDAB8B249B93CB365570AAC1310BBD1777D717486F8BF7E8D8CADCFB4F4A4</code></li>
+<li><span>IL size</span><span>231</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.Int32::Parse(System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Construction_ConstructionMaterialsAggregate.html#getamountforresource-system-string---system-int32">Shared.Models.Construction.ConstructionMaterialsAggregate::GetAmountForResource(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Int32&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.Int32&gt;::get_Key()</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.Int32&gt;::get_Value()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Int32&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Citizens_GenericServerCitizenController.html#tryfindnearbyresourcetopickup-candideserver-entities-serverentitymodel----system-boolean"><code>CandideServer.Citizens.GenericServerCitizenController::TryFindNearbyResourceToPickUp</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>bucket_content_resource_id</code></li>
+<li><code>bucket_content_amount</code></li>
+<li><code>resource:bucket</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TrySetBucketParameters public System.Boolean TrySetBucketParameters(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;&amp; parametersRef, Shared.Models.Construction.ConstructionMaterialsAggregate&amp; constructionMaterials, BucketEntityHelperShared.BucketContentType type, System.String resourceId, System.Int32 amount) System.Boolean parametersRef System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;&amp; constructionMaterials Shared.Models.Construction.ConstructionMaterialsAggregate&amp; type BucketEntityHelperShared.BucketContentType resourceId System.String amount System.Int32" id="trysetbucketparameters-system-collections-generic-dictionary-2-system-string-system-string----shared-models-construction-constructionmaterialsaggregate---bucketentityhelpershared-bucketcontenttype--system-string--system-int32---system-boolean">
+<div class="method-heading">
+<h3><code>TrySetBucketParameters</code></h3>
+<a class="permalink" href="#trysetbucketparameters-system-collections-generic-dictionary-2-system-string-system-string----shared-models-construction-constructionmaterialsaggregate---bucketentityhelpershared-bucketcontenttype--system-string--system-int32---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TrySetBucketParameters(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;&amp; parametersRef, Shared.Models.Construction.ConstructionMaterialsAggregate&amp; constructionMaterials, BucketEntityHelperShared.BucketContentType type, System.String resourceId, System.Int32 amount)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Helpers.BucketEntityHelper::TrySetBucketParameters(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;&amp;, Shared.Models.Construction.ConstructionMaterialsAggregate&amp;, BucketEntityHelperShared.BucketContentType, System.String, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TrySetBucketParameters(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;&amp; parametersRef, <a href="../../types/Shared/Shared_Models_Construction_ConstructionMaterialsAggregate.html">Shared.Models.Construction.ConstructionMaterialsAggregate</a>&amp; constructionMaterials, <a href="../../types/Shared/BucketEntityHelperShared_BucketContentType.html">BucketEntityHelperShared.BucketContentType</a> type, System.String resourceId, System.Int32 amount)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E6E19B172354672B9A8A919801036557DA2FB357AFBAB61C86BED93F8460F510</code></li>
+<li><span>Body hash</span><code>C76C6DDA56681F7D63A25F1C5E763FF4CBA6C2C62C2CBDEAACB4AEEA02D9F735</code></li>
+<li><span>IL size</span><span>312</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Helpers_BucketEntityHelper.html#setempty-system-collections-generic-dictionary-2-system-string-system-string----shared-models-construction-constructionmaterialsaggregate----system-void">CandideServer.Helpers.BucketEntityHelper::SetEmpty(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;&amp;, Shared.Models.Construction.ConstructionMaterialsAggregate&amp;)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Data_ConstructionResourcesDataBase.html#getconstructionresourceornull-system-string---system-nullable-1-shared-models-construction-constructionresourcedatamodel-">Shared.Data.ConstructionResourcesDataBase::GetConstructionResourceOrNull(System.String)</a></code></li>
+<li><code>System.Nullable&lt;Shared.Models.Construction.ConstructionResourceDataModel&gt;::get_HasValue()</code></li>
+<li><code>System.Object::ToString()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.Int32::ToString()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Construction_ConstructionMaterialsAggregate.html#emptyallexcept-system-string---system-void">Shared.Models.Construction.ConstructionMaterialsAggregate::EmptyAllExcept(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.ArgumentOutOfRangeException::.ctor(System.String, System.Object, System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#setbucketcontent-candideserver-entities-serverentitymodel--bucketentityhelpershared-bucketcontenttype--system-string--system-int32---system-boolean"><code>CandideServer.ServerControllers.EntitySController::SetBucketContent</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>TrySetBucketParameters</code></li>
+<li><code>: Received BucketContentType </code></li>
+<li><code> but no resource ID was given. Defaulting to </code></li>
+<li><code> but could not find the resource ID in the database. Defaulting to </code></li>
+<li><code>bucket_content_type</code></li>
+<li><code>bucket_content_resource_id</code></li>
+<li><code>bucket_content_amount</code></li>
+<li><code>resource:bucket</code></li>
+<li><code>type</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

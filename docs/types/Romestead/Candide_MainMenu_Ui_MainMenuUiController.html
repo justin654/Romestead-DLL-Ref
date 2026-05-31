@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.MainMenu.Ui.MainMenuUiController - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.MainMenu.Ui.MainMenuUiController</h1>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.Ui.MainMenuUiController">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.MainMenu.Ui.MainMenuUiController
+
+- Assembly: `Romestead`
+- Namespace: `Candide.MainMenu.Ui`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 7 methods, 1 properties, 6 fields, 0 events
+
+## Public Methods
+- `public System.Void Back()`
+- `public System.Void InsertTemporaryState(Candide.MainMenu.MainMenuPanelState state)`
+- `public System.Void Next()`
+- `public System.Void Reset()`
+- `public System.Void Setup(Candide.CandideUI.CandideDesktop desktop, System.Collections.Generic.Dictionary&lt;Candide.MainMenu.MainMenuPanelState, System.Func&lt;Candide.CandideUI.Containers.CandideWindow&gt;&gt; windows)`
+- `public System.Void StartJoinProcess(Candide.MainMenu.Ui.JoinGameState newState, Candide.MainMenu.MainMenuPanelState[] steps, System.Int32 startIndex)`
+">Copy markdown</button>
+<a class="button" href="Candide_MainMenu_Ui_MainMenuUiController.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.MainMenu.Ui</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>7</strong></article>
+<article class="metric"><span>Properties</span><strong>1</strong></article>
+<article class="metric"><span>Fields</span><strong>6</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.MainMenu.Ui</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>70C8F291E0A04C050CF44C4ABE17C51F3C01E11BAA324C8D8304AE8C947CFE1E</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_MainMenuUi.html"><code>Candide.MainMenu.Ui.MainMenuUi</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="JoinGameState public Candide.MainMenu.Ui.JoinGameState JoinGameState Candide.MainMenu.Ui.JoinGameState" id="joingamestate-candide-mainmenu-ui-joingamestate"><td><span class="member-name-cell"><code>JoinGameState</code><a class="permalink" href="#joingamestate-candide-mainmenu-ui-joingamestate" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.MainMenu.Ui.JoinGameState JoinGameState">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_MainMenu_Ui_JoinGameState.html">Candide.MainMenu.Ui.JoinGameState</a> JoinGameState</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_desktop private Candide.CandideUI.CandideDesktop _desktop Candide.CandideUI.CandideDesktop" id="-desktop-candide-candideui-candidedesktop"><td><span class="member-name-cell"><code>_desktop</code><a class="permalink" href="#-desktop-candide-candideui-candidedesktop" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.CandideDesktop _desktop">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_CandideDesktop.html">Candide.CandideUI.CandideDesktop</a> _desktop</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_state private Candide.MainMenu.MainMenuPanelState _state Candide.MainMenu.MainMenuPanelState" id="-state-candide-mainmenu-mainmenupanelstate"><td><span class="member-name-cell"><code>_state</code><a class="permalink" href="#-state-candide-mainmenu-mainmenupanelstate" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.MainMenu.MainMenuPanelState _state">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_MainMenu_MainMenuPanelState.html">Candide.MainMenu.MainMenuPanelState</a> _state</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_stepIndex private System.Int32 _stepIndex System.Int32" id="-stepindex-system-int32"><td><span class="member-name-cell"><code>_stepIndex</code><a class="permalink" href="#-stepindex-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _stepIndex">Copy</button></span></td><td>private</td><td><code>private System.Int32 _stepIndex</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_steps private System.Collections.Generic.List&lt;System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;&gt; _steps System.Collections.Generic.List&lt;System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;&gt;" id="-steps-system-collections-generic-list-1-system-valuetuple-2-candide-mainmenu-mainmenupanelstate-system-boolean--"><td><span class="member-name-cell"><code>_steps</code><a class="permalink" href="#-steps-system-collections-generic-list-1-system-valuetuple-2-candide-mainmenu-mainmenupanelstate-system-boolean--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;&gt; _steps">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;System.ValueTuple&lt;<a href="../../types/Romestead/Candide_MainMenu_MainMenuPanelState.html">Candide.MainMenu.MainMenuPanelState</a>, System.Boolean&gt;&gt; _steps</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_windows private System.Collections.Generic.Dictionary&lt;Candide.MainMenu.MainMenuPanelState, System.Func&lt;Candide.CandideUI.Containers.CandideWindow&gt;&gt; _windows System.Collections.Generic.Dictionary&lt;Candide.MainMenu.MainMenuPanelState, System.Func&lt;Candide.CandideUI.Containers.CandideWindow&gt;&gt;" id="-windows-system-collections-generic-dictionary-2-candide-mainmenu-mainmenupanelstate-system-func-1-candide-candideui-containers-candidewindow--"><td><span class="member-name-cell"><code>_windows</code><a class="permalink" href="#-windows-system-collections-generic-dictionary-2-candide-mainmenu-mainmenupanelstate-system-func-1-candide-candideui-containers-candidewindow--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;Candide.MainMenu.MainMenuPanelState, System.Func&lt;Candide.CandideUI.Containers.CandideWindow&gt;&gt; _windows">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;<a href="../../types/Romestead/Candide_MainMenu_MainMenuPanelState.html">Candide.MainMenu.MainMenuPanelState</a>, System.Func&lt;<a href="../../types/Romestead/Candide_CandideUI_Containers_CandideWindow.html">Candide.CandideUI.Containers.CandideWindow</a>&gt;&gt; _windows</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="State public Candide.MainMenu.MainMenuPanelState State Candide.MainMenu.MainMenuPanelState" id="state-candide-mainmenu-mainmenupanelstate"><td><span class="member-name-cell"><code>State</code><a class="permalink" href="#state-candide-mainmenu-mainmenupanelstate" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.MainMenu.MainMenuPanelState State">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_MainMenu_MainMenuPanelState.html">Candide.MainMenu.MainMenuPanelState</a> State</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Back public System.Void Back() System.Void " id="back----system-void">
+<div class="method-heading">
+<h3><code>Back</code></h3>
+<a class="permalink" href="#back----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Back()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.Ui.MainMenuUiController::Back()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Back()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FCFADE7151B2A1C77F11AAE145876835E00830564210011D73AFCFFD04189BFB</code></li>
+<li><span>Body hash</span><code>C1043A59B5FBC64131BE57D92779F88758283CE308D698B245896E3FA2589EFA</code></li>
+<li><span>IL size</span><span>148</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;&gt;::get_Count()</code></li>
+<li><code>Candide.MainMenu.Ui.MainMenuUiController::set_State(Candide.MainMenu.MainMenuPanelState)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;&gt;::RemoveAt(System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Sound_SoundPlayer.html#playeventoneshot-system-string--system-single--system-single---system-void">Candide.Sound.SoundPlayer::PlayEventOneShot(System.String, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_AbstractStepsWindow.html#onuiclosepressed----system-boolean"><code>Candide.MainMenu.Ui.Steps.AbstractStepsWindow::OnUiClosePressed</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_ConnectingStatusWindow.html#cancelconnection----system-void"><code>Candide.MainMenu.Ui.Steps.ConnectingStatusWindow::CancelConnection</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_ConnectingStatusWindow.html#onwindowshown----system-void"><code>Candide.MainMenu.Ui.Steps.ConnectingStatusWindow::OnWindowShown</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_ConnectingStatusWindow.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.MainMenu.Ui.Steps.ConnectingStatusWindow::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_CreateWorldWindow.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.MainMenu.Ui.Steps.CreateWorldWindow::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_PostGameWindow.html#onclicked-backbutton----system-void"><code>Candide.MainMenu.Ui.Steps.PostGameWindow::OnClicked_BackButton</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_PostGameWindow.html#onwindowshown----system-void"><code>Candide.MainMenu.Ui.Steps.PostGameWindow::OnWindowShown</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_PostGameWindow.html#updatewaitforpostgamebehaviours----system-void"><code>Candide.MainMenu.Ui.Steps.PostGameWindow::UpdateWaitForPostGameBehaviours</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>event:/interface/main menu/ui_mainmenu_back</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="InsertTemporaryState public System.Void InsertTemporaryState(Candide.MainMenu.MainMenuPanelState state) System.Void state Candide.MainMenu.MainMenuPanelState" id="inserttemporarystate-candide-mainmenu-mainmenupanelstate---system-void">
+<div class="method-heading">
+<h3><code>InsertTemporaryState</code></h3>
+<a class="permalink" href="#inserttemporarystate-candide-mainmenu-mainmenupanelstate---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void InsertTemporaryState(Candide.MainMenu.MainMenuPanelState state)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.Ui.MainMenuUiController::InsertTemporaryState(Candide.MainMenu.MainMenuPanelState)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void InsertTemporaryState(<a href="../../types/Romestead/Candide_MainMenu_MainMenuPanelState.html">Candide.MainMenu.MainMenuPanelState</a> state)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FBD77BDD3B3D3BAF4B08FED3723957AD0731FAF2E7EAC6F947BE54B4290A9149</code></li>
+<li><span>Body hash</span><code>8A9E485AAD7808EB297DB518891F1ABD0C20DC227BACE5E3DA8D6F51558698AA</code></li>
+<li><span>IL size</span><span>33</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;::.ctor(!0, !1)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;&gt;::Insert(System.Int32, !0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_MainMenu_Ui_MainMenuUiController.html#next----system-void">Candide.MainMenu.Ui.MainMenuUiController::Next()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_ConnectingStatusWindow.html#promptpasswordinput----system-void"><code>Candide.MainMenu.Ui.Steps.ConnectingStatusWindow::PromptPasswordInput</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Next public System.Void Next() System.Void " id="next----system-void">
+<div class="method-heading">
+<h3><code>Next</code></h3>
+<a class="permalink" href="#next----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Next()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.Ui.MainMenuUiController::Next()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Next()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7E33AEB7D74F3F7ABEEE0DB465DABE71ABDE033BE3109572476AA24835F8F80C</code></li>
+<li><span>Body hash</span><code>D1814877121A01C4A4A978D60D91B919C7B3BF0B923C21F18F9BDA24B2EB6831</code></li>
+<li><span>IL size</span><span>116</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;&gt;::RemoveAt(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;&gt;::get_Count()</code></li>
+<li><code>System.NotFiniteNumberException::.ctor(System.String)</code></li>
+<li><code>Candide.MainMenu.Ui.MainMenuUiController::set_State(Candide.MainMenu.MainMenuPanelState)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_MainMenuUiController.html#inserttemporarystate-candide-mainmenu-mainmenupanelstate---system-void"><code>Candide.MainMenu.Ui.MainMenuUiController::InsertTemporaryState</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_HostServerWindow.html#onstartgameclicked----system-void"><code>Candide.MainMenu.Ui.Steps.HostServerWindow::OnStartGameClicked</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_SelectServerWindow.html#onconnectclicked----system-void"><code>Candide.MainMenu.Ui.Steps.SelectServerWindow::OnConnectClicked</code></a></li>
+<li><a href="../../types/Romestead/Candide_Steam_SteamIntegration.html#joingame-system-string---system-void"><code>Candide.Steam.SteamIntegration::JoinGame</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Implement finish last step</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Reset public System.Void Reset() System.Void " id="reset----system-void">
+<div class="method-heading">
+<h3><code>Reset</code></h3>
+<a class="permalink" href="#reset----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Reset()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.Ui.MainMenuUiController::Reset()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Reset()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>23B033B4075BCBE8ECFB5119E5F0C1D9101CAFA5479613B65EA56F1916A4B2A3</code></li>
+<li><span>Body hash</span><code>1417FD327149EAA1C73913A61E9A647CA016F4792A6CE8DA51CF1E2B0AE86B8F</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.MainMenu.Ui.MainMenuUiController::set_State(Candide.MainMenu.MainMenuPanelState)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_MainMenu.html#onsceneactivated----system-void"><code>Candide.MainMenu.MainMenu::OnSceneActivated</code></a></li>
+<li><a href="../../types/Romestead/Candide_Steam_SteamIntegration.html#joingame-system-string---system-void"><code>Candide.Steam.SteamIntegration::JoinGame</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Setup public System.Void Setup(Candide.CandideUI.CandideDesktop desktop, System.Collections.Generic.Dictionary&lt;Candide.MainMenu.MainMenuPanelState, System.Func&lt;Candide.CandideUI.Containers.CandideWindow&gt;&gt; windows) System.Void desktop Candide.CandideUI.CandideDesktop windows System.Collections.Generic.Dictionary&lt;Candide.MainMenu.MainMenuPanelState, System.Func&lt;Candide.CandideUI.Containers.CandideWindow&gt;&gt;" id="setup-candide-candideui-candidedesktop--system-collections-generic-dictionary-2-candide-mainmenu-mainmenupanelstate-system-func-1-candide-candideui-containers-candidewindow-----system-void">
+<div class="method-heading">
+<h3><code>Setup</code></h3>
+<a class="permalink" href="#setup-candide-candideui-candidedesktop--system-collections-generic-dictionary-2-candide-mainmenu-mainmenupanelstate-system-func-1-candide-candideui-containers-candidewindow-----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Setup(Candide.CandideUI.CandideDesktop desktop, System.Collections.Generic.Dictionary&lt;Candide.MainMenu.MainMenuPanelState, System.Func&lt;Candide.CandideUI.Containers.CandideWindow&gt;&gt; windows)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.Ui.MainMenuUiController::Setup(Candide.CandideUI.CandideDesktop, System.Collections.Generic.Dictionary&lt;Candide.MainMenu.MainMenuPanelState, System.Func&lt;Candide.CandideUI.Containers.CandideWindow&gt;&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Setup(<a href="../../types/Romestead/Candide_CandideUI_CandideDesktop.html">Candide.CandideUI.CandideDesktop</a> desktop, System.Collections.Generic.Dictionary&lt;<a href="../../types/Romestead/Candide_MainMenu_MainMenuPanelState.html">Candide.MainMenu.MainMenuPanelState</a>, System.Func&lt;<a href="../../types/Romestead/Candide_CandideUI_Containers_CandideWindow.html">Candide.CandideUI.Containers.CandideWindow</a>&gt;&gt; windows)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4547DDB675BC7D8EF55337A471F5B8194FE4ADC619757AF91F520589609A93E9</code></li>
+<li><span>Body hash</span><code>ABD35FA05786290464224626F899098218DC83C67A7E02EF4E9DFEC80317EF91</code></li>
+<li><span>IL size</span><span>38</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideDesktop.html#closeall----system-void">Candide.CandideUI.CandideDesktop::CloseAll()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_MainMenu_Ui_MainMenuUiController.html#statechanged----system-void">Candide.MainMenu.Ui.MainMenuUiController::StateChanged()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_MainMenuUi.html#showui-candide-candideui-candidedesktop---system-void"><code>Candide.MainMenu.Ui.MainMenuUi::ShowUi</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="StartJoinProcess public System.Void StartJoinProcess(Candide.MainMenu.Ui.JoinGameState newState, Candide.MainMenu.MainMenuPanelState[] steps, System.Int32 startIndex) System.Void newState Candide.MainMenu.Ui.JoinGameState steps Candide.MainMenu.MainMenuPanelState[] startIndex System.Int32" id="startjoinprocess-candide-mainmenu-ui-joingamestate--candide-mainmenu-mainmenupanelstate----system-int32---system-void">
+<div class="method-heading">
+<h3><code>StartJoinProcess</code></h3>
+<a class="permalink" href="#startjoinprocess-candide-mainmenu-ui-joingamestate--candide-mainmenu-mainmenupanelstate----system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void StartJoinProcess(Candide.MainMenu.Ui.JoinGameState newState, Candide.MainMenu.MainMenuPanelState[] steps, System.Int32 startIndex)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.Ui.MainMenuUiController::StartJoinProcess(Candide.MainMenu.Ui.JoinGameState, Candide.MainMenu.MainMenuPanelState[], System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void StartJoinProcess(<a href="../../types/Romestead/Candide_MainMenu_Ui_JoinGameState.html">Candide.MainMenu.Ui.JoinGameState</a> newState, <a href="../../types/Romestead/Candide_MainMenu_MainMenuPanelState.html">Candide.MainMenu.MainMenuPanelState</a>[] steps, System.Int32 startIndex)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>507A4AEC25957720B05ADBD3F768759AF1EA5D73D1480C17C19D2DC78C9FCC70</code></li>
+<li><span>Body hash</span><code>9A6F83303ADE0257F170EA70AF23ADB5CCDBBF0AB6BE3DFFB19EA3451656CD65</code></li>
+<li><span>IL size</span><span>107</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.ArgumentException::.ctor(System.String)</code></li>
+<li><code>Candide.Multiplayer.Services.ConnectionState::set_Step(Candide.Multiplayer.Services.ConnectionStep)</code></li>
+<li><code>System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;::.ctor(!0, !1)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;&gt;::Add(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;&gt;::get_Item(System.Int32)</code></li>
+<li><code>Candide.MainMenu.Ui.MainMenuUiController::set_State(Candide.MainMenu.MainMenuPanelState)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_PostGameWindow.html#handlepostgamebehaviour----system-void"><code>Candide.MainMenu.Ui.Steps.PostGameWindow::HandlePostGameBehaviour</code></a></li>
+<li><a href="../../types/Romestead/Candide_Steam_SteamIntegration.html#joingame-system-string---system-void"><code>Candide.Steam.SteamIntegration::JoinGame</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Steps array can&#39;t be empty</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="StateChanged private System.Void StateChanged() System.Void " id="statechanged----system-void">
+<div class="method-heading">
+<h3><code>StateChanged</code></h3>
+<a class="permalink" href="#statechanged----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void StateChanged()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.Ui.MainMenuUiController::StateChanged()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void StateChanged()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C79C846A62475BC295AEF393254209F7334D867B5E3F200795025821CC034A85</code></li>
+<li><span>Body hash</span><code>822EE8578F838C3240AF0E7A7D84556F787F92F4E83B2F5B37B95FD1581FAAFC</code></li>
+<li><span>IL size</span><span>148</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideDesktop.html#closeall----system-void">Candide.CandideUI.CandideDesktop::CloseAll()</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;Candide.MainMenu.MainMenuPanelState, System.Func&lt;Candide.CandideUI.Containers.CandideWindow&gt;&gt;::get_Item(!0)</code></li>
+<li><code>System.Func&lt;Candide.CandideUI.Containers.CandideWindow&gt;::Invoke()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideWindow.html#show-candide-candideui-candidedesktop--system-nullable-1-system-int32---system-nullable-1-system-int32----system-void">Candide.CandideUI.Containers.CandideWindow::Show(Candide.CandideUI.CandideDesktop, System.Nullable&lt;System.Int32&gt;, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Candide.MainMenu.MainMenuPanelState, System.Boolean&gt;&gt;::Clear()</code></li>
+<li><code>System.ArgumentOutOfRangeException::.ctor()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_MainMenuUiController.html#setup-candide-candideui-candidedesktop--system-collections-generic-dictionary-2-candide-mainmenu-mainmenupanelstate-system-func-1-candide-candideui-containers-candidewindow-----system-void"><code>Candide.MainMenu.Ui.MainMenuUiController::Setup</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

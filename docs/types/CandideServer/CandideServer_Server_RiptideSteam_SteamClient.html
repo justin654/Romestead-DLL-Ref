@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.Server.RiptideSteam.SteamClient - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.Server.RiptideSteam.SteamClient</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.Server.RiptideSteam.SteamClient">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.Server.RiptideSteam.SteamClient
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.Server.RiptideSteam`
+- Kind: `public class`
+- Base type: `CandideServer.Server.RiptideSteam.SteamPeer`
+- Interfaces: `Riptide.Transports.IClient`, `Riptide.Transports.IPeer`
+- Members: 12 methods, 0 properties, 13 fields, 4 events
+
+## Public Methods
+- `public System.Void ChangeLocalServer(CandideServer.Server.RiptideSteam.SteamServer newLocalServer)`
+- `public System.Boolean Connect(System.String hostAddress, out Riptide.Connection&amp; connection, out System.String&amp; connectError)`
+- `public System.Void Disconnect()`
+- `public System.Void Poll()`
+">Copy markdown</button>
+<a class="button" href="CandideServer_Server_RiptideSteam_SteamClient.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.Server.RiptideSteam</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>12</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>13</strong></article>
+<article class="metric"><span>Events</span><strong>4</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.Server.RiptideSteam</code></li>
+<li><span>Base type</span><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamPeer.html">CandideServer.Server.RiptideSteam.SteamPeer</a></code></li>
+<li><span>Interfaces</span><code>Riptide.Transports.IClient, Riptide.Transports.IPeer</code></li>
+<li><span>Hash</span><code>7737A894DD0AB8A0F4B64A258E52E0A1646B6CF2779056EAC99A8A4CE0C40126</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamPeer.html">CandideServer.Server.RiptideSteam.SteamPeer</a></code></p></article>
+<article><h3>Interfaces</h3><ul class="list compact">
+<li><code>Riptide.Transports.IClient</code></li>
+<li><code>Riptide.Transports.IPeer</code></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="Connected private System.EventHandler Connected System.EventHandler" id="connected-system-eventhandler"><td><span class="member-name-cell"><code>Connected</code><a class="permalink" href="#connected-system-eventhandler" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.EventHandler Connected">Copy</button></span></td><td>private</td><td><code>private System.EventHandler Connected</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ConnectionFailed private System.EventHandler ConnectionFailed System.EventHandler" id="connectionfailed-system-eventhandler"><td><span class="member-name-cell"><code>ConnectionFailed</code><a class="permalink" href="#connectionfailed-system-eventhandler" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.EventHandler ConnectionFailed">Copy</button></span></td><td>private</td><td><code>private System.EventHandler ConnectionFailed</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="DataReceived private System.EventHandler&lt;Riptide.Transports.DataReceivedEventArgs&gt; DataReceived System.EventHandler&lt;Riptide.Transports.DataReceivedEventArgs&gt;" id="datareceived-system-eventhandler-1-riptide-transports-datareceivedeventargs-"><td><span class="member-name-cell"><code>DataReceived</code><a class="permalink" href="#datareceived-system-eventhandler-1-riptide-transports-datareceivedeventargs-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.EventHandler&lt;Riptide.Transports.DataReceivedEventArgs&gt; DataReceived">Copy</button></span></td><td>private</td><td><code>private System.EventHandler&lt;Riptide.Transports.DataReceivedEventArgs&gt; DataReceived</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="Disconnected private System.EventHandler&lt;Riptide.Transports.DisconnectedEventArgs&gt; Disconnected System.EventHandler&lt;Riptide.Transports.DisconnectedEventArgs&gt;" id="disconnected-system-eventhandler-1-riptide-transports-disconnectedeventargs-"><td><span class="member-name-cell"><code>Disconnected</code><a class="permalink" href="#disconnected-system-eventhandler-1-riptide-transports-disconnectedeventargs-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.EventHandler&lt;Riptide.Transports.DisconnectedEventArgs&gt; Disconnected">Copy</button></span></td><td>private</td><td><code>private System.EventHandler&lt;Riptide.Transports.DisconnectedEventArgs&gt; Disconnected</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="LocalHostIp private System.String LocalHostIp System.String" id="localhostip-system-string"><td><span class="member-name-cell"><code>LocalHostIp</code><a class="permalink" href="#localhostip-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.String LocalHostIp">Copy</button></span></td><td>private</td><td><code>private System.String LocalHostIp</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="LocalHostName private System.String LocalHostName System.String" id="localhostname-system-string"><td><span class="member-name-cell"><code>LocalHostName</code><a class="permalink" href="#localhostname-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.String LocalHostName">Copy</button></span></td><td>private</td><td><code>private System.String LocalHostName</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_connectionStatusChanged private Steamworks.Callback&lt;Steamworks.SteamNetConnectionStatusChangedCallback_t&gt; _connectionStatusChanged Steamworks.Callback&lt;Steamworks.SteamNetConnectionStatusChangedCallback_t&gt;" id="-connectionstatuschanged-steamworks-callback-1-steamworks-steamnetconnectionstatuschangedcallback-t-"><td><span class="member-name-cell"><code>_connectionStatusChanged</code><a class="permalink" href="#-connectionstatuschanged-steamworks-callback-1-steamworks-steamnetconnectionstatuschangedcallback-t-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Steamworks.Callback&lt;Steamworks.SteamNetConnectionStatusChangedCallback_t&gt; _connectionStatusChanged">Copy</button></span></td><td>private</td><td><code>private Steamworks.Callback&lt;Steamworks.SteamNetConnectionStatusChangedCallback_t&gt; _connectionStatusChanged</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_localhosting private System.Boolean _localhosting System.Boolean" id="-localhosting-system-boolean"><td><span class="member-name-cell"><code>_localhosting</code><a class="permalink" href="#-localhosting-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _localhosting">Copy</button></span></td><td>private</td><td><code>private System.Boolean _localhosting</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_localServer private CandideServer.Server.RiptideSteam.SteamServer _localServer CandideServer.Server.RiptideSteam.SteamServer" id="-localserver-candideserver-server-riptidesteam-steamserver"><td><span class="member-name-cell"><code>_localServer</code><a class="permalink" href="#-localserver-candideserver-server-riptidesteam-steamserver" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private CandideServer.Server.RiptideSteam.SteamServer _localServer">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamServer.html">CandideServer.Server.RiptideSteam.SteamServer</a> _localServer</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_offline private System.Boolean _offline System.Boolean" id="-offline-system-boolean"><td><span class="member-name-cell"><code>_offline</code><a class="permalink" href="#-offline-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _offline">Copy</button></span></td><td>private</td><td><code>private System.Boolean _offline</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_reuseDataReceivedEventArgs private Riptide.Transports.DataReceivedEventArgs _reuseDataReceivedEventArgs Riptide.Transports.DataReceivedEventArgs" id="-reusedatareceivedeventargs-riptide-transports-datareceivedeventargs"><td><span class="member-name-cell"><code>_reuseDataReceivedEventArgs</code><a class="permalink" href="#-reusedatareceivedeventargs-riptide-transports-datareceivedeventargs" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Riptide.Transports.DataReceivedEventArgs _reuseDataReceivedEventArgs">Copy</button></span></td><td>private</td><td><code>private Riptide.Transports.DataReceivedEventArgs _reuseDataReceivedEventArgs</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_reuseDisconnectedEventArgs private Riptide.Transports.DisconnectedEventArgs _reuseDisconnectedEventArgs Riptide.Transports.DisconnectedEventArgs" id="-reusedisconnectedeventargs-riptide-transports-disconnectedeventargs"><td><span class="member-name-cell"><code>_reuseDisconnectedEventArgs</code><a class="permalink" href="#-reusedisconnectedeventargs-riptide-transports-disconnectedeventargs" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Riptide.Transports.DisconnectedEventArgs _reuseDisconnectedEventArgs">Copy</button></span></td><td>private</td><td><code>private Riptide.Transports.DisconnectedEventArgs _reuseDisconnectedEventArgs</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_steamConnection private CandideServer.Server.RiptideSteam.SteamConnection _steamConnection CandideServer.Server.RiptideSteam.SteamConnection" id="-steamconnection-candideserver-server-riptidesteam-steamconnection"><td><span class="member-name-cell"><code>_steamConnection</code><a class="permalink" href="#-steamconnection-candideserver-server-riptidesteam-steamconnection" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private CandideServer.Server.RiptideSteam.SteamConnection _steamConnection">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamConnection.html">CandideServer.Server.RiptideSteam.SteamConnection</a> _steamConnection</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Events</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="Connected public System.EventHandler Connected System.EventHandler" id="connected-system-eventhandler"><td><span class="member-name-cell"><code>Connected</code><a class="permalink" href="#connected-system-eventhandler" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.EventHandler Connected">Copy</button></span></td><td>public</td><td><code>public System.EventHandler Connected</code></td></tr>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="ConnectionFailed public System.EventHandler ConnectionFailed System.EventHandler" id="connectionfailed-system-eventhandler"><td><span class="member-name-cell"><code>ConnectionFailed</code><a class="permalink" href="#connectionfailed-system-eventhandler" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.EventHandler ConnectionFailed">Copy</button></span></td><td>public</td><td><code>public System.EventHandler ConnectionFailed</code></td></tr>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="DataReceived public System.EventHandler&lt;Riptide.Transports.DataReceivedEventArgs&gt; DataReceived System.EventHandler&lt;Riptide.Transports.DataReceivedEventArgs&gt;" id="datareceived-system-eventhandler-1-riptide-transports-datareceivedeventargs-"><td><span class="member-name-cell"><code>DataReceived</code><a class="permalink" href="#datareceived-system-eventhandler-1-riptide-transports-datareceivedeventargs-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.EventHandler&lt;Riptide.Transports.DataReceivedEventArgs&gt; DataReceived">Copy</button></span></td><td>public</td><td><code>public System.EventHandler&lt;Riptide.Transports.DataReceivedEventArgs&gt; DataReceived</code></td></tr>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="Disconnected public System.EventHandler&lt;Riptide.Transports.DisconnectedEventArgs&gt; Disconnected System.EventHandler&lt;Riptide.Transports.DisconnectedEventArgs&gt;" id="disconnected-system-eventhandler-1-riptide-transports-disconnectedeventargs-"><td><span class="member-name-cell"><code>Disconnected</code><a class="permalink" href="#disconnected-system-eventhandler-1-riptide-transports-disconnectedeventargs-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.EventHandler&lt;Riptide.Transports.DisconnectedEventArgs&gt; Disconnected">Copy</button></span></td><td>public</td><td><code>public System.EventHandler&lt;Riptide.Transports.DisconnectedEventArgs&gt; Disconnected</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ChangeLocalServer public System.Void ChangeLocalServer(CandideServer.Server.RiptideSteam.SteamServer newLocalServer) System.Void newLocalServer CandideServer.Server.RiptideSteam.SteamServer" id="changelocalserver-candideserver-server-riptidesteam-steamserver---system-void">
+<div class="method-heading">
+<h3><code>ChangeLocalServer</code></h3>
+<a class="permalink" href="#changelocalserver-candideserver-server-riptidesteam-steamserver---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ChangeLocalServer(CandideServer.Server.RiptideSteam.SteamServer newLocalServer)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Server.RiptideSteam.SteamClient::ChangeLocalServer(CandideServer.Server.RiptideSteam.SteamServer)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ChangeLocalServer(<a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamServer.html">CandideServer.Server.RiptideSteam.SteamServer</a> newLocalServer)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2FD165B961F361E963DA0E27B0E83C5790A886EA66C57C7918916DD4DC0C2E91</code></li>
+<li><span>Body hash</span><code>A7483EE23E8BD2850455764C60203F9B1F8D20A7E76A0C8157E16FCE896A3F7E</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Connect public System.Boolean Connect(System.String hostAddress, out Riptide.Connection&amp; connection, out System.String&amp; connectError) System.Boolean hostAddress System.String connection Riptide.Connection&amp; connectError System.String&amp;" id="connect-system-string--riptide-connection---system-string----system-boolean">
+<div class="method-heading">
+<h3><code>Connect</code></h3>
+<a class="permalink" href="#connect-system-string--riptide-connection---system-string----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean Connect(System.String hostAddress, out Riptide.Connection&amp; connection, out System.String&amp; connectError)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Server.RiptideSteam.SteamClient::Connect(System.String, Riptide.Connection&amp;, System.String&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean Connect(System.String hostAddress, out Riptide.Connection&amp; connection, out System.String&amp; connectError)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>CC727E050ED13E28747109066DE7CF86EEB54AB4ED53AE3E17D71B0EF78A8699</code></li>
+<li><span>Body hash</span><code>41E0BE9B86E2EB920E4BEA694772A34996D014CF6C2B011608E30A7BD54F58C3</code></li>
+<li><span>IL size</span><span>423</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Steamworks.SteamNetworkingUtils::InitRelayNetworkAccess()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>System.String::StartsWith(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#connectlocal----candideserver-server-riptidesteam-steamconnection">CandideServer.Server.RiptideSteam.SteamClient::ConnectLocal()</a></code></li>
+<li><code>System.String::IndexOf(System.Char)</code></li>
+<li><code>System.String::get_Length()</code></li>
+<li><code>System.String::Substring(System.Int32, System.Int32)</code></li>
+<li><code>System.Int32::TryParse(System.String, System.Int32&amp;)</code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code>System.UInt64::TryParse(System.String, System.UInt64&amp;)</code></li>
+<li><code>Steamworks.CSteamID::.ctor(System.UInt64)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#tryconnect-steamworks-csteamid--system-int32---candideserver-server-riptidesteam-steamconnection">CandideServer.Server.RiptideSteam.SteamClient::TryConnect(Steamworks.CSteamID, System.Int32)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Couldn&#39;t connect: </code></li>
+<li><code>127.0.0.1</code></li>
+<li><code>localhost</code></li>
+<li><code>No locally running server was specified to connect to! Either pass a SteamServer instance to your SteamClient&#39;s construc</code></li>
+<li><code>Failed to create local socket pair</code></li>
+<li><code>Couldn&#39;t connect: Failed to parse port &#39;</code></li>
+<li><code>&#39;</code></li>
+<li><code>Invalid host address &#39;</code></li>
+<li><code>&#39;! Expected &#39;</code></li>
+<li><code>&#39; or &#39;</code></li>
+<li><code>&#39; for local connections, or a valid Steam ID.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ConnectLocal private CandideServer.Server.RiptideSteam.SteamConnection ConnectLocal() CandideServer.Server.RiptideSteam.SteamConnection " id="connectlocal----candideserver-server-riptidesteam-steamconnection">
+<div class="method-heading">
+<h3><code>ConnectLocal</code></h3>
+<a class="permalink" href="#connectlocal----candideserver-server-riptidesteam-steamconnection" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private CandideServer.Server.RiptideSteam.SteamConnection ConnectLocal()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Server.RiptideSteam.SteamClient::ConnectLocal()">Copy Harmony target</button>
+</div>
+<p><code>private <a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamConnection.html">CandideServer.Server.RiptideSteam.SteamConnection</a> ConnectLocal()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamConnection.html">CandideServer.Server.RiptideSteam.SteamConnection</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>144ADFCF7D7292770417D8964E08FDC80474B9E276DFE953975966177CFF5F98</code></li>
+<li><span>Body hash</span><code>7D71AF085B3292D9CEE729F43692DE0F58D90FBCB5AC5CB165E15E79B7AC3D6F</code></li>
+<li><span>IL size</span><span>61</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Riptide.Utils.RiptideLogger::Log(Riptide.Utils.LogType, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#onconnectionstatuschanged-steamworks-steamnetconnectionstatuschangedcallback-t---system-void">CandideServer.Server.RiptideSteam.SteamClient::OnConnectionStatusChanged(Steamworks.SteamNetConnectionStatusChangedCallback_t)</a></code></li>
+<li><code>Callback.DispatchDelegate&lt;Steamworks.SteamNetConnectionStatusChangedCallback_t&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Steamworks.Callback&lt;Steamworks.SteamNetConnectionStatusChangedCallback_t&gt;::Create(Callback.DispatchDelegate&lt;!0&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamServer.html#createlocalconnection-candideserver-server-riptidesteam-steampeer---candideserver-server-riptidesteam-steamconnection">CandideServer.Server.RiptideSteam.SteamServer::CreateLocalConnection(CandideServer.Server.RiptideSteam.SteamPeer)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#onconnected-steamworks-hsteamnetconnection---system-void">CandideServer.Server.RiptideSteam.SteamClient::OnConnected(Steamworks.HSteamNetConnection)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#connect-system-string--riptide-connection---system-string----system-boolean"><code>CandideServer.Server.RiptideSteam.SteamClient::Connect</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>STEAM: Connecting to locally running server...</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ConnectTimeout private System.Void ConnectTimeout() System.Void " id="connecttimeout----system-void">
+<div class="method-heading">
+<h3><code>ConnectTimeout</code></h3>
+<a class="permalink" href="#connecttimeout----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void ConnectTimeout()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Server.RiptideSteam.SteamClient::ConnectTimeout()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void ConnectTimeout()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8B960836CD61BE070944A10410E54DC83C11019C5EF0D9D3B6929D2EB73523A7</code></li>
+<li><span>Body hash</span><code>4771ADD7C309A7FCBC259091DAE406CF36867AAFD46FEBB5EA8140AA466C1E0A</code></li>
+<li><span>IL size</span><span>43</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Runtime.CompilerServices.AsyncVoidMethodBuilder::Create()</code></li>
+<li><code>System.Runtime.CompilerServices.AsyncVoidMethodBuilder::Start(!!0&amp;)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Disconnect public System.Void Disconnect() System.Void " id="disconnect----system-void">
+<div class="method-heading">
+<h3><code>Disconnect</code></h3>
+<a class="permalink" href="#disconnect----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Disconnect()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Server.RiptideSteam.SteamClient::Disconnect()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Disconnect()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>0C783D59DBF9A4A32B5DA46F3E855762D9A261D0819AEAA8414C79DB8307010B</code></li>
+<li><span>Body hash</span><code>8E5AD16780059751CD319656C0307FB16E2193F6EDD3913529CE1D83DBD2391C</code></li>
+<li><span>IL size</span><span>79</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Steamworks.Callback&lt;Steamworks.SteamNetConnectionStatusChangedCallback_t&gt;::Dispose()</code></li>
+<li><code>CandideServer.Server.RiptideSteam.SteamConnection::op_Inequality(CandideServer.Server.RiptideSteam.SteamConnection, CandideServer.Server.RiptideSteam.SteamConnection)</code></li>
+<li><code>Steamworks.SteamNetworkingSockets::CloseConnection(Steamworks.HSteamNetConnection, System.Int32, System.String, System.Boolean)</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Disconnected</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="OnConnected protected System.Void OnConnected(Steamworks.HSteamNetConnection connection) System.Void connection Steamworks.HSteamNetConnection" id="onconnected-steamworks-hsteamnetconnection---system-void">
+<div class="method-heading">
+<h3><code>OnConnected</code></h3>
+<a class="permalink" href="#onconnected-steamworks-hsteamnetconnection---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected System.Void OnConnected(Steamworks.HSteamNetConnection connection)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Server.RiptideSteam.SteamClient::OnConnected(Steamworks.HSteamNetConnection)">Copy Harmony target</button>
+</div>
+<p><code>protected System.Void OnConnected(Steamworks.HSteamNetConnection connection)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>3733B56E222313500175BE9C5A0DE7E660F54DA7A33D3E902717BD9B061DE5C2</code></li>
+<li><span>Body hash</span><code>E528F7E561BBD946887B74435B60E7C75B019158FA43B4CC19929858E2C650A3</code></li>
+<li><span>IL size</span><span>200</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Steamworks.SteamNetworkingSockets::GetConnectionInfo(Steamworks.HSteamNetConnection, Steamworks.SteamNetConnectionInfo_t&amp;)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>Steamworks.SteamNetworkingIdentity::GetSteamID()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>Steamworks.SteamFriends::SetRichPresence(System.String, System.String)</code></li>
+<li><code>System.EventHandler::Invoke(System.Object, System.EventArgs)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#connectlocal----candideserver-server-riptidesteam-steamconnection"><code>CandideServer.Server.RiptideSteam.SteamClient::ConnectLocal</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#onconnectionstatuschanged-steamworks-steamnetconnectionstatuschangedcallback-t---system-void"><code>CandideServer.Server.RiptideSteam.SteamClient::OnConnectionStatusChanged</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>connect</code></li>
+<li><code>s</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="OnConnectionFailed protected System.Void OnConnectionFailed() System.Void " id="onconnectionfailed----system-void">
+<div class="method-heading">
+<h3><code>OnConnectionFailed</code></h3>
+<a class="permalink" href="#onconnectionfailed----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected System.Void OnConnectionFailed()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Server.RiptideSteam.SteamClient::OnConnectionFailed()">Copy Harmony target</button>
+</div>
+<p><code>protected System.Void OnConnectionFailed()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>16A10B44A3246BF2F51E991BC0D3A1F0545EBCA5D027B22195C70D7CF6CDDA77</code></li>
+<li><span>Body hash</span><code>99145C4260535D298455DAE378259E70F60084AC311DF6809AEB5444D49F47F2</code></li>
+<li><span>IL size</span><span>23</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.EventHandler::Invoke(System.Object, System.EventArgs)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#tryconnect-steamworks-csteamid--system-int32---candideserver-server-riptidesteam-steamconnection"><code>CandideServer.Server.RiptideSteam.SteamClient::TryConnect</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="OnConnectionStatusChanged private System.Void OnConnectionStatusChanged(Steamworks.SteamNetConnectionStatusChangedCallback_t callback) System.Void callback Steamworks.SteamNetConnectionStatusChangedCallback_t" id="onconnectionstatuschanged-steamworks-steamnetconnectionstatuschangedcallback-t---system-void">
+<div class="method-heading">
+<h3><code>OnConnectionStatusChanged</code></h3>
+<a class="permalink" href="#onconnectionstatuschanged-steamworks-steamnetconnectionstatuschangedcallback-t---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void OnConnectionStatusChanged(Steamworks.SteamNetConnectionStatusChangedCallback_t callback)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Server.RiptideSteam.SteamClient::OnConnectionStatusChanged(Steamworks.SteamNetConnectionStatusChangedCallback_t)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void OnConnectionStatusChanged(Steamworks.SteamNetConnectionStatusChangedCallback_t callback)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>095589C30313B9F86CFCC70DE33564FE3440768F53282E13813E907217488C3F</code></li>
+<li><span>Body hash</span><code>725C329AF244D881413E14D20C57C49CC6C22365FE2BEC175F4489B59FB57D33</code></li>
+<li><span>IL size</span><span>224</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Steamworks.HSteamNetConnection::Equals(Steamworks.HSteamNetConnection)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#onconnected-steamworks-hsteamnetconnection---system-void">CandideServer.Server.RiptideSteam.SteamClient::OnConnected(Steamworks.HSteamNetConnection)</a></code></li>
+<li><code>Steamworks.SteamNetworkingSockets::CloseConnection(Steamworks.HSteamNetConnection, System.Int32, System.String, System.Boolean)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#ondisconnected-riptide-disconnectreason---system-void">CandideServer.Server.RiptideSteam.SteamClient::OnDisconnected(Riptide.DisconnectReason)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>Steamworks.SteamNetConnectionInfo_t::get_m_szEndDebug()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>Riptide.Utils.RiptideLogger::Log(Riptide.Utils.LogType, System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#connectlocal----candideserver-server-riptidesteam-steamconnection"><code>CandideServer.Server.RiptideSteam.SteamClient::ConnectLocal</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#tryconnect-steamworks-csteamid--system-int32---candideserver-server-riptidesteam-steamconnection"><code>CandideServer.Server.RiptideSteam.SteamClient::TryConnect</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Closed by peer</code></li>
+<li><code>Problem detected</code></li>
+<li><code>STEAM</code></li>
+<li><code>: Connection state changed - </code></li>
+<li><code> | </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="OnDataReceived protected System.Void OnDataReceived(System.Byte[] dataBuffer, System.Int32 amount, CandideServer.Server.RiptideSteam.SteamConnection fromConnection) System.Void dataBuffer System.Byte[] amount System.Int32 fromConnection CandideServer.Server.RiptideSteam.SteamConnection" id="ondatareceived-system-byte----system-int32--candideserver-server-riptidesteam-steamconnection---system-void">
+<div class="method-heading">
+<h3><code>OnDataReceived</code></h3>
+<a class="permalink" href="#ondatareceived-system-byte----system-int32--candideserver-server-riptidesteam-steamconnection---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected System.Void OnDataReceived(System.Byte[] dataBuffer, System.Int32 amount, CandideServer.Server.RiptideSteam.SteamConnection fromConnection)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Server.RiptideSteam.SteamClient::OnDataReceived(System.Byte[], System.Int32, CandideServer.Server.RiptideSteam.SteamConnection)">Copy Harmony target</button>
+</div>
+<p><code>protected System.Void OnDataReceived(System.Byte[] dataBuffer, System.Int32 amount, <a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamConnection.html">CandideServer.Server.RiptideSteam.SteamConnection</a> fromConnection)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>89D26B949FCEFCA4F2654D005CAA8F477D534E6F06209B325B08EA6F38E8828F</code></li>
+<li><span>Body hash</span><code>947F4D03AC19847411D64FAFAF853F7F204217B90841062F8B9B6E5EC2BBCF5A</code></li>
+<li><span>IL size</span><span>42</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Riptide.Transports.DataReceivedEventArgs::SetData(System.Byte[], System.Int32, Riptide.Connection)</code></li>
+<li><code>System.EventHandler&lt;Riptide.Transports.DataReceivedEventArgs&gt;::Invoke(System.Object, !0)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="OnDisconnected protected System.Void OnDisconnected(Riptide.DisconnectReason reason) System.Void reason Riptide.DisconnectReason" id="ondisconnected-riptide-disconnectreason---system-void">
+<div class="method-heading">
+<h3><code>OnDisconnected</code></h3>
+<a class="permalink" href="#ondisconnected-riptide-disconnectreason---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected System.Void OnDisconnected(Riptide.DisconnectReason reason)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Server.RiptideSteam.SteamClient::OnDisconnected(Riptide.DisconnectReason)">Copy Harmony target</button>
+</div>
+<p><code>protected System.Void OnDisconnected(Riptide.DisconnectReason reason)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>CF9AB83B9AB1D1C50C77AC8721728372A91C2416FE666C6D895B473A61E160F4</code></li>
+<li><span>Body hash</span><code>E9F22F1B3F5A654E34E74DC77321B787124757DAB3E6B326B1F56EFB1F00010B</code></li>
+<li><span>IL size</span><span>46</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Riptide.Transports.DisconnectedEventArgs::SetData(Riptide.Connection, Riptide.DisconnectReason)</code></li>
+<li><code>System.EventHandler&lt;Riptide.Transports.DisconnectedEventArgs&gt;::Invoke(System.Object, !0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#onconnectionstatuschanged-steamworks-steamnetconnectionstatuschangedcallback-t---system-void"><code>CandideServer.Server.RiptideSteam.SteamClient::OnConnectionStatusChanged</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Poll public System.Void Poll() System.Void " id="poll----system-void">
+<div class="method-heading">
+<h3><code>Poll</code></h3>
+<a class="permalink" href="#poll----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Poll()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Server.RiptideSteam.SteamClient::Poll()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Poll()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>2B65E5958CB6EF6BE7A904CC89781DE06DBBCFABD24DB107E74A48A623CD3E9C</code></li>
+<li><span>Body hash</span><code>9315A996EA11A4E62451850D398E4B0F4D1396814BACED29A8F1CA2D04496303</code></li>
+<li><span>IL size</span><span>27</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideServer.Server.RiptideSteam.SteamConnection::op_Inequality(CandideServer.Server.RiptideSteam.SteamConnection, CandideServer.Server.RiptideSteam.SteamConnection)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamPeer.html#receive-candideserver-server-riptidesteam-steamconnection---system-void">CandideServer.Server.RiptideSteam.SteamPeer::Receive(CandideServer.Server.RiptideSteam.SteamConnection)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="TryConnect private CandideServer.Server.RiptideSteam.SteamConnection TryConnect(Steamworks.CSteamID hostId, System.Int32 port) CandideServer.Server.RiptideSteam.SteamConnection hostId Steamworks.CSteamID port System.Int32" id="tryconnect-steamworks-csteamid--system-int32---candideserver-server-riptidesteam-steamconnection">
+<div class="method-heading">
+<h3><code>TryConnect</code></h3>
+<a class="permalink" href="#tryconnect-steamworks-csteamid--system-int32---candideserver-server-riptidesteam-steamconnection" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private CandideServer.Server.RiptideSteam.SteamConnection TryConnect(Steamworks.CSteamID hostId, System.Int32 port)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Server.RiptideSteam.SteamClient::TryConnect(Steamworks.CSteamID, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>private <a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamConnection.html">CandideServer.Server.RiptideSteam.SteamConnection</a> TryConnect(Steamworks.CSteamID hostId, System.Int32 port)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamConnection.html">CandideServer.Server.RiptideSteam.SteamConnection</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>25D621AC9A732FB9D8486718C07BBAF6E27541CAA81288846FE720E868B688E4</code></li>
+<li><span>Body hash</span><code>E830EE7547201AF5B4C3DCD9BDBF1ED41F46230BE97BDFA8A594F4D59037EC37</code></li>
+<li><span>IL size</span><span>86</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#onconnectionstatuschanged-steamworks-steamnetconnectionstatuschangedcallback-t---system-void">CandideServer.Server.RiptideSteam.SteamClient::OnConnectionStatusChanged(Steamworks.SteamNetConnectionStatusChangedCallback_t)</a></code></li>
+<li><code>Callback.DispatchDelegate&lt;Steamworks.SteamNetConnectionStatusChangedCallback_t&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Steamworks.Callback&lt;Steamworks.SteamNetConnectionStatusChangedCallback_t&gt;::Create(Callback.DispatchDelegate&lt;!0&gt;)</code></li>
+<li><code>Steamworks.SteamNetworkingIdentity::SetSteamID(Steamworks.CSteamID)</code></li>
+<li><code>Steamworks.SteamNetworkingSockets::ConnectP2P(Steamworks.SteamNetworkingIdentity&amp;, System.Int32, System.Int32, Steamworks.SteamNetworkingConfigValue_t[])</code></li>
+<li><code>CandideServer.Server.RiptideSteam.SteamConnection::.ctor(Steamworks.CSteamID, Steamworks.HSteamNetConnection, CandideServer.Server.RiptideSteam.SteamPeer)</code></li>
+<li><code>System.Object::ToString()</code></li>
+<li><code>Riptide.Utils.RiptideLogger::Log(Riptide.Utils.LogType, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#onconnectionfailed----system-void">CandideServer.Server.RiptideSteam.SteamClient::OnConnectionFailed()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Server_RiptideSteam_SteamClient.html#connect-system-string--riptide-connection---system-string----system-boolean"><code>CandideServer.Server.RiptideSteam.SteamClient::Connect</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

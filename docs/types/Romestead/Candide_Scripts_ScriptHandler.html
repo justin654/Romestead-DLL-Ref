@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.Scripts.ScriptHandler - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.Scripts.ScriptHandler</h1>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.Scripts.ScriptHandler
+
+- Assembly: `Romestead`
+- Namespace: `Candide.Scripts`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 13 methods, 3 properties, 5 fields, 0 events
+
+## Public Methods
+- `public Candide.Scripts.LuaFunctionWrapper GetFunctionWrapper(NLua.LuaFunction function)`
+- `public System.Void Initialize()`
+- `public System.Void LeaveDialogue()`
+- `public System.Void LoadEvent(Candide.Scripts.Script e)`
+- `public System.Void RedoDialogueProperties()`
+- `public System.Void ShowNextDialoguePart(System.Int32 id)`
+- `public System.Void StartDialogue(System.Int32 id)`
+- `public System.Void Update(Microsoft.Xna.Framework.GameTime gt)`
+">Copy markdown</button>
+<a class="button" href="Candide_Scripts_ScriptHandler.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.Scripts</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>13</strong></article>
+<article class="metric"><span>Properties</span><strong>3</strong></article>
+<article class="metric"><span>Fields</span><strong>5</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.Scripts</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>BC775C7B6867542526750840D660880ACB07237342A8B2FC87DE080F734003FC</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ConditionWaitingScripts private System.Collections.Generic.List&lt;Candide.Scripts.ScriptConditionWait&gt; ConditionWaitingScripts System.Collections.Generic.List&lt;Candide.Scripts.ScriptConditionWait&gt;" id="conditionwaitingscripts-system-collections-generic-list-1-candide-scripts-scriptconditionwait-"><td><span class="member-name-cell"><code>ConditionWaitingScripts</code><a class="permalink" href="#conditionwaitingscripts-system-collections-generic-list-1-candide-scripts-scriptconditionwait-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;Candide.Scripts.ScriptConditionWait&gt; ConditionWaitingScripts">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;<a href="../../types/Romestead/Candide_Scripts_ScriptConditionWait.html">Candide.Scripts.ScriptConditionWait</a>&gt; ConditionWaitingScripts</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ContentX public System.Int32 ContentX System.Int32" id="contentx-system-int32"><td><span class="member-name-cell"><code>ContentX</code><a class="permalink" href="#contentx-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 ContentX">Copy</button></span></td><td>public</td><td><code>public System.Int32 ContentX</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ContentY public System.Int32 ContentY System.Int32" id="contenty-system-int32"><td><span class="member-name-cell"><code>ContentY</code><a class="permalink" href="#contenty-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 ContentY">Copy</button></span></td><td>public</td><td><code>public System.Int32 ContentY</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="EventQueue private System.Collections.Generic.Queue&lt;Candide.Scripts.Script&gt; EventQueue System.Collections.Generic.Queue&lt;Candide.Scripts.Script&gt;" id="eventqueue-system-collections-generic-queue-1-candide-scripts-script-"><td><span class="member-name-cell"><code>EventQueue</code><a class="permalink" href="#eventqueue-system-collections-generic-queue-1-candide-scripts-script-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Queue&lt;Candide.Scripts.Script&gt; EventQueue">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Queue&lt;<a href="../../types/Romestead/Candide_Scripts_Script.html">Candide.Scripts.Script</a>&gt; EventQueue</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="WaitingScripts private System.Collections.Generic.List&lt;Candide.Scripts.Script&gt; WaitingScripts System.Collections.Generic.List&lt;Candide.Scripts.Script&gt;" id="waitingscripts-system-collections-generic-list-1-candide-scripts-script-"><td><span class="member-name-cell"><code>WaitingScripts</code><a class="permalink" href="#waitingscripts-system-collections-generic-list-1-candide-scripts-script-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;Candide.Scripts.Script&gt; WaitingScripts">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;<a href="../../types/Romestead/Candide_Scripts_Script.html">Candide.Scripts.Script</a>&gt; WaitingScripts</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="ActiveScript public Candide.Scripts.Script ActiveScript Candide.Scripts.Script" id="activescript-candide-scripts-script"><td><span class="member-name-cell"><code>ActiveScript</code><a class="permalink" href="#activescript-candide-scripts-script" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.Scripts.Script ActiveScript">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_Scripts_Script.html">Candide.Scripts.Script</a> ActiveScript</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="DialogueIsActive public System.Boolean DialogueIsActive System.Boolean" id="dialogueisactive-system-boolean"><td><span class="member-name-cell"><code>DialogueIsActive</code><a class="permalink" href="#dialogueisactive-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean DialogueIsActive">Copy</button></span></td><td>public</td><td><code>public System.Boolean DialogueIsActive</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="PlayerBusy public System.Boolean PlayerBusy System.Boolean" id="playerbusy-system-boolean"><td><span class="member-name-cell"><code>PlayerBusy</code><a class="permalink" href="#playerbusy-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean PlayerBusy">Copy</button></span></td><td>public</td><td><code>public System.Boolean PlayerBusy</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ExitActiveEvent private System.Void ExitActiveEvent() System.Void " id="exitactiveevent----system-void">
+<div class="method-heading">
+<h3><code>ExitActiveEvent</code></h3>
+<a class="permalink" href="#exitactiveevent----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void ExitActiveEvent()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler::ExitActiveEvent()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void ExitActiveEvent()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4721200CA1C45F2154FFEE7902F713A673C62E0A9BB30557CBB77E59A5368D7D</code></li>
+<li><span>Body hash</span><code>60F80B53BE7A9BC1166EDFAEDDB8F68707C348204BAA47ADD06D8C34D0F100D9</code></li>
+<li><span>IL size</span><span>41</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Queue&lt;Candide.Scripts.Script&gt;::get_Count()</code></li>
+<li><code>Candide.Scripts.ScriptHandler::set_ActiveScript(Candide.Scripts.Script)</code></li>
+<li><code>Candide.Scripts.ScriptHandler::set_PlayerBusy(System.Boolean)</code></li>
+<li><code>System.Collections.Generic.Queue&lt;Candide.Scripts.Script&gt;::Dequeue()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_ScriptHandler.html#startevent-candide-scripts-script---system-void">Candide.Scripts.ScriptHandler::StartEvent(Candide.Scripts.Script)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_ScriptHandler.html#startevent-candide-scripts-script---system-void"><code>Candide.Scripts.ScriptHandler::StartEvent</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetFunctionWrapper public Candide.Scripts.LuaFunctionWrapper GetFunctionWrapper(NLua.LuaFunction function) Candide.Scripts.LuaFunctionWrapper function NLua.LuaFunction" id="getfunctionwrapper-nlua-luafunction---candide-scripts-luafunctionwrapper">
+<div class="method-heading">
+<h3><code>GetFunctionWrapper</code></h3>
+<a class="permalink" href="#getfunctionwrapper-nlua-luafunction---candide-scripts-luafunctionwrapper" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Candide.Scripts.LuaFunctionWrapper GetFunctionWrapper(NLua.LuaFunction function)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler::GetFunctionWrapper(NLua.LuaFunction)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Romestead/Candide_Scripts_LuaFunctionWrapper.html">Candide.Scripts.LuaFunctionWrapper</a> GetFunctionWrapper(NLua.LuaFunction function)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Romestead/Candide_Scripts_LuaFunctionWrapper.html">Candide.Scripts.LuaFunctionWrapper</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>39A9E380C6926E341F3BFD17D81EEC2D67987FA0B0E395D53E7FBAD9EAC5196B</code></li>
+<li><span>Body hash</span><code>849234BAD6001B7EC29F88CBCAA849B1886F47E4AA1C828B86FCFDDDAAE6B9DB</code></li>
+<li><span>IL size</span><span>12</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Scripts.ScriptHandler::get_ActiveScript()</code></li>
+<li><code>Candide.Scripts.LuaFunctionWrapper::.ctor(Candide.Scripts.Script, NLua.LuaFunction)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Events_Trigger.html#onenter-nlua-luafunction---system-void"><code>Candide.Events.Trigger::OnEnter</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Initialize public System.Void Initialize() System.Void " id="initialize----system-void">
+<div class="method-heading">
+<h3><code>Initialize</code></h3>
+<a class="permalink" href="#initialize----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Initialize()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler::Initialize()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Initialize()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>41CE1F0B78D9954D2909787127734AD13454E004626AA59C3D611ABACBF3F704</code></li>
+<li><span>Body hash</span><code>87BD148DD11D93F0791C6F24C82B452665941F75482FBFD9581C99CF95C0C8AD</code></li>
+<li><span>IL size</span><span>6</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Scripts_ScriptHandler.html#redodialogueproperties----system-void">Candide.Scripts.ScriptHandler::RedoDialogueProperties()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#doscreensizestuff----system-void"><code>Candide.CandideEngine::DoScreensizeStuff</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LeaveDialogue public System.Void LeaveDialogue() System.Void " id="leavedialogue----system-void">
+<div class="method-heading">
+<h3><code>LeaveDialogue</code></h3>
+<a class="permalink" href="#leavedialogue----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void LeaveDialogue()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler::LeaveDialogue()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void LeaveDialogue()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4CB067D5EEC8A8A05316B125BC456EDD249F87344696E6251630C18A384DC3BD</code></li>
+<li><span>Body hash</span><code>F36BEF2EE1ABFCCD2F6DB1FDA6EBB25CC57C7FEFDF85165F32EC47AC852A327F</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Scripts.ScriptHandler::set_DialogueIsActive(System.Boolean)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_LuaMethods.html#leave----system-void"><code>Candide.Scripts.LuaMethods::Leave</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LoadEvent public System.Void LoadEvent(Candide.Scripts.Script e) System.Void e Candide.Scripts.Script" id="loadevent-candide-scripts-script---system-void">
+<div class="method-heading">
+<h3><code>LoadEvent</code></h3>
+<a class="permalink" href="#loadevent-candide-scripts-script---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void LoadEvent(Candide.Scripts.Script e)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler::LoadEvent(Candide.Scripts.Script)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void LoadEvent(<a href="../../types/Romestead/Candide_Scripts_Script.html">Candide.Scripts.Script</a> e)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E26B320AAD6449F0B856159036E1100958D4734031C01E4BA30AFFD6737C28E9</code></li>
+<li><span>Body hash</span><code>DBEF8DA145DF19CA30803466673715F2A8C71CEA59FB6BDA160BF6EB8BC3AD0B</code></li>
+<li><span>IL size</span><span>34</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Queue&lt;Candide.Scripts.Script&gt;::Enqueue(!0)</code></li>
+<li><code>Candide.Scripts.ScriptHandler::get_PlayerBusy()</code></li>
+<li><code>System.Collections.Generic.Queue&lt;Candide.Scripts.Script&gt;::Dequeue()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_ScriptHandler.html#startevent-candide-scripts-script---system-void">Candide.Scripts.ScriptHandler::StartEvent(Candide.Scripts.Script)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RedoDialogueProperties public System.Void RedoDialogueProperties() System.Void " id="redodialogueproperties----system-void">
+<div class="method-heading">
+<h3><code>RedoDialogueProperties</code></h3>
+<a class="permalink" href="#redodialogueproperties----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RedoDialogueProperties()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler::RedoDialogueProperties()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RedoDialogueProperties()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>12C06A4E660C0D78AE3DCB021AF552BBB128780156D1EDC03B87C263CC1BE0A3</code></li>
+<li><span>Body hash</span><code>6975B311698239BFC60B96CE50216BDE5FDED76E34FBB8F8454A390EFCB92C3D</code></li>
+<li><span>IL size</span><span>28</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_ScriptHandler.html#initialize----system-void"><code>Candide.Scripts.ScriptHandler::Initialize</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="internal" data-patch-target="true" data-member-text="SetCurrentScript internal System.Void SetCurrentScript(Candide.Scripts.Script script) System.Void script Candide.Scripts.Script" id="setcurrentscript-candide-scripts-script---system-void">
+<div class="method-heading">
+<h3><code>SetCurrentScript</code></h3>
+<a class="permalink" href="#setcurrentscript-candide-scripts-script---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="internal System.Void SetCurrentScript(Candide.Scripts.Script script)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler::SetCurrentScript(Candide.Scripts.Script)">Copy Harmony target</button>
+</div>
+<p><code>internal System.Void SetCurrentScript(<a href="../../types/Romestead/Candide_Scripts_Script.html">Candide.Scripts.Script</a> script)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>internal</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FCAE3EEF81DD416900BA66D1B0772CB21AE451C82CC0380FB9B7568C90A20F00</code></li>
+<li><span>Body hash</span><code>9BC764A7BF4261C58FBFBE456EB8215CA8B5086430B8378B01072AA332699B54</code></li>
+<li><span>IL size</span><span>7</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Scripts.ScriptHandler::set_ActiveScript(Candide.Scripts.Script)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_Script.html#resumestoppable-system-object-----system-void"><code>Candide.Scripts.Script::ResumeStoppable</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="internal" data-patch-target="true" data-member-text="SetWait internal System.Void SetWait(Candide.Events.Condition waitCondition) System.Void waitCondition Candide.Events.Condition" id="setwait-candide-events-condition---system-void">
+<div class="method-heading">
+<h3><code>SetWait</code></h3>
+<a class="permalink" href="#setwait-candide-events-condition---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="internal System.Void SetWait(Candide.Events.Condition waitCondition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler::SetWait(Candide.Events.Condition)">Copy Harmony target</button>
+</div>
+<p><code>internal System.Void SetWait(<a href="../../types/Romestead/Candide_Events_Condition.html">Candide.Events.Condition</a> waitCondition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>internal</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2260CDD3D39D250C90EC205A83CF04A7846CAE127A7AF334580A8B9535A6E67B</code></li>
+<li><span>Body hash</span><code>E1DD1FEC009CEB087BF1FA43B94E696101C03F41F0134786B76F70CF3E7056C4</code></li>
+<li><span>IL size</span><span>22</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Scripts.ScriptHandler::get_ActiveScript()</code></li>
+<li><code>Candide.Scripts.ScriptConditionWait::.ctor(Candide.Scripts.Script, Candide.Events.Condition)</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.Scripts.ScriptConditionWait&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_LuaMethods.html#wait-candide-events-condition---system-void"><code>Candide.Scripts.LuaMethods::Wait</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="internal" data-patch-target="true" data-member-text="SetWait internal System.Void SetWait(System.Single waitTime) System.Void waitTime System.Single" id="setwait-system-single---system-void">
+<div class="method-heading">
+<h3><code>SetWait</code></h3>
+<a class="permalink" href="#setwait-system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="internal System.Void SetWait(System.Single waitTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler::SetWait(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>internal System.Void SetWait(System.Single waitTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>internal</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0DE6B6A4993D73DED68C40FF996C12F329857FFEE37B93815CFC40ED8A991688</code></li>
+<li><span>Body hash</span><code>2C4CB0BBD9F6DD73B8000B0D89DFB0924774BBB8C3394C91C9ED05154D58787B</code></li>
+<li><span>IL size</span><span>51</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Scripts.ScriptHandler::get_ActiveScript()</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.Scripts.Script&gt;::Contains(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.Scripts.Script&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_LuaMethods.html#wait-system-single---system-void"><code>Candide.Scripts.LuaMethods::Wait</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ShowNextDialoguePart public System.Void ShowNextDialoguePart(System.Int32 id) System.Void id System.Int32" id="shownextdialoguepart-system-int32---system-void">
+<div class="method-heading">
+<h3><code>ShowNextDialoguePart</code></h3>
+<a class="permalink" href="#shownextdialoguepart-system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ShowNextDialoguePart(System.Int32 id)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler::ShowNextDialoguePart(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ShowNextDialoguePart(System.Int32 id)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D7E15C207AA53D14A78FB708E4AC9949CD731BD79BB9B7B9F478467D91D17773</code></li>
+<li><span>Body hash</span><code>8A6F127E0053EB13AFDA0F394E4CD706376ECB1E15358DC72521A636A4B8AD55</code></li>
+<li><span>IL size</span><span>1</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_LuaMethods.html#showdialogue-system-int32---system-void"><code>Candide.Scripts.LuaMethods::ShowDialogue</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="StartDialogue public System.Void StartDialogue(System.Int32 id) System.Void id System.Int32" id="startdialogue-system-int32---system-void">
+<div class="method-heading">
+<h3><code>StartDialogue</code></h3>
+<a class="permalink" href="#startdialogue-system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void StartDialogue(System.Int32 id)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler::StartDialogue(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void StartDialogue(System.Int32 id)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9D65ED08105B7F36F011BFE1B4198A0E59DE117BF43DE51F1A254B628BA20F13</code></li>
+<li><span>Body hash</span><code>616FAC1A442665B477361AFFDFB65B809521BD745DB73F8D68E0C78BFADBDCDC</code></li>
+<li><span>IL size</span><span>104</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsDevice::get_Viewport()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.Viewport::get_Width()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.Viewport::get_Height()</code></li>
+<li><code>Candide.Scripts.ScriptHandler::set_DialogueIsActive(System.Boolean)</code></li>
+<li><code>Candide.Scripts.ScriptHandler::get_ActiveScript()</code></li>
+<li><code>Candide.Scripts.Script::get_Dialogues()</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.Scripts.CandideDialogue&gt;::get_Item(System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#converttext----system-void">Candide.Scripts.CandideDialogue::ConvertText()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_LuaMethods.html#showdialogue-system-int32---system-void"><code>Candide.Scripts.LuaMethods::ShowDialogue</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="StartEvent private System.Void StartEvent(Candide.Scripts.Script e) System.Void e Candide.Scripts.Script" id="startevent-candide-scripts-script---system-void">
+<div class="method-heading">
+<h3><code>StartEvent</code></h3>
+<a class="permalink" href="#startevent-candide-scripts-script---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void StartEvent(Candide.Scripts.Script e)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler::StartEvent(Candide.Scripts.Script)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void StartEvent(<a href="../../types/Romestead/Candide_Scripts_Script.html">Candide.Scripts.Script</a> e)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7DBF1A6A65B184A5D905E80EBFD1733022F6AC9F450738CDC66C20522805B021</code></li>
+<li><span>Body hash</span><code>C55220B9904862DFF11F6F270888ADD89212EA567F0EDC90A119346B4E8FD758</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Scripts.ScriptHandler::set_PlayerBusy(System.Boolean)</code></li>
+<li><code>Candide.Scripts.ScriptHandler::set_ActiveScript(Candide.Scripts.Script)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_ScriptHandler.html#exitactiveevent----system-void">Candide.Scripts.ScriptHandler::ExitActiveEvent()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_ScriptHandler.html#exitactiveevent----system-void"><code>Candide.Scripts.ScriptHandler::ExitActiveEvent</code></a></li>
+<li><a href="../../types/Romestead/Candide_Scripts_ScriptHandler.html#loadevent-candide-scripts-script---system-void"><code>Candide.Scripts.ScriptHandler::LoadEvent</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(Microsoft.Xna.Framework.GameTime gt) System.Void gt Microsoft.Xna.Framework.GameTime" id="update-microsoft-xna-framework-gametime---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-microsoft-xna-framework-gametime---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(Microsoft.Xna.Framework.GameTime gt)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.ScriptHandler::Update(Microsoft.Xna.Framework.GameTime)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(Microsoft.Xna.Framework.GameTime gt)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>009C8DD1C2F979A3B36EFA27F69AF95915F68207F462E60D14F932D686C8FDE9</code></li>
+<li><span>Body hash</span><code>B3D91C8D2EC5F00D3633F0B450D7D6D256B428A379D076B63E67AFD20F97748F</code></li>
+<li><span>IL size</span><span>270</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.GameTime::get_ElapsedGameTime()</code></li>
+<li><code>System.TimeSpan::get_TotalSeconds()</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.Scripts.Script&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Candide.Scripts.Script&gt;::get_Current()</code></li>
+<li><code>System.Array::Empty()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_Script.html#resumestoppable-system-object-----system-void">Candide.Scripts.Script::ResumeStoppable(System.Object[])</a></code></li>
+<li><code>List.Enumerator&lt;Candide.Scripts.Script&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>ScriptHandler.&lt;&gt;c::&lt;Update&gt;b__27_0(Candide.Scripts.Script)</code></li>
+<li><code>System.Predicate&lt;Candide.Scripts.Script&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.Scripts.Script&gt;::RemoveAll(System.Predicate&lt;!0&gt;)</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.Scripts.ScriptConditionWait&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Candide.Scripts.ScriptConditionWait&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Events_Condition.html#done----system-boolean">Candide.Events.Condition::Done()</a></code></li>
+<li><code>List.Enumerator&lt;Candide.Scripts.ScriptConditionWait&gt;::MoveNext()</code></li>
+<li><code>ScriptHandler.&lt;&gt;c::&lt;Update&gt;b__27_1(Candide.Scripts.ScriptConditionWait)</code></li>
+<li><code>System.Predicate&lt;Candide.Scripts.ScriptConditionWait&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.Scripts.ScriptConditionWait&gt;::RemoveAll(System.Predicate&lt;!0&gt;)</code></li>
+<li><code>Candide.Scripts.ScriptHandler::get_DialogueIsActive()</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

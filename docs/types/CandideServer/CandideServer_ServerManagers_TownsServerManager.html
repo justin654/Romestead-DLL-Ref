@@ -1,0 +1,945 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerManagers.TownsServerManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerManagers.TownsServerManager</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerManagers.TownsServerManager
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerManagers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 20 methods, 0 properties, 2 fields, 0 events
+
+## Public Methods
+- `public System.Void AddBuildingToNearestTown(CandideServer.SimulationModels.BuildingSimulationModel building)`
+- `public System.Void AddNewBuildingToTown(CandideServer.SimulationModels.BuildingSimulationModel building, System.Guid townId)`
+- `public System.Void AssignCitizenToSlot(CandideServer.MessageModels.Towns.AssignCitizenToSlotMessage msg)`
+- `public System.Void AssignCitizenToSlot(CandideServer.Models.Town.ServerTownModel town, CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.SimulationModels.BuildingSimulationModel building, CandideServer.SimulationModels.CitizenSlotSimulationModel slot)`
+- `public System.Void ChangeTownName(System.Guid townId, System.String name, System.Nullable&lt;System.Guid&gt; characterId, CandideServer.SyncStrategies.SyncStrategy syncStrategy)`
+- `public System.Void CitizenSwitchTown(CandideServer.MessageModels.Towns.CitizenSwitchTownMessage msg)`
+- `public CandideServer.MessageModels.Towns.TownOverviewListeningData CreateOverviewListeningData(CandideServer.Models.Town.ServerTownModel town)`
+- `public CandideServer.Models.Town.ServerTownModel CreateTown(System.Guid id, System.Guid firstBuildingId)`
+- `public System.Collections.Generic.HashSet&lt;System.Guid&gt; GetAllMaterialStoragesForTown(CandideServer.Models.Town.TownModel town)`
+- `public System.Nullable&lt;System.ValueTuple&lt;CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;&gt; GetAvailableBuildingAndSlotForOneCitizen(CandideServer.Models.Town.ServerTownModel town)`
+- `public CandideServer.Models.Town.ServerTownModel GetClosestTown(Microsoft.Xna.Framework.Vector2 worldPosition)`
+- `public CandideServer.Models.Town.ServerTownModel GetClosestTownWithAvailableSlot(Microsoft.Xna.Framework.Vector2 worldPosition, System.Guid worldId)`
+- `public System.Void RegisterTownDefenceValue(System.Guid townId, Shared.Models.Construction.ConstructionModel construction, System.Guid spawnId)`
+- `public System.Void RemoveTown(CandideServer.Models.Town.TownModel town)`
+- `public System.Void SwitchCitizenSlots(CandideServer.MessageModels.Towns.SwitchCitizenSlotsMessage msg)`
+- `public System.Boolean TryGetBuildingInTown(System.String buildingTypeId, CandideServer.Models.Town.ServerTownModel town, out CandideServer.SimulationModels.BuildingSimulationModel&amp; outBuilding)`
+- `public System.Boolean TryGetRandomBuildingInTown(CandideServer.Citizens.Base.AbstractCitizenController controller, CandideServer.Models.Town.ServerTownModel town, out CandideServer.SimulationModels.BuildingSimulationModel&amp; outBuilding, System.Collections.Generic.List&lt;System.Guid&gt; excludedBuildingIds, System.Boolean excludeCurrentBuilding, System.Boolean excludeInteriors, System.Boolean excludeExteriors)`
+- `public System.Boolean TryGetTownWithinRange(Microsoft.Xna.Framework.Vector2 center, System.Single range, out CandideServer.Models.Town.ServerTownModel&amp; outTown, out Microsoft.Xna.Framework.Vector2&amp; outTownAltarPos)`
+- `public System.Void UnassignCitizenFromSlot(CandideServer.MessageModels.Towns.UnassignCitizenFromSlotMessage msg)`
+- `public System.Void UnregisterTownDefenseValue(CandideServer.Models.Town.ServerTownModel town, System.Guid spawnId)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerManagers_TownsServerManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerManagers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>20</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>2</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerManagers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>0E0CFAA840554AA662B7AD9081631C847144545993102855FCF369E7A85FD47E</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="CitizensOverviewReuse private System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt; CitizensOverviewReuse System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt;" id="citizensoverviewreuse-system-collections-generic-dictionary-2-system-guid-candideserver-messagemodels-towns-citizentownoverviewdata-"><td><span class="member-name-cell"><code>CitizensOverviewReuse</code><a class="permalink" href="#citizensoverviewreuse-system-collections-generic-dictionary-2-system-guid-candideserver-messagemodels-towns-citizentownoverviewdata-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt; CitizensOverviewReuse">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;System.Guid, <a href="../../types/CandideServer/CandideServer_MessageModels_Towns_CitizenTownOverviewData.html">CandideServer.MessageModels.Towns.CitizenTownOverviewData</a>&gt; CitizensOverviewReuse</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ReUseBuildingIdsList private System.Collections.Generic.List&lt;System.Guid&gt; ReUseBuildingIdsList System.Collections.Generic.List&lt;System.Guid&gt;" id="reusebuildingidslist-system-collections-generic-list-1-system-guid-"><td><span class="member-name-cell"><code>ReUseBuildingIdsList</code><a class="permalink" href="#reusebuildingidslist-system-collections-generic-list-1-system-guid-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;System.Guid&gt; ReUseBuildingIdsList">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;System.Guid&gt; ReUseBuildingIdsList</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddBuildingToNearestTown public System.Void AddBuildingToNearestTown(CandideServer.SimulationModels.BuildingSimulationModel building) System.Void building CandideServer.SimulationModels.BuildingSimulationModel" id="addbuildingtonearesttown-candideserver-simulationmodels-buildingsimulationmodel---system-void">
+<div class="method-heading">
+<h3><code>AddBuildingToNearestTown</code></h3>
+<a class="permalink" href="#addbuildingtonearesttown-candideserver-simulationmodels-buildingsimulationmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddBuildingToNearestTown(CandideServer.SimulationModels.BuildingSimulationModel building)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::AddBuildingToNearestTown(CandideServer.SimulationModels.BuildingSimulationModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddBuildingToNearestTown(<a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> building)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>32D8DC86D69FFFC1322EE7C73E18BA85DE4CAFB85AADA00EC215148D877A2C9D</code></li>
+<li><span>Body hash</span><code>F89E3F02854D3760AC41F807EFEF5B8872129EAA59E17091D445D6B57DE4908D</code></li>
+<li><span>IL size</span><span>354</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Location()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Size()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Addition(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Distance(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#addbuildingtotown-candideserver-simulationmodels-buildingsimulationmodel--candideserver-models-town-servertownmodel---system-void">CandideServer.ServerControllers.TownsServerController::AddBuildingToTown(CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.Models.Town.ServerTownModel)</a></code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::MoveNext()</code></li>
+<li><code>CandideServer.MessageModels.Towns.TownUpdatedMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#send-townbuildingsupdated-candideserver-messagemodels-towns-townupdatedmessage---system-void">CandideServer.ServerServices.TownsServerService::Send_TownBuildingsUpdated(CandideServer.MessageModels.Towns.TownUpdatedMessage)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddNewBuildingToTown public System.Void AddNewBuildingToTown(CandideServer.SimulationModels.BuildingSimulationModel building, System.Guid townId) System.Void building CandideServer.SimulationModels.BuildingSimulationModel townId System.Guid" id="addnewbuildingtotown-candideserver-simulationmodels-buildingsimulationmodel--system-guid---system-void">
+<div class="method-heading">
+<h3><code>AddNewBuildingToTown</code></h3>
+<a class="permalink" href="#addnewbuildingtotown-candideserver-simulationmodels-buildingsimulationmodel--system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddNewBuildingToTown(CandideServer.SimulationModels.BuildingSimulationModel building, System.Guid townId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::AddNewBuildingToTown(CandideServer.SimulationModels.BuildingSimulationModel, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddNewBuildingToTown(<a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> building, System.Guid townId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>96D23067C68B8F52313BB3B09703C082C0AA25460C49238B8D7C832278A0FEA2</code></li>
+<li><span>Body hash</span><code>C9441B489572F568500538B70C1E8AA9EA7D47969AF51A2FEBF4E09E60150681</code></li>
+<li><span>IL size</span><span>100</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#addbuildingtotown-candideserver-simulationmodels-buildingsimulationmodel--candideserver-models-town-servertownmodel---system-void">CandideServer.ServerControllers.TownsServerController::AddBuildingToTown(CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.Models.Town.ServerTownModel)</a></code></li>
+<li><code>CandideServer.MessageModels.Towns.TownUpdatedMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#send-townbuildingsupdated-candideserver-messagemodels-towns-townupdatedmessage---system-void">CandideServer.ServerServices.TownsServerService::Send_TownBuildingsUpdated(CandideServer.MessageModels.Towns.TownUpdatedMessage)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Could not find town with id &#39;</code></li>
+<li><code>&#39; when adding new building.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AssignCitizenToSlot public System.Void AssignCitizenToSlot(CandideServer.MessageModels.Towns.AssignCitizenToSlotMessage msg) System.Void msg CandideServer.MessageModels.Towns.AssignCitizenToSlotMessage" id="assigncitizentoslot-candideserver-messagemodels-towns-assigncitizentoslotmessage---system-void">
+<div class="method-heading">
+<h3><code>AssignCitizenToSlot</code></h3>
+<a class="permalink" href="#assigncitizentoslot-candideserver-messagemodels-towns-assigncitizentoslotmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AssignCitizenToSlot(CandideServer.MessageModels.Towns.AssignCitizenToSlotMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::AssignCitizenToSlot(CandideServer.MessageModels.Towns.AssignCitizenToSlotMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AssignCitizenToSlot(<a href="../../types/CandideServer/CandideServer_MessageModels_Towns_AssignCitizenToSlotMessage.html">CandideServer.MessageModels.Towns.AssignCitizenToSlotMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>43BF509F3880794C5C0BAF7CC89A2EA623F1D96A194F48FA433EBA7A2B3276E5</code></li>
+<li><span>Body hash</span><code>3098AE01ABB2035E1FB8E1EBDB07024D21828A9CD7A282117B63873ECD719E32</code></li>
+<li><span>IL size</span><span>276</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizen-system-guid--candideserver-models-citizen-citizenmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizen(System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygettown-system-guid--candideserver-models-town-servertownmodel----system-boolean">CandideServer.ServerGameState::TryGetTown(System.Guid, CandideServer.Models.Town.ServerTownModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#assigncitizentoslot-system-guid--candideserver-models-citizen-citizenmodel---system-void">CandideServer.ServerControllers.CitizenSlotsSController::AssignCitizenToSlot(System.Guid, CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+<li><code>CandideServer.ServerServices.UpdateCitizensChangedMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_Citizens_UpdateCitizenMessage.html#fromcitizenmodel-candideserver-models-citizen-citizenmodel---candideserver-messagemodels-citizens-updatecitizenmessage">CandideServer.MessageModels.Citizens.UpdateCitizenMessage::FromCitizenModel(CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_CitizenServerService.html#send-citizenschanged-candideserver-serverservices-updatecitizenschangedmessage---system-void">CandideServer.ServerServices.CitizenServerService::Send_CitizensChanged(CandideServer.ServerServices.UpdateCitizensChangedMessage)</a></code></li>
+<li><code>CandideServer.MessageModels.Citizens.CitizenAssignmentsChangeForTownMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt;::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_Towns_CitizenTownOverviewData.html#frommodel-candideserver-models-citizen-citizenmodel---candideserver-messagemodels-towns-citizentownoverviewdata">CandideServer.MessageModels.Towns.CitizenTownOverviewData::FromModel(CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt;::Add(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#sendcitizenassignmentschangefortown-candideserver-messagemodels-citizens-citizenassignmentschangefortownmessage---system-void">CandideServer.ServerServices.TownsServerService::SendCitizenAssignmentsChangeForTown(CandideServer.MessageModels.Citizens.CitizenAssignmentsChangeForTownMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#onreceive-assigncitizentoslot-candideserver-messagemodels-towns-assigncitizentoslotmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.TownsServerService::OnReceive_AssignCitizenToSlot</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>AssignCitizenToSlot: Citizen already has a slot ID set.</code></li>
+<li><code>TownsServerManager</code></li>
+<li><code>: Building with ID </code></li>
+<li><code> is missing a town ID</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AssignCitizenToSlot public System.Void AssignCitizenToSlot(CandideServer.Models.Town.ServerTownModel town, CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.SimulationModels.BuildingSimulationModel building, CandideServer.SimulationModels.CitizenSlotSimulationModel slot) System.Void town CandideServer.Models.Town.ServerTownModel citizen CandideServer.Models.Citizen.CitizenModel building CandideServer.SimulationModels.BuildingSimulationModel slot CandideServer.SimulationModels.CitizenSlotSimulationModel" id="assigncitizentoslot-candideserver-models-town-servertownmodel--candideserver-models-citizen-citizenmodel--candideserver-simulationmodels-buildingsimulationmodel--candideserver-simulationmodels-citizenslotsimulationmodel---system-void">
+<div class="method-heading">
+<h3><code>AssignCitizenToSlot</code></h3>
+<a class="permalink" href="#assigncitizentoslot-candideserver-models-town-servertownmodel--candideserver-models-citizen-citizenmodel--candideserver-simulationmodels-buildingsimulationmodel--candideserver-simulationmodels-citizenslotsimulationmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AssignCitizenToSlot(CandideServer.Models.Town.ServerTownModel town, CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.SimulationModels.BuildingSimulationModel building, CandideServer.SimulationModels.CitizenSlotSimulationModel slot)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::AssignCitizenToSlot(CandideServer.Models.Town.ServerTownModel, CandideServer.Models.Citizen.CitizenModel, CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.CitizenSlotSimulationModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AssignCitizenToSlot(<a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> town, <a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen, <a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> building, <a href="../../types/CandideServer/CandideServer_SimulationModels_CitizenSlotSimulationModel.html">CandideServer.SimulationModels.CitizenSlotSimulationModel</a> slot)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D50B89B33613B6B123782B952F506059D3D296CC89E14BEA7DD6D11B273A55B3</code></li>
+<li><span>Body hash</span><code>FDE100B2103B79424AABF7ED691CAB8B0EF39289867C54ED973CCA5DA554D823</code></li>
+<li><span>IL size</span><span>107</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#assigncitizentoslot-system-guid--candideserver-models-citizen-citizenmodel---system-void">CandideServer.ServerControllers.CitizenSlotsSController::AssignCitizenToSlot(System.Guid, CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+<li><code>CandideServer.ServerServices.UpdateCitizensChangedMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_Citizens_UpdateCitizenMessage.html#fromcitizenmodel-candideserver-models-citizen-citizenmodel---candideserver-messagemodels-citizens-updatecitizenmessage">CandideServer.MessageModels.Citizens.UpdateCitizenMessage::FromCitizenModel(CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_CitizenServerService.html#send-citizenschanged-candideserver-serverservices-updatecitizenschangedmessage---system-void">CandideServer.ServerServices.CitizenServerService::Send_CitizensChanged(CandideServer.ServerServices.UpdateCitizensChangedMessage)</a></code></li>
+<li><code>CandideServer.MessageModels.Citizens.CitizenAssignmentsChangeForTownMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt;::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_Towns_CitizenTownOverviewData.html#frommodel-candideserver-models-citizen-citizenmodel---candideserver-messagemodels-towns-citizentownoverviewdata">CandideServer.MessageModels.Towns.CitizenTownOverviewData::FromModel(CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt;::Add(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#sendcitizenassignmentschangefortown-candideserver-messagemodels-citizens-citizenassignmentschangefortownmessage---system-void">CandideServer.ServerServices.TownsServerService::SendCitizenAssignmentsChangeForTown(CandideServer.MessageModels.Citizens.CitizenAssignmentsChangeForTownMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#addcitizentotown-candideserver-models-town-servertownmodel--candideserver-models-citizen-citizenmodel--candideserver-simulationmodels-buildingsimulationmodel--candideserver-simulationmodels-citizenslotsimulationmodel---system-void"><code>CandideServer.ServerManagers.CitizenServerManager::AddCitizenToTown</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ChangeTownName public System.Void ChangeTownName(System.Guid townId, System.String name, System.Nullable&lt;System.Guid&gt; characterId, CandideServer.SyncStrategies.SyncStrategy syncStrategy) System.Void townId System.Guid name System.String characterId System.Nullable&lt;System.Guid&gt; syncStrategy CandideServer.SyncStrategies.SyncStrategy" id="changetownname-system-guid--system-string--system-nullable-1-system-guid---candideserver-syncstrategies-syncstrategy---system-void">
+<div class="method-heading">
+<h3><code>ChangeTownName</code></h3>
+<a class="permalink" href="#changetownname-system-guid--system-string--system-nullable-1-system-guid---candideserver-syncstrategies-syncstrategy---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ChangeTownName(System.Guid townId, System.String name, System.Nullable&lt;System.Guid&gt; characterId, CandideServer.SyncStrategies.SyncStrategy syncStrategy)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::ChangeTownName(System.Guid, System.String, System.Nullable&lt;System.Guid&gt;, CandideServer.SyncStrategies.SyncStrategy)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ChangeTownName(System.Guid townId, System.String name, System.Nullable&lt;System.Guid&gt; characterId, <a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html">CandideServer.SyncStrategies.SyncStrategy</a> syncStrategy)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AB487394857B6A880790548138ADE66CC9C967A097BBB9AB9BE087C9D04ACF5D</code></li>
+<li><span>Body hash</span><code>35A6A643CD64AFF3784F29D21839167ECC42449F62FA3583EBBD36DA5B31A59B</code></li>
+<li><span>IL size</span><span>43</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#trychangetownname-system-guid--system-string---system-boolean">CandideServer.ServerControllers.TownsServerController::TryChangeTownName(System.Guid, System.String)</a></code></li>
+<li><code>CandideServer.MessageModels.Towns.SetNewTownNameMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#send-setnewtownname-candideserver-messagemodels-towns-setnewtownnamemessage--candideserver-syncstrategies-syncstrategy---system-void">CandideServer.ServerServices.TownsServerService::Send_SetNewTownName(CandideServer.MessageModels.Towns.SetNewTownNameMessage, CandideServer.SyncStrategies.SyncStrategy)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#onreceive-setnewtownname-candideserver-messagemodels-towns-setnewtownnamemessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.TownsServerService::OnReceive_SetNewTownName</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CitizenSwitchTown public System.Void CitizenSwitchTown(CandideServer.MessageModels.Towns.CitizenSwitchTownMessage msg) System.Void msg CandideServer.MessageModels.Towns.CitizenSwitchTownMessage" id="citizenswitchtown-candideserver-messagemodels-towns-citizenswitchtownmessage---system-void">
+<div class="method-heading">
+<h3><code>CitizenSwitchTown</code></h3>
+<a class="permalink" href="#citizenswitchtown-candideserver-messagemodels-towns-citizenswitchtownmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CitizenSwitchTown(CandideServer.MessageModels.Towns.CitizenSwitchTownMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::CitizenSwitchTown(CandideServer.MessageModels.Towns.CitizenSwitchTownMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CitizenSwitchTown(<a href="../../types/CandideServer/CandideServer_MessageModels_Towns_CitizenSwitchTownMessage.html">CandideServer.MessageModels.Towns.CitizenSwitchTownMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9BF6446DB6260800C88796EB0E84BBAE8AF38A0A7EE0E266851E23ECFB46A68F</code></li>
+<li><span>Body hash</span><code>5C3226F95A54D3C76780EDCFCA1CE264DCFB50E64D799391EA8F50978D2599C3</code></li>
+<li><span>IL size</span><span>506</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizen-system-guid--candideserver-models-citizen-citizenmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizen(System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygettown-system-guid--candideserver-models-town-servertownmodel----system-boolean">CandideServer.ServerGameState::TryGetTown(System.Guid, CandideServer.Models.Town.ServerTownModel&amp;)</a></code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Contains(!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringExtensions.html#gettranslation-shared-text-stringid---system-string">Shared.Text.StringExtensions::GetTranslation(Shared.Text.StringId)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_Town_TownModel.html#getlocalizedname----system-string">CandideServer.Models.Town.TownModel::GetLocalizedName()</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_TownsServerManager.html#getavailablebuildingandslotforonecitizen-candideserver-models-town-servertownmodel---system-nullable-1-system-valuetuple-2-candideserver-simulationmodels-buildingsimulationmodel-candideserver-simulationmodels-citizenslotsimulationmodel--">CandideServer.ServerManagers.TownsServerManager::GetAvailableBuildingAndSlotForOneCitizen(CandideServer.Models.Town.ServerTownModel)</a></code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;&gt;::get_Value()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>CandideServer.ServerControllers.UnassignCitizenSlotMessage::.ctor()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#unassigncitizenslot-candideserver-servercontrollers-unassigncitizenslotmessage---system-void">CandideServer.ServerControllers.CitizenSlotsSController::UnassignCitizenSlot(CandideServer.ServerControllers.UnassignCitizenSlotMessage)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#removecitizen-system-guid--system-guid---system-boolean">CandideServer.ServerControllers.TownsServerController::RemoveCitizen(System.Guid, System.Guid)</a></code></li>
+<li><code>CandideServer.MessageModels.Towns.RemoveCitizenFromTownMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#send-removecitizenfromtown-candideserver-messagemodels-towns-removecitizenfromtownmessage---system-void">CandideServer.ServerServices.TownsServerService::Send_RemoveCitizenFromTown(CandideServer.MessageModels.Towns.RemoveCitizenFromTownMessage)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#addcitizen-system-guid--system-guid---system-void">CandideServer.ServerControllers.TownsServerController::AddCitizen(System.Guid, System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#addcitizentotown-candideserver-models-town-servertownmodel--candideserver-models-citizen-citizenmodel--candideserver-simulationmodels-buildingsimulationmodel--candideserver-simulationmodels-citizenslotsimulationmodel---system-void">CandideServer.ServerManagers.CitizenServerManager::AddCitizenToTown(CandideServer.Models.Town.ServerTownModel, CandideServer.Models.Citizen.CitizenModel, CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.CitizenSlotSimulationModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#onreceive-citizenswitchtown-candideserver-messagemodels-towns-citizenswitchtownmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.TownsServerService::OnReceive_CitizenSwitchTown</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>CitizenSwitchTown</code></li>
+<li><code>: Tried to switch town for citizen </code></li>
+<li><code> but the citizen does not belong to the given source town </code></li>
+<li><code> but the target town </code></li>
+<li><code> does not have any available slots</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateOverviewListeningData public CandideServer.MessageModels.Towns.TownOverviewListeningData CreateOverviewListeningData(CandideServer.Models.Town.ServerTownModel town) CandideServer.MessageModels.Towns.TownOverviewListeningData town CandideServer.Models.Town.ServerTownModel" id="createoverviewlisteningdata-candideserver-models-town-servertownmodel---candideserver-messagemodels-towns-townoverviewlisteningdata">
+<div class="method-heading">
+<h3><code>CreateOverviewListeningData</code></h3>
+<a class="permalink" href="#createoverviewlisteningdata-candideserver-models-town-servertownmodel---candideserver-messagemodels-towns-townoverviewlisteningdata" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.MessageModels.Towns.TownOverviewListeningData CreateOverviewListeningData(CandideServer.Models.Town.ServerTownModel town)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::CreateOverviewListeningData(CandideServer.Models.Town.ServerTownModel)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_MessageModels_Towns_TownOverviewListeningData.html">CandideServer.MessageModels.Towns.TownOverviewListeningData</a> CreateOverviewListeningData(<a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> town)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_MessageModels_Towns_TownOverviewListeningData.html">CandideServer.MessageModels.Towns.TownOverviewListeningData</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>17699BA0002AB9631BDB02F4C1F040138668FECA11336B3DAB38BF04001A3755</code></li>
+<li><span>Body hash</span><code>D706E07709C28040BC36CBAEAB60608F215646DC6F7E157E5B2593CC5CD7AFF0</code></li>
+<li><span>IL size</span><span>685</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizen-system-guid--candideserver-models-citizen-citizenmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizen(System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)</a></code></li>
+<li><code>CandideServer.MessageModels.Towns.CitizenTownOverviewData::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt;::Add(!0, !1)</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizenslot-system-guid--candideserver-simulationmodels-citizenslotsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizenSlot(System.Guid, CandideServer.SimulationModels.CitizenSlotSimulationModel&amp;)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt;::get_Item(!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>CandideServer.ServerManagers.ServerCitizenException::.ctor(System.String)</code></li>
+<li><code>List.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>CandideServer.MessageModels.Towns.TownOverviewListeningData::.ctor()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#onreceive-getandlistentotown-candideserver-messagemodels-towns-getandlistentotownrequest--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.TownsServerService::OnReceive_GetAndListenToTown</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Citizen with ID </code></li>
+<li><code> should have its citizien slot ID set</code></li>
+<li><code> should have its home building ID set</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateTown public CandideServer.Models.Town.ServerTownModel CreateTown(System.Guid id, System.Guid firstBuildingId) CandideServer.Models.Town.ServerTownModel id System.Guid firstBuildingId System.Guid" id="createtown-system-guid--system-guid---candideserver-models-town-servertownmodel">
+<div class="method-heading">
+<h3><code>CreateTown</code></h3>
+<a class="permalink" href="#createtown-system-guid--system-guid---candideserver-models-town-servertownmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Town.ServerTownModel CreateTown(System.Guid id, System.Guid firstBuildingId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::CreateTown(System.Guid, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> CreateTown(System.Guid id, System.Guid firstBuildingId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>983208B8FC50A5101DCFC06339225162E376BE441F6398622DE2A5D9DD003396</code></li>
+<li><span>Body hash</span><code>344B5753792172023CC05AE65978798587895A1D9D6B4DF90922ACF195748968</code></li>
+<li><span>IL size</span><span>72</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenNameServerManager.html#getrandomname-system-string---shared-text-stringid">CandideServer.ServerManagers.CitizenNameServerManager::GetRandomName(System.String)</a></code></li>
+<li><code>System.Nullable&lt;Shared.Text.StringId&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#createtown-system-guid--system-guid--system-nullable-1-shared-text-stringid---system-string---candideserver-models-town-servertownmodel">CandideServer.ServerControllers.TownsServerController::CreateTown(System.Guid, System.Guid, System.Nullable&lt;Shared.Text.StringId&gt;, System.String)</a></code></li>
+<li><code>CandideServer.MessageModels.Towns.TownCreatedMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#send-towncreated-candideserver-messagemodels-towns-towncreatedmessage---system-void">CandideServer.ServerServices.TownsServerService::Send_TownCreated(CandideServer.MessageModels.Towns.TownCreatedMessage)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_ChatLogMessage.html#formatstringid-system-string--shared-text-stringid--candideserver-models-chatmessagetype---candideserver-messagemodels-chatlogmessage">CandideServer.MessageModels.ChatLogMessage::FormatStringId(System.String, Shared.Text.StringId, CandideServer.Models.ChatMessageType)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_ChatLogServerService.html#sendchatlogmessage-candideserver-messagemodels-chatlogmessage---system-void">CandideServer.ServerServices.ChatLogServerService::SendChatLogMessage(CandideServer.MessageModels.ChatLogMessage)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>town</code></li>
+<li><code>Town_Chat_Founded</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetAllMaterialStoragesForTown public System.Collections.Generic.HashSet&lt;System.Guid&gt; GetAllMaterialStoragesForTown(CandideServer.Models.Town.TownModel town) System.Collections.Generic.HashSet&lt;System.Guid&gt; town CandideServer.Models.Town.TownModel" id="getallmaterialstoragesfortown-candideserver-models-town-townmodel---system-collections-generic-hashset-1-system-guid-">
+<div class="method-heading">
+<h3><code>GetAllMaterialStoragesForTown</code></h3>
+<a class="permalink" href="#getallmaterialstoragesfortown-candideserver-models-town-townmodel---system-collections-generic-hashset-1-system-guid-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.HashSet&lt;System.Guid&gt; GetAllMaterialStoragesForTown(CandideServer.Models.Town.TownModel town)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::GetAllMaterialStoragesForTown(CandideServer.Models.Town.TownModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.HashSet&lt;System.Guid&gt; GetAllMaterialStoragesForTown(<a href="../../types/CandideServer/CandideServer_Models_Town_TownModel.html">CandideServer.Models.Town.TownModel</a> town)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>72B329641C68F949158F9B3DBBE21B4CB82D5AAC8E4E64E34EFEF96D6200F567</code></li>
+<li><span>Body hash</span><code>922DDFEE34F3A5E806C5B45799DE7F029F290BC874100D7264A8C81958E70AD8</code></li>
+<li><span>IL size</span><span>96</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Add(!0)</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_InternalResourceStorageSController.html#canspendconstructionupgradecostfortown-shared-models-construction-constructionmodel--system-guid---system-valuetuple-2-system-boolean-system-collections-generic-dictionary-2-system-guid-system-collections-generic-list-1-shared-models-items-resourceamount---"><code>CandideServer.ServerControllers.InternalResourceStorageSController::CanSpendConstructionUpgradeCostForTown</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>material_storage</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetAvailableBuildingAndSlotForOneCitizen public System.Nullable&lt;System.ValueTuple&lt;CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;&gt; GetAvailableBuildingAndSlotForOneCitizen(CandideServer.Models.Town.ServerTownModel town) System.Nullable&lt;System.ValueTuple&lt;CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;&gt; town CandideServer.Models.Town.ServerTownModel" id="getavailablebuildingandslotforonecitizen-candideserver-models-town-servertownmodel---system-nullable-1-system-valuetuple-2-candideserver-simulationmodels-buildingsimulationmodel-candideserver-simulationmodels-citizenslotsimulationmodel--">
+<div class="method-heading">
+<h3><code>GetAvailableBuildingAndSlotForOneCitizen</code></h3>
+<a class="permalink" href="#getavailablebuildingandslotforonecitizen-candideserver-models-town-servertownmodel---system-nullable-1-system-valuetuple-2-candideserver-simulationmodels-buildingsimulationmodel-candideserver-simulationmodels-citizenslotsimulationmodel--" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Nullable&lt;System.ValueTuple&lt;CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;&gt; GetAvailableBuildingAndSlotForOneCitizen(CandideServer.Models.Town.ServerTownModel town)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::GetAvailableBuildingAndSlotForOneCitizen(CandideServer.Models.Town.ServerTownModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Nullable&lt;System.ValueTuple&lt;<a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a>, <a href="../../types/CandideServer/CandideServer_SimulationModels_CitizenSlotSimulationModel.html">CandideServer.SimulationModels.CitizenSlotSimulationModel</a>&gt;&gt; GetAvailableBuildingAndSlotForOneCitizen(<a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> town)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Nullable&lt;System.ValueTuple&lt;<a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a>, <a href="../../types/CandideServer/CandideServer_SimulationModels_CitizenSlotSimulationModel.html">CandideServer.SimulationModels.CitizenSlotSimulationModel</a>&gt;&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>79DF97C31131585296AC7A4C3C03F22877919AF77008654FC6DE16024907D707</code></li>
+<li><span>Body hash</span><code>BAC8F6CBDD26EBDF20BBE0313F95D16CAC2F81FC9FB61455636D6D5FA0770318</code></li>
+<li><span>IL size</span><span>290</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizenslot-system-guid--candideserver-simulationmodels-citizenslotsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizenSlot(System.Guid, CandideServer.SimulationModels.CitizenSlotSimulationModel&amp;)</a></code></li>
+<li><code>CandideServer.Models.Citizen.CitizenSlotModel::get_IsOccupied()</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;&gt;::get_Value()</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>System.ValueTuple&lt;CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;::.ctor(!0, !1)</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;&gt;::.ctor(!0)</code></li>
+<li><code>List.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>CandideServer.ServerManagers.ServerCitizenException::.ctor(System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#addnewcitizentotown-candideserver-models-town-servertownmodel---system-void"><code>CandideServer.ServerManagers.CitizenServerManager::AddNewCitizenToTown</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#convertwildcitizentotowncitizen-candideserver-models-town-servertownmodel--system-guid--system-guid---system-void"><code>CandideServer.ServerManagers.CitizenServerManager::ConvertWildCitizenToTownCitizen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_TownsServerManager.html#citizenswitchtown-candideserver-messagemodels-towns-citizenswitchtownmessage---system-void"><code>CandideServer.ServerManagers.TownsServerManager::CitizenSwitchTown</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>insula</code></li>
+<li><code>We have more citizens than slots for some reason. Unexpected</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetClosestTown public CandideServer.Models.Town.ServerTownModel GetClosestTown(Microsoft.Xna.Framework.Vector2 worldPosition) CandideServer.Models.Town.ServerTownModel worldPosition Microsoft.Xna.Framework.Vector2" id="getclosesttown-microsoft-xna-framework-vector2---candideserver-models-town-servertownmodel">
+<div class="method-heading">
+<h3><code>GetClosestTown</code></h3>
+<a class="permalink" href="#getclosesttown-microsoft-xna-framework-vector2---candideserver-models-town-servertownmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Town.ServerTownModel GetClosestTown(Microsoft.Xna.Framework.Vector2 worldPosition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::GetClosestTown(Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> GetClosestTown(Microsoft.Xna.Framework.Vector2 worldPosition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2BD546F0D201898E91C93BB05533FC8DCFF0296E47465BC1972C91F65DA13D43</code></li>
+<li><span>Body hash</span><code>50069E4891009B3139A75BBB36B8D541DBBC32B51FF37A7AC8517CFAB9426EEE</code></li>
+<li><span>IL size</span><span>90</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector2::op_Division(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::get_Current()</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::Contains(Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ConstructionsServerManager.html#tryplaceconstruction-microsoft-xna-framework-point--system-guid--system-guid--candideserver-eventbus-eventbusargs---system-nullable-1-system-int32-"><code>CandideServer.ServerManagers.ConstructionsServerManager::TryPlaceConstruction</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#usewardeclaration-system-guid--candideserver-serverservices-serverjoinedplayermodel---system-void"><code>CandideServer.ServerManagers.RaidsServerManager::UseWarDeclaration</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_ServerState_CitizensPlayerListenersController.html#onreceive-cheataddgenericcitizen-system-object--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.ServerState_CitizensPlayerListenersController::OnReceive_CheatAddGenericCitizen</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetClosestTownWithAvailableSlot public CandideServer.Models.Town.ServerTownModel GetClosestTownWithAvailableSlot(Microsoft.Xna.Framework.Vector2 worldPosition, System.Guid worldId) CandideServer.Models.Town.ServerTownModel worldPosition Microsoft.Xna.Framework.Vector2 worldId System.Guid" id="getclosesttownwithavailableslot-microsoft-xna-framework-vector2--system-guid---candideserver-models-town-servertownmodel">
+<div class="method-heading">
+<h3><code>GetClosestTownWithAvailableSlot</code></h3>
+<a class="permalink" href="#getclosesttownwithavailableslot-microsoft-xna-framework-vector2--system-guid---candideserver-models-town-servertownmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Town.ServerTownModel GetClosestTownWithAvailableSlot(Microsoft.Xna.Framework.Vector2 worldPosition, System.Guid worldId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::GetClosestTownWithAvailableSlot(Microsoft.Xna.Framework.Vector2, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> GetClosestTownWithAvailableSlot(Microsoft.Xna.Framework.Vector2 worldPosition, System.Guid worldId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DCAE2775834540F560CE27C2F1683CC95994F06987CE730269FD2E8A9D230CF8</code></li>
+<li><span>Body hash</span><code>39DDE7565EB1EF569231A94581C7A2CEF432682023D24A87CD15606F20E70963</code></li>
+<li><span>IL size</span><span>301</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector3xy-microsoft-xna-framework-vector2---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.VectorExtension::ToVector3Xy(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_WorldServerManager.html#trygetnearestoutsideposition-system-guid--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3----system-boolean">CandideServer.ServerManagers.WorldServerManager::TryGetNearestOutsidePosition(System.Guid, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3&amp;)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>CandideServer.ServerManagers.TownsServerManager::&lt;GetClosestTownWithAvailableSlot&gt;g__IsClosest|15_0(CandideServer.Models.Town.ServerTownModel, TownsServerManager.&lt;&gt;c__DisplayClass15_0&amp;)</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::MoveNext()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_ServerState_CitizensPlayerListenersController.html#onreceive-sendwildcitizentoclosesttown-candideserver-messagemodels-citizens-sendwildcitizentoclosesttownmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.ServerState_CitizensPlayerListenersController::OnReceive_SendWildCitizenToClosestTown</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>GetClosestTownWithAvailableSlot: We have more citizens than slots for some reason. Unexpected</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RegisterTownDefenceValue public System.Void RegisterTownDefenceValue(System.Guid townId, Shared.Models.Construction.ConstructionModel construction, System.Guid spawnId) System.Void townId System.Guid construction Shared.Models.Construction.ConstructionModel spawnId System.Guid" id="registertowndefencevalue-system-guid--shared-models-construction-constructionmodel--system-guid---system-void">
+<div class="method-heading">
+<h3><code>RegisterTownDefenceValue</code></h3>
+<a class="permalink" href="#registertowndefencevalue-system-guid--shared-models-construction-constructionmodel--system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RegisterTownDefenceValue(System.Guid townId, Shared.Models.Construction.ConstructionModel construction, System.Guid spawnId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::RegisterTownDefenceValue(System.Guid, Shared.Models.Construction.ConstructionModel, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RegisterTownDefenceValue(System.Guid townId, <a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a> construction, System.Guid spawnId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D01BF9A6733139CED5DB398E60788B3C7F1D4E06884763E7A88DFA484F68889E</code></li>
+<li><span>Body hash</span><code>BBD1B085B6477A30B1B12ACA44C82FA428BF02680D97B32800CAAFC807C6D0F6</code></li>
+<li><span>IL size</span><span>157</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygettown-system-guid--candideserver-models-town-servertownmodel----system-boolean">CandideServer.ServerGameState::TryGetTown(System.Guid, CandideServer.Models.Town.ServerTownModel&amp;)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Town.TownDefenceProvider&gt;::ContainsKey(!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Town.TownDefenceProvider&gt;::set_Item(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#ontowndefencechanged-candideserver-models-town-servertownmodel---system-int32">CandideServer.ServerControllers.TownsServerController::OnTownDefenceChanged(CandideServer.Models.Town.ServerTownModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#send-towndefencevaluechanged-candideserver-models-town-servertownmodel--system-int32---system-void">CandideServer.ServerServices.TownsServerService::Send_TownDefenceValueChanged(CandideServer.Models.Town.ServerTownModel, System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ConstructionsServerManager.html#spawnconstruction-shared-models-construction-constructionmodel--microsoft-xna-framework-rectangle--system-guid--system-guid--system-collections-generic-dictionary-2-system-string-system-string---system-nullable-1-system-guid---system-nullable-1-system-guid---system-nullable-1-system-guid----system-void"><code>CandideServer.ServerManagers.ConstructionsServerManager::SpawnConstruction</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Town already has a Defense Provider with ID </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveTown public System.Void RemoveTown(CandideServer.Models.Town.TownModel town) System.Void town CandideServer.Models.Town.TownModel" id="removetown-candideserver-models-town-townmodel---system-void">
+<div class="method-heading">
+<h3><code>RemoveTown</code></h3>
+<a class="permalink" href="#removetown-candideserver-models-town-townmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemoveTown(CandideServer.Models.Town.TownModel town)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::RemoveTown(CandideServer.Models.Town.TownModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemoveTown(<a href="../../types/CandideServer/CandideServer_Models_Town_TownModel.html">CandideServer.Models.Town.TownModel</a> town)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9CA95051500071CA7DF8DA3703E095A99E8A1A4EEA83F63F5CC90FF47B7DCC38</code></li>
+<li><span>Body hash</span><code>CE23348D13A49427690E7686AE650A473457B7864C33DA377F41EBBFFE9F5D21</code></li>
+<li><span>IL size</span><span>100</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#removetown-candideserver-models-town-townmodel---system-boolean">CandideServer.ServerControllers.TownsServerController::RemoveTown(CandideServer.Models.Town.TownModel)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Models.Raids.RaidInstanceModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, Shared.Models.Raids.RaidInstanceModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, Shared.Models.Raids.RaidInstanceModel&gt;::get_Current()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#removeraid-shared-models-raids-raidinstancemodel---system-void">CandideServer.ServerManagers.RaidsServerManager::RemoveRaid(Shared.Models.Raids.RaidInstanceModel)</a></code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, Shared.Models.Raids.RaidInstanceModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_ServerState_TownsPlayerListenersController.html#unregistertown-system-guid---system-void">CandideServer.ServerServices.ServerState_TownsPlayerListenersController::UnregisterTown(System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#send-townremoved-system-guid---system-void">CandideServer.ServerServices.TownsServerService::Send_TownRemoved(System.Guid)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#removebuildingfromtown-candideserver-models-town-servertownmodel--candideserver-simulationmodels-buildingsimulationmodel---system-void"><code>CandideServer.ServerControllers.TownsServerController::RemoveBuildingFromTown</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SwitchCitizenSlots public System.Void SwitchCitizenSlots(CandideServer.MessageModels.Towns.SwitchCitizenSlotsMessage msg) System.Void msg CandideServer.MessageModels.Towns.SwitchCitizenSlotsMessage" id="switchcitizenslots-candideserver-messagemodels-towns-switchcitizenslotsmessage---system-void">
+<div class="method-heading">
+<h3><code>SwitchCitizenSlots</code></h3>
+<a class="permalink" href="#switchcitizenslots-candideserver-messagemodels-towns-switchcitizenslotsmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SwitchCitizenSlots(CandideServer.MessageModels.Towns.SwitchCitizenSlotsMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::SwitchCitizenSlots(CandideServer.MessageModels.Towns.SwitchCitizenSlotsMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SwitchCitizenSlots(<a href="../../types/CandideServer/CandideServer_MessageModels_Towns_SwitchCitizenSlotsMessage.html">CandideServer.MessageModels.Towns.SwitchCitizenSlotsMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8BA5B1AE5A44890B07BB18C22DF3C050679974C42894E52DC1AA7B6720F152B5</code></li>
+<li><span>Body hash</span><code>AE98C778D3ECE696FE78251776B09C974D5B1D951FAB8141A23EBB55821ECFB2</code></li>
+<li><span>IL size</span><span>901</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizen-system-guid--candideserver-models-citizen-citizenmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizen(System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygettown-system-guid--candideserver-models-town-servertownmodel----system-boolean">CandideServer.ServerGameState::TryGetTown(System.Guid, CandideServer.Models.Town.ServerTownModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizenslot-system-guid--candideserver-simulationmodels-citizenslotsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizenSlot(System.Guid, CandideServer.SimulationModels.CitizenSlotSimulationModel&amp;)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code>CandideServer.ServerControllers.UnassignCitizenSlotMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#unassigncitizenslot-candideserver-servercontrollers-unassigncitizenslotmessage---system-void">CandideServer.ServerControllers.CitizenSlotsSController::UnassignCitizenSlot(CandideServer.ServerControllers.UnassignCitizenSlotMessage)</a></code></li>
+<li><code>CandideServer.Models.Citizen.CitizenSlotModel::get_IsOccupied()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#assigncitizentoslot-system-guid--candideserver-models-citizen-citizenmodel---system-void">CandideServer.ServerControllers.CitizenSlotsSController::AssignCitizenToSlot(System.Guid, CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetjob-system-guid--candideserver-models-jobmodel----system-boolean">CandideServer.ServerGameState::TryGetJob(System.Guid, CandideServer.Models.JobModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_JobServerManager.html#sendjobchanged-candideserver-models-jobmodel---system-void">CandideServer.ServerManagers.JobServerManager::SendJobChanged(CandideServer.Models.JobModel)</a></code></li>
+<li><code>CandideServer.ServerServices.UpdateCitizensChangedMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_Citizens_UpdateCitizenMessage.html#fromcitizenmodel-candideserver-models-citizen-citizenmodel---candideserver-messagemodels-citizens-updatecitizenmessage">CandideServer.MessageModels.Citizens.UpdateCitizenMessage::FromCitizenModel(CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_CitizenServerService.html#send-citizenschanged-candideserver-serverservices-updatecitizenschangedmessage---system-void">CandideServer.ServerServices.CitizenServerService::Send_CitizensChanged(CandideServer.ServerServices.UpdateCitizensChangedMessage)</a></code></li>
+<li><code>CandideServer.MessageModels.Citizens.CitizenAssignmentsChangeForTownMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt;::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_Towns_CitizenTownOverviewData.html#frommodel-candideserver-models-citizen-citizenmodel---candideserver-messagemodels-towns-citizentownoverviewdata">CandideServer.MessageModels.Towns.CitizenTownOverviewData::FromModel(CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt;::Add(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#sendcitizenassignmentschangefortown-candideserver-messagemodels-citizens-citizenassignmentschangefortownmessage---system-void">CandideServer.ServerServices.TownsServerService::SendCitizenAssignmentsChangeForTown(CandideServer.MessageModels.Citizens.CitizenAssignmentsChangeForTownMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#onreceive-switchcitizenslots-candideserver-messagemodels-towns-switchcitizenslotsmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.TownsServerService::OnReceive_SwitchCitizenSlots</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>TownsServerManager</code></li>
+<li><code>: Building with ID </code></li>
+<li><code> is missing a town ID</code></li>
+<li><code>SwitchCitizenSlots: Citizen slot had not the same citizen ID which was requested</code></li>
+<li><code>SwitchCitizenSlots: Citizen slot had not the same building ID which was requested. Very grave error</code></li>
+<li><code>SwitchCitizenSlots</code></li>
+<li><code>SwitchCitizenSlots: Tried switching citizen slot but the source slot building&#39;s town and the target slot building&#39;s town</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetBuildingInTown public System.Boolean TryGetBuildingInTown(System.String buildingTypeId, CandideServer.Models.Town.ServerTownModel town, out CandideServer.SimulationModels.BuildingSimulationModel&amp; outBuilding) System.Boolean buildingTypeId System.String town CandideServer.Models.Town.ServerTownModel outBuilding CandideServer.SimulationModels.BuildingSimulationModel&amp;" id="trygetbuildingintown-system-string--candideserver-models-town-servertownmodel--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">
+<div class="method-heading">
+<h3><code>TryGetBuildingInTown</code></h3>
+<a class="permalink" href="#trygetbuildingintown-system-string--candideserver-models-town-servertownmodel--candideserver-simulationmodels-buildingsimulationmodel----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetBuildingInTown(System.String buildingTypeId, CandideServer.Models.Town.ServerTownModel town, out CandideServer.SimulationModels.BuildingSimulationModel&amp; outBuilding)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::TryGetBuildingInTown(System.String, CandideServer.Models.Town.ServerTownModel, CandideServer.SimulationModels.BuildingSimulationModel&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetBuildingInTown(System.String buildingTypeId, <a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> town, out <a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a>&amp; outBuilding)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3B0790955DC783F2D206F3AD3343AA6EC2C5681F24869666BA45B317A7FB806A</code></li>
+<li><span>Body hash</span><code>653FDA22ED2BCC39CAC00B60932058AAAC464FC0C8CD76A1EED91DF7B5C59DFD</code></li>
+<li><span>IL size</span><span>93</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#trygetbuildingincitizenhometown-candideserver-citizens-base-abstractcitizencontroller--system-string--candideserver-simulationmodels-buildingsimulationmodel----system-boolean"><code>CandideServer.ServerManagers.CitizenServerManager::TryGetBuildingInCitizenHomeTown</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_TownsServerManager.html#trygettownwithinrange-microsoft-xna-framework-vector2--system-single--candideserver-models-town-servertownmodel---microsoft-xna-framework-vector2----system-boolean"><code>CandideServer.ServerManagers.TownsServerManager::TryGetTownWithinRange</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_ServerDirectorSystem.html#onraidbeaten-system-valuetuple-2-shared-models-raids-raidinstancemodel-candideserver-models-town-servertownmodel----system-void"><code>CandideServer.ServerSystems.ServerDirectorSystem::OnRaidBeaten</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetRandomBuildingInTown public System.Boolean TryGetRandomBuildingInTown(CandideServer.Citizens.Base.AbstractCitizenController controller, CandideServer.Models.Town.ServerTownModel town, out CandideServer.SimulationModels.BuildingSimulationModel&amp; outBuilding, System.Collections.Generic.List&lt;System.Guid&gt; excludedBuildingIds, System.Boolean excludeCurrentBuilding, System.Boolean excludeInteriors, System.Boolean excludeExteriors) System.Boolean controller CandideServer.Citizens.Base.AbstractCitizenController town CandideServer.Models.Town.ServerTownModel outBuilding CandideServer.SimulationModels.BuildingSimulationModel&amp; excludedBuildingIds System.Collections.Generic.List&lt;System.Guid&gt; excludeCurrentBuilding System.Boolean excludeInteriors System.Boolean excludeExteriors System.Boolean" id="trygetrandombuildingintown-candideserver-citizens-base-abstractcitizencontroller--candideserver-models-town-servertownmodel--candideserver-simulationmodels-buildingsimulationmodel---system-collections-generic-list-1-system-guid---system-boolean--system-boolean--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>TryGetRandomBuildingInTown</code></h3>
+<a class="permalink" href="#trygetrandombuildingintown-candideserver-citizens-base-abstractcitizencontroller--candideserver-models-town-servertownmodel--candideserver-simulationmodels-buildingsimulationmodel---system-collections-generic-list-1-system-guid---system-boolean--system-boolean--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetRandomBuildingInTown(CandideServer.Citizens.Base.AbstractCitizenController controller, CandideServer.Models.Town.ServerTownModel town, out CandideServer.SimulationModels.BuildingSimulationModel&amp; outBuilding, System.Collections.Generic.List&lt;System.Guid&gt; excludedBuildingIds, System.Boolean excludeCurrentBuilding, System.Boolean excludeInteriors, System.Boolean excludeExteriors)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::TryGetRandomBuildingInTown(CandideServer.Citizens.Base.AbstractCitizenController, CandideServer.Models.Town.ServerTownModel, CandideServer.SimulationModels.BuildingSimulationModel&amp;, System.Collections.Generic.List&lt;System.Guid&gt;, System.Boolean, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetRandomBuildingInTown(<a href="../../types/CandideServer/CandideServer_Citizens_Base_AbstractCitizenController.html">CandideServer.Citizens.Base.AbstractCitizenController</a> controller, <a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> town, out <a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a>&amp; outBuilding, System.Collections.Generic.List&lt;System.Guid&gt; excludedBuildingIds, System.Boolean excludeCurrentBuilding, System.Boolean excludeInteriors, System.Boolean excludeExteriors)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CDDBDB4C8A51171C60B3B95CC1983E0F10A343B69362ADBEBAC8DC41618AC48E</code></li>
+<li><span>Body hash</span><code>14E5FEE73B81B8A2268F842AC8EAC2F0EF063F0CBE56885B0C6D1E7C1E634AE2</code></li>
+<li><span>IL size</span><span>448</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::Contains(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::Add(!0)</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Random::get_Shared()</code></li>
+<li><code>System.Random::Next(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::get_Item(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Core_ScheduleCreation_TaskFactory.html#createwandertask-candideserver-citizens-base-abstractcitizencontroller--system-collections-generic-list-1-candideserver-entities-schedulesystem-core-schedulecreation-taskstep----system-void"><code>CandideServer.Entities.ScheduleSystem.Core.ScheduleCreation.TaskFactory::CreateWanderTask</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#trygetrandombuildingincitizenhometown-candideserver-citizens-base-abstractcitizencontroller--candideserver-simulationmodels-buildingsimulationmodel---system-boolean--system-boolean--system-boolean--system-boolean---system-boolean"><code>CandideServer.ServerManagers.CitizenServerManager::TryGetRandomBuildingInCitizenHomeTown</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetTownWithinRange public System.Boolean TryGetTownWithinRange(Microsoft.Xna.Framework.Vector2 center, System.Single range, out CandideServer.Models.Town.ServerTownModel&amp; outTown, out Microsoft.Xna.Framework.Vector2&amp; outTownAltarPos) System.Boolean center Microsoft.Xna.Framework.Vector2 range System.Single outTown CandideServer.Models.Town.ServerTownModel&amp; outTownAltarPos Microsoft.Xna.Framework.Vector2&amp;" id="trygettownwithinrange-microsoft-xna-framework-vector2--system-single--candideserver-models-town-servertownmodel---microsoft-xna-framework-vector2----system-boolean">
+<div class="method-heading">
+<h3><code>TryGetTownWithinRange</code></h3>
+<a class="permalink" href="#trygettownwithinrange-microsoft-xna-framework-vector2--system-single--candideserver-models-town-servertownmodel---microsoft-xna-framework-vector2----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetTownWithinRange(Microsoft.Xna.Framework.Vector2 center, System.Single range, out CandideServer.Models.Town.ServerTownModel&amp; outTown, out Microsoft.Xna.Framework.Vector2&amp; outTownAltarPos)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::TryGetTownWithinRange(Microsoft.Xna.Framework.Vector2, System.Single, CandideServer.Models.Town.ServerTownModel&amp;, Microsoft.Xna.Framework.Vector2&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetTownWithinRange(Microsoft.Xna.Framework.Vector2 center, System.Single range, out <a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a>&amp; outTown, out Microsoft.Xna.Framework.Vector2&amp; outTownAltarPos)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6E1C9E5F7DD26BBEB08D28A11DE16514ABC6BA1B39C1D33F5FAEBC7A1A65A544</code></li>
+<li><span>Body hash</span><code>904ADB24A539D36103323AFB3FE616AD7D10FBD3B3205EE013873B3450B74D06</code></li>
+<li><span>IL size</span><span>165</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector2::get_Zero()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_TownsServerManager.html#trygetbuildingintown-system-string--candideserver-models-town-servertownmodel--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerManagers.TownsServerManager::TryGetBuildingInTown(System.String, CandideServer.Models.Town.ServerTownModel, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Center()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::LengthSquared()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>altar</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UnassignCitizenFromSlot public System.Void UnassignCitizenFromSlot(CandideServer.MessageModels.Towns.UnassignCitizenFromSlotMessage msg) System.Void msg CandideServer.MessageModels.Towns.UnassignCitizenFromSlotMessage" id="unassigncitizenfromslot-candideserver-messagemodels-towns-unassigncitizenfromslotmessage---system-void">
+<div class="method-heading">
+<h3><code>UnassignCitizenFromSlot</code></h3>
+<a class="permalink" href="#unassigncitizenfromslot-candideserver-messagemodels-towns-unassigncitizenfromslotmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UnassignCitizenFromSlot(CandideServer.MessageModels.Towns.UnassignCitizenFromSlotMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::UnassignCitizenFromSlot(CandideServer.MessageModels.Towns.UnassignCitizenFromSlotMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UnassignCitizenFromSlot(<a href="../../types/CandideServer/CandideServer_MessageModels_Towns_UnassignCitizenFromSlotMessage.html">CandideServer.MessageModels.Towns.UnassignCitizenFromSlotMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A88A30B49C3AE44271FA0E0625388922720D0AC3DF2A940FD4E0D005A769BA6D</code></li>
+<li><span>Body hash</span><code>92B54836B04A10D6465C76FC7500C782CBB6D0DE552B1B9C9B609C1548C3A987</code></li>
+<li><span>IL size</span><span>427</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizen-system-guid--candideserver-models-citizen-citizenmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizen(System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygettown-system-guid--candideserver-models-town-servertownmodel----system-boolean">CandideServer.ServerGameState::TryGetTown(System.Guid, CandideServer.Models.Town.ServerTownModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizenslot-system-guid--candideserver-simulationmodels-citizenslotsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizenSlot(System.Guid, CandideServer.SimulationModels.CitizenSlotSimulationModel&amp;)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code>CandideServer.ServerControllers.UnassignCitizenSlotMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#unassigncitizenslot-candideserver-servercontrollers-unassigncitizenslotmessage---system-void">CandideServer.ServerControllers.CitizenSlotsSController::UnassignCitizenSlot(CandideServer.ServerControllers.UnassignCitizenSlotMessage)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetjob-system-guid--candideserver-models-jobmodel----system-boolean">CandideServer.ServerGameState::TryGetJob(System.Guid, CandideServer.Models.JobModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_JobServerManager.html#sendjobchanged-candideserver-models-jobmodel---system-void">CandideServer.ServerManagers.JobServerManager::SendJobChanged(CandideServer.Models.JobModel)</a></code></li>
+<li><code>CandideServer.ServerServices.UpdateCitizensChangedMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_Citizens_UpdateCitizenMessage.html#fromcitizenmodel-candideserver-models-citizen-citizenmodel---candideserver-messagemodels-citizens-updatecitizenmessage">CandideServer.MessageModels.Citizens.UpdateCitizenMessage::FromCitizenModel(CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_CitizenServerService.html#send-citizenschanged-candideserver-serverservices-updatecitizenschangedmessage---system-void">CandideServer.ServerServices.CitizenServerService::Send_CitizensChanged(CandideServer.ServerServices.UpdateCitizensChangedMessage)</a></code></li>
+<li><code>CandideServer.MessageModels.Citizens.CitizenAssignmentsChangeForTownMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt;::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_Towns_CitizenTownOverviewData.html#frommodel-candideserver-models-citizen-citizenmodel---candideserver-messagemodels-towns-citizentownoverviewdata">CandideServer.MessageModels.Towns.CitizenTownOverviewData::FromModel(CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt;::Add(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#sendcitizenassignmentschangefortown-candideserver-messagemodels-citizens-citizenassignmentschangefortownmessage---system-void">CandideServer.ServerServices.TownsServerService::SendCitizenAssignmentsChangeForTown(CandideServer.MessageModels.Citizens.CitizenAssignmentsChangeForTownMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#onreceive-unassigncitizenfromslot-candideserver-messagemodels-towns-unassigncitizenfromslotmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.TownsServerService::OnReceive_UnassignCitizenFromSlot</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>TownsServerManager</code></li>
+<li><code>: Building with ID </code></li>
+<li><code> is missing a town ID</code></li>
+<li><code>UnassignCitizenFromSlot: Citizen slot had not the same citizen ID which was requested</code></li>
+<li><code>UnassignCitizenFromSlot: Citizen slot had not the same building ID which was requested. Very grave error</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UnregisterTownDefenseValue public System.Void UnregisterTownDefenseValue(CandideServer.Models.Town.ServerTownModel town, System.Guid spawnId) System.Void town CandideServer.Models.Town.ServerTownModel spawnId System.Guid" id="unregistertowndefensevalue-candideserver-models-town-servertownmodel--system-guid---system-void">
+<div class="method-heading">
+<h3><code>UnregisterTownDefenseValue</code></h3>
+<a class="permalink" href="#unregistertowndefensevalue-candideserver-models-town-servertownmodel--system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UnregisterTownDefenseValue(CandideServer.Models.Town.ServerTownModel town, System.Guid spawnId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.TownsServerManager::UnregisterTownDefenseValue(CandideServer.Models.Town.ServerTownModel, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UnregisterTownDefenseValue(<a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> town, System.Guid spawnId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>50D27DB7B285FBF4D8892C2CF0AE7AA15C0725DFFF9C77250261672AE5AB2EBC</code></li>
+<li><span>Body hash</span><code>50C651B97E6DFB95AEFDB03E55E242A47FF7B635B6BC442D2E95AD0E37C52EDF</code></li>
+<li><span>IL size</span><span>28</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Town.TownDefenceProvider&gt;::Remove(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#ontowndefencechanged-candideserver-models-town-servertownmodel---system-int32">CandideServer.ServerControllers.TownsServerController::OnTownDefenceChanged(CandideServer.Models.Town.ServerTownModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_TownsServerService.html#send-towndefencevaluechanged-candideserver-models-town-servertownmodel--system-int32---system-void">CandideServer.ServerServices.TownsServerService::Send_TownDefenceValueChanged(CandideServer.Models.Town.ServerTownModel, System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Simulations_TownServerSystem.html#update-system-single---system-void"><code>CandideServer.Simulations.TownServerSystem::Update</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

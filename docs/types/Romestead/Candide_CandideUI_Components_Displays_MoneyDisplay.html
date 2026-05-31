@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.CandideUI.Components.Displays.MoneyDisplay - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.CandideUI.Components.Displays.MoneyDisplay</h1>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.Displays.MoneyDisplay">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.CandideUI.Components.Displays.MoneyDisplay
+
+- Assembly: `Romestead`
+- Namespace: `Candide.CandideUI.Components.Displays`
+- Kind: `public class`
+- Base type: `Candide.CandideUI.Containers.CandidePanel`
+- Members: 5 methods, 2 properties, 6 fields, 0 events
+
+## Public Methods
+- `public Candide.CandideUI.CandideUiElement GetFocusable()`
+- `public System.Double LerpPrecise(System.Double value1, System.Double value2, System.Double amount)`
+- `public System.Boolean OnControllerNavigation(Candide.CandideUI.ControllerNavigation navigation)`
+- `public System.Void SetMoney(System.UInt64 value, System.Boolean skipAnimation)`
+- `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)`
+">Copy markdown</button>
+<a class="button" href="Candide_CandideUI_Components_Displays_MoneyDisplay.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.CandideUI.Components.Displays</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>5</strong></article>
+<article class="metric"><span>Properties</span><strong>2</strong></article>
+<article class="metric"><span>Fields</span><strong>6</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.CandideUI.Components.Displays</code></li>
+<li><span>Base type</span><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandidePanel.html">Candide.CandideUI.Containers.CandidePanel</a></code></li>
+<li><span>Hash</span><code>1591E9FB125E0AF22CB0648A26C03F16EED11286AAC6FB20D7C5DB97B0A2C91D</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandidePanel.html">Candide.CandideUI.Containers.CandidePanel</a></code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryControl.html"><code>Candide.CandideUI.UserControls.InventoryControl</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="AnimationSpeed private System.Single AnimationSpeed System.Single" id="animationspeed-system-single"><td><span class="member-name-cell"><code>AnimationSpeed</code><a class="permalink" href="#animationspeed-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single AnimationSpeed">Copy</button></span></td><td>private</td><td><code>private System.Single AnimationSpeed</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="CoinsDisplay public Candide.CandideUI.Components.Displays.CoinsHolderDisplay CoinsDisplay Candide.CandideUI.Components.Displays.CoinsHolderDisplay" id="coinsdisplay-candide-candideui-components-displays-coinsholderdisplay"><td><span class="member-name-cell"><code>CoinsDisplay</code><a class="permalink" href="#coinsdisplay-candide-candideui-components-displays-coinsholderdisplay" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.CandideUI.Components.Displays.CoinsHolderDisplay CoinsDisplay">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_CandideUI_Components_Displays_CoinsHolderDisplay.html">Candide.CandideUI.Components.Displays.CoinsHolderDisplay</a> CoinsDisplay</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="Timer private System.Single Timer System.Single" id="timer-system-single"><td><span class="member-name-cell"><code>Timer</code><a class="permalink" href="#timer-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single Timer">Copy</button></span></td><td>private</td><td><code>private System.Single Timer</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_currentDisplayMoney private System.UInt64 _currentDisplayMoney System.UInt64" id="-currentdisplaymoney-system-uint64"><td><span class="member-name-cell"><code>_currentDisplayMoney</code><a class="permalink" href="#-currentdisplaymoney-system-uint64" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.UInt64 _currentDisplayMoney">Copy</button></span></td><td>private</td><td><code>private System.UInt64 _currentDisplayMoney</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_money private System.UInt64 _money System.UInt64" id="-money-system-uint64"><td><span class="member-name-cell"><code>_money</code><a class="permalink" href="#-money-system-uint64" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.UInt64 _money">Copy</button></span></td><td>private</td><td><code>private System.UInt64 _money</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_previousDisplayMoney private System.UInt64 _previousDisplayMoney System.UInt64" id="-previousdisplaymoney-system-uint64"><td><span class="member-name-cell"><code>_previousDisplayMoney</code><a class="permalink" href="#-previousdisplaymoney-system-uint64" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.UInt64 _previousDisplayMoney">Copy</button></span></td><td>private</td><td><code>private System.UInt64 _previousDisplayMoney</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="private" data-patch-target="false" data-member-text="CurrentDisplayMoney private System.UInt64 CurrentDisplayMoney System.UInt64" id="currentdisplaymoney-system-uint64"><td><span class="member-name-cell"><code>CurrentDisplayMoney</code><a class="permalink" href="#currentdisplaymoney-system-uint64" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.UInt64 CurrentDisplayMoney">Copy</button></span></td><td>private</td><td><code>private System.UInt64 CurrentDisplayMoney</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="Money public System.UInt64 Money System.UInt64" id="money-system-uint64"><td><span class="member-name-cell"><code>Money</code><a class="permalink" href="#money-system-uint64" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.UInt64 Money">Copy</button></span></td><td>public</td><td><code>public System.UInt64 Money</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetFocusable public Candide.CandideUI.CandideUiElement GetFocusable() Candide.CandideUI.CandideUiElement " id="getfocusable----candide-candideui-candideuielement">
+<div class="method-heading">
+<h3><code>GetFocusable</code></h3>
+<a class="permalink" href="#getfocusable----candide-candideui-candideuielement" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Candide.CandideUI.CandideUiElement GetFocusable()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.Displays.MoneyDisplay::GetFocusable()">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html">Candide.CandideUI.CandideUiElement</a> GetFocusable()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html">Candide.CandideUI.CandideUiElement</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>EABFA006218717C8BDC1A0D931313292A7DBC82228DE71A1204EB67BFBAFE903</code></li>
+<li><span>Body hash</span><code>188A9E70AA3C3F4FCC98EB91D095C328412AB6D2F23A73B0943B99C2D64BCE68</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.Components.Displays.MoneyDisplay::get_Money()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerMultipleItems.html#getfocusable----candide-candideui-candideuielement">Candide.CandideUI.CandideUiContainerMultipleItems::GetFocusable()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LerpPrecise public System.Double LerpPrecise(System.Double value1, System.Double value2, System.Double amount) System.Double value1 System.Double value2 System.Double amount System.Double" id="lerpprecise-system-double--system-double--system-double---system-double">
+<div class="method-heading">
+<h3><code>LerpPrecise</code></h3>
+<a class="permalink" href="#lerpprecise-system-double--system-double--system-double---system-double" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Double LerpPrecise(System.Double value1, System.Double value2, System.Double amount)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.Displays.MoneyDisplay::LerpPrecise(System.Double, System.Double, System.Double)">Copy Harmony target</button>
+</div>
+<p><code>public System.Double LerpPrecise(System.Double value1, System.Double value2, System.Double amount)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Double</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F0CDCEEDB14FEF0389226FA9145D8F9E529D459824AE274A715C20C8B42F1ECC</code></li>
+<li><span>Body hash</span><code>5B3A069BDCDE02A43D46ACAFD64625C06169014CAFB2FF28D986461AE9D614D7</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Displays_MoneyDisplay.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideUI.Components.Displays.MoneyDisplay::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnControllerNavigation public System.Boolean OnControllerNavigation(Candide.CandideUI.ControllerNavigation navigation) System.Boolean navigation Candide.CandideUI.ControllerNavigation" id="oncontrollernavigation-candide-candideui-controllernavigation---system-boolean">
+<div class="method-heading">
+<h3><code>OnControllerNavigation</code></h3>
+<a class="permalink" href="#oncontrollernavigation-candide-candideui-controllernavigation---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean OnControllerNavigation(Candide.CandideUI.ControllerNavigation navigation)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.Displays.MoneyDisplay::OnControllerNavigation(Candide.CandideUI.ControllerNavigation)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean OnControllerNavigation(<a href="../../types/Romestead/Candide_CandideUI_ControllerNavigation.html">Candide.CandideUI.ControllerNavigation</a> navigation)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>3A5189E00DC7A5FF807A293363B020855F23218E0BB1550FCF3ABDA685921978</code></li>
+<li><span>Body hash</span><code>B3216244B4A7F22F5111744648BF98101FB0337DAC521899CFD41CB734249ED1</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerMultipleItems.html#oncontrollernavigation-candide-candideui-controllernavigation---system-boolean">Candide.CandideUI.CandideUiContainerMultipleItems::OnControllerNavigation(Candide.CandideUI.ControllerNavigation)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetMoney public System.Void SetMoney(System.UInt64 value, System.Boolean skipAnimation) System.Void value System.UInt64 skipAnimation System.Boolean" id="setmoney-system-uint64--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>SetMoney</code></h3>
+<a class="permalink" href="#setmoney-system-uint64--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetMoney(System.UInt64 value, System.Boolean skipAnimation)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.Displays.MoneyDisplay::SetMoney(System.UInt64, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetMoney(System.UInt64 value, System.Boolean skipAnimation)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AE21E1322A8EAD43CF4260C5162F32D9868FBCF98D101228AF12B95643FC3797</code></li>
+<li><span>Body hash</span><code>AEAA490E07950BFC3B642DD22B3A4EAD24F0327A2E0360234F3974CEB4B2B777</code></li>
+<li><span>IL size</span><span>223</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.Components.Displays.MoneyDisplay::get_CurrentDisplayMoney()</code></li>
+<li><code>Candide.CandideUI.Components.Displays.MoneyDisplay::set_CurrentDisplayMoney(System.UInt64)</code></li>
+<li><code>Microsoft.Xna.Framework.MathHelper::Distance(System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_CandideSplitInventoryMoneyMockComponent.html#ondropped----system-boolean"><code>Candide.CandideUI.CandideSplitInventoryMoneyMockComponent::OnDropped</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_CandideSplitInventoryMoneyMockComponent.html#ondroppedonholder-candide-candideui-components-holder-candideholderbase---system-boolean"><code>Candide.CandideUI.CandideSplitInventoryMoneyMockComponent::OnDroppedOnHolder</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Holder_MoneyCandideDraggableHolderContent.html#ondropped----system-boolean"><code>Candide.CandideUI.Components.Holder.MoneyCandideDraggableHolderContent::OnDropped</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Holder_MoneyCandideDraggableHolderContent.html#ondroppedonholder-candide-candideui-components-holder-candideholderbase---system-boolean"><code>Candide.CandideUI.Components.Holder.MoneyCandideDraggableHolderContent::OnDroppedOnHolder</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryControl.html#invalidatemoneydisplay----system-void"><code>Candide.CandideUI.UserControls.InventoryControl::InvalidateMoneyDisplay</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryControl.html#ondropmoney-candide-candideui-components-holder-coinslot--system-uint64---system-boolean"><code>Candide.CandideUI.UserControls.InventoryControl::OnDropMoney</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryControl.html#updateslots----system-void"><code>Candide.CandideUI.UserControls.InventoryControl::UpdateSlots</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_PlayerInventoryUserControl.html#onmoneyrightclickfunc-candide-candideui-usercontrols-inventorycontrolmoney-onmouserightclickargs---system-boolean"><code>Candide.CandideUI.UserControls.PlayerInventoryUserControl::OnMoneyRightClickFunc</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime) System.Void gameTime Microsoft.Xna.Framework.GameTime" id="update-microsoft-xna-framework-gametime---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-microsoft-xna-framework-gametime---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.Displays.MoneyDisplay::Update(Microsoft.Xna.Framework.GameTime)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>1CEAB57B58DA8B7C7E27FC7EFA53A5D4FAEA5EE2F3F8050CB1FE379C8E9AD40B</code></li>
+<li><span>Body hash</span><code>89C9AC5AE96EAE3CFA309D98605184B8626038CE4C492CC4A07B904BF2A914F3</code></li>
+<li><span>IL size</span><span>118</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.GameTime::get_ElapsedGameTime()</code></li>
+<li><code>System.TimeSpan::get_TotalSeconds()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Components_Displays_MoneyDisplay.html#lerpprecise-system-double--system-double--system-double---system-double">Candide.CandideUI.Components.Displays.MoneyDisplay::LerpPrecise(System.Double, System.Double, System.Double)</a></code></li>
+<li><code>Candide.CandideUI.Components.Displays.MoneyDisplay::set_CurrentDisplayMoney(System.UInt64)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerMultipleItems.html#update-microsoft-xna-framework-gametime---system-void">Candide.CandideUI.CandideUiContainerMultipleItems::Update(Microsoft.Xna.Framework.GameTime)</a></code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

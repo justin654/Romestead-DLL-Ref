@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerServices.BuildingsServerService - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerServices.BuildingsServerService</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerServices.BuildingsServerService
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerServices`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 14 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public System.Void OnReceive_DepositEntityIntoStorage(CandideServer.MessageModels.Buildings.DepositEntityIntoStorageMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_GetAndListenOnInternalResourceStorageForBuilding(CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageForBuildingMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public CandideServer.Models.InternalResourceStorageModel OnReceive_GetInternalResourceStorage(CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageForBuildingMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_GetTryBucketDepleteResourceStorageEndpoint(CandideServer.MessageModels.Buildings.GetBucketDepleteResourceStorageEndpointRequest msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_GetTryBucketDepositResourceStorageEndpoint(CandideServer.MessageModels.Buildings.GetBucketDepositResourceStorageEndpointRequest msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_RemoveBuilding(CandideServer.MessageModels.Buildings.RemoveBuildingMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_TryTurnItemIntoFuelForSource(CandideServer.MessageModels.Buildings.TryTurnItemIntoFuelForSourceMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_TryUpgradeBuilding(CandideServer.MessageModels.Buildings.TryUpgradeBuildingRequest msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_UpgradeBuildingCheat(CandideServer.MessageModels.Buildings.UpgradeBuildingCheatMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void Send_BuildingRemoved(CandideServer.MessageModels.Buildings.BuildingRemovedMessage msg)`
+- `public System.Void Send_BuildingSpawned(CandideServer.MessageModels.Buildings.BuildingSpawnedMessage msg)`
+- `public System.Void Send_BuildingUpgraded(CandideServer.MessageModels.Buildings.BuildingUpgradedMessage msg)`
+- `public System.Void Send_UpdateBuildingAppeal(CandideServer.MessageModels.Buildings.UpdateBuildingAppealMessage msg)`
+- `public System.Void Send_UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage msg)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerServices_BuildingsServerService.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerServices</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>14</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerServices</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>96CCC1BF6B24BC0EDB60A6DC4AFADC7DB8A4E7A6A3BAB6708145BA361A631546</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_DepositEntityIntoStorage public System.Void OnReceive_DepositEntityIntoStorage(CandideServer.MessageModels.Buildings.DepositEntityIntoStorageMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Buildings.DepositEntityIntoStorageMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-depositentityintostorage-candideserver-messagemodels-buildings-depositentityintostoragemessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_DepositEntityIntoStorage</code></h3>
+<a class="permalink" href="#onreceive-depositentityintostorage-candideserver-messagemodels-buildings-depositentityintostoragemessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_DepositEntityIntoStorage(CandideServer.MessageModels.Buildings.DepositEntityIntoStorageMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::OnReceive_DepositEntityIntoStorage(CandideServer.MessageModels.Buildings.DepositEntityIntoStorageMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_DepositEntityIntoStorage(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_DepositEntityIntoStorageMessage.html">CandideServer.MessageModels.Buildings.DepositEntityIntoStorageMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>73EB759396A00EC31E78AB90AF43B67F45D4ADEF06C782C0978E6490D3DE9940</code></li>
+<li><span>Body hash</span><code>7F3D74323DCE0959FC4C4CFA47E1BE41AAE08BC12D4A54BDACD04F55F7FA16E0</code></li>
+<li><span>IL size</span><span>224</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;::get_Value()</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#getplayerinfofrompeerid-system-int32---system-nullable-1-system-valuetuple-2-candideserver-models-player-serverplayercharacter-candideserver-serverservices-serverjoinedplayermodel--">CandideServer.ServerServices.PlayerServerService::GetPlayerInfoFromPeerId(System.Int32)</a></code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::GetValueOrDefault()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetserverentity-system-guid--candideserver-entities-serverentitymodel---system-string---system-boolean">CandideServer.ServerGameState::TryGetServerEntity(System.Guid, CandideServer.Entities.ServerEntityModel&amp;, System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#trydepositresourceentityintostorage-candideserver-entities-serverentitymodel--system-guid---system-boolean">CandideServer.ServerManagers.BuildingsServerManager::TryDepositResourceEntityIntoStorage(CandideServer.Entities.ServerEntityModel, System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#updateentityposition-candideserver-entities-serverentitymodel--microsoft-xna-framework-vector3--system-boolean---system-boolean">CandideServer.ServerControllers.EntitySController::UpdateEntityPosition(CandideServer.Entities.ServerEntityModel, Microsoft.Xna.Framework.Vector3, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#removeentity-system-guid--shared-entity-entityremoveinfo---candideserver-entities-serverentitymodel">CandideServer.ServerControllers.EntitySController::RemoveEntity(System.Guid, Shared.Entity.EntityRemoveInfo)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>OnReceive_DepositEntityIntoStorage: No error position was provided and no player character could be found.</code></li>
+<li><code>OnReceive_DepositEntityIntoStorage</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_GetAndListenOnInternalResourceStorageForBuilding public System.Void OnReceive_GetAndListenOnInternalResourceStorageForBuilding(CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageForBuildingMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageForBuildingMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-getandlistenoninternalresourcestorageforbuilding-candideserver-messagemodels-internalresourcestorage-getinternalresourcestorageforbuildingmessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_GetAndListenOnInternalResourceStorageForBuilding</code></h3>
+<a class="permalink" href="#onreceive-getandlistenoninternalresourcestorageforbuilding-candideserver-messagemodels-internalresourcestorage-getinternalresourcestorageforbuildingmessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_GetAndListenOnInternalResourceStorageForBuilding(CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageForBuildingMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::OnReceive_GetAndListenOnInternalResourceStorageForBuilding(CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageForBuildingMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_GetAndListenOnInternalResourceStorageForBuilding(<a href="../../types/CandideServer/CandideServer_MessageModels_InternalResourceStorage_GetInternalResourceStorageForBuildingMessage.html">CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageForBuildingMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9A396BCDBD65BEB3384E4D98F5A6ECF55650C1EEA44BB67C759E7226451EF824</code></li>
+<li><span>Body hash</span><code>8EE2851C98CA97CA9E9CEBE8DD101DC5F3701F0B51FADFFB2945F36EF600AB5B</code></li>
+<li><span>IL size</span><span>29</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#onreceive-getinternalresourcestorage-candideserver-messagemodels-internalresourcestorage-getinternalresourcestorageforbuildingmessage--candideserver-eventbus-eventbusargs---candideserver-models-internalresourcestoragemodel">CandideServer.ServerServices.BuildingsServerService::OnReceive_GetInternalResourceStorage(CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageForBuildingMessage, CandideServer.EventBus.EventBusArgs)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_ServerState_InternalResourceStoragePlayerListenersController.html#registerplayerinternalresourcestoragelistener-system-guid--candideserver-server-network-connectedpeer---system-void">CandideServer.ServerServices.ServerState_InternalResourceStoragePlayerListenersController::RegisterPlayerInternalResourceStorageListener(System.Guid, CandideServer.Server.Network.ConnectedPeer)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_GetInternalResourceStorage public CandideServer.Models.InternalResourceStorageModel OnReceive_GetInternalResourceStorage(CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageForBuildingMessage msg, CandideServer.EventBus.EventBusArgs args) CandideServer.Models.InternalResourceStorageModel msg CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageForBuildingMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-getinternalresourcestorage-candideserver-messagemodels-internalresourcestorage-getinternalresourcestorageforbuildingmessage--candideserver-eventbus-eventbusargs---candideserver-models-internalresourcestoragemodel">
+<div class="method-heading">
+<h3><code>OnReceive_GetInternalResourceStorage</code></h3>
+<a class="permalink" href="#onreceive-getinternalresourcestorage-candideserver-messagemodels-internalresourcestorage-getinternalresourcestorageforbuildingmessage--candideserver-eventbus-eventbusargs---candideserver-models-internalresourcestoragemodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.InternalResourceStorageModel OnReceive_GetInternalResourceStorage(CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageForBuildingMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::OnReceive_GetInternalResourceStorage(CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageForBuildingMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_InternalResourceStorageModel.html">CandideServer.Models.InternalResourceStorageModel</a> OnReceive_GetInternalResourceStorage(<a href="../../types/CandideServer/CandideServer_MessageModels_InternalResourceStorage_GetInternalResourceStorageForBuildingMessage.html">CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageForBuildingMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_InternalResourceStorageModel.html">CandideServer.Models.InternalResourceStorageModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A57C3BAB5286A027901FF6C0520C7524DA6A4C7A3A775E3B8CBC67937A1E2606</code></li>
+<li><span>Body hash</span><code>07E509672A5ECD67D3453D7F9EEDD06413CDBCD4DBFACC275139E822F79F5EBA</code></li>
+<li><span>IL size</span><span>185</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetresourcestorage-system-guid--candideserver-models-internalresourcestoragemodel----system-boolean">CandideServer.ServerGameState::TryGetResourceStorage(System.Guid, CandideServer.Models.InternalResourceStorageModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendgetresponseerror-candideserver-eventbus-eventbusargs--system-byte---system-void">CandideServer.Server.BaseServer::SendGetResponseError(CandideServer.EventBus.EventBusArgs, System.Byte)</a></code></li>
+<li><code>CandideServer.MessageModels.InternalResourceStorage.GetInternalResourceStorageResponse::.ctor()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendgetresponsemessage-candideserver-eventbus-eventbusargs--system-object--system-boolean---system-void">CandideServer.Server.BaseServer::SendGetResponseMessage(CandideServer.EventBus.EventBusArgs, System.Object, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#onreceive-getandlistenoninternalresourcestorageforbuilding-candideserver-messagemodels-internalresourcestorage-getinternalresourcestorageforbuildingmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.BuildingsServerService::OnReceive_GetAndListenOnInternalResourceStorageForBuilding</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_GetTryBucketDepleteResourceStorageEndpoint public System.Void OnReceive_GetTryBucketDepleteResourceStorageEndpoint(CandideServer.MessageModels.Buildings.GetBucketDepleteResourceStorageEndpointRequest msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Buildings.GetBucketDepleteResourceStorageEndpointRequest args CandideServer.EventBus.EventBusArgs" id="onreceive-gettrybucketdepleteresourcestorageendpoint-candideserver-messagemodels-buildings-getbucketdepleteresourcestorageendpointrequest--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_GetTryBucketDepleteResourceStorageEndpoint</code></h3>
+<a class="permalink" href="#onreceive-gettrybucketdepleteresourcestorageendpoint-candideserver-messagemodels-buildings-getbucketdepleteresourcestorageendpointrequest--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_GetTryBucketDepleteResourceStorageEndpoint(CandideServer.MessageModels.Buildings.GetBucketDepleteResourceStorageEndpointRequest msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::OnReceive_GetTryBucketDepleteResourceStorageEndpoint(CandideServer.MessageModels.Buildings.GetBucketDepleteResourceStorageEndpointRequest, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_GetTryBucketDepleteResourceStorageEndpoint(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_GetBucketDepleteResourceStorageEndpointRequest.html">CandideServer.MessageModels.Buildings.GetBucketDepleteResourceStorageEndpointRequest</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>736597E21734E6168993BA05B7705A2C003D44A0B508D5898892930E361334CC</code></li>
+<li><span>Body hash</span><code>14E1C26D08C88A78B42CF78A0B143DF827051645CE97E8550E7FB236DC451D05</code></li>
+<li><span>IL size</span><span>353</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendgetresponseerror-candideserver-eventbus-eventbusargs--system-byte---system-void">CandideServer.Server.BaseServer::SendGetResponseError(CandideServer.EventBus.EventBusArgs, System.Byte)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetserverentity-system-guid--candideserver-entities-serverentitymodel---system-string---system-boolean">CandideServer.ServerGameState::TryGetServerEntity(System.Guid, CandideServer.Entities.ServerEntityModel&amp;, System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#getplayerinfofrompeerid-system-int32---system-nullable-1-system-valuetuple-2-candideserver-models-player-serverplayercharacter-candideserver-serverservices-serverjoinedplayermodel--">CandideServer.ServerServices.PlayerServerService::GetPlayerInfoFromPeerId(System.Int32)</a></code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::GetValueOrDefault()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Helpers_BucketEntityHelper.html#isbucketempty-system-collections-generic-dictionary-2-system-string-system-string----system-boolean">CandideServer.Helpers.BucketEntityHelper::IsBucketEmpty(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#depleteoutputresourcestorage-candideserver-servermanagers-depleteoutputresourcestorageargs---system-nullable-1-system-int32-">CandideServer.ServerManagers.BuildingsServerManager::DepleteOutputResourceStorage(CandideServer.ServerManagers.DepleteOutputResourceStorageArgs)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#setbucketcontent-candideserver-entities-serverentitymodel--bucketentityhelpershared-bucketcontenttype--system-string--system-int32---system-boolean">CandideServer.ServerManagers.EntityServerManager::SetBucketContent(CandideServer.Entities.ServerEntityModel, BucketEntityHelperShared.BucketContentType, System.String, System.Int32)</a></code></li>
+<li><code>CandideServer.MessageModels.Buildings.GetBucketDepleteResourceStorageEndpointResponse::.ctor()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendgetresponsemessage-candideserver-eventbus-eventbusargs--system-object--system-boolean---system-void">CandideServer.Server.BaseServer::SendGetResponseMessage(CandideServer.EventBus.EventBusArgs, System.Object, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Amount is less or equal 0</code></li>
+<li><code>OnReceive_GetTryBucketDepleteResourceStorageEndpoint</code></li>
+<li><code>Bucket with entity ID </code></li>
+<li><code> is not empty.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_GetTryBucketDepositResourceStorageEndpoint public System.Void OnReceive_GetTryBucketDepositResourceStorageEndpoint(CandideServer.MessageModels.Buildings.GetBucketDepositResourceStorageEndpointRequest msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Buildings.GetBucketDepositResourceStorageEndpointRequest args CandideServer.EventBus.EventBusArgs" id="onreceive-gettrybucketdepositresourcestorageendpoint-candideserver-messagemodels-buildings-getbucketdepositresourcestorageendpointrequest--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_GetTryBucketDepositResourceStorageEndpoint</code></h3>
+<a class="permalink" href="#onreceive-gettrybucketdepositresourcestorageendpoint-candideserver-messagemodels-buildings-getbucketdepositresourcestorageendpointrequest--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_GetTryBucketDepositResourceStorageEndpoint(CandideServer.MessageModels.Buildings.GetBucketDepositResourceStorageEndpointRequest msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::OnReceive_GetTryBucketDepositResourceStorageEndpoint(CandideServer.MessageModels.Buildings.GetBucketDepositResourceStorageEndpointRequest, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_GetTryBucketDepositResourceStorageEndpoint(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_GetBucketDepositResourceStorageEndpointRequest.html">CandideServer.MessageModels.Buildings.GetBucketDepositResourceStorageEndpointRequest</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>745A56968E53A004B87B5CB9B70D50C214F41F83A64F0D1C2A2AF93D5D480B3E</code></li>
+<li><span>Body hash</span><code>D164D93B1575FC08BAB612B5F04B531788FB7BCDFDD36ECDEEFDD26752B01F6D</code></li>
+<li><span>IL size</span><span>245</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendgetresponseerror-candideserver-eventbus-eventbusargs--system-byte---system-void">CandideServer.Server.BaseServer::SendGetResponseError(CandideServer.EventBus.EventBusArgs, System.Byte)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetserverentity-system-guid--candideserver-entities-serverentitymodel---system-string---system-boolean">CandideServer.ServerGameState::TryGetServerEntity(System.Guid, CandideServer.Entities.ServerEntityModel&amp;, System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#getplayerinfofrompeerid-system-int32---system-nullable-1-system-valuetuple-2-candideserver-models-player-serverplayercharacter-candideserver-serverservices-serverjoinedplayermodel--">CandideServer.ServerServices.PlayerServerService::GetPlayerInfoFromPeerId(System.Int32)</a></code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::GetValueOrDefault()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Helpers_BucketEntityHelper.html#trygetbucketcontentfromentity-candideserver-entities-serverentitymodel--shared-models-construction-constructionmaterialsaggregate----system-boolean">CandideServer.Helpers.BucketEntityHelper::TryGetBucketContentFromEntity(CandideServer.Entities.ServerEntityModel, Shared.Models.Construction.ConstructionMaterialsAggregate&amp;)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#tryadjustinternalresourcestorage-candideserver-simulationmodels-buildingsimulationmodel--shared-models-construction-constructionmaterialsaggregate---system-boolean">CandideServer.ServerManagers.BuildingsServerManager::TryAdjustInternalResourceStorage(CandideServer.SimulationModels.BuildingSimulationModel, Shared.Models.Construction.ConstructionMaterialsAggregate)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#setbucketcontent-candideserver-entities-serverentitymodel--bucketentityhelpershared-bucketcontenttype--system-string--system-int32---system-boolean">CandideServer.ServerManagers.EntityServerManager::SetBucketContent(CandideServer.Entities.ServerEntityModel, BucketEntityHelperShared.BucketContentType, System.String, System.Int32)</a></code></li>
+<li><code>CandideServer.MessageModels.Buildings.GetBucketDepositResourceStorageEndpointResponse::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendgetresponsemessage-candideserver-eventbus-eventbusargs--system-object--system-boolean---system-void">CandideServer.Server.BaseServer::SendGetResponseMessage(CandideServer.EventBus.EventBusArgs, System.Object, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>OnReceive_GetTryBucketDepositResourceStorageEndpoint</code></li>
+<li><code>Failed to get content from bucket with entity ID </code></li>
+<li><code>.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_RemoveBuilding public System.Void OnReceive_RemoveBuilding(CandideServer.MessageModels.Buildings.RemoveBuildingMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Buildings.RemoveBuildingMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-removebuilding-candideserver-messagemodels-buildings-removebuildingmessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_RemoveBuilding</code></h3>
+<a class="permalink" href="#onreceive-removebuilding-candideserver-messagemodels-buildings-removebuildingmessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_RemoveBuilding(CandideServer.MessageModels.Buildings.RemoveBuildingMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::OnReceive_RemoveBuilding(CandideServer.MessageModels.Buildings.RemoveBuildingMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_RemoveBuilding(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_RemoveBuildingMessage.html">CandideServer.MessageModels.Buildings.RemoveBuildingMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DB743C84982682DAB27BB0D37EBC293F2C2E68E563B1EEE4E599A0BEB6FBCD78</code></li>
+<li><span>Body hash</span><code>16CDDF12D6CBFE1ACFE50D0809C7E3624883F83215F135D414AFF223199BF072</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#tryremovebuilding-system-guid--candideserver-syncstrategies-syncstrategy---system-boolean">CandideServer.ServerManagers.BuildingsServerManager::TryRemoveBuilding(System.Guid, CandideServer.SyncStrategies.SyncStrategy)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_TryTurnItemIntoFuelForSource public System.Void OnReceive_TryTurnItemIntoFuelForSource(CandideServer.MessageModels.Buildings.TryTurnItemIntoFuelForSourceMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Buildings.TryTurnItemIntoFuelForSourceMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-tryturnitemintofuelforsource-candideserver-messagemodels-buildings-tryturnitemintofuelforsourcemessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_TryTurnItemIntoFuelForSource</code></h3>
+<a class="permalink" href="#onreceive-tryturnitemintofuelforsource-candideserver-messagemodels-buildings-tryturnitemintofuelforsourcemessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_TryTurnItemIntoFuelForSource(CandideServer.MessageModels.Buildings.TryTurnItemIntoFuelForSourceMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::OnReceive_TryTurnItemIntoFuelForSource(CandideServer.MessageModels.Buildings.TryTurnItemIntoFuelForSourceMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_TryTurnItemIntoFuelForSource(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_TryTurnItemIntoFuelForSourceMessage.html">CandideServer.MessageModels.Buildings.TryTurnItemIntoFuelForSourceMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>217558999250C5B797E72753F34C0889935BD0E7B9CEBFB54D77CD370D9E9AE1</code></li>
+<li><span>Body hash</span><code>2E4F31A9F8B321EBB8E9ECB726D4AE815BC5D264381A6155359A9CD8345EA7E6</code></li>
+<li><span>IL size</span><span>279</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetinventory-system-guid--shared-models-items-sharedinventorymodel----system-boolean">CandideServer.ServerGameState::TryGetInventory(System.Guid, Shared.Models.Items.SharedInventoryModel&amp;)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code>Shared.Models.Items.ItemInstanceModel::get_Data()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetinfrastructuresource-system-guid--candideserver-models-sourcemodel----system-boolean">CandideServer.ServerGameState::TryGetInfrastructureSource(System.Guid, CandideServer.Models.SourceModel&amp;)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::GetValueOrDefault(!0)</code></li>
+<li><code>System.Math::Min(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#tryexpenditem-system-guid--system-int32--system-int32--system-boolean---system-boolean">CandideServer.ServerManagers.SimpleInventoryServerManager::TryExpendItem(System.Guid, System.Int32, System.Int32, System.Boolean)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_TryUpgradeBuilding public System.Void OnReceive_TryUpgradeBuilding(CandideServer.MessageModels.Buildings.TryUpgradeBuildingRequest msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Buildings.TryUpgradeBuildingRequest args CandideServer.EventBus.EventBusArgs" id="onreceive-tryupgradebuilding-candideserver-messagemodels-buildings-tryupgradebuildingrequest--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_TryUpgradeBuilding</code></h3>
+<a class="permalink" href="#onreceive-tryupgradebuilding-candideserver-messagemodels-buildings-tryupgradebuildingrequest--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_TryUpgradeBuilding(CandideServer.MessageModels.Buildings.TryUpgradeBuildingRequest msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::OnReceive_TryUpgradeBuilding(CandideServer.MessageModels.Buildings.TryUpgradeBuildingRequest, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_TryUpgradeBuilding(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_TryUpgradeBuildingRequest.html">CandideServer.MessageModels.Buildings.TryUpgradeBuildingRequest</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>158B4AADC9712DD4705966078A69F8DA7B21F15C9CBC351AA996BAAE97D84497</code></li>
+<li><span>Body hash</span><code>EA8C4FFBBBED1A1923C0970D25C20FE0B8F72A27FC4D7021D8F7477EC33335AD</code></li>
+<li><span>IL size</span><span>51</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#tryupgradebuilding-system-guid--system-string--system-boolean---system-boolean">CandideServer.ServerManagers.BuildingsServerManager::TryUpgradeBuilding(System.Guid, System.String, System.Boolean)</a></code></li>
+<li><code>CandideServer.MessageModels.Buildings.TryUpgradeBuildingResponse::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendgetresponsemessage-candideserver-eventbus-eventbusargs--system-object--system-boolean---system-void">CandideServer.Server.BaseServer::SendGetResponseMessage(CandideServer.EventBus.EventBusArgs, System.Object, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendgetresponseerror-candideserver-eventbus-eventbusargs--system-byte---system-void">CandideServer.Server.BaseServer::SendGetResponseError(CandideServer.EventBus.EventBusArgs, System.Byte)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_UpgradeBuildingCheat public System.Void OnReceive_UpgradeBuildingCheat(CandideServer.MessageModels.Buildings.UpgradeBuildingCheatMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Buildings.UpgradeBuildingCheatMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-upgradebuildingcheat-candideserver-messagemodels-buildings-upgradebuildingcheatmessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_UpgradeBuildingCheat</code></h3>
+<a class="permalink" href="#onreceive-upgradebuildingcheat-candideserver-messagemodels-buildings-upgradebuildingcheatmessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_UpgradeBuildingCheat(CandideServer.MessageModels.Buildings.UpgradeBuildingCheatMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::OnReceive_UpgradeBuildingCheat(CandideServer.MessageModels.Buildings.UpgradeBuildingCheatMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_UpgradeBuildingCheat(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_UpgradeBuildingCheatMessage.html">CandideServer.MessageModels.Buildings.UpgradeBuildingCheatMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>16C07979C23E92AF122C2A59E42289B6F2BA588FFBEB44BBE6CFE13D9AAD5833</code></li>
+<li><span>Body hash</span><code>4D39917FBAAA19303B27B78F4FD82C0EF94AEECC46A3AC52C6E2294478BC3FDF</code></li>
+<li><span>IL size</span><span>33</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#tryupgradebuilding-system-guid--system-string--system-boolean---system-boolean">CandideServer.ServerManagers.BuildingsServerManager::TryUpgradeBuilding(System.Guid, System.String, System.Boolean)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Send_BuildingRemoved public System.Void Send_BuildingRemoved(CandideServer.MessageModels.Buildings.BuildingRemovedMessage msg) System.Void msg CandideServer.MessageModels.Buildings.BuildingRemovedMessage" id="send-buildingremoved-candideserver-messagemodels-buildings-buildingremovedmessage---system-void">
+<div class="method-heading">
+<h3><code>Send_BuildingRemoved</code></h3>
+<a class="permalink" href="#send-buildingremoved-candideserver-messagemodels-buildings-buildingremovedmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Send_BuildingRemoved(CandideServer.MessageModels.Buildings.BuildingRemovedMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::Send_BuildingRemoved(CandideServer.MessageModels.Buildings.BuildingRemovedMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Send_BuildingRemoved(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_BuildingRemovedMessage.html">CandideServer.MessageModels.Buildings.BuildingRemovedMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>38A5A12178544B015DC9ADF589A542B6C83108F4D6339F940AD516337BC9292A</code></li>
+<li><span>Body hash</span><code>323AE878642D2048B7C345E6CC29B19196E912611A152238DB120FD22F34625E</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoall-system-string--system-object---system-void">CandideServer.Server.BaseServer::SendHostMessageToAll(System.String, System.Object)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#tryremovebuilding-system-guid--candideserver-syncstrategies-syncstrategy---system-boolean"><code>CandideServer.ServerManagers.BuildingsServerManager::TryRemoveBuilding</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>buildings-remove-building</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Send_BuildingSpawned public System.Void Send_BuildingSpawned(CandideServer.MessageModels.Buildings.BuildingSpawnedMessage msg) System.Void msg CandideServer.MessageModels.Buildings.BuildingSpawnedMessage" id="send-buildingspawned-candideserver-messagemodels-buildings-buildingspawnedmessage---system-void">
+<div class="method-heading">
+<h3><code>Send_BuildingSpawned</code></h3>
+<a class="permalink" href="#send-buildingspawned-candideserver-messagemodels-buildings-buildingspawnedmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Send_BuildingSpawned(CandideServer.MessageModels.Buildings.BuildingSpawnedMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::Send_BuildingSpawned(CandideServer.MessageModels.Buildings.BuildingSpawnedMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Send_BuildingSpawned(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_BuildingSpawnedMessage.html">CandideServer.MessageModels.Buildings.BuildingSpawnedMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>03D1BE7AC976874BF8613A3CD404AE5F4F158DECF283440BF2A367A621C299B1</code></li>
+<li><span>Body hash</span><code>C8F20093E36371422F90C72BDE73DB54F9FC0418B5354968ABFB75712D9D696D</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoall-system-string--system-object---system-void">CandideServer.Server.BaseServer::SendHostMessageToAll(System.String, System.Object)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ConstructionsServerManager.html#spawnconstruction-shared-models-construction-constructionmodel--microsoft-xna-framework-rectangle--system-guid--system-guid--system-collections-generic-dictionary-2-system-string-system-string---system-nullable-1-system-guid---system-nullable-1-system-guid---system-nullable-1-system-guid----system-void"><code>CandideServer.ServerManagers.ConstructionsServerManager::SpawnConstruction</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>buildings-new-building-spawned</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Send_BuildingUpgraded public System.Void Send_BuildingUpgraded(CandideServer.MessageModels.Buildings.BuildingUpgradedMessage msg) System.Void msg CandideServer.MessageModels.Buildings.BuildingUpgradedMessage" id="send-buildingupgraded-candideserver-messagemodels-buildings-buildingupgradedmessage---system-void">
+<div class="method-heading">
+<h3><code>Send_BuildingUpgraded</code></h3>
+<a class="permalink" href="#send-buildingupgraded-candideserver-messagemodels-buildings-buildingupgradedmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Send_BuildingUpgraded(CandideServer.MessageModels.Buildings.BuildingUpgradedMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::Send_BuildingUpgraded(CandideServer.MessageModels.Buildings.BuildingUpgradedMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Send_BuildingUpgraded(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_BuildingUpgradedMessage.html">CandideServer.MessageModels.Buildings.BuildingUpgradedMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>02A2D37A4A266A02C26B16096C07644CD34A70261964C4C39C4449BA04F39E44</code></li>
+<li><span>Body hash</span><code>546B4AD7CA3D7EC2D184A3C0FAC1226E99C06A3B53C7CC0CCF709D111A80B57B</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoall-system-string--system-object---system-void">CandideServer.Server.BaseServer::SendHostMessageToAll(System.String, System.Object)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#tryupgradebuilding-system-guid--system-string--system-boolean---system-boolean"><code>CandideServer.ServerManagers.BuildingsServerManager::TryUpgradeBuilding</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>building-upgraded</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Send_UpdateBuildingAppeal public System.Void Send_UpdateBuildingAppeal(CandideServer.MessageModels.Buildings.UpdateBuildingAppealMessage msg) System.Void msg CandideServer.MessageModels.Buildings.UpdateBuildingAppealMessage" id="send-updatebuildingappeal-candideserver-messagemodels-buildings-updatebuildingappealmessage---system-void">
+<div class="method-heading">
+<h3><code>Send_UpdateBuildingAppeal</code></h3>
+<a class="permalink" href="#send-updatebuildingappeal-candideserver-messagemodels-buildings-updatebuildingappealmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Send_UpdateBuildingAppeal(CandideServer.MessageModels.Buildings.UpdateBuildingAppealMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::Send_UpdateBuildingAppeal(CandideServer.MessageModels.Buildings.UpdateBuildingAppealMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Send_UpdateBuildingAppeal(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_UpdateBuildingAppealMessage.html">CandideServer.MessageModels.Buildings.UpdateBuildingAppealMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9E7005FED48710AB8A33625C2DC5FD0895A3A06ECFB93251294B9C761D0EEEC9</code></li>
+<li><span>Body hash</span><code>44E61DC44C2697CE66C00B7DB60763776BD29760CCA444EE86AD29BDC49FB72C</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoall-system-string--system-object---system-void">CandideServer.Server.BaseServer::SendHostMessageToAll(System.String, System.Object)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#updatesendbuildingappeal-candideserver-models-buildings-buildinginstancemodel---system-void"><code>CandideServer.ServerControllers.BuildingsSController::UpdateSendBuildingAppeal</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>buildings-update-buildings-appeal</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Send_UpdateBuildingParameters public System.Void Send_UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage msg) System.Void msg CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage" id="send-updatebuildingparameters-candideserver-messagemodels-buildings-updatebuildingparametersmessage---system-void">
+<div class="method-heading">
+<h3><code>Send_UpdateBuildingParameters</code></h3>
+<a class="permalink" href="#send-updatebuildingparameters-candideserver-messagemodels-buildings-updatebuildingparametersmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Send_UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.BuildingsServerService::Send_UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Send_UpdateBuildingParameters(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_UpdateBuildingParametersMessage.html">CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>514AF38ED816D038571278A7E5B4D500A085C691C147696E1F77B429825910B0</code></li>
+<li><span>Body hash</span><code>154FF9C1F46FD985B88421C1C1AD86B305880C7FDFBB58DB70A794AECFC3A11A</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoall-system-string--system-object---system-void">CandideServer.Server.BaseServer::SendHostMessageToAll(System.String, System.Object)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#updatebuildingparameters-candideserver-messagemodels-buildings-updatebuildingparametersmessage---system-void"><code>CandideServer.ServerManagers.BuildingsServerManager::UpdateBuildingParameters</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>buildings-update-building-parameters</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

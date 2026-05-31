@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.LegacyUI.OverheadHealthbar - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.LegacyUI.OverheadHealthbar</h1>
+<button class="copy-button" type="button" data-copy="Candide.LegacyUI.OverheadHealthbar">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.LegacyUI.OverheadHealthbar
+
+- Assembly: `Romestead`
+- Namespace: `Candide.LegacyUI`
+- Kind: `public struct`
+- Base type: `System.ValueType`
+- Members: 12 methods, 0 properties, 21 fields, 0 events
+
+## Public Methods
+- `public System.Void ClearHistory()`
+- `public System.Void Damaged(System.Single damage)`
+- `public System.Void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Shared.Entity.EntityWrapper entity)`
+- `public System.Void EnergyGained(System.Single energyGained)`
+- `public System.Int32 GetEnergybarWidth(System.Single maxEnergy)`
+- `public System.Int32 GetHealthbarWidth(System.Single maxHealth)`
+- `public System.Void Healed(System.Single healing)`
+- `public System.Void Hide()`
+- `public System.Void Reset()`
+- `public System.Void Show()`
+- `public System.Void SpentEnergy(System.Single energyLost)`
+- `public System.Void Update(Shared.Entity.EntityWrapper entity, System.Single dt)`
+">Copy markdown</button>
+<a class="button" href="Candide_LegacyUI_OverheadHealthbar.json">Type JSON</a>
+</div>
+<p class="lede">public struct in <code>Candide.LegacyUI</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>12</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>21</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.LegacyUI</code></li>
+<li><span>Base type</span><code>System.ValueType</code></li>
+<li><span>Hash</span><code>8E28A8F28425958BE7FD307199C2217492327E3A60DE10A92FFD458078CE1AB0</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.ValueType</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html"><code>Candide.CandideEngine</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_NetworkPlayerController.html"><code>Candide.Entities.PlayerState.NetworkPlayerController</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="CurrentEnergy public System.Single CurrentEnergy System.Single" id="currentenergy-system-single"><td><span class="member-name-cell"><code>CurrentEnergy</code><a class="permalink" href="#currentenergy-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single CurrentEnergy">Copy</button></span></td><td>public</td><td><code>public System.Single CurrentEnergy</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="CurrentHealth public System.Single CurrentHealth System.Single" id="currenthealth-system-single"><td><span class="member-name-cell"><code>CurrentHealth</code><a class="permalink" href="#currenthealth-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single CurrentHealth">Copy</button></span></td><td>public</td><td><code>public System.Single CurrentHealth</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="CurrentMaxEnergy public System.Single CurrentMaxEnergy System.Single" id="currentmaxenergy-system-single"><td><span class="member-name-cell"><code>CurrentMaxEnergy</code><a class="permalink" href="#currentmaxenergy-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single CurrentMaxEnergy">Copy</button></span></td><td>public</td><td><code>public System.Single CurrentMaxEnergy</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="CurrentMaxHealth public System.Single CurrentMaxHealth System.Single" id="currentmaxhealth-system-single"><td><span class="member-name-cell"><code>CurrentMaxHealth</code><a class="permalink" href="#currentmaxhealth-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single CurrentMaxHealth">Copy</button></span></td><td>public</td><td><code>public System.Single CurrentMaxHealth</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="IncomingDamage public System.Single IncomingDamage System.Single" id="incomingdamage-system-single"><td><span class="member-name-cell"><code>IncomingDamage</code><a class="permalink" href="#incomingdamage-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single IncomingDamage">Copy</button></span></td><td>public</td><td><code>public System.Single IncomingDamage</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="IncomingHeals public System.Single IncomingHeals System.Single" id="incomingheals-system-single"><td><span class="member-name-cell"><code>IncomingHeals</code><a class="permalink" href="#incomingheals-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single IncomingHeals">Copy</button></span></td><td>public</td><td><code>public System.Single IncomingHeals</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Mode public System.Int32 Mode System.Int32" id="mode-system-int32"><td><span class="member-name-cell"><code>Mode</code><a class="permalink" href="#mode-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 Mode">Copy</button></span></td><td>public</td><td><code>public System.Int32 Mode</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="RecentDamage public System.Single RecentDamage System.Single" id="recentdamage-system-single"><td><span class="member-name-cell"><code>RecentDamage</code><a class="permalink" href="#recentdamage-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single RecentDamage">Copy</button></span></td><td>public</td><td><code>public System.Single RecentDamage</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="RecentEnergyLoss public System.Single RecentEnergyLoss System.Single" id="recentenergyloss-system-single"><td><span class="member-name-cell"><code>RecentEnergyLoss</code><a class="permalink" href="#recentenergyloss-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single RecentEnergyLoss">Copy</button></span></td><td>public</td><td><code>public System.Single RecentEnergyLoss</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="RecentHealing public System.Single RecentHealing System.Single" id="recenthealing-system-single"><td><span class="member-name-cell"><code>RecentHealing</code><a class="permalink" href="#recenthealing-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single RecentHealing">Copy</button></span></td><td>public</td><td><code>public System.Single RecentHealing</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="UseDamageHistory public System.Boolean UseDamageHistory System.Boolean" id="usedamagehistory-system-boolean"><td><span class="member-name-cell"><code>UseDamageHistory</code><a class="permalink" href="#usedamagehistory-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean UseDamageHistory">Copy</button></span></td><td>public</td><td><code>public System.Boolean UseDamageHistory</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Visible public System.Boolean Visible System.Boolean" id="visible-system-boolean"><td><span class="member-name-cell"><code>Visible</code><a class="permalink" href="#visible-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean Visible">Copy</button></span></td><td>public</td><td><code>public System.Boolean Visible</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_actualRecentDamage private System.Single _actualRecentDamage System.Single" id="-actualrecentdamage-system-single"><td><span class="member-name-cell"><code>_actualRecentDamage</code><a class="permalink" href="#-actualrecentdamage-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single _actualRecentDamage">Copy</button></span></td><td>private</td><td><code>private System.Single _actualRecentDamage</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_actualRecentEnergyLoss private System.Single _actualRecentEnergyLoss System.Single" id="-actualrecentenergyloss-system-single"><td><span class="member-name-cell"><code>_actualRecentEnergyLoss</code><a class="permalink" href="#-actualrecentenergyloss-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single _actualRecentEnergyLoss">Copy</button></span></td><td>private</td><td><code>private System.Single _actualRecentEnergyLoss</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_damageHistory private System.ValueTuple&lt;System.Single, System.Single&gt;[] _damageHistory System.ValueTuple&lt;System.Single, System.Single&gt;[]" id="-damagehistory-system-valuetuple-2-system-single-system-single---"><td><span class="member-name-cell"><code>_damageHistory</code><a class="permalink" href="#-damagehistory-system-valuetuple-2-system-single-system-single---" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.ValueTuple&lt;System.Single, System.Single&gt;[] _damageHistory">Copy</button></span></td><td>private</td><td><code>private System.ValueTuple&lt;System.Single, System.Single&gt;[] _damageHistory</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_damageHistoryIndex private System.Int32 _damageHistoryIndex System.Int32" id="-damagehistoryindex-system-int32"><td><span class="member-name-cell"><code>_damageHistoryIndex</code><a class="permalink" href="#-damagehistoryindex-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _damageHistoryIndex">Copy</button></span></td><td>private</td><td><code>private System.Int32 _damageHistoryIndex</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_energyHideTimer private System.Single _energyHideTimer System.Single" id="-energyhidetimer-system-single"><td><span class="member-name-cell"><code>_energyHideTimer</code><a class="permalink" href="#-energyhidetimer-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single _energyHideTimer">Copy</button></span></td><td>private</td><td><code>private System.Single _energyHideTimer</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_hideTimer private System.Single _hideTimer System.Single" id="-hidetimer-system-single"><td><span class="member-name-cell"><code>_hideTimer</code><a class="permalink" href="#-hidetimer-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single _hideTimer">Copy</button></span></td><td>private</td><td><code>private System.Single _hideTimer</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_recentDamageTimer private System.Single _recentDamageTimer System.Single" id="-recentdamagetimer-system-single"><td><span class="member-name-cell"><code>_recentDamageTimer</code><a class="permalink" href="#-recentdamagetimer-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single _recentDamageTimer">Copy</button></span></td><td>private</td><td><code>private System.Single _recentDamageTimer</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_recentEnergyLossTimer private System.Single _recentEnergyLossTimer System.Single" id="-recentenergylosstimer-system-single"><td><span class="member-name-cell"><code>_recentEnergyLossTimer</code><a class="permalink" href="#-recentenergylosstimer-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single _recentEnergyLossTimer">Copy</button></span></td><td>private</td><td><code>private System.Single _recentEnergyLossTimer</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_recentHealingTimer private System.Single _recentHealingTimer System.Single" id="-recenthealingtimer-system-single"><td><span class="member-name-cell"><code>_recentHealingTimer</code><a class="permalink" href="#-recenthealingtimer-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single _recentHealingTimer">Copy</button></span></td><td>private</td><td><code>private System.Single _recentHealingTimer</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ClearHistory public System.Void ClearHistory() System.Void " id="clearhistory----system-void">
+<div class="method-heading">
+<h3><code>ClearHistory</code></h3>
+<a class="permalink" href="#clearhistory----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ClearHistory()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.LegacyUI.OverheadHealthbar::ClearHistory()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ClearHistory()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>37776B15A1623F3449C17AC514B2C95C50F98705F00D102E331082A59412685A</code></li>
+<li><span>Body hash</span><code>3E7F5123FDA970647C1B14BAD69598BF62E07BBFA1C2C12D6FD4DB4596352878</code></li>
+<li><span>IL size</span><span>51</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_LegacyUI_OverheadHealthbar.html#reset----system-void"><code>Candide.LegacyUI.OverheadHealthbar::Reset</code></a></li>
+<li><a href="../../types/Romestead/Candide_LegacyUI_OverheadHealthbar.html#update-shared-entity-entitywrapper--system-single---system-void"><code>Candide.LegacyUI.OverheadHealthbar::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Damaged public System.Void Damaged(System.Single damage) System.Void damage System.Single" id="damaged-system-single---system-void">
+<div class="method-heading">
+<h3><code>Damaged</code></h3>
+<a class="permalink" href="#damaged-system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Damaged(System.Single damage)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.LegacyUI.OverheadHealthbar::Damaged(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Damaged(System.Single damage)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2B241A0B9DA443BD1BE65F5A42AF33DF5E9C2BE2BEB84E8459302DD004538897</code></li>
+<li><span>Body hash</span><code>66B2565DB5259FDB1928616EA9FD9AF8FE067703E706D3095772F08B74DA3693</code></li>
+<li><span>IL size</span><span>118</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.ValueTuple&lt;System.Single, System.Single&gt;::.ctor(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_NetworkPlayerController.html#ondamaged-shared-combat-damageresult---system-void"><code>Candide.Entities.PlayerState.NetworkPlayerController::OnDamaged</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_NetworkPlayerController.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Entities.PlayerState.NetworkPlayerController::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerController.html#ondamaged-shared-combat-damageresult---system-void"><code>Candide.Entities.PlayerState.PlayerController::OnDamaged</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Draw public System.Void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Shared.Entity.EntityWrapper entity) System.Void batch Microsoft.Xna.Framework.Graphics.SpriteBatch entity Shared.Entity.EntityWrapper" id="draw-microsoft-xna-framework-graphics-spritebatch--shared-entity-entitywrapper---system-void">
+<div class="method-heading">
+<h3><code>Draw</code></h3>
+<a class="permalink" href="#draw-microsoft-xna-framework-graphics-spritebatch--shared-entity-entitywrapper---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Shared.Entity.EntityWrapper entity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.LegacyUI.OverheadHealthbar::Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch, Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>63DFFD651F7CC90122679014C2CC1FA2427E5E4399CB8C5806B8ECA967CF19C0</code></li>
+<li><span>Body hash</span><code>C4EA305EF0A94B08F5FF7161E85562795A75EF0F0ADED8378EF7BAFC94449E30</code></li>
+<li><span>IL size</span><span>627</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsResource::get_GraphicsDevice()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsDevice::get_Viewport()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.Viewport::get_Width()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.Viewport::get_Height()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::.ctor(System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Division(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#toscreenspace-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToScreenSpace(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Graphics_Camera.html#getmatrix----microsoft-xna-framework-matrix">Candide.Graphics.Camera::GetMatrix()</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Transform(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Matrix)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Addition(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/Romestead/Candide_LegacyUI_OverheadHealthbar.html#gethealthbarwidth-system-single---system-int32">Candide.LegacyUI.OverheadHealthbar::GetHealthbarWidth(System.Single)</a></code></li>
+<li><code>System.MathF::Ceiling(System.Single)</code></li>
+<li><code><a href="../../types/Romestead/Candide_LegacyUI_FillBarRenderer.html#drawfillbar2-microsoft-xna-framework-graphics-spritebatch--microsoft-xna-framework-vector2--system-single--fillbarrenderer-horizontalalignment--system-single--fillbarrenderer-stylecolor--fillbarrenderer-endstyle--system-single--fillbarrenderer-fillcolor--system-single--fillbarrenderer-fillcolor--system-single--fillbarrenderer-fillcolor--system-single--fillbarrenderer-fillcolor--system-single--fillbarrenderer-fillcolor---system-void">Candide.LegacyUI.FillBarRenderer::DrawFillBar2(Microsoft.Xna.Framework.Graphics.SpriteBatch, Microsoft.Xna.Framework.Vector2, System.Single, FillBarRenderer.HorizontalAlignment, System.Single, FillBarRenderer.StyleColor, FillBarRenderer.EndStyle, System.Single, FillBarRenderer.FillColor, System.Single, FillBarRenderer.FillColor, System.Single, FillBarRenderer.FillColor, System.Single, FillBarRenderer.FillColor, System.Single, FillBarRenderer.FillColor)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_LegacyUI_FillBarRenderer.html#drawfillbar2-microsoft-xna-framework-graphics-spritebatch--microsoft-xna-framework-vector2--system-single--fillbarrenderer-horizontalalignment--system-single--fillbarrenderer-stylecolor--fillbarrenderer-endstyle--system-single--fillbarrenderer-fillcolor--system-single--fillbarrenderer-fillcolor--system-single--fillbarrenderer-fillcolor---system-void">Candide.LegacyUI.FillBarRenderer::DrawFillBar2(Microsoft.Xna.Framework.Graphics.SpriteBatch, Microsoft.Xna.Framework.Vector2, System.Single, FillBarRenderer.HorizontalAlignment, System.Single, FillBarRenderer.StyleColor, FillBarRenderer.EndStyle, System.Single, FillBarRenderer.FillColor, System.Single, FillBarRenderer.FillColor, System.Single, FillBarRenderer.FillColor)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_LegacyUI_OverheadHealthbar.html#getenergybarwidth-system-single---system-int32">Candide.LegacyUI.OverheadHealthbar::GetEnergybarWidth(System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Color::.ctor(System.Int32, System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_LegacyUI_FillBarRenderer.html#drawfillbar2-microsoft-xna-framework-graphics-spritebatch--microsoft-xna-framework-vector2--system-single--fillbarrenderer-horizontalalignment--system-single--fillbarrenderer-stylecolor--fillbarrenderer-endstyle--system-single--fillbarrenderer-fillcolor--microsoft-xna-framework-color--system-single--fillbarrenderer-fillcolor---system-void">Candide.LegacyUI.FillBarRenderer::DrawFillBar2(Microsoft.Xna.Framework.Graphics.SpriteBatch, Microsoft.Xna.Framework.Vector2, System.Single, FillBarRenderer.HorizontalAlignment, System.Single, FillBarRenderer.StyleColor, FillBarRenderer.EndStyle, System.Single, FillBarRenderer.FillColor, Microsoft.Xna.Framework.Color, System.Single, FillBarRenderer.FillColor)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_NetworkPlayerController.html#drawpixelui-microsoft-xna-framework-graphics-spritebatch--system-boolean---system-void"><code>Candide.Entities.PlayerState.NetworkPlayerController::DrawPixelUI</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="EnergyGained public System.Void EnergyGained(System.Single energyGained) System.Void energyGained System.Single" id="energygained-system-single---system-void">
+<div class="method-heading">
+<h3><code>EnergyGained</code></h3>
+<a class="permalink" href="#energygained-system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void EnergyGained(System.Single energyGained)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.LegacyUI.OverheadHealthbar::EnergyGained(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void EnergyGained(System.Single energyGained)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6978DFCBDC65AB21ED19E4B8E69A42E4BA7BF4A9EAE3A6949C022FDEAEF0AF31</code></li>
+<li><span>Body hash</span><code>3A40A64307E5EF99B26F81B17106F2705D94BE60D80D253E30EF0A91C4D1C18E</code></li>
+<li><span>IL size</span><span>38</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.MathF::Max(System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_LegacyUI_OverheadHealthbar.html#update-shared-entity-entitywrapper--system-single---system-void"><code>Candide.LegacyUI.OverheadHealthbar::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetEnergybarWidth public System.Int32 GetEnergybarWidth(System.Single maxEnergy) System.Int32 maxEnergy System.Single" id="getenergybarwidth-system-single---system-int32">
+<div class="method-heading">
+<h3><code>GetEnergybarWidth</code></h3>
+<a class="permalink" href="#getenergybarwidth-system-single---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 GetEnergybarWidth(System.Single maxEnergy)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.LegacyUI.OverheadHealthbar::GetEnergybarWidth(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 GetEnergybarWidth(System.Single maxEnergy)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1DC60F4A0EF48BC5D53EB44564D64DCFB1FB9DD1522B3F104C6A9258A5FAB003</code></li>
+<li><span>Body hash</span><code>4739EE18130141C8911274A845447F359C1CDD7A7F188871F0D5E3FB1E5B43D9</code></li>
+<li><span>IL size</span><span>38</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_CandideMathHelper.html#from0to1between-system-single--system-single--system-single---system-single">CandideCreator.Shared.Helpers.CandideMathHelper::From0To1Between(System.Single, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_InterpolationHelperExtemsion.html#sineout-system-single---system-single">CandideCreator.Shared.Helpers.InterpolationHelperExtemsion::SineOut(System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_CandideMathHelper.html#interpolatebetween-system-single--system-single--system-single---system-single">CandideCreator.Shared.Helpers.CandideMathHelper::InterpolateBetween(System.Single, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_LegacyUI_OverheadHealthbar.html#draw-microsoft-xna-framework-graphics-spritebatch--shared-entity-entitywrapper---system-void"><code>Candide.LegacyUI.OverheadHealthbar::Draw</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetHealthbarWidth public System.Int32 GetHealthbarWidth(System.Single maxHealth) System.Int32 maxHealth System.Single" id="gethealthbarwidth-system-single---system-int32">
+<div class="method-heading">
+<h3><code>GetHealthbarWidth</code></h3>
+<a class="permalink" href="#gethealthbarwidth-system-single---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 GetHealthbarWidth(System.Single maxHealth)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.LegacyUI.OverheadHealthbar::GetHealthbarWidth(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 GetHealthbarWidth(System.Single maxHealth)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>90F0120811CDAEEF310EA530E244E45F8163CBB406A53A9C2025627564D24EEC</code></li>
+<li><span>Body hash</span><code>0BF35E3BBCAE3A7A9140C1E967AD8F9CED8653DF2866C0A5FA335A52A52BFBA0</code></li>
+<li><span>IL size</span><span>38</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_CandideMathHelper.html#from0to1between-system-single--system-single--system-single---system-single">CandideCreator.Shared.Helpers.CandideMathHelper::From0To1Between(System.Single, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_InterpolationHelperExtemsion.html#sineout-system-single---system-single">CandideCreator.Shared.Helpers.InterpolationHelperExtemsion::SineOut(System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_CandideMathHelper.html#interpolatebetween-system-single--system-single--system-single---system-single">CandideCreator.Shared.Helpers.CandideMathHelper::InterpolateBetween(System.Single, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_LegacyUI_OverheadHealthbar.html#draw-microsoft-xna-framework-graphics-spritebatch--shared-entity-entitywrapper---system-void"><code>Candide.LegacyUI.OverheadHealthbar::Draw</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Healed public System.Void Healed(System.Single healing) System.Void healing System.Single" id="healed-system-single---system-void">
+<div class="method-heading">
+<h3><code>Healed</code></h3>
+<a class="permalink" href="#healed-system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Healed(System.Single healing)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.LegacyUI.OverheadHealthbar::Healed(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Healed(System.Single healing)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6B4382328470328DEA56936DC91055CFDEBB257037DD99200A5109A0AE056E95</code></li>
+<li><span>Body hash</span><code>D5FD770AA7D3A621E90BB3FDEAED76E20189E2A3A7A09680FC114688ABB5530C</code></li>
+<li><span>IL size</span><span>37</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_Auras_HealingOverTimeAura.html#healtarget-shared-entity-entitywrapper---system-void"><code>Candide.Entities.Auras.HealingOverTimeAura::HealTarget</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Models_Spells_HealSpell.html#cast-candide-combat-clientprojectilesystem--shared-combat-spells-casting-spellcastingcontext--shared-helpers-castspellargs---system-void"><code>Candide.GameModels.Models.Spells.HealSpell::Cast</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Hide public System.Void Hide() System.Void " id="hide----system-void">
+<div class="method-heading">
+<h3><code>Hide</code></h3>
+<a class="permalink" href="#hide----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Hide()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.LegacyUI.OverheadHealthbar::Hide()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Hide()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E7AE6D94BBC435F25F14B351716F100A2FCBBE9D8BADBCBD6AC15B4C634FCF36</code></li>
+<li><span>Body hash</span><code>40A9FFDD1EFCAFEF3BCB2116FC98C5BD051EB85AA428847A7F8C2F7B40E25C76</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_PlayerMode_BigModeManager.html#onentering----system-void"><code>Candide.PlayerMode.BigModeManager::OnEntering</code></a></li>
+<li><a href="../../types/Romestead/Candide_PlayerMode_Vehicle_VehicleModeManager.html#onentering----system-void"><code>Candide.PlayerMode.Vehicle.VehicleModeManager::OnEntering</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Reset public System.Void Reset() System.Void " id="reset----system-void">
+<div class="method-heading">
+<h3><code>Reset</code></h3>
+<a class="permalink" href="#reset----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Reset()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.LegacyUI.OverheadHealthbar::Reset()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Reset()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9E71ED62DC55459B983A8375CEF9437E1E00BD058869696FF0196129121B494F</code></li>
+<li><span>Body hash</span><code>E433FE7F7A4D6DB2A63DC08317CE803B2EE7B4120EF34B3BA55568B177CC44FB</code></li>
+<li><span>IL size</span><span>69</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_LegacyUI_OverheadHealthbar.html#clearhistory----system-void">Candide.LegacyUI.OverheadHealthbar::ClearHistory()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerController.html#reset----system-void"><code>Candide.Entities.PlayerState.PlayerController::Reset</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Show public System.Void Show() System.Void " id="show----system-void">
+<div class="method-heading">
+<h3><code>Show</code></h3>
+<a class="permalink" href="#show----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Show()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.LegacyUI.OverheadHealthbar::Show()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Show()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0B4187BBAD0D7026FE5E8559C20C240391F9D36D5EB50303B022CCB6A3D39FE6</code></li>
+<li><span>Body hash</span><code>BF18CBB334E0B1EBD88CCA468A408DA40D465665029E01DE70772A2A1A889906</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_PlayerMode_BigModeManager.html#onleaving----system-void"><code>Candide.PlayerMode.BigModeManager::OnLeaving</code></a></li>
+<li><a href="../../types/Romestead/Candide_PlayerMode_Vehicle_VehicleModeManager.html#onleaving----system-void"><code>Candide.PlayerMode.Vehicle.VehicleModeManager::OnLeaving</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpentEnergy public System.Void SpentEnergy(System.Single energyLost) System.Void energyLost System.Single" id="spentenergy-system-single---system-void">
+<div class="method-heading">
+<h3><code>SpentEnergy</code></h3>
+<a class="permalink" href="#spentenergy-system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SpentEnergy(System.Single energyLost)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.LegacyUI.OverheadHealthbar::SpentEnergy(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SpentEnergy(System.Single energyLost)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BA5532F991B9E3F4CC886BC93C4F6AFE49252E44B9C9C59E668627E37930F7A4</code></li>
+<li><span>Body hash</span><code>C17A80A4F9BEDCC4FC712035239A458C213653DB13025C5F44B52B89E869BC70</code></li>
+<li><span>IL size</span><span>37</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_LegacyUI_OverheadHealthbar.html#update-shared-entity-entitywrapper--system-single---system-void"><code>Candide.LegacyUI.OverheadHealthbar::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(Shared.Entity.EntityWrapper entity, System.Single dt) System.Void entity Shared.Entity.EntityWrapper dt System.Single" id="update-shared-entity-entitywrapper--system-single---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-shared-entity-entitywrapper--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(Shared.Entity.EntityWrapper entity, System.Single dt)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.LegacyUI.OverheadHealthbar::Update(Shared.Entity.EntityWrapper, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, System.Single dt)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>45FA3014D5C83378ABB3016E5EB4F94383065B158DDF8994D9D6FBFF7AA840CC</code></li>
+<li><span>Body hash</span><code>3418570CAFF74DFFDB9D6BC70BAFFBDF3489A687A35770DF3F7F74AC9DFFAA32</code></li>
+<li><span>IL size</span><span>1020</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Health()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Stats()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_EntityStats.html#get-system-string---system-single">Shared.Models.Stats.EntityStats::Get(System.String)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_LegacyUI_OverheadHealthbar.html#clearhistory----system-void">Candide.LegacyUI.OverheadHealthbar::ClearHistory()</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_CandideMathHelper.html#from1to0between-system-single--system-single--system-single---system-single">CandideCreator.Shared.Helpers.CandideMathHelper::From1To0Between(System.Single, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_InterpolationHelperExtemsion.html#quadout-system-single---system-single">CandideCreator.Shared.Helpers.InterpolationHelperExtemsion::QuadOut(System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_InterpolationHelperExtemsion.html#cubein-system-single---system-single">CandideCreator.Shared.Helpers.InterpolationHelperExtemsion::CubeIn(System.Single)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Auras()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;::get_Current()</code></li>
+<li><code>Candide.Entities.Auras.HealingOverTimeAura::get_Args()</code></li>
+<li><code>Candide.Entities.Auras.HealingOverTimeAura::get_State()</code></li>
+<li><code>System.MathF::Ceiling(System.Single)</code></li>
+<li><code>Candide.Entities.Auras.DamageOverTimeAura::get_Args()</code></li>
+<li><code>Candide.Entities.Auras.DamageOverTimeAura::get_State()</code></li>
+<li><code><a href="../../types/Shared/Shared_Aura_State_DamageOverTimeAuraState.html#gettickdamage-shared-entity-entitywrapper--shared-aura-args-damageovertimeauraargs---shared-combat-damagetypesarray">Shared.Aura.State.DamageOverTimeAuraState::GetTickDamage(Shared.Entity.EntityWrapper, Shared.Aura.Args.DamageOverTimeAuraArgs)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_DamageTypesArray.html#gettotaldamage----system-single">Shared.Combat.DamageTypesArray::GetTotalDamage()</a></code></li>
+<li><code>List.Enumerator&lt;Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_CandideMathHelper.html#from0to1between-system-single--system-single--system-single---system-single">CandideCreator.Shared.Helpers.CandideMathHelper::From0To1Between(System.Single, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_CandideMathHelper.html#interpolatebetween-system-single--system-single--system-single---system-single">CandideCreator.Shared.Helpers.CandideMathHelper::InterpolateBetween(System.Single, System.Single, System.Single)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Energy()</code></li>
+<li><code><a href="../../types/Romestead/Candide_LegacyUI_OverheadHealthbar.html#spentenergy-system-single---system-void">Candide.LegacyUI.OverheadHealthbar::SpentEnergy(System.Single)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_LegacyUI_OverheadHealthbar.html#energygained-system-single---system-void">Candide.LegacyUI.OverheadHealthbar::EnergyGained(System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_NetworkPlayerController.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Entities.PlayerState.NetworkPlayerController::Update</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Health</code></li>
+<li><code>Energy</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow</h1>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow
+
+- Assembly: `Romestead`
+- Namespace: `Candide.CandideUI.ConstructionsUi`
+- Kind: `public class`
+- Base type: `Candide.CandideUI.Containers.CandideExtendedCustomGraphicsWindow`
+- Members: 8 methods, 0 properties, 6 fields, 0 events
+
+## Public Methods
+- `public System.Void HideTooltip()`
+- `public System.Void SetState(System.Boolean hasTown, System.Boolean availableConstructionsHasChanged)`
+- `public System.Void ShowTooltip(System.String constructionId, System.Boolean hasTown)`
+- `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)`
+">Copy markdown</button>
+<a class="button" href="Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.CandideUI.ConstructionsUi</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>8</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>6</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.CandideUI.ConstructionsUi</code></li>
+<li><span>Base type</span><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideExtendedCustomGraphicsWindow.html">Candide.CandideUI.Containers.CandideExtendedCustomGraphicsWindow</a></code></li>
+<li><span>Hash</span><code>867571FA1C3FCC4D27C46F30ABA6189A07BA83E03BBF317C46C1E9C36A31923D</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideExtendedCustomGraphicsWindow.html">Candide.CandideUI.Containers.CandideExtendedCustomGraphicsWindow</a></code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_PlayerMode_Construction_ConstructionDesktop.html"><code>Candide.PlayerMode.Construction.ConstructionDesktop</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="BgSheet private CandideCreator.Shared.Graphics.SpriteSheet BgSheet CandideCreator.Shared.Graphics.SpriteSheet" id="bgsheet-candidecreator-shared-graphics-spritesheet"><td><span class="member-name-cell"><code>BgSheet</code><a class="permalink" href="#bgsheet-candidecreator-shared-graphics-spritesheet" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private CandideCreator.Shared.Graphics.SpriteSheet BgSheet">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Graphics_SpriteSheet.html">CandideCreator.Shared.Graphics.SpriteSheet</a> BgSheet</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_control private Candide.CandideUI.ConstructionsUi.ConstructionsOptionsControl _control Candide.CandideUI.ConstructionsUi.ConstructionsOptionsControl" id="-control-candide-candideui-constructionsui-constructionsoptionscontrol"><td><span class="member-name-cell"><code>_control</code><a class="permalink" href="#-control-candide-candideui-constructionsui-constructionsoptionscontrol" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.ConstructionsUi.ConstructionsOptionsControl _control">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsOptionsControl.html">Candide.CandideUI.ConstructionsUi.ConstructionsOptionsControl</a> _control</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_descriptionWindow private Candide.CandideUI.ConstructionsUi.ConstructionDescriptionWindow _descriptionWindow Candide.CandideUI.ConstructionsUi.ConstructionDescriptionWindow" id="-descriptionwindow-candide-candideui-constructionsui-constructiondescriptionwindow"><td><span class="member-name-cell"><code>_descriptionWindow</code><a class="permalink" href="#-descriptionwindow-candide-candideui-constructionsui-constructiondescriptionwindow" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.ConstructionsUi.ConstructionDescriptionWindow _descriptionWindow">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionDescriptionWindow.html">Candide.CandideUI.ConstructionsUi.ConstructionDescriptionWindow</a> _descriptionWindow</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_extraWindow private Candide.CandideUI.ConstructionsUi.ConstructionPlacementInfoTooltipWindow _extraWindow Candide.CandideUI.ConstructionsUi.ConstructionPlacementInfoTooltipWindow" id="-extrawindow-candide-candideui-constructionsui-constructionplacementinfotooltipwindow"><td><span class="member-name-cell"><code>_extraWindow</code><a class="permalink" href="#-extrawindow-candide-candideui-constructionsui-constructionplacementinfotooltipwindow" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.ConstructionsUi.ConstructionPlacementInfoTooltipWindow _extraWindow">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionPlacementInfoTooltipWindow.html">Candide.CandideUI.ConstructionsUi.ConstructionPlacementInfoTooltipWindow</a> _extraWindow</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_prevHoveredId private System.String _prevHoveredId System.String" id="-prevhoveredid-system-string"><td><span class="member-name-cell"><code>_prevHoveredId</code><a class="permalink" href="#-prevhoveredid-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.String _prevHoveredId">Copy</button></span></td><td>private</td><td><code>private System.String _prevHoveredId</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_subConstructionsWindow private Candide.CandideUI.ConstructionsUi.SubConstructionsWindow _subConstructionsWindow Candide.CandideUI.ConstructionsUi.SubConstructionsWindow" id="-subconstructionswindow-candide-candideui-constructionsui-subconstructionswindow"><td><span class="member-name-cell"><code>_subConstructionsWindow</code><a class="permalink" href="#-subconstructionswindow-candide-candideui-constructionsui-subconstructionswindow" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.ConstructionsUi.SubConstructionsWindow _subConstructionsWindow">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_SubConstructionsWindow.html">Candide.CandideUI.ConstructionsUi.SubConstructionsWindow</a> _subConstructionsWindow</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="HideTooltip public System.Void HideTooltip() System.Void " id="hidetooltip----system-void">
+<div class="method-heading">
+<h3><code>HideTooltip</code></h3>
+<a class="permalink" href="#hidetooltip----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void HideTooltip()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::HideTooltip()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void HideTooltip()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>62659B8C260D23E90821132182808ED295FB5A342DE2CE986B6BE75A7A44E907</code></li>
+<li><span>Body hash</span><code>BF2873F53DCF275A4243A65FE06B5EEF0D1D6220D67FE50300029DBA7EC3680C</code></li>
+<li><span>IL size</span><span>20</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.CandideUiElement::set_Visible(System.Boolean)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="InstanceOnSelectedConstructionChanged private System.Void InstanceOnSelectedConstructionChanged(System.Object sender, Candide.PlayerMode.Construction.PlacingConstruction e) System.Void sender System.Object e Candide.PlayerMode.Construction.PlacingConstruction" id="instanceonselectedconstructionchanged-system-object--candide-playermode-construction-placingconstruction---system-void">
+<div class="method-heading">
+<h3><code>InstanceOnSelectedConstructionChanged</code></h3>
+<a class="permalink" href="#instanceonselectedconstructionchanged-system-object--candide-playermode-construction-placingconstruction---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void InstanceOnSelectedConstructionChanged(System.Object sender, Candide.PlayerMode.Construction.PlacingConstruction e)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::InstanceOnSelectedConstructionChanged(System.Object, Candide.PlayerMode.Construction.PlacingConstruction)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void InstanceOnSelectedConstructionChanged(System.Object sender, <a href="../../types/Romestead/Candide_PlayerMode_Construction_PlacingConstruction.html">Candide.PlayerMode.Construction.PlacingConstruction</a> e)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CB580F3F91CEC14108B14B29C281200D005538C8A163C913FB9373FEA37C5FA4</code></li>
+<li><span>Body hash</span><code>BF67CD4ABF5FCA601274DBB59D1EC0B3ACFC18F7FABE57717C58A57C0F7B9FDC</code></li>
+<li><span>IL size</span><span>46</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.CandideUiElement::set_Visible(System.Boolean)</code></li>
+<li><code>Candide.PlayerMode.Construction.PlacingConstruction::get_ConstructionId()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionDescriptionWindow.html#setconstruction-system-string---system-void">Candide.CandideUI.ConstructionsUi.ConstructionDescriptionWindow::SetConstruction(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#onwindowclosed----system-void"><code>Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::OnWindowClosed</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#onwindowshown----system-void"><code>Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::OnWindowShown</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="OnWindowClosed protected System.Void OnWindowClosed() System.Void " id="onwindowclosed----system-void">
+<div class="method-heading">
+<h3><code>OnWindowClosed</code></h3>
+<a class="permalink" href="#onwindowclosed----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected System.Void OnWindowClosed()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::OnWindowClosed()">Copy Harmony target</button>
+</div>
+<p><code>protected System.Void OnWindowClosed()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>29CDDBC207FF5F6FE3C7AB8F9F59C2D712539A5D08AC4016362ED354C5278D18</code></li>
+<li><span>Body hash</span><code>AD55C390E984224C01AF2E3C48889A460FDFCA6232335C2ECB8116F230EA9C9F</code></li>
+<li><span>IL size</span><span>99</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Sound_SoundPlayer.html#playeventoneshot-system-string--system-single--system-single---system-void">Candide.Sound.SoundPlayer::PlayEventOneShot(System.String, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#instanceonselectedconstructionchanged-system-object--candide-playermode-construction-placingconstruction---system-void">Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::InstanceOnSelectedConstructionChanged(System.Object, Candide.PlayerMode.Construction.PlacingConstruction)</a></code></li>
+<li><code>System.EventHandler&lt;Candide.PlayerMode.Construction.PlacingConstruction&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.PlayerMode.Construction.Constructing.ConstructingHandler::remove_SelectedConstructionChanged(System.EventHandler&lt;Candide.PlayerMode.Construction.PlacingConstruction&gt;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideWindow.html#close----system-void">Candide.CandideUI.Containers.CandideWindow::Close()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideWindow.html#onwindowclosed----system-void">Candide.CandideUI.Containers.CandideWindow::OnWindowClosed()</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>event:/interface/close_window</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="OnWindowShown protected System.Void OnWindowShown() System.Void " id="onwindowshown----system-void">
+<div class="method-heading">
+<h3><code>OnWindowShown</code></h3>
+<a class="permalink" href="#onwindowshown----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected System.Void OnWindowShown()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::OnWindowShown()">Copy Harmony target</button>
+</div>
+<p><code>protected System.Void OnWindowShown()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>E7D25C866F0843CA5E4C7D60F44025F7DC0C2D0127C494306334738B680196F0</code></li>
+<li><span>Body hash</span><code>3DE9FD3A1E0BCCA7B27DF19504EC4167C7A96752BFED4CFB16A12DDD27D93922</code></li>
+<li><span>IL size</span><span>165</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#instanceonselectedconstructionchanged-system-object--candide-playermode-construction-placingconstruction---system-void">Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::InstanceOnSelectedConstructionChanged(System.Object, Candide.PlayerMode.Construction.PlacingConstruction)</a></code></li>
+<li><code>System.EventHandler&lt;Candide.PlayerMode.Construction.PlacingConstruction&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.PlayerMode.Construction.Constructing.ConstructingHandler::add_SelectedConstructionChanged(System.EventHandler&lt;Candide.PlayerMode.Construction.PlacingConstruction&gt;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideWindow.html#onwindowshown----system-void">Candide.CandideUI.Containers.CandideWindow::OnWindowShown()</a></code></li>
+<li><code>Candide.CandideUI.CandideUiElement::get_Desktop()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideWindow.html#show-candide-candideui-candidedesktop--system-nullable-1-system-int32---system-nullable-1-system-int32----system-void">Candide.CandideUI.Containers.CandideWindow::Show(Candide.CandideUI.CandideDesktop, System.Nullable&lt;System.Int32&gt;, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code>Candide.CandideUI.CandideUiSystem::get_ControllerEnabled()</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Visible(System.Boolean)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#setextrawindowvisible-system-boolean---system-void">Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::SetExtraWindowVisible(System.Boolean)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SetExtraWindowVisible private System.Void SetExtraWindowVisible(System.Boolean visible) System.Void visible System.Boolean" id="setextrawindowvisible-system-boolean---system-void">
+<div class="method-heading">
+<h3><code>SetExtraWindowVisible</code></h3>
+<a class="permalink" href="#setextrawindowvisible-system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SetExtraWindowVisible(System.Boolean visible)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::SetExtraWindowVisible(System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SetExtraWindowVisible(System.Boolean visible)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8B3A5BBD4E1769711E58C61FDFCA2FAD1B86C640E0B32355250992F3340F3D5F</code></li>
+<li><span>Body hash</span><code>233A40B480EE2DBA8EC7639BC1DC1A794E35C8ADB94FDA17A3579CB3C6167B47</code></li>
+<li><span>IL size</span><span>27</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.PlayerMode.AbstractModeManager::get_IsMouseOverGui()</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Visible(System.Boolean)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#onwindowshown----system-void"><code>Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::OnWindowShown</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetState public System.Void SetState(System.Boolean hasTown, System.Boolean availableConstructionsHasChanged) System.Void hasTown System.Boolean availableConstructionsHasChanged System.Boolean" id="setstate-system-boolean--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>SetState</code></h3>
+<a class="permalink" href="#setstate-system-boolean--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetState(System.Boolean hasTown, System.Boolean availableConstructionsHasChanged)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::SetState(System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetState(System.Boolean hasTown, System.Boolean availableConstructionsHasChanged)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C857D126ABD8AB4269310631E1A3D4702596D78DE7161062A4FD17EFAF5D5815</code></li>
+<li><span>Body hash</span><code>EAFB3BD0AD88A461F66067EF9BFA16AC140AAEEBC00BD2DCA308ED342ED4569D</code></li>
+<li><span>IL size</span><span>14</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsOptionsControl.html#setstate-system-boolean--system-boolean---system-void">Candide.CandideUI.ConstructionsUi.ConstructionsOptionsControl::SetState(System.Boolean, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_PlayerMode_Construction_ConstructionDesktop.html#onupdate-availableconstructions----system-void"><code>Candide.PlayerMode.Construction.ConstructionDesktop::OnUpdate_AvailableConstructions</code></a></li>
+<li><a href="../../types/Romestead/Candide_PlayerMode_Construction_ConstructionDesktop.html#onupdate-town-system-object--system-eventargs---system-void"><code>Candide.PlayerMode.Construction.ConstructionDesktop::OnUpdate_Town</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ShowTooltip public System.Void ShowTooltip(System.String constructionId, System.Boolean hasTown) System.Void constructionId System.String hasTown System.Boolean" id="showtooltip-system-string--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>ShowTooltip</code></h3>
+<a class="permalink" href="#showtooltip-system-string--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ShowTooltip(System.String constructionId, System.Boolean hasTown)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::ShowTooltip(System.String, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ShowTooltip(System.String constructionId, System.Boolean hasTown)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A4543CACC28DCA8E01F6E896034BB5F30D69C712ED969E8E63468E7808F9F76C</code></li>
+<li><span>Body hash</span><code>D74EBD59C3909EFDB19A5D357B046291FDF3712BAB02E0187A9356C8520BB8E1</code></li>
+<li><span>IL size</span><span>283</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_ConstructionDataBase.html#getconstructionormissing-system-string---shared-models-construction-constructionmodel">Shared.Data.ConstructionDataBase::GetConstructionOrMissing(System.String)</a></code></li>
+<li><code>Candide.CandideUI.Containers.CandideVerticalStackPanel::.ctor()</code></li>
+<li><code>Candide.CandideUI.CandideThickness::.ctor(System.Int32)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Padding(Candide.CandideUI.CandideThickness)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Tooltip_CandideTooltipHelper.html#buildconstructiontooltip-shared-models-construction-constructionmodel--system-boolean---system-collections-generic-list-1-candide-candideui-candideuielement-">Candide.CandideUI.Tooltip.CandideTooltipHelper::BuildConstructionTooltip(Shared.Models.Construction.ConstructionModel, System.Boolean)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.CandideUI.CandideUiElement&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Candide.CandideUI.CandideUiElement&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerMultipleItems.html#addchild-candide-candideui-candideuielement--system-boolean---system-void">Candide.CandideUI.CandideUiContainerMultipleItems::AddChild(Candide.CandideUI.CandideUiElement, System.Boolean)</a></code></li>
+<li><code>List.Enumerator&lt;Candide.CandideUI.CandideUiElement&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>Candide.CandideUI.Components.CandideHorizontalSeparator::.ctor()</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_HorizontalAlignment(Candide.CandideUI.HorizontalAlignment)</code></li>
+<li><code>Candide.CandideUI.CandideThickness::.ctor(System.Int32, System.Int32, System.Int32, System.Int32)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Margin(Candide.CandideUI.CandideThickness)</code></li>
+<li><code>Candide.CandideUI.Components.CandideTextLabel::.ctor()</code></li>
+<li><code>Candide.CandideUI.Components.CandideTextLabel::set_Wrap(System.Boolean)</code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringExtensions.html#gettranslation-shared-text-stringid---system-string">Shared.Text.StringExtensions::GetTranslation(Shared.Text.StringId)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringDefinitions.html#getformatstring-system-string--system-string---system-string">Shared.Text.StringDefinitions::GetFormatString(System.String, System.String)</a></code></li>
+<li><code>Candide.CandideUI.Components.CandideTextLabel::set_Text(System.String)</code></li>
+<li><code>Candide.CandideUI.Components.CandideTextLabel::set_TextAlign(FontStashSharp.RichText.TextHorizontalAlignment)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerSingleItem.html#setchild-candide-candideui-candideuielement---system-void">Candide.CandideUI.CandideUiContainerSingleItem::SetChild(Candide.CandideUI.CandideUiElement)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html#updatearrange----system-void">Candide.CandideUI.CandideUiElement::UpdateArrange()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionDescriptionWindow.html#updatepos----system-void">Candide.CandideUI.ConstructionsUi.ConstructionDescriptionWindow::UpdatePos()</a></code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Visible(System.Boolean)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::Update</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>town_core:0</code></li>
+<li><code>Buildings_Proximity_Building</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime) System.Void gameTime Microsoft.Xna.Framework.GameTime" id="update-microsoft-xna-framework-gametime---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-microsoft-xna-framework-gametime---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::Update(Microsoft.Xna.Framework.GameTime)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>7A7B4C46FBA5E91A4D33C187605272408F402A9ED0BD5C5D11AA2140ADF353AA</code></li>
+<li><span>Body hash</span><code>C514B29E8641AB9D3624B9737806EE7FB5DC856D04CAD2076C7653242626C2EC</code></li>
+<li><span>IL size</span><span>573</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideWindow.html#update-microsoft-xna-framework-gametime---system-void">Candide.CandideUI.Containers.CandideWindow::Update(Microsoft.Xna.Framework.GameTime)</a></code></li>
+<li><code>Candide.PlayerMode.Construction.ConstructionModeManager::get_PlacingConstruction()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#setextrawindowvisible-system-boolean---system-void">Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::SetExtraWindowVisible(System.Boolean)</a></code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Visible(System.Boolean)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#showtooltip-system-string--system-boolean---system-void">Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::ShowTooltip(System.String, System.Boolean)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#hidetooltip----system-void">Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::HideTooltip()</a></code></li>
+<li><code>Candide.PlayerMode.Construction.PlacingConstruction::get_ConstructionId()</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_ConstructionDataBase.html#getconstructionormissing-system-string---shared-models-construction-constructionmodel">Shared.Data.ConstructionDataBase::GetConstructionOrMissing(System.String)</a></code></li>
+<li><code>Candide.PlayerMode.Construction.PlacingConstruction::get_SpaceInfo()</code></li>
+<li><code>Shared.Models.Construction.ConstructionSpaceInfo::get_GetMainArea()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Toolkit_TileBoundsHelper.html#getcenteredpositionfromtilebounds-microsoft-xna-framework-rectangle---microsoft-xna-framework-vector2">CandideServer.Toolkit.TileBoundsHelper::GetCenteredPositionFromTileBounds(Microsoft.Xna.Framework.Rectangle)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_TopLeft()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Division(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::get_InteractionBounds()</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Left(System.Int32)</code></li>
+<li><code>Candide.CandideUI.CandideUiSystem::get_Scale()</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Top(System.Int32)</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::get_Desktop()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_SubConstructionsWindow.html#setsubconstruction-candide-playermode-construction-subplacingconstruction---system-void">Candide.CandideUI.ConstructionsUi.SubConstructionsWindow::SetSubConstruction(Candide.PlayerMode.Construction.SubPlacingConstruction)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html#calculatescreenposition----microsoft-xna-framework-vector2">Candide.CandideUI.CandideUiElement::CalculateScreenPosition()</a></code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

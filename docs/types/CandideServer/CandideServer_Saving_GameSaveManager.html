@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.Saving.GameSaveManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.Saving.GameSaveManager</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.Saving.GameSaveManager
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.Saving`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 16 methods, 0 properties, 11 fields, 0 events
+
+## Public Methods
+- `public System.Boolean CheckIsInvalidWorldName(System.String worldName)`
+- `public System.Void EmptyGameState()`
+- `public System.Void EmptyRunState()`
+- `public System.Void LoadGame(CandideServer.GameDescription gameDescription, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; state)`
+- `public CandideServer.GameDescription LoadGameDescriptionFromDirectory(System.String directoryPath)`
+- `public System.Boolean LoadGameFromFile(CandideServer.GameDescription description, System.String gameStateFilePath)`
+- `public System.Void QueueSave(System.String directoryPath, System.Boolean offThread, System.Boolean stopAfterSave)`
+- `public System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; SaveGameState(System.Boolean forOffThreadSerializing)`
+- `public System.Threading.Tasks.Task SaveGameToDirectory(System.String directoryPath, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; gameState, System.Boolean sendNetworkMessages, System.Boolean sendLockInMessage)`
+- `public System.Boolean SaveNewGameToDirectory(System.String directoryPath, CandideServer.GameDescription gameDescription, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; state, System.Action onSaveError)`
+- `public System.Threading.Tasks.Task SaveWithCallbacks(System.String saveDirectoryPath, System.Action&lt;System.Int32&gt; saveStepCallback)`
+- `public System.Threading.Tasks.Task SaveWorldDescToDirectory(System.String directoryPath, CandideServer.GameDescription desc)`
+- `public System.Void Update()`
+">Copy markdown</button>
+<a class="button" href="CandideServer_Saving_GameSaveManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.Saving</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>16</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>11</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.Saving</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>C6A72085B28F6B08E20975FF0DE4A697ED08B2EFDCDAD9CF56396F0B0F0603CE</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="AnalyticsFirsts private System.String AnalyticsFirsts System.String" id="analyticsfirsts-system-string"><td><span class="member-name-cell"><code>AnalyticsFirsts</code><a class="permalink" href="#analyticsfirsts-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.String AnalyticsFirsts">Copy</button></span></td><td>private</td><td><code>private System.String AnalyticsFirsts</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="AutoSaveEnabled public System.Boolean AutoSaveEnabled System.Boolean" id="autosaveenabled-system-boolean"><td><span class="member-name-cell"><code>AutoSaveEnabled</code><a class="permalink" href="#autosaveenabled-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean AutoSaveEnabled">Copy</button></span></td><td>public</td><td><code>public System.Boolean AutoSaveEnabled</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Deserializer public CandideCreator.Shared.Serialization.CandideDeserializer Deserializer CandideCreator.Shared.Serialization.CandideDeserializer" id="deserializer-candidecreator-shared-serialization-candidedeserializer"><td><span class="member-name-cell"><code>Deserializer</code><a class="permalink" href="#deserializer-candidecreator-shared-serialization-candidedeserializer" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public CandideCreator.Shared.Serialization.CandideDeserializer Deserializer">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideDeserializer.html">CandideCreator.Shared.Serialization.CandideDeserializer</a> Deserializer</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="GameStateSaveReflection public CandideCreator.Shared.Serialization.CandideReflection GameStateSaveReflection CandideCreator.Shared.Serialization.CandideReflection" id="gamestatesavereflection-candidecreator-shared-serialization-candidereflection"><td><span class="member-name-cell"><code>GameStateSaveReflection</code><a class="permalink" href="#gamestatesavereflection-candidecreator-shared-serialization-candidereflection" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public CandideCreator.Shared.Serialization.CandideReflection GameStateSaveReflection">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideReflection.html">CandideCreator.Shared.Serialization.CandideReflection</a> GameStateSaveReflection</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="GameStateSaveSerializer public CandideCreator.Shared.Serialization.CandideSerializer GameStateSaveSerializer CandideCreator.Shared.Serialization.CandideSerializer" id="gamestatesaveserializer-candidecreator-shared-serialization-candideserializer"><td><span class="member-name-cell"><code>GameStateSaveSerializer</code><a class="permalink" href="#gamestatesaveserializer-candidecreator-shared-serialization-candideserializer" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public CandideCreator.Shared.Serialization.CandideSerializer GameStateSaveSerializer">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideSerializer.html">CandideCreator.Shared.Serialization.CandideSerializer</a> GameStateSaveSerializer</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="TimeBetweenAutoSaves public System.TimeSpan TimeBetweenAutoSaves System.TimeSpan" id="timebetweenautosaves-system-timespan"><td><span class="member-name-cell"><code>TimeBetweenAutoSaves</code><a class="permalink" href="#timebetweenautosaves-system-timespan" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.TimeSpan TimeBetweenAutoSaves">Copy</button></span></td><td>public</td><td><code>public System.TimeSpan TimeBetweenAutoSaves</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_lastSaveTime private System.DateTime _lastSaveTime System.DateTime" id="-lastsavetime-system-datetime"><td><span class="member-name-cell"><code>_lastSaveTime</code><a class="permalink" href="#-lastsavetime-system-datetime" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.DateTime _lastSaveTime">Copy</button></span></td><td>private</td><td><code>private System.DateTime _lastSaveTime</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_queuedSaveDirectory private System.String _queuedSaveDirectory System.String" id="-queuedsavedirectory-system-string"><td><span class="member-name-cell"><code>_queuedSaveDirectory</code><a class="permalink" href="#-queuedsavedirectory-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.String _queuedSaveDirectory">Copy</button></span></td><td>private</td><td><code>private System.String _queuedSaveDirectory</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_saveQueuedOffThread private System.Boolean _saveQueuedOffThread System.Boolean" id="-savequeuedoffthread-system-boolean"><td><span class="member-name-cell"><code>_saveQueuedOffThread</code><a class="permalink" href="#-savequeuedoffthread-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _saveQueuedOffThread">Copy</button></span></td><td>private</td><td><code>private System.Boolean _saveQueuedOffThread</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_savingTask private System.Threading.Tasks.Task _savingTask System.Threading.Tasks.Task" id="-savingtask-system-threading-tasks-task"><td><span class="member-name-cell"><code>_savingTask</code><a class="permalink" href="#-savingtask-system-threading-tasks-task" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Threading.Tasks.Task _savingTask">Copy</button></span></td><td>private</td><td><code>private System.Threading.Tasks.Task _savingTask</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_stopAfterSave private System.Boolean _stopAfterSave System.Boolean" id="-stopaftersave-system-boolean"><td><span class="member-name-cell"><code>_stopAfterSave</code><a class="permalink" href="#-stopaftersave-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _stopAfterSave">Copy</button></span></td><td>private</td><td><code>private System.Boolean _stopAfterSave</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CheckIsInvalidWorldName public System.Boolean CheckIsInvalidWorldName(System.String worldName) System.Boolean worldName System.String" id="checkisinvalidworldname-system-string---system-boolean">
+<div class="method-heading">
+<h3><code>CheckIsInvalidWorldName</code></h3>
+<a class="permalink" href="#checkisinvalidworldname-system-string---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean CheckIsInvalidWorldName(System.String worldName)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::CheckIsInvalidWorldName(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean CheckIsInvalidWorldName(System.String worldName)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>23DCB38A71AFF0F3A3AA911B36E54D2DD1AE2DAD81CA6714DC63E2AD1FEE5C50</code></li>
+<li><span>Body hash</span><code>618B0AFB27DEA1A78220E1DDE276A92A148F1CAC23087673BCE84021F90E0215</code></li>
+<li><span>IL size</span><span>47</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.IO.Path::GetInvalidFileNameChars()</code></li>
+<li><code>System.String::IndexOfAny(System.Char[])</code></li>
+<li><code>System.String::Contains(System.Char)</code></li>
+<li><code>System.String::Trim()</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_CreateWorldWindow.html#savenewworld----system-void"><code>Candide.MainMenu.Ui.Steps.CreateWorldWindow::SaveNewWorld</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="EmptyGameState public System.Void EmptyGameState() System.Void " id="emptygamestate----system-void">
+<div class="method-heading">
+<h3><code>EmptyGameState</code></h3>
+<a class="permalink" href="#emptygamestate----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void EmptyGameState()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::EmptyGameState()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void EmptyGameState()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4D8DE8C5942DB6A741E9E10E63BD6BD622D4D1333DB98E660E6D140AC74C0982</code></li>
+<li><span>Body hash</span><code>88D1BD43B945B1419511825BC27386CF49ECB80939432B3915EAF3699B2C9F4E</code></li>
+<li><span>IL size</span><span>120</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)</code></li>
+<li><code>System.Type::GetMembers(System.Reflection.BindingFlags)</code></li>
+<li><code>System.Reflection.FieldInfo::GetValue(System.Object)</code></li>
+<li><code>System.Object::GetType()</code></li>
+<li><code>System.Type::GetMethod(System.String, System.Reflection.BindingFlags, System.Type[])</code></li>
+<li><code>System.Reflection.MethodBase::Invoke(System.Object, System.Object[])</code></li>
+<li><code>System.Reflection.FieldInfo::get_FieldType()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideReflection.html#getdefaultvalue-system-type---system-object">CandideCreator.Shared.Serialization.CandideReflection::GetDefaultValue(System.Type)</a></code></li>
+<li><code>System.Reflection.FieldInfo::SetValue(System.Object, System.Object)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Game_ServerGameSetup.html#setupnewgamestate-candideserver-game-gameconfig---system-void"><code>CandideServer.Game.ServerGameSetup::SetupNewGameState</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#loadgamestate-system-collections-generic-list-1-system-valuetuple-2-system-string-system-object-----system-void"><code>CandideServer.Saving.GameSaveManager::LoadGameState</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Clear</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="EmptyRunState public System.Void EmptyRunState() System.Void " id="emptyrunstate----system-void">
+<div class="method-heading">
+<h3><code>EmptyRunState</code></h3>
+<a class="permalink" href="#emptyrunstate----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void EmptyRunState()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::EmptyRunState()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void EmptyRunState()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>047AD8CEFD66533242F3B4F3FC6A28FEAEA6BDF73199038D9D2D7F7C17411CC1</code></li>
+<li><span>Body hash</span><code>7464E1961B60A65E3D981997F25D7BA07F5ABD4561B927E83236AE32F6E61396</code></li>
+<li><span>IL size</span><span>120</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)</code></li>
+<li><code>System.Type::GetMembers(System.Reflection.BindingFlags)</code></li>
+<li><code>System.Reflection.FieldInfo::GetValue(System.Object)</code></li>
+<li><code>System.Object::GetType()</code></li>
+<li><code>System.Type::GetMethod(System.String, System.Reflection.BindingFlags, System.Type[])</code></li>
+<li><code>System.Reflection.MethodBase::Invoke(System.Object, System.Object[])</code></li>
+<li><code>System.Reflection.FieldInfo::get_FieldType()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideReflection.html#getdefaultvalue-system-type---system-object">CandideCreator.Shared.Serialization.CandideReflection::GetDefaultValue(System.Type)</a></code></li>
+<li><code>System.Reflection.FieldInfo::SetValue(System.Object, System.Object)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#loadgamestate-system-collections-generic-list-1-system-valuetuple-2-system-string-system-object-----system-void"><code>CandideServer.Saving.GameSaveManager::LoadGameState</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Clear</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="GetShallowDictionaryCopy private System.Object GetShallowDictionaryCopy(System.Type type, System.Object source) System.Object type System.Type source System.Object" id="getshallowdictionarycopy-system-type--system-object---system-object">
+<div class="method-heading">
+<h3><code>GetShallowDictionaryCopy</code></h3>
+<a class="permalink" href="#getshallowdictionarycopy-system-type--system-object---system-object" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Object GetShallowDictionaryCopy(System.Type type, System.Object source)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::GetShallowDictionaryCopy(System.Type, System.Object)">Copy Harmony target</button>
+</div>
+<p><code>private System.Object GetShallowDictionaryCopy(System.Type type, System.Object source)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Object</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0C46CD385188D8D0CD935349968AED654762B1EA00BCE28DDE051F258CD66F8D</code></li>
+<li><span>Body hash</span><code>281DB31F53E6E92E776A0EA7328AA9D3B547F1F2B9EDA1F7F5F82879C9B19051</code></li>
+<li><span>IL size</span><span>90</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Type::get_GenericTypeArguments()</code></li>
+<li><code>System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)</code></li>
+<li><code>System.Type::MakeGenericType(System.Type[])</code></li>
+<li><code>System.Type::MakeArrayType()</code></li>
+<li><code>System.Type::GetConstructor(System.Type[])</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ReflectionHelper.html#getactivator-system-reflection-constructorinfo---reflectionhelper-objectactivator">CandideCreator.Shared.Helpers.ReflectionHelper::GetActivator(System.Reflection.ConstructorInfo)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/ReflectionHelper_ObjectActivator.html#invoke-system-object-----system-object">ReflectionHelper.ObjectActivator::Invoke(System.Object[])</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#savegamestate-system-boolean---system-collections-generic-list-1-system-valuetuple-2-system-string-system-object--"><code>CandideServer.Saving.GameSaveManager::SaveGameState</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LoadGame public System.Void LoadGame(CandideServer.GameDescription gameDescription, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; state) System.Void gameDescription CandideServer.GameDescription state System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt;" id="loadgame-candideserver-gamedescription--system-collections-generic-list-1-system-valuetuple-2-system-string-system-object-----system-void">
+<div class="method-heading">
+<h3><code>LoadGame</code></h3>
+<a class="permalink" href="#loadgame-candideserver-gamedescription--system-collections-generic-list-1-system-valuetuple-2-system-string-system-object-----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void LoadGame(CandideServer.GameDescription gameDescription, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; state)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::LoadGame(CandideServer.GameDescription, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void LoadGame(<a href="../../types/CandideServer/CandideServer_GameDescription.html">CandideServer.GameDescription</a> gameDescription, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; state)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4FE548EA6F0C0DE71C8D431E24D8EB03172C7C32D556BAB7F71C6C8D9838FB43</code></li>
+<li><span>Body hash</span><code>577086B7C5C4D159951B2C89718049999124314497A81C231B3456F01FE236AD</code></li>
+<li><span>IL size</span><span>57</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.DateTime::get_UtcNow()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#loadgamestate-system-collections-generic-list-1-system-valuetuple-2-system-string-system-object-----system-void">CandideServer.Saving.GameSaveManager::LoadGameState(System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_EventBus_EventBusManager.html#sendevent-system-string--system-object--system-boolean---system-void">CandideServer.EventBus.EventBusManager::SendEvent(System.String, System.Object, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#loadgamefromfile-candideserver-gamedescription--system-string---system-boolean"><code>CandideServer.Saving.GameSaveManager::LoadGameFromFile</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>servergamestate-loaded</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LoadGameDescriptionFromDirectory public CandideServer.GameDescription LoadGameDescriptionFromDirectory(System.String directoryPath) CandideServer.GameDescription directoryPath System.String" id="loadgamedescriptionfromdirectory-system-string---candideserver-gamedescription">
+<div class="method-heading">
+<h3><code>LoadGameDescriptionFromDirectory</code></h3>
+<a class="permalink" href="#loadgamedescriptionfromdirectory-system-string---candideserver-gamedescription" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.GameDescription LoadGameDescriptionFromDirectory(System.String directoryPath)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::LoadGameDescriptionFromDirectory(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_GameDescription.html">CandideServer.GameDescription</a> LoadGameDescriptionFromDirectory(System.String directoryPath)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_GameDescription.html">CandideServer.GameDescription</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>592894D58BB7FD44C6B4851AE48D607EAD4CD98A8C7B0754FF9F1D1E62F4A791</code></li>
+<li><span>Body hash</span><code>207C00761EA1C0741F7CC122B40AC6DC98DF6E68C51824CAF60EE056E619A6F4</code></li>
+<li><span>IL size</span><span>348</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.IO.Path::Combine(System.String, System.String)</code></li>
+<li><code>System.IO.File::Exists(System.String)</code></li>
+<li><code>System.IO.File::OpenRead(System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideDeserializer.html#clear----system-void">CandideCreator.Shared.Serialization.CandideDeserializer::Clear()</a></code></li>
+<li><code>CandideCreator.Shared.Serialization.CandideDeserializer::Deserialize(CandideCreator.Shared.Serialization.CandideReflection, System.IO.Stream, System.Boolean)</code></li>
+<li><code>System.IO.Path::GetFileName(System.String)</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_SelectWorldWindow.html#insertworlds-system-io-directoryinfo---system-void"><code>Candide.MainMenu.Ui.Steps.SelectWorldWindow::InsertWorlds</code></a></li>
+<li><a href="../../types/Romestead/Candide_Save_CharacterSaveManager.html#getquicksingleplayerworld----candideserver-gamedescription"><code>Candide.Save.CharacterSaveManager::GetQuickSinglePlayerWorld</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>world_desc</code></li>
+<li><code>Error while loading world desc file &#39;</code></li>
+<li><code>&#39;:
+</code></li>
+<li><code>world_desc_backup</code></li>
+<li><code>Error while loading world desc backup file &#39;</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LoadGameFromFile public System.Boolean LoadGameFromFile(CandideServer.GameDescription description, System.String gameStateFilePath) System.Boolean description CandideServer.GameDescription gameStateFilePath System.String" id="loadgamefromfile-candideserver-gamedescription--system-string---system-boolean">
+<div class="method-heading">
+<h3><code>LoadGameFromFile</code></h3>
+<a class="permalink" href="#loadgamefromfile-candideserver-gamedescription--system-string---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean LoadGameFromFile(CandideServer.GameDescription description, System.String gameStateFilePath)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::LoadGameFromFile(CandideServer.GameDescription, System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean LoadGameFromFile(<a href="../../types/CandideServer/CandideServer_GameDescription.html">CandideServer.GameDescription</a> description, System.String gameStateFilePath)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>00FF60272B824FD52D871A45A60C5315E1F82A3BBCFCFC62C593F980E9A1C8B3</code></li>
+<li><span>Body hash</span><code>1C3C2653726696340EF8B3C3E6BC6933983DFA34949D41578D5D28746783A322</code></li>
+<li><span>IL size</span><span>174</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.IO.File::OpenRead(System.String)</code></li>
+<li><code>System.Diagnostics.Stopwatch::StartNew()</code></li>
+<li><code>System.IO.MemoryStream::.ctor(System.Int32)</code></li>
+<li><code>System.IO.Compression.GZipStream::.ctor(System.IO.Stream, System.IO.Compression.CompressionMode)</code></li>
+<li><code>System.IO.Stream::CopyTo(System.IO.Stream)</code></li>
+<li><code>System.Diagnostics.Stopwatch::Restart()</code></li>
+<li><code>System.IO.Stream::set_Position(System.Int64)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideDeserializer.html#clear----system-void">CandideCreator.Shared.Serialization.CandideDeserializer::Clear()</a></code></li>
+<li><code>CandideCreator.Shared.Serialization.CandideDeserializer::Deserialize(CandideCreator.Shared.Serialization.CandideReflection, System.IO.Stream, System.Boolean)</code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#loadgame-candideserver-gamedescription--system-collections-generic-list-1-system-valuetuple-2-system-string-system-object-----system-void">CandideServer.Saving.GameSaveManager::LoadGame(CandideServer.GameDescription, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt;)</a></code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Failed to load game state for game </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="LoadGameState private System.Void LoadGameState(System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; state) System.Void state System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt;" id="loadgamestate-system-collections-generic-list-1-system-valuetuple-2-system-string-system-object-----system-void">
+<div class="method-heading">
+<h3><code>LoadGameState</code></h3>
+<a class="permalink" href="#loadgamestate-system-collections-generic-list-1-system-valuetuple-2-system-string-system-object-----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void LoadGameState(System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; state)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::LoadGameState(System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt;)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void LoadGameState(System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; state)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E8EF67353634D3C75760896DD1DC403C8AB5F121DCE1EC6E95C1A10770F6D7D3</code></li>
+<li><span>Body hash</span><code>081FD7FBD312FD00A318F20346CF5DEA69D04D6E7DDFCF19B113BD758C3D674D</code></li>
+<li><span>IL size</span><span>413</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#emptyrunstate----system-void">CandideServer.Saving.GameSaveManager::EmptyRunState()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#emptygamestate----system-void">CandideServer.Saving.GameSaveManager::EmptyGameState()</a></code></li>
+<li><code>GameSaveManager.&lt;&gt;c::&lt;LoadGameState&gt;b__26_0(System.ValueTuple&lt;System.String, System.Object&gt;)</code></li>
+<li><code>System.Func&lt;System.ValueTuple&lt;System.String, System.Object&gt;, System.String&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>GameSaveManager.&lt;&gt;c::&lt;LoadGameState&gt;b__26_1(System.ValueTuple&lt;System.String, System.Object&gt;)</code></li>
+<li><code>System.Func&lt;System.ValueTuple&lt;System.String, System.Object&gt;, System.Object&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Linq.Enumerable::ToDictionary(System.Collections.Generic.IEnumerable&lt;!!0&gt;, System.Func&lt;!!0, !!1&gt;, System.Func&lt;!!0, !!2&gt;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Object&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.WorldFlag&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Object&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)</code></li>
+<li><code>System.Type::GetMembers(System.Reflection.BindingFlags)</code></li>
+<li><code>System.Reflection.MemberInfo::get_Name()</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>System.Reflection.FieldInfo::SetValue(System.Object, System.Object)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Object::GetType()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_Inventory_InventorySaveModel.html#tosharedinventorymodel----shared-models-items-sharedinventorymodel">CandideServer.Models.Inventory.InventorySaveModel::ToSharedInventoryModel()</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Models.Items.SharedInventoryModel&gt;::set_Item(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#loadgame-candideserver-gamedescription--system-collections-generic-list-1-system-valuetuple-2-system-string-system-object-----system-void"><code>CandideServer.Saving.GameSaveManager::LoadGame</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>WorldFlags</code></li>
+<li><code>Inventories</code></li>
+<li><code>SavedInventorySaveModels were null while loading world</code></li>
+<li><code>Unknown saved inventory format </code></li>
+<li><code>A saved inventory was null when loading game.</code></li>
+<li><code>analytics_firsts</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="QueueSave public System.Void QueueSave(System.String directoryPath, System.Boolean offThread, System.Boolean stopAfterSave) System.Void directoryPath System.String offThread System.Boolean stopAfterSave System.Boolean" id="queuesave-system-string--system-boolean--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>QueueSave</code></h3>
+<a class="permalink" href="#queuesave-system-string--system-boolean--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void QueueSave(System.String directoryPath, System.Boolean offThread, System.Boolean stopAfterSave)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::QueueSave(System.String, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void QueueSave(System.String directoryPath, System.Boolean offThread, System.Boolean stopAfterSave)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9058E9008100855AA25C2FF28465226EABDE23832AE93E880D394207BD1B219B</code></li>
+<li><span>Body hash</span><code>37C84425C45B8C82BEA097621D260B37DD4E6F1CE0B850BDACB5630EC722BF63</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#updateautosave----system-void"><code>CandideServer.Saving.GameSaveManager::UpdateAutoSave</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#checkcommand-system-string---system-void"><code>CandideServer.Server.BaseServer::CheckCommand</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_TimeServerSystem.html#handlesleepingplayers----system-void"><code>CandideServer.ServerSystems.TimeServerSystem::HandleSleepingPlayers</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SaveGameState public System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; SaveGameState(System.Boolean forOffThreadSerializing) System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; forOffThreadSerializing System.Boolean" id="savegamestate-system-boolean---system-collections-generic-list-1-system-valuetuple-2-system-string-system-object--">
+<div class="method-heading">
+<h3><code>SaveGameState</code></h3>
+<a class="permalink" href="#savegamestate-system-boolean---system-collections-generic-list-1-system-valuetuple-2-system-string-system-object--" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; SaveGameState(System.Boolean forOffThreadSerializing)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::SaveGameState(System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; SaveGameState(System.Boolean forOffThreadSerializing)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>35C3CABF442E4F89FADCD0CD1FB3567973E736639A65DD369B743650D89BAEAF</code></li>
+<li><span>Body hash</span><code>31A39FA1ECC004C08580B5CC0A22E1A40A61A18223E5A5A379854362D5872AB3</code></li>
+<li><span>IL size</span><span>778</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_EventBus_EventBusManager.html#sendevent-system-string--system-object--system-boolean---system-void">CandideServer.EventBus.EventBusManager::SendEvent(System.String, System.Object, System.Boolean)</a></code></li>
+<li><code>System.DateTime::get_UtcNow()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt;::.ctor()</code></li>
+<li><code>System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)</code></li>
+<li><code>System.Type::GetMembers(System.Reflection.BindingFlags)</code></li>
+<li><code>System.Reflection.MemberInfo::get_Name()</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>System.Reflection.FieldInfo::GetValue(System.Object)</code></li>
+<li><code>System.Reflection.FieldInfo::get_FieldType()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#getshallowdictionarycopy-system-type--system-object---system-object">CandideServer.Saving.GameSaveManager::GetShallowDictionaryCopy(System.Type, System.Object)</a></code></li>
+<li><code>System.ValueTuple&lt;System.String, System.Object&gt;::.ctor(!0, !1)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt;::Add(!0)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::get_Comparer()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::.ctor(System.Collections.Generic.IEnumerable&lt;!0&gt;, System.Collections.Generic.IEqualityComparer&lt;!0&gt;)</code></li>
+<li><code>System.Type::get_IsArray()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Models.Items.SharedInventoryModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, Shared.Models.Items.SharedInventoryModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, Shared.Models.Items.SharedInventoryModel&gt;::get_Current()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, Shared.Models.Items.SharedInventoryModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_Inventory_InventorySaveModel.html#frominventorymodel-shared-models-items-sharedinventorymodel---candideserver-models-inventory-inventorysavemodel">CandideServer.Models.Inventory.InventorySaveModel::FromInventoryModel(Shared.Models.Items.SharedInventoryModel)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::.ctor(System.Int32)</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::Add(!0, !1)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::MoveNext()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::.ctor(System.Int32)</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::GetEnumerator()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#update----system-void"><code>CandideServer.Saving.GameSaveManager::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerationManager.html#finishgenerating----system-collections-generic-list-1-system-valuetuple-2-system-string-system-object--"><code>CandideServer.World.Generation.WorldGenerationManager::FinishGenerating</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>before-servergamestate-saved</code></li>
+<li><code>Inventories</code></li>
+<li><code>Entities</code></li>
+<li><code>Worlds</code></li>
+<li><code>analytics_firsts</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SaveGameToDirectory public System.Threading.Tasks.Task SaveGameToDirectory(System.String directoryPath, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; gameState, System.Boolean sendNetworkMessages, System.Boolean sendLockInMessage) System.Threading.Tasks.Task directoryPath System.String gameState System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; sendNetworkMessages System.Boolean sendLockInMessage System.Boolean" id="savegametodirectory-system-string--system-collections-generic-list-1-system-valuetuple-2-system-string-system-object----system-boolean--system-boolean---system-threading-tasks-task">
+<div class="method-heading">
+<h3><code>SaveGameToDirectory</code></h3>
+<a class="permalink" href="#savegametodirectory-system-string--system-collections-generic-list-1-system-valuetuple-2-system-string-system-object----system-boolean--system-boolean---system-threading-tasks-task" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Threading.Tasks.Task SaveGameToDirectory(System.String directoryPath, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; gameState, System.Boolean sendNetworkMessages, System.Boolean sendLockInMessage)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::SaveGameToDirectory(System.String, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt;, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Threading.Tasks.Task SaveGameToDirectory(System.String directoryPath, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; gameState, System.Boolean sendNetworkMessages, System.Boolean sendLockInMessage)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Threading.Tasks.Task</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>134A391C9AF7C99ED4DBE873AED51D9D480819C4CFC3B14816D4F05144877BD4</code></li>
+<li><span>Body hash</span><code>198F21E287742EA8D84AC7CDF71F961F198E31AAEA43C9FBAFFB1B17497EBFAF</code></li>
+<li><span>IL size</span><span>284</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>GameSaveManager.&lt;&gt;c__DisplayClass16_0::.ctor()</code></li>
+<li><code>System.IO.Directory::Exists(System.String)</code></li>
+<li><code>System.IO.Directory::CreateDirectory(System.String)</code></li>
+<li><code>Shared.Text.StringId::op_Implicit(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_ChatLogMessage.html#asstringid-shared-text-stringid--candideserver-models-chatmessagetype--system-boolean--system-string---candideserver-messagemodels-chatlogmessage">CandideServer.MessageModels.ChatLogMessage::AsStringId(Shared.Text.StringId, CandideServer.Models.ChatMessageType, System.Boolean, System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_ChatLogServerService.html#sendchatlogmessagethreadsafe-candideserver-messagemodels-chatlogmessage---system-void">CandideServer.ServerServices.ChatLogServerService::SendChatLogMessageThreadSafe(CandideServer.MessageModels.ChatLogMessage)</a></code></li>
+<li><code>System.DateTime::get_UtcNow()</code></li>
+<li><code>System.Nullable&lt;System.DateTime&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#getworldplaytimeseconds----system-double">CandideServer.ServerGameState::GetWorldPlayTimeSeconds()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#saveworlddesctodirectory-system-string--candideserver-gamedescription---system-threading-tasks-task">CandideServer.Saving.GameSaveManager::SaveWorldDescToDirectory(System.String, CandideServer.GameDescription)</a></code></li>
+<li><code>System.IO.Path::Combine(System.String, System.String)</code></li>
+<li><code>System.IO.MemoryStream::.ctor(System.Int32)</code></li>
+<li><code>System.Diagnostics.Stopwatch::StartNew()</code></li>
+<li><code>CandideCreator.Shared.Serialization.CandideSerializer::Serialize(CandideCreator.Shared.Serialization.CandideReflection, System.IO.Stream, !!0, System.Boolean)</code></li>
+<li><code>System.Diagnostics.Stopwatch::get_Elapsed()</code></li>
+<li><code>System.IO.Stream::set_Position(System.Int64)</code></li>
+<li><code>GameSaveManager.&lt;&gt;c__DisplayClass16_0::&lt;SaveGameToDirectory&gt;b__0()</code></li>
+<li><code>System.Action::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Threading.Tasks.Task::Run(System.Action)</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#update----system-void"><code>CandideServer.Saving.GameSaveManager::Update</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>HostServer_SavingGame</code></li>
+<li><code>game_state</code></li>
+<li><code>game_state_temp</code></li>
+<li><code>game_state_backup</code></li>
+<li><code>HostServer_DataLockedInForSaving</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SaveNewGameToDirectory public System.Boolean SaveNewGameToDirectory(System.String directoryPath, CandideServer.GameDescription gameDescription, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; state, System.Action onSaveError) System.Boolean directoryPath System.String gameDescription CandideServer.GameDescription state System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; onSaveError System.Action" id="savenewgametodirectory-system-string--candideserver-gamedescription--system-collections-generic-list-1-system-valuetuple-2-system-string-system-object----system-action---system-boolean">
+<div class="method-heading">
+<h3><code>SaveNewGameToDirectory</code></h3>
+<a class="permalink" href="#savenewgametodirectory-system-string--candideserver-gamedescription--system-collections-generic-list-1-system-valuetuple-2-system-string-system-object----system-action---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean SaveNewGameToDirectory(System.String directoryPath, CandideServer.GameDescription gameDescription, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; state, System.Action onSaveError)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::SaveNewGameToDirectory(System.String, CandideServer.GameDescription, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt;, System.Action)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean SaveNewGameToDirectory(System.String directoryPath, <a href="../../types/CandideServer/CandideServer_GameDescription.html">CandideServer.GameDescription</a> gameDescription, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt; state, System.Action onSaveError)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A39B74D29CAE0D9FD9DEFF59AB181CF67471DEF284D132216F0AC340CC44A012</code></li>
+<li><span>Body hash</span><code>4A462EF24A0EA82A56A5B6C75AF4B728C42E1A977A2774441BBFB7DD6EB2714D</code></li>
+<li><span>IL size</span><span>295</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.IO.Directory::CreateDirectory(System.String)</code></li>
+<li><code>System.IO.Path::Combine(System.String, System.String)</code></li>
+<li><code>System.IO.File::Exists(System.String)</code></li>
+<li><code>System.Action::Invoke()</code></li>
+<li><code>System.IO.File::Create(System.String)</code></li>
+<li><code>CandideCreator.Shared.Serialization.CandideSerializer::Serialize(CandideCreator.Shared.Serialization.CandideReflection, System.IO.Stream, !!0, System.Boolean)</code></li>
+<li><code>System.IO.Compression.GZipStream::.ctor(System.IO.Stream, System.IO.Compression.CompressionLevel)</code></li>
+<li><code>System.IO.FileStream::Flush(System.Boolean)</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>world_desc</code></li>
+<li><code>game_state</code></li>
+<li><code>Error while saving new world:
+</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SaveWithCallbacks public System.Threading.Tasks.Task SaveWithCallbacks(System.String saveDirectoryPath, System.Action&lt;System.Int32&gt; saveStepCallback) System.Threading.Tasks.Task saveDirectoryPath System.String saveStepCallback System.Action&lt;System.Int32&gt;" id="savewithcallbacks-system-string--system-action-1-system-int32----system-threading-tasks-task">
+<div class="method-heading">
+<h3><code>SaveWithCallbacks</code></h3>
+<a class="permalink" href="#savewithcallbacks-system-string--system-action-1-system-int32----system-threading-tasks-task" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Threading.Tasks.Task SaveWithCallbacks(System.String saveDirectoryPath, System.Action&lt;System.Int32&gt; saveStepCallback)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::SaveWithCallbacks(System.String, System.Action&lt;System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Threading.Tasks.Task SaveWithCallbacks(System.String saveDirectoryPath, System.Action&lt;System.Int32&gt; saveStepCallback)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Threading.Tasks.Task</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E1FC958EDB7D93E2D9518984AD67F9E5D5B44CED44E2053E4827AF375FB7D50B</code></li>
+<li><span>Body hash</span><code>017DFA08FC6384AC9FD4AD4840D3D965D54DEFE99A7E426D189D86D0A994939E</code></li>
+<li><span>IL size</span><span>36</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>GameSaveManager.&lt;&gt;c__DisplayClass15_0::.ctor()</code></li>
+<li><code>GameSaveManager.&lt;&gt;c__DisplayClass15_0::&lt;SaveWithCallbacks&gt;b__0()</code></li>
+<li><code>System.Func&lt;System.Threading.Tasks.Task&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Threading.Tasks.Task::Run(System.Func&lt;System.Threading.Tasks.Task&gt;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_PostGameWindow.html#onwindowshown----system-void"><code>Candide.MainMenu.Ui.Steps.PostGameWindow::OnWindowShown</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SaveWorldDescToDirectory public System.Threading.Tasks.Task SaveWorldDescToDirectory(System.String directoryPath, CandideServer.GameDescription desc) System.Threading.Tasks.Task directoryPath System.String desc CandideServer.GameDescription" id="saveworlddesctodirectory-system-string--candideserver-gamedescription---system-threading-tasks-task">
+<div class="method-heading">
+<h3><code>SaveWorldDescToDirectory</code></h3>
+<a class="permalink" href="#saveworlddesctodirectory-system-string--candideserver-gamedescription---system-threading-tasks-task" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Threading.Tasks.Task SaveWorldDescToDirectory(System.String directoryPath, CandideServer.GameDescription desc)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::SaveWorldDescToDirectory(System.String, CandideServer.GameDescription)">Copy Harmony target</button>
+</div>
+<p><code>public System.Threading.Tasks.Task SaveWorldDescToDirectory(System.String directoryPath, <a href="../../types/CandideServer/CandideServer_GameDescription.html">CandideServer.GameDescription</a> desc)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Threading.Tasks.Task</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0F337636FBA0A034EB8C909255088DC36127572F599CA3976CA3640292C50D02</code></li>
+<li><span>Body hash</span><code>11E7342193D049DACB9F23A75ADD8A90208A5978C706B3A392F992E916624F73</code></li>
+<li><span>IL size</span><span>137</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>GameSaveManager.&lt;&gt;c__DisplayClass17_0::.ctor()</code></li>
+<li><code>System.IO.Path::Combine(System.String, System.String)</code></li>
+<li><code>System.IO.MemoryStream::.ctor()</code></li>
+<li><code>CandideCreator.Shared.Serialization.CandideSerializer::Serialize(CandideCreator.Shared.Serialization.CandideReflection, System.IO.Stream, !!0, System.Boolean)</code></li>
+<li><code>System.IO.Stream::set_Position(System.Int64)</code></li>
+<li><code>GameSaveManager.&lt;&gt;c__DisplayClass17_0::&lt;SaveWorldDescToDirectory&gt;b__0()</code></li>
+<li><code>System.Action::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Threading.Tasks.Task::Run(System.Action)</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#savegametodirectory-system-string--system-collections-generic-list-1-system-valuetuple-2-system-string-system-object----system-boolean--system-boolean---system-threading-tasks-task"><code>CandideServer.Saving.GameSaveManager::SaveGameToDirectory</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>world_desc</code></li>
+<li><code>world_desc_temp</code></li>
+<li><code>world_desc_backup</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update() System.Void " id="update----system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::Update()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FDCAAAF2CA59D5CE8C989DF0E67647EFABDC068B44FF725CA6637C1F4548F19F</code></li>
+<li><span>Body hash</span><code>D168485ECB2317F78FC02C88CB9F1301971DCC848C17BAF81EFD9DCE47064803</code></li>
+<li><span>IL size</span><span>231</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>GameSaveManager.&lt;&gt;c__DisplayClass12_0::.ctor()</code></li>
+<li><code>System.Threading.Tasks.Task::get_IsCompleted()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#updateautosave----system-void">CandideServer.Saving.GameSaveManager::UpdateAutoSave()</a></code></li>
+<li><code>System.Threading.Monitor::Enter(System.Object, System.Boolean&amp;)</code></li>
+<li><code>System.Diagnostics.Stopwatch::StartNew()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#savegamestate-system-boolean---system-collections-generic-list-1-system-valuetuple-2-system-string-system-object--">CandideServer.Saving.GameSaveManager::SaveGameState(System.Boolean)</a></code></li>
+<li><code>System.Threading.Monitor::Exit(System.Object)</code></li>
+<li><code>GameSaveManager.&lt;&gt;c__DisplayClass12_0::&lt;Update&gt;b__0()</code></li>
+<li><code>System.Func&lt;System.Threading.Tasks.Task&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Threading.Tasks.Task::Run(System.Func&lt;System.Threading.Tasks.Task&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#savegametodirectory-system-string--system-collections-generic-list-1-system-valuetuple-2-system-string-system-object----system-boolean--system-boolean---system-threading-tasks-task">CandideServer.Saving.GameSaveManager::SaveGameToDirectory(System.String, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Object&gt;&gt;, System.Boolean, System.Boolean)</a></code></li>
+<li><code>System.Threading.Tasks.Task::Wait()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#stop-system-boolean---system-void">CandideServer.Server.BaseServer::Stop(System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#dogameupdate-system-timespan---system-void"><code>CandideServer.Server.BaseServer::DoGameUpdate</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="UpdateAutoSave private System.Void UpdateAutoSave() System.Void " id="updateautosave----system-void">
+<div class="method-heading">
+<h3><code>UpdateAutoSave</code></h3>
+<a class="permalink" href="#updateautosave----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void UpdateAutoSave()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Saving.GameSaveManager::UpdateAutoSave()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void UpdateAutoSave()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B130EB47ADC0659C5CA12CDC4BC0C21EC5117BDF2CDD6ECD37B6BE6A42D3C0D8</code></li>
+<li><span>Body hash</span><code>14CE04256DAD7E54376D2FDDB73940F7AE2F2E92E47DD60957EED203BA0A0CF2</code></li>
+<li><span>IL size</span><span>75</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.DateTime::get_UtcNow()</code></li>
+<li><code>System.DateTime::op_Subtraction(System.DateTime, System.DateTime)</code></li>
+<li><code>System.TimeSpan::op_LessThan(System.TimeSpan, System.TimeSpan)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#queuesave-system-string--system-boolean--system-boolean---system-void">CandideServer.Saving.GameSaveManager::QueueSave(System.String, System.Boolean, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#update----system-void"><code>CandideServer.Saving.GameSaveManager::Update</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

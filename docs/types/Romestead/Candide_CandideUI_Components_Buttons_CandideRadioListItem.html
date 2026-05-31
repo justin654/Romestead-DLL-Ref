@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.CandideUI.Components.Buttons.CandideRadioListItem - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.CandideUI.Components.Buttons.CandideRadioListItem</h1>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.Buttons.CandideRadioListItem">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.CandideUI.Components.Buttons.CandideRadioListItem
+
+- Assembly: `Romestead`
+- Namespace: `Candide.CandideUI.Components.Buttons`
+- Kind: `public class`
+- Base type: `Candide.CandideUI.Containers.CandideListBase`
+- Interfaces: `Candide.CandideUI.Tooltip.ITooltipContent`
+- Members: 0 methods, 4 properties, 4 fields, 0 events
+">Copy markdown</button>
+<a class="button" href="Candide_CandideUI_Components_Buttons_CandideRadioListItem.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.CandideUI.Components.Buttons</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>0</strong></article>
+<article class="metric"><span>Properties</span><strong>4</strong></article>
+<article class="metric"><span>Fields</span><strong>4</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.CandideUI.Components.Buttons</code></li>
+<li><span>Base type</span><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideListBase.html">Candide.CandideUI.Containers.CandideListBase</a></code></li>
+<li><span>Interfaces</span><code><a href="../../types/Romestead/Candide_CandideUI_Tooltip_ITooltipContent.html">Candide.CandideUI.Tooltip.ITooltipContent</a></code></li>
+<li><span>Hash</span><code>29F62B85F0B2DE1B28F1645251FDAEEB31EE1902E8514A26DDB2B680C2704954</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideListBase.html">Candide.CandideUI.Containers.CandideListBase</a></code></p></article>
+<article><h3>Interfaces</h3><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Tooltip_ITooltipContent.html">Candide.CandideUI.Tooltip.ITooltipContent</a></code></li>
+</ul></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_PauseMenuUi_PauseMenuWindow.html"><code>Candide.CandideUI.PauseMenuUi.PauseMenuWindow</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="protected" data-patch-target="false" data-member-text="MainPanel protected Candide.CandideUI.Containers.CandidePanel MainPanel Candide.CandideUI.Containers.CandidePanel" id="mainpanel-candide-candideui-containers-candidepanel"><td><span class="member-name-cell"><code>MainPanel</code><a class="permalink" href="#mainpanel-candide-candideui-containers-candidepanel" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="protected Candide.CandideUI.Containers.CandidePanel MainPanel">Copy</button></span></td><td>protected</td><td><code>protected <a href="../../types/Romestead/Candide_CandideUI_Containers_CandidePanel.html">Candide.CandideUI.Containers.CandidePanel</a> MainPanel</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_extraIcon private Candide.CandideUI.Components.CandideIcon _extraIcon Candide.CandideUI.Components.CandideIcon" id="-extraicon-candide-candideui-components-candideicon"><td><span class="member-name-cell"><code>_extraIcon</code><a class="permalink" href="#-extraicon-candide-candideui-components-candideicon" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Components.CandideIcon _extraIcon">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Components_CandideIcon.html">Candide.CandideUI.Components.CandideIcon</a> _extraIcon</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_iconLabel private Candide.CandideUI.Components.TranslationCenteredIconLabel _iconLabel Candide.CandideUI.Components.TranslationCenteredIconLabel" id="-iconlabel-candide-candideui-components-translationcenterediconlabel"><td><span class="member-name-cell"><code>_iconLabel</code><a class="permalink" href="#-iconlabel-candide-candideui-components-translationcenterediconlabel" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Components.TranslationCenteredIconLabel _iconLabel">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Components_TranslationCenteredIconLabel.html">Candide.CandideUI.Components.TranslationCenteredIconLabel</a> _iconLabel</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_iconStatusPanel private Candide.CandideUI.Containers.CandideHorizontalStackPanel _iconStatusPanel Candide.CandideUI.Containers.CandideHorizontalStackPanel" id="-iconstatuspanel-candide-candideui-containers-candidehorizontalstackpanel"><td><span class="member-name-cell"><code>_iconStatusPanel</code><a class="permalink" href="#-iconstatuspanel-candide-candideui-containers-candidehorizontalstackpanel" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Containers.CandideHorizontalStackPanel _iconStatusPanel">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Containers_CandideHorizontalStackPanel.html">Candide.CandideUI.Containers.CandideHorizontalStackPanel</a> _iconStatusPanel</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="ExtraIcon public System.String ExtraIcon System.String" id="extraicon-system-string"><td><span class="member-name-cell"><code>ExtraIcon</code><a class="permalink" href="#extraicon-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String ExtraIcon">Copy</button></span></td><td>public</td><td><code>public System.String ExtraIcon</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="Icon public System.String Icon System.String" id="icon-system-string"><td><span class="member-name-cell"><code>Icon</code><a class="permalink" href="#icon-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String Icon">Copy</button></span></td><td>public</td><td><code>public System.String Icon</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="Text public System.String Text System.String" id="text-system-string"><td><span class="member-name-cell"><code>Text</code><a class="permalink" href="#text-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String Text">Copy</button></span></td><td>public</td><td><code>public System.String Text</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="TextColor public Microsoft.Xna.Framework.Color TextColor Microsoft.Xna.Framework.Color" id="textcolor-microsoft-xna-framework-color"><td><span class="member-name-cell"><code>TextColor</code><a class="permalink" href="#textcolor-microsoft-xna-framework-color" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Color TextColor">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Color TextColor</code></td></tr>
+</tbody></table>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

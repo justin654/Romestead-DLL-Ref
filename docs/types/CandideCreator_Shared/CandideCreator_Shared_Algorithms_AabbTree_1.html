@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideCreator.Shared.Algorithms.AabbTree - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideCreator_Shared.html">CandideCreator.Shared</a></p>
+<div class="title-row">
+<h1>CandideCreator.Shared.Algorithms.AabbTree</h1>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideCreator.Shared.Algorithms.AabbTree
+
+- Assembly: `CandideCreator.Shared`
+- Namespace: `CandideCreator.Shared.Algorithms`
+- Kind: `public class`
+- Base type: `System.Object`
+- Interfaces: `System.Collections.Generic.IEnumerable&lt;T&gt;`, `System.Collections.IEnumerable`
+- Members: 30 methods, 3 properties, 7 fields, 0 events
+
+## Public Methods
+- `public System.Int32 Add(CandideCreator.Shared.Models.RectangleF aabb, T item)`
+- `public System.Void Clear()`
+- `public System.Void Clear(System.Int32 initialCapacity)`
+- `public System.Collections.Generic.IEnumerable&lt;CandideCreator.Shared.Models.RectangleF&gt; DebugAllNodes()`
+- `public System.Collections.Generic.IEnumerable&lt;CandideCreator.Shared.Models.RectangleF&gt; DebugNodes(CandideCreator.Shared.Models.RectangleF aabb)`
+- `public CandideCreator.Shared.Models.RectangleF GetAabb(System.Int32 leaf)`
+- `public System.Collections.Generic.IEnumerator&lt;T&gt; GetEnumerator()`
+- `public T GetItem(System.Int32 leaf)`
+- `public CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt; GetReadOnlyCopy()`
+- `public System.Boolean Move(System.Int32 leaf, CandideCreator.Shared.Models.RectangleF aabb, Microsoft.Xna.Framework.Vector2 offset)`
+- `public AabbTree.QueryRect&lt;T&gt; QueryFast(CandideCreator.Shared.Models.RectangleF aabb)`
+- `public AabbTree.QueryRect&lt;T&gt; QueryFast(Microsoft.Xna.Framework.Vector2 v)`
+- `public System.Int32 Remove(System.Int32 leaf)`
+- `public System.Void SetItem(System.Int32 leaf, T item)`
+- `public System.Boolean Update(System.Int32 leaf, CandideCreator.Shared.Models.RectangleF aabb)`
+">Copy markdown</button>
+<a class="button" href="CandideCreator_Shared_Algorithms_AabbTree_1.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideCreator.Shared.Algorithms</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>30</strong></article>
+<article class="metric"><span>Properties</span><strong>3</strong></article>
+<article class="metric"><span>Fields</span><strong>7</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideCreator.Shared</code></li>
+<li><span>Namespace</span><code>CandideCreator.Shared.Algorithms</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Interfaces</span><code>System.Collections.Generic.IEnumerable&lt;T&gt;, System.Collections.IEnumerable</code></li>
+<li><span>Hash</span><code>D2D863F06CD7D749CCB4A18CC5E0223375D176C360005EB41F142BDA8F08F810</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Interfaces</h3><ul class="list compact">
+<li><code>System.Collections.Generic.IEnumerable&lt;T&gt;</code></li>
+<li><code>System.Collections.IEnumerable</code></li>
+</ul></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/AabbTree_1_QueryAll.html"><code>AabbTree.QueryAll</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/AabbTree_1_QueryAllNodes.html"><code>AabbTree.QueryAllNodes</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/AabbTree_1_QueryNodes.html"><code>AabbTree.QueryNodes</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/AabbTree_1_QueryRect.html"><code>AabbTree.QueryRect</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Collision_CollisionBroadPhase.html"><code>CandideCreator.Shared.Collision.CollisionBroadPhase</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_PathFinding_PathFindCollisionData.html"><code>CandideServer.PathFinding.PathFindCollisionData</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_ConstructionSitesSController.html"><code>CandideServer.ServerControllers.ConstructionSitesSController</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_WorldItemServerController.html"><code>CandideServer.ServerControllers.WorldItemServerController</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerRunState.html"><code>CandideServer.ServerRunState</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html"><code>CandideServer.World.Generation.WorldGenerator</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html"><code>Candide.World.ExteriorWorldHandler</code></a></li>
+<li><a href="../../types/Shared/Shared_Collision_CollisionHelper.html"><code>Shared.Collision.CollisionHelper</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="AabbTreeNullNodeIndex private System.Int32 AabbTreeNullNodeIndex System.Int32" id="aabbtreenullnodeindex-system-int32"><td><span class="member-name-cell"><code>AabbTreeNullNodeIndex</code><a class="permalink" href="#aabbtreenullnodeindex-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 AabbTreeNullNodeIndex">Copy</button></span></td><td>private</td><td><code>private System.Int32 AabbTreeNullNodeIndex</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="AabbTreeStackQueryCapacity private System.Int32 AabbTreeStackQueryCapacity System.Int32" id="aabbtreestackquerycapacity-system-int32"><td><span class="member-name-cell"><code>AabbTreeStackQueryCapacity</code><a class="permalink" href="#aabbtreestackquerycapacity-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 AabbTreeStackQueryCapacity">Copy</button></span></td><td>private</td><td><code>private System.Int32 AabbTreeStackQueryCapacity</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_aabbTreeExpandConstant private System.Single _aabbTreeExpandConstant System.Single" id="-aabbtreeexpandconstant-system-single"><td><span class="member-name-cell"><code>_aabbTreeExpandConstant</code><a class="permalink" href="#-aabbtreeexpandconstant-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single _aabbTreeExpandConstant">Copy</button></span></td><td>private</td><td><code>private System.Single _aabbTreeExpandConstant</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_aabbTreeMoveConstant private System.Single _aabbTreeMoveConstant System.Single" id="-aabbtreemoveconstant-system-single"><td><span class="member-name-cell"><code>_aabbTreeMoveConstant</code><a class="permalink" href="#-aabbtreemoveconstant-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single _aabbTreeMoveConstant">Copy</button></span></td><td>private</td><td><code>private System.Single _aabbTreeMoveConstant</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_queue private AabbTree.PriorityQueue&lt;T&gt; _queue AabbTree.PriorityQueue&lt;T&gt;" id="-queue-aabbtree-1-priorityqueue--t-"><td><span class="member-name-cell"><code>_queue</code><a class="permalink" href="#-queue-aabbtree-1-priorityqueue--t-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private AabbTree.PriorityQueue&lt;T&gt; _queue">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideCreator_Shared/AabbTree_1_PriorityQueue.html">AabbTree.PriorityQueue</a>&lt;T&gt; _queue</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_tree private AabbTree.AabbTreeT&lt;T&gt; _tree AabbTree.AabbTreeT&lt;T&gt;" id="-tree-aabbtree-1-aabbtreet--t-"><td><span class="member-name-cell"><code>_tree</code><a class="permalink" href="#-tree-aabbtree-1-aabbtreet--t-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private AabbTree.AabbTreeT&lt;T&gt; _tree">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideCreator_Shared/AabbTree_1_AabbTreeT.html">AabbTree.AabbTreeT</a>&lt;T&gt; _tree</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_version private System.Int32 _version System.Int32" id="-version-system-int32"><td><span class="member-name-cell"><code>_version</code><a class="permalink" href="#-version-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _version">Copy</button></span></td><td>private</td><td><code>private System.Int32 _version</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="Count public System.Int32 Count System.Int32" id="count-system-int32"><td><span class="member-name-cell"><code>Count</code><a class="permalink" href="#count-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 Count">Copy</button></span></td><td>public</td><td><code>public System.Int32 Count</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="ExpandConstant public System.Single ExpandConstant System.Single" id="expandconstant-system-single"><td><span class="member-name-cell"><code>ExpandConstant</code><a class="permalink" href="#expandconstant-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single ExpandConstant">Copy</button></span></td><td>public</td><td><code>public System.Single ExpandConstant</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="MoveConstant public System.Single MoveConstant System.Single" id="moveconstant-system-single"><td><span class="member-name-cell"><code>MoveConstant</code><a class="permalink" href="#moveconstant-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single MoveConstant">Copy</button></span></td><td>public</td><td><code>public System.Single MoveConstant</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Add public System.Int32 Add(CandideCreator.Shared.Models.RectangleF aabb, T item) System.Int32 aabb CandideCreator.Shared.Models.RectangleF item T" id="add-candidecreator-shared-models-rectanglef---t---system-int32">
+<div class="method-heading">
+<h3><code>Add</code></h3>
+<a class="permalink" href="#add-candidecreator-shared-models-rectanglef---t---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 Add(CandideCreator.Shared.Models.RectangleF aabb, T item)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::Add(CandideCreator.Shared.Models.RectangleF, T)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 Add(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> aabb, T item)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7C25F566AA1BB3DFB9018359D6DA14840E01C8A6E2E835D9850B8487919E6A8E</code></li>
+<li><span>Body hash</span><code>FB4086CA9517D53601301D856A40485A4D53C69266F5D549893B98A286F5B7D2</code></li>
+<li><span>IL size</span><span>25</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::Expand(CandideCreator.Shared.Models.RectangleF, System.Single)</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::InternalAdd(CandideCreator.Shared.Models.RectangleF, T)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Clear public System.Void Clear() System.Void " id="clear----system-void">
+<div class="method-heading">
+<h3><code>Clear</code></h3>
+<a class="permalink" href="#clear----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Clear()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::Clear()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Clear()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>622207A3B3E0D3E5B95795CE338157563B0768AF7B7D6A44FF0C76AC718F1860</code></li>
+<li><span>Body hash</span><code>638B523F155E60DF85713BFBA2F72B06282DB003D411E207340C1919ED1205A0</code></li>
+<li><span>IL size</span><span>29</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>AabbTree.AabbTreeT&lt;T&gt;::.ctor(System.Int32)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Clear public System.Void Clear(System.Int32 initialCapacity) System.Void initialCapacity System.Int32" id="clear-system-int32---system-void">
+<div class="method-heading">
+<h3><code>Clear</code></h3>
+<a class="permalink" href="#clear-system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Clear(System.Int32 initialCapacity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::Clear(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Clear(System.Int32 initialCapacity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>124ADC18E62208E1E4C3C409ED5FEA6B29D53B3409B8FB55D772471FB1C8888B</code></li>
+<li><span>Body hash</span><code>B57A125BA68670DCCACC746C535F2744623C7FABAC2FEFF50C8203D85E7BC39E</code></li>
+<li><span>IL size</span><span>28</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>AabbTree.AabbTreeT&lt;T&gt;::.ctor(System.Int32)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="Collide private System.Boolean Collide(CandideCreator.Shared.Models.RectangleF a, CandideCreator.Shared.Models.RectangleF b) System.Boolean a CandideCreator.Shared.Models.RectangleF b CandideCreator.Shared.Models.RectangleF" id="collide-candidecreator-shared-models-rectanglef--candidecreator-shared-models-rectanglef---system-boolean">
+<div class="method-heading">
+<h3><code>Collide</code></h3>
+<a class="permalink" href="#collide-candidecreator-shared-models-rectanglef--candidecreator-shared-models-rectanglef---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean Collide(CandideCreator.Shared.Models.RectangleF a, CandideCreator.Shared.Models.RectangleF b)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::Collide(CandideCreator.Shared.Models.RectangleF, CandideCreator.Shared.Models.RectangleF)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean Collide(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> a, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> b)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>399ADDBB2DA49472F152EFE57618175D21EE460959177D14B85B759DF1D51B10</code></li>
+<li><span>Body hash</span><code>42DF30F216C8F6804BC36EE9D0F9E68B74CA18EE4AF0C3D7628926BC97A3F6A0</code></li>
+<li><span>IL size</span><span>86</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Right()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Left()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Bottom()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Top()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="Contains private System.Boolean Contains(CandideCreator.Shared.Models.RectangleF r1, CandideCreator.Shared.Models.RectangleF r2) System.Boolean r1 CandideCreator.Shared.Models.RectangleF r2 CandideCreator.Shared.Models.RectangleF" id="contains-candidecreator-shared-models-rectanglef--candidecreator-shared-models-rectanglef---system-boolean">
+<div class="method-heading">
+<h3><code>Contains</code></h3>
+<a class="permalink" href="#contains-candidecreator-shared-models-rectanglef--candidecreator-shared-models-rectanglef---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean Contains(CandideCreator.Shared.Models.RectangleF r1, CandideCreator.Shared.Models.RectangleF r2)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::Contains(CandideCreator.Shared.Models.RectangleF, CandideCreator.Shared.Models.RectangleF)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean Contains(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> r1, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> r2)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C05535F2AAC95F30286383D5BA6778039E4B8282AAB1E198E3F2FDD06294E5B1</code></li>
+<li><span>Body hash</span><code>D71B4C1E15D50B95EC74CC887DB441DA5CC26DDA92BD7E8AFE21177FA2090FC7</code></li>
+<li><span>IL size</span><span>76</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Left()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Right()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Top()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Bottom()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DebugAllNodes public System.Collections.Generic.IEnumerable&lt;CandideCreator.Shared.Models.RectangleF&gt; DebugAllNodes() System.Collections.Generic.IEnumerable&lt;CandideCreator.Shared.Models.RectangleF&gt; " id="debugallnodes----system-collections-generic-ienumerable-1-candidecreator-shared-models-rectanglef-">
+<div class="method-heading">
+<h3><code>DebugAllNodes</code></h3>
+<a class="permalink" href="#debugallnodes----system-collections-generic-ienumerable-1-candidecreator-shared-models-rectanglef-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.IEnumerable&lt;CandideCreator.Shared.Models.RectangleF&gt; DebugAllNodes()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::DebugAllNodes()">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.IEnumerable&lt;<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a>&gt; DebugAllNodes()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.IEnumerable&lt;<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a>&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2EB483AE2422069350E8769CE46BFC22FB46E0860D7E6110AB169350730E114C</code></li>
+<li><span>Body hash</span><code>CCBE41842B392735D50638D34A7B5CD9724662B21A7A8F3BA02B8D26E9D72CA4</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>AabbTree.QueryAllNodes&lt;T&gt;::.ctor(CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DebugNodes public System.Collections.Generic.IEnumerable&lt;CandideCreator.Shared.Models.RectangleF&gt; DebugNodes(CandideCreator.Shared.Models.RectangleF aabb) System.Collections.Generic.IEnumerable&lt;CandideCreator.Shared.Models.RectangleF&gt; aabb CandideCreator.Shared.Models.RectangleF" id="debugnodes-candidecreator-shared-models-rectanglef---system-collections-generic-ienumerable-1-candidecreator-shared-models-rectanglef-">
+<div class="method-heading">
+<h3><code>DebugNodes</code></h3>
+<a class="permalink" href="#debugnodes-candidecreator-shared-models-rectanglef---system-collections-generic-ienumerable-1-candidecreator-shared-models-rectanglef-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.IEnumerable&lt;CandideCreator.Shared.Models.RectangleF&gt; DebugNodes(CandideCreator.Shared.Models.RectangleF aabb)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::DebugNodes(CandideCreator.Shared.Models.RectangleF)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.IEnumerable&lt;<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a>&gt; DebugNodes(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> aabb)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.IEnumerable&lt;<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a>&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9DBED20D396A5D7FD1D5A755DB3EAA457E851842D370DE3066A5355A53131543</code></li>
+<li><span>Body hash</span><code>A8A6DD9A0697B896FC1C92793E30732440A7E1F6C708EAF8161A111A260C06F9</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>AabbTree.QueryNodes&lt;T&gt;::.ctor(CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;, CandideCreator.Shared.Models.RectangleF)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="EnsureSize private System.Void EnsureSize&lt;TK&gt;(TK[]&amp; array, System.Int32 newCapacity) System.Void array TK[]&amp; newCapacity System.Int32" id="ensuresize-1--tk-----system-int32---system-void">
+<div class="method-heading">
+<h3><code>EnsureSize</code></h3>
+<a class="permalink" href="#ensuresize-1--tk-----system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void EnsureSize&lt;TK&gt;(TK[]&amp; array, System.Int32 newCapacity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::EnsureSize(TK[]&amp;, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void EnsureSize&lt;TK&gt;(TK[]&amp; array, System.Int32 newCapacity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C0E076738C69B054C8A4A1E5C47652F7A072C6BF60DE38354790A7100EE09F3E</code></li>
+<li><span>Body hash</span><code>B7CCF3ED05C5E69C6D203E7BF6E7E2A06431CC903CF706D45D15EB379F401DD3</code></li>
+<li><span>IL size</span><span>23</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Array::Resize(!!0[]&amp;, System.Int32)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="Expand private CandideCreator.Shared.Models.RectangleF Expand(CandideCreator.Shared.Models.RectangleF aabb, System.Single v) CandideCreator.Shared.Models.RectangleF aabb CandideCreator.Shared.Models.RectangleF v System.Single" id="expand-candidecreator-shared-models-rectanglef--system-single---candidecreator-shared-models-rectanglef">
+<div class="method-heading">
+<h3><code>Expand</code></h3>
+<a class="permalink" href="#expand-candidecreator-shared-models-rectanglef--system-single---candidecreator-shared-models-rectanglef" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private CandideCreator.Shared.Models.RectangleF Expand(CandideCreator.Shared.Models.RectangleF aabb, System.Single v)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::Expand(CandideCreator.Shared.Models.RectangleF, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> Expand(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> aabb, System.Single v)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6282F7532A6FE00BAFCE63A27544D335DC5EDC8FDC348846C22056745F95B7E3</code></li>
+<li><span>Body hash</span><code>453EA94324E12F8056A639F13970DBA0614C41B055EDA640C2B609C9CB724D76</code></li>
+<li><span>IL size</span><span>57</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Left()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Top()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::.ctor(System.Single, System.Single, System.Single, System.Single)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetAabb public CandideCreator.Shared.Models.RectangleF GetAabb(System.Int32 leaf) CandideCreator.Shared.Models.RectangleF leaf System.Int32" id="getaabb-system-int32---candidecreator-shared-models-rectanglef">
+<div class="method-heading">
+<h3><code>GetAabb</code></h3>
+<a class="permalink" href="#getaabb-system-int32---candidecreator-shared-models-rectanglef" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideCreator.Shared.Models.RectangleF GetAabb(System.Int32 leaf)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::GetAabb(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> GetAabb(System.Int32 leaf)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F43EA7C378A477AD22D80BD000C7A3C887F945AF10DD13A51DA07A01543A2D14</code></li>
+<li><span>Body hash</span><code>AE9EDF4DB88EC28F222D61A6D434D6FF4CA282D9396225C4AFDD56CC9AA74F0B</code></li>
+<li><span>IL size</span><span>23</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetEnumerator public System.Collections.Generic.IEnumerator&lt;T&gt; GetEnumerator() System.Collections.Generic.IEnumerator&lt;T&gt; " id="getenumerator----system-collections-generic-ienumerator-1--t-">
+<div class="method-heading">
+<h3><code>GetEnumerator</code></h3>
+<a class="permalink" href="#getenumerator----system-collections-generic-ienumerator-1--t-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.IEnumerator&lt;T&gt; GetEnumerator()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::GetEnumerator()">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.IEnumerator&lt;T&gt; GetEnumerator()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.IEnumerator&lt;T&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>A784EF3FE8150554AFAF03A810126A3F8E45A62898B2053CDF02457FFB3793E7</code></li>
+<li><span>Body hash</span><code>E0F94DE15C142FDBE3BB4BBEB5E62C5601F2748CD65D55F39A5AF436048EEC8F</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>AabbTree.QueryAll&lt;T&gt;::.ctor(CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetItem public T GetItem(System.Int32 leaf) T leaf System.Int32" id="getitem-system-int32----t">
+<div class="method-heading">
+<h3><code>GetItem</code></h3>
+<a class="permalink" href="#getitem-system-int32----t" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public T GetItem(System.Int32 leaf)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::GetItem(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public T GetItem(System.Int32 leaf)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>T</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>76B6EB1F53B87368C4941BDFE82B95F732B39849CC297EB0107D1897C074C4A4</code></li>
+<li><span>Body hash</span><code>131975F1E3568161291AF7419A5475B27144A0FE434F19F4A332A4B5AF83B36E</code></li>
+<li><span>IL size</span><span>23</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetReadOnlyCopy public CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt; GetReadOnlyCopy() CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt; " id="getreadonlycopy----candidecreator-shared-algorithms-aabbtree-1--t-">
+<div class="method-heading">
+<h3><code>GetReadOnlyCopy</code></h3>
+<a class="permalink" href="#getreadonlycopy----candidecreator-shared-algorithms-aabbtree-1--t-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt; GetReadOnlyCopy()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::GetReadOnlyCopy()">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Algorithms_AabbTree_1.html">CandideCreator.Shared.Algorithms.AabbTree</a>&lt;T&gt; GetReadOnlyCopy()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Algorithms_AabbTree_1.html">CandideCreator.Shared.Algorithms.AabbTree</a>&lt;T&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D0FE4790AA69140E0EAA8074A05D44526787BFCAA78A53E4A1E3020C9FE4A0C2</code></li>
+<li><span>Body hash</span><code>2C52A31C3232A8D418BB42CFC032901A9A43C98349C85630D5DBCC55B164B2FF</code></li>
+<li><span>IL size</span><span>30</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::.ctor()</code></li>
+<li><code>AabbTree.AabbTreeT&lt;T&gt;::Copy()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="InternalAdd private System.Int32 InternalAdd(CandideCreator.Shared.Models.RectangleF aabb, T item) System.Int32 aabb CandideCreator.Shared.Models.RectangleF item T" id="internaladd-candidecreator-shared-models-rectanglef---t---system-int32">
+<div class="method-heading">
+<h3><code>InternalAdd</code></h3>
+<a class="permalink" href="#internaladd-candidecreator-shared-models-rectanglef---t---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Int32 InternalAdd(CandideCreator.Shared.Models.RectangleF aabb, T item)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::InternalAdd(CandideCreator.Shared.Models.RectangleF, T)">Copy Harmony target</button>
+</div>
+<p><code>private System.Int32 InternalAdd(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> aabb, T item)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>58F3D233507DB60C0B25CB3109DB25AC03953132D460029518C9D78C0BB68666</code></li>
+<li><span>Body hash</span><code>C538E8662505458F7B40BEC5B36DF10C129918E8EE257E7D53CC333B20FC40D0</code></li>
+<li><span>IL size</span><span>362</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::SPopFreelist(CandideCreator.Shared.Models.RectangleF, T)</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::SBranchAndBoundFindOptimalSibling(CandideCreator.Shared.Models.RectangleF)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#union-candidecreator-shared-models-rectanglef--candidecreator-shared-models-rectanglef---candidecreator-shared-models-rectanglef">CandideCreator.Shared.Models.RectangleF::Union(CandideCreator.Shared.Models.RectangleF, CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::SRefitHierarchy(System.Int32)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Move public System.Boolean Move(System.Int32 leaf, CandideCreator.Shared.Models.RectangleF aabb, Microsoft.Xna.Framework.Vector2 offset) System.Boolean leaf System.Int32 aabb CandideCreator.Shared.Models.RectangleF offset Microsoft.Xna.Framework.Vector2" id="move-system-int32--candidecreator-shared-models-rectanglef--microsoft-xna-framework-vector2---system-boolean">
+<div class="method-heading">
+<h3><code>Move</code></h3>
+<a class="permalink" href="#move-system-int32--candidecreator-shared-models-rectanglef--microsoft-xna-framework-vector2---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean Move(System.Int32 leaf, CandideCreator.Shared.Models.RectangleF aabb, Microsoft.Xna.Framework.Vector2 offset)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::Move(System.Int32, CandideCreator.Shared.Models.RectangleF, Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean Move(System.Int32 leaf, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> aabb, Microsoft.Xna.Framework.Vector2 offset)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>62D128C2EFE23CB6B230879200E2D14E2B898CB1C3A073D5C68834B5580D826D</code></li>
+<li><span>Body hash</span><code>C9D09027BD5EFDF85DB3D6A4E63D09E415784299C7171A9A0A00AA8E9CA125A1</code></li>
+<li><span>IL size</span><span>306</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::Expand(CandideCreator.Shared.Models.RectangleF, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::Contains(CandideCreator.Shared.Models.RectangleF, CandideCreator.Shared.Models.RectangleF)</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::Remove(System.Int32)</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::InternalAdd(CandideCreator.Shared.Models.RectangleF, T)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="QueryFast public AabbTree.QueryRect&lt;T&gt; QueryFast(CandideCreator.Shared.Models.RectangleF aabb) AabbTree.QueryRect&lt;T&gt; aabb CandideCreator.Shared.Models.RectangleF" id="queryfast-candidecreator-shared-models-rectanglef---aabbtree-1-queryrect--t-">
+<div class="method-heading">
+<h3><code>QueryFast</code></h3>
+<a class="permalink" href="#queryfast-candidecreator-shared-models-rectanglef---aabbtree-1-queryrect--t-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public AabbTree.QueryRect&lt;T&gt; QueryFast(CandideCreator.Shared.Models.RectangleF aabb)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::QueryFast(CandideCreator.Shared.Models.RectangleF)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideCreator_Shared/AabbTree_1_QueryRect.html">AabbTree.QueryRect</a>&lt;T&gt; QueryFast(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> aabb)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideCreator_Shared/AabbTree_1_QueryRect.html">AabbTree.QueryRect</a>&lt;T&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>50966B7909CC6845B7739B36CD14BBF750474261D75EB9EDF3249EFD67B18605</code></li>
+<li><span>Body hash</span><code>190D38B773E766425FBB7CC1A6A59AA44E13E6E2B6476F3BB7C0D90EC43CCFA3</code></li>
+<li><span>IL size</span><span>13</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>AabbTree.QueryRect&lt;T&gt;::.ctor(CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;, CandideCreator.Shared.Models.RectangleF)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="QueryFast public AabbTree.QueryRect&lt;T&gt; QueryFast(Microsoft.Xna.Framework.Vector2 v) AabbTree.QueryRect&lt;T&gt; v Microsoft.Xna.Framework.Vector2" id="queryfast-microsoft-xna-framework-vector2---aabbtree-1-queryrect--t-">
+<div class="method-heading">
+<h3><code>QueryFast</code></h3>
+<a class="permalink" href="#queryfast-microsoft-xna-framework-vector2---aabbtree-1-queryrect--t-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public AabbTree.QueryRect&lt;T&gt; QueryFast(Microsoft.Xna.Framework.Vector2 v)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::QueryFast(Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideCreator_Shared/AabbTree_1_QueryRect.html">AabbTree.QueryRect</a>&lt;T&gt; QueryFast(Microsoft.Xna.Framework.Vector2 v)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideCreator_Shared/AabbTree_1_QueryRect.html">AabbTree.QueryRect</a>&lt;T&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>84E782A77C4D3A298917E54B149E8B994CEFE12490C9831FF8481EDEC72144FD</code></li>
+<li><span>Body hash</span><code>75E7211D9BDA6626C53C74098DFE5C6A3FC6A2303B5A8BBA3353F73FFBE061C4</code></li>
+<li><span>IL size</span><span>39</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Models.RectangleF::.ctor(System.Single, System.Single, System.Single, System.Single)</code></li>
+<li><code>AabbTree.QueryRect&lt;T&gt;::.ctor(CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;, CandideCreator.Shared.Models.RectangleF)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Remove public System.Int32 Remove(System.Int32 leaf) System.Int32 leaf System.Int32" id="remove-system-int32---system-int32">
+<div class="method-heading">
+<h3><code>Remove</code></h3>
+<a class="permalink" href="#remove-system-int32---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 Remove(System.Int32 leaf)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::Remove(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 Remove(System.Int32 leaf)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>47D69814D61AB6D1BE40E76958820B143A5F9498CD87912769FC78B39F3A0468</code></li>
+<li><span>Body hash</span><code>4A2D1BD890A7BC0652620746DA5049546F46F3F05AB8BA795B44261962E9CD62</code></li>
+<li><span>IL size</span><span>481</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::SRefitHierarchy(System.Int32)</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::SPushFreelist(System.Int32)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SBalance private System.Int32 SBalance(System.Int32 indexA) System.Int32 indexA System.Int32" id="sbalance-system-int32---system-int32">
+<div class="method-heading">
+<h3><code>SBalance</code></h3>
+<a class="permalink" href="#sbalance-system-int32---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Int32 SBalance(System.Int32 indexA)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::SBalance(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>private System.Int32 SBalance(System.Int32 indexA)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8203D6AF5B4638188F9E2A041E1486772A21A2FB8188FF94C4991E6A227249E1</code></li>
+<li><span>Body hash</span><code>09329E483FA03B4B82A9C48F8BC7E5A925F283811D2DAF1A8399F2E397FDA8AB</code></li>
+<li><span>IL size</span><span>1446</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#union-candidecreator-shared-models-rectanglef--candidecreator-shared-models-rectanglef---candidecreator-shared-models-rectanglef">CandideCreator.Shared.Models.RectangleF::Union(CandideCreator.Shared.Models.RectangleF, CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code>System.Math::Max(System.Int32, System.Int32)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SBranchAndBoundFindOptimalSibling private System.Int32 SBranchAndBoundFindOptimalSibling(CandideCreator.Shared.Models.RectangleF toInsert) System.Int32 toInsert CandideCreator.Shared.Models.RectangleF" id="sbranchandboundfindoptimalsibling-candidecreator-shared-models-rectanglef---system-int32">
+<div class="method-heading">
+<h3><code>SBranchAndBoundFindOptimalSibling</code></h3>
+<a class="permalink" href="#sbranchandboundfindoptimalsibling-candidecreator-shared-models-rectanglef---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Int32 SBranchAndBoundFindOptimalSibling(CandideCreator.Shared.Models.RectangleF toInsert)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::SBranchAndBoundFindOptimalSibling(CandideCreator.Shared.Models.RectangleF)">Copy Harmony target</button>
+</div>
+<p><code>private System.Int32 SBranchAndBoundFindOptimalSibling(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> toInsert)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E90162EF05E219C0AE809F752DFA33D73CF5B5C3953225F528112D596BCB9E4F</code></li>
+<li><span>Body hash</span><code>9262FF5988927C790AAF7EEB449D37A3B5D02ABB9BDE3A01735E498A9981B2C5</code></li>
+<li><span>IL size</span><span>317</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>AabbTree.PriorityQueue&lt;T&gt;::Reset()</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::SDeltaCost(CandideCreator.Shared.Models.RectangleF, CandideCreator.Shared.Models.RectangleF)</code></li>
+<li><code>AabbTree.PriorityQueue&lt;T&gt;::Push(System.Int32, System.Single)</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::SurfaceArea(CandideCreator.Shared.Models.RectangleF)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#union-candidecreator-shared-models-rectanglef--candidecreator-shared-models-rectanglef---candidecreator-shared-models-rectanglef">CandideCreator.Shared.Models.RectangleF::Union(CandideCreator.Shared.Models.RectangleF, CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code>AabbTree.PriorityQueue&lt;T&gt;::TryPop(System.Int32&amp;, System.Single&amp;)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SDeltaCost private System.Single SDeltaCost(CandideCreator.Shared.Models.RectangleF toInsert, CandideCreator.Shared.Models.RectangleF candidate) System.Single toInsert CandideCreator.Shared.Models.RectangleF candidate CandideCreator.Shared.Models.RectangleF" id="sdeltacost-candidecreator-shared-models-rectanglef--candidecreator-shared-models-rectanglef---system-single">
+<div class="method-heading">
+<h3><code>SDeltaCost</code></h3>
+<a class="permalink" href="#sdeltacost-candidecreator-shared-models-rectanglef--candidecreator-shared-models-rectanglef---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Single SDeltaCost(CandideCreator.Shared.Models.RectangleF toInsert, CandideCreator.Shared.Models.RectangleF candidate)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::SDeltaCost(CandideCreator.Shared.Models.RectangleF, CandideCreator.Shared.Models.RectangleF)">Copy Harmony target</button>
+</div>
+<p><code>private System.Single SDeltaCost(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> toInsert, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> candidate)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E9CC89D23E20CDE5EA5FB9D4123EA5B02839877C8027634A6E86FD78856E289A</code></li>
+<li><span>Body hash</span><code>4362AAED068FAFE3BF23EA1AFA47193C95BDA102443887BF9F0D958E24B461A2</code></li>
+<li><span>IL size</span><span>25</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#union-candidecreator-shared-models-rectanglef--candidecreator-shared-models-rectanglef---candidecreator-shared-models-rectanglef">CandideCreator.Shared.Models.RectangleF::Union(CandideCreator.Shared.Models.RectangleF, CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::SurfaceArea(CandideCreator.Shared.Models.RectangleF)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetItem public System.Void SetItem(System.Int32 leaf, T item) System.Void leaf System.Int32 item T" id="setitem-system-int32---t---system-void">
+<div class="method-heading">
+<h3><code>SetItem</code></h3>
+<a class="permalink" href="#setitem-system-int32---t---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetItem(System.Int32 leaf, T item)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::SetItem(System.Int32, T)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetItem(System.Int32 leaf, T item)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A327039B758F9EDD6A29DA3037870048E524412C392B393C32AC5C1BF9B6D8CC</code></li>
+<li><span>Body hash</span><code>E1CBAFDEFDACB42FE10791CE5C7B2AA27703A65B8308CDDF6AE63A2889CBF762</code></li>
+<li><span>IL size</span><span>20</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SPopFreelist private System.Int32 SPopFreelist(CandideCreator.Shared.Models.RectangleF aabb, T item) System.Int32 aabb CandideCreator.Shared.Models.RectangleF item T" id="spopfreelist-candidecreator-shared-models-rectanglef---t---system-int32">
+<div class="method-heading">
+<h3><code>SPopFreelist</code></h3>
+<a class="permalink" href="#spopfreelist-candidecreator-shared-models-rectanglef---t---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Int32 SPopFreelist(CandideCreator.Shared.Models.RectangleF aabb, T item)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::SPopFreelist(CandideCreator.Shared.Models.RectangleF, T)">Copy Harmony target</button>
+</div>
+<p><code>private System.Int32 SPopFreelist(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> aabb, T item)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C826A1BB08EE93B9B5C217CFFAF22ED8EABF6B2FECFEB72A3F6F4E0D21CA25DB</code></li>
+<li><span>Body hash</span><code>A41DA586D768140F7E9B0B4F5509FA5DDA0CDCBF929EDBC8D2308B1F2EF2192D</code></li>
+<li><span>IL size</span><span>414</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::EnsureSize(!!0[]&amp;, System.Int32)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SPushFreelist private System.Void SPushFreelist(System.Int32 index) System.Void index System.Int32" id="spushfreelist-system-int32---system-void">
+<div class="method-heading">
+<h3><code>SPushFreelist</code></h3>
+<a class="permalink" href="#spushfreelist-system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SPushFreelist(System.Int32 index)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::SPushFreelist(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SPushFreelist(System.Int32 index)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>566B7ED30421C4F46BAC927529E2F01C49B712BDF66CABD3FCDC7EA18A2BDC49</code></li>
+<li><span>Body hash</span><code>845ED166560C1AA8C2514C08600A5682A105109EC52690FC90E8F78C139A197B</code></li>
+<li><span>IL size</span><span>89</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SRefitHierarchy private System.Void SRefitHierarchy(System.Int32 index) System.Void index System.Int32" id="srefithierarchy-system-int32---system-void">
+<div class="method-heading">
+<h3><code>SRefitHierarchy</code></h3>
+<a class="permalink" href="#srefithierarchy-system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SRefitHierarchy(System.Int32 index)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::SRefitHierarchy(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SRefitHierarchy(System.Int32 index)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>90C7B49C3DC51521FCCA79F9C7AA7C38DE50D7B91559E9D359200A26B978DF23</code></li>
+<li><span>Body hash</span><code>2A17A45C3049589E1391E0097DFE550AEC9E56BC88381859135E7F647F4C1B5F</code></li>
+<li><span>IL size</span><span>58</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::SBalance(System.Int32)</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::SSyncNode(System.Int32)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SSyncNode private System.Void SSyncNode(System.Int32 index) System.Void index System.Int32" id="ssyncnode-system-int32---system-void">
+<div class="method-heading">
+<h3><code>SSyncNode</code></h3>
+<a class="permalink" href="#ssyncnode-system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SSyncNode(System.Int32 index)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::SSyncNode(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SSyncNode(System.Int32 index)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1972E7B7702C502E0B1D4D4430A25E2B7295EDD7DABE3E6906D3CFF380D18D8F</code></li>
+<li><span>Body hash</span><code>1305717BC136CB60A5BA780453C36976FED1A89744321C9CE098619246F4BDFD</code></li>
+<li><span>IL size</span><span>147</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Math::Max(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#union-candidecreator-shared-models-rectanglef--candidecreator-shared-models-rectanglef---candidecreator-shared-models-rectanglef">CandideCreator.Shared.Models.RectangleF::Union(CandideCreator.Shared.Models.RectangleF, CandideCreator.Shared.Models.RectangleF)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="STreeCost private System.Single STreeCost(System.Int32 index) System.Single index System.Int32" id="streecost-system-int32---system-single">
+<div class="method-heading">
+<h3><code>STreeCost</code></h3>
+<a class="permalink" href="#streecost-system-int32---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Single STreeCost(System.Int32 index)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::STreeCost(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>private System.Single STreeCost(System.Int32 index)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>94D5D32585B8C8CB24375CC577789DA22024B059810CF0064515CD04EFE4CFE4</code></li>
+<li><span>Body hash</span><code>A7AB09D93858D56C9E9BE2DD9A85577B368495004B4AD0A57700117B502CE0C5</code></li>
+<li><span>IL size</span><span>111</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::STreeCost(System.Int32)</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::SurfaceArea(CandideCreator.Shared.Models.RectangleF)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SurfaceArea private System.Single SurfaceArea(CandideCreator.Shared.Models.RectangleF bb) System.Single bb CandideCreator.Shared.Models.RectangleF" id="surfacearea-candidecreator-shared-models-rectanglef---system-single">
+<div class="method-heading">
+<h3><code>SurfaceArea</code></h3>
+<a class="permalink" href="#surfacearea-candidecreator-shared-models-rectanglef---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Single SurfaceArea(CandideCreator.Shared.Models.RectangleF bb)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::SurfaceArea(CandideCreator.Shared.Models.RectangleF)">Copy Harmony target</button>
+</div>
+<p><code>private System.Single SurfaceArea(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> bb)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F08EC26787B6571B6B5491E71CEFA31935461B4D5446C284DBF331FDD0DA1A87</code></li>
+<li><span>Body hash</span><code>092B325514BB57F19CFF2BC8EC46931C6F99C240E92723F558711AE656763EB7</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="System.Collections.IEnumerable.GetEnumerator private System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() System.Collections.IEnumerator " id="system-collections-ienumerable-getenumerator----system-collections-ienumerator">
+<div class="method-heading">
+<h3><code>System.Collections.IEnumerable.GetEnumerator</code></h3>
+<a class="permalink" href="#system-collections-ienumerable-getenumerator----system-collections-ienumerator" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::System.Collections.IEnumerable.GetEnumerator()">Copy Harmony target</button>
+</div>
+<p><code>private System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Collections.IEnumerator</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>54972FB1F80C4266EC252812471EC8C2182CB9536446F6EBC96B84D6166156B0</code></li>
+<li><span>Body hash</span><code>E0F94DE15C142FDBE3BB4BBEB5E62C5601F2748CD65D55F39A5AF436048EEC8F</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>AabbTree.QueryAll&lt;T&gt;::.ctor(CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Boolean Update(System.Int32 leaf, CandideCreator.Shared.Models.RectangleF aabb) System.Boolean leaf System.Int32 aabb CandideCreator.Shared.Models.RectangleF" id="update-system-int32--candidecreator-shared-models-rectanglef---system-boolean">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-system-int32--candidecreator-shared-models-rectanglef---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean Update(System.Int32 leaf, CandideCreator.Shared.Models.RectangleF aabb)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.AabbTree::Update(System.Int32, CandideCreator.Shared.Models.RectangleF)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean Update(System.Int32 leaf, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> aabb)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C1BFE0546D4FAA0395EC1D607D3ECC6CD18EC04111063B3260345BC4DF7B3F44</code></li>
+<li><span>Body hash</span><code>5978F910CFCC67617FC995F37A8597988531C400FD7865514128B2CF593CBCE6</code></li>
+<li><span>IL size</span><span>106</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::Contains(CandideCreator.Shared.Models.RectangleF, CandideCreator.Shared.Models.RectangleF)</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::Remove(System.Int32)</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;T&gt;::Add(CandideCreator.Shared.Models.RectangleF, T)</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

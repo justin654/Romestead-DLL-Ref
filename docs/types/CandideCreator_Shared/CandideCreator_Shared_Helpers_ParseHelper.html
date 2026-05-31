@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideCreator.Shared.Helpers.ParseHelper - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideCreator_Shared.html">CandideCreator.Shared</a></p>
+<div class="title-row">
+<h1>CandideCreator.Shared.Helpers.ParseHelper</h1>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideCreator.Shared.Helpers.ParseHelper
+
+- Assembly: `CandideCreator.Shared`
+- Namespace: `CandideCreator.Shared.Helpers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 13 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public System.Boolean ParseBool(System.String text, System.Boolean def)`
+- `public Microsoft.Xna.Framework.Color ParseColor(System.String text, Microsoft.Xna.Framework.Color def)`
+- `public System.Double ParseDouble(System.String text, System.Double def)`
+- `public System.Single ParseFloat(System.String text, System.Single def)`
+- `public System.Guid ParseGuid(System.String text)`
+- `public System.Int32 ParseInt(System.String text, System.Int32 def)`
+- `public System.Int64 ParseLong(System.String text, System.Int64 def)`
+- `public CandideCreator.Shared.Graphics.SpriteSheet ParseSpriteSheet(System.String text)`
+- `public System.UInt64 ParseULong(System.String text, System.UInt64 def)`
+- `public Microsoft.Xna.Framework.Vector2 ParseVector2(System.String text, Microsoft.Xna.Framework.Vector2 def)`
+- `public Microsoft.Xna.Framework.Vector3 ParseVector3(System.String text, Microsoft.Xna.Framework.Vector3 def)`
+- `public System.Boolean TryParseInt(System.String text, out System.Int32&amp; value)`
+- `public System.Boolean TryParseLong(System.String text, out System.Int64&amp; value)`
+">Copy markdown</button>
+<a class="button" href="CandideCreator_Shared_Helpers_ParseHelper.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideCreator.Shared.Helpers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>13</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideCreator.Shared</code></li>
+<li><span>Namespace</span><code>CandideCreator.Shared.Helpers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>5A3337BE77C721C9D7B0CEED1985408A519584C5CF56EB05FCBD3595CE909AE7</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ParseBool public System.Boolean ParseBool(System.String text, System.Boolean def) System.Boolean text System.String def System.Boolean" id="parsebool-system-string--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>ParseBool</code></h3>
+<a class="permalink" href="#parsebool-system-string--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean ParseBool(System.String text, System.Boolean def)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper::ParseBool(System.String, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean ParseBool(System.String text, System.Boolean def)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A1F94411B4679EF06FB435CE62910613B06D4B31A66BD5AAB274E56F9365602F</code></li>
+<li><span>Body hash</span><code>AD9C1B0415E0475A8539FFEFB67BC025B56040D04BA80ECE5900C54498B0ECC8</code></li>
+<li><span>IL size</span><span>61</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.String::Equals(System.String, System.String, System.StringComparison)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#getbool-system-string--system-boolean---system-boolean"><code>CandideCreator.Shared.Helpers.Parameters::GetBool</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>true</code></li>
+<li><code>false</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ParseColor public Microsoft.Xna.Framework.Color ParseColor(System.String text, Microsoft.Xna.Framework.Color def) Microsoft.Xna.Framework.Color text System.String def Microsoft.Xna.Framework.Color" id="parsecolor-system-string--microsoft-xna-framework-color---microsoft-xna-framework-color">
+<div class="method-heading">
+<h3><code>ParseColor</code></h3>
+<a class="permalink" href="#parsecolor-system-string--microsoft-xna-framework-color---microsoft-xna-framework-color" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Color ParseColor(System.String text, Microsoft.Xna.Framework.Color def)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper::ParseColor(System.String, Microsoft.Xna.Framework.Color)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Color ParseColor(System.String text, Microsoft.Xna.Framework.Color def)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Color</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4B8585F54623A632FD2C3E30B1F44B9B5FCCA913D4B24FC9BEB0C6AABF0FE442</code></li>
+<li><span>Body hash</span><code>8F068263A98979151D0B77ACF12B518420A4A917B550CDB801563986038EC164</code></li>
+<li><span>IL size</span><span>123</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.String::ToLowerInvariant()</code></li>
+<li><code>System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)</code></li>
+<li><code>System.Type::GetProperties()</code></li>
+<li><code>System.Reflection.MemberInfo::get_Name()</code></li>
+<li><code>System.String::Equals(System.String, System.String, System.StringComparison)</code></li>
+<li><code>System.Reflection.PropertyInfo::GetValue(System.Object, System.Object[])</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ParseDouble public System.Double ParseDouble(System.String text, System.Double def) System.Double text System.String def System.Double" id="parsedouble-system-string--system-double---system-double">
+<div class="method-heading">
+<h3><code>ParseDouble</code></h3>
+<a class="permalink" href="#parsedouble-system-string--system-double---system-double" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Double ParseDouble(System.String text, System.Double def)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper::ParseDouble(System.String, System.Double)">Copy Harmony target</button>
+</div>
+<p><code>public System.Double ParseDouble(System.String text, System.Double def)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Double</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DB1FAE703BA5082FE534143AED29F104636F137B4D14E4AF4422A378B1B4E205</code></li>
+<li><span>Body hash</span><code>2132AA947AD3C85DF6C476730248CA8DA41A0C00A2520D29F0EFF04649AEE8A5</code></li>
+<li><span>IL size</span><span>49</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.Globalization.CultureInfo::get_InvariantCulture()</code></li>
+<li><code>System.Double::TryParse(System.String, System.Globalization.NumberStyles, System.IFormatProvider, System.Double&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#getdouble-system-string--system-double---system-double"><code>CandideCreator.Shared.Helpers.Parameters::GetDouble</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ParseFloat public System.Single ParseFloat(System.String text, System.Single def) System.Single text System.String def System.Single" id="parsefloat-system-string--system-single---system-single">
+<div class="method-heading">
+<h3><code>ParseFloat</code></h3>
+<a class="permalink" href="#parsefloat-system-string--system-single---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single ParseFloat(System.String text, System.Single def)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper::ParseFloat(System.String, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single ParseFloat(System.String text, System.Single def)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>992A8814DB23B264B70676AE4EA1CA2EE0D93F67F1C099E6E077D4ABC8E22D95</code></li>
+<li><span>Body hash</span><code>F849AEFCBEB689CEB4A177038C36B2E8B9C2204B122829A0E18BFFB9B8D3FF38</code></li>
+<li><span>IL size</span><span>49</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.Globalization.CultureInfo::get_InvariantCulture()</code></li>
+<li><code>System.Single::TryParse(System.String, System.Globalization.NumberStyles, System.IFormatProvider, System.Single&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#getfloat-system-string--system-single---system-single"><code>CandideCreator.Shared.Helpers.Parameters::GetFloat</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ParseHelper.html#parsevector2-system-string--microsoft-xna-framework-vector2---microsoft-xna-framework-vector2"><code>CandideCreator.Shared.Helpers.ParseHelper::ParseVector2</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ParseHelper.html#parsevector3-system-string--microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.ParseHelper::ParseVector3</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_Modules_Nodes_Schmovement_Patrol.html#getpoiposition-system-string--microsoft-xna-framework-vector2---microsoft-xna-framework-vector2"><code>CandideServer.Entities.BehaviorMachine.Modules.Nodes.Schmovement.Patrol::GetPoiPosition</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ParseGuid public System.Guid ParseGuid(System.String text) System.Guid text System.String" id="parseguid-system-string---system-guid">
+<div class="method-heading">
+<h3><code>ParseGuid</code></h3>
+<a class="permalink" href="#parseguid-system-string---system-guid" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Guid ParseGuid(System.String text)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper::ParseGuid(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Guid ParseGuid(System.String text)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Guid</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6FDB311D483009DDD9049A4895268CC2B885B9B68B6137A13DD1A604BB7D9DB2</code></li>
+<li><span>Body hash</span><code>C3C7EDA2F72BBAE3EA5FA2D50FE4DA139119E7F8DDAFE98F90D6CBB7DCF0207C</code></li>
+<li><span>IL size</span><span>31</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Guid::TryParse(System.String, System.Guid&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_FarmsteadController.html#checkforbeehives----system-void"><code>CandideServer.Buildings.BuildingControllers.FarmsteadController::CheckForBeehives</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ParseInt public System.Int32 ParseInt(System.String text, System.Int32 def) System.Int32 text System.String def System.Int32" id="parseint-system-string--system-int32---system-int32">
+<div class="method-heading">
+<h3><code>ParseInt</code></h3>
+<a class="permalink" href="#parseint-system-string--system-int32---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 ParseInt(System.String text, System.Int32 def)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper::ParseInt(System.String, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 ParseInt(System.String text, System.Int32 def)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0247CC8B00AB64264127419AE7737C7CF19A78BD057F0DBACC8C9EBA92D50DD5</code></li>
+<li><span>Body hash</span><code>3381F8AB907B468175463705FE29E362D3BF869FFAF42F7F816DB1358B8AC6A8</code></li>
+<li><span>IL size</span><span>45</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.Globalization.CultureInfo::get_InvariantCulture()</code></li>
+<li><code>System.Int32::TryParse(System.String, System.Globalization.NumberStyles, System.IFormatProvider, System.Int32&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#getint-system-string--system-int32---system-int32"><code>CandideCreator.Shared.Helpers.Parameters::GetInt</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ParseHelper.html#parsespritesheet-system-string---candidecreator-shared-graphics-spritesheet"><code>CandideCreator.Shared.Helpers.ParseHelper::ParseSpriteSheet</code></a></li>
+<li><a href="../../types/Romestead/Candide_Dialogue_DialogueRunner.html#actor-system-string-----system-void"><code>Candide.Dialogue.DialogueRunner::Actor</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_PuzzleMechanics_PathMemoryPuzzleController.html#onserversetstate-system-int32---system-void"><code>Candide.Entities.Controllers.PuzzleMechanics.PathMemoryPuzzleController::OnServerSetState</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerStates_PlacingState.html#actionplace-system-boolean---system-boolean"><code>Candide.Entities.PlayerState.PlayerStates.PlacingState::ActionPlace</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerStates_PlacingState.html#drawinworldui-microsoft-xna-framework-graphics-spritebatch---system-void"><code>Candide.Entities.PlayerState.PlayerStates.PlacingState::DrawInWorldUI</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_PlayerSkinManager.html#add-system-int32--system-string--system-int32---system-void"><code>Candide.GameModels.Managers.PlayerSkinManager::Add</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_CreateWorldWindow.html#savenewworld----system-void"><code>Candide.MainMenu.Ui.Steps.CreateWorldWindow::SaveNewWorld</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_HostServerWindow.html#onstartgameclicked----system-void"><code>Candide.MainMenu.Ui.Steps.HostServerWindow::OnStartGameClicked</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_SelectServerWindow.html#onconnectclicked----system-void"><code>Candide.MainMenu.Ui.Steps.SelectServerWindow::OnConnectClicked</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ParseLong public System.Int64 ParseLong(System.String text, System.Int64 def) System.Int64 text System.String def System.Int64" id="parselong-system-string--system-int64---system-int64">
+<div class="method-heading">
+<h3><code>ParseLong</code></h3>
+<a class="permalink" href="#parselong-system-string--system-int64---system-int64" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int64 ParseLong(System.String text, System.Int64 def)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper::ParseLong(System.String, System.Int64)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int64 ParseLong(System.String text, System.Int64 def)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int64</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>40F2D358E5F2EA88918EABE57A05DEED39EBB4F13FA9802E8E2B05800DDDD6EA</code></li>
+<li><span>Body hash</span><code>713ECBF9E66C072A7D900F2C96524A7FABF131712C752F432B7847E1E6C30F4A</code></li>
+<li><span>IL size</span><span>45</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.Globalization.CultureInfo::get_InvariantCulture()</code></li>
+<li><code>System.Int64::TryParse(System.String, System.Globalization.NumberStyles, System.IFormatProvider, System.Int64&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#getlong-system-string--system-int64---system-int64"><code>CandideCreator.Shared.Helpers.Parameters::GetLong</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ParseSpriteSheet public CandideCreator.Shared.Graphics.SpriteSheet ParseSpriteSheet(System.String text) CandideCreator.Shared.Graphics.SpriteSheet text System.String" id="parsespritesheet-system-string---candidecreator-shared-graphics-spritesheet">
+<div class="method-heading">
+<h3><code>ParseSpriteSheet</code></h3>
+<a class="permalink" href="#parsespritesheet-system-string---candidecreator-shared-graphics-spritesheet" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideCreator.Shared.Graphics.SpriteSheet ParseSpriteSheet(System.String text)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper::ParseSpriteSheet(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Graphics_SpriteSheet.html">CandideCreator.Shared.Graphics.SpriteSheet</a> ParseSpriteSheet(System.String text)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Graphics_SpriteSheet.html">CandideCreator.Shared.Graphics.SpriteSheet</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8F9ABE27F5D8773C23D2873BDBBC3E5EAD2CDDDEC299F22CD91B10893CB63CED</code></li>
+<li><span>Body hash</span><code>7D28DF32465F3EC4EDB1C8FDAF9614C33E52FE000BAE505E20F020B17E6099FA</code></li>
+<li><span>IL size</span><span>94</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.String::Split(System.String, System.StringSplitOptions)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ParseHelper.html#parseint-system-string--system-int32---system-int32">CandideCreator.Shared.Helpers.ParseHelper::ParseInt(System.String, System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Content.html#spritesheet-system-string--system-int32--system-int32--microsoft-xna-framework-vector2---candidecreator-shared-graphics-spritesheet">CandideCreator.Shared.Content::SpriteSheet(System.String, System.Int32, System.Int32, Microsoft.Xna.Framework.Vector2)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#getsprite-system-string---candidecreator-shared-graphics-spritesheet"><code>CandideCreator.Shared.Helpers.Parameters::GetSprite</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>|</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ParseULong public System.UInt64 ParseULong(System.String text, System.UInt64 def) System.UInt64 text System.String def System.UInt64" id="parseulong-system-string--system-uint64---system-uint64">
+<div class="method-heading">
+<h3><code>ParseULong</code></h3>
+<a class="permalink" href="#parseulong-system-string--system-uint64---system-uint64" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.UInt64 ParseULong(System.String text, System.UInt64 def)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper::ParseULong(System.String, System.UInt64)">Copy Harmony target</button>
+</div>
+<p><code>public System.UInt64 ParseULong(System.String text, System.UInt64 def)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.UInt64</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F518B291C86592DEA2F8622E74ED3B0B6790141536ED9BC6EC4B6A6FE4AEE764</code></li>
+<li><span>Body hash</span><code>2989D8484E172FBDB66A20CE5CF48636D489B855FA6DD06D666EF31B02C4EC68</code></li>
+<li><span>IL size</span><span>45</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.Globalization.CultureInfo::get_InvariantCulture()</code></li>
+<li><code>System.UInt64::TryParse(System.String, System.Globalization.NumberStyles, System.IFormatProvider, System.UInt64&amp;)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ParseVector2 public Microsoft.Xna.Framework.Vector2 ParseVector2(System.String text, Microsoft.Xna.Framework.Vector2 def) Microsoft.Xna.Framework.Vector2 text System.String def Microsoft.Xna.Framework.Vector2" id="parsevector2-system-string--microsoft-xna-framework-vector2---microsoft-xna-framework-vector2">
+<div class="method-heading">
+<h3><code>ParseVector2</code></h3>
+<a class="permalink" href="#parsevector2-system-string--microsoft-xna-framework-vector2---microsoft-xna-framework-vector2" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector2 ParseVector2(System.String text, Microsoft.Xna.Framework.Vector2 def)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper::ParseVector2(System.String, Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Vector2 ParseVector2(System.String text, Microsoft.Xna.Framework.Vector2 def)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector2</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>29BAEAB1B0BB9B0020EE71F0194DE5ABA21370D80BEC4F8980A071D7327F3619</code></li>
+<li><span>Body hash</span><code>E7AB3E71241A049741D13312BC375455585B95F6DF5C0B3B630100314534B645</code></li>
+<li><span>IL size</span><span>143</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.String::Split(System.String, System.StringSplitOptions)</code></li>
+<li><code>System.String::get_Length()</code></li>
+<li><code>System.String::Substring(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ParseHelper.html#parsefloat-system-string--system-single---system-single">CandideCreator.Shared.Helpers.ParseHelper::ParseFloat(System.String, System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::.ctor(System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#getvector2-system-string--microsoft-xna-framework-vector2---microsoft-xna-framework-vector2"><code>CandideCreator.Shared.Helpers.Parameters::GetVector2</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#getvector2nullable-system-string--system-nullable-1-microsoft-xna-framework-vector2----system-nullable-1-microsoft-xna-framework-vector2-"><code>CandideCreator.Shared.Helpers.Parameters::GetVector2Nullable</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#getvector2ornull-system-string--microsoft-xna-framework-vector2---system-nullable-1-microsoft-xna-framework-vector2-"><code>CandideCreator.Shared.Helpers.Parameters::GetVector2OrNull</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ParseVector3 public Microsoft.Xna.Framework.Vector3 ParseVector3(System.String text, Microsoft.Xna.Framework.Vector3 def) Microsoft.Xna.Framework.Vector3 text System.String def Microsoft.Xna.Framework.Vector3" id="parsevector3-system-string--microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">
+<div class="method-heading">
+<h3><code>ParseVector3</code></h3>
+<a class="permalink" href="#parsevector3-system-string--microsoft-xna-framework-vector3---microsoft-xna-framework-vector3" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector3 ParseVector3(System.String text, Microsoft.Xna.Framework.Vector3 def)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper::ParseVector3(System.String, Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Vector3 ParseVector3(System.String text, Microsoft.Xna.Framework.Vector3 def)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector3</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6292BEEB5A707A14CDF20554AAD5F76FDE5B7B8C3CC1F8992C48CA9048495F2B</code></li>
+<li><span>Body hash</span><code>CA10C44F4F52E20C1BC78BB06A92D4B1E39841F2FA9FF756BF569B478FFA2576</code></li>
+<li><span>IL size</span><span>190</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.String::Split(System.String, System.StringSplitOptions)</code></li>
+<li><code>System.String::get_Length()</code></li>
+<li><code>System.String::Substring(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ParseHelper.html#parsefloat-system-string--system-single---system-single">CandideCreator.Shared.Helpers.ParseHelper::ParseFloat(System.String, System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#getvector3-system-string--microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.Parameters::GetVector3</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryParseInt public System.Boolean TryParseInt(System.String text, out System.Int32&amp; value) System.Boolean text System.String value System.Int32&amp;" id="tryparseint-system-string--system-int32----system-boolean">
+<div class="method-heading">
+<h3><code>TryParseInt</code></h3>
+<a class="permalink" href="#tryparseint-system-string--system-int32----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryParseInt(System.String text, out System.Int32&amp; value)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper::TryParseInt(System.String, System.Int32&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryParseInt(System.String text, out System.Int32&amp; value)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D945641135B9A0CF24B2519F54061ECF623CEF7B7F89078FBC9C7BC0726559F6</code></li>
+<li><span>Body hash</span><code>4F8E9D4C5F20C6D86C79CCA91348996A5059E05D69DE87C7F4DD44C155EE2A0E</code></li>
+<li><span>IL size</span><span>47</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.Globalization.CultureInfo::get_InvariantCulture()</code></li>
+<li><code>System.Int32::TryParse(System.String, System.Globalization.NumberStyles, System.IFormatProvider, System.Int32&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#trygetint-system-string--system-int32----system-boolean"><code>CandideCreator.Shared.Helpers.Parameters::TryGetInt</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryParseLong public System.Boolean TryParseLong(System.String text, out System.Int64&amp; value) System.Boolean text System.String value System.Int64&amp;" id="tryparselong-system-string--system-int64----system-boolean">
+<div class="method-heading">
+<h3><code>TryParseLong</code></h3>
+<a class="permalink" href="#tryparselong-system-string--system-int64----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryParseLong(System.String text, out System.Int64&amp; value)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ParseHelper::TryParseLong(System.String, System.Int64&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryParseLong(System.String text, out System.Int64&amp; value)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6ACC4B23AD5AF449218781220C04B0CFA7E67A22199586A66EF245C1E3492745</code></li>
+<li><span>Body hash</span><code>AD668917305EA489809D1880A8280A3746EB2768C4465FD33A384F4A7860EDEC</code></li>
+<li><span>IL size</span><span>48</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.Globalization.CultureInfo::get_InvariantCulture()</code></li>
+<li><code>System.Int64::TryParse(System.String, System.Globalization.NumberStyles, System.IFormatProvider, System.Int64&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#trygetlong-system-string--system-int64----system-boolean"><code>CandideCreator.Shared.Helpers.Parameters::TryGetLong</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

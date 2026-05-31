@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.GameModels.Managers.SimpleInventoryManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.GameModels.Managers.SimpleInventoryManager</h1>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.GameModels.Managers.SimpleInventoryManager
+
+- Assembly: `Romestead`
+- Namespace: `Candide.GameModels.Managers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 18 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public System.Void AddItemCheat(System.String id, System.Int32 count, System.String auraId)`
+- `public System.Boolean AddItemFromSourceAction(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, System.Int32 sourceIndex, Candide.GameModels.Models.Items.SimpleInventory targetInventory, Candide.GameModels.Models.Items.SimpleInventory equipmentInventory, System.Boolean allowPartialStack)`
+- `public System.Boolean CanAddItemInstance(Candide.GameModels.Models.Items.SimpleInventory targetInventory, Shared.Models.Items.ItemInstanceModel item, System.Boolean allowPartialStack)`
+- `public System.Boolean CanRemoveItems(Candide.GameModels.Models.Items.SimpleInventory inventory, Shared.Models.Items.ItemAmount[] itemAmounts)`
+- `public System.Void DropMoney(Candide.GameModels.Models.Items.SimpleInventory inventory, System.UInt64 droppedMoney, System.Single direction)`
+- `public System.Boolean EmptyTrashAndSwapInItem(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory trashInventory, System.Int32 sourceSlotIndex, System.Int32 trashSlotIndex)`
+- `public System.Boolean ItemSwapAction(System.Guid sourceInventoryId, System.Int32 sourceSlotIndex, System.Guid targetInventoryId, System.Int32 targetSlotIndex)`
+- `public System.Void LootAll(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory targetInventory, Candide.GameModels.Models.Items.SimpleInventory equipmentInventory, Shared.Inventory.Models.LootAllStrategy lootStrategy)`
+- `public System.Void LootItemAmountIntoMoney(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, System.Int32 sourceSlotIndex, Candide.GameModels.Models.Items.SimpleInventory targetInventory, System.Int32 splitValue)`
+- `public System.Boolean MoneySwapAction(System.Guid sourceInventoryId, System.UInt64 coinAmount, System.Int32 coinType, System.Guid targetInventoryId, System.Int32 slotIndex, System.Boolean allowPartialStack)`
+- `public Shared.Inventory.DeltaModels.DeltaComplexResult MoveItemsFromInventoryToInventory(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory targetInventory, System.Collections.Generic.IReadOnlyCollection&lt;Shared.Models.Items.ItemAmount&gt; moveItems, System.Boolean allowPartialStack, System.Nullable&lt;System.UInt64&gt; specialMoveMoneyAmount)`
+- `public System.Void QuickStack(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory targetInventory)`
+- `public System.Void SortInventory(System.Guid inventoryId)`
+- `public System.Void SplitStack(System.Guid sourceInventoryId, System.Guid targetInventoryId, System.Int32 splitAmount, System.Int32 sourceIndex, System.Int32 targetIndex)`
+">Copy markdown</button>
+<a class="button" href="Candide_GameModels_Managers_SimpleInventoryManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.GameModels.Managers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>18</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.GameModels.Managers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>035E9422AE29FE8842053D7AFBCEAF6F8EE06A409BEBE27374B6BC57BC64BC9F</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddItemCheat public System.Void AddItemCheat(System.String id, System.Int32 count, System.String auraId) System.Void id System.String count System.Int32 auraId System.String" id="additemcheat-system-string--system-int32--system-string---system-void">
+<div class="method-heading">
+<h3><code>AddItemCheat</code></h3>
+<a class="permalink" href="#additemcheat-system-string--system-int32--system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddItemCheat(System.String id, System.Int32 count, System.String auraId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::AddItemCheat(System.String, System.Int32, System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddItemCheat(System.String id, System.Int32 count, System.String auraId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BB7091B0A41A34BFDB625ED5FBD9FEC566951364AF003171D0A0F9AC10BF25DD</code></li>
+<li><span>Body hash</span><code>82F670A73182CA724A100226C5517BC1193DDF130D85E5B9173B486BE62F42D6</code></li>
+<li><span>IL size</span><span>9</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_SimpleInventoryService.html#sendadditemcheat-system-string--system-int32--system-string---system-void">Candide.GameModels.Services.SimpleInventoryService::SendAddItemCheat(System.String, System.Int32, System.String)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddItemFromSourceAction public System.Boolean AddItemFromSourceAction(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, System.Int32 sourceIndex, Candide.GameModels.Models.Items.SimpleInventory targetInventory, Candide.GameModels.Models.Items.SimpleInventory equipmentInventory, System.Boolean allowPartialStack) System.Boolean sourceInventory Candide.GameModels.Models.Items.SimpleInventory sourceIndex System.Int32 targetInventory Candide.GameModels.Models.Items.SimpleInventory equipmentInventory Candide.GameModels.Models.Items.SimpleInventory allowPartialStack System.Boolean" id="additemfromsourceaction-candide-gamemodels-models-items-simpleinventory--system-int32--candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>AddItemFromSourceAction</code></h3>
+<a class="permalink" href="#additemfromsourceaction-candide-gamemodels-models-items-simpleinventory--system-int32--candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean AddItemFromSourceAction(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, System.Int32 sourceIndex, Candide.GameModels.Models.Items.SimpleInventory targetInventory, Candide.GameModels.Models.Items.SimpleInventory equipmentInventory, System.Boolean allowPartialStack)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::AddItemFromSourceAction(Candide.GameModels.Models.Items.SimpleInventory, System.Int32, Candide.GameModels.Models.Items.SimpleInventory, Candide.GameModels.Models.Items.SimpleInventory, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean AddItemFromSourceAction(<a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> sourceInventory, System.Int32 sourceIndex, <a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> targetInventory, <a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> equipmentInventory, System.Boolean allowPartialStack)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>68931FD292F325714E23FADE6EB1259DA0FE8E1CF71CFB7E72E2E18EB9F2FD25</code></li>
+<li><span>Body hash</span><code>8AA27B085F93EF5D82D46FE37D1721BFA72D19EC6996912D065A8A72F009F941</code></li>
+<li><span>IL size</span><span>199</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#assert-not-equipment-inventory-system-guid--system-guid---system-void">Candide.GameModels.Managers.SimpleInventoryManager::ASSERT_NOT_EQUIPMENT_INVENTORY(System.Guid, System.Guid)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_ComplexInventoryDeltaEngine.html#lootitem-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-boolean--shared-models-items-sharedinventorymodel--system-boolean---shared-inventory-deltamodels-deltacomplexresult">Shared.Inventory.ComplexInventoryDeltaEngine::LootItem(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Boolean, Shared.Models.Items.SharedInventoryModel, System.Boolean)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_InventoryApplyEngine.html#tryapplymanyactions-shared-inventory-inventoryapplybridge-iinventoryapplybridge--system-collections-generic-ireadonlycollection-1-shared-inventory-deltamodels-deltaaction----system-boolean">Shared.Inventory.InventoryApplyEngine::TryApplyManyActions(Shared.Inventory.InventoryApplyBridge.IInventoryApplyBridge, System.Collections.Generic.IReadOnlyCollection&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#playsound-candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32---candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32----system-void">Candide.GameModels.Managers.SimpleInventoryManager::PlaySound(Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;, Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code>CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_SimpleInventoryService.html#send-inventoryapplymanydelta-candideserver-messagemodels-inventories-inventoryapplymanydeltamessage---system-void">Candide.GameModels.Services.SimpleInventoryService::Send_InventoryApplyManyDelta(CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_JobUiNew_UserControls_JobResourcesAndItemsUserControl.html#onmouserightclickfunc-candide-candideui-usercontrols-inventorycontrolonmouserightclickargs---system-boolean"><code>Candide.CandideUI.JobUiNew.UserControls.JobResourcesAndItemsUserControl::OnMouseRightClickFunc</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_JobUiNew_UserControls_SubControls_JobOutputInventoryUserControl.html#onmouserightclickfunc-candide-candideui-usercontrols-inventorycontrolonmouserightclickargs---system-boolean"><code>Candide.CandideUI.JobUiNew.UserControls.SubControls.JobOutputInventoryUserControl::OnMouseRightClickFunc</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ProximityWindows_InventoryWindow.html#onmouserightclickfunc-candide-candideui-usercontrols-inventorycontrolonmouserightclickargs---system-boolean"><code>Candide.CandideUI.ProximityWindows.InventoryWindow::OnMouseRightClickFunc</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_PlayerInventoryUserControl.html#onmouserightclickfunc-candide-candideui-usercontrols-inventorycontrolonmouserightclickargs---system-boolean"><code>Candide.CandideUI.UserControls.PlayerInventoryUserControl::OnMouseRightClickFunc</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_PlayerInventoryUserControl.html#trash-onmouserightclickfunc-candide-candideui-usercontrols-inventorycontrolonmouserightclickargs---system-boolean"><code>Candide.CandideUI.UserControls.PlayerInventoryUserControl::Trash_OnMouseRightClickFunc</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_WorshipUi_Altar2_NewOfferingView.html#onplayerinventorymouserightclickfunc-candide-candideui-usercontrols-inventorycontrolonmouserightclickargs---system-boolean"><code>Candide.CandideUI.WorshipUi.Altar2.NewOfferingView::OnPlayerInventoryMouseRightClickFunc</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>AddItemFromSourceAction</code></li>
+<li><code>: Result was </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ASSERT_NOT_EQUIPMENT_INVENTORY private System.Void ASSERT_NOT_EQUIPMENT_INVENTORY(System.Guid sourceInventoryId) System.Void sourceInventoryId System.Guid" id="assert-not-equipment-inventory-system-guid---system-void">
+<div class="method-heading">
+<h3><code>ASSERT_NOT_EQUIPMENT_INVENTORY</code></h3>
+<a class="permalink" href="#assert-not-equipment-inventory-system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void ASSERT_NOT_EQUIPMENT_INVENTORY(System.Guid sourceInventoryId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::ASSERT_NOT_EQUIPMENT_INVENTORY(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void ASSERT_NOT_EQUIPMENT_INVENTORY(System.Guid sourceInventoryId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>ACDF1FE805895E690C8BD6DA6217020D3298A3B628143003FA119137F6D1F146</code></li>
+<li><span>Body hash</span><code>425C68841D6469CCDA1F1A5CBC781815D98691169AD365CD624B612F0B86DE3A</code></li>
+<li><span>IL size</span><span>35</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Multiplayer.Models.LocalPlayer::get_Inventory()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code>Candide.Toolkit.SamuelDevelopmentException::.ctor(System.String)</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Use EquipmentManager instead.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ASSERT_NOT_EQUIPMENT_INVENTORY private System.Void ASSERT_NOT_EQUIPMENT_INVENTORY(System.Guid sourceInventoryId, System.Guid targetInventoryId) System.Void sourceInventoryId System.Guid targetInventoryId System.Guid" id="assert-not-equipment-inventory-system-guid--system-guid---system-void">
+<div class="method-heading">
+<h3><code>ASSERT_NOT_EQUIPMENT_INVENTORY</code></h3>
+<a class="permalink" href="#assert-not-equipment-inventory-system-guid--system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void ASSERT_NOT_EQUIPMENT_INVENTORY(System.Guid sourceInventoryId, System.Guid targetInventoryId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::ASSERT_NOT_EQUIPMENT_INVENTORY(System.Guid, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void ASSERT_NOT_EQUIPMENT_INVENTORY(System.Guid sourceInventoryId, System.Guid targetInventoryId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5B584116FBE14D2B74AB4BBDF1D5D395A3C1C05ECC5ADD0B63ECD7DF76DE76F7</code></li>
+<li><span>Body hash</span><code>6DF973A30D60A0DD0D886E2583A09DF087898D5FF155D64C29BDB04E16836B25</code></li>
+<li><span>IL size</span><span>58</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Multiplayer.Models.LocalPlayer::get_Inventory()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code>Candide.Toolkit.SamuelDevelopmentException::.ctor(System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#additemfromsourceaction-candide-gamemodels-models-items-simpleinventory--system-int32--candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-boolean---system-boolean"><code>Candide.GameModels.Managers.SimpleInventoryManager::AddItemFromSourceAction</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#lootall-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--shared-inventory-models-lootallstrategy---system-void"><code>Candide.GameModels.Managers.SimpleInventoryManager::LootAll</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#moveitemsfrominventorytoinventory-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-collections-generic-ireadonlycollection-1-shared-models-items-itemamount---system-boolean--system-nullable-1-system-uint64----shared-inventory-deltamodels-deltacomplexresult"><code>Candide.GameModels.Managers.SimpleInventoryManager::MoveItemsFromInventoryToInventory</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Use EquipmentManager instead.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CanAddItemInstance public System.Boolean CanAddItemInstance(Candide.GameModels.Models.Items.SimpleInventory targetInventory, Shared.Models.Items.ItemInstanceModel item, System.Boolean allowPartialStack) System.Boolean targetInventory Candide.GameModels.Models.Items.SimpleInventory item Shared.Models.Items.ItemInstanceModel allowPartialStack System.Boolean" id="canadditeminstance-candide-gamemodels-models-items-simpleinventory--shared-models-items-iteminstancemodel--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>CanAddItemInstance</code></h3>
+<a class="permalink" href="#canadditeminstance-candide-gamemodels-models-items-simpleinventory--shared-models-items-iteminstancemodel--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean CanAddItemInstance(Candide.GameModels.Models.Items.SimpleInventory targetInventory, Shared.Models.Items.ItemInstanceModel item, System.Boolean allowPartialStack)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::CanAddItemInstance(Candide.GameModels.Models.Items.SimpleInventory, Shared.Models.Items.ItemInstanceModel, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean CanAddItemInstance(<a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> targetInventory, <a href="../../types/Shared/Shared_Models_Items_ItemInstanceModel.html">Shared.Models.Items.ItemInstanceModel</a> item, System.Boolean allowPartialStack)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D6E7C5C13509A02BAC8AA8C7C29A0F5D2F342C7C010F98E1EF4C90A253D56A92</code></li>
+<li><span>Body hash</span><code>FB2907717FE24A236E5616813D7802868CF31BFABB38CB0DB1BD2D0EEF34E3A3</code></li>
+<li><span>IL size</span><span>21</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_InventoryHelper.html#canadditeminstance-shared-models-items-sharedinventorymodel--shared-models-items-iteminstancemodel--system-boolean--system-int32----system-boolean">Shared.Inventory.DeltaModels.InventoryHelper::CanAddItemInstance(Shared.Models.Items.SharedInventoryModel, Shared.Models.Items.ItemInstanceModel, System.Boolean, System.Int32&amp;)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CanRemoveItems public System.Boolean CanRemoveItems(Candide.GameModels.Models.Items.SimpleInventory inventory, Shared.Models.Items.ItemAmount[] itemAmounts) System.Boolean inventory Candide.GameModels.Models.Items.SimpleInventory itemAmounts Shared.Models.Items.ItemAmount[]" id="canremoveitems-candide-gamemodels-models-items-simpleinventory--shared-models-items-itemamount-----system-boolean">
+<div class="method-heading">
+<h3><code>CanRemoveItems</code></h3>
+<a class="permalink" href="#canremoveitems-candide-gamemodels-models-items-simpleinventory--shared-models-items-itemamount-----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean CanRemoveItems(Candide.GameModels.Models.Items.SimpleInventory inventory, Shared.Models.Items.ItemAmount[] itemAmounts)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::CanRemoveItems(Candide.GameModels.Models.Items.SimpleInventory, Shared.Models.Items.ItemAmount[])">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean CanRemoveItems(<a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> inventory, <a href="../../types/Shared/Shared_Models_Items_ItemAmount.html">Shared.Models.Items.ItemAmount</a>[] itemAmounts)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>93086FFB8E8B16CD2BB6B2051A152829C2E7FDD8757CB0565051BDCD6B8013F7</code></li>
+<li><span>Body hash</span><code>7C39BF61FE3B3BAB3CE0ADEDF641BAB9AE304B206099AB8E4AE5F0482E9E52CA</code></li>
+<li><span>IL size</span><span>53</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#getitemcount-system-string---system-int32">Shared.Models.Items.SharedInventoryModel::GetItemCount(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_ItemRecipeManager.html#cancraftitem-candide-gamemodels-models-items-simpleinventory--shared-models-items-itemamount-----system-boolean"><code>Candide.GameModels.Managers.ItemRecipeManager::CanCraftItem</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_OfferingsManager.html#candooffering-shared-models-gods-offering--candide-gamemodels-models-items-simpleinventory---system-boolean"><code>Candide.GameModels.Managers.OfferingsManager::CanDoOffering</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DropMoney public System.Void DropMoney(Candide.GameModels.Models.Items.SimpleInventory inventory, System.UInt64 droppedMoney, System.Single direction) System.Void inventory Candide.GameModels.Models.Items.SimpleInventory droppedMoney System.UInt64 direction System.Single" id="dropmoney-candide-gamemodels-models-items-simpleinventory--system-uint64--system-single---system-void">
+<div class="method-heading">
+<h3><code>DropMoney</code></h3>
+<a class="permalink" href="#dropmoney-candide-gamemodels-models-items-simpleinventory--system-uint64--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DropMoney(Candide.GameModels.Models.Items.SimpleInventory inventory, System.UInt64 droppedMoney, System.Single direction)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::DropMoney(Candide.GameModels.Models.Items.SimpleInventory, System.UInt64, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DropMoney(<a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> inventory, System.UInt64 droppedMoney, System.Single direction)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6FDE258C6BF159BD7CDF087913CCE1C8A5A67FFE82374FFB171B52F1F8574EB6</code></li>
+<li><span>Body hash</span><code>857358F39E32CAF8220000D9C4FEAF4ADEB8789397C40E9FBB7046422308C06A</code></li>
+<li><span>IL size</span><span>145</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.UInt64&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.UInt64&gt;::get_Value()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Controllers_SimpleInventoryController.html#setmoney-candide-gamemodels-models-items-simpleinventory--system-uint64---system-void">Candide.GameModels.Controllers.SimpleInventoryController::SetMoney(Candide.GameModels.Models.Items.SimpleInventory, System.UInt64)</a></code></li>
+<li><code>CandideServer.ServerServices.DropMoneyMessage::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_SimpleInventoryService.html#senddropmoney-candideserver-serverservices-dropmoneymessage---system-void">Candide.GameModels.Services.SimpleInventoryService::SendDropMoney(CandideServer.ServerServices.DropMoneyMessage)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Sound_SoundPlayer.html#playeventoneshot-system-string--system-single--system-single---system-void">Candide.Sound.SoundPlayer::PlayEventOneShot(System.String, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_CandideSplitInventoryMoneyMockComponent.html#ondropped----system-boolean"><code>Candide.CandideUI.CandideSplitInventoryMoneyMockComponent::OnDropped</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Holder_MoneyCandideDraggableHolderContent.html#ondropped----system-boolean"><code>Candide.CandideUI.Components.Holder.MoneyCandideDraggableHolderContent::OnDropped</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryControl.html#ondropmoney-candide-candideui-components-holder-coinslot--system-uint64---system-boolean"><code>Candide.CandideUI.UserControls.InventoryControl::OnDropMoney</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>DropMoney: Inventory doesn&#39;t have any money defined</code></li>
+<li><code>DropMoney: Tried dropping more money than we have</code></li>
+<li><code>event:/items/coin_drop</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="EmptyTrashAndSplitStack private System.Boolean EmptyTrashAndSplitStack(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory trashInventory, System.Int32 sourceSlotIndex, System.Int32 trashSlotIndex, System.Int32 splitAmount) System.Boolean sourceInventory Candide.GameModels.Models.Items.SimpleInventory trashInventory Candide.GameModels.Models.Items.SimpleInventory sourceSlotIndex System.Int32 trashSlotIndex System.Int32 splitAmount System.Int32" id="emptytrashandsplitstack-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-int32--system-int32--system-int32---system-boolean">
+<div class="method-heading">
+<h3><code>EmptyTrashAndSplitStack</code></h3>
+<a class="permalink" href="#emptytrashandsplitstack-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-int32--system-int32--system-int32---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean EmptyTrashAndSplitStack(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory trashInventory, System.Int32 sourceSlotIndex, System.Int32 trashSlotIndex, System.Int32 splitAmount)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::EmptyTrashAndSplitStack(Candide.GameModels.Models.Items.SimpleInventory, Candide.GameModels.Models.Items.SimpleInventory, System.Int32, System.Int32, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean EmptyTrashAndSplitStack(<a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> sourceInventory, <a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> trashInventory, System.Int32 sourceSlotIndex, System.Int32 trashSlotIndex, System.Int32 splitAmount)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>41E0664C4376818AF9BF46E368A0B75BEB12F9BB00A9E7336427838B6EE78F63</code></li>
+<li><span>Body hash</span><code>C8CAD5E3F8BA32560FB1E18C0FF4FBB0938B1D1E35CEB405B586DDD79E950837</code></li>
+<li><span>IL size</span><span>211</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Inventory_InventoryDeltaEngine.html#moveamount-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-int32---shared-inventory-deltamodels-deltaresult">Shared.Inventory.InventoryDeltaEngine::MoveAmount(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32, System.Int32)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#playsound-candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32---candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32----system-void">Candide.GameModels.Managers.SimpleInventoryManager::PlaySound(Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;, Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code>CandideServer.MessageModels.Inventories.PlayerTrashItemAndApplyDeltaMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;::.ctor(System.Int32)</code></li>
+<li><code>System.Runtime.InteropServices.CollectionsMarshal::SetCount(System.Collections.Generic.List&lt;!!0&gt;, System.Int32)</code></li>
+<li><code>System.Runtime.InteropServices.CollectionsMarshal::AsSpan(System.Collections.Generic.List&lt;!!0&gt;)</code></li>
+<li><code>System.Span&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;::get_Item(System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_PlayerCharactersService.html#send-playertrashitemandapplydelta-candideserver-messagemodels-inventories-playertrashitemandapplydeltamessage---system-void">Candide.GameModels.Services.PlayerCharactersService::Send_PlayerTrashItemAndApplyDelta(CandideServer.MessageModels.Inventories.PlayerTrashItemAndApplyDeltaMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#splitstack-system-guid--system-guid--system-int32--system-int32--system-int32---system-void"><code>Candide.GameModels.Managers.SimpleInventoryManager::SplitStack</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>SplitStack</code></li>
+<li><code>: Result was </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="EmptyTrashAndSwapInItem public System.Boolean EmptyTrashAndSwapInItem(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory trashInventory, System.Int32 sourceSlotIndex, System.Int32 trashSlotIndex) System.Boolean sourceInventory Candide.GameModels.Models.Items.SimpleInventory trashInventory Candide.GameModels.Models.Items.SimpleInventory sourceSlotIndex System.Int32 trashSlotIndex System.Int32" id="emptytrashandswapinitem-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-int32--system-int32---system-boolean">
+<div class="method-heading">
+<h3><code>EmptyTrashAndSwapInItem</code></h3>
+<a class="permalink" href="#emptytrashandswapinitem-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-int32--system-int32---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean EmptyTrashAndSwapInItem(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory trashInventory, System.Int32 sourceSlotIndex, System.Int32 trashSlotIndex)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::EmptyTrashAndSwapInItem(Candide.GameModels.Models.Items.SimpleInventory, Candide.GameModels.Models.Items.SimpleInventory, System.Int32, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean EmptyTrashAndSwapInItem(<a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> sourceInventory, <a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> trashInventory, System.Int32 sourceSlotIndex, System.Int32 trashSlotIndex)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D5C1C3E442D473ABED322FD3CCE7050E4B5F2B02D42094D52EB0F0DC50B184AE</code></li>
+<li><span>Body hash</span><code>7D2A15AEED84FFB51D4C751414E9CBA7B5C8467FAD40A4863E4D1A0663B414C3</code></li>
+<li><span>IL size</span><span>209</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Inventory_InventoryDeltaEngine.html#swapslots-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32---shared-inventory-deltamodels-deltaresult">Shared.Inventory.InventoryDeltaEngine::SwapSlots(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#playsound-candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32---candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32----system-void">Candide.GameModels.Managers.SimpleInventoryManager::PlaySound(Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;, Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code>CandideServer.MessageModels.Inventories.PlayerTrashItemAndApplyDeltaMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;::.ctor(System.Int32)</code></li>
+<li><code>System.Runtime.InteropServices.CollectionsMarshal::SetCount(System.Collections.Generic.List&lt;!!0&gt;, System.Int32)</code></li>
+<li><code>System.Runtime.InteropServices.CollectionsMarshal::AsSpan(System.Collections.Generic.List&lt;!!0&gt;)</code></li>
+<li><code>System.Span&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;::get_Item(System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_PlayerCharactersService.html#send-playertrashitemandapplydelta-candideserver-messagemodels-inventories-playertrashitemandapplydeltamessage---system-void">Candide.GameModels.Services.PlayerCharactersService::Send_PlayerTrashItemAndApplyDelta(CandideServer.MessageModels.Inventories.PlayerTrashItemAndApplyDeltaMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EquipmentManager.html#tryequipandswapaction-system-guid--system-int32--system-guid--system-int32--system-boolean---system-boolean"><code>Candide.GameModels.Managers.EquipmentManager::TryEquipAndSwapAction</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#itemswapaction-system-guid--system-int32--system-guid--system-int32---system-boolean"><code>Candide.GameModels.Managers.SimpleInventoryManager::ItemSwapAction</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>CanAddItemInstance</code></li>
+<li><code>: Result was </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ItemSwapAction public System.Boolean ItemSwapAction(System.Guid sourceInventoryId, System.Int32 sourceSlotIndex, System.Guid targetInventoryId, System.Int32 targetSlotIndex) System.Boolean sourceInventoryId System.Guid sourceSlotIndex System.Int32 targetInventoryId System.Guid targetSlotIndex System.Int32" id="itemswapaction-system-guid--system-int32--system-guid--system-int32---system-boolean">
+<div class="method-heading">
+<h3><code>ItemSwapAction</code></h3>
+<a class="permalink" href="#itemswapaction-system-guid--system-int32--system-guid--system-int32---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean ItemSwapAction(System.Guid sourceInventoryId, System.Int32 sourceSlotIndex, System.Guid targetInventoryId, System.Int32 targetSlotIndex)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::ItemSwapAction(System.Guid, System.Int32, System.Guid, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean ItemSwapAction(System.Guid sourceInventoryId, System.Int32 sourceSlotIndex, System.Guid targetInventoryId, System.Int32 targetSlotIndex)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1CC7EA32D63AAF580272DBD0296CEA43D82C2C03B42686CA59FD83BB82A1FD64</code></li>
+<li><span>Body hash</span><code>20ADEBA77E6C908C297957DD70700AC5E4C6BE981E366989030F30598B499AA5</code></li>
+<li><span>IL size</span><span>225</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_GameState.html#trygetactiveinventory-system-guid--candide-gamemodels-models-items-simpleinventory----system-boolean">Candide.GameModels.GameState::TryGetActiveInventory(System.Guid, Candide.GameModels.Models.Items.SimpleInventory&amp;)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#emptytrashandswapinitem-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-int32--system-int32---system-boolean">Candide.GameModels.Managers.SimpleInventoryManager::EmptyTrashAndSwapInItem(Candide.GameModels.Models.Items.SimpleInventory, Candide.GameModels.Models.Items.SimpleInventory, System.Int32, System.Int32)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_InventoryDeltaEngine.html#swapslots-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32---shared-inventory-deltamodels-deltaresult">Shared.Inventory.InventoryDeltaEngine::SwapSlots(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_InventoryApplyEngine.html#tryapplyaction-shared-inventory-inventoryapplybridge-iinventoryapplybridge--shared-inventory-deltamodels-deltaaction---system-boolean">Shared.Inventory.InventoryApplyEngine::TryApplyAction(Shared.Inventory.InventoryApplyBridge.IInventoryApplyBridge, Shared.Inventory.DeltaModels.DeltaAction)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#playsound-candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32---candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32----system-void">Candide.GameModels.Managers.SimpleInventoryManager::PlaySound(Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;, Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code>CandideServer.MessageModels.Inventories.InventoryApplyDeltaMessage::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_SimpleInventoryService.html#send-inventoryapplydelta-candideserver-messagemodels-inventories-inventoryapplydeltamessage---system-void">Candide.GameModels.Services.SimpleInventoryService::Send_InventoryApplyDelta(CandideServer.MessageModels.Inventories.InventoryApplyDeltaMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Holder_ItemCandideDraggableHolderContent.html#ondroppedonholder-candide-candideui-components-holder-candideholderbase---system-boolean"><code>Candide.CandideUI.Components.Holder.ItemCandideDraggableHolderContent::OnDroppedOnHolder</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EquipmentManager.html#tryequipandswapaction-system-guid--system-int32--system-guid--system-int32--system-boolean---system-boolean"><code>Candide.GameModels.Managers.EquipmentManager::TryEquipAndSwapAction</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>CanAddItemInstance</code></li>
+<li><code>: Result was </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LootAll public System.Void LootAll(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory targetInventory, Candide.GameModels.Models.Items.SimpleInventory equipmentInventory, Shared.Inventory.Models.LootAllStrategy lootStrategy) System.Void sourceInventory Candide.GameModels.Models.Items.SimpleInventory targetInventory Candide.GameModels.Models.Items.SimpleInventory equipmentInventory Candide.GameModels.Models.Items.SimpleInventory lootStrategy Shared.Inventory.Models.LootAllStrategy" id="lootall-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--shared-inventory-models-lootallstrategy---system-void">
+<div class="method-heading">
+<h3><code>LootAll</code></h3>
+<a class="permalink" href="#lootall-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--shared-inventory-models-lootallstrategy---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void LootAll(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory targetInventory, Candide.GameModels.Models.Items.SimpleInventory equipmentInventory, Shared.Inventory.Models.LootAllStrategy lootStrategy)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::LootAll(Candide.GameModels.Models.Items.SimpleInventory, Candide.GameModels.Models.Items.SimpleInventory, Candide.GameModels.Models.Items.SimpleInventory, Shared.Inventory.Models.LootAllStrategy)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void LootAll(<a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> sourceInventory, <a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> targetInventory, <a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> equipmentInventory, <a href="../../types/Shared/Shared_Inventory_Models_LootAllStrategy.html">Shared.Inventory.Models.LootAllStrategy</a> lootStrategy)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6D6E90DD93B93F2F72426C297F887CBFCA62D78CB7D9F0A1FCF896F6D163A0B9</code></li>
+<li><span>Body hash</span><code>99C5EEC71618E47AA8304EEC85FCEB288D94666E702CA6E4FF6022E01BD20BFC</code></li>
+<li><span>IL size</span><span>247</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#assert-not-equipment-inventory-system-guid--system-guid---system-void">Candide.GameModels.Managers.SimpleInventoryManager::ASSERT_NOT_EQUIPMENT_INVENTORY(System.Guid, System.Guid)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#acceptsmoney----system-boolean">Shared.Models.Items.SharedInventoryModel::AcceptsMoney()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_ItemInstanceExtensions.html#ismoney-shared-models-items-iteminstancemodel---system-boolean">Shared.Inventory.ItemInstanceExtensions::IsMoney(Shared.Models.Items.ItemInstanceModel)</a></code></li>
+<li><code>Shared.Models.Items.ItemInstanceModel::get_Data()</code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_InventoryHelper.html#canadditemamount-shared-models-items-sharedinventorymodel--shared-models-items-itemdata--system-int32--system-boolean--system-int32----system-boolean">Shared.Inventory.DeltaModels.InventoryHelper::CanAddItemAmount(Shared.Models.Items.SharedInventoryModel, Shared.Models.Items.ItemData, System.Int32, System.Boolean, System.Int32&amp;)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#playsound-candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32---candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32----system-void">Candide.GameModels.Managers.SimpleInventoryManager::PlaySound(Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;, Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code>CandideServer.MessageModels.Inventories.LootAllMessage::.ctor()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_SimpleInventoryService.html#sendlootall-candideserver-messagemodels-inventories-lootallmessage---system-void">Candide.GameModels.Services.SimpleInventoryService::SendLootAll(CandideServer.MessageModels.Inventories.LootAllMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_InventoryQuickActionsPanel.html#quickactionlootall----system-void"><code>Candide.CandideUI.Components.InventoryQuickActionsPanel::QuickActionLootAll</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LootItemAmountIntoMoney public System.Void LootItemAmountIntoMoney(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, System.Int32 sourceSlotIndex, Candide.GameModels.Models.Items.SimpleInventory targetInventory, System.Int32 splitValue) System.Void sourceInventory Candide.GameModels.Models.Items.SimpleInventory sourceSlotIndex System.Int32 targetInventory Candide.GameModels.Models.Items.SimpleInventory splitValue System.Int32" id="lootitemamountintomoney-candide-gamemodels-models-items-simpleinventory--system-int32--candide-gamemodels-models-items-simpleinventory--system-int32---system-void">
+<div class="method-heading">
+<h3><code>LootItemAmountIntoMoney</code></h3>
+<a class="permalink" href="#lootitemamountintomoney-candide-gamemodels-models-items-simpleinventory--system-int32--candide-gamemodels-models-items-simpleinventory--system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void LootItemAmountIntoMoney(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, System.Int32 sourceSlotIndex, Candide.GameModels.Models.Items.SimpleInventory targetInventory, System.Int32 splitValue)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::LootItemAmountIntoMoney(Candide.GameModels.Models.Items.SimpleInventory, System.Int32, Candide.GameModels.Models.Items.SimpleInventory, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void LootItemAmountIntoMoney(<a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> sourceInventory, System.Int32 sourceSlotIndex, <a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> targetInventory, System.Int32 splitValue)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7EF04B46975C58F6AB8B575989BA7D27DAB2D695165089C4533E600A62F6418B</code></li>
+<li><span>Body hash</span><code>DB97C6E0BFD62E593207391C3FC62F9BCE4105420000F56EB5E918C7CFF2E68D</code></li>
+<li><span>IL size</span><span>139</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;::.ctor()</code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_InventoryDeltaEngine.html#moveamountintoexistingstacks-system-collections-generic-list-1-shared-inventory-deltamodels-deltaaction---shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-int32----shared-inventory-deltamodels-inventoryresult">Shared.Inventory.InventoryDeltaEngine::MoveAmountIntoExistingStacks(System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;, Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32, System.Int32&amp;)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_InventoryApplyEngine.html#tryapplymanyactions-shared-inventory-inventoryapplybridge-iinventoryapplybridge--system-collections-generic-ireadonlycollection-1-shared-inventory-deltamodels-deltaaction----system-boolean">Shared.Inventory.InventoryApplyEngine::TryApplyManyActions(Shared.Inventory.InventoryApplyBridge.IInventoryApplyBridge, System.Collections.Generic.IReadOnlyCollection&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;)</a></code></li>
+<li><code>CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_SimpleInventoryService.html#send-inventoryapplymanydelta-candideserver-messagemodels-inventories-inventoryapplymanydeltamessage---system-void">Candide.GameModels.Services.SimpleInventoryService::Send_InventoryApplyManyDelta(CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Sound_SoundPlayer.html#playeventoneshot-system-string--system-single--system-single---system-void">Candide.Sound.SoundPlayer::PlayEventOneShot(System.String, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_CandideSplitInventoryItemMockComponent.html#ondroppedonholder-candide-candideui-components-holder-candideholderbase---system-boolean"><code>Candide.CandideUI.CandideSplitInventoryItemMockComponent::OnDroppedOnHolder</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Holder_ItemCandideDraggableHolderContent.html#ondroppedonholder-candide-candideui-components-holder-candideholderbase---system-boolean"><code>Candide.CandideUI.Components.Holder.ItemCandideDraggableHolderContent::OnDroppedOnHolder</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>QuickStack</code></li>
+<li><code>: Result was </code></li>
+<li><code>event:/items/coin_pickup</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MoneySwapAction public System.Boolean MoneySwapAction(System.Guid sourceInventoryId, System.UInt64 coinAmount, System.Int32 coinType, System.Guid targetInventoryId, System.Int32 slotIndex, System.Boolean allowPartialStack) System.Boolean sourceInventoryId System.Guid coinAmount System.UInt64 coinType System.Int32 targetInventoryId System.Guid slotIndex System.Int32 allowPartialStack System.Boolean" id="moneyswapaction-system-guid--system-uint64--system-int32--system-guid--system-int32--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>MoneySwapAction</code></h3>
+<a class="permalink" href="#moneyswapaction-system-guid--system-uint64--system-int32--system-guid--system-int32--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean MoneySwapAction(System.Guid sourceInventoryId, System.UInt64 coinAmount, System.Int32 coinType, System.Guid targetInventoryId, System.Int32 slotIndex, System.Boolean allowPartialStack)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::MoneySwapAction(System.Guid, System.UInt64, System.Int32, System.Guid, System.Int32, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean MoneySwapAction(System.Guid sourceInventoryId, System.UInt64 coinAmount, System.Int32 coinType, System.Guid targetInventoryId, System.Int32 slotIndex, System.Boolean allowPartialStack)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DF3E39F2A6F182621F364D860C7EEB4072DE7F9FC0190E0B78C36726CFC3B1A1</code></li>
+<li><span>Body hash</span><code>C1BE58E1E19A326CBF7D97C665B11D2AA52533283614F7954258E4A3E8E704DB</code></li>
+<li><span>IL size</span><span>270</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Candide.GameModels.Models.Items.SimpleInventory&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getmaxitemstackforcointype-system-int32---system-int32">Shared.Helpers.MoneyHelper::GetMaxItemStackForCoinType(System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_InventoryDeltaEngine.html#movemoneyintoitem-shared-models-items-sharedinventorymodel--system-int32--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-boolean---shared-inventory-deltamodels-deltaresult">Shared.Inventory.InventoryDeltaEngine::MoveMoneyIntoItem(Shared.Models.Items.SharedInventoryModel, System.Int32, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32, System.Boolean)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_InventoryApplyEngine.html#tryapplyaction-shared-inventory-inventoryapplybridge-iinventoryapplybridge--shared-inventory-deltamodels-deltaaction---system-boolean">Shared.Inventory.InventoryApplyEngine::TryApplyAction(Shared.Inventory.InventoryApplyBridge.IInventoryApplyBridge, Shared.Inventory.DeltaModels.DeltaAction)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#hasmoneyfield----system-boolean">Shared.Models.Items.SharedInventoryModel::HasMoneyField()</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#playsound-candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32---candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32----system-void">Candide.GameModels.Managers.SimpleInventoryManager::PlaySound(Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;, Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code>CandideServer.MessageModels.Inventories.InventoryApplyDeltaMessage::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_SimpleInventoryService.html#send-inventoryapplydelta-candideserver-messagemodels-inventories-inventoryapplydeltamessage---system-void">Candide.GameModels.Services.SimpleInventoryService::Send_InventoryApplyDelta(CandideServer.MessageModels.Inventories.InventoryApplyDeltaMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_CandideSplitInventoryMoneyMockComponent.html#ondroppedonholder-candide-candideui-components-holder-candideholderbase---system-boolean"><code>Candide.CandideUI.CandideSplitInventoryMoneyMockComponent::OnDroppedOnHolder</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Holder_MoneyCandideDraggableHolderContent.html#ondroppedonholder-candide-candideui-components-holder-candideholderbase---system-boolean"><code>Candide.CandideUI.Components.Holder.MoneyCandideDraggableHolderContent::OnDroppedOnHolder</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_PlayerInventoryUserControl.html#onmoneyrightclickfunc-candide-candideui-usercontrols-inventorycontrolmoney-onmouserightclickargs---system-boolean"><code>Candide.CandideUI.UserControls.PlayerInventoryUserControl::OnMoneyRightClickFunc</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>MoneySwapAction: Coin amount exceeded its item max stack</code></li>
+<li><code>CanAddItemInstance</code></li>
+<li><code>: Result was </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MoveItemsFromInventoryToInventory public Shared.Inventory.DeltaModels.DeltaComplexResult MoveItemsFromInventoryToInventory(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory targetInventory, System.Collections.Generic.IReadOnlyCollection&lt;Shared.Models.Items.ItemAmount&gt; moveItems, System.Boolean allowPartialStack, System.Nullable&lt;System.UInt64&gt; specialMoveMoneyAmount) Shared.Inventory.DeltaModels.DeltaComplexResult sourceInventory Candide.GameModels.Models.Items.SimpleInventory targetInventory Candide.GameModels.Models.Items.SimpleInventory moveItems System.Collections.Generic.IReadOnlyCollection&lt;Shared.Models.Items.ItemAmount&gt; allowPartialStack System.Boolean specialMoveMoneyAmount System.Nullable&lt;System.UInt64&gt;" id="moveitemsfrominventorytoinventory-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-collections-generic-ireadonlycollection-1-shared-models-items-itemamount---system-boolean--system-nullable-1-system-uint64----shared-inventory-deltamodels-deltacomplexresult">
+<div class="method-heading">
+<h3><code>MoveItemsFromInventoryToInventory</code></h3>
+<a class="permalink" href="#moveitemsfrominventorytoinventory-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-collections-generic-ireadonlycollection-1-shared-models-items-itemamount---system-boolean--system-nullable-1-system-uint64----shared-inventory-deltamodels-deltacomplexresult" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Inventory.DeltaModels.DeltaComplexResult MoveItemsFromInventoryToInventory(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory targetInventory, System.Collections.Generic.IReadOnlyCollection&lt;Shared.Models.Items.ItemAmount&gt; moveItems, System.Boolean allowPartialStack, System.Nullable&lt;System.UInt64&gt; specialMoveMoneyAmount)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::MoveItemsFromInventoryToInventory(Candide.GameModels.Models.Items.SimpleInventory, Candide.GameModels.Models.Items.SimpleInventory, System.Collections.Generic.IReadOnlyCollection&lt;Shared.Models.Items.ItemAmount&gt;, System.Boolean, System.Nullable&lt;System.UInt64&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaComplexResult.html">Shared.Inventory.DeltaModels.DeltaComplexResult</a> MoveItemsFromInventoryToInventory(<a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> sourceInventory, <a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> targetInventory, System.Collections.Generic.IReadOnlyCollection&lt;<a href="../../types/Shared/Shared_Models_Items_ItemAmount.html">Shared.Models.Items.ItemAmount</a>&gt; moveItems, System.Boolean allowPartialStack, System.Nullable&lt;System.UInt64&gt; specialMoveMoneyAmount)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaComplexResult.html">Shared.Inventory.DeltaModels.DeltaComplexResult</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>72E0A4414899FC1C8D7A8D6C49C95BDA57653AF159DA44C49732DF5FFC7C28B0</code></li>
+<li><span>Body hash</span><code>9E0BFF9565597A2EA69642C5122E4A27058F857A7425BBB887DC22EB17C2A2D3</code></li>
+<li><span>IL size</span><span>140</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#assert-not-equipment-inventory-system-guid--system-guid---system-void">Candide.GameModels.Managers.SimpleInventoryManager::ASSERT_NOT_EQUIPMENT_INVENTORY(System.Guid, System.Guid)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_ComplexInventoryDeltaEngine.html#moveitemamountsfrominventorytoinventory-system-collections-generic-ireadonlycollection-1-shared-models-items-itemamount---shared-models-items-sharedinventorymodel--shared-models-items-sharedinventorymodel--system-nullable-1-system-uint64---system-boolean---shared-inventory-deltamodels-deltacomplexresult">Shared.Inventory.ComplexInventoryDeltaEngine::MoveItemAmountsFromInventoryToInventory(System.Collections.Generic.IReadOnlyCollection&lt;Shared.Models.Items.ItemAmount&gt;, Shared.Models.Items.SharedInventoryModel, Shared.Models.Items.SharedInventoryModel, System.Nullable&lt;System.UInt64&gt;, System.Boolean)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#playsound-candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32---candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32----system-void">Candide.GameModels.Managers.SimpleInventoryManager::PlaySound(Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;, Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_JobsController.html#checkcanperformfurniturecraft-system-guid--system-string--system-nullable-1-system-guid---system-nullable-1-system-guid---candide-candideui-jobuinew-state-jobordersstate--candide-candideui-jobuinew-state-jobresourcestoragestate--candide-gamemodels-models-jobs-job---system-boolean---shared-inventory-deltamodels-deltacomplexresult----system-boolean"><code>Candide.GameModels.Controllers.JobsController::CheckCanPerformFurnitureCraft</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#quickstack-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory---system-void"><code>Candide.GameModels.Managers.SimpleInventoryManager::QuickStack</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>MoveItemsFromInventoryToInventory</code></li>
+<li><code>: Result was </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="PlaySound private System.Void PlaySound(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, System.Nullable&lt;System.Int32&gt; sourceIndex, Candide.GameModels.Models.Items.SimpleInventory targetInventory, System.Nullable&lt;System.Int32&gt; targetIndex) System.Void sourceInventory Candide.GameModels.Models.Items.SimpleInventory sourceIndex System.Nullable&lt;System.Int32&gt; targetInventory Candide.GameModels.Models.Items.SimpleInventory targetIndex System.Nullable&lt;System.Int32&gt;" id="playsound-candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32---candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32----system-void">
+<div class="method-heading">
+<h3><code>PlaySound</code></h3>
+<a class="permalink" href="#playsound-candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32---candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void PlaySound(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, System.Nullable&lt;System.Int32&gt; sourceIndex, Candide.GameModels.Models.Items.SimpleInventory targetInventory, System.Nullable&lt;System.Int32&gt; targetIndex)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::PlaySound(Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;, Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void PlaySound(<a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> sourceInventory, System.Nullable&lt;System.Int32&gt; sourceIndex, <a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> targetInventory, System.Nullable&lt;System.Int32&gt; targetIndex)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3102DE5A0B1A2A9E7A8CED746BE05451AD60D34E8F41B155184B259CEF96D7AA</code></li>
+<li><span>Body hash</span><code>0AACA76DB06D849FCDEDF9E7805CB15CE3AFA2FEF1421F68904A14E1F3B92A7F</code></li>
+<li><span>IL size</span><span>97</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_Value()</code></li>
+<li><code>Shared.Models.Items.ItemInstanceModel::get_Data()</code></li>
+<li><code>System.Enum::HasFlag(System.Enum)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Sound_SoundPlayer.html#playeventoneshot-system-string--system-single--system-single---system-void">Candide.Sound.SoundPlayer::PlayEventOneShot(System.String, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#additemfromsourceaction-candide-gamemodels-models-items-simpleinventory--system-int32--candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-boolean---system-boolean"><code>Candide.GameModels.Managers.SimpleInventoryManager::AddItemFromSourceAction</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#emptytrashandsplitstack-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-int32--system-int32--system-int32---system-boolean"><code>Candide.GameModels.Managers.SimpleInventoryManager::EmptyTrashAndSplitStack</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#emptytrashandswapinitem-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-int32--system-int32---system-boolean"><code>Candide.GameModels.Managers.SimpleInventoryManager::EmptyTrashAndSwapInItem</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#itemswapaction-system-guid--system-int32--system-guid--system-int32---system-boolean"><code>Candide.GameModels.Managers.SimpleInventoryManager::ItemSwapAction</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#lootall-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--shared-inventory-models-lootallstrategy---system-void"><code>Candide.GameModels.Managers.SimpleInventoryManager::LootAll</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#moneyswapaction-system-guid--system-uint64--system-int32--system-guid--system-int32--system-boolean---system-boolean"><code>Candide.GameModels.Managers.SimpleInventoryManager::MoneySwapAction</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#moveitemsfrominventorytoinventory-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-collections-generic-ireadonlycollection-1-shared-models-items-itemamount---system-boolean--system-nullable-1-system-uint64----shared-inventory-deltamodels-deltacomplexresult"><code>Candide.GameModels.Managers.SimpleInventoryManager::MoveItemsFromInventoryToInventory</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#splitstack-system-guid--system-guid--system-int32--system-int32--system-int32---system-void"><code>Candide.GameModels.Managers.SimpleInventoryManager::SplitStack</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>event:/interface/player inventory/ui_player_loot</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="QuickStack public System.Void QuickStack(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory targetInventory) System.Void sourceInventory Candide.GameModels.Models.Items.SimpleInventory targetInventory Candide.GameModels.Models.Items.SimpleInventory" id="quickstack-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory---system-void">
+<div class="method-heading">
+<h3><code>QuickStack</code></h3>
+<a class="permalink" href="#quickstack-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void QuickStack(Candide.GameModels.Models.Items.SimpleInventory sourceInventory, Candide.GameModels.Models.Items.SimpleInventory targetInventory)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::QuickStack(Candide.GameModels.Models.Items.SimpleInventory, Candide.GameModels.Models.Items.SimpleInventory)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void QuickStack(<a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> sourceInventory, <a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> targetInventory)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>ECB529C902AD5E334F120E4195296E900AEDFC39FE6712392F778A3EB2FBF050</code></li>
+<li><span>Body hash</span><code>EF1DCAB6B27B14B2BB6BEB5FF9AA4756E0E7EA4FBDDA6012B22A2B79BFB8030F</code></li>
+<li><span>IL size</span><span>423</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Items.ItemAmount&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Items.ItemAmount&gt;::ContainsKey(!0)</code></li>
+<li><code>Shared.Models.Items.ItemAmount::.ctor(System.String, System.Int32)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Items.ItemAmount&gt;::Add(!0, !1)</code></li>
+<li><code>Shared.Models.Items.ItemInstanceModel::get_Data()</code></li>
+<li><code>System.Enum::HasFlag(System.Enum)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Items.ItemAmount&gt;::get_Item(!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Items.ItemAmount&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Items.ItemAmount&gt;::get_Values()</code></li>
+<li><code>SimpleInventoryManager.&lt;&gt;c::&lt;QuickStack&gt;b__14_0(Shared.Models.Items.ItemAmount)</code></li>
+<li><code>System.Func&lt;Shared.Models.Items.ItemAmount, System.Boolean&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Linq.Enumerable::Where(System.Collections.Generic.IEnumerable&lt;!!0&gt;, System.Func&lt;!!0, System.Boolean&gt;)</code></li>
+<li><code>System.Linq.Enumerable::ToArray(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#hasmoneyfield----system-boolean">Shared.Models.Items.SharedInventoryModel::HasMoneyField()</a></code></li>
+<li><code>System.Nullable&lt;System.UInt64&gt;::get_Value()</code></li>
+<li><code>System.Nullable&lt;System.UInt64&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#moveitemsfrominventorytoinventory-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-collections-generic-ireadonlycollection-1-shared-models-items-itemamount---system-boolean--system-nullable-1-system-uint64----shared-inventory-deltamodels-deltacomplexresult">Candide.GameModels.Managers.SimpleInventoryManager::MoveItemsFromInventoryToInventory(Candide.GameModels.Models.Items.SimpleInventory, Candide.GameModels.Models.Items.SimpleInventory, System.Collections.Generic.IReadOnlyCollection&lt;Shared.Models.Items.ItemAmount&gt;, System.Boolean, System.Nullable&lt;System.UInt64&gt;)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code>CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_SimpleInventoryService.html#send-inventoryapplymanydelta-candideserver-messagemodels-inventories-inventoryapplymanydeltamessage---system-void">Candide.GameModels.Services.SimpleInventoryService::Send_InventoryApplyManyDelta(CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_InventoryQuickActionsPanel.html#quickactionquickstack----system-void"><code>Candide.CandideUI.Components.InventoryQuickActionsPanel::QuickActionQuickStack</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>QuickStack</code></li>
+<li><code>: Result was </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SortInventory public System.Void SortInventory(System.Guid inventoryId) System.Void inventoryId System.Guid" id="sortinventory-system-guid---system-void">
+<div class="method-heading">
+<h3><code>SortInventory</code></h3>
+<a class="permalink" href="#sortinventory-system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SortInventory(System.Guid inventoryId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::SortInventory(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SortInventory(System.Guid inventoryId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0477E1282B4EB0367AA1B9B30ED9BDB19D894BC522407A832FAD4709211B91FD</code></li>
+<li><span>Body hash</span><code>AB9C0C2E80CBF80313BCC63EAD24899040224027587268DA13E2F35800E48A62</code></li>
+<li><span>IL size</span><span>45</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_GameModels_GameState.html#trygetactiveinventory-system-guid--candide-gamemodels-models-items-simpleinventory----system-boolean">Candide.GameModels.GameState::TryGetActiveInventory(System.Guid, Candide.GameModels.Models.Items.SimpleInventory&amp;)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_InventorySortHelper.html#sortinventory-shared-models-items-sharedinventorymodel---system-collections-generic-list-1-shared-inventory-deltamodels-deltaaction-">Shared.Inventory.InventorySortHelper::SortInventory(Shared.Models.Items.SharedInventoryModel)</a></code></li>
+<li><code>CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_SimpleInventoryService.html#send-inventoryapplymanydelta-candideserver-messagemodels-inventories-inventoryapplymanydeltamessage---system-void">Candide.GameModels.Services.SimpleInventoryService::Send_InventoryApplyManyDelta(CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SplitStack public System.Void SplitStack(System.Guid sourceInventoryId, System.Guid targetInventoryId, System.Int32 splitAmount, System.Int32 sourceIndex, System.Int32 targetIndex) System.Void sourceInventoryId System.Guid targetInventoryId System.Guid splitAmount System.Int32 sourceIndex System.Int32 targetIndex System.Int32" id="splitstack-system-guid--system-guid--system-int32--system-int32--system-int32---system-void">
+<div class="method-heading">
+<h3><code>SplitStack</code></h3>
+<a class="permalink" href="#splitstack-system-guid--system-guid--system-int32--system-int32--system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SplitStack(System.Guid sourceInventoryId, System.Guid targetInventoryId, System.Int32 splitAmount, System.Int32 sourceIndex, System.Int32 targetIndex)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.SimpleInventoryManager::SplitStack(System.Guid, System.Guid, System.Int32, System.Int32, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SplitStack(System.Guid sourceInventoryId, System.Guid targetInventoryId, System.Int32 splitAmount, System.Int32 sourceIndex, System.Int32 targetIndex)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>761C90CD612CD8A863BA94A2CB523D4541467C154C095A159B7801188CCE37AF</code></li>
+<li><span>Body hash</span><code>8C460909D8D7D4612A73C86F674CC3C4DA4A97F540BD8D21B4B2A03F361CF07C</code></li>
+<li><span>IL size</span><span>212</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_GameModels_GameState.html#trygetactiveinventory-system-guid--candide-gamemodels-models-items-simpleinventory----system-boolean">Candide.GameModels.GameState::TryGetActiveInventory(System.Guid, Candide.GameModels.Models.Items.SimpleInventory&amp;)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#emptytrashandsplitstack-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-int32--system-int32--system-int32---system-boolean">Candide.GameModels.Managers.SimpleInventoryManager::EmptyTrashAndSplitStack(Candide.GameModels.Models.Items.SimpleInventory, Candide.GameModels.Models.Items.SimpleInventory, System.Int32, System.Int32, System.Int32)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_InventoryDeltaEngine.html#moveamount-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-int32---shared-inventory-deltamodels-deltaresult">Shared.Inventory.InventoryDeltaEngine::MoveAmount(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32, System.Int32)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_InventoryApplyEngine.html#tryapplyaction-shared-inventory-inventoryapplybridge-iinventoryapplybridge--shared-inventory-deltamodels-deltaaction---system-boolean">Shared.Inventory.InventoryApplyEngine::TryApplyAction(Shared.Inventory.InventoryApplyBridge.IInventoryApplyBridge, Shared.Inventory.DeltaModels.DeltaAction)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#playsound-candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32---candide-gamemodels-models-items-simpleinventory--system-nullable-1-system-int32----system-void">Candide.GameModels.Managers.SimpleInventoryManager::PlaySound(Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;, Candide.GameModels.Models.Items.SimpleInventory, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code>CandideServer.MessageModels.Inventories.InventoryApplyDeltaMessage::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_SimpleInventoryService.html#send-inventoryapplydelta-candideserver-messagemodels-inventories-inventoryapplydeltamessage---system-void">Candide.GameModels.Services.SimpleInventoryService::Send_InventoryApplyDelta(CandideServer.MessageModels.Inventories.InventoryApplyDeltaMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_CandideSplitInventoryItemMockComponent.html#ondroppedonholder-candide-candideui-components-holder-candideholderbase---system-boolean"><code>Candide.CandideUI.CandideSplitInventoryItemMockComponent::OnDroppedOnHolder</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>SplitStack</code></li>
+<li><code>: Result was </code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

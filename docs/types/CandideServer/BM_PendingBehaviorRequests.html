@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BM.PendingBehaviorRequests - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>BM.PendingBehaviorRequests</h1>
+<button class="copy-button" type="button" data-copy="BM.PendingBehaviorRequests">Copy type</button>
+<button class="copy-button" type="button" data-copy="# BM.PendingBehaviorRequests
+
+- Assembly: `CandideServer`
+- Namespace: `BM`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 4 methods, 0 properties, 1 fields, 0 events
+
+## Public Methods
+- `public BM.BehaviorRequest Dequeue(System.String id)`
+- `public System.Void Enqueue(BM.BehaviorRequest request)`
+- `public System.Boolean HasRequest(System.String id)`
+- `public System.Void RemoveExpiredRequests()`
+">Copy markdown</button>
+<a class="button" href="BM_PendingBehaviorRequests.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>BM</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>4</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>1</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>BM</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>0CF346BFCB41CC5E15E5D32C616E2DD5629CFD021724FAF345A98560A78BC966</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_BehaviorMachine.html"><code>BM.BehaviorMachine</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_requests private System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt; _requests System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt;" id="-requests-system-collections-generic-dictionary-2-system-string-system-collections-generic-list-1-bm-behaviorrequest--"><td><span class="member-name-cell"><code>_requests</code><a class="permalink" href="#-requests-system-collections-generic-dictionary-2-system-string-system-collections-generic-list-1-bm-behaviorrequest--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt; _requests">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;<a href="../../types/CandideServer/BM_BehaviorRequest.html">BM.BehaviorRequest</a>&gt;&gt; _requests</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Dequeue public BM.BehaviorRequest Dequeue(System.String id) BM.BehaviorRequest id System.String" id="dequeue-system-string---bm-behaviorrequest">
+<div class="method-heading">
+<h3><code>Dequeue</code></h3>
+<a class="permalink" href="#dequeue-system-string---bm-behaviorrequest" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.BehaviorRequest Dequeue(System.String id)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.PendingBehaviorRequests::Dequeue(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_BehaviorRequest.html">BM.BehaviorRequest</a> Dequeue(System.String id)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_BehaviorRequest.html">BM.BehaviorRequest</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>140304E1C340C68B75168E11007DC975F6F9F2D8EB580D98F15CA07542236134</code></li>
+<li><span>Body hash</span><code>61A05D899472B0FBE8CBDDFD07C3AB9CBCF0DA2CD949F659A17DB2B0BA22FB8D</code></li>
+<li><span>IL size</span><span>64</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;::RemoveAt(System.Int32)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt;::Remove(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_ReceiveBehaviorRequest.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.ReceiveBehaviorRequest::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Enqueue public System.Void Enqueue(BM.BehaviorRequest request) System.Void request BM.BehaviorRequest" id="enqueue-bm-behaviorrequest---system-void">
+<div class="method-heading">
+<h3><code>Enqueue</code></h3>
+<a class="permalink" href="#enqueue-bm-behaviorrequest---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Enqueue(BM.BehaviorRequest request)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.PendingBehaviorRequests::Enqueue(BM.BehaviorRequest)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Enqueue(<a href="../../types/CandideServer/BM_BehaviorRequest.html">BM.BehaviorRequest</a> request)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7B94CD49BDCA05FEA48AC45BD634B04BEC8B57D8542CC88F2491C7BB2B80B543</code></li>
+<li><span>Body hash</span><code>01F68CACB3775104F6913A001F33BBA3BD23CB906F202B20DF18428272C2C344</code></li>
+<li><span>IL size</span><span>63</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_SendBehaviorRequest.html#sendrequest-candideserver-entities-controllers-serverbehaviormachinecontroller--shared-entity-entitywrapper---system-void"><code>BM.SendBehaviorRequest::SendRequest</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="HasRequest public System.Boolean HasRequest(System.String id) System.Boolean id System.String" id="hasrequest-system-string---system-boolean">
+<div class="method-heading">
+<h3><code>HasRequest</code></h3>
+<a class="permalink" href="#hasrequest-system-string---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean HasRequest(System.String id)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.PendingBehaviorRequests::HasRequest(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean HasRequest(System.String id)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>88AEBAC968B465E3C53BDE752BB308A8118AD06647A15BC7FFDDEBB500815BCB</code></li>
+<li><span>Body hash</span><code>82654AFA4667DF335E3CAA241F424F44FC7557B57186AE81A4228763D88FE395</code></li>
+<li><span>IL size</span><span>28</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;::get_Count()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_ReceiveBehaviorRequest.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.ReceiveBehaviorRequest::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveExpiredRequests public System.Void RemoveExpiredRequests() System.Void " id="removeexpiredrequests----system-void">
+<div class="method-heading">
+<h3><code>RemoveExpiredRequests</code></h3>
+<a class="permalink" href="#removeexpiredrequests----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemoveExpiredRequests()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.PendingBehaviorRequests::RemoveExpiredRequests()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemoveExpiredRequests()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D8108E028CF46AAA1403DCC0EDB54CB5B3D2336FC82357DD0C567985FF6E0BAD</code></li>
+<li><span>Body hash</span><code>33F07B87E4D83C91DEBAF31BF336CCB0370B21A712018D820CF7C1C0676AF8C3</code></li>
+<li><span>IL size</span><span>123</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt;::get_Keys()</code></li>
+<li><code>Dictionary.KeyCollection&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.KeyCollection.Enumerator&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt;::get_Item(!0)</code></li>
+<li><code>PendingBehaviorRequests.&lt;&gt;c::&lt;RemoveExpiredRequests&gt;b__4_0(BM.BehaviorRequest)</code></li>
+<li><code>System.Predicate&lt;BM.BehaviorRequest&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;::RemoveAll(System.Predicate&lt;!0&gt;)</code></li>
+<li><code>System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt;::Remove(!0)</code></li>
+<li><code>Dictionary.KeyCollection.Enumerator&lt;System.String, System.Collections.Generic.List&lt;BM.BehaviorRequest&gt;&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_BehaviorMachine.html#update-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel---system-void"><code>BM.BehaviorMachine::Update</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.World.ServerWorldDataManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.World.ServerWorldDataManager</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.World.ServerWorldDataManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.World.ServerWorldDataManager
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.World`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 7 methods, 0 properties, 1 fields, 0 events
+
+## Public Methods
+- `public CandideServer.World.ServerWorldData GetWorldDataOrNull(System.String mapName)`
+- `public System.Void LoadMapFiles()`
+- `public System.Void SpawnWorldEntities(CandideServer.Models.Worlds.WorldModel model, System.Func&lt;CandideServer.ServerControllers.SpawnEntityArgs, CandideServer.World.ServerEntitySpawnData, System.Boolean&gt; beforeSpawnAction)`
+- `public System.Void SpawnWorldEntities(CandideServer.World.ServerWorldData worldData, System.Guid worldId, Microsoft.Xna.Framework.Vector3 offset, System.Func&lt;CandideServer.ServerControllers.SpawnEntityArgs, CandideServer.World.ServerEntitySpawnData, System.Boolean&gt; beforeSpawnAction, Microsoft.Xna.Framework.Vector3 positionScale)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_World_ServerWorldDataManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.World</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>7</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>1</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.World</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>77E38ACB0ABF0B6B44D7D32DDD98C3598DF0746AD1A4B4C957B97424B9B30D07</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="WorldData public System.Collections.Generic.Dictionary&lt;System.String, CandideServer.World.ServerWorldData&gt; WorldData System.Collections.Generic.Dictionary&lt;System.String, CandideServer.World.ServerWorldData&gt;" id="worlddata-system-collections-generic-dictionary-2-system-string-candideserver-world-serverworlddata-"><td><span class="member-name-cell"><code>WorldData</code><a class="permalink" href="#worlddata-system-collections-generic-dictionary-2-system-string-candideserver-world-serverworlddata-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.String, CandideServer.World.ServerWorldData&gt; WorldData">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.String, <a href="../../types/CandideServer/CandideServer_World_ServerWorldData.html">CandideServer.World.ServerWorldData</a>&gt; WorldData</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetWorldDataOrNull public CandideServer.World.ServerWorldData GetWorldDataOrNull(System.String mapName) CandideServer.World.ServerWorldData mapName System.String" id="getworlddataornull-system-string---candideserver-world-serverworlddata">
+<div class="method-heading">
+<h3><code>GetWorldDataOrNull</code></h3>
+<a class="permalink" href="#getworlddataornull-system-string---candideserver-world-serverworlddata" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.World.ServerWorldData GetWorldDataOrNull(System.String mapName)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.ServerWorldDataManager::GetWorldDataOrNull(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_World_ServerWorldData.html">CandideServer.World.ServerWorldData</a> GetWorldDataOrNull(System.String mapName)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_World_ServerWorldData.html">CandideServer.World.ServerWorldData</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>00B8AEDBDC1D7D17F69F43E3DD8BFB1968716CB27F2F348A66F9F1C231979AED</code></li>
+<li><span>Body hash</span><code>FD90849D2B328FBDC5738028525A3743D2CDF126BE43DA5AF40F5AE1644EE6D3</code></li>
+<li><span>IL size</span><span>46</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.String::Replace(System.Char, System.Char)</code></li>
+<li><code>System.String::ToLowerInvariant()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.World.ServerWorldData&gt;::TryGetValue(!0, !1&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Database_DungeonRoomDataBase.html#adddungeonroomdata-system-collections-generic-ienumerable-1-candideserver-models-dungeons-dungeonroomdatamodel----system-void"><code>CandideServer.Database.DungeonRoomDataBase::AddDungeonRoomData</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerChallengeDungeonGenerator.html#connectroom-candideserver-models-dungeons-dungeonlocationmodel--candideserver-models-dungeons-dungeonlocationroommodel--candideserver-generators-dungeon-dungeonroom--system-int32---system-void"><code>CandideServer.Generators.Dungeon.ServerChallengeDungeonGenerator::ConnectRoom</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerChallengeDungeonGenerator.html#generatenewchallengedungeon-candideserver-models-dungeons-dungeonlocationmodel--candideserver-data-dungeons-challengedungeonconfig--candideserver-generators-dungeon-generatechallengedungeonargs---system-boolean"><code>CandideServer.Generators.Dungeon.ServerChallengeDungeonGenerator::GenerateNewChallengeDungeon</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerDungeonLoader.html#addsubdungeonroom-candideserver-models-dungeons-dungeonroomdatamodel--candideserver-models-dungeons-dungeonlocationmodel--candideserver-models-dungeons-dungeonlocationroommodel--candideserver-world-serverworlddata--system-int32---candideserver-models-dungeons-dungeonlocationroommodel"><code>CandideServer.Generators.Dungeon.ServerDungeonLoader::AddSubDungeonRoom</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerDungeonLoader.html#generatedungeonlayout-candideserver-models-dungeons-dungeonroomdatamodel--candideserver-models-dungeons-dungeonlocationmodel---system-boolean"><code>CandideServer.Generators.Dungeon.ServerDungeonLoader::GenerateDungeonLayout</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerDungeonLoader.html#setuproom-candideserver-models-dungeons-dungeonroomdatamodel--candideserver-models-dungeons-dungeonlocationroommodel--candideserver-models-dungeons-dungeonlocationmodel--system-boolean---candideserver-models-worlds-worldmodel"><code>CandideServer.Generators.Dungeon.ServerDungeonLoader::SetUpRoom</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_WorldSController.html#changeworldmap-candideserver-models-worlds-worldmodel--system-string--system-boolean---system-boolean"><code>CandideServer.ServerControllers.WorldSController::ChangeWorldMap</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_WorldSController.html#newchallengedungeonworld-candideserver-messagemodels-worlds-newworldmessage--system-action-1-candideserver-models-worlds-worldmodel----candideserver-models-worlds-worldmodel"><code>CandideServer.ServerControllers.WorldSController::NewChallengeDungeonWorld</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_WorldSController.html#newworld-candideserver-messagemodels-worlds-newworldmessage--system-func-3-candideserver-servercontrollers-spawnentityargs-candideserver-world-serverentityspawndata-system-boolean----candideserver-models-worlds-worldmodel"><code>CandideServer.ServerControllers.WorldSController::NewWorld</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_WorldSController.html#onservergamestateloaded-candideserver-gamedescription---system-void"><code>CandideServer.ServerControllers.WorldSController::OnServerGameStateLoaded</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#tryupgradebuilding-system-guid--system-string--system-boolean---system-boolean"><code>CandideServer.ServerManagers.BuildingsServerManager::TryUpgradeBuilding</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#trygetbuildingexteriordoorpositionthroughtransportnode-candideserver-models-buildings-buildinginstancemodel--microsoft-xna-framework-vector2----system-boolean"><code>CandideServer.ServerManagers.CitizenServerManager::TryGetBuildingExteriorDoorPositionThroughTransportNode</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#trygetbuildinginteriordoorposition-candideserver-simulationmodels-buildingsimulationmodel--microsoft-xna-framework-vector2----system-boolean"><code>CandideServer.ServerManagers.CitizenServerManager::TryGetBuildingInteriorDoorPosition</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#getworldsizeforpoi-system-string---microsoft-xna-framework-point"><code>CandideServer.ServerManagers.PoiServerManager::GetWorldSizeForPoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#setupfetchquest-shared-models-quests-questdata--shared-models-quests-questinstancemodel--system-single---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::SetupFetchQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_PointOfInterestInserter.html#loadinworldat-system-string--microsoft-xna-framework-point--system-boolean--system-action-1-candideserver-servercontrollers-spawnentityargs----system-void"><code>CandideServer.World.Generation.PointOfInterestInserter::LoadInWorldAt</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generatespawnarea-microsoft-xna-framework-vector2---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateSpawnArea</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#spawnworldentities-candideserver-models-worlds-worldmodel--system-func-3-candideserver-servercontrollers-spawnentityargs-candideserver-world-serverentityspawndata-system-boolean----system-void"><code>CandideServer.World.ServerWorldDataManager::SpawnWorldEntities</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="LoadMap private System.Void LoadMap(System.IO.FileStream stream, System.IO.FileInfo file, System.IO.DirectoryInfo baseDirectory) System.Void stream System.IO.FileStream file System.IO.FileInfo baseDirectory System.IO.DirectoryInfo" id="loadmap-system-io-filestream--system-io-fileinfo--system-io-directoryinfo---system-void">
+<div class="method-heading">
+<h3><code>LoadMap</code></h3>
+<a class="permalink" href="#loadmap-system-io-filestream--system-io-fileinfo--system-io-directoryinfo---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void LoadMap(System.IO.FileStream stream, System.IO.FileInfo file, System.IO.DirectoryInfo baseDirectory)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.ServerWorldDataManager::LoadMap(System.IO.FileStream, System.IO.FileInfo, System.IO.DirectoryInfo)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void LoadMap(System.IO.FileStream stream, System.IO.FileInfo file, System.IO.DirectoryInfo baseDirectory)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>41523F406009F950171FA351AD6F45EAAE879BCCFC8E90FF38136290E8590A51</code></li>
+<li><span>Body hash</span><code>7FC214C5193EE7413CF3EEC8BF582E376337FB5666E6DE084B020B44165B4790</code></li>
+<li><span>IL size</span><span>47</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Serialization.CandideDeserializer::.ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice, Microsoft.Xna.Framework.Content.ContentManager)</code></li>
+<li><code>System.IO.BinaryReader::.ctor(System.IO.Stream)</code></li>
+<li><code>System.IO.BinaryReader::ReadString()</code></li>
+<li><code>CandideCreator.Shared.Serialization.CandideDeserializer::Deserialize(CandideCreator.Shared.Serialization.CandideReflection, System.IO.Stream, System.Boolean)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#onworldread-candidecreator-shared-serialization-candidedeserializer--candidecreator-shared-models-world--system-io-fileinfo--system-io-directoryinfo---system-void">CandideServer.World.ServerWorldDataManager::OnWorldRead(CandideCreator.Shared.Serialization.CandideDeserializer, CandideCreator.Shared.Models.World, System.IO.FileInfo, System.IO.DirectoryInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#loadmapfiles-system-io-directoryinfo--system-io-directoryinfo---system-void"><code>CandideServer.World.ServerWorldDataManager::LoadMapFiles</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="LoadMapFiles private System.Void LoadMapFiles(System.IO.DirectoryInfo directory, System.IO.DirectoryInfo baseDirectory) System.Void directory System.IO.DirectoryInfo baseDirectory System.IO.DirectoryInfo" id="loadmapfiles-system-io-directoryinfo--system-io-directoryinfo---system-void">
+<div class="method-heading">
+<h3><code>LoadMapFiles</code></h3>
+<a class="permalink" href="#loadmapfiles-system-io-directoryinfo--system-io-directoryinfo---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void LoadMapFiles(System.IO.DirectoryInfo directory, System.IO.DirectoryInfo baseDirectory)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.ServerWorldDataManager::LoadMapFiles(System.IO.DirectoryInfo, System.IO.DirectoryInfo)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void LoadMapFiles(System.IO.DirectoryInfo directory, System.IO.DirectoryInfo baseDirectory)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5747A56EA738A8C239C21A60DFA6B6EA07F0C384F948D0FA6238328D1628C590</code></li>
+<li><span>Body hash</span><code>1D8EB0E8351BFA5340903476F058C8BE35D34A2429B77EDC65FA102A55F94897</code></li>
+<li><span>IL size</span><span>133</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.IO.DirectoryInfo::EnumerateFiles()</code></li>
+<li><code>System.Collections.Generic.IEnumerable&lt;System.IO.FileInfo&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;System.IO.FileInfo&gt;::get_Current()</code></li>
+<li><code>System.IO.FileSystemInfo::get_Extension()</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>System.IO.FileInfo::OpenRead()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#loadmap-system-io-filestream--system-io-fileinfo--system-io-directoryinfo---system-void">CandideServer.World.ServerWorldDataManager::LoadMap(System.IO.FileStream, System.IO.FileInfo, System.IO.DirectoryInfo)</a></code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.IEnumerator::MoveNext()</code></li>
+<li><code>System.IO.DirectoryInfo::EnumerateDirectories()</code></li>
+<li><code>System.Collections.Generic.IEnumerable&lt;System.IO.DirectoryInfo&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;System.IO.DirectoryInfo&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#loadmapfiles-system-io-directoryinfo--system-io-directoryinfo---system-void">CandideServer.World.ServerWorldDataManager::LoadMapFiles(System.IO.DirectoryInfo, System.IO.DirectoryInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#loadmapfiles-system-io-directoryinfo--system-io-directoryinfo---system-void"><code>CandideServer.World.ServerWorldDataManager::LoadMapFiles</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#loadmapfiles----system-void"><code>CandideServer.World.ServerWorldDataManager::LoadMapFiles</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>.cmx</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LoadMapFiles public System.Void LoadMapFiles() System.Void " id="loadmapfiles----system-void">
+<div class="method-heading">
+<h3><code>LoadMapFiles</code></h3>
+<a class="permalink" href="#loadmapfiles----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void LoadMapFiles()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.ServerWorldDataManager::LoadMapFiles()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void LoadMapFiles()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>97F80C6CDCDFF2F8E4C8A31FCEB107BDEC8566A66D9BADF2BDBDC6DBB52B5C33</code></li>
+<li><span>Body hash</span><code>453B4303B616AFD0B28F1F4F87D609DA6718A6E7931B84AF7A7322744FFECA84</code></li>
+<li><span>IL size</span><span>38</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.World.ServerWorldData&gt;::Clear()</code></li>
+<li><code>System.IO.DirectoryInfo::.ctor(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#loadmapfiles-system-io-directoryinfo--system-io-directoryinfo---system-void">CandideServer.World.ServerWorldDataManager::LoadMapFiles(System.IO.DirectoryInfo, System.IO.DirectoryInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Data_ServerDataSetups_ServerDataSetup.html#setupdatafileloading----system-void"><code>CandideServer.Data.ServerDataSetups.ServerDataSetup::SetupDataFileLoading</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Content/maps</code></li>
+<li><code>Content</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="OnWorldRead private System.Void OnWorldRead(CandideCreator.Shared.Serialization.CandideDeserializer deserializer, CandideCreator.Shared.Models.World world, System.IO.FileInfo file, System.IO.DirectoryInfo baseDirectory) System.Void deserializer CandideCreator.Shared.Serialization.CandideDeserializer world CandideCreator.Shared.Models.World file System.IO.FileInfo baseDirectory System.IO.DirectoryInfo" id="onworldread-candidecreator-shared-serialization-candidedeserializer--candidecreator-shared-models-world--system-io-fileinfo--system-io-directoryinfo---system-void">
+<div class="method-heading">
+<h3><code>OnWorldRead</code></h3>
+<a class="permalink" href="#onworldread-candidecreator-shared-serialization-candidedeserializer--candidecreator-shared-models-world--system-io-fileinfo--system-io-directoryinfo---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void OnWorldRead(CandideCreator.Shared.Serialization.CandideDeserializer deserializer, CandideCreator.Shared.Models.World world, System.IO.FileInfo file, System.IO.DirectoryInfo baseDirectory)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.ServerWorldDataManager::OnWorldRead(CandideCreator.Shared.Serialization.CandideDeserializer, CandideCreator.Shared.Models.World, System.IO.FileInfo, System.IO.DirectoryInfo)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void OnWorldRead(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideDeserializer.html">CandideCreator.Shared.Serialization.CandideDeserializer</a> deserializer, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_World.html">CandideCreator.Shared.Models.World</a> world, System.IO.FileInfo file, System.IO.DirectoryInfo baseDirectory)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D062317A95112B8E258BB43841CA5919A1E4095DEB5BA52B1773D9D8CADF3A02</code></li>
+<li><span>Body hash</span><code>3434304CC576C9FA8266F2AE738C5A82C2A658899E7F9550DEBD3D4D48C26609</code></li>
+<li><span>IL size</span><span>1366</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.IO.FileSystemInfo::get_FullName()</code></li>
+<li><code>System.IO.Path::GetRelativePath(System.String, System.String)</code></li>
+<li><code>System.IO.Path::ChangeExtension(System.String, System.String)</code></li>
+<li><code>System.String::Replace(System.Char, System.Char)</code></li>
+<li><code>CandideCreator.Shared.Models.World::get_Terrains()</code></li>
+<li><code>System.Collections.ObjectModel.Collection&lt;CandideCreator.Shared.Models.Terrain&gt;::get_Count()</code></li>
+<li><code>Shared.Collision.CollisionTerrainGroup::.ctor(System.Int32)</code></li>
+<li><code>CandideServer.World.ServerWorldData::.ctor()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::get_Zero()</code></li>
+<li><code><a href="../../types/Shared/Shared_World_HeightAtPointLookUp.html#createheightatpointlookup-system-collections-generic-ireadonlycollection-1-candidecreator-shared-models-terrain---microsoft-xna-framework-vector2---shared-world-heightatpointlookup">Shared.World.HeightAtPointLookUp::CreateHeightAtPointLookup(System.Collections.Generic.IReadOnlyCollection&lt;CandideCreator.Shared.Models.Terrain&gt;, Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>System.Collections.ObjectModel.Collection&lt;CandideCreator.Shared.Models.Terrain&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;CandideCreator.Shared.Models.Terrain&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_TerrainToCollisionHelper.html#addcollisionfromterrain-candidecreator-shared-models-terrain--shared-collision-collisionterraingroup--microsoft-xna-framework-vector2---system-void">Shared.Helpers.TerrainToCollisionHelper::AddCollisionFromTerrain(CandideCreator.Shared.Models.Terrain, Shared.Collision.CollisionTerrainGroup, Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>System.Collections.IEnumerator::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>CandideCreator.Shared.Models.World::get_TransportNodes()</code></li>
+<li><code>System.Collections.ObjectModel.Collection&lt;CandideCreator.Shared.Models.TransportNode&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;CandideCreator.Shared.Models.TransportNode&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#toxzy-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.VectorExtension::ToXzy(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>CandideCreator.Shared.Models.World::get_TiledMapFileName()</code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code>System.IO.Path::Join(System.String, System.String)</code></li>
+<li><code>System.IO.File::Exists(System.String)</code></li>
+<li><code>System.Xml.XmlDocument::.ctor()</code></li>
+<li><code>System.Xml.XmlDocument::Load(System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Tiled_TiledMapParser.html#parsexmldataonly-system-xml-xmldocument--microsoft-xna-framework-content-contentmanager---candidecreator-shared-tiled-tiledmap">CandideCreator.Shared.Tiled.TiledMapParser::ParseXMLDataOnly(System.Xml.XmlDocument, Microsoft.Xna.Framework.Content.ContentManager)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>CandideCreator.Shared.Models.World::get_Name()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#loadmap-system-io-filestream--system-io-fileinfo--system-io-directoryinfo---system-void"><code>CandideServer.World.ServerWorldDataManager::LoadMap</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>.tmx</code></li>
+<li><code>Failed to load in tiled map </code></li>
+<li><code> for world </code></li>
+<li><code>. </code></li>
+<li><code>Could not find tiled map </code></li>
+<li><code>. The file &#39;</code></li>
+<li><code>&#39; does not exist.</code></li>
+<li><code>Could not find a base doodad &#39;</code></li>
+<li><code>/</code></li>
+<li><code>&#39; when loading map &#39;</code></li>
+<li><code>&#39;! </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnWorldEntities public System.Void SpawnWorldEntities(CandideServer.Models.Worlds.WorldModel model, System.Func&lt;CandideServer.ServerControllers.SpawnEntityArgs, CandideServer.World.ServerEntitySpawnData, System.Boolean&gt; beforeSpawnAction) System.Void model CandideServer.Models.Worlds.WorldModel beforeSpawnAction System.Func&lt;CandideServer.ServerControllers.SpawnEntityArgs, CandideServer.World.ServerEntitySpawnData, System.Boolean&gt;" id="spawnworldentities-candideserver-models-worlds-worldmodel--system-func-3-candideserver-servercontrollers-spawnentityargs-candideserver-world-serverentityspawndata-system-boolean----system-void">
+<div class="method-heading">
+<h3><code>SpawnWorldEntities</code></h3>
+<a class="permalink" href="#spawnworldentities-candideserver-models-worlds-worldmodel--system-func-3-candideserver-servercontrollers-spawnentityargs-candideserver-world-serverentityspawndata-system-boolean----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SpawnWorldEntities(CandideServer.Models.Worlds.WorldModel model, System.Func&lt;CandideServer.ServerControllers.SpawnEntityArgs, CandideServer.World.ServerEntitySpawnData, System.Boolean&gt; beforeSpawnAction)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.ServerWorldDataManager::SpawnWorldEntities(CandideServer.Models.Worlds.WorldModel, System.Func&lt;CandideServer.ServerControllers.SpawnEntityArgs, CandideServer.World.ServerEntitySpawnData, System.Boolean&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SpawnWorldEntities(<a href="../../types/CandideServer/CandideServer_Models_Worlds_WorldModel.html">CandideServer.Models.Worlds.WorldModel</a> model, System.Func&lt;<a href="../../types/CandideServer/CandideServer_ServerControllers_SpawnEntityArgs.html">CandideServer.ServerControllers.SpawnEntityArgs</a>, <a href="../../types/CandideServer/CandideServer_World_ServerEntitySpawnData.html">CandideServer.World.ServerEntitySpawnData</a>, System.Boolean&gt; beforeSpawnAction)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4CA99FDF93329673AE74BBC10AA08B860570655BE433DF9E07CAABBA1EFC89C6</code></li>
+<li><span>Body hash</span><code>C0C0210780B4EE19A6ED53B06B21BFC29DBEBB4FA37068C0734895BB902D4A69</code></li>
+<li><span>IL size</span><span>138</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#getworlddataornull-system-string---candideserver-world-serverworlddata">CandideServer.World.ServerWorldDataManager::GetWorldDataOrNull(System.String)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::get_Zero()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#spawnworldentities-candideserver-world-serverworlddata--system-guid--microsoft-xna-framework-vector3--system-func-3-candideserver-servercontrollers-spawnentityargs-candideserver-world-serverentityspawndata-system-boolean---microsoft-xna-framework-vector3---system-void">CandideServer.World.ServerWorldDataManager::SpawnWorldEntities(CandideServer.World.ServerWorldData, System.Guid, Microsoft.Xna.Framework.Vector3, System.Func&lt;CandideServer.ServerControllers.SpawnEntityArgs, CandideServer.World.ServerEntitySpawnData, System.Boolean&gt;, Microsoft.Xna.Framework.Vector3)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_WorldSController.html#changeworldmap-candideserver-models-worlds-worldmodel--system-string--system-boolean---system-boolean"><code>CandideServer.ServerControllers.WorldSController::ChangeWorldMap</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_WorldSController.html#newworld-candideserver-messagemodels-worlds-newworldmessage--system-func-3-candideserver-servercontrollers-spawnentityargs-candideserver-world-serverentityspawndata-system-boolean----candideserver-models-worlds-worldmodel"><code>CandideServer.ServerControllers.WorldSController::NewWorld</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Could not find world file &#39;</code></li>
+<li><code>&#39; for world name &#39;</code></li>
+<li><code>&#39;.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnWorldEntities public System.Void SpawnWorldEntities(CandideServer.World.ServerWorldData worldData, System.Guid worldId, Microsoft.Xna.Framework.Vector3 offset, System.Func&lt;CandideServer.ServerControllers.SpawnEntityArgs, CandideServer.World.ServerEntitySpawnData, System.Boolean&gt; beforeSpawnAction, Microsoft.Xna.Framework.Vector3 positionScale) System.Void worldData CandideServer.World.ServerWorldData worldId System.Guid offset Microsoft.Xna.Framework.Vector3 beforeSpawnAction System.Func&lt;CandideServer.ServerControllers.SpawnEntityArgs, CandideServer.World.ServerEntitySpawnData, System.Boolean&gt; positionScale Microsoft.Xna.Framework.Vector3" id="spawnworldentities-candideserver-world-serverworlddata--system-guid--microsoft-xna-framework-vector3--system-func-3-candideserver-servercontrollers-spawnentityargs-candideserver-world-serverentityspawndata-system-boolean---microsoft-xna-framework-vector3---system-void">
+<div class="method-heading">
+<h3><code>SpawnWorldEntities</code></h3>
+<a class="permalink" href="#spawnworldentities-candideserver-world-serverworlddata--system-guid--microsoft-xna-framework-vector3--system-func-3-candideserver-servercontrollers-spawnentityargs-candideserver-world-serverentityspawndata-system-boolean---microsoft-xna-framework-vector3---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SpawnWorldEntities(CandideServer.World.ServerWorldData worldData, System.Guid worldId, Microsoft.Xna.Framework.Vector3 offset, System.Func&lt;CandideServer.ServerControllers.SpawnEntityArgs, CandideServer.World.ServerEntitySpawnData, System.Boolean&gt; beforeSpawnAction, Microsoft.Xna.Framework.Vector3 positionScale)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.ServerWorldDataManager::SpawnWorldEntities(CandideServer.World.ServerWorldData, System.Guid, Microsoft.Xna.Framework.Vector3, System.Func&lt;CandideServer.ServerControllers.SpawnEntityArgs, CandideServer.World.ServerEntitySpawnData, System.Boolean&gt;, Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SpawnWorldEntities(<a href="../../types/CandideServer/CandideServer_World_ServerWorldData.html">CandideServer.World.ServerWorldData</a> worldData, System.Guid worldId, Microsoft.Xna.Framework.Vector3 offset, System.Func&lt;<a href="../../types/CandideServer/CandideServer_ServerControllers_SpawnEntityArgs.html">CandideServer.ServerControllers.SpawnEntityArgs</a>, <a href="../../types/CandideServer/CandideServer_World_ServerEntitySpawnData.html">CandideServer.World.ServerEntitySpawnData</a>, System.Boolean&gt; beforeSpawnAction, Microsoft.Xna.Framework.Vector3 positionScale)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DBBD10DC1FE33799D97E9CF17D3BBA8309FDF8464BC9DEC5D802BF96CEC32F7B</code></li>
+<li><span>Body hash</span><code>E63319D8A02B1390B5CC6AF73CF43804D1D47C336239E3C748E315F510CC22F3</code></li>
+<li><span>IL size</span><span>278</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector3::op_Equality(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::get_One()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.World.ServerEntitySpawnData&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;CandideServer.World.ServerEntitySpawnData&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Entities_ServerEntityDataManager.html#trygetentitybasedata-system-guid--shared-entity-entitywrapper----system-boolean">CandideServer.Entities.ServerEntityDataManager::TryGetEntityBaseData(System.Guid, Shared.Entity.EntityWrapper&amp;)</a></code></li>
+<li><code>CandideServer.ServerControllers.SpawnEntityArgs::.ctor()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Addition(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ParameterExtensions.html#copy-system-collections-generic-dictionary-2-system-string-system-string----system-collections-generic-dictionary-2-system-string-system-string-">CandideCreator.Shared.Helpers.ParameterExtensions::Copy(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;)</a></code></li>
+<li><code>System.String::Contains(System.String)</code></li>
+<li><code>System.Func&lt;CandideServer.ServerControllers.SpawnEntityArgs, CandideServer.World.ServerEntitySpawnData, System.Boolean&gt;::Invoke(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#spawnentity-candideserver-servercontrollers-spawnentityargs---candideserver-entities-serverentitymodel">CandideServer.ServerControllers.EntitySController::SpawnEntity(CandideServer.ServerControllers.SpawnEntityArgs)</a></code></li>
+<li><code>List.Enumerator&lt;CandideServer.World.ServerEntitySpawnData&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#spawnworldentities-candideserver-models-worlds-worldmodel--system-func-3-candideserver-servercontrollers-spawnentityargs-candideserver-world-serverentityspawndata-system-boolean----system-void"><code>CandideServer.World.ServerWorldDataManager::SpawnWorldEntities</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>elite</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

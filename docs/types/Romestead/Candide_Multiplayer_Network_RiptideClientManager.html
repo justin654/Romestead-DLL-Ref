@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.Multiplayer.Network.RiptideClientManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.Multiplayer.Network.RiptideClientManager</h1>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.RiptideClientManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.Multiplayer.Network.RiptideClientManager
+
+- Assembly: `Romestead`
+- Namespace: `Candide.Multiplayer.Network`
+- Kind: `public class`
+- Base type: `System.Object`
+- Interfaces: `Candide.Multiplayer.Network.IClientManager`
+- Members: 10 methods, 0 properties, 9 fields, 0 events
+
+## Public Methods
+- `public Candide.Multiplayer.Network.BetterMemoryStream DecompressMessage(Candide.Multiplayer.Network.BetterMemoryStream memoryStream, Candide.Multiplayer.Network.BetterMemoryStream decompressStream, System.Boolean compressed, System.String key, System.UInt16 type, System.Int32 messageSize)`
+- `public System.Nullable&lt;System.Single&gt; GetPingMilliseconds()`
+- `public System.Void SendEvent(System.String key, System.Object message, Candide.Multiplayer.Network.BetterMemoryStream messageBytes, System.Boolean compressed, System.UInt16 type, System.Int32 messageSize)`
+- `public System.Void SendMessage(System.Byte[] data, System.Int32 position, System.Byte type)`
+- `public System.Void StartClient(CandideServer.Server.MultiplayerConfiguration config, Candide.Multiplayer.Network.ClientConfiguration clientConfig)`
+- `public System.Void StopClient()`
+- `public System.Void UpdateClient()`
+">Copy markdown</button>
+<a class="button" href="Candide_Multiplayer_Network_RiptideClientManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.Multiplayer.Network</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>10</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>9</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.Multiplayer.Network</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Interfaces</span><code><a href="../../types/Romestead/Candide_Multiplayer_Network_IClientManager.html">Candide.Multiplayer.Network.IClientManager</a></code></li>
+<li><span>Hash</span><code>83807A7538F1BC587CC8EBC9D0EBC6C71C1C7A6AA345559B4F4CC46A4151F15F</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Interfaces</h3><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_IClientManager.html">Candide.Multiplayer.Network.IClientManager</a></code></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Client public Riptide.Client Client Riptide.Client" id="client-riptide-client"><td><span class="member-name-cell"><code>Client</code><a class="permalink" href="#client-riptide-client" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Riptide.Client Client">Copy</button></span></td><td>public</td><td><code>public Riptide.Client Client</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Config public CandideServer.Server.MultiplayerConfiguration Config CandideServer.Server.MultiplayerConfiguration" id="config-candideserver-server-multiplayerconfiguration"><td><span class="member-name-cell"><code>Config</code><a class="permalink" href="#config-candideserver-server-multiplayerconfiguration" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public CandideServer.Server.MultiplayerConfiguration Config">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/CandideServer_Server_MultiplayerConfiguration.html">CandideServer.Server.MultiplayerConfiguration</a> Config</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Deserializer public CandideCreator.Shared.Serialization.CandideDeserializer Deserializer CandideCreator.Shared.Serialization.CandideDeserializer" id="deserializer-candidecreator-shared-serialization-candidedeserializer"><td><span class="member-name-cell"><code>Deserializer</code><a class="permalink" href="#deserializer-candidecreator-shared-serialization-candidedeserializer" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public CandideCreator.Shared.Serialization.CandideDeserializer Deserializer">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideDeserializer.html">CandideCreator.Shared.Serialization.CandideDeserializer</a> Deserializer</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Server public Riptide.Connection Server Riptide.Connection" id="server-riptide-connection"><td><span class="member-name-cell"><code>Server</code><a class="permalink" href="#server-riptide-connection" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Riptide.Connection Server">Copy</button></span></td><td>public</td><td><code>public Riptide.Connection Server</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_decompressStream private Candide.Multiplayer.Network.BetterMemoryStream _decompressStream Candide.Multiplayer.Network.BetterMemoryStream" id="-decompressstream-candide-multiplayer-network-bettermemorystream"><td><span class="member-name-cell"><code>_decompressStream</code><a class="permalink" href="#-decompressstream-candide-multiplayer-network-bettermemorystream" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.Multiplayer.Network.BetterMemoryStream _decompressStream">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_Multiplayer_Network_BetterMemoryStream.html">Candide.Multiplayer.Network.BetterMemoryStream</a> _decompressStream</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_messageReader private System.IO.BinaryReader _messageReader System.IO.BinaryReader" id="-messagereader-system-io-binaryreader"><td><span class="member-name-cell"><code>_messageReader</code><a class="permalink" href="#-messagereader-system-io-binaryreader" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.IO.BinaryReader _messageReader">Copy</button></span></td><td>private</td><td><code>private System.IO.BinaryReader _messageReader</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_messageStream private Candide.Multiplayer.Network.BetterMemoryStream _messageStream Candide.Multiplayer.Network.BetterMemoryStream" id="-messagestream-candide-multiplayer-network-bettermemorystream"><td><span class="member-name-cell"><code>_messageStream</code><a class="permalink" href="#-messagestream-candide-multiplayer-network-bettermemorystream" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.Multiplayer.Network.BetterMemoryStream _messageStream">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_Multiplayer_Network_BetterMemoryStream.html">Candide.Multiplayer.Network.BetterMemoryStream</a> _messageStream</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_readMessageBytes private System.Byte[] _readMessageBytes System.Byte[]" id="-readmessagebytes-system-byte--"><td><span class="member-name-cell"><code>_readMessageBytes</code><a class="permalink" href="#-readmessagebytes-system-byte--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Byte[] _readMessageBytes">Copy</button></span></td><td>private</td><td><code>private System.Byte[] _readMessageBytes</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_transport private Riptide.Transports.IClient _transport Riptide.Transports.IClient" id="-transport-riptide-transports-iclient"><td><span class="member-name-cell"><code>_transport</code><a class="permalink" href="#-transport-riptide-transports-iclient" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Riptide.Transports.IClient _transport">Copy</button></span></td><td>private</td><td><code>private Riptide.Transports.IClient _transport</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DecompressMessage public Candide.Multiplayer.Network.BetterMemoryStream DecompressMessage(Candide.Multiplayer.Network.BetterMemoryStream memoryStream, Candide.Multiplayer.Network.BetterMemoryStream decompressStream, System.Boolean compressed, System.String key, System.UInt16 type, System.Int32 messageSize) Candide.Multiplayer.Network.BetterMemoryStream memoryStream Candide.Multiplayer.Network.BetterMemoryStream decompressStream Candide.Multiplayer.Network.BetterMemoryStream compressed System.Boolean key System.String type System.UInt16 messageSize System.Int32" id="decompressmessage-candide-multiplayer-network-bettermemorystream--candide-multiplayer-network-bettermemorystream--system-boolean--system-string--system-uint16--system-int32---candide-multiplayer-network-bettermemorystream">
+<div class="method-heading">
+<h3><code>DecompressMessage</code></h3>
+<a class="permalink" href="#decompressmessage-candide-multiplayer-network-bettermemorystream--candide-multiplayer-network-bettermemorystream--system-boolean--system-string--system-uint16--system-int32---candide-multiplayer-network-bettermemorystream" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Candide.Multiplayer.Network.BetterMemoryStream DecompressMessage(Candide.Multiplayer.Network.BetterMemoryStream memoryStream, Candide.Multiplayer.Network.BetterMemoryStream decompressStream, System.Boolean compressed, System.String key, System.UInt16 type, System.Int32 messageSize)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.RiptideClientManager::DecompressMessage(Candide.Multiplayer.Network.BetterMemoryStream, Candide.Multiplayer.Network.BetterMemoryStream, System.Boolean, System.String, System.UInt16, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Romestead/Candide_Multiplayer_Network_BetterMemoryStream.html">Candide.Multiplayer.Network.BetterMemoryStream</a> DecompressMessage(<a href="../../types/Romestead/Candide_Multiplayer_Network_BetterMemoryStream.html">Candide.Multiplayer.Network.BetterMemoryStream</a> memoryStream, <a href="../../types/Romestead/Candide_Multiplayer_Network_BetterMemoryStream.html">Candide.Multiplayer.Network.BetterMemoryStream</a> decompressStream, System.Boolean compressed, System.String key, System.UInt16 type, System.Int32 messageSize)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Romestead/Candide_Multiplayer_Network_BetterMemoryStream.html">Candide.Multiplayer.Network.BetterMemoryStream</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B46D238A63070275300F99926F15E32F2036CCF1A7603E2B0CE61A46194D05C3</code></li>
+<li><span>Body hash</span><code>C9555FE68BE360B16E5D231342EBC57E3E10B040D47AF6B2554D9D5B9A577E9A</code></li>
+<li><span>IL size</span><span>761</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.IO.Stream::get_Position()</code></li>
+<li><code>System.IO.Stream::set_Position(System.Int64)</code></li>
+<li><code>System.IO.Compression.GZipStream::.ctor(System.IO.Stream, System.IO.Compression.CompressionMode, System.Boolean)</code></li>
+<li><code>System.IO.Stream::CopyTo(System.IO.Stream)</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_BetterMemoryStream.html#toarray----system-byte--">Candide.Multiplayer.Network.BetterMemoryStream::ToArray()</a></code></li>
+<li><code>System.MemoryExtensions::AsSpan(!!0[], System.Int32, System.Int32)</code></li>
+<li><code>System.Span&lt;System.Byte&gt;::op_Implicit(System.Span&lt;!0&gt;)</code></li>
+<li><code>System.Convert::ToBase64String(System.ReadOnlySpan&lt;System.Byte&gt;, System.Base64FormattingOptions)</code></li>
+<li><code><a href="../../types/Romestead/Candide_DebugTools_TamperChecker.html#isgamelikelytamperedwith-system-exception---system-int32">Candide.DebugTools.TamperChecker::IsGameLikelyTamperedWith(System.Exception)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>Candide.CandideUI.CandideUiSystem::get_ControllerEnabled()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, Candide.Multiplayer.Models.ClientPlayerCharacter&gt;::get_Count()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0, System.String)</code></li>
+<li><code>Microsoft.Xna.Framework.GameTime::get_TotalGameTime()</code></li>
+<li><code>System.TimeSpan::get_TotalHours()</code></li>
+<li><code>System.Object::GetType()</code></li>
+<li><code>System.Reflection.MemberInfo::get_Name()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Nullable&lt;System.Boolean&gt;::.ctor(!0)</code></li>
+<li><code>System.Globalization.CultureInfo::get_CurrentCulture()</code></li>
+<li><code>System.Globalization.CultureInfo::get_Name()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ByteSizeHelper.html#getbytesreadable-system-int64---system-string">CandideCreator.Shared.Helpers.ByteSizeHelper::GetBytesReadable(System.Int64)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsManager.html#trackerror-system-string---system-void">Shared.Analytics.AnalyticsManager::TrackError(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_LiteNetLibClientManager.html#debugclipboardmessage----system-void"><code>Candide.Multiplayer.Network.LiteNetLibClientManager::DebugClipboardMessage</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_LiteNetLibClientManager.html#handlenetworkreceiveevent-litenetlib-netpeer--litenetlib-netpacketreader--system-byte--litenetlib-deliverymethod---system-void"><code>Candide.Multiplayer.Network.LiteNetLibClientManager::HandleNetworkReceiveEvent</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#handlenetworkreceiveevent-system-object--riptide-messagereceivedeventargs---system-void"><code>Candide.Multiplayer.Network.RiptideClientManager::HandleNetworkReceiveEvent</code></a></li>
+<li><a href="../../types/Romestead/Candide_TestAndDebug.html#testcrashingmessage----system-void"><code>Candide.TestAndDebug::TestCrashingMessage</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Info:
+Controller: </code></li>
+<li><code>
+Hosting: </code></li>
+<li><code>
+Player Count: </code></li>
+<li><code>
+Time Played In Session: </code></li>
+<li><code>F2</code></li>
+<li><code> (hours)
+Game Up-time: </code></li>
+<li><code> (hours)
+Current Scene: </code></li>
+<li><code>
+Debug: </code></li>
+<li><code> (</code></li>
+<li><code>)
+Modded: </code></li>
+<li><code>
+Tampered: </code></li>
+<li><code>
+Locale: </code></li>
+<li><code>Context: Key &#39;</code></li>
+<li><code>&#39;, Message Type: </code></li>
+<li><code>, MessageSize: </code></li>
+<li><code>, StartPosition: </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetPingMilliseconds public System.Nullable&lt;System.Single&gt; GetPingMilliseconds() System.Nullable&lt;System.Single&gt; " id="getpingmilliseconds----system-nullable-1-system-single-">
+<div class="method-heading">
+<h3><code>GetPingMilliseconds</code></h3>
+<a class="permalink" href="#getpingmilliseconds----system-nullable-1-system-single-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Nullable&lt;System.Single&gt; GetPingMilliseconds()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.RiptideClientManager::GetPingMilliseconds()">Copy Harmony target</button>
+</div>
+<p><code>public System.Nullable&lt;System.Single&gt; GetPingMilliseconds()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Nullable&lt;System.Single&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>DDC533FD05F94CC459862C3A6C72A92AD76D6F3DF9ED3FE68154BB3038808AB9</code></li>
+<li><span>Body hash</span><code>A116BBF5CC0F614B48511F43B67954340A1014B987F73A671F86A56BC1AF98D3</code></li>
+<li><span>IL size</span><span>34</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Riptide.Client::get_SmoothRTT()</code></li>
+<li><code>System.Nullable&lt;System.Single&gt;::.ctor(!0)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="HandleNetworkReceiveEvent private System.Void HandleNetworkReceiveEvent(System.Object sender, Riptide.MessageReceivedEventArgs messageReceivedEventArgs) System.Void sender System.Object messageReceivedEventArgs Riptide.MessageReceivedEventArgs" id="handlenetworkreceiveevent-system-object--riptide-messagereceivedeventargs---system-void">
+<div class="method-heading">
+<h3><code>HandleNetworkReceiveEvent</code></h3>
+<a class="permalink" href="#handlenetworkreceiveevent-system-object--riptide-messagereceivedeventargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void HandleNetworkReceiveEvent(System.Object sender, Riptide.MessageReceivedEventArgs messageReceivedEventArgs)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.RiptideClientManager::HandleNetworkReceiveEvent(System.Object, Riptide.MessageReceivedEventArgs)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void HandleNetworkReceiveEvent(System.Object sender, Riptide.MessageReceivedEventArgs messageReceivedEventArgs)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>407F79D990581173D098EAC7FC30F6BCF16C1532947DBE3CA0378AF3F0FDB3EB</code></li>
+<li><span>Body hash</span><code>D64108382AEBDD1F2E52046C6DB8E21B95BBBE1FC7A90867F6AE896F511F2D27</code></li>
+<li><span>IL size</span><span>765</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Riptide.Message::get_UnreadBits()</code></li>
+<li><code>Riptide.Message::SkipBits(System.Int32)</code></li>
+<li><code>Riptide.Message::GetBytes(System.Int32, System.Byte[], System.Int32)</code></li>
+<li><code>System.IO.Stream::set_Position(System.Int64)</code></li>
+<li><code>System.IO.Stream::SetLength(System.Int64)</code></li>
+<li><code>Candide.Multiplayer.Services.ConnectionState::get_Step()</code></li>
+<li><code>System.IO.BinaryReader::ReadString()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#decompressmessage-candide-multiplayer-network-bettermemorystream--candide-multiplayer-network-bettermemorystream--system-boolean--system-string--system-uint16--system-int32---candide-multiplayer-network-bettermemorystream">Candide.Multiplayer.Network.RiptideClientManager::DecompressMessage(Candide.Multiplayer.Network.BetterMemoryStream, Candide.Multiplayer.Network.BetterMemoryStream, System.Boolean, System.String, System.UInt16, System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideDeserializer.html#clear----system-void">CandideCreator.Shared.Serialization.CandideDeserializer::Clear()</a></code></li>
+<li><code>CandideCreator.Shared.Serialization.CandideDeserializer::Deserialize(CandideCreator.Shared.Serialization.CandideReflection, System.IO.Stream, System.Boolean)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#sendevent-system-string--system-object--candide-multiplayer-network-bettermemorystream--system-boolean--system-uint16--system-int32---system-void">Candide.Multiplayer.Network.RiptideClientManager::SendEvent(System.String, System.Object, Candide.Multiplayer.Network.BetterMemoryStream, System.Boolean, System.UInt16, System.Int32)</a></code></li>
+<li><code>System.IO.BinaryReader::ReadUInt16()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt;::Remove(!0)</code></li>
+<li><code>System.Action&lt;System.Byte&gt;::Invoke(!0)</code></li>
+<li><code>System.Action&lt;System.Object&gt;::Invoke(!0)</code></li>
+<li><code>System.IO.BinaryReader::ReadByte()</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_EntityService.html#onreceive-entitiesinfo2-system-io-stream---system-void">Candide.GameModels.Services.EntityService::OnReceive_EntitiesInfo2(System.IO.Stream)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#startclient-candideserver-server-multiplayerconfiguration--candide-multiplayer-network-clientconfiguration---system-void"><code>Candide.Multiplayer.Network.RiptideClientManager::StartClient</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#stopclient----system-void"><code>Candide.Multiplayer.Network.RiptideClientManager::StopClient</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Received get response but did not have response handler </code></li>
+<li><code>get-response</code></li>
+<li><code>ei</code></li>
+<li><code>Received unknown message type </code></li>
+<li><code> from host</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ListenerOnPeerConnectedEvent private System.Void ListenerOnPeerConnectedEvent(System.Object sender, System.EventArgs eventArgs) System.Void sender System.Object eventArgs System.EventArgs" id="listeneronpeerconnectedevent-system-object--system-eventargs---system-void">
+<div class="method-heading">
+<h3><code>ListenerOnPeerConnectedEvent</code></h3>
+<a class="permalink" href="#listeneronpeerconnectedevent-system-object--system-eventargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void ListenerOnPeerConnectedEvent(System.Object sender, System.EventArgs eventArgs)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.RiptideClientManager::ListenerOnPeerConnectedEvent(System.Object, System.EventArgs)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void ListenerOnPeerConnectedEvent(System.Object sender, System.EventArgs eventArgs)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5C6792F7FFD2292E0B20B24645A916950AE94ED5F73F32D9211C5DCDC0F7CAF0</code></li>
+<li><span>Body hash</span><code>2CABCBF9FAACC47B462FF135B74B6DFFBA2924445CAAEEA06476885FA3BBBAA5</code></li>
+<li><span>IL size</span><span>53</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Riptide.Client::get_Connection()</code></li>
+<li><code>System.TimeSpan::get_TotalMilliseconds()</code></li>
+<li><code>Riptide.Peer::set_TimeoutTime(System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#serverconnected----system-void">Candide.Multiplayer.Services.ConnectService::ServerConnected()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#startclient-candideserver-server-multiplayerconfiguration--candide-multiplayer-network-clientconfiguration---system-void"><code>Candide.Multiplayer.Network.RiptideClientManager::StartClient</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#stopclient----system-void"><code>Candide.Multiplayer.Network.RiptideClientManager::StopClient</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ListenerOnPeerDisconnectedEvent private System.Void ListenerOnPeerDisconnectedEvent(System.Object sender, Riptide.DisconnectedEventArgs disconnectedEventArgs) System.Void sender System.Object disconnectedEventArgs Riptide.DisconnectedEventArgs" id="listeneronpeerdisconnectedevent-system-object--riptide-disconnectedeventargs---system-void">
+<div class="method-heading">
+<h3><code>ListenerOnPeerDisconnectedEvent</code></h3>
+<a class="permalink" href="#listeneronpeerdisconnectedevent-system-object--riptide-disconnectedeventargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void ListenerOnPeerDisconnectedEvent(System.Object sender, Riptide.DisconnectedEventArgs disconnectedEventArgs)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.RiptideClientManager::ListenerOnPeerDisconnectedEvent(System.Object, Riptide.DisconnectedEventArgs)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void ListenerOnPeerDisconnectedEvent(System.Object sender, Riptide.DisconnectedEventArgs disconnectedEventArgs)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>11C75232A359512F7D16D0B8935D5C66E9C88138DDB80AD8C0BC9D7CC5C6726A</code></li>
+<li><span>Body hash</span><code>468C9E5C82446EB4E73833B6740656F02D6EE1984E32BFBB8E6FAE8125388A4C</code></li>
+<li><span>IL size</span><span>24</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Server_Network_DisconnectReasonExtension.html#todisconnectreason-riptide-disconnectreason---candideserver-server-network-disconnectreason">CandideServer.Server.Network.DisconnectReasonExtension::ToDisconnectReason(Riptide.DisconnectReason)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#serverdisconnected-candideserver-server-network-disconnectreason---system-void">Candide.Multiplayer.Services.ConnectService::ServerDisconnected(CandideServer.Server.Network.DisconnectReason)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#startclient-candideserver-server-multiplayerconfiguration--candide-multiplayer-network-clientconfiguration---system-void"><code>Candide.Multiplayer.Network.RiptideClientManager::StartClient</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#stopclient----system-void"><code>Candide.Multiplayer.Network.RiptideClientManager::StopClient</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SendEvent public System.Void SendEvent(System.String key, System.Object message, Candide.Multiplayer.Network.BetterMemoryStream messageBytes, System.Boolean compressed, System.UInt16 type, System.Int32 messageSize) System.Void key System.String message System.Object messageBytes Candide.Multiplayer.Network.BetterMemoryStream compressed System.Boolean type System.UInt16 messageSize System.Int32" id="sendevent-system-string--system-object--candide-multiplayer-network-bettermemorystream--system-boolean--system-uint16--system-int32---system-void">
+<div class="method-heading">
+<h3><code>SendEvent</code></h3>
+<a class="permalink" href="#sendevent-system-string--system-object--candide-multiplayer-network-bettermemorystream--system-boolean--system-uint16--system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SendEvent(System.String key, System.Object message, Candide.Multiplayer.Network.BetterMemoryStream messageBytes, System.Boolean compressed, System.UInt16 type, System.Int32 messageSize)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.RiptideClientManager::SendEvent(System.String, System.Object, Candide.Multiplayer.Network.BetterMemoryStream, System.Boolean, System.UInt16, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SendEvent(System.String key, System.Object message, <a href="../../types/Romestead/Candide_Multiplayer_Network_BetterMemoryStream.html">Candide.Multiplayer.Network.BetterMemoryStream</a> messageBytes, System.Boolean compressed, System.UInt16 type, System.Int32 messageSize)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0A5FEB63CBF08638A546FBEC7BC6C2CA2DC190B6DE892737E5672B661A6CB270</code></li>
+<li><span>Body hash</span><code>7216C64406077F8AB6C39EE1F7437709A5D5D29B74F97E85E70949ED038B8275</code></li>
+<li><span>IL size</span><span>813</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_EventBus_EventBusManager.html#sendevent-system-string--system-object--system-boolean---system-void">CandideServer.EventBus.EventBusManager::SendEvent(System.String, System.Object, System.Boolean)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_DebugTools_TamperChecker.html#isgamelikelytamperedwith-system-exception---system-int32">Candide.DebugTools.TamperChecker::IsGameLikelyTamperedWith(System.Exception)</a></code></li>
+<li><code>Candide.CandideUI.CandideUiSystem::get_ControllerEnabled()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, Candide.Multiplayer.Models.ClientPlayerCharacter&gt;::get_Count()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0, System.String)</code></li>
+<li><code>Microsoft.Xna.Framework.GameTime::get_TotalGameTime()</code></li>
+<li><code>System.TimeSpan::get_TotalHours()</code></li>
+<li><code>System.Object::GetType()</code></li>
+<li><code>System.Reflection.MemberInfo::get_Name()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Nullable&lt;System.Boolean&gt;::.ctor(!0)</code></li>
+<li><code>System.Globalization.CultureInfo::get_CurrentCulture()</code></li>
+<li><code>System.Globalization.CultureInfo::get_Name()</code></li>
+<li><code>System.IO.Stream::set_Position(System.Int64)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_BetterMemoryStream.html#toarray----system-byte--">Candide.Multiplayer.Network.BetterMemoryStream::ToArray()</a></code></li>
+<li><code>System.Math::Min(System.Int32, System.Int32)</code></li>
+<li><code>System.MemoryExtensions::AsSpan(!!0[], System.Int32, System.Int32)</code></li>
+<li><code>System.Span&lt;System.Byte&gt;::op_Implicit(System.Span&lt;!0&gt;)</code></li>
+<li><code>System.Convert::ToBase64String(System.ReadOnlySpan&lt;System.Byte&gt;, System.Base64FormattingOptions)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.Object, System.Int32, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ByteSizeHelper.html#getbytesreadable-system-int64---system-string">CandideCreator.Shared.Helpers.ByteSizeHelper::GetBytesReadable(System.Int64)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsManager.html#trackerror-system-string---system-void">Shared.Analytics.AnalyticsManager::TrackError(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_LiteNetLibClientManager.html#debugclipboardmessage----system-void"><code>Candide.Multiplayer.Network.LiteNetLibClientManager::DebugClipboardMessage</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_LiteNetLibClientManager.html#handlenetworkreceiveevent-litenetlib-netpeer--litenetlib-netpacketreader--system-byte--litenetlib-deliverymethod---system-void"><code>Candide.Multiplayer.Network.LiteNetLibClientManager::HandleNetworkReceiveEvent</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#handlenetworkreceiveevent-system-object--riptide-messagereceivedeventargs---system-void"><code>Candide.Multiplayer.Network.RiptideClientManager::HandleNetworkReceiveEvent</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Error on received network message:
+</code></li>
+<li><code>Info:
+Controller: </code></li>
+<li><code>
+Hosting: </code></li>
+<li><code>
+Player Count: </code></li>
+<li><code>
+Time Played In Session: </code></li>
+<li><code>F2</code></li>
+<li><code> (hours)
+Game Up-time: </code></li>
+<li><code> (hours)
+Current Scene: </code></li>
+<li><code>
+Debug: </code></li>
+<li><code> (</code></li>
+<li><code>)
+Modded: </code></li>
+<li><code>
+Tampered: </code></li>
+<li><code>
+Locale: </code></li>
+<li><code>Context: Key &#39;</code></li>
+<li><code>&#39;, Message Object: &#39;</code></li>
+<li><code>null</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SendMessage public System.Void SendMessage(System.Byte[] data, System.Int32 position, System.Byte type) System.Void data System.Byte[] position System.Int32 type System.Byte" id="sendmessage-system-byte----system-int32--system-byte---system-void">
+<div class="method-heading">
+<h3><code>SendMessage</code></h3>
+<a class="permalink" href="#sendmessage-system-byte----system-int32--system-byte---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SendMessage(System.Byte[] data, System.Int32 position, System.Byte type)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.RiptideClientManager::SendMessage(System.Byte[], System.Int32, System.Byte)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SendMessage(System.Byte[] data, System.Int32 position, System.Byte type)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>574E040860AED8840473BDB43E8D8030FCCC65E85E6B3D19A75CA08695C0FA78</code></li>
+<li><span>Body hash</span><code>31AE33B10385C33C2E4B654CAB6DD3604E6BC4192EC3ECD7D5D9729CA5F65771</code></li>
+<li><span>IL size</span><span>42</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Riptide.Message::Create(Riptide.MessageSendMode, System.UInt16)</code></li>
+<li><code>Riptide.Message::ReserveBits(System.Int32)</code></li>
+<li><code>Riptide.Message::AddBytes(System.Byte[], System.Int32, System.Int32, System.Boolean)</code></li>
+<li><code>Riptide.Client::Send(Riptide.Message, System.Boolean)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="StartClient public System.Void StartClient(CandideServer.Server.MultiplayerConfiguration config, Candide.Multiplayer.Network.ClientConfiguration clientConfig) System.Void config CandideServer.Server.MultiplayerConfiguration clientConfig Candide.Multiplayer.Network.ClientConfiguration" id="startclient-candideserver-server-multiplayerconfiguration--candide-multiplayer-network-clientconfiguration---system-void">
+<div class="method-heading">
+<h3><code>StartClient</code></h3>
+<a class="permalink" href="#startclient-candideserver-server-multiplayerconfiguration--candide-multiplayer-network-clientconfiguration---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void StartClient(CandideServer.Server.MultiplayerConfiguration config, Candide.Multiplayer.Network.ClientConfiguration clientConfig)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.RiptideClientManager::StartClient(CandideServer.Server.MultiplayerConfiguration, Candide.Multiplayer.Network.ClientConfiguration)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void StartClient(<a href="../../types/CandideServer/CandideServer_Server_MultiplayerConfiguration.html">CandideServer.Server.MultiplayerConfiguration</a> config, <a href="../../types/Romestead/Candide_Multiplayer_Network_ClientConfiguration.html">Candide.Multiplayer.Network.ClientConfiguration</a> clientConfig)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>43C126C9440746E3029822B61D8082B7A0877E3E2D71D99CEEFA017395654A2B</code></li>
+<li><span>Body hash</span><code>5327D6191CFD2C698459D2988A1A42EB078B76CBA720DEA728D5F129C2E1B70A</code></li>
+<li><span>IL size</span><span>358</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Serialization.CandideDeserializer::.ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice, Microsoft.Xna.Framework.Content.ContentManager)</code></li>
+<li><code>Riptide.Client::.ctor(Riptide.Transports.IClient, System.String)</code></li>
+<li><code>Candide.Multiplayer.Network.BetterMemoryStream::.ctor(System.Byte[])</code></li>
+<li><code>System.Text.Encoding::get_UTF8()</code></li>
+<li><code>System.IO.BinaryReader::.ctor(System.IO.Stream, System.Text.Encoding, System.Boolean)</code></li>
+<li><code>Riptide.Message::Create()</code></li>
+<li><code>Riptide.Message::AddString(System.String)</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#handlenetworkreceiveevent-system-object--riptide-messagereceivedeventargs---system-void">Candide.Multiplayer.Network.RiptideClientManager::HandleNetworkReceiveEvent(System.Object, Riptide.MessageReceivedEventArgs)</a></code></li>
+<li><code>System.EventHandler&lt;Riptide.MessageReceivedEventArgs&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Riptide.Client::add_MessageReceived(System.EventHandler&lt;Riptide.MessageReceivedEventArgs&gt;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#listeneronpeerdisconnectedevent-system-object--riptide-disconnectedeventargs---system-void">Candide.Multiplayer.Network.RiptideClientManager::ListenerOnPeerDisconnectedEvent(System.Object, Riptide.DisconnectedEventArgs)</a></code></li>
+<li><code>System.EventHandler&lt;Riptide.DisconnectedEventArgs&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Riptide.Client::add_Disconnected(System.EventHandler&lt;Riptide.DisconnectedEventArgs&gt;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#listeneronpeerconnectedevent-system-object--system-eventargs---system-void">Candide.Multiplayer.Network.RiptideClientManager::ListenerOnPeerConnectedEvent(System.Object, System.EventArgs)</a></code></li>
+<li><code>System.EventHandler::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Riptide.Client::add_Connected(System.EventHandler)</code></li>
+<li><code>RiptideClientManager.&lt;&gt;c::&lt;StartClient&gt;b__10_0(System.Object, Riptide.ConnectionFailedEventArgs)</code></li>
+<li><code>System.EventHandler&lt;Riptide.ConnectionFailedEventArgs&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Riptide.Client::add_ConnectionFailed(System.EventHandler&lt;Riptide.ConnectionFailedEventArgs&gt;)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>Riptide.Client::Connect(System.String, System.Int32, System.Byte, Riptide.Message, System.Boolean)</code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringDefinitions.html#getstring-system-string---system-string">Shared.Text.StringDefinitions::GetString(System.String)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#errordisconnect-candide-multiplayer-services-disconnectreason--system-string---system-void">Candide.Multiplayer.Services.ConnectService::ErrorDisconnect(Candide.Multiplayer.Services.DisconnectReason, System.String)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>CLIENT</code></li>
+<li><code>127.0.0.1</code></li>
+<li><code>:</code></li>
+<li><code>ConnectionError_InvalidAddress</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="StopClient public System.Void StopClient() System.Void " id="stopclient----system-void">
+<div class="method-heading">
+<h3><code>StopClient</code></h3>
+<a class="permalink" href="#stopclient----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void StopClient()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.RiptideClientManager::StopClient()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void StopClient()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>34F19B68A33C6B33B29E3043C600C3DEC91C5CB2A196751D433F1EDC2D02BB1B</code></li>
+<li><span>Body hash</span><code>0DF73E0DA4ADA5B3170EAD7D5F0379B5E26330ED16632A0CE8AB05F6F5911E00</code></li>
+<li><span>IL size</span><span>97</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#handlenetworkreceiveevent-system-object--riptide-messagereceivedeventargs---system-void">Candide.Multiplayer.Network.RiptideClientManager::HandleNetworkReceiveEvent(System.Object, Riptide.MessageReceivedEventArgs)</a></code></li>
+<li><code>System.EventHandler&lt;Riptide.MessageReceivedEventArgs&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Riptide.Client::remove_MessageReceived(System.EventHandler&lt;Riptide.MessageReceivedEventArgs&gt;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#listeneronpeerdisconnectedevent-system-object--riptide-disconnectedeventargs---system-void">Candide.Multiplayer.Network.RiptideClientManager::ListenerOnPeerDisconnectedEvent(System.Object, Riptide.DisconnectedEventArgs)</a></code></li>
+<li><code>System.EventHandler&lt;Riptide.DisconnectedEventArgs&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Riptide.Client::remove_Disconnected(System.EventHandler&lt;Riptide.DisconnectedEventArgs&gt;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_RiptideClientManager.html#listeneronpeerconnectedevent-system-object--system-eventargs---system-void">Candide.Multiplayer.Network.RiptideClientManager::ListenerOnPeerConnectedEvent(System.Object, System.EventArgs)</a></code></li>
+<li><code>System.EventHandler::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Riptide.Client::remove_Connected(System.EventHandler)</code></li>
+<li><code>Riptide.Client::Disconnect()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateClient public System.Void UpdateClient() System.Void " id="updateclient----system-void">
+<div class="method-heading">
+<h3><code>UpdateClient</code></h3>
+<a class="permalink" href="#updateclient----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateClient()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.RiptideClientManager::UpdateClient()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateClient()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>027797A79CD26DA9E068F254F037A2EB9EE4605A8064161D44286F0AC9BB440D</code></li>
+<li><span>Body hash</span><code>CAFA8BDE2F77988A5C99D8AAE46401984CF058AD102B297702D930071675A311</code></li>
+<li><span>IL size</span><span>12</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Riptide.Peer::Update()</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

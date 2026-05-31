@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.GameModels.Managers.WorshipManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.GameModels.Managers.WorshipManager</h1>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.WorshipManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.GameModels.Managers.WorshipManager
+
+- Assembly: `Romestead`
+- Namespace: `Candide.GameModels.Managers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 7 methods, 0 properties, 3 fields, 3 events
+
+## Public Methods
+- `public System.Void CreateImgui()`
+- `public System.Boolean IsWorshipUnlockAvailable(Shared.Models.Gods.WorshipUnlock worshipUnlock)`
+- `public System.Void SyncFullGameState(CandideServer.ServerServices.GetFullGameStateResponse model)`
+- `public System.Void SynchCurrentWorshipPoints(System.Int32 worshipCurrency)`
+- `public System.Void SynchGodProgressionChanged(CandideServer.MessageModels.Gods.Worship.GodProgressionChangedMessage msg)`
+- `public System.Void SynchWorshipUnlocked(System.String worshipUnlockId)`
+- `public System.Boolean TryBuyWorshipUnlock(Shared.Models.Gods.WorshipUnlock worshipUnlock)`
+">Copy markdown</button>
+<a class="button" href="Candide_GameModels_Managers_WorshipManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.GameModels.Managers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>7</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>3</strong></article>
+<article class="metric"><span>Events</span><strong>3</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.GameModels.Managers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>58752DF3FA1F4032579FE7DB0AD70B553CA1740E1891C76174C3FDD281423CEA</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="AcquiredWorshipUnlocksChanged private WorshipManager.GameStateAcquiredWorshipUnlocksChanged AcquiredWorshipUnlocksChanged WorshipManager.GameStateAcquiredWorshipUnlocksChanged" id="acquiredworshipunlockschanged-worshipmanager-gamestateacquiredworshipunlockschanged"><td><span class="member-name-cell"><code>AcquiredWorshipUnlocksChanged</code><a class="permalink" href="#acquiredworshipunlockschanged-worshipmanager-gamestateacquiredworshipunlockschanged" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private WorshipManager.GameStateAcquiredWorshipUnlocksChanged AcquiredWorshipUnlocksChanged">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/WorshipManager_GameStateAcquiredWorshipUnlocksChanged.html">WorshipManager.GameStateAcquiredWorshipUnlocksChanged</a> AcquiredWorshipUnlocksChanged</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="GodProgressionChanged private WorshipManager.GameStateGodProgressionChanged GodProgressionChanged WorshipManager.GameStateGodProgressionChanged" id="godprogressionchanged-worshipmanager-gamestategodprogressionchanged"><td><span class="member-name-cell"><code>GodProgressionChanged</code><a class="permalink" href="#godprogressionchanged-worshipmanager-gamestategodprogressionchanged" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private WorshipManager.GameStateGodProgressionChanged GodProgressionChanged">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/WorshipManager_GameStateGodProgressionChanged.html">WorshipManager.GameStateGodProgressionChanged</a> GodProgressionChanged</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="WorshipPointsChanged private WorshipManager.GameStateWorshipPointsChanged WorshipPointsChanged WorshipManager.GameStateWorshipPointsChanged" id="worshippointschanged-worshipmanager-gamestateworshippointschanged"><td><span class="member-name-cell"><code>WorshipPointsChanged</code><a class="permalink" href="#worshippointschanged-worshipmanager-gamestateworshippointschanged" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private WorshipManager.GameStateWorshipPointsChanged WorshipPointsChanged">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/WorshipManager_GameStateWorshipPointsChanged.html">WorshipManager.GameStateWorshipPointsChanged</a> WorshipPointsChanged</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Events</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="AcquiredWorshipUnlocksChanged public WorshipManager.GameStateAcquiredWorshipUnlocksChanged AcquiredWorshipUnlocksChanged WorshipManager.GameStateAcquiredWorshipUnlocksChanged" id="acquiredworshipunlockschanged-worshipmanager-gamestateacquiredworshipunlockschanged"><td><span class="member-name-cell"><code>AcquiredWorshipUnlocksChanged</code><a class="permalink" href="#acquiredworshipunlockschanged-worshipmanager-gamestateacquiredworshipunlockschanged" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public WorshipManager.GameStateAcquiredWorshipUnlocksChanged AcquiredWorshipUnlocksChanged">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/WorshipManager_GameStateAcquiredWorshipUnlocksChanged.html">WorshipManager.GameStateAcquiredWorshipUnlocksChanged</a> AcquiredWorshipUnlocksChanged</code></td></tr>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="GodProgressionChanged public WorshipManager.GameStateGodProgressionChanged GodProgressionChanged WorshipManager.GameStateGodProgressionChanged" id="godprogressionchanged-worshipmanager-gamestategodprogressionchanged"><td><span class="member-name-cell"><code>GodProgressionChanged</code><a class="permalink" href="#godprogressionchanged-worshipmanager-gamestategodprogressionchanged" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public WorshipManager.GameStateGodProgressionChanged GodProgressionChanged">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/WorshipManager_GameStateGodProgressionChanged.html">WorshipManager.GameStateGodProgressionChanged</a> GodProgressionChanged</code></td></tr>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="WorshipPointsChanged public WorshipManager.GameStateWorshipPointsChanged WorshipPointsChanged WorshipManager.GameStateWorshipPointsChanged" id="worshippointschanged-worshipmanager-gamestateworshippointschanged"><td><span class="member-name-cell"><code>WorshipPointsChanged</code><a class="permalink" href="#worshippointschanged-worshipmanager-gamestateworshippointschanged" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public WorshipManager.GameStateWorshipPointsChanged WorshipPointsChanged">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/WorshipManager_GameStateWorshipPointsChanged.html">WorshipManager.GameStateWorshipPointsChanged</a> WorshipPointsChanged</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateImgui public System.Void CreateImgui() System.Void " id="createimgui----system-void">
+<div class="method-heading">
+<h3><code>CreateImgui</code></h3>
+<a class="permalink" href="#createimgui----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CreateImgui()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.WorshipManager::CreateImgui()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CreateImgui()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>23B4A853242AA829B5533D00DDC40C9E64C7731001C015B1E1B972F105229786</code></li>
+<li><span>Body hash</span><code>4C457CAAD57B75F3CFE9419C9CA304D6CE52D6F58AC5CD3F9110EA2C16FF6523</code></li>
+<li><span>IL size</span><span>287</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::op_Implicit(System.String)</code></li>
+<li><code>ImGuiNET.ImGui::Text(System.ReadOnlySpan&lt;System.Char&gt;)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.String&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_BlessingsDataBase.html#getblessingormissing-system-string---shared-models-gods-blessing">Shared.Data.BlessingsDataBase::GetBlessingOrMissing(System.String)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>ImGuiNET.ImGui::Button(System.ReadOnlySpan&lt;System.Char&gt;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_BlessingsManager.html#tryapplyblessing-shared-models-gods-blessing---system-boolean">Candide.GameModels.Managers.BlessingsManager::TryApplyBlessing(Shared.Models.Gods.Blessing)</a></code></li>
+<li><code>HashSet.Enumerator&lt;System.String&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_WorldOrdinancesDataBase.html#getworldordinanceormissing-system-string---shared-models-gods-worldordinance">Shared.Data.WorldOrdinancesDataBase::GetWorldOrdinanceOrMissing(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Data_GodsDataBase.html#getgodormissing-system-string---shared-models-gods-goddata">Shared.Data.GodsDataBase::GetGodOrMissing(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringExtensions.html#gettranslation-shared-text-stringid---system-string">Shared.Text.StringExtensions::GetTranslation(Shared.Text.StringId)</a></code></li>
+<li><code>ImGuiNET.ImGui::SameLine()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_OrdinanceManager.html#tryapplyordinance-shared-models-gods-worldordinance---system-boolean">Candide.GameModels.Managers.OrdinanceManager::TryApplyOrdinance(Shared.Models.Gods.WorldOrdinance)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>-- Blessings --</code></li>
+<li><code>B:</code></li>
+<li><code>-- Ordinance --</code></li>
+<li><code>O:</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IsWorshipUnlockAvailable public System.Boolean IsWorshipUnlockAvailable(Shared.Models.Gods.WorshipUnlock worshipUnlock) System.Boolean worshipUnlock Shared.Models.Gods.WorshipUnlock" id="isworshipunlockavailable-shared-models-gods-worshipunlock---system-boolean">
+<div class="method-heading">
+<h3><code>IsWorshipUnlockAvailable</code></h3>
+<a class="permalink" href="#isworshipunlockavailable-shared-models-gods-worshipunlock---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean IsWorshipUnlockAvailable(Shared.Models.Gods.WorshipUnlock worshipUnlock)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.WorshipManager::IsWorshipUnlockAvailable(Shared.Models.Gods.WorshipUnlock)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean IsWorshipUnlockAvailable(<a href="../../types/Shared/Shared_Models_Gods_WorshipUnlock.html">Shared.Models.Gods.WorshipUnlock</a> worshipUnlock)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>61EAF34EB21BE103EE25EA3BE95B04E537EA4925D497554E96F463F56F2AF861</code></li>
+<li><span>Body hash</span><code>53FB8C5BD42764A8E165CB9612AE5316550168C1A368983CE87126DBA024EDB2</code></li>
+<li><span>IL size</span><span>77</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Contains(!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Gods.GodProgression&gt;::get_Item(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_WorshipUi_Altar_WorshipUnlockHolder.html#updatestate----system-void"><code>Candide.CandideUI.WorshipUi.Altar.WorshipUnlockHolder::UpdateState</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SyncFullGameState public System.Void SyncFullGameState(CandideServer.ServerServices.GetFullGameStateResponse model) System.Void model CandideServer.ServerServices.GetFullGameStateResponse" id="syncfullgamestate-candideserver-serverservices-getfullgamestateresponse---system-void">
+<div class="method-heading">
+<h3><code>SyncFullGameState</code></h3>
+<a class="permalink" href="#syncfullgamestate-candideserver-serverservices-getfullgamestateresponse---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SyncFullGameState(CandideServer.ServerServices.GetFullGameStateResponse model)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.WorshipManager::SyncFullGameState(CandideServer.ServerServices.GetFullGameStateResponse)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SyncFullGameState(<a href="../../types/CandideServer/CandideServer_ServerServices_GetFullGameStateResponse.html">CandideServer.ServerServices.GetFullGameStateResponse</a> model)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8A5BB1C89C8B47CF25BBCFEE6E234A54E5B95FD7BE7179EBD1158476CB8ADB2C</code></li>
+<li><span>Body hash</span><code>61CB73540AB6FD27A6279AAAFC66F124C2D1F4BFFB566E749A66731A03E43EC9</code></li>
+<li><span>IL size</span><span>81</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.String&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Add(!0)</code></li>
+<li><code>HashSet.Enumerator&lt;System.String&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SynchCurrentWorshipPoints public System.Void SynchCurrentWorshipPoints(System.Int32 worshipCurrency) System.Void worshipCurrency System.Int32" id="synchcurrentworshippoints-system-int32---system-void">
+<div class="method-heading">
+<h3><code>SynchCurrentWorshipPoints</code></h3>
+<a class="permalink" href="#synchcurrentworshippoints-system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SynchCurrentWorshipPoints(System.Int32 worshipCurrency)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.WorshipManager::SynchCurrentWorshipPoints(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SynchCurrentWorshipPoints(System.Int32 worshipCurrency)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>210741DB4D9954E60CDEAEE1AD0DD2BF12979E66B719C8385216990855BE9F98</code></li>
+<li><span>Body hash</span><code>9D844524F7B845828A0A8868AC94487F3779186791BDCC64B638C0319C0CAD54</code></li>
+<li><span>IL size</span><span>87</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Sound_SoundPlayer.html#playeventoneshot-system-string--system-single--system-single---system-void">Candide.Sound.SoundPlayer::PlayEventOneShot(System.String, System.Single, System.Single)</a></code></li>
+<li><code>Candide.GameModels.Managers.WorshipPointsChangedArgs::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/WorshipManager_GameStateWorshipPointsChanged.html#invoke-candide-gamemodels-managers-worshippointschangedargs---system-void">WorshipManager.GameStateWorshipPointsChanged::Invoke(Candide.GameModels.Managers.WorshipPointsChangedArgs)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Services_WorshipService.html#onreceive-godprogressionchanged-candideserver-messagemodels-gods-worship-godprogressionchangedmessage---system-void"><code>Candide.GameModels.Services.WorshipService::OnReceive_GodProgressionChanged</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_WorshipService.html#onreceive-updatecurrentworshippoints-candideserver-messagemodels-gods-updatecurrentworshipmessage---system-void"><code>Candide.GameModels.Services.WorshipService::OnReceive_UpdateCurrentWorshipPoints</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_WorshipService.html#onreceive-worshipunlockwasbought-candideserver-messagemodels-gods-worshipunlockwasboughtmessage---system-void"><code>Candide.GameModels.Services.WorshipService::OnReceive_WorshipUnlockWasBought</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>event:/interface/offering/ui_offering_unlock_worship_reward</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SynchGodProgressionChanged public System.Void SynchGodProgressionChanged(CandideServer.MessageModels.Gods.Worship.GodProgressionChangedMessage msg) System.Void msg CandideServer.MessageModels.Gods.Worship.GodProgressionChangedMessage" id="synchgodprogressionchanged-candideserver-messagemodels-gods-worship-godprogressionchangedmessage---system-void">
+<div class="method-heading">
+<h3><code>SynchGodProgressionChanged</code></h3>
+<a class="permalink" href="#synchgodprogressionchanged-candideserver-messagemodels-gods-worship-godprogressionchangedmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SynchGodProgressionChanged(CandideServer.MessageModels.Gods.Worship.GodProgressionChangedMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.WorshipManager::SynchGodProgressionChanged(CandideServer.MessageModels.Gods.Worship.GodProgressionChangedMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SynchGodProgressionChanged(<a href="../../types/CandideServer/CandideServer_MessageModels_Gods_Worship_GodProgressionChangedMessage.html">CandideServer.MessageModels.Gods.Worship.GodProgressionChangedMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0EFD868C0CFDA49F597343EC08880E0C17BB83605F2898E945CE109C32F14E8F</code></li>
+<li><span>Body hash</span><code>7C075FBD50D0CF43F575896105F6767DBAB2CFADF877567FBA86B0D3EF4119A0</code></li>
+<li><span>IL size</span><span>549</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Int32&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.Int32&gt;::get_Key()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::ContainsKey(!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::get_Item(!0)</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.Int32&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::set_Item(!0, !1)</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Int32&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Gods.GodProgression&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, Shared.Models.Gods.GodProgression&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, Shared.Models.Gods.GodProgression&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Gods.GodProgression&gt;::get_Item(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_GodsDataBase.html#getgodormissing-system-string---shared-models-gods-goddata">Shared.Data.GodsDataBase::GetGodOrMissing(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_ChatLogMessage.html#formatstringid-system-string--shared-text-stringid--candideserver-models-chatmessagetype---candideserver-messagemodels-chatlogmessage">CandideServer.MessageModels.ChatLogMessage::FormatStringId(System.String, Shared.Text.StringId, CandideServer.Models.ChatMessageType)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Chat_ChatLogManager.html#sendlocalchatmessage-candideserver-messagemodels-chatlogmessage---system-void">Candide.Multiplayer.Chat.ChatLogManager::SendLocalChatMessage(CandideServer.MessageModels.ChatLogMessage)</a></code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, Shared.Models.Gods.GodProgression&gt;::MoveNext()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Sound_SoundPlayer.html#playeventoneshot-system-string--system-single--system-single---system-void">Candide.Sound.SoundPlayer::PlayEventOneShot(System.String, System.Single, System.Single)</a></code></li>
+<li><code>CandideServer.MessageModels.Citizens.RemoveCitizenMessage::.ctor()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Controllers_CitizenController.html#removecitizen-candideserver-messagemodels-citizens-removecitizenmessage---system-void">Candide.GameModels.Controllers.CitizenController::RemoveCitizen(CandideServer.MessageModels.Citizens.RemoveCitizenMessage)</a></code></li>
+<li><code>Candide.GameModels.Managers.GodProgressionChangedArgs::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/WorshipManager_GameStateGodProgressionChanged.html#invoke-candide-gamemodels-managers-godprogressionchangedargs---system-void">WorshipManager.GameStateGodProgressionChanged::Invoke(Candide.GameModels.Managers.GodProgressionChangedArgs)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Services_WorshipService.html#onreceive-godprogressionchanged-candideserver-messagemodels-gods-worship-godprogressionchangedmessage---system-void"><code>Candide.GameModels.Services.WorshipService::OnReceive_GodProgressionChanged</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Gods_Chat_GodDiscovered</code></li>
+<li><code>event:/interface/offering/ui_offering_unlock_god</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SynchWorshipUnlocked public System.Void SynchWorshipUnlocked(System.String worshipUnlockId) System.Void worshipUnlockId System.String" id="synchworshipunlocked-system-string---system-void">
+<div class="method-heading">
+<h3><code>SynchWorshipUnlocked</code></h3>
+<a class="permalink" href="#synchworshipunlocked-system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SynchWorshipUnlocked(System.String worshipUnlockId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.WorshipManager::SynchWorshipUnlocked(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SynchWorshipUnlocked(System.String worshipUnlockId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B296779A36F006AACCB28F35E4F99C44E7CF3DBCE8AC9E2D641476BB702ED5A1</code></li>
+<li><span>Body hash</span><code>FAA06535AFBF0C71FCD8A0E3D835EB153514CC22299C902CA2C0F6B2A3376BB4</code></li>
+<li><span>IL size</span><span>29</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/Romestead/WorshipManager_GameStateAcquiredWorshipUnlocksChanged.html#invoke-system-string---system-void">WorshipManager.GameStateAcquiredWorshipUnlocksChanged::Invoke(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Services_WorshipService.html#onreceive-worshipunlockwasbought-candideserver-messagemodels-gods-worshipunlockwasboughtmessage---system-void"><code>Candide.GameModels.Services.WorshipService::OnReceive_WorshipUnlockWasBought</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryBuyWorshipUnlock public System.Boolean TryBuyWorshipUnlock(Shared.Models.Gods.WorshipUnlock worshipUnlock) System.Boolean worshipUnlock Shared.Models.Gods.WorshipUnlock" id="trybuyworshipunlock-shared-models-gods-worshipunlock---system-boolean">
+<div class="method-heading">
+<h3><code>TryBuyWorshipUnlock</code></h3>
+<a class="permalink" href="#trybuyworshipunlock-shared-models-gods-worshipunlock---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryBuyWorshipUnlock(Shared.Models.Gods.WorshipUnlock worshipUnlock)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.WorshipManager::TryBuyWorshipUnlock(Shared.Models.Gods.WorshipUnlock)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryBuyWorshipUnlock(<a href="../../types/Shared/Shared_Models_Gods_WorshipUnlock.html">Shared.Models.Gods.WorshipUnlock</a> worshipUnlock)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2C163295C03BE10B0A1BAB8046D70D646A3590BFB2BED36137C15600F40E1861</code></li>
+<li><span>Body hash</span><code>5EF386DF716DA19B7A44A9AD9E327F079393D394F790F0BEFF18A4C138F15E91</code></li>
+<li><span>IL size</span><span>111</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Contains(!0)</code></li>
+<li><code>CandideServer.MessageModels.Gods.BuyWorshipUnlockMessage::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_WorshipService.html#send-unlockworshipunlock-candideserver-messagemodels-gods-buyworshipunlockmessage---system-void">Candide.GameModels.Services.WorshipService::Send_UnlockWorshipUnlock(CandideServer.MessageModels.Gods.BuyWorshipUnlockMessage)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Tried to buy WorshipUnlock with ID </code></li>
+<li><code> but not enough worship currency was found.</code></li>
+<li><code>WorshipUnlock with ID </code></li>
+<li><code> is already aquired.</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

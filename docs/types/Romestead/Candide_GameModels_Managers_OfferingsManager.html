@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.GameModels.Managers.OfferingsManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.GameModels.Managers.OfferingsManager</h1>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.OfferingsManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.GameModels.Managers.OfferingsManager
+
+- Assembly: `Romestead`
+- Namespace: `Candide.GameModels.Managers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 5 methods, 0 properties, 1 fields, 1 events
+
+## Public Methods
+- `public System.Boolean CanDoOffering(Shared.Models.Gods.Offering offering, Candide.GameModels.Models.Items.SimpleInventory inventory)`
+- `public System.Void SyncFullGameState(CandideServer.ServerServices.GetFullGameStateResponse model)`
+- `public System.Void SynchCurrentOfferings(System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt; offerings)`
+- `public System.Boolean TryDoOffering(System.Guid altarBuildingId)`
+- `public System.Boolean TryDoSacrifice(CandideServer.MessageModels.Towns.CitizenTownOverviewData citizen, System.Nullable&lt;System.Guid&gt; townId)`
+">Copy markdown</button>
+<a class="button" href="Candide_GameModels_Managers_OfferingsManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.GameModels.Managers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>5</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>1</strong></article>
+<article class="metric"><span>Events</span><strong>1</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.GameModels.Managers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>D993C1901F70FAA248F3E84A172E0363B97E313F0CECA7F81E667E49E5AD297B</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="CurrentOfferingsChanged private OfferingsManager.GameStateCurrentOfferingsChanged CurrentOfferingsChanged OfferingsManager.GameStateCurrentOfferingsChanged" id="currentofferingschanged-offeringsmanager-gamestatecurrentofferingschanged"><td><span class="member-name-cell"><code>CurrentOfferingsChanged</code><a class="permalink" href="#currentofferingschanged-offeringsmanager-gamestatecurrentofferingschanged" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private OfferingsManager.GameStateCurrentOfferingsChanged CurrentOfferingsChanged">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/OfferingsManager_GameStateCurrentOfferingsChanged.html">OfferingsManager.GameStateCurrentOfferingsChanged</a> CurrentOfferingsChanged</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Events</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="CurrentOfferingsChanged public OfferingsManager.GameStateCurrentOfferingsChanged CurrentOfferingsChanged OfferingsManager.GameStateCurrentOfferingsChanged" id="currentofferingschanged-offeringsmanager-gamestatecurrentofferingschanged"><td><span class="member-name-cell"><code>CurrentOfferingsChanged</code><a class="permalink" href="#currentofferingschanged-offeringsmanager-gamestatecurrentofferingschanged" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public OfferingsManager.GameStateCurrentOfferingsChanged CurrentOfferingsChanged">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/OfferingsManager_GameStateCurrentOfferingsChanged.html">OfferingsManager.GameStateCurrentOfferingsChanged</a> CurrentOfferingsChanged</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CanDoOffering public System.Boolean CanDoOffering(Shared.Models.Gods.Offering offering, Candide.GameModels.Models.Items.SimpleInventory inventory) System.Boolean offering Shared.Models.Gods.Offering inventory Candide.GameModels.Models.Items.SimpleInventory" id="candooffering-shared-models-gods-offering--candide-gamemodels-models-items-simpleinventory---system-boolean">
+<div class="method-heading">
+<h3><code>CanDoOffering</code></h3>
+<a class="permalink" href="#candooffering-shared-models-gods-offering--candide-gamemodels-models-items-simpleinventory---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean CanDoOffering(Shared.Models.Gods.Offering offering, Candide.GameModels.Models.Items.SimpleInventory inventory)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.OfferingsManager::CanDoOffering(Shared.Models.Gods.Offering, Candide.GameModels.Models.Items.SimpleInventory)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean CanDoOffering(<a href="../../types/Shared/Shared_Models_Gods_Offering.html">Shared.Models.Gods.Offering</a> offering, <a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> inventory)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3CC87988D832DFA66F04E6C4BAB872396568536BD1D2CD978223487046F344D9</code></li>
+<li><span>Body hash</span><code>2041B131F2542AB21819EC0051CD820202B21760559B67A93D0A7CB18460AC04</code></li>
+<li><span>IL size</span><span>170</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.GameModels.Models.Gods.ClientOffering&gt;::ContainsKey(!0)</code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#canremoveitems-candide-gamemodels-models-items-simpleinventory--shared-models-items-itemamount-----system-boolean">Candide.GameModels.Managers.SimpleInventoryManager::CanRemoveItems(Candide.GameModels.Models.Items.SimpleInventory, Shared.Models.Items.ItemAmount[])</a></code></li>
+<li><code>System.ArgumentOutOfRangeException::.ctor(System.String)</code></li>
+<li><code>System.ArgumentOutOfRangeException::.ctor()</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Offering with ID </code></li>
+<li><code> does not exist in the GameState</code></li>
+<li><code>Failed doing offering with ID </code></li>
+<li><code>. Insufficient items.</code></li>
+<li><code>Fix this. Check connected sources etc.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SyncFullGameState public System.Void SyncFullGameState(CandideServer.ServerServices.GetFullGameStateResponse model) System.Void model CandideServer.ServerServices.GetFullGameStateResponse" id="syncfullgamestate-candideserver-serverservices-getfullgamestateresponse---system-void">
+<div class="method-heading">
+<h3><code>SyncFullGameState</code></h3>
+<a class="permalink" href="#syncfullgamestate-candideserver-serverservices-getfullgamestateresponse---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SyncFullGameState(CandideServer.ServerServices.GetFullGameStateResponse model)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.OfferingsManager::SyncFullGameState(CandideServer.ServerServices.GetFullGameStateResponse)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SyncFullGameState(<a href="../../types/CandideServer/CandideServer_ServerServices_GetFullGameStateResponse.html">CandideServer.ServerServices.GetFullGameStateResponse</a> model)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>696B0389FBBC1569DB567AB9F4CF090DA832AB93D18082F87A28C01A7BCEF9F7</code></li>
+<li><span>Body hash</span><code>F1A265A705AA08D1F86E7C5DCB1044913A94D463013D40E4E50A56822665170C</code></li>
+<li><span>IL size</span><span>101</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.GameModels.Models.Gods.ClientOffering&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Int32&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.Int32&gt;::get_Key()</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_OfferingDataBase.html#getofferingormissing-system-string---shared-models-gods-offering">Shared.Data.OfferingDataBase::GetOfferingOrMissing(System.String)</a></code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.Int32&gt;::get_Value()</code></li>
+<li><code>Candide.GameModels.Models.Gods.ClientOffering::.ctor(System.Int32, Shared.Models.Gods.Offering)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.GameModels.Models.Gods.ClientOffering&gt;::set_Item(!0, !1)</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Int32&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SynchCurrentOfferings public System.Void SynchCurrentOfferings(System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt; offerings) System.Void offerings System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;" id="synchcurrentofferings-system-collections-generic-dictionary-2-system-string-system-int32----system-void">
+<div class="method-heading">
+<h3><code>SynchCurrentOfferings</code></h3>
+<a class="permalink" href="#synchcurrentofferings-system-collections-generic-dictionary-2-system-string-system-int32----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SynchCurrentOfferings(System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt; offerings)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.OfferingsManager::SynchCurrentOfferings(System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SynchCurrentOfferings(System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt; offerings)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>87E891B2C6A1965D904489EFCED4FBF1EB2199A947C13043CFB2DE274DB7B516</code></li>
+<li><span>Body hash</span><code>12FD03BCA2AEEA9BA9C54ABAF4B26C421EF095EF2AE9969437BAF5FA24AB215B</code></li>
+<li><span>IL size</span><span>408</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.GameModels.Managers.CurrentOfferingsChangedArgs::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Int32&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.Int32&gt;::get_Key()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.GameModels.Models.Gods.ClientOffering&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.Int32&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::ContainsKey(!0)</code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code>Candide.GameModels.Managers.OfferingsManagerException::.ctor(System.String)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::set_Item(!0, !1)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_OfferingDataBase.html#getofferingormissing-system-string---shared-models-gods-offering">Shared.Data.OfferingDataBase::GetOfferingOrMissing(System.String)</a></code></li>
+<li><code>Candide.GameModels.Models.Gods.ClientOffering::.ctor(System.Int32, Shared.Models.Gods.Offering)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.GameModels.Models.Gods.ClientOffering&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::Add(!0)</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Int32&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.GameModels.Models.Gods.ClientOffering&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, Candide.GameModels.Models.Gods.ClientOffering&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, Candide.GameModels.Models.Gods.ClientOffering&gt;::get_Key()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, Candide.GameModels.Models.Gods.ClientOffering&gt;::MoveNext()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.String&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.GameModels.Models.Gods.ClientOffering&gt;::Remove(!0)</code></li>
+<li><code>List.Enumerator&lt;System.String&gt;::MoveNext()</code></li>
+<li><code><a href="../../types/Romestead/OfferingsManager_GameStateCurrentOfferingsChanged.html#invoke-candide-gamemodels-managers-currentofferingschangedargs---system-void">OfferingsManager.GameStateCurrentOfferingsChanged::Invoke(Candide.GameModels.Managers.CurrentOfferingsChangedArgs)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Services_OfferingsService.html#onreceive-updatecurrentofferings-candideserver-messagemodels-gods-updatecurrentofferingsmessage---system-void"><code>Candide.GameModels.Services.OfferingsService::OnReceive_UpdateCurrentOfferings</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Received multiple offerings with the same key: </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryDoOffering public System.Boolean TryDoOffering(System.Guid altarBuildingId) System.Boolean altarBuildingId System.Guid" id="trydooffering-system-guid---system-boolean">
+<div class="method-heading">
+<h3><code>TryDoOffering</code></h3>
+<a class="permalink" href="#trydooffering-system-guid---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryDoOffering(System.Guid altarBuildingId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.OfferingsManager::TryDoOffering(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryDoOffering(System.Guid altarBuildingId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7022596D31939D0190E526E60DDB5EE1B8FF64E2B4C446FCC8E9EB414CA0C725</code></li>
+<li><span>Body hash</span><code>778A579ADE978A6B26E795FD6E505765D64E95926FCCC5AA3B2D2A02911F225B</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideServer.MessageModels.Gods.HandInOfferingMessage::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_OfferingsService.html#send-handinoffering-candideserver-messagemodels-gods-handinofferingmessage---system-void">Candide.GameModels.Services.OfferingsService::Send_HandInOffering(CandideServer.MessageModels.Gods.HandInOfferingMessage)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryDoSacrifice public System.Boolean TryDoSacrifice(CandideServer.MessageModels.Towns.CitizenTownOverviewData citizen, System.Nullable&lt;System.Guid&gt; townId) System.Boolean citizen CandideServer.MessageModels.Towns.CitizenTownOverviewData townId System.Nullable&lt;System.Guid&gt;" id="trydosacrifice-candideserver-messagemodels-towns-citizentownoverviewdata--system-nullable-1-system-guid----system-boolean">
+<div class="method-heading">
+<h3><code>TryDoSacrifice</code></h3>
+<a class="permalink" href="#trydosacrifice-candideserver-messagemodels-towns-citizentownoverviewdata--system-nullable-1-system-guid----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryDoSacrifice(CandideServer.MessageModels.Towns.CitizenTownOverviewData citizen, System.Nullable&lt;System.Guid&gt; townId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Managers.OfferingsManager::TryDoSacrifice(CandideServer.MessageModels.Towns.CitizenTownOverviewData, System.Nullable&lt;System.Guid&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryDoSacrifice(<a href="../../types/CandideServer/CandideServer_MessageModels_Towns_CitizenTownOverviewData.html">CandideServer.MessageModels.Towns.CitizenTownOverviewData</a> citizen, System.Nullable&lt;System.Guid&gt; townId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BD6885D3CC83A0467FC7A7551ACDAAB787BC3BA85F298AE625061D3AA4D60704</code></li>
+<li><span>Body hash</span><code>DDD576A727063E6961B309D58C3FB0EAFB6D2C83B1B69BEBEC8B1B6757714B09</code></li>
+<li><span>IL size</span><span>143</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_GameState.html#trygetbuilding-system-nullable-1-system-guid---candide-gamemodels-models-constructions-building----system-boolean">Candide.GameModels.GameState::TryGetBuilding(System.Nullable&lt;System.Guid&gt;, Candide.GameModels.Models.Constructions.Building&amp;)</a></code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code>CandideServer.MessageModels.Gods.SacrificeCitizenMessage::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_OfferingsService.html#send-sacrificecitizen-candideserver-messagemodels-gods-sacrificecitizenmessage---system-void">Candide.GameModels.Services.OfferingsService::Send_SacrificeCitizen(CandideServer.MessageModels.Gods.SacrificeCitizenMessage)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Sound_SoundPlayer.html#playeventoneshot-system-string--system-single--system-single---system-void">Candide.Sound.SoundPlayer::PlayEventOneShot(System.String, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>event:/interface/offering/ui_worship_sacrifice</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

@@ -61,6 +61,19 @@ dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- scan `
   --allow-modded
 ```
 
+To require a known clean Steam manifest before scanning:
+
+```powershell
+dotnet run --project .\src\RomesteadRef\RomesteadRef.csproj -- scan `
+  --root "C:\Program Files (x86)\Steam\steamapps\content\app_1805320\depot_1805321" `
+  --require-known-clean `
+  --expected-manifest 4886639939922115546 `
+  --assembly-exact Romestead `
+  --assembly-exact Shared `
+  --assembly-exact CandideServer `
+  --assembly-exact CandideCreator.Shared
+```
+
 Or use the helper script:
 
 ```powershell
@@ -85,6 +98,14 @@ Rename-Item .\output\latest\history\snapshot-20260527-231110.json snapshot-20260
 The helper script automatically looks for the newest `*-basegame.json` file and uses it as the baseline.
 
 If `--baseline` is omitted and `output/latest/snapshot.json` already exists, `scan` automatically diffs against the previous run.
+
+## Known-Clean Verification
+
+Steam depot manifests include file sizes and SHA1 hashes. SteamDB is useful for finding app, depot, and manifest IDs; full hashes may require signing in or reading the downloaded Steam manifest. Store trusted entries in `known-clean-romestead.json`.
+
+Use `--require-known-clean` to load `known-clean-romestead.json` from the repo root and refuse to scan if `Romestead.dll` does not match any listed size/SHA1 pair. Use `--expected-manifest <id>` to require one exact manifest.
+
+The first included entry is for app `1805320`, depot `1805321`, manifest `4886639939922115546`.
 
 ## Modded Install Safety
 

@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BM.State - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>BM.State</h1>
+<button class="copy-button" type="button" data-copy="BM.State">Copy type</button>
+<button class="copy-button" type="button" data-copy="# BM.State
+
+- Assembly: `CandideServer`
+- Namespace: `BM`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 28 methods, 5 properties, 23 fields, 0 events
+
+## Public Methods
+- `public BM.Transition&amp; AddStartChildTransition(BM.State childState)`
+- `public BM.Transition&amp; AddTransition(BM.State targetState)`
+- `public System.Void EnterStatesRecursively(BM.SMUpdateContext updateContext, BM.Blackboard blackboard)`
+- `public System.Void ExitStatesRecursively(BM.SMUpdateContext updateContext, BM.Blackboard blackboard)`
+- `public System.Nullable&lt;BM.Transition&gt; GetActiveTransition()`
+- `public BM.State GetCurrentChildState()`
+- `public System.Boolean GetIsRootState()`
+- `public BM.State GetParentState()`
+- `public System.Boolean HasDefaultStartChildState()`
+- `public System.Void InitializeCurrentChildStatesRecursively(BM.SMUpdateContext updateContext, BM.Blackboard blackboard)`
+- `public System.Void ResetBehaviorTreesRecursively(BM.Blackboard blackboard)`
+- `public System.Void SetCurrentChildState(BM.State state)`
+- `public System.Void SetDefaultStartChildState(BM.State state)`
+- `public System.Void SetParentState(BM.State state)`
+- `public System.Void SetStartChildTransitionCapacity(System.Int32 capacity)`
+- `public System.Void SetSubState(BM.State state)`
+- `public System.Void SetTransitionCapacity(System.Int32 capacity)`
+- `public System.Void UpdateStatesRecursively(BM.SMUpdateContext updateContext, BM.Blackboard blackboard)`
+">Copy markdown</button>
+<a class="button" href="BM_State.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>BM</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>28</strong></article>
+<article class="metric"><span>Properties</span><strong>5</strong></article>
+<article class="metric"><span>Fields</span><strong>23</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>BM</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>C9B8E8D5F086BB5EEA0402E09E329730BFC92F4FBB75154BCA4F8E960EFF3E95</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_AndCondition.html"><code>BM.AndCondition</code></a></li>
+<li><a href="../../types/CandideServer/BM_BehaviorMachine.html"><code>BM.BehaviorMachine</code></a></li>
+<li><a href="../../types/CandideServer/BM_BehaviorTree.html"><code>BM.BehaviorTree</code></a></li>
+<li><a href="../../types/CandideServer/BM_BMUpdateContext.html"><code>BM.BMUpdateContext</code></a></li>
+<li><a href="../../types/CandideServer/BM_BTCondition.html"><code>BM.BTCondition</code></a></li>
+<li><a href="../../types/CandideServer/BM_BTUpdateContext.html"><code>BM.BTUpdateContext</code></a></li>
+<li><a href="../../types/CandideServer/BM_IBaseCondition.html"><code>BM.IBaseCondition</code></a></li>
+<li><a href="../../types/CandideServer/BM_IsState.html"><code>BM.IsState</code></a></li>
+<li><a href="../../types/CandideServer/BM_NotCondition.html"><code>BM.NotCondition</code></a></li>
+<li><a href="../../types/CandideServer/BM_OrCondition.html"><code>BM.OrCondition</code></a></li>
+<li><a href="../../types/CandideServer/BM_SMBuilder.html"><code>BM.SMBuilder</code></a></li>
+<li><a href="../../types/CandideServer/BM_SMHelper.html"><code>BM.SMHelper</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="BlackListedTransitions public BM.TransitionExceptionList BlackListedTransitions BM.TransitionExceptionList" id="blacklistedtransitions-bm-transitionexceptionlist"><td><span class="member-name-cell"><code>BlackListedTransitions</code><a class="permalink" href="#blacklistedtransitions-bm-transitionexceptionlist" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public BM.TransitionExceptionList BlackListedTransitions">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/BM_TransitionExceptionList.html">BM.TransitionExceptionList</a> BlackListedTransitions</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Info public System.String Info System.String" id="info-system-string"><td><span class="member-name-cell"><code>Info</code><a class="permalink" href="#info-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String Info">Copy</button></span></td><td>public</td><td><code>public System.String Info</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="StateIndex public System.Byte StateIndex System.Byte" id="stateindex-system-byte"><td><span class="member-name-cell"><code>StateIndex</code><a class="permalink" href="#stateindex-system-byte" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Byte StateIndex">Copy</button></span></td><td>public</td><td><code>public System.Byte StateIndex</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="WhiteListedTransitions public BM.TransitionExceptionList WhiteListedTransitions BM.TransitionExceptionList" id="whitelistedtransitions-bm-transitionexceptionlist"><td><span class="member-name-cell"><code>WhiteListedTransitions</code><a class="permalink" href="#whitelistedtransitions-bm-transitionexceptionlist" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public BM.TransitionExceptionList WhiteListedTransitions">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/BM_TransitionExceptionList.html">BM.TransitionExceptionList</a> WhiteListedTransitions</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_activeTransition private System.Int32 _activeTransition System.Int32" id="-activetransition-system-int32"><td><span class="member-name-cell"><code>_activeTransition</code><a class="permalink" href="#-activetransition-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _activeTransition">Copy</button></span></td><td>private</td><td><code>private System.Int32 _activeTransition</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_ancestors private System.Collections.Generic.HashSet&lt;BM.State&gt; _ancestors System.Collections.Generic.HashSet&lt;BM.State&gt;" id="-ancestors-system-collections-generic-hashset-1-bm-state-"><td><span class="member-name-cell"><code>_ancestors</code><a class="permalink" href="#-ancestors-system-collections-generic-hashset-1-bm-state-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.HashSet&lt;BM.State&gt; _ancestors">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.HashSet&lt;<a href="../../types/CandideServer/BM_State.html">BM.State</a>&gt; _ancestors</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_canInterruptChildStates private System.Boolean _canInterruptChildStates System.Boolean" id="-caninterruptchildstates-system-boolean"><td><span class="member-name-cell"><code>_canInterruptChildStates</code><a class="permalink" href="#-caninterruptchildstates-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _canInterruptChildStates">Copy</button></span></td><td>private</td><td><code>private System.Boolean _canInterruptChildStates</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_currentChildState private BM.State _currentChildState BM.State" id="-currentchildstate-bm-state"><td><span class="member-name-cell"><code>_currentChildState</code><a class="permalink" href="#-currentchildstate-bm-state" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.State _currentChildState">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_State.html">BM.State</a> _currentChildState</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_currentStartChildState private BM.State _currentStartChildState BM.State" id="-currentstartchildstate-bm-state"><td><span class="member-name-cell"><code>_currentStartChildState</code><a class="permalink" href="#-currentstartchildstate-bm-state" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.State _currentStartChildState">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_State.html">BM.State</a> _currentStartChildState</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_defaultStartChildState private BM.State _defaultStartChildState BM.State" id="-defaultstartchildstate-bm-state"><td><span class="member-name-cell"><code>_defaultStartChildState</code><a class="permalink" href="#-defaultstartchildstate-bm-state" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.State _defaultStartChildState">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_State.html">BM.State</a> _defaultStartChildState</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_enterBehaviorTree private BM.BehaviorTree _enterBehaviorTree BM.BehaviorTree" id="-enterbehaviortree-bm-behaviortree"><td><span class="member-name-cell"><code>_enterBehaviorTree</code><a class="permalink" href="#-enterbehaviortree-bm-behaviortree" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.BehaviorTree _enterBehaviorTree">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> _enterBehaviorTree</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_exitBehaviorTree private BM.BehaviorTree _exitBehaviorTree BM.BehaviorTree" id="-exitbehaviortree-bm-behaviortree"><td><span class="member-name-cell"><code>_exitBehaviorTree</code><a class="permalink" href="#-exitbehaviortree-bm-behaviortree" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.BehaviorTree _exitBehaviorTree">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> _exitBehaviorTree</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_isInterruptible private System.Boolean _isInterruptible System.Boolean" id="-isinterruptible-system-boolean"><td><span class="member-name-cell"><code>_isInterruptible</code><a class="permalink" href="#-isinterruptible-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _isInterruptible">Copy</button></span></td><td>private</td><td><code>private System.Boolean _isInterruptible</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_isRootState private System.Boolean _isRootState System.Boolean" id="-isrootstate-system-boolean"><td><span class="member-name-cell"><code>_isRootState</code><a class="permalink" href="#-isrootstate-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _isRootState">Copy</button></span></td><td>private</td><td><code>private System.Boolean _isRootState</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_name private System.String _name System.String" id="-name-system-string"><td><span class="member-name-cell"><code>_name</code><a class="permalink" href="#-name-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.String _name">Copy</button></span></td><td>private</td><td><code>private System.String _name</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_parentState private BM.State _parentState BM.State" id="-parentstate-bm-state"><td><span class="member-name-cell"><code>_parentState</code><a class="permalink" href="#-parentstate-bm-state" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.State _parentState">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_State.html">BM.State</a> _parentState</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_queuedTransition private System.Int32 _queuedTransition System.Int32" id="-queuedtransition-system-int32"><td><span class="member-name-cell"><code>_queuedTransition</code><a class="permalink" href="#-queuedtransition-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _queuedTransition">Copy</button></span></td><td>private</td><td><code>private System.Int32 _queuedTransition</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_startChildStateTransitions private BM.Transition[] _startChildStateTransitions BM.Transition[]" id="-startchildstatetransitions-bm-transition--"><td><span class="member-name-cell"><code>_startChildStateTransitions</code><a class="permalink" href="#-startchildstatetransitions-bm-transition--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.Transition[] _startChildStateTransitions">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_Transition.html">BM.Transition</a>[] _startChildStateTransitions</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_startChildStateTransitionsCount private System.Int32 _startChildStateTransitionsCount System.Int32" id="-startchildstatetransitionscount-system-int32"><td><span class="member-name-cell"><code>_startChildStateTransitionsCount</code><a class="permalink" href="#-startchildstatetransitionscount-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _startChildStateTransitionsCount">Copy</button></span></td><td>private</td><td><code>private System.Int32 _startChildStateTransitionsCount</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_stateMachine private BM.StateMachine _stateMachine BM.StateMachine" id="-statemachine-bm-statemachine"><td><span class="member-name-cell"><code>_stateMachine</code><a class="permalink" href="#-statemachine-bm-statemachine" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.StateMachine _stateMachine">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_StateMachine.html">BM.StateMachine</a> _stateMachine</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_transitionCount private System.Int32 _transitionCount System.Int32" id="-transitioncount-system-int32"><td><span class="member-name-cell"><code>_transitionCount</code><a class="permalink" href="#-transitioncount-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _transitionCount">Copy</button></span></td><td>private</td><td><code>private System.Int32 _transitionCount</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_transitions private BM.Transition[] _transitions BM.Transition[]" id="-transitions-bm-transition--"><td><span class="member-name-cell"><code>_transitions</code><a class="permalink" href="#-transitions-bm-transition--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.Transition[] _transitions">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_Transition.html">BM.Transition</a>[] _transitions</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_updateBehaviorTree private BM.BehaviorTree _updateBehaviorTree BM.BehaviorTree" id="-updatebehaviortree-bm-behaviortree"><td><span class="member-name-cell"><code>_updateBehaviorTree</code><a class="permalink" href="#-updatebehaviortree-bm-behaviortree" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.BehaviorTree _updateBehaviorTree">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> _updateBehaviorTree</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="EnterBehaviorTree public BM.BehaviorTree EnterBehaviorTree BM.BehaviorTree" id="enterbehaviortree-bm-behaviortree"><td><span class="member-name-cell"><code>EnterBehaviorTree</code><a class="permalink" href="#enterbehaviortree-bm-behaviortree" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public BM.BehaviorTree EnterBehaviorTree">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> EnterBehaviorTree</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="ExitBehaviorTree public BM.BehaviorTree ExitBehaviorTree BM.BehaviorTree" id="exitbehaviortree-bm-behaviortree"><td><span class="member-name-cell"><code>ExitBehaviorTree</code><a class="permalink" href="#exitbehaviortree-bm-behaviortree" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public BM.BehaviorTree ExitBehaviorTree">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> ExitBehaviorTree</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="IsInterruptible public System.Boolean IsInterruptible System.Boolean" id="isinterruptible-system-boolean"><td><span class="member-name-cell"><code>IsInterruptible</code><a class="permalink" href="#isinterruptible-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean IsInterruptible">Copy</button></span></td><td>public</td><td><code>public System.Boolean IsInterruptible</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="Name public System.String Name System.String" id="name-system-string"><td><span class="member-name-cell"><code>Name</code><a class="permalink" href="#name-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String Name">Copy</button></span></td><td>public</td><td><code>public System.String Name</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="UpdateBehaviorTree public BM.BehaviorTree UpdateBehaviorTree BM.BehaviorTree" id="updatebehaviortree-bm-behaviortree"><td><span class="member-name-cell"><code>UpdateBehaviorTree</code><a class="permalink" href="#updatebehaviortree-bm-behaviortree" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public BM.BehaviorTree UpdateBehaviorTree">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/BM_BehaviorTree.html">BM.BehaviorTree</a> UpdateBehaviorTree</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddStartChildTransition public BM.Transition&amp; AddStartChildTransition(BM.State childState) BM.Transition&amp; childState BM.State" id="addstartchildtransition-bm-state---bm-transition-">
+<div class="method-heading">
+<h3><code>AddStartChildTransition</code></h3>
+<a class="permalink" href="#addstartchildtransition-bm-state---bm-transition-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.Transition&amp; AddStartChildTransition(BM.State childState)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::AddStartChildTransition(BM.State)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_Transition.html">BM.Transition</a>&amp; AddStartChildTransition(<a href="../../types/CandideServer/BM_State.html">BM.State</a> childState)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_Transition.html">BM.Transition</a>&amp;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C0912D6618FB61F699BEB5DE7A7C5DBCBF15AC5781ACF8FAA97E03C1C520AEF8</code></li>
+<li><span>Body hash</span><code>B963AC78A519C346EBA0FA6A9BBCA6ADB259EDC12D1722E24DDE2C1ABDA5AAFD</code></li>
+<li><span>IL size</span><span>73</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.InvalidOperationException::.ctor(System.String)</code></li>
+<li><code>BM.Transition::.ctor(BM.State)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerDeerController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerDeerController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerGoatController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerGoatController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerLizardController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerLizardController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerMouseController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerMouseController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerRabbitController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerRabbitController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerScarabController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerScarabController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerSquirrelController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.BehaviorMachine.ServerSquirrelController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerAshManController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerAshManController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerBearController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerBearController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerBoarController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerBoarController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerEngineerController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerEngineerController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenBloatController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenBloatController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenCenturionController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenCenturionController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenCrawlerController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenCrawlerController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenSwordController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenSwordController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFireElementalController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerFireElementalController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerGhostlyWomanController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerGhostlyWomanController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerMasterEngineerController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerMasterEngineerController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerMedusaController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerMedusaController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSatyrBarbarianController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSatyrBarbarianController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSatyrBruteController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSatyrBruteController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSatyrRangerController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSatyrRangerController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSatyrTinyController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSatyrTinyController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSatyrTinySpectatorController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSatyrTinySpectatorController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSkeletonWarriorController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSkeletonWarriorController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSmallScorpionController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSmallScorpionController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerSnakeController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerSnakeController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerWraithController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Enemies.ServerWraithController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerWildCitizenEntityController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.ServerWildCitizenEntityController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Fallen_SkeletonArcher_ServerFallenSpearController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.ControllerSets.Fallen.SkeletonArcher.ServerFallenSpearController::CreateStateMachine</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Fallen_SkeletonArcher_ServerSkeletonArcherController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.ControllerSets.Fallen.SkeletonArcher.ServerSkeletonArcherController::CreateStateMachine</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>SetStartChildTransitionsCapacity must be called before adding transitions.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddTransition public BM.Transition&amp; AddTransition(BM.State targetState) BM.Transition&amp; targetState BM.State" id="addtransition-bm-state---bm-transition-">
+<div class="method-heading">
+<h3><code>AddTransition</code></h3>
+<a class="permalink" href="#addtransition-bm-state---bm-transition-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.Transition&amp; AddTransition(BM.State targetState)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::AddTransition(BM.State)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_Transition.html">BM.Transition</a>&amp; AddTransition(<a href="../../types/CandideServer/BM_State.html">BM.State</a> targetState)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_Transition.html">BM.Transition</a>&amp;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4751DD5B21DBE81037B8F0ECDC010D372DBDF7E6371552E045BF9A282B9ACB56</code></li>
+<li><span>Body hash</span><code>F878AEE426AA6D55DB2AA7D1B6669C068A623A5D43FEC6AB3B44F29797059A9F</code></li>
+<li><span>IL size</span><span>54</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BM.Transition::.ctor(BM.State)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Creatures_ServerFireStatueController.html#createstatemachine----bm-statemachine"><code>CandideServer.Entities.Controllers.Creatures.ServerFireStatueController::CreateStateMachine</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_BehaviorMachine_LavaSpitterController.html#createstatemachine----bm-statemachine"><code>Candide.Entities.Controllers.Other.BehaviorMachine.LavaSpitterController::CreateStateMachine</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_Cyclops_CyclopsArenaController.html#createstatemachine----bm-statemachine"><code>Candide.Entities.Controllers.Other.Cyclops.CyclopsArenaController::CreateStateMachine</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_Cyclops_CyclopsLaserPhase2Controller.html#createstatemachine----bm-statemachine"><code>Candide.Entities.Controllers.Other.Cyclops.CyclopsLaserPhase2Controller::CreateStateMachine</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="CanInterruptThisState private System.Boolean CanInterruptThisState(BM.SMUpdateContext updateContext, System.Nullable&lt;BM.Transition&gt;&amp; triggeredTransition) System.Boolean updateContext BM.SMUpdateContext triggeredTransition System.Nullable&lt;BM.Transition&gt;&amp;" id="caninterruptthisstate-bm-smupdatecontext--system-nullable-1-bm-transition-----system-boolean">
+<div class="method-heading">
+<h3><code>CanInterruptThisState</code></h3>
+<a class="permalink" href="#caninterruptthisstate-bm-smupdatecontext--system-nullable-1-bm-transition-----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean CanInterruptThisState(BM.SMUpdateContext updateContext, System.Nullable&lt;BM.Transition&gt;&amp; triggeredTransition)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::CanInterruptThisState(BM.SMUpdateContext, System.Nullable&lt;BM.Transition&gt;&amp;)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean CanInterruptThisState(<a href="../../types/CandideServer/BM_SMUpdateContext.html">BM.SMUpdateContext</a> updateContext, System.Nullable&lt;<a href="../../types/CandideServer/BM_Transition.html">BM.Transition</a>&gt;&amp; triggeredTransition)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E33FA75A4D2AFD91F01E1C9A6EE3BD4C78222383CE453FC0121DCDE345738198</code></li>
+<li><span>Body hash</span><code>54A007013744A55EB0236B46F449BE839988A04EB967A7896D5F87B2E980DFEF</code></li>
+<li><span>IL size</span><span>180</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_State.html#caninterruptthisstate-bm-smupdatecontext--system-nullable-1-bm-transition-----system-boolean">BM.State::CanInterruptThisState(BM.SMUpdateContext, System.Nullable&lt;BM.Transition&gt;&amp;)</a></code></li>
+<li><code>BM.State::get_Name()</code></li>
+<li><code>System.Nullable&lt;BM.Transition&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;BM.Transition&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/BM_TransitionExceptionList.html#isenabled-bm-transition----system-boolean">BM.TransitionExceptionList::IsEnabled(BM.Transition&amp;)</a></code></li>
+<li><code>BM.State::get_UpdateBehaviorTree()</code></li>
+<li><code><a href="../../types/CandideServer/BM_Node.html#isrunning----system-boolean">BM.Node::IsRunning()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#caninterruptthisstate-bm-smupdatecontext--system-nullable-1-bm-transition-----system-boolean"><code>BM.State::CanInterruptThisState</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#handlequeuedtransition-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::HandleQueuedTransition</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#update-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ChangeState private System.Void ChangeState(BM.State fromState, BM.State targetState, BM.SMUpdateContext updateContext, BM.Blackboard blackboard, System.Boolean runExitBehaviorTrees) System.Void fromState BM.State targetState BM.State updateContext BM.SMUpdateContext blackboard BM.Blackboard runExitBehaviorTrees System.Boolean" id="changestate-bm-state--bm-state--bm-smupdatecontext--bm-blackboard--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>ChangeState</code></h3>
+<a class="permalink" href="#changestate-bm-state--bm-state--bm-smupdatecontext--bm-blackboard--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void ChangeState(BM.State fromState, BM.State targetState, BM.SMUpdateContext updateContext, BM.Blackboard blackboard, System.Boolean runExitBehaviorTrees)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::ChangeState(BM.State, BM.State, BM.SMUpdateContext, BM.Blackboard, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void ChangeState(<a href="../../types/CandideServer/BM_State.html">BM.State</a> fromState, <a href="../../types/CandideServer/BM_State.html">BM.State</a> targetState, <a href="../../types/CandideServer/BM_SMUpdateContext.html">BM.SMUpdateContext</a> updateContext, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard, System.Boolean runExitBehaviorTrees)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8A5E3DC375FAA7C5E4AB1CA2E6D6A6BD5366E0BF0E89FF1BB831662F1930D9FF</code></li>
+<li><span>Body hash</span><code>33E82606EEE50BB9C57C9723B620B41B3A021550A1216EA627051839E9051F7E</code></li>
+<li><span>IL size</span><span>224</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;BM.State&gt;::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/BM_SMHelper.html#findlowestcommonancestor-bm-state--bm-state--system-collections-generic-hashset-1-bm-state----bm-state">BM.SMHelper::FindLowestCommonAncestor(BM.State, BM.State, System.Collections.Generic.HashSet&lt;BM.State&gt;)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#exitstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void">BM.State::ExitStatesRecursively(BM.SMUpdateContext, BM.Blackboard)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#resetbehaviortreesrecursively-bm-blackboard---system-void">BM.State::ResetBehaviorTreesRecursively(BM.Blackboard)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#setcurrentchildstate-bm-state---system-void">BM.State::SetCurrentChildState(BM.State)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#initializecurrentchildstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void">BM.State::InitializeCurrentChildStatesRecursively(BM.SMUpdateContext, BM.Blackboard)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#enterstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void">BM.State::EnterStatesRecursively(BM.SMUpdateContext, BM.Blackboard)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#getisrootstate----system-boolean">BM.State::GetIsRootState()</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_StateMachine.html#setcurrentrootstate-bm-state---system-void">BM.StateMachine::SetCurrentRootState(BM.State)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#handletriggeredtransition-system-int32--bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::HandleTriggeredTransition</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#updateactivetransition-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::UpdateActiveTransition</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="CheckForTriggeredStartChildStateTransitions private System.Int32 CheckForTriggeredStartChildStateTransitions(Microsoft.Xna.Framework.GameTime gameTime, Shared.Entity.EntityWrapper entity, CandideServer.Entities.ServerEntityModel serverEntity, BM.Blackboard blackboard) System.Int32 gameTime Microsoft.Xna.Framework.GameTime entity Shared.Entity.EntityWrapper serverEntity CandideServer.Entities.ServerEntityModel blackboard BM.Blackboard" id="checkfortriggeredstartchildstatetransitions-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard---system-int32">
+<div class="method-heading">
+<h3><code>CheckForTriggeredStartChildStateTransitions</code></h3>
+<a class="permalink" href="#checkfortriggeredstartchildstatetransitions-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Int32 CheckForTriggeredStartChildStateTransitions(Microsoft.Xna.Framework.GameTime gameTime, Shared.Entity.EntityWrapper entity, CandideServer.Entities.ServerEntityModel serverEntity, BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::CheckForTriggeredStartChildStateTransitions(Microsoft.Xna.Framework.GameTime, Shared.Entity.EntityWrapper, CandideServer.Entities.ServerEntityModel, BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>private System.Int32 CheckForTriggeredStartChildStateTransitions(Microsoft.Xna.Framework.GameTime gameTime, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> serverEntity, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0D9EE391B58E044FBFAF62CC313809C14127A5DA089EED171D5C355E80CE961C</code></li>
+<li><span>Body hash</span><code>E2B15A92C009AD8181CA66138D0B0C5795EE3F5FE9E147969CC793D50BBC7F78</code></li>
+<li><span>IL size</span><span>69</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_Transition.html#istriggered-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard--bm-statemachine---system-boolean">BM.Transition::IsTriggered(Microsoft.Xna.Framework.GameTime, Shared.Entity.EntityWrapper, CandideServer.Entities.ServerEntityModel, BM.Blackboard, BM.StateMachine)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#initializecurrentchildstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::InitializeCurrentChildStatesRecursively</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="CheckForTriggeredTransitions private System.Int32 CheckForTriggeredTransitions(Microsoft.Xna.Framework.GameTime gameTime, Shared.Entity.EntityWrapper entity, CandideServer.Entities.ServerEntityModel serverEntity, BM.Blackboard blackboard) System.Int32 gameTime Microsoft.Xna.Framework.GameTime entity Shared.Entity.EntityWrapper serverEntity CandideServer.Entities.ServerEntityModel blackboard BM.Blackboard" id="checkfortriggeredtransitions-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard---system-int32">
+<div class="method-heading">
+<h3><code>CheckForTriggeredTransitions</code></h3>
+<a class="permalink" href="#checkfortriggeredtransitions-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Int32 CheckForTriggeredTransitions(Microsoft.Xna.Framework.GameTime gameTime, Shared.Entity.EntityWrapper entity, CandideServer.Entities.ServerEntityModel serverEntity, BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::CheckForTriggeredTransitions(Microsoft.Xna.Framework.GameTime, Shared.Entity.EntityWrapper, CandideServer.Entities.ServerEntityModel, BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>private System.Int32 CheckForTriggeredTransitions(Microsoft.Xna.Framework.GameTime gameTime, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> serverEntity, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7C0AF9F420FE597FD48D880EDED7A0B606BBBA57E9662DAFF9B01606165179D0</code></li>
+<li><span>Body hash</span><code>BAA61B1155C1562831104706CE1732E9AAFD9D49734BF8A3D862D877DE8277B9</code></li>
+<li><span>IL size</span><span>59</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_Transition.html#istriggered-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard--bm-statemachine---system-boolean">BM.Transition::IsTriggered(Microsoft.Xna.Framework.GameTime, Shared.Entity.EntityWrapper, CandideServer.Entities.ServerEntityModel, BM.Blackboard, BM.StateMachine)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#update-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="EnterStatesRecursively public System.Void EnterStatesRecursively(BM.SMUpdateContext updateContext, BM.Blackboard blackboard) System.Void updateContext BM.SMUpdateContext blackboard BM.Blackboard" id="enterstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void">
+<div class="method-heading">
+<h3><code>EnterStatesRecursively</code></h3>
+<a class="permalink" href="#enterstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void EnterStatesRecursively(BM.SMUpdateContext updateContext, BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::EnterStatesRecursively(BM.SMUpdateContext, BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void EnterStatesRecursively(<a href="../../types/CandideServer/BM_SMUpdateContext.html">BM.SMUpdateContext</a> updateContext, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4BAE1849FCB2F90BBBE6913008F45798F8AA6B7942B2A560697623ABEE30091C</code></li>
+<li><span>Body hash</span><code>02CD6075F8978F9C8043D011B15B677A307246B56FFBCBD2DA6CA82D1F5B9B65</code></li>
+<li><span>IL size</span><span>57</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BehaviorTree.html#execute-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard--bm-statemachine---node-status">BM.BehaviorTree::Execute(Microsoft.Xna.Framework.GameTime, Shared.Entity.EntityWrapper, CandideServer.Entities.ServerEntityModel, BM.Blackboard, BM.StateMachine)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#enterstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void">BM.State::EnterStatesRecursively(BM.SMUpdateContext, BM.Blackboard)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#changestate-bm-state--bm-state--bm-smupdatecontext--bm-blackboard--system-boolean---system-void"><code>BM.State::ChangeState</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#enterstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::EnterStatesRecursively</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateMachine.html#update-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard---system-void"><code>BM.StateMachine::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ExitStatesRecursively public System.Void ExitStatesRecursively(BM.SMUpdateContext updateContext, BM.Blackboard blackboard) System.Void updateContext BM.SMUpdateContext blackboard BM.Blackboard" id="exitstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void">
+<div class="method-heading">
+<h3><code>ExitStatesRecursively</code></h3>
+<a class="permalink" href="#exitstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ExitStatesRecursively(BM.SMUpdateContext updateContext, BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::ExitStatesRecursively(BM.SMUpdateContext, BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ExitStatesRecursively(<a href="../../types/CandideServer/BM_SMUpdateContext.html">BM.SMUpdateContext</a> updateContext, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3D8CBA5F7C0719C232356956FE67D5C8BC1760CFABC9654349656776D05A4A47</code></li>
+<li><span>Body hash</span><code>A7D2F1A36BD5D13FBD2D1AA767940E0AD529E47A4EEDC8AE7C00A4179D149407</code></li>
+<li><span>IL size</span><span>57</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BehaviorTree.html#execute-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard--bm-statemachine---node-status">BM.BehaviorTree::Execute(Microsoft.Xna.Framework.GameTime, Shared.Entity.EntityWrapper, CandideServer.Entities.ServerEntityModel, BM.Blackboard, BM.StateMachine)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#exitstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void">BM.State::ExitStatesRecursively(BM.SMUpdateContext, BM.Blackboard)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#changestate-bm-state--bm-state--bm-smupdatecontext--bm-blackboard--system-boolean---system-void"><code>BM.State::ChangeState</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#exitstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::ExitStatesRecursively</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#handletriggeredtransition-system-int32--bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::HandleTriggeredTransition</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetActiveTransition public System.Nullable&lt;BM.Transition&gt; GetActiveTransition() System.Nullable&lt;BM.Transition&gt; " id="getactivetransition----system-nullable-1-bm-transition-">
+<div class="method-heading">
+<h3><code>GetActiveTransition</code></h3>
+<a class="permalink" href="#getactivetransition----system-nullable-1-bm-transition-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Nullable&lt;BM.Transition&gt; GetActiveTransition()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::GetActiveTransition()">Copy Harmony target</button>
+</div>
+<p><code>public System.Nullable&lt;<a href="../../types/CandideServer/BM_Transition.html">BM.Transition</a>&gt; GetActiveTransition()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Nullable&lt;<a href="../../types/CandideServer/BM_Transition.html">BM.Transition</a>&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B5E62177F3A2B54BAF8220A03B78BD64CE42580E61419B453D9BAB42E8BD7718</code></li>
+<li><span>Body hash</span><code>82923C9C4B04F330E0B2171827456DBA1D423B4E4EA813C9074F872629384891</code></li>
+<li><span>IL size</span><span>42</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;BM.Transition&gt;::.ctor(!0)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetCurrentChildState public BM.State GetCurrentChildState() BM.State " id="getcurrentchildstate----bm-state">
+<div class="method-heading">
+<h3><code>GetCurrentChildState</code></h3>
+<a class="permalink" href="#getcurrentchildstate----bm-state" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.State GetCurrentChildState()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::GetCurrentChildState()">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_State.html">BM.State</a> GetCurrentChildState()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_State.html">BM.State</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>78AF99773CACD89BE620221F9C2A9BEC7A2BF49B31499F5BBAC81889C0210D01</code></li>
+<li><span>Body hash</span><code>6AA9940B631303392257243F220311728EA40D56F9BFEF11C6F9872196B9E4D8</code></li>
+<li><span>IL size</span><span>7</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_StateMachine.html#getcurrentchildstate----bm-state"><code>BM.StateMachine::GetCurrentChildState</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateMachine.html#isstate-bm-state--bm-state---system-boolean"><code>BM.StateMachine::IsState</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateMachine.html#isstate-system-string--bm-state---system-boolean"><code>BM.StateMachine::IsState</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateMachine.html#isstate-system-string----bm-state---system-boolean"><code>BM.StateMachine::IsState</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetIsRootState public System.Boolean GetIsRootState() System.Boolean " id="getisrootstate----system-boolean">
+<div class="method-heading">
+<h3><code>GetIsRootState</code></h3>
+<a class="permalink" href="#getisrootstate----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean GetIsRootState()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::GetIsRootState()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean GetIsRootState()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>63FBCFD294ECA0CC8D0A4051DF4188BDD58FBD98484D0434CF0F3ECB5E001BCD</code></li>
+<li><span>Body hash</span><code>13CDB8DB91ABFEC6120AE2A13BF850E189C02E303DEB07122E41B4D62E8AF183</code></li>
+<li><span>IL size</span><span>7</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#changestate-bm-state--bm-state--bm-smupdatecontext--bm-blackboard--system-boolean---system-void"><code>BM.State::ChangeState</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateMachine.html#setcurrentstate-bm-state--bm-blackboard--system-boolean---system-void"><code>BM.StateMachine::SetCurrentState</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetParentState public BM.State GetParentState() BM.State " id="getparentstate----bm-state">
+<div class="method-heading">
+<h3><code>GetParentState</code></h3>
+<a class="permalink" href="#getparentstate----bm-state" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.State GetParentState()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::GetParentState()">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_State.html">BM.State</a> GetParentState()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_State.html">BM.State</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6278AD31C11A096E1B663567B34487082E1EBE414F849CF394C80F734B966187</code></li>
+<li><span>Body hash</span><code>517A367339888E807ADDBB23504ED6EF4B2A87B82DEA0163993343CB56499567</code></li>
+<li><span>IL size</span><span>7</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_SMHelper.html#findlowestcommonancestor-bm-state--bm-state--system-collections-generic-hashset-1-bm-state----bm-state"><code>BM.SMHelper::FindLowestCommonAncestor</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#startchildtransitionislegal-bm-state---system-boolean"><code>BM.State::StartChildTransitionIsLegal</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateMachine.html#setcurrentstate-bm-state--bm-blackboard--system-boolean---system-void"><code>BM.StateMachine::SetCurrentState</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="HandleQueuedTransition private System.Void HandleQueuedTransition(BM.SMUpdateContext updateContext, BM.Blackboard blackboard) System.Void updateContext BM.SMUpdateContext blackboard BM.Blackboard" id="handlequeuedtransition-bm-smupdatecontext--bm-blackboard---system-void">
+<div class="method-heading">
+<h3><code>HandleQueuedTransition</code></h3>
+<a class="permalink" href="#handlequeuedtransition-bm-smupdatecontext--bm-blackboard---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void HandleQueuedTransition(BM.SMUpdateContext updateContext, BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::HandleQueuedTransition(BM.SMUpdateContext, BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void HandleQueuedTransition(<a href="../../types/CandideServer/BM_SMUpdateContext.html">BM.SMUpdateContext</a> updateContext, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E48402878F88F750ECD299B42414AC7E07A9ABC45FD074F3E5D1B9F69CA78464</code></li>
+<li><span>Body hash</span><code>D446E3ED643EA0A0DC612E4C78B73F1AC64E18157633E9A84A588941A5745B33</code></li>
+<li><span>IL size</span><span>66</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_State.html#caninterruptthisstate-bm-smupdatecontext--system-nullable-1-bm-transition-----system-boolean">BM.State::CanInterruptThisState(BM.SMUpdateContext, System.Nullable&lt;BM.Transition&gt;&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#handletriggeredtransition-system-int32--bm-smupdatecontext--bm-blackboard---system-void">BM.State::HandleTriggeredTransition(System.Int32, BM.SMUpdateContext, BM.Blackboard)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#update-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="HandleQueuedTransitionPropagation private System.Void HandleQueuedTransitionPropagation(BM.SMUpdateContext updateContext) System.Void updateContext BM.SMUpdateContext" id="handlequeuedtransitionpropagation-bm-smupdatecontext---system-void">
+<div class="method-heading">
+<h3><code>HandleQueuedTransitionPropagation</code></h3>
+<a class="permalink" href="#handlequeuedtransitionpropagation-bm-smupdatecontext---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void HandleQueuedTransitionPropagation(BM.SMUpdateContext updateContext)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::HandleQueuedTransitionPropagation(BM.SMUpdateContext)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void HandleQueuedTransitionPropagation(<a href="../../types/CandideServer/BM_SMUpdateContext.html">BM.SMUpdateContext</a> updateContext)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8C9C8E887859E4F1B334411D3489E01608E2D7F96D00BEC09C1645CB300ADFC6</code></li>
+<li><span>Body hash</span><code>86C54562CF1813796240C6CEFA8BE1B838229654B4EC57ED7E5916EDDEA6CBA8</code></li>
+<li><span>IL size</span><span>40</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#updatestatesrecursively-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::UpdateStatesRecursively</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="HandleTriggeredTransition private System.Void HandleTriggeredTransition(System.Int32 triggeredTransition, BM.SMUpdateContext updateContext, BM.Blackboard blackboard) System.Void triggeredTransition System.Int32 updateContext BM.SMUpdateContext blackboard BM.Blackboard" id="handletriggeredtransition-system-int32--bm-smupdatecontext--bm-blackboard---system-void">
+<div class="method-heading">
+<h3><code>HandleTriggeredTransition</code></h3>
+<a class="permalink" href="#handletriggeredtransition-system-int32--bm-smupdatecontext--bm-blackboard---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void HandleTriggeredTransition(System.Int32 triggeredTransition, BM.SMUpdateContext updateContext, BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::HandleTriggeredTransition(System.Int32, BM.SMUpdateContext, BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void HandleTriggeredTransition(System.Int32 triggeredTransition, <a href="../../types/CandideServer/BM_SMUpdateContext.html">BM.SMUpdateContext</a> updateContext, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3194CA5DD222944535492CD8BF171ECE67FDB509897E4E499D52E51CFE9AD8E6</code></li>
+<li><span>Body hash</span><code>C678C0F34894906C6B341393D284F3B2E65A659C17BE1320A205258C90F5D53B</code></li>
+<li><span>IL size</span><span>79</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_StateMachine.html#handletriggeredtransition-bm-transition---bm-smupdatecontext---system-void">BM.StateMachine::HandleTriggeredTransition(BM.Transition&amp;, BM.SMUpdateContext)</a></code></li>
+<li><code>BM.Transition::get_OnTransitionBT()</code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#exitstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void">BM.State::ExitStatesRecursively(BM.SMUpdateContext, BM.Blackboard)</a></code></li>
+<li><code>BM.Transition::get_TargetState()</code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#changestate-bm-state--bm-state--bm-smupdatecontext--bm-blackboard--system-boolean---system-void">BM.State::ChangeState(BM.State, BM.State, BM.SMUpdateContext, BM.Blackboard, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#handlequeuedtransition-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::HandleQueuedTransition</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#update-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="HasDefaultStartChildState public System.Boolean HasDefaultStartChildState() System.Boolean " id="hasdefaultstartchildstate----system-boolean">
+<div class="method-heading">
+<h3><code>HasDefaultStartChildState</code></h3>
+<a class="permalink" href="#hasdefaultstartchildstate----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean HasDefaultStartChildState()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::HasDefaultStartChildState()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean HasDefaultStartChildState()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>26F96929BE1B4A71F6D0A8728630EF3BBF1740763F536920477064A07F8E946D</code></li>
+<li><span>Body hash</span><code>C67F1B2A1EB0154E50A58D46B72C5779633690AF2DE80B7EA6661C63D4127DC8</code></li>
+<li><span>IL size</span><span>10</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_StateBuilder_1.html#branch-system-string--bm-state---system-int32--system-int32---bm-statebuilder-1-bm-statebuilder-1--parent--"><code>BM.StateBuilder::Branch</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateBuilder_1.html#leaf-system-string--bm-state---system-int32--system-int32---bm-statebuilder-1--parent-"><code>BM.StateBuilder::Leaf</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="InitializeCurrentChildStatesRecursively public System.Void InitializeCurrentChildStatesRecursively(BM.SMUpdateContext updateContext, BM.Blackboard blackboard) System.Void updateContext BM.SMUpdateContext blackboard BM.Blackboard" id="initializecurrentchildstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void">
+<div class="method-heading">
+<h3><code>InitializeCurrentChildStatesRecursively</code></h3>
+<a class="permalink" href="#initializecurrentchildstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void InitializeCurrentChildStatesRecursively(BM.SMUpdateContext updateContext, BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::InitializeCurrentChildStatesRecursively(BM.SMUpdateContext, BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void InitializeCurrentChildStatesRecursively(<a href="../../types/CandideServer/BM_SMUpdateContext.html">BM.SMUpdateContext</a> updateContext, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5326EDBADB44B9DCF948DD986CA6D1C8CC92359AED6BC6B8DD86E8841934F155</code></li>
+<li><span>Body hash</span><code>C05E52DEFA0E77DCCDD9BF625AC3C0919833705DFDE8528A663F2C9B4F9EF087</code></li>
+<li><span>IL size</span><span>126</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_State.html#checkfortriggeredstartchildstatetransitions-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard---system-int32">BM.State::CheckForTriggeredStartChildStateTransitions(Microsoft.Xna.Framework.GameTime, Shared.Entity.EntityWrapper, CandideServer.Entities.ServerEntityModel, BM.Blackboard)</a></code></li>
+<li><code>BM.Transition::get_TargetState()</code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#setcurrentchildstate-bm-state---system-void">BM.State::SetCurrentChildState(BM.State)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#initializecurrentchildstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void">BM.State::InitializeCurrentChildStatesRecursively(BM.SMUpdateContext, BM.Blackboard)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#changestate-bm-state--bm-state--bm-smupdatecontext--bm-blackboard--system-boolean---system-void"><code>BM.State::ChangeState</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#initializecurrentchildstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::InitializeCurrentChildStatesRecursively</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateMachine.html#update-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard---system-void"><code>BM.StateMachine::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ResetBehaviorTreesRecursively public System.Void ResetBehaviorTreesRecursively(BM.Blackboard blackboard) System.Void blackboard BM.Blackboard" id="resetbehaviortreesrecursively-bm-blackboard---system-void">
+<div class="method-heading">
+<h3><code>ResetBehaviorTreesRecursively</code></h3>
+<a class="permalink" href="#resetbehaviortreesrecursively-bm-blackboard---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ResetBehaviorTreesRecursively(BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::ResetBehaviorTreesRecursively(BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ResetBehaviorTreesRecursively(<a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6C8D6BD499EDE5A068F45F429A685876E722F3547C843E861D5A820AB0BD0853</code></li>
+<li><span>Body hash</span><code>3DD4F908D308F7C83FEEC2988CC400191D9904EDC1EE5BB163062904E450F4F8</code></li>
+<li><span>IL size</span><span>202</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_BehaviorTree.html#resettree-bm-blackboard---system-void">BM.BehaviorTree::ResetTree(BM.Blackboard)</a></code></li>
+<li><code>BM.Transition::get_TargetState()</code></li>
+<li><code>BM.Transition::get_Condition()</code></li>
+<li><code>BM.Transition::get_OnTransitionBT()</code></li>
+<li><code>System.Exception::.ctor(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/BM_IBaseCondition.html#resetcondition-bm-blackboard---system-void">BM.IBaseCondition::ResetCondition(BM.Blackboard)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#resetbehaviortreesrecursively-bm-blackboard---system-void">BM.State::ResetBehaviorTreesRecursively(BM.Blackboard)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#changestate-bm-state--bm-state--bm-smupdatecontext--bm-blackboard--system-boolean---system-void"><code>BM.State::ChangeState</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#resetbehaviortreesrecursively-bm-blackboard---system-void"><code>BM.State::ResetBehaviorTreesRecursively</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateMachine.html#setcurrentstate-bm-state--bm-blackboard--system-boolean---system-void"><code>BM.StateMachine::SetCurrentState</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Citizens_GenericServerCitizenController.html#update-microsoft-xna-framework-gametime--system-single---system-void"><code>CandideServer.Citizens.GenericServerCitizenController::Update</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Greetings Traveller, make sure your &#39;transition capacity&#39; is correct when you create your state machine!</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetCurrentChildState public System.Void SetCurrentChildState(BM.State state) System.Void state BM.State" id="setcurrentchildstate-bm-state---system-void">
+<div class="method-heading">
+<h3><code>SetCurrentChildState</code></h3>
+<a class="permalink" href="#setcurrentchildstate-bm-state---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetCurrentChildState(BM.State state)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::SetCurrentChildState(BM.State)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetCurrentChildState(<a href="../../types/CandideServer/BM_State.html">BM.State</a> state)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2E90AE93543FC7B398DF83C5407373ED8B380FA93FEEE0F2564EA831006D5875</code></li>
+<li><span>Body hash</span><code>AD639B4E52D01CF6A469307FBECC753D97735F7E7AC4AD558CDA1929621AA2E8</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#changestate-bm-state--bm-state--bm-smupdatecontext--bm-blackboard--system-boolean---system-void"><code>BM.State::ChangeState</code></a></li>
+<li><a href="../../types/CandideServer/BM_State.html#initializecurrentchildstatesrecursively-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::InitializeCurrentChildStatesRecursively</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateMachine.html#setcurrentstate-bm-state--bm-blackboard--system-boolean---system-void"><code>BM.StateMachine::SetCurrentState</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetDefaultStartChildState public System.Void SetDefaultStartChildState(BM.State state) System.Void state BM.State" id="setdefaultstartchildstate-bm-state---system-void">
+<div class="method-heading">
+<h3><code>SetDefaultStartChildState</code></h3>
+<a class="permalink" href="#setdefaultstartchildstate-bm-state---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetDefaultStartChildState(BM.State state)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::SetDefaultStartChildState(BM.State)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetDefaultStartChildState(<a href="../../types/CandideServer/BM_State.html">BM.State</a> state)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B3D992A72931E90D3BAC454CDCAE8023D5452BE9CBBEA5BCC247C3B72A3677C8</code></li>
+<li><span>Body hash</span><code>DC6C13DAFA078E4FD9C82593C82E3DA0E0DE8450D576108B52E56EBEFD7051AE</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_StateBuilder_1.html#branch-system-string--bm-state---system-int32--system-int32---bm-statebuilder-1-bm-statebuilder-1--parent--"><code>BM.StateBuilder::Branch</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateBuilder_1.html#leaf-system-string--bm-state---system-int32--system-int32---bm-statebuilder-1--parent-"><code>BM.StateBuilder::Leaf</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetParentState public System.Void SetParentState(BM.State state) System.Void state BM.State" id="setparentstate-bm-state---system-void">
+<div class="method-heading">
+<h3><code>SetParentState</code></h3>
+<a class="permalink" href="#setparentstate-bm-state---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetParentState(BM.State state)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::SetParentState(BM.State)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetParentState(<a href="../../types/CandideServer/BM_State.html">BM.State</a> state)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1F0802712E161647CB5B94F21A722CC1A8E9E52965DBA653D37572867E7CE207</code></li>
+<li><span>Body hash</span><code>78CD10141643E2F460DC571454962393C4B8B8C4E87E0BDD1D9B82767F5E1E6B</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetStartChildTransitionCapacity public System.Void SetStartChildTransitionCapacity(System.Int32 capacity) System.Void capacity System.Int32" id="setstartchildtransitioncapacity-system-int32---system-void">
+<div class="method-heading">
+<h3><code>SetStartChildTransitionCapacity</code></h3>
+<a class="permalink" href="#setstartchildtransitioncapacity-system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetStartChildTransitionCapacity(System.Int32 capacity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::SetStartChildTransitionCapacity(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetStartChildTransitionCapacity(System.Int32 capacity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7FC72C094CCE6E1071323F578A8AA6AA9FA29AB9DB93CEAE2098EED346150C42</code></li>
+<li><span>Body hash</span><code>BE7DDF567365D1718EDF58D2B870565DDA91F564E380356E57B4C29AD92C8464</code></li>
+<li><span>IL size</span><span>13</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_SMBuilder.html#branch-system-string--bm-state---system-int32--system-int32---bm-statebuilder-1-bm-smbuilder-"><code>BM.SMBuilder::Branch</code></a></li>
+<li><a href="../../types/CandideServer/BM_SMBuilder.html#leaf-system-string--bm-state---system-int32--system-int32---bm-smbuilder"><code>BM.SMBuilder::Leaf</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateBuilder_1.html#branch-system-string--bm-state---system-int32--system-int32---bm-statebuilder-1-bm-statebuilder-1--parent--"><code>BM.StateBuilder::Branch</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateBuilder_1.html#leaf-system-string--bm-state---system-int32--system-int32---bm-statebuilder-1--parent-"><code>BM.StateBuilder::Leaf</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetSubState public System.Void SetSubState(BM.State state) System.Void state BM.State" id="setsubstate-bm-state---system-void">
+<div class="method-heading">
+<h3><code>SetSubState</code></h3>
+<a class="permalink" href="#setsubstate-bm-state---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetSubState(BM.State state)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::SetSubState(BM.State)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetSubState(<a href="../../types/CandideServer/BM_State.html">BM.State</a> state)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EE6C3935CEC27C37EEDEBEA8F0A962EFDA3FED164C1A8BC3A49D0291EBB22AD2</code></li>
+<li><span>Body hash</span><code>F137C1BCFFD066E7DE37B4F47860CF6CEE748B8F8054794413CB6946B381D7A6</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_StateBuilder_1.html#branch-system-string--bm-state---system-int32--system-int32---bm-statebuilder-1-bm-statebuilder-1--parent--"><code>BM.StateBuilder::Branch</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateBuilder_1.html#leaf-system-string--bm-state---system-int32--system-int32---bm-statebuilder-1--parent-"><code>BM.StateBuilder::Leaf</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetTransitionCapacity public System.Void SetTransitionCapacity(System.Int32 capacity) System.Void capacity System.Int32" id="settransitioncapacity-system-int32---system-void">
+<div class="method-heading">
+<h3><code>SetTransitionCapacity</code></h3>
+<a class="permalink" href="#settransitioncapacity-system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetTransitionCapacity(System.Int32 capacity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::SetTransitionCapacity(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetTransitionCapacity(System.Int32 capacity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4F8BEA6AF9AA1164879F17F734047151418AE24BD1807673F0B8AEC3A0230E2B</code></li>
+<li><span>Body hash</span><code>713BAE4187E64A1E81703C23290EFFD9E9E69A909A7346E62466BFCCC239DFFA</code></li>
+<li><span>IL size</span><span>13</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_SMBuilder.html#branch-system-string--bm-state---system-int32--system-int32---bm-statebuilder-1-bm-smbuilder-"><code>BM.SMBuilder::Branch</code></a></li>
+<li><a href="../../types/CandideServer/BM_SMBuilder.html#leaf-system-string--bm-state---system-int32--system-int32---bm-smbuilder"><code>BM.SMBuilder::Leaf</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateBuilder_1.html#branch-system-string--bm-state---system-int32--system-int32---bm-statebuilder-1-bm-statebuilder-1--parent--"><code>BM.StateBuilder::Branch</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateBuilder_1.html#leaf-system-string--bm-state---system-int32--system-int32---bm-statebuilder-1--parent-"><code>BM.StateBuilder::Leaf</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="StartChildTransitionIsLegal private System.Boolean StartChildTransitionIsLegal(BM.State child) System.Boolean child BM.State" id="startchildtransitionislegal-bm-state---system-boolean">
+<div class="method-heading">
+<h3><code>StartChildTransitionIsLegal</code></h3>
+<a class="permalink" href="#startchildtransitionislegal-bm-state---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean StartChildTransitionIsLegal(BM.State child)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::StartChildTransitionIsLegal(BM.State)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean StartChildTransitionIsLegal(<a href="../../types/CandideServer/BM_State.html">BM.State</a> child)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>62400925104AE80BDB9C19D823D0BC16DE2BA2A1B468D1C1791198B8F9A97068</code></li>
+<li><span>Body hash</span><code>DB8C3C4F7A163F9A25CFC00D4BE397840A25F5C583AE9FC76E47AEE9F5909211</code></li>
+<li><span>IL size</span><span>27</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_State.html#getparentstate----bm-state">BM.State::GetParentState()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="Update private System.Void Update(BM.SMUpdateContext updateContext, BM.Blackboard blackboard) System.Void updateContext BM.SMUpdateContext blackboard BM.Blackboard" id="update-bm-smupdatecontext--bm-blackboard---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-bm-smupdatecontext--bm-blackboard---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void Update(BM.SMUpdateContext updateContext, BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::Update(BM.SMUpdateContext, BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void Update(<a href="../../types/CandideServer/BM_SMUpdateContext.html">BM.SMUpdateContext</a> updateContext, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9B86D739727D57371ECBDA0F53DB87DB0EB31968A7CF0EA92F3BC2B7122CF86B</code></li>
+<li><span>Body hash</span><code>4C2870F6943918DCC369C2D837159160CB8806217F24D06F556C72CB1DD96830</code></li>
+<li><span>IL size</span><span>210</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_State.html#updateactivetransition-bm-smupdatecontext--bm-blackboard---system-void">BM.State::UpdateActiveTransition(BM.SMUpdateContext, BM.Blackboard)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_BehaviorTree.html#execute-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard--bm-statemachine---node-status">BM.BehaviorTree::Execute(Microsoft.Xna.Framework.GameTime, Shared.Entity.EntityWrapper, CandideServer.Entities.ServerEntityModel, BM.Blackboard, BM.StateMachine)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#handlequeuedtransition-bm-smupdatecontext--bm-blackboard---system-void">BM.State::HandleQueuedTransition(BM.SMUpdateContext, BM.Blackboard)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#checkfortriggeredtransitions-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard---system-int32">BM.State::CheckForTriggeredTransitions(Microsoft.Xna.Framework.GameTime, Shared.Entity.EntityWrapper, CandideServer.Entities.ServerEntityModel, BM.Blackboard)</a></code></li>
+<li><code>System.Nullable&lt;BM.Transition&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#caninterruptthisstate-bm-smupdatecontext--system-nullable-1-bm-transition-----system-boolean">BM.State::CanInterruptThisState(BM.SMUpdateContext, System.Nullable&lt;BM.Transition&gt;&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#handletriggeredtransition-system-int32--bm-smupdatecontext--bm-blackboard---system-void">BM.State::HandleTriggeredTransition(System.Int32, BM.SMUpdateContext, BM.Blackboard)</a></code></li>
+<li><code>BM.Transition::get_IsQueueable()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#updatestatesrecursively-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::UpdateStatesRecursively</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="UpdateActiveTransition private System.Void UpdateActiveTransition(BM.SMUpdateContext updateContext, BM.Blackboard blackboard) System.Void updateContext BM.SMUpdateContext blackboard BM.Blackboard" id="updateactivetransition-bm-smupdatecontext--bm-blackboard---system-void">
+<div class="method-heading">
+<h3><code>UpdateActiveTransition</code></h3>
+<a class="permalink" href="#updateactivetransition-bm-smupdatecontext--bm-blackboard---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void UpdateActiveTransition(BM.SMUpdateContext updateContext, BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::UpdateActiveTransition(BM.SMUpdateContext, BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void UpdateActiveTransition(<a href="../../types/CandideServer/BM_SMUpdateContext.html">BM.SMUpdateContext</a> updateContext, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>919A65D68D4D11226A0306F1859981B2B387ECF536375708FC70441ACA7A6A5C</code></li>
+<li><span>Body hash</span><code>93A3EEE0B2363D77D6E9D83B55F2F413BBCD1B8BA0439B98DAF0633F1B5666CD</code></li>
+<li><span>IL size</span><span>82</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_Transition.html#update-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard---system-boolean">BM.Transition::Update(Microsoft.Xna.Framework.GameTime, Shared.Entity.EntityWrapper, CandideServer.Entities.ServerEntityModel, BM.Blackboard)</a></code></li>
+<li><code>BM.Transition::get_TargetState()</code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#changestate-bm-state--bm-state--bm-smupdatecontext--bm-blackboard--system-boolean---system-void">BM.State::ChangeState(BM.State, BM.State, BM.SMUpdateContext, BM.Blackboard, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#update-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateStatesRecursively public System.Void UpdateStatesRecursively(BM.SMUpdateContext updateContext, BM.Blackboard blackboard) System.Void updateContext BM.SMUpdateContext blackboard BM.Blackboard" id="updatestatesrecursively-bm-smupdatecontext--bm-blackboard---system-void">
+<div class="method-heading">
+<h3><code>UpdateStatesRecursively</code></h3>
+<a class="permalink" href="#updatestatesrecursively-bm-smupdatecontext--bm-blackboard---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateStatesRecursively(BM.SMUpdateContext updateContext, BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.State::UpdateStatesRecursively(BM.SMUpdateContext, BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateStatesRecursively(<a href="../../types/CandideServer/BM_SMUpdateContext.html">BM.SMUpdateContext</a> updateContext, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B95D48F4B0C40312AC4C1FDD7F30F84411823065AD5C349DD4D229973FB34893</code></li>
+<li><span>Body hash</span><code>86B0FD4F4D3E9E7AD9F5DC85A99C5BB4CAF1CCF04893627CB4098003D8269675</code></li>
+<li><span>IL size</span><span>89</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_State.html#handlequeuedtransitionpropagation-bm-smupdatecontext---system-void">BM.State::HandleQueuedTransitionPropagation(BM.SMUpdateContext)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#update-bm-smupdatecontext--bm-blackboard---system-void">BM.State::Update(BM.SMUpdateContext, BM.Blackboard)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_StateMachine.html#getcurrentstate----bm-state">BM.StateMachine::GetCurrentState()</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_State.html#updatestatesrecursively-bm-smupdatecontext--bm-blackboard---system-void">BM.State::UpdateStatesRecursively(BM.SMUpdateContext, BM.Blackboard)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_State.html#updatestatesrecursively-bm-smupdatecontext--bm-blackboard---system-void"><code>BM.State::UpdateStatesRecursively</code></a></li>
+<li><a href="../../types/CandideServer/BM_StateMachine.html#update-microsoft-xna-framework-gametime--shared-entity-entitywrapper--candideserver-entities-serverentitymodel--bm-blackboard---system-void"><code>BM.StateMachine::Update</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

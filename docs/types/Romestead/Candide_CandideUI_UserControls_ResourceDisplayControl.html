@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.CandideUI.UserControls.ResourceDisplayControl - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.CandideUI.UserControls.ResourceDisplayControl</h1>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.ResourceDisplayControl">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.CandideUI.UserControls.ResourceDisplayControl
+
+- Assembly: `Romestead`
+- Namespace: `Candide.CandideUI.UserControls`
+- Kind: `public class`
+- Base type: `Candide.CandideUI.CandideUiContainerSingleItem`
+- Members: 5 methods, 2 properties, 6 fields, 0 events
+
+## Public Methods
+- `public System.Void DisplayErrorMessage(System.String message)`
+- `public System.Void ResetErrorMessage()`
+">Copy markdown</button>
+<a class="button" href="Candide_CandideUI_UserControls_ResourceDisplayControl.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.CandideUI.UserControls</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>5</strong></article>
+<article class="metric"><span>Properties</span><strong>2</strong></article>
+<article class="metric"><span>Fields</span><strong>6</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.CandideUI.UserControls</code></li>
+<li><span>Base type</span><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerSingleItem.html">Candide.CandideUI.CandideUiContainerSingleItem</a></code></li>
+<li><span>Hash</span><code>DF158959C0CD43A6254FD5B2AF0462AD602591E71DCF898E8A7AA3AA42EE5AAA</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerSingleItem.html">Candide.CandideUI.CandideUiContainerSingleItem</a></code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionModeSelectionWindow.html"><code>Candide.CandideUI.ConstructionsUi.ConstructionModeSelectionWindow</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_JobUiNew_UserControls_JobResourcesAndItemsUserControl.html"><code>Candide.CandideUI.JobUiNew.UserControls.JobResourcesAndItemsUserControl</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_availableResources private Shared.Models.Construction.ConstructionMaterialsAggregate _availableResources Shared.Models.Construction.ConstructionMaterialsAggregate" id="-availableresources-shared-models-construction-constructionmaterialsaggregate"><td><span class="member-name-cell"><code>_availableResources</code><a class="permalink" href="#-availableresources-shared-models-construction-constructionmaterialsaggregate" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Shared.Models.Construction.ConstructionMaterialsAggregate _availableResources">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Shared/Shared_Models_Construction_ConstructionMaterialsAggregate.html">Shared.Models.Construction.ConstructionMaterialsAggregate</a> _availableResources</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_columnCount private System.Int32 _columnCount System.Int32" id="-columncount-system-int32"><td><span class="member-name-cell"><code>_columnCount</code><a class="permalink" href="#-columncount-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _columnCount">Copy</button></span></td><td>private</td><td><code>private System.Int32 _columnCount</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_displays private System.Collections.Generic.Dictionary&lt;System.String, Candide.CandideUI.Components.Displays.MaterialRequirementDisplay&gt; _displays System.Collections.Generic.Dictionary&lt;System.String, Candide.CandideUI.Components.Displays.MaterialRequirementDisplay&gt;" id="-displays-system-collections-generic-dictionary-2-system-string-candide-candideui-components-displays-materialrequirementdisplay-"><td><span class="member-name-cell"><code>_displays</code><a class="permalink" href="#-displays-system-collections-generic-dictionary-2-system-string-candide-candideui-components-displays-materialrequirementdisplay-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;System.String, Candide.CandideUI.Components.Displays.MaterialRequirementDisplay&gt; _displays">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;System.String, <a href="../../types/Romestead/Candide_CandideUI_Components_Displays_MaterialRequirementDisplay.html">Candide.CandideUI.Components.Displays.MaterialRequirementDisplay</a>&gt; _displays</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_errorTextWrapper private Candide.CandideUI.Components.CandideErrorTextWrapper _errorTextWrapper Candide.CandideUI.Components.CandideErrorTextWrapper" id="-errortextwrapper-candide-candideui-components-candideerrortextwrapper"><td><span class="member-name-cell"><code>_errorTextWrapper</code><a class="permalink" href="#-errortextwrapper-candide-candideui-components-candideerrortextwrapper" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Components.CandideErrorTextWrapper _errorTextWrapper">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Components_CandideErrorTextWrapper.html">Candide.CandideUI.Components.CandideErrorTextWrapper</a> _errorTextWrapper</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_grid private Candide.CandideUI.Containers.CandideGrid _grid Candide.CandideUI.Containers.CandideGrid" id="-grid-candide-candideui-containers-candidegrid"><td><span class="member-name-cell"><code>_grid</code><a class="permalink" href="#-grid-candide-candideui-containers-candidegrid" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Containers.CandideGrid _grid">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Containers_CandideGrid.html">Candide.CandideUI.Containers.CandideGrid</a> _grid</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_visibleResources private System.String[] _visibleResources System.String[]" id="-visibleresources-system-string--"><td><span class="member-name-cell"><code>_visibleResources</code><a class="permalink" href="#-visibleresources-system-string--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.String[] _visibleResources">Copy</button></span></td><td>private</td><td><code>private System.String[] _visibleResources</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="AvailableResources public Shared.Models.Construction.ConstructionMaterialsAggregate AvailableResources Shared.Models.Construction.ConstructionMaterialsAggregate" id="availableresources-shared-models-construction-constructionmaterialsaggregate"><td><span class="member-name-cell"><code>AvailableResources</code><a class="permalink" href="#availableresources-shared-models-construction-constructionmaterialsaggregate" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Shared.Models.Construction.ConstructionMaterialsAggregate AvailableResources">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Shared/Shared_Models_Construction_ConstructionMaterialsAggregate.html">Shared.Models.Construction.ConstructionMaterialsAggregate</a> AvailableResources</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="ColumnCount public System.Int32 ColumnCount System.Int32" id="columncount-system-int32"><td><span class="member-name-cell"><code>ColumnCount</code><a class="permalink" href="#columncount-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 ColumnCount">Copy</button></span></td><td>public</td><td><code>public System.Int32 ColumnCount</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="AvailableResourcesChanged private System.Void AvailableResourcesChanged() System.Void " id="availableresourceschanged----system-void">
+<div class="method-heading">
+<h3><code>AvailableResourcesChanged</code></h3>
+<a class="permalink" href="#availableresourceschanged----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void AvailableResourcesChanged()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.ResourceDisplayControl::AvailableResourcesChanged()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void AvailableResourcesChanged()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>04DD735CDB7DD40663061A21C047431004E553EB86A8E60C81CBA0B9C93ACFE0</code></li>
+<li><span>Body hash</span><code>1D0B11FBBB18D8B69965C66D41CEE19F053540DCF4F3C737C7574E6331F8424A</code></li>
+<li><span>IL size</span><span>110</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.CandideUI.Components.Displays.MaterialRequirementDisplay&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, Candide.CandideUI.Components.Displays.MaterialRequirementDisplay&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, Candide.CandideUI.Components.Displays.MaterialRequirementDisplay&gt;::get_Key()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Construction_ConstructionMaterialsAggregate.html#getamountforresource-system-string---system-int32">Shared.Models.Construction.ConstructionMaterialsAggregate::GetAmountForResource(System.String)</a></code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, Candide.CandideUI.Components.Displays.MaterialRequirementDisplay&gt;::get_Value()</code></li>
+<li><code>System.Int32::ToString()</code></li>
+<li><code>Candide.CandideUI.Components.CandideTextLabel::set_Text(System.String)</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, Candide.CandideUI.Components.Displays.MaterialRequirementDisplay&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>ResourceDisplayControl: AvailableResources is not set.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DisplayErrorMessage public System.Void DisplayErrorMessage(System.String message) System.Void message System.String" id="displayerrormessage-system-string---system-void">
+<div class="method-heading">
+<h3><code>DisplayErrorMessage</code></h3>
+<a class="permalink" href="#displayerrormessage-system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DisplayErrorMessage(System.String message)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.ResourceDisplayControl::DisplayErrorMessage(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DisplayErrorMessage(System.String message)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CEAA4EC35085678962A2EC13AAD3912941BD53DC28551CF173B7B5D31DC3C62C</code></li>
+<li><span>Body hash</span><code>D606299BF68E097D763E1BB4BFFA9C864F364300D62F1F4F7F8B4E493AB45844</code></li>
+<li><span>IL size</span><span>13</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Components_CandideErrorTextWrapper.html#showerror-system-string---system-void">Candide.CandideUI.Components.CandideErrorTextWrapper::ShowError(System.String)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="DisplaysChanged private System.Void DisplaysChanged() System.Void " id="displayschanged----system-void">
+<div class="method-heading">
+<h3><code>DisplaysChanged</code></h3>
+<a class="permalink" href="#displayschanged----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void DisplaysChanged()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.ResourceDisplayControl::DisplaysChanged()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void DisplaysChanged()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1011F47375C65574BAECB1FB6B5353EA419D15A4DD148A37DC0474763C8EDCFB</code></li>
+<li><span>Body hash</span><code>51149D9DA3E2EEC72E7E83F534C2C70557CA514647F0EDF8C898E97BD35C5764</code></li>
+<li><span>IL size</span><span>253</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.UserControls.ResourceDisplayControl::get_ColumnCount()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideGrid.html#clearchildren----system-void">Candide.CandideUI.Containers.CandideGrid::ClearChildren()</a></code></li>
+<li><code>ResourceDisplayControl.&lt;&gt;c__DisplayClass13_0::.ctor()</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_ConstructionResourcesDataBase.html#getconstructionresourceormissing-system-string---shared-models-construction-constructionresourcedatamodel">Shared.Data.ConstructionResourcesDataBase::GetConstructionResourceOrMissing(System.String)</a></code></li>
+<li><code>Candide.CandideUI.Components.Displays.MaterialRequirementDisplay::.ctor()</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_GridColumn(System.Int32)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_GridRow(System.Int32)</code></li>
+<li><code>Candide.CandideUI.CandideThickness::.ctor(System.Int32)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Margin(Candide.CandideUI.CandideThickness)</code></li>
+<li><code>ResourceDisplayControl.&lt;&gt;c::&lt;DisplaysChanged&gt;b__13_1()</code></li>
+<li><code>System.Func&lt;Candide.CandideUI.Tooltip.CandideTooltipGrowthDirection&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.CandideUI.Components.Holder.CandideHolderBase::set_GetPreferredTooltipGrowthDirection(System.Func&lt;Candide.CandideUI.Tooltip.CandideTooltipGrowthDirection&gt;)</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Width(System.Nullable&lt;System.Int32&gt;)</code></li>
+<li><code>Candide.CandideUI.Components.CandideIcon::set_Icon(System.String)</code></li>
+<li><code>ResourceDisplayControl.&lt;&gt;c__DisplayClass13_0::&lt;DisplaysChanged&gt;b__0()</code></li>
+<li><code>System.Func&lt;System.Collections.Generic.IEnumerable&lt;Candide.CandideUI.CandideUiElement&gt;&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.CandideUI.Components.Holder.CandideHolderBase::set_GetTooltipContent(System.Func&lt;System.Collections.Generic.IEnumerable&lt;Candide.CandideUI.CandideUiElement&gt;&gt;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.CandideUI.Components.Displays.MaterialRequirementDisplay&gt;::Add(!0, !1)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerMultipleItems.html#addchild-candide-candideui-candideuielement--system-boolean---system-void">Candide.CandideUI.CandideUiContainerMultipleItems::AddChild(Candide.CandideUI.CandideUiElement, System.Boolean)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html#invalidatemeasure----system-void">Candide.CandideUI.CandideUiElement::InvalidateMeasure()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="InternalDraw protected System.Void InternalDraw(Candide.CandideUI.UiRenderContext context) System.Void context Candide.CandideUI.UiRenderContext" id="internaldraw-candide-candideui-uirendercontext---system-void">
+<div class="method-heading">
+<h3><code>InternalDraw</code></h3>
+<a class="permalink" href="#internaldraw-candide-candideui-uirendercontext---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected System.Void InternalDraw(Candide.CandideUI.UiRenderContext context)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.ResourceDisplayControl::InternalDraw(Candide.CandideUI.UiRenderContext)">Copy Harmony target</button>
+</div>
+<p><code>protected System.Void InternalDraw(<a href="../../types/Romestead/Candide_CandideUI_UiRenderContext.html">Candide.CandideUI.UiRenderContext</a> context)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>2158DAB98E67DBC417874C6BA143363332848447FA08C1EFD04EAB766245180C</code></li>
+<li><span>Body hash</span><code>913FB59CC96E92493AF2651959D74757982CE3BA1D3193D3423829246FDFCF26</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html#draw-candide-candideui-uirendercontext---system-void">Candide.CandideUI.CandideUiElement::Draw(Candide.CandideUI.UiRenderContext)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ResetErrorMessage public System.Void ResetErrorMessage() System.Void " id="reseterrormessage----system-void">
+<div class="method-heading">
+<h3><code>ResetErrorMessage</code></h3>
+<a class="permalink" href="#reseterrormessage----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ResetErrorMessage()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.ResourceDisplayControl::ResetErrorMessage()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ResetErrorMessage()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>96CF753D4DD5A0D6AA69AB40997AF237B8BD08B603DEF755C57943645EDDBE42</code></li>
+<li><span>Body hash</span><code>118B297097FA560F1556A9AADF1C52F637996880B1127BD7766378D9361E7652</code></li>
+<li><span>IL size</span><span>13</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.Components.CandideErrorTextWrapper::set_ShowingError(System.Boolean)</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

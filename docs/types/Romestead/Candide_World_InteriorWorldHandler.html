@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.World.InteriorWorldHandler - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.World.InteriorWorldHandler</h1>
+<button class="copy-button" type="button" data-copy="Candide.World.InteriorWorldHandler">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.World.InteriorWorldHandler
+
+- Assembly: `Romestead`
+- Namespace: `Candide.World`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 10 methods, 1 properties, 2 fields, 0 events
+
+## Public Methods
+- `public System.Void CheckEntityVsTerrainCollision(Shared.Entity.EntityWrapper entity, Microsoft.Xna.Framework.Vector2&amp; position, Microsoft.Xna.Framework.Vector3&amp; velocity, Microsoft.Xna.Framework.Vector2 nextPosition, System.Single positionZ, CandideCreator.Shared.Collision.CollisionMasks collisionMask, CandideCreator.Shared.Collision.CollisionShape collisionShape)`
+- `public System.Void CheckMovableObjectVsTerrainCollision(System.Single dt, Microsoft.Xna.Framework.Vector2&amp; position, Microsoft.Xna.Framework.Vector3&amp; velocity, Microsoft.Xna.Framework.Vector2 nextPosition, System.Single positionZ, CandideCreator.Shared.Collision.CollisionMasks collisionMask, CandideCreator.Shared.Collision.CollisionShape collisionShape)`
+- `public System.Void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, CandideCreator.Shared.Tiled.TileEffectEnum effectEnum)`
+- `public System.Void DrawUi(Microsoft.Xna.Framework.Graphics.SpriteBatch batch)`
+- `public System.Void DrawWorldMap(Microsoft.Xna.Framework.Graphics.SpriteBatch batch)`
+- `public System.Void EntitiesLoaded()`
+- `public System.Single HeightAtPoint(Microsoft.Xna.Framework.Vector2 position, System.Single z)`
+- `public System.Boolean IsFullyLoaded()`
+- `public System.Void Update(Microsoft.Xna.Framework.GameTime gt)`
+">Copy markdown</button>
+<a class="button" href="Candide_World_InteriorWorldHandler.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.World</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>10</strong></article>
+<article class="metric"><span>Properties</span><strong>1</strong></article>
+<article class="metric"><span>Fields</span><strong>2</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.World</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>5C9F5F7DD3BA63288CC9C17F53EFF5A8D1E3D40B9A128C54AF9865317B11F8E9</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="IsLoading public System.Boolean IsLoading System.Boolean" id="isloading-system-boolean"><td><span class="member-name-cell"><code>IsLoading</code><a class="permalink" href="#isloading-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean IsLoading">Copy</button></span></td><td>public</td><td><code>public System.Boolean IsLoading</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_checkTransportNodeCooldown private System.Single _checkTransportNodeCooldown System.Single" id="-checktransportnodecooldown-system-single"><td><span class="member-name-cell"><code>_checkTransportNodeCooldown</code><a class="permalink" href="#-checktransportnodecooldown-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single _checkTransportNodeCooldown">Copy</button></span></td><td>private</td><td><code>private System.Single _checkTransportNodeCooldown</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="World public Candide.World.World World Candide.World.World" id="world-candide-world-world"><td><span class="member-name-cell"><code>World</code><a class="permalink" href="#world-candide-world-world" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.World.World World">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_World_World.html">Candide.World.World</a> World</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CheckEntityVsTerrainCollision public System.Void CheckEntityVsTerrainCollision(Shared.Entity.EntityWrapper entity, Microsoft.Xna.Framework.Vector2&amp; position, Microsoft.Xna.Framework.Vector3&amp; velocity, Microsoft.Xna.Framework.Vector2 nextPosition, System.Single positionZ, CandideCreator.Shared.Collision.CollisionMasks collisionMask, CandideCreator.Shared.Collision.CollisionShape collisionShape) System.Void entity Shared.Entity.EntityWrapper position Microsoft.Xna.Framework.Vector2&amp; velocity Microsoft.Xna.Framework.Vector3&amp; nextPosition Microsoft.Xna.Framework.Vector2 positionZ System.Single collisionMask CandideCreator.Shared.Collision.CollisionMasks collisionShape CandideCreator.Shared.Collision.CollisionShape" id="checkentityvsterraincollision-shared-entity-entitywrapper--microsoft-xna-framework-vector2---microsoft-xna-framework-vector3---microsoft-xna-framework-vector2--system-single--candidecreator-shared-collision-collisionmasks--candidecreator-shared-collision-collisionshape---system-void">
+<div class="method-heading">
+<h3><code>CheckEntityVsTerrainCollision</code></h3>
+<a class="permalink" href="#checkentityvsterraincollision-shared-entity-entitywrapper--microsoft-xna-framework-vector2---microsoft-xna-framework-vector3---microsoft-xna-framework-vector2--system-single--candidecreator-shared-collision-collisionmasks--candidecreator-shared-collision-collisionshape---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CheckEntityVsTerrainCollision(Shared.Entity.EntityWrapper entity, Microsoft.Xna.Framework.Vector2&amp; position, Microsoft.Xna.Framework.Vector3&amp; velocity, Microsoft.Xna.Framework.Vector2 nextPosition, System.Single positionZ, CandideCreator.Shared.Collision.CollisionMasks collisionMask, CandideCreator.Shared.Collision.CollisionShape collisionShape)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.InteriorWorldHandler::CheckEntityVsTerrainCollision(Shared.Entity.EntityWrapper, Microsoft.Xna.Framework.Vector2&amp;, Microsoft.Xna.Framework.Vector3&amp;, Microsoft.Xna.Framework.Vector2, System.Single, CandideCreator.Shared.Collision.CollisionMasks, CandideCreator.Shared.Collision.CollisionShape)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CheckEntityVsTerrainCollision(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, Microsoft.Xna.Framework.Vector2&amp; position, Microsoft.Xna.Framework.Vector3&amp; velocity, Microsoft.Xna.Framework.Vector2 nextPosition, System.Single positionZ, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Collision_CollisionMasks.html">CandideCreator.Shared.Collision.CollisionMasks</a> collisionMask, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Collision_CollisionShape.html">CandideCreator.Shared.Collision.CollisionShape</a> collisionShape)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C9C953A7E0A6683B9CA1F5AA2EF0208828FF07F7ED9760B16F079DFEB3EEFEEC</code></li>
+<li><span>Body hash</span><code>535C6B12D098131FBA3156C0180D869FF8488A4F5C0230451FF0690F6701E96B</code></li>
+<li><span>IL size</span><span>31</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.World.InteriorWorldHandler::get_World()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::get_Zero()</code></li>
+<li><code><a href="../../types/Shared/Shared_Collision_CollisionTerrainGroup.html#checkentityvsterraincollision-shared-entity-entitywrapper--microsoft-xna-framework-vector2---microsoft-xna-framework-vector3---microsoft-xna-framework-vector2--system-single--candidecreator-shared-collision-collisionmasks--candidecreator-shared-collision-collisionshape--microsoft-xna-framework-vector2---system-void">Shared.Collision.CollisionTerrainGroup::CheckEntityVsTerrainCollision(Shared.Entity.EntityWrapper, Microsoft.Xna.Framework.Vector2&amp;, Microsoft.Xna.Framework.Vector3&amp;, Microsoft.Xna.Framework.Vector2, System.Single, CandideCreator.Shared.Collision.CollisionMasks, CandideCreator.Shared.Collision.CollisionShape, Microsoft.Xna.Framework.Vector2)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_WorldHandler.html#checkterraincollision-shared-entity-entitywrapper--microsoft-xna-framework-vector2---microsoft-xna-framework-vector3---microsoft-xna-framework-vector2--system-single--candidecreator-shared-collision-collisionmasks--candidecreator-shared-collision-collisionshape---system-void"><code>Candide.World.WorldHandler::CheckTerrainCollision</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CheckMovableObjectVsTerrainCollision public System.Void CheckMovableObjectVsTerrainCollision(System.Single dt, Microsoft.Xna.Framework.Vector2&amp; position, Microsoft.Xna.Framework.Vector3&amp; velocity, Microsoft.Xna.Framework.Vector2 nextPosition, System.Single positionZ, CandideCreator.Shared.Collision.CollisionMasks collisionMask, CandideCreator.Shared.Collision.CollisionShape collisionShape) System.Void dt System.Single position Microsoft.Xna.Framework.Vector2&amp; velocity Microsoft.Xna.Framework.Vector3&amp; nextPosition Microsoft.Xna.Framework.Vector2 positionZ System.Single collisionMask CandideCreator.Shared.Collision.CollisionMasks collisionShape CandideCreator.Shared.Collision.CollisionShape" id="checkmovableobjectvsterraincollision-system-single--microsoft-xna-framework-vector2---microsoft-xna-framework-vector3---microsoft-xna-framework-vector2--system-single--candidecreator-shared-collision-collisionmasks--candidecreator-shared-collision-collisionshape---system-void">
+<div class="method-heading">
+<h3><code>CheckMovableObjectVsTerrainCollision</code></h3>
+<a class="permalink" href="#checkmovableobjectvsterraincollision-system-single--microsoft-xna-framework-vector2---microsoft-xna-framework-vector3---microsoft-xna-framework-vector2--system-single--candidecreator-shared-collision-collisionmasks--candidecreator-shared-collision-collisionshape---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CheckMovableObjectVsTerrainCollision(System.Single dt, Microsoft.Xna.Framework.Vector2&amp; position, Microsoft.Xna.Framework.Vector3&amp; velocity, Microsoft.Xna.Framework.Vector2 nextPosition, System.Single positionZ, CandideCreator.Shared.Collision.CollisionMasks collisionMask, CandideCreator.Shared.Collision.CollisionShape collisionShape)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.InteriorWorldHandler::CheckMovableObjectVsTerrainCollision(System.Single, Microsoft.Xna.Framework.Vector2&amp;, Microsoft.Xna.Framework.Vector3&amp;, Microsoft.Xna.Framework.Vector2, System.Single, CandideCreator.Shared.Collision.CollisionMasks, CandideCreator.Shared.Collision.CollisionShape)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CheckMovableObjectVsTerrainCollision(System.Single dt, Microsoft.Xna.Framework.Vector2&amp; position, Microsoft.Xna.Framework.Vector3&amp; velocity, Microsoft.Xna.Framework.Vector2 nextPosition, System.Single positionZ, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Collision_CollisionMasks.html">CandideCreator.Shared.Collision.CollisionMasks</a> collisionMask, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Collision_CollisionShape.html">CandideCreator.Shared.Collision.CollisionShape</a> collisionShape)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>304E73FD79804A4D735061BB376ADC8454ED561C7DB061E09A3F73FA2CFF95A4</code></li>
+<li><span>Body hash</span><code>ABE2618EB254AE1679197D0F7499F98FD55C428EF24BBE194BA32FA48FB1DEF8</code></li>
+<li><span>IL size</span><span>31</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.World.InteriorWorldHandler::get_World()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::get_Zero()</code></li>
+<li><code><a href="../../types/Shared/Shared_Collision_CollisionTerrainGroup.html#checkmovableobjectvsterraincollision-system-single--microsoft-xna-framework-vector2---microsoft-xna-framework-vector3---microsoft-xna-framework-vector2--system-single--candidecreator-shared-collision-collisionmasks--candidecreator-shared-collision-collisionshape--microsoft-xna-framework-vector2---system-void">Shared.Collision.CollisionTerrainGroup::CheckMovableObjectVsTerrainCollision(System.Single, Microsoft.Xna.Framework.Vector2&amp;, Microsoft.Xna.Framework.Vector3&amp;, Microsoft.Xna.Framework.Vector2, System.Single, CandideCreator.Shared.Collision.CollisionMasks, CandideCreator.Shared.Collision.CollisionShape, Microsoft.Xna.Framework.Vector2)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_WorldHandler.html#checkmovableobjectterraincollision-system-single--microsoft-xna-framework-vector2---microsoft-xna-framework-vector3---microsoft-xna-framework-vector2--system-single--candidecreator-shared-collision-collisionmasks--candidecreator-shared-collision-collisionshape---system-void"><code>Candide.World.WorldHandler::CheckMovableObjectTerrainCollision</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="CheckTransportNodes private System.Void CheckTransportNodes(System.Single dt) System.Void dt System.Single" id="checktransportnodes-system-single---system-void">
+<div class="method-heading">
+<h3><code>CheckTransportNodes</code></h3>
+<a class="permalink" href="#checktransportnodes-system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void CheckTransportNodes(System.Single dt)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.InteriorWorldHandler::CheckTransportNodes(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void CheckTransportNodes(System.Single dt)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EE5AFB0BF203EC3A6B374059C75B77AD9CA4F8ECEB2C9A89D9AD05D9164D79F7</code></li>
+<li><span>Body hash</span><code>D4DECA99C0DC8C8F3F216196A1D068345352E61EFDF64855C120A8911185CF6C</code></li>
+<li><span>IL size</span><span>561</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Text_StringDefinitions.html#getformatstring-system-string--system-string---system-string">Shared.Text.StringDefinitions::GetFormatString(System.String, System.String)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#errordisconnect-candide-multiplayer-services-disconnectreason--system-string---system-void">Candide.Multiplayer.Services.ConnectService::ErrorDisconnect(Candide.Multiplayer.Services.DisconnectReason, System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.String::Replace(System.Char, System.Char)</code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#log-system-string--system-double--analyticshandler-logtype--system-single---system-void">Shared.Analytics.AnalyticsHandler::Log(System.String, System.Double, AnalyticsHandler.LogType, System.Single)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, CandideServer.Models.Dungeons.DungeonTransitionArea&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Int32, CandideServer.Models.Dungeons.DungeonTransitionArea&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.Int32, CandideServer.Models.Dungeons.DungeonTransitionArea&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_AxisAlignedBox.html#contains-microsoft-xna-framework-vector3---system-boolean">CandideCreator.Shared.Models.AxisAlignedBox::Contains(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_DungeonManager.html#tryenterdungeon-system-guid--system-guid--system-int32---system-void">Candide.GameModels.Managers.DungeonManager::TryEnterDungeon(System.Guid, System.Guid, System.Int32)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_WorldManager.html#exitdungeon----system-void">Candide.GameModels.Managers.WorldManager::ExitDungeon()</a></code></li>
+<li><code>Dictionary.Enumerator&lt;System.Int32, CandideServer.Models.Dungeons.DungeonTransitionArea&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#toxzy-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.VectorExtension::ToXzy(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>Candide.World.InteriorWorldHandler::get_World()</code></li>
+<li><code>CandideCreator.Shared.Models.World::get_TransportNodes()</code></li>
+<li><code>System.Collections.ObjectModel.Collection&lt;CandideCreator.Shared.Models.TransportNode&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;CandideCreator.Shared.Models.TransportNode&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_WorldManager.html#exitbuilding-system-nullable-1-system-guid----system-void">Candide.GameModels.Managers.WorldManager::ExitBuilding(System.Nullable&lt;System.Guid&gt;)</a></code></li>
+<li><code>System.Collections.IEnumerator::MoveNext()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_InteriorWorldHandler.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.World.InteriorWorldHandler::Update</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>ConnectionError_Content</code></li>
+<li><code>0x0</code></li>
+<li><code>0x1</code></li>
+<li><code>0x2</code></li>
+<li><code>dungeon2:</code></li>
+<li><code>:time</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Draw public System.Void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, CandideCreator.Shared.Tiled.TileEffectEnum effectEnum) System.Void batch Microsoft.Xna.Framework.Graphics.SpriteBatch effectEnum CandideCreator.Shared.Tiled.TileEffectEnum" id="draw-microsoft-xna-framework-graphics-spritebatch--candidecreator-shared-tiled-tileeffectenum---system-void">
+<div class="method-heading">
+<h3><code>Draw</code></h3>
+<a class="permalink" href="#draw-microsoft-xna-framework-graphics-spritebatch--candidecreator-shared-tiled-tileeffectenum---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, CandideCreator.Shared.Tiled.TileEffectEnum effectEnum)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.InteriorWorldHandler::Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch, CandideCreator.Shared.Tiled.TileEffectEnum)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Tiled_TileEffectEnum.html">CandideCreator.Shared.Tiled.TileEffectEnum</a> effectEnum)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E37F315CED4E6F411B6FE8BB3B64045D89C545FAE537DE6E122451BA7D4B46FC</code></li>
+<li><span>Body hash</span><code>8866989825338208245A2D4D3629474A32B17B8BB2101F775C7683325CD31783</code></li>
+<li><span>IL size</span><span>28</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.World.InteriorWorldHandler::get_World()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Graphics_CustomSpriteBatch.html#reset-microsoft-xna-framework-graphics-spritebatch---candidecreator-shared-graphics-customspritebatch">CandideCreator.Shared.Graphics.CustomSpriteBatch::Reset(Microsoft.Xna.Framework.Graphics.SpriteBatch)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Tiled_TiledMap.html#draw-candidecreator-shared-graphics-customspritebatch--candidecreator-shared-tiled-tileeffectenum---system-void">CandideCreator.Shared.Tiled.TiledMap::Draw(CandideCreator.Shared.Graphics.CustomSpriteBatch, CandideCreator.Shared.Tiled.TileEffectEnum)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_WorldHandler.html#draw-microsoft-xna-framework-graphics-spritebatch--candidecreator-shared-tiled-tileeffectenum---system-void"><code>Candide.World.WorldHandler::Draw</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DrawUi public System.Void DrawUi(Microsoft.Xna.Framework.Graphics.SpriteBatch batch) System.Void batch Microsoft.Xna.Framework.Graphics.SpriteBatch" id="drawui-microsoft-xna-framework-graphics-spritebatch---system-void">
+<div class="method-heading">
+<h3><code>DrawUi</code></h3>
+<a class="permalink" href="#drawui-microsoft-xna-framework-graphics-spritebatch---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DrawUi(Microsoft.Xna.Framework.Graphics.SpriteBatch batch)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.InteriorWorldHandler::DrawUi(Microsoft.Xna.Framework.Graphics.SpriteBatch)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DrawUi(Microsoft.Xna.Framework.Graphics.SpriteBatch batch)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>15E836B2EE11DB9CB9CCEF730E018C8CD7DB18ED6465956165872A434FA37259</code></li>
+<li><span>Body hash</span><code>8A6F127E0053EB13AFDA0F394E4CD706376ECB1E15358DC72521A636A4B8AD55</code></li>
+<li><span>IL size</span><span>1</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DrawWorldMap public System.Void DrawWorldMap(Microsoft.Xna.Framework.Graphics.SpriteBatch batch) System.Void batch Microsoft.Xna.Framework.Graphics.SpriteBatch" id="drawworldmap-microsoft-xna-framework-graphics-spritebatch---system-void">
+<div class="method-heading">
+<h3><code>DrawWorldMap</code></h3>
+<a class="permalink" href="#drawworldmap-microsoft-xna-framework-graphics-spritebatch---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DrawWorldMap(Microsoft.Xna.Framework.Graphics.SpriteBatch batch)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.InteriorWorldHandler::DrawWorldMap(Microsoft.Xna.Framework.Graphics.SpriteBatch)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DrawWorldMap(Microsoft.Xna.Framework.Graphics.SpriteBatch batch)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>78D44BAEA0B110BC6F14B8C14E687823B23CACE4B3CFADF2069CF4C7080A1CAC</code></li>
+<li><span>Body hash</span><code>22EE32B974BD95C279C936CFDEAE69A36D1F247AADA0B24B393B43D109A5F206</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_World_WorldMap.html#draw-microsoft-xna-framework-graphics-spritebatch--system-boolean---system-void">Candide.World.WorldMap::Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch, System.Boolean)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="EntitiesLoaded public System.Void EntitiesLoaded() System.Void " id="entitiesloaded----system-void">
+<div class="method-heading">
+<h3><code>EntitiesLoaded</code></h3>
+<a class="permalink" href="#entitiesloaded----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void EntitiesLoaded()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.InteriorWorldHandler::EntitiesLoaded()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void EntitiesLoaded()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3AFD94464CDA952A808DC5B849AB4858498785C51F537590D87AA306E50A11D3</code></li>
+<li><span>Body hash</span><code>1D45A4E36ECA09C935727216A7C2658FF8D066F46DC692C70E93BA0452F1F365</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Services_InteriorService.html#oninteriorgetdataresponse-candideserver-messagemodels-interiors-interiordatagetresponse---system-void"><code>Candide.GameModels.Services.InteriorService::OnInteriorGetDataResponse</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="HeightAtPoint public System.Single HeightAtPoint(Microsoft.Xna.Framework.Vector2 position, System.Single z) System.Single position Microsoft.Xna.Framework.Vector2 z System.Single" id="heightatpoint-microsoft-xna-framework-vector2--system-single---system-single">
+<div class="method-heading">
+<h3><code>HeightAtPoint</code></h3>
+<a class="permalink" href="#heightatpoint-microsoft-xna-framework-vector2--system-single---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single HeightAtPoint(Microsoft.Xna.Framework.Vector2 position, System.Single z)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.InteriorWorldHandler::HeightAtPoint(Microsoft.Xna.Framework.Vector2, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single HeightAtPoint(Microsoft.Xna.Framework.Vector2 position, System.Single z)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>06925C1BFB7ECB72313D684A56CFD70A65DBC547B4200B282DDFBA973E3B5393</code></li>
+<li><span>Body hash</span><code>0E69711FF331AFB3C5F7698DDC9CBE108286939DE305DF8F471E3C43CEA7FC8A</code></li>
+<li><span>IL size</span><span>215</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.World.InteriorWorldHandler::get_World()</code></li>
+<li><code>Candide.World.World::get_HeightAtPointLookup()</code></li>
+<li><code><a href="../../types/Shared/Shared_World_HeightAtPointLookUp.html#heightatpoint-microsoft-xna-framework-vector2--system-single---system-single">Shared.World.HeightAtPointLookUp::HeightAtPoint(Microsoft.Xna.Framework.Vector2, System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Division(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::ToPoint()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/Shared/Shared_World_SharedWorldHandler.html#getheightatfloor-shared-models-worldtile-----system-sbyte-----microsoft-xna-framework-vector2--system-single--microsoft-xna-framework-point--microsoft-xna-framework-point--system-single----system-void">Shared.World.SharedWorldHandler::GetHeightAtFloor(Shared.Models.WorldTile[,], System.SByte[,], Microsoft.Xna.Framework.Vector2, System.Single, Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point, System.Single&amp;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_WorldHandler.html#heightatpoint-microsoft-xna-framework-vector2--system-single---system-single"><code>Candide.World.WorldHandler::HeightAtPoint</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IsFullyLoaded public System.Boolean IsFullyLoaded() System.Boolean " id="isfullyloaded----system-boolean">
+<div class="method-heading">
+<h3><code>IsFullyLoaded</code></h3>
+<a class="permalink" href="#isfullyloaded----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean IsFullyLoaded()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.InteriorWorldHandler::IsFullyLoaded()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean IsFullyLoaded()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C40E7878F5676F6F5952883CFD48D1D59ECF22E12D7BA54C4626C2B34E32A122</code></li>
+<li><span>Body hash</span><code>1F9A839098D5A6A7453E4AA0C01E812AA03AE2B49B74AEB51B12CF96EF764EA1</code></li>
+<li><span>IL size</span><span>9</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_WorldHandler.html#isworldloaded----system-boolean"><code>Candide.World.WorldHandler::IsWorldLoaded</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(Microsoft.Xna.Framework.GameTime gt) System.Void gt Microsoft.Xna.Framework.GameTime" id="update-microsoft-xna-framework-gametime---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-microsoft-xna-framework-gametime---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(Microsoft.Xna.Framework.GameTime gt)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.World.InteriorWorldHandler::Update(Microsoft.Xna.Framework.GameTime)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(Microsoft.Xna.Framework.GameTime gt)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>77D33D31416E9D0A32C83D339ED033047993C606C1434190E5A03F97701C9CC1</code></li>
+<li><span>Body hash</span><code>A1FC763FB49FCDB7630C07D8835CFF4A7F6FA472448A4FFC4883BD27B9A7B190</code></li>
+<li><span>IL size</span><span>214</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Candide.GameModels.Models.Constructions.Building&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::get_Zero()</code></li>
+<li><code>Candide.World.InteriorWorldHandler::get_World()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Tiled_TiledMap.html#update-microsoft-xna-framework-gametime---system-void">CandideCreator.Shared.Tiled.TiledMap::Update(Microsoft.Xna.Framework.GameTime)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Sound_AudioWorld.html#update-microsoft-xna-framework-gametime---system-void">Candide.Sound.AudioWorld::Update(Microsoft.Xna.Framework.GameTime)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#updateall-microsoft-xna-framework-gametime---system-void">Shared.Entity.EntitySystem::UpdateAll(Microsoft.Xna.Framework.GameTime)</a></code></li>
+<li><code>Microsoft.Xna.Framework.GameTime::get_ElapsedGameTime()</code></li>
+<li><code>System.TimeSpan::get_TotalSeconds()</code></li>
+<li><code><a href="../../types/Romestead/Candide_World_InteriorWorldHandler.html#checktransportnodes-system-single---system-void">Candide.World.InteriorWorldHandler::CheckTransportNodes(System.Single)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_World_WorldMap.html#canceloverlay----system-void">Candide.World.WorldMap::CancelOverlay()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_PlayerControllerKeyBind.html#pressed----system-boolean">Candide.Input.PlayerControllerKeyBind::Pressed()</a></code></li>
+<li><code>Candide.UserSettings.GameAutoUserSettings::set_MiniMapOpen(System.Boolean)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_WorldHandler.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.World.WorldHandler::Update</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

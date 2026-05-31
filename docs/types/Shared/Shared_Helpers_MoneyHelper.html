@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shared.Helpers.MoneyHelper - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Shared.html">Shared</a></p>
+<div class="title-row">
+<h1>Shared.Helpers.MoneyHelper</h1>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.MoneyHelper">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Shared.Helpers.MoneyHelper
+
+- Assembly: `Shared`
+- Namespace: `Shared.Helpers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 11 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public System.Void CreateCoinsArrayForMoney(System.UInt64 money, System.Span&lt;System.Int32&gt; outArray)`
+- `public System.Int32 GetCoinAmountForMoney(System.UInt64 money, System.Int32 coinIndex)`
+- `public System.String GetCoinIcon(System.Int32 coinType)`
+- `public System.String GetCoinItemId(System.Int32 coinType)`
+- `public System.Int32 GetCoinType(System.String dataId)`
+- `public System.ValueTuple&lt;System.Int32, System.Int32&gt; GetCoinTypeAndStackSatisfyingMoney(System.UInt64 moneyAmount)`
+- `public System.Int32 GetIntValueForCoin(System.UInt64 money, System.Int32 coinType)`
+- `public System.Int32 GetMaxItemStackForCoinType(System.Int32 coinType)`
+- `public System.UInt64 GetModifiedPriceValue(System.Int32 amount, System.UInt64 price, System.Double multiplier)`
+- `public System.UInt64 GetMultiplierForCoinType(System.Int32 coinType)`
+- `public System.ValueTuple&lt;System.UInt64, System.Boolean&gt; GetValueForCoin(System.UInt64 money, System.Int32 coinType)`
+">Copy markdown</button>
+<a class="button" href="Shared_Helpers_MoneyHelper.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Shared.Helpers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>11</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Shared</code></li>
+<li><span>Namespace</span><code>Shared.Helpers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>8EB023F33E1213F5EC8B6FC07D7516BC576624AD4223115AC5C3801ACFB718A8</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateCoinsArrayForMoney public System.Void CreateCoinsArrayForMoney(System.UInt64 money, System.Span&lt;System.Int32&gt; outArray) System.Void money System.UInt64 outArray System.Span&lt;System.Int32&gt;" id="createcoinsarrayformoney-system-uint64--system-span-1-system-int32----system-void">
+<div class="method-heading">
+<h3><code>CreateCoinsArrayForMoney</code></h3>
+<a class="permalink" href="#createcoinsarrayformoney-system-uint64--system-span-1-system-int32----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CreateCoinsArrayForMoney(System.UInt64 money, System.Span&lt;System.Int32&gt; outArray)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.MoneyHelper::CreateCoinsArrayForMoney(System.UInt64, System.Span&lt;System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CreateCoinsArrayForMoney(System.UInt64 money, System.Span&lt;System.Int32&gt; outArray)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2D4016475C175B00F670202BBFD9C91A6637513C23B81B4AF99CB27415370DFD</code></li>
+<li><span>Body hash</span><code>8110A3D1872F3D999B72F4F06FA5BEE6D5CBE8C1D8EA9A2407AB62317DDAB01B</code></li>
+<li><span>IL size</span><span>29</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Span&lt;System.Int32&gt;::get_Item(System.Int32)</code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getintvalueforcoin-system-uint64--system-int32---system-int32">Shared.Helpers.MoneyHelper::GetIntValueForCoin(System.UInt64, System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Inventory_Models_DeltaTransaction.html#movemoney-returnrest-system-int32--system-uint64--shared-inventory-models-searchstrategy--system-int32---system-valuetuple-2-system-uint64-system-boolean-"><code>Shared.Inventory.Models.DeltaTransaction::MoveMoney_ReturnRest</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetCoinAmountForMoney public System.Int32 GetCoinAmountForMoney(System.UInt64 money, System.Int32 coinIndex) System.Int32 money System.UInt64 coinIndex System.Int32" id="getcoinamountformoney-system-uint64--system-int32---system-int32">
+<div class="method-heading">
+<h3><code>GetCoinAmountForMoney</code></h3>
+<a class="permalink" href="#getcoinamountformoney-system-uint64--system-int32---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 GetCoinAmountForMoney(System.UInt64 money, System.Int32 coinIndex)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.MoneyHelper::GetCoinAmountForMoney(System.UInt64, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 GetCoinAmountForMoney(System.UInt64 money, System.Int32 coinIndex)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F4C2F261BF74CE0459016B3A8496860B7999467ED6843975065A5C78690BAC61</code></li>
+<li><span>Body hash</span><code>91F2322789A89D88E9093387076C95EED21B79CC7E04E7828FB8A0C81363278F</code></li>
+<li><span>IL size</span><span>108</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Exception::.ctor(System.String)</code></li>
+<li><code>System.ArgumentOutOfRangeException::.ctor()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Inventory_Models_DeltaTransaction.html#movemoney-returnrest-system-int32--system-uint64--shared-inventory-models-searchstrategy--system-int32---system-valuetuple-2-system-uint64-system-boolean-"><code>Shared.Inventory.Models.DeltaTransaction::MoveMoney_ReturnRest</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>This should not be possible.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetCoinIcon public System.String GetCoinIcon(System.Int32 coinType) System.String coinType System.Int32" id="getcoinicon-system-int32---system-string">
+<div class="method-heading">
+<h3><code>GetCoinIcon</code></h3>
+<a class="permalink" href="#getcoinicon-system-int32---system-string" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.String GetCoinIcon(System.Int32 coinType)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.MoneyHelper::GetCoinIcon(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.String GetCoinIcon(System.Int32 coinType)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.String</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DF0A0A2765301B2E6B6D818CE5F7DB86E4BB0F7CC3DAA32F22F986F274AA7C41</code></li>
+<li><span>Body hash</span><code>1936FA697407EDA2ABC9BEED5A1BBA3F12781FC5D8C7848E68795E51C4FACA4D</code></li>
+<li><span>IL size</span><span>69</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.ArgumentException::.ctor(System.String)</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>money</code></li>
+<li><code>money:1</code></li>
+<li><code>money:2</code></li>
+<li><code>money:3</code></li>
+<li><code>GetCoinIcon: Invalid coin type</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetCoinItemId public System.String GetCoinItemId(System.Int32 coinType) System.String coinType System.Int32" id="getcoinitemid-system-int32---system-string">
+<div class="method-heading">
+<h3><code>GetCoinItemId</code></h3>
+<a class="permalink" href="#getcoinitemid-system-int32---system-string" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.String GetCoinItemId(System.Int32 coinType)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.MoneyHelper::GetCoinItemId(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.String GetCoinItemId(System.Int32 coinType)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.String</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B18CABF715B8228E86C01D117E6C4E9A90614264A60D521CC4E4854BE1309DD0</code></li>
+<li><span>Body hash</span><code>A7E9EB193FCD78AEA878C7902454CEAF557DE3AECC16BA8CA99E10FF72E6AF4C</code></li>
+<li><span>IL size</span><span>69</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.ArgumentException::.ctor(System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#trydropmoney-system-guid--system-uint64--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32---system-nullable-1-system-int32----system-boolean"><code>CandideServer.ServerManagers.SimpleInventoryServerManager::TryDropMoney</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_PlayerInventoryUserControl.html#onmoneyrightclickfunc-candide-candideui-usercontrols-inventorycontrolmoney-onmouserightclickargs---system-boolean"><code>Candide.CandideUI.UserControls.PlayerInventoryUserControl::OnMoneyRightClickFunc</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_InventoryApplyEngine.html#splitmoneyitemintonewmoneyitem-shared-inventory-inventoryapplybridge-iinventoryapplybridge--system-guid--system-int32--system-guid--system-int32--system-int32---system-boolean"><code>Shared.Inventory.InventoryApplyEngine::SplitMoneyItemIntoNewMoneyItem</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_InventoryApplyEngine.html#turnmoneyintoitem-shared-inventory-inventoryapplybridge-iinventoryapplybridge--system-guid--system-guid--system-int32--system-uint64---system-boolean"><code>Shared.Inventory.InventoryApplyEngine::TurnMoneyIntoItem</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_InventoryApplyEngine.html#turnmoneyintoitemstackamount-shared-inventory-inventoryapplybridge-iinventoryapplybridge--system-guid--system-guid--system-int32--system-uint64---system-boolean"><code>Shared.Inventory.InventoryApplyEngine::TurnMoneyIntoItemStackAmount</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_InventoryDeltaEngine.html#movecointypeintoitems-system-collections-generic-list-1-shared-inventory-deltamodels-deltaaction---shared-models-items-sharedinventorymodel--system-int32--system-int32--shared-models-items-sharedinventorymodel--system-uint64----shared-inventory-deltamodels-inventoryresult"><code>Shared.Inventory.InventoryDeltaEngine::MoveCoinTypeIntoItems</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_InventoryDeltaEngine.html#movemoneyintoitem-shared-models-items-sharedinventorymodel--system-int32--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-boolean---shared-inventory-deltamodels-deltaresult"><code>Shared.Inventory.InventoryDeltaEngine::MoveMoneyIntoItem</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_InventoryDeltaEngine.html#movemoneyitemsintomoney-coin-system-collections-generic-list-1-shared-inventory-deltamodels-deltaaction---shared-models-items-sharedinventorymodel--shared-inventory-models-searchstrategy--system-int32--system-uint64--shared-models-items-sharedinventorymodel--system-uint64---system-uint64----shared-inventory-deltamodels-inventoryresult"><code>Shared.Inventory.InventoryDeltaEngine::MoveMoneyItemsIntoMoney_Coin</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_Models_DeltaTransaction.html#movemoney-returnrest-system-int32--system-uint64--shared-inventory-models-searchstrategy--system-int32---system-valuetuple-2-system-uint64-system-boolean-"><code>Shared.Inventory.Models.DeltaTransaction::MoveMoney_ReturnRest</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>money</code></li>
+<li><code>money:1</code></li>
+<li><code>money:2</code></li>
+<li><code>money:3</code></li>
+<li><code>GetCoinItemId: Invalid coin type</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetCoinType public System.Int32 GetCoinType(System.String dataId) System.Int32 dataId System.String" id="getcointype-system-string---system-int32">
+<div class="method-heading">
+<h3><code>GetCoinType</code></h3>
+<a class="permalink" href="#getcointype-system-string---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 GetCoinType(System.String dataId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.MoneyHelper::GetCoinType(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 GetCoinType(System.String dataId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C2BAB87F6A8FD7E21CD0673F2E26044CF700CED152880E6443452B7E1D1CD6DA</code></li>
+<li><span>Body hash</span><code>46095C4D87668CB1CDF1D2AA4BBBB3002D1498F36E4293AE72422F98B0AD6D2B</code></li>
+<li><span>IL size</span><span>89</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code>System.ArgumentOutOfRangeException::.ctor(System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Inventory_InventoryApplyEngine.html#splitmoneyitemintonewmoneyitem-shared-inventory-inventoryapplybridge-iinventoryapplybridge--system-guid--system-int32--system-guid--system-int32--system-int32---system-boolean"><code>Shared.Inventory.InventoryApplyEngine::SplitMoneyItemIntoNewMoneyItem</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>money</code></li>
+<li><code>money:1</code></li>
+<li><code>money:2</code></li>
+<li><code>money:3</code></li>
+<li><code>Unknown money coin ID </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetCoinTypeAndStackSatisfyingMoney public System.ValueTuple&lt;System.Int32, System.Int32&gt; GetCoinTypeAndStackSatisfyingMoney(System.UInt64 moneyAmount) System.ValueTuple&lt;System.Int32, System.Int32&gt; moneyAmount System.UInt64" id="getcointypeandstacksatisfyingmoney-system-uint64---system-valuetuple-2-system-int32-system-int32-">
+<div class="method-heading">
+<h3><code>GetCoinTypeAndStackSatisfyingMoney</code></h3>
+<a class="permalink" href="#getcointypeandstacksatisfyingmoney-system-uint64---system-valuetuple-2-system-int32-system-int32-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.ValueTuple&lt;System.Int32, System.Int32&gt; GetCoinTypeAndStackSatisfyingMoney(System.UInt64 moneyAmount)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.MoneyHelper::GetCoinTypeAndStackSatisfyingMoney(System.UInt64)">Copy Harmony target</button>
+</div>
+<p><code>public System.ValueTuple&lt;System.Int32, System.Int32&gt; GetCoinTypeAndStackSatisfyingMoney(System.UInt64 moneyAmount)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.ValueTuple&lt;System.Int32, System.Int32&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>16746EF1981B01284CA9468AF911FFA18C9A883D28A5D28931C266189C1E9E39</code></li>
+<li><span>Body hash</span><code>C9BB2AD6B04DA21EBA8918F3560FF57DEC34ACD76343121FE7B41A1A77AC9F53</code></li>
+<li><span>IL size</span><span>62</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getmultiplierforcointype-system-int32---system-uint64">Shared.Helpers.MoneyHelper::GetMultiplierForCoinType(System.Int32)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getmaxitemstackforcointype-system-int32---system-int32">Shared.Helpers.MoneyHelper::GetMaxItemStackForCoinType(System.Int32)</a></code></li>
+<li><code>System.ValueTuple&lt;System.Int32, System.Int32&gt;::.ctor(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#trydropmoney-system-guid--system-uint64--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32---system-nullable-1-system-int32----system-boolean"><code>CandideServer.ServerManagers.SimpleInventoryServerManager::TryDropMoney</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_InventoryApplyEngine.html#turnmoneyintoitem-shared-inventory-inventoryapplybridge-iinventoryapplybridge--system-guid--system-guid--system-int32--system-uint64---system-boolean"><code>Shared.Inventory.InventoryApplyEngine::TurnMoneyIntoItem</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_InventoryApplyEngine.html#turnmoneyintoitemstackamount-shared-inventory-inventoryapplybridge-iinventoryapplybridge--system-guid--system-guid--system-int32--system-uint64---system-boolean"><code>Shared.Inventory.InventoryApplyEngine::TurnMoneyIntoItemStackAmount</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetIntValueForCoin public System.Int32 GetIntValueForCoin(System.UInt64 money, System.Int32 coinType) System.Int32 money System.UInt64 coinType System.Int32" id="getintvalueforcoin-system-uint64--system-int32---system-int32">
+<div class="method-heading">
+<h3><code>GetIntValueForCoin</code></h3>
+<a class="permalink" href="#getintvalueforcoin-system-uint64--system-int32---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 GetIntValueForCoin(System.UInt64 money, System.Int32 coinType)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.MoneyHelper::GetIntValueForCoin(System.UInt64, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 GetIntValueForCoin(System.UInt64 money, System.Int32 coinType)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C82EEF0ACF387B94ED89631EFBB13E3768CC0C525D397D5F13CAA24EA9BE07DD</code></li>
+<li><span>Body hash</span><code>EA38D611C0FA76877DB2AFBCF4950D1B980BAE99CBC24E0D2458611916421531</code></li>
+<li><span>IL size</span><span>97</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getvalueforcoin-system-uint64--system-int32---system-valuetuple-2-system-uint64-system-boolean-">Shared.Helpers.MoneyHelper::GetValueForCoin(System.UInt64, System.Int32)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#createcoinsarrayformoney-system-uint64--system-span-1-system-int32----system-void"><code>Shared.Helpers.MoneyHelper::CreateCoinsArrayForMoney</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>GetIntValueForCoin</code></li>
+<li><code>: Value for coin type </code></li>
+<li><code> was bigger than the int.MaxValue.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetMaxItemStackForCoinType public System.Int32 GetMaxItemStackForCoinType(System.Int32 coinType) System.Int32 coinType System.Int32" id="getmaxitemstackforcointype-system-int32---system-int32">
+<div class="method-heading">
+<h3><code>GetMaxItemStackForCoinType</code></h3>
+<a class="permalink" href="#getmaxitemstackforcointype-system-int32---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 GetMaxItemStackForCoinType(System.Int32 coinType)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.MoneyHelper::GetMaxItemStackForCoinType(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 GetMaxItemStackForCoinType(System.Int32 coinType)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>244BF640F98F8A6C403E47C9CC4679F8E38FFBB213F3DE2EE11FE0A73A79E528</code></li>
+<li><span>Body hash</span><code>1B2BBADCED1F81FEC4316BDDF3C9645401F7684A440D8473DD9817574E7696DE</code></li>
+<li><span>IL size</span><span>113</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>System.ArgumentException::.ctor(System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#moneyswapaction-system-guid--system-uint64--system-int32--system-guid--system-int32--system-boolean---system-boolean"><code>Candide.GameModels.Managers.SimpleInventoryManager::MoneySwapAction</code></a></li>
+<li><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getcointypeandstacksatisfyingmoney-system-uint64---system-valuetuple-2-system-int32-system-int32-"><code>Shared.Helpers.MoneyHelper::GetCoinTypeAndStackSatisfyingMoney</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>GetValueForCoin</code></li>
+<li><code>: Invalid coin type </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetModifiedPriceValue public System.UInt64 GetModifiedPriceValue(System.Int32 amount, System.UInt64 price, System.Double multiplier) System.UInt64 amount System.Int32 price System.UInt64 multiplier System.Double" id="getmodifiedpricevalue-system-int32--system-uint64--system-double---system-uint64">
+<div class="method-heading">
+<h3><code>GetModifiedPriceValue</code></h3>
+<a class="permalink" href="#getmodifiedpricevalue-system-int32--system-uint64--system-double---system-uint64" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.UInt64 GetModifiedPriceValue(System.Int32 amount, System.UInt64 price, System.Double multiplier)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.MoneyHelper::GetModifiedPriceValue(System.Int32, System.UInt64, System.Double)">Copy Harmony target</button>
+</div>
+<p><code>public System.UInt64 GetModifiedPriceValue(System.Int32 amount, System.UInt64 price, System.Double multiplier)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.UInt64</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5673490C95EEF3A29EC4CE009F5E29F253DAA8D8D84C1F631E4D9AD42A0C8F4A</code></li>
+<li><span>Body hash</span><code>B16C38F9D645DC2BFB3AD1ACA2D6AB0A435E08409ABB95A59D8C4DD9FF6ED121</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Double::Round(System.Double)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Helpers_ItemHelper.html#getmodifiedprice-shared-models-items-iteminstancemodel--system-nullable-1-system-int32---system-single---system-uint64"><code>CandideServer.Helpers.ItemHelper::GetModifiedPrice</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Helpers_ItemHelper.html#getmodifiedpricestack-shared-models-items-iteminstancemodel--system-single---system-uint64"><code>CandideServer.Helpers.ItemHelper::GetModifiedPriceStack</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ShopServerManager.html#trybuyitem-system-nullable-1-system-guid---system-string--system-string--system-int32--system-guid--system-nullable-1-system-int32---system-nullable-1-system-guid----system-boolean"><code>CandideServer.ServerManagers.ShopServerManager::TryBuyItem</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_ShopDisplayControl.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideUI.UserControls.ShopDisplayControl::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetMultiplierForCoinType public System.UInt64 GetMultiplierForCoinType(System.Int32 coinType) System.UInt64 coinType System.Int32" id="getmultiplierforcointype-system-int32---system-uint64">
+<div class="method-heading">
+<h3><code>GetMultiplierForCoinType</code></h3>
+<a class="permalink" href="#getmultiplierforcointype-system-int32---system-uint64" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.UInt64 GetMultiplierForCoinType(System.Int32 coinType)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.MoneyHelper::GetMultiplierForCoinType(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.UInt64 GetMultiplierForCoinType(System.Int32 coinType)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.UInt64</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9C235B5B322A8A1C9CC404EB5195179F0581B24013DE1A71A6AAA76674CAB19C</code></li>
+<li><span>Body hash</span><code>26827ACA8D7AFC468FF1A155855F2973570FBD9282E6DE156FBCE0BAFAAE9E64</code></li>
+<li><span>IL size</span><span>110</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>System.ArgumentException::.ctor(System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#trydropmoney-system-guid--system-uint64--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32---system-nullable-1-system-int32----system-boolean"><code>CandideServer.ServerManagers.SimpleInventoryServerManager::TryDropMoney</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_CandideSplitInventoryMoneyMockComponent.html#ondropped----system-boolean"><code>Candide.CandideUI.CandideSplitInventoryMoneyMockComponent::OnDropped</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Holder_CoinSlot.html#oncontrollerypressed-system-boolean---system-void"><code>Candide.CandideUI.Components.Holder.CoinSlot::OnControllerYPressed</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Holder_CoinSlot.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideUI.Components.Holder.CoinSlot::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Holder_MoneyCandideDraggableHolderContent.html#ondropped----system-boolean"><code>Candide.CandideUI.Components.Holder.MoneyCandideDraggableHolderContent::OnDropped</code></a></li>
+<li><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getcointypeandstacksatisfyingmoney-system-uint64---system-valuetuple-2-system-int32-system-int32-"><code>Shared.Helpers.MoneyHelper::GetCoinTypeAndStackSatisfyingMoney</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_InventoryApplyEngine.html#splitmoneyitemintonewmoneyitem-shared-inventory-inventoryapplybridge-iinventoryapplybridge--system-guid--system-int32--system-guid--system-int32--system-int32---system-boolean"><code>Shared.Inventory.InventoryApplyEngine::SplitMoneyItemIntoNewMoneyItem</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_InventoryDeltaEngine.html#movecointypeintoitems-system-collections-generic-list-1-shared-inventory-deltamodels-deltaaction---shared-models-items-sharedinventorymodel--system-int32--system-int32--shared-models-items-sharedinventorymodel--system-uint64----shared-inventory-deltamodels-inventoryresult"><code>Shared.Inventory.InventoryDeltaEngine::MoveCoinTypeIntoItems</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_InventoryDeltaEngine.html#movemoneyintoitem-shared-models-items-sharedinventorymodel--system-int32--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-boolean---shared-inventory-deltamodels-deltaresult"><code>Shared.Inventory.InventoryDeltaEngine::MoveMoneyIntoItem</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_InventoryDeltaEngine.html#movemoneyitemsintomoney-coin-system-collections-generic-list-1-shared-inventory-deltamodels-deltaaction---shared-models-items-sharedinventorymodel--shared-inventory-models-searchstrategy--system-int32--system-uint64--shared-models-items-sharedinventorymodel--system-uint64---system-uint64----shared-inventory-deltamodels-inventoryresult"><code>Shared.Inventory.InventoryDeltaEngine::MoveMoneyItemsIntoMoney_Coin</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_Models_DeltaTransaction.html#movemoney-returnrest-system-int32--system-uint64--shared-inventory-models-searchstrategy--system-int32---system-valuetuple-2-system-uint64-system-boolean-"><code>Shared.Inventory.Models.DeltaTransaction::MoveMoney_ReturnRest</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>GetValueForCoin</code></li>
+<li><code>: Invalid coin type </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetValueForCoin public System.ValueTuple&lt;System.UInt64, System.Boolean&gt; GetValueForCoin(System.UInt64 money, System.Int32 coinType) System.ValueTuple&lt;System.UInt64, System.Boolean&gt; money System.UInt64 coinType System.Int32" id="getvalueforcoin-system-uint64--system-int32---system-valuetuple-2-system-uint64-system-boolean-">
+<div class="method-heading">
+<h3><code>GetValueForCoin</code></h3>
+<a class="permalink" href="#getvalueforcoin-system-uint64--system-int32---system-valuetuple-2-system-uint64-system-boolean-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.ValueTuple&lt;System.UInt64, System.Boolean&gt; GetValueForCoin(System.UInt64 money, System.Int32 coinType)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.MoneyHelper::GetValueForCoin(System.UInt64, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.ValueTuple&lt;System.UInt64, System.Boolean&gt; GetValueForCoin(System.UInt64 money, System.Int32 coinType)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.ValueTuple&lt;System.UInt64, System.Boolean&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>54401BBBFC6DAE4FA51BDE39A6D28BEFBB45D603C9D32570B05FF28D72727E11</code></li>
+<li><span>Body hash</span><code>C4A1EE0C4F95274D844322B6B89E43CD68014E052D0ACB0117934532C52380DC</code></li>
+<li><span>IL size</span><span>148</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>System.ArgumentException::.ctor(System.String)</code></li>
+<li><code>System.ValueTuple&lt;System.UInt64, System.Boolean&gt;::.ctor(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Displays_CoinDisplay.html#setmoney-system-uint64---system-void"><code>Candide.CandideUI.Components.Displays.CoinDisplay::SetMoney</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Holder_CoinSlot.html#setmoney-system-uint64---system-void"><code>Candide.CandideUI.Components.Holder.CoinSlot::SetMoney</code></a></li>
+<li><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getintvalueforcoin-system-uint64--system-int32---system-int32"><code>Shared.Helpers.MoneyHelper::GetIntValueForCoin</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>GetValueForCoin</code></li>
+<li><code>: Invalid coin type </code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

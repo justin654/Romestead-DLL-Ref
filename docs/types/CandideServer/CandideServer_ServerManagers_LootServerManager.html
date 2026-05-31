@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerManagers.LootServerManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerManagers.LootServerManager</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.LootServerManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerManagers.LootServerManager
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerManagers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 11 methods, 0 properties, 3 fields, 0 events
+
+## Public Methods
+- `public System.Void DropGoods(Shared.Models.DropTables.DroppedGoods droppedGoods, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Nullable&lt;System.Int32&gt; owningPlayerId)`
+- `public System.Void DropGoodsAndInventory(Shared.Entity.EntityWrapper entity, System.Nullable&lt;System.Int32&gt; owningPlayerId)`
+- `public System.Void DropInventoryAndDelete(Shared.Models.Items.SharedInventoryModel inventory, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Nullable&lt;System.Int32&gt; owningPlayerId)`
+- `public System.Void DropInventoryButDoNotDelete(Shared.Models.Items.SharedInventoryModel inventory, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Single horizontalSpeedScale, System.Nullable&lt;System.Int32&gt; owningPlayerId)`
+- `public System.Void DropLootAtPosition(System.String dropTableId, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Nullable&lt;System.Int32&gt; owningPlayerId)`
+- `public System.Void EntityDropGoods(CandideServer.Entities.ServerEntityModel entity, Shared.Models.DropTables.DroppedGoods droppedGoods, System.Nullable&lt;System.Int32&gt; owningPlayerId, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; overrideDropLocation)`
+- `public System.Void EntityDropInventory(CandideServer.Entities.ServerEntityModel entity, Shared.Models.Items.SharedInventoryModel inventory, System.Nullable&lt;System.Int32&gt; owningPlayerId)`
+- `public Shared.Models.DropTables.DroppedGoods GenerateDroppedGoods(Shared.Models.DropTables.DropTableSystem system, System.Single difficulty)`
+- `public Shared.Models.DropTables.DroppedGoods GenerateDroppedGoods(Shared.Models.DropTables.DropTableSystem system, System.Single difficulty, System.Func&lt;System.ValueTuple&lt;System.String, System.Int32, System.String&gt;, System.ValueTuple&lt;System.String, System.Int32, System.String&gt;&gt; itemFilter)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerManagers_LootServerManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerManagers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>11</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>3</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerManagers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>61B74F2FF83A6F6B6AF3360ADC891303CE24A9988FB434559CF20046A9EF166C</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ReuseInventoryUpdateList private System.Collections.Generic.List&lt;CandideServer.ServerControllers.UpdateInventoryItemInstanceMessage&gt; ReuseInventoryUpdateList System.Collections.Generic.List&lt;CandideServer.ServerControllers.UpdateInventoryItemInstanceMessage&gt;" id="reuseinventoryupdatelist-system-collections-generic-list-1-candideserver-servercontrollers-updateinventoryiteminstancemessage-"><td><span class="member-name-cell"><code>ReuseInventoryUpdateList</code><a class="permalink" href="#reuseinventoryupdatelist-system-collections-generic-list-1-candideserver-servercontrollers-updateinventoryiteminstancemessage-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;CandideServer.ServerControllers.UpdateInventoryItemInstanceMessage&gt; ReuseInventoryUpdateList">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_ServerControllers_UpdateInventoryItemInstanceMessage.html">CandideServer.ServerControllers.UpdateInventoryItemInstanceMessage</a>&gt; ReuseInventoryUpdateList</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ReuseItemAmountsDictionary private System.Collections.Generic.Dictionary&lt;System.ValueTuple&lt;System.String, System.String&gt;, System.Int32&gt; ReuseItemAmountsDictionary System.Collections.Generic.Dictionary&lt;System.ValueTuple&lt;System.String, System.String&gt;, System.Int32&gt;" id="reuseitemamountsdictionary-system-collections-generic-dictionary-2-system-valuetuple-2-system-string-system-string--system-int32-"><td><span class="member-name-cell"><code>ReuseItemAmountsDictionary</code><a class="permalink" href="#reuseitemamountsdictionary-system-collections-generic-dictionary-2-system-valuetuple-2-system-string-system-string--system-int32-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;System.ValueTuple&lt;System.String, System.String&gt;, System.Int32&gt; ReuseItemAmountsDictionary">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;System.ValueTuple&lt;System.String, System.String&gt;, System.Int32&gt; ReuseItemAmountsDictionary</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ReuseList private System.Collections.Generic.List&lt;CandideServer.ServerManagers.CreateWorldItemArguments&gt; ReuseList System.Collections.Generic.List&lt;CandideServer.ServerManagers.CreateWorldItemArguments&gt;" id="reuselist-system-collections-generic-list-1-candideserver-servermanagers-createworlditemarguments-"><td><span class="member-name-cell"><code>ReuseList</code><a class="permalink" href="#reuselist-system-collections-generic-list-1-candideserver-servermanagers-createworlditemarguments-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;CandideServer.ServerManagers.CreateWorldItemArguments&gt; ReuseList">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_ServerManagers_CreateWorldItemArguments.html">CandideServer.ServerManagers.CreateWorldItemArguments</a>&gt; ReuseList</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="AddDroppedItem private System.Void AddDroppedItem(Shared.Models.DropTables.ItemDrop item, System.Single difficulty) System.Void item Shared.Models.DropTables.ItemDrop difficulty System.Single" id="adddroppeditem-shared-models-droptables-itemdrop--system-single---system-void">
+<div class="method-heading">
+<h3><code>AddDroppedItem</code></h3>
+<a class="permalink" href="#adddroppeditem-shared-models-droptables-itemdrop--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void AddDroppedItem(Shared.Models.DropTables.ItemDrop item, System.Single difficulty)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.LootServerManager::AddDroppedItem(Shared.Models.DropTables.ItemDrop, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void AddDroppedItem(<a href="../../types/Shared/Shared_Models_DropTables_ItemDrop.html">Shared.Models.DropTables.ItemDrop</a> item, System.Single difficulty)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>09F39B00476E426826D5AF62AB407C3A9B07E99B597B33CE2D0804B96E927737</code></li>
+<li><span>Body hash</span><code>01EFB2437CD138F3FAAE27626151C8DF64CBC970A71B25FC935BC85289C5CAC5</code></li>
+<li><span>IL size</span><span>195</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Random::Next(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_ServerDropTablesDataBase.html#getdroptableitemlistornull-system-string---candideserver-data-serverdatasetups-serverdroptabledata">CandideServer.Database.ServerDropTablesDataBase::GetDropTableItemListOrNull(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#processdropsystem-shared-models-droptables-droptablesystem--system-single---system-void">CandideServer.ServerManagers.LootServerManager::ProcessDropSystem(Shared.Models.DropTables.DropTableSystem, System.Single)</a></code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Helpers_ServerRandomItemStatsHelper.html#rollitemaura2-system-single--system-collections-generic-dictionary-2-shared-models-auras-itemauratier-system-collections-generic-list-1-system-string-----system-string">CandideServer.Helpers.ServerRandomItemStatsHelper::RollItemAura2(System.Single, System.Collections.Generic.Dictionary&lt;Shared.Models.Auras.ItemAuraTier, System.Collections.Generic.List&lt;System.String&gt;&gt;)</a></code></li>
+<li><code>System.ValueTuple&lt;System.String, System.String&gt;::.ctor(!0, !1)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.ValueTuple&lt;System.String, System.String&gt;, System.Int32&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.ValueTuple&lt;System.String, System.String&gt;, System.Int32&gt;::set_Item(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#processdropsystem-shared-models-droptables-droptablesystem--system-single---system-void"><code>CandideServer.ServerManagers.LootServerManager::ProcessDropSystem</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>(empty)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DropGoods public System.Void DropGoods(Shared.Models.DropTables.DroppedGoods droppedGoods, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Nullable&lt;System.Int32&gt; owningPlayerId) System.Void droppedGoods Shared.Models.DropTables.DroppedGoods position Microsoft.Xna.Framework.Vector3 extraVelocity Microsoft.Xna.Framework.Vector3 worldId System.Guid owningPlayerId System.Nullable&lt;System.Int32&gt;" id="dropgoods-shared-models-droptables-droppedgoods--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void">
+<div class="method-heading">
+<h3><code>DropGoods</code></h3>
+<a class="permalink" href="#dropgoods-shared-models-droptables-droppedgoods--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DropGoods(Shared.Models.DropTables.DroppedGoods droppedGoods, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Nullable&lt;System.Int32&gt; owningPlayerId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.LootServerManager::DropGoods(Shared.Models.DropTables.DroppedGoods, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Guid, System.Nullable&lt;System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DropGoods(<a href="../../types/Shared/Shared_Models_DropTables_DroppedGoods.html">Shared.Models.DropTables.DroppedGoods</a> droppedGoods, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Nullable&lt;System.Int32&gt; owningPlayerId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2FB5226EFFA288ED9F4ED979EBAC9EBD1CAAC56D07311B24D7FA3BB1DD034A1D</code></li>
+<li><span>Body hash</span><code>1E1EDFC1C7E0876A507094F1B321843DC6FDF26F8B563B32F0F586E4842E3973</code></li>
+<li><span>IL size</span><span>287</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.CreateWorldItemArguments&gt;::Clear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextfloat-system-random--system-single--system-single---system-single">CandideCreator.Shared.Helpers.RandomHelper::NextFloat(System.Random, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextdouble-system-random--system-double--system-double---system-double">CandideCreator.Shared.Helpers.RandomHelper::NextDouble(System.Random, System.Double, System.Double)</a></code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_ItemInstanceSController.html#createnewiteminstance-system-string--system-int32--system-guid--system-nullable-1-system-guid---system-string---shared-models-items-iteminstancemodel">CandideServer.ServerControllers.ItemInstanceSController::CreateNewItemInstance(System.String, System.Int32, System.Guid, System.Nullable&lt;System.Guid&gt;, System.String)</a></code></li>
+<li><code>System.Math::Cos(System.Double)</code></li>
+<li><code>System.Math::Sin(System.Double)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(System.Single, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::get_UnitZ()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(Microsoft.Xna.Framework.Vector3, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Addition(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.CreateWorldItemArguments&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_WorldItemServerManager.html#spawnworlditems-system-collections-generic-list-1-candideserver-servermanagers-createworlditemarguments---system-guid--system-nullable-1-system-int32----system-void">CandideServer.ServerManagers.WorldItemServerManager::SpawnWorldItems(System.Collections.Generic.List&lt;CandideServer.ServerManagers.CreateWorldItemArguments&gt;, System.Guid, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerFlintController.html#onoutofhealth-shared-combat-damageresult---system-boolean"><code>CandideServer.Entities.Controllers.ServerFlintController::OnOutOfHealth</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#harvestcrop-microsoft-xna-framework-point--system-nullable-1-system-int32----system-void"><code>CandideServer.ServerManagers.CropServerManager::HarvestCrop</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#dropgoodsandinventory-shared-entity-entitywrapper--system-nullable-1-system-int32----system-void"><code>CandideServer.ServerManagers.LootServerManager::DropGoodsAndInventory</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#droplootatposition-system-string--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void"><code>CandideServer.ServerManagers.LootServerManager::DropLootAtPosition</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#entitydropgoods-candideserver-entities-serverentitymodel--shared-models-droptables-droppedgoods--system-nullable-1-system-int32---system-nullable-1-microsoft-xna-framework-vector3----system-void"><code>CandideServer.ServerManagers.LootServerManager::EntityDropGoods</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DropGoodsAndInventory public System.Void DropGoodsAndInventory(Shared.Entity.EntityWrapper entity, System.Nullable&lt;System.Int32&gt; owningPlayerId) System.Void entity Shared.Entity.EntityWrapper owningPlayerId System.Nullable&lt;System.Int32&gt;" id="dropgoodsandinventory-shared-entity-entitywrapper--system-nullable-1-system-int32----system-void">
+<div class="method-heading">
+<h3><code>DropGoodsAndInventory</code></h3>
+<a class="permalink" href="#dropgoodsandinventory-shared-entity-entitywrapper--system-nullable-1-system-int32----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DropGoodsAndInventory(Shared.Entity.EntityWrapper entity, System.Nullable&lt;System.Int32&gt; owningPlayerId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.LootServerManager::DropGoodsAndInventory(Shared.Entity.EntityWrapper, System.Nullable&lt;System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DropGoodsAndInventory(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, System.Nullable&lt;System.Int32&gt; owningPlayerId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>091F335110E3B0FC3687DEB245F806A1BB043A45A67B8B39719F1918A1F44AB5</code></li>
+<li><span>Body hash</span><code>2A0159715BE9E79F0D42450FF8F3F768583770FB904F1068C57516A2B733EC72</code></li>
+<li><span>IL size</span><span>350</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_WorldId()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Models.Items.SharedInventoryModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Velocity()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Division(Microsoft.Xna.Framework.Vector3, System.Single)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#dropinventoryanddelete-shared-models-items-sharedinventorymodel--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void">CandideServer.ServerManagers.LootServerManager::DropInventoryAndDelete(Shared.Models.Items.SharedInventoryModel, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Guid, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_BaseGuid()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Frame()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_Furniture_FurnitureDataBase.html#trygetfurnitureidfromentity-system-guid--system-nullable-1-system-int32---system-string----system-boolean">Shared.Data.Furniture.FurnitureDataBase::TryGetFurnitureIdFromEntity(System.Guid, System.Nullable&lt;System.Int32&gt;, System.String&amp;)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Addition(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextpointinhollowcircle-system-random--system-single---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.RandomHelper::NextPointInHollowCircle(System.Random, System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_WorldItemServerManager.html#spawnfurnitureworlditem-system-string--system-int32--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32---system-nullable-1-system-int32----candideserver-models-items-serverworlditemmodel">CandideServer.ServerManagers.WorldItemServerManager::SpawnFurnitureWorldItem(System.String, System.Int32, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Guid, System.Nullable&lt;System.Int32&gt;, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextfloat-system-random---system-single">CandideCreator.Shared.Helpers.RandomHelper::NextFloat(System.Random)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#generatedroppedgoods-shared-models-droptables-droptablesystem--system-single---shared-models-droptables-droppedgoods">CandideServer.ServerManagers.LootServerManager::GenerateDroppedGoods(Shared.Models.DropTables.DropTableSystem, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#dropgoods-shared-models-droptables-droppedgoods--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void">CandideServer.ServerManagers.LootServerManager::DropGoods(Shared.Models.DropTables.DroppedGoods, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Guid, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Bridges_ServerEntitySystemBridge.html#onentitykilled-shared-combat-damageinfo--shared-entity-base-onkilledbehaviour--system-single---system-void"><code>CandideServer.Entities.Bridges.ServerEntitySystemBridge::OnEntityKilled</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerTreeController.html#onremove-shared-entity-entityremoveinfo---system-void"><code>CandideServer.Entities.Controllers.ServerTreeController::OnRemove</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DropInventoryAndDelete public System.Void DropInventoryAndDelete(Shared.Models.Items.SharedInventoryModel inventory, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Nullable&lt;System.Int32&gt; owningPlayerId) System.Void inventory Shared.Models.Items.SharedInventoryModel position Microsoft.Xna.Framework.Vector3 extraVelocity Microsoft.Xna.Framework.Vector3 worldId System.Guid owningPlayerId System.Nullable&lt;System.Int32&gt;" id="dropinventoryanddelete-shared-models-items-sharedinventorymodel--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void">
+<div class="method-heading">
+<h3><code>DropInventoryAndDelete</code></h3>
+<a class="permalink" href="#dropinventoryanddelete-shared-models-items-sharedinventorymodel--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DropInventoryAndDelete(Shared.Models.Items.SharedInventoryModel inventory, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Nullable&lt;System.Int32&gt; owningPlayerId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.LootServerManager::DropInventoryAndDelete(Shared.Models.Items.SharedInventoryModel, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Guid, System.Nullable&lt;System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DropInventoryAndDelete(<a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> inventory, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Nullable&lt;System.Int32&gt; owningPlayerId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8930BEC85372388AAD7EBC1296327F3ACBF7AF5668D380D55623188549D86626</code></li>
+<li><span>Body hash</span><code>F36244F3A69BBE957458AFC6BE67043E2D6FD384D61FCD869738D7ADA68E5D97</code></li>
+<li><span>IL size</span><span>488</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.CreateWorldItemArguments&gt;::Clear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_SimpleInventorySController.html#trydetachitemfrominventory-shared-models-items-sharedinventorymodel--system-int32---system-boolean">CandideServer.ServerControllers.SimpleInventorySController::TryDetachItemFromInventory(Shared.Models.Items.SharedInventoryModel, System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextfloat-system-random--system-single--system-single---system-single">CandideCreator.Shared.Helpers.RandomHelper::NextFloat(System.Random, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextdouble-system-random--system-double--system-double---system-double">CandideCreator.Shared.Helpers.RandomHelper::NextDouble(System.Random, System.Double, System.Double)</a></code></li>
+<li><code>System.Math::Cos(System.Double)</code></li>
+<li><code>System.Math::Sin(System.Double)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(System.Single, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::get_UnitZ()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(Microsoft.Xna.Framework.Vector3, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Addition(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.CreateWorldItemArguments&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#hasmoneyfield----system-boolean">Shared.Models.Items.SharedInventoryModel::HasMoneyField()</a></code></li>
+<li><code>System.Nullable&lt;System.UInt64&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_ItemInstanceSController.html#createmoneyiteminstancesfrommoney-system-uint64--system-nullable-1-system-guid----system-collections-generic-list-1-shared-models-items-iteminstancemodel-">CandideServer.ServerControllers.ItemInstanceSController::CreateMoneyItemInstancesFromMoney(System.UInt64, System.Nullable&lt;System.Guid&gt;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Items.ItemInstanceModel&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Items.ItemInstanceModel&gt;::get_Current()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Items.ItemInstanceModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_SimpleInventorySController.html#removeinventory-shared-models-items-sharedinventorymodel--system-boolean---system-void">CandideServer.ServerControllers.SimpleInventorySController::RemoveInventory(Shared.Models.Items.SharedInventoryModel, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_WorldItemServerManager.html#spawnworlditems-system-collections-generic-list-1-candideserver-servermanagers-createworlditemarguments---system-guid--system-nullable-1-system-int32----system-void">CandideServer.ServerManagers.WorldItemServerManager::SpawnWorldItems(System.Collections.Generic.List&lt;CandideServer.ServerManagers.CreateWorldItemArguments&gt;, System.Guid, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_AutoBallista_ServerAutoBallistaController.html#onremove-shared-entity-entityremoveinfo---system-void"><code>CandideServer.Entities.ControllerSets.AutoBallista.ServerAutoBallistaController::OnRemove</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#dropgoodsandinventory-shared-entity-entitywrapper--system-nullable-1-system-int32----system-void"><code>CandideServer.ServerManagers.LootServerManager::DropGoodsAndInventory</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#entitydropinventory-candideserver-entities-serverentitymodel--shared-models-items-sharedinventorymodel--system-nullable-1-system-int32----system-void"><code>CandideServer.ServerManagers.LootServerManager::EntityDropInventory</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_TradeRoutesServerManager.html#handlecancellation-candideserver-simulationmodels-traderoutesimulationmodel--candideserver-simulationmodels-traderoutecancelstatus---system-void"><code>CandideServer.ServerManagers.TradeRoutesServerManager::HandleCancellation</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DropInventoryButDoNotDelete public System.Void DropInventoryButDoNotDelete(Shared.Models.Items.SharedInventoryModel inventory, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Single horizontalSpeedScale, System.Nullable&lt;System.Int32&gt; owningPlayerId) System.Void inventory Shared.Models.Items.SharedInventoryModel position Microsoft.Xna.Framework.Vector3 extraVelocity Microsoft.Xna.Framework.Vector3 worldId System.Guid horizontalSpeedScale System.Single owningPlayerId System.Nullable&lt;System.Int32&gt;" id="dropinventorybutdonotdelete-shared-models-items-sharedinventorymodel--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-single--system-nullable-1-system-int32----system-void">
+<div class="method-heading">
+<h3><code>DropInventoryButDoNotDelete</code></h3>
+<a class="permalink" href="#dropinventorybutdonotdelete-shared-models-items-sharedinventorymodel--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-single--system-nullable-1-system-int32----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DropInventoryButDoNotDelete(Shared.Models.Items.SharedInventoryModel inventory, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Single horizontalSpeedScale, System.Nullable&lt;System.Int32&gt; owningPlayerId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.LootServerManager::DropInventoryButDoNotDelete(Shared.Models.Items.SharedInventoryModel, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Guid, System.Single, System.Nullable&lt;System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DropInventoryButDoNotDelete(<a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> inventory, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Single horizontalSpeedScale, System.Nullable&lt;System.Int32&gt; owningPlayerId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A8C2AD99BDA3183A2A508B41FF398594C436A18E3CDF45A3ECBC83F4F694A923</code></li>
+<li><span>Body hash</span><code>CDC467EDC9E570578C8EDEFE2784873221095FA8DAC18ECA5182B7BBED0DCA69</code></li>
+<li><span>IL size</span><span>575</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.CreateWorldItemArguments&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerControllers.UpdateInventoryItemInstanceMessage&gt;::Clear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_SimpleInventorySController.html#trydetachitemfrominventory-shared-models-items-sharedinventorymodel--system-int32---system-boolean">CandideServer.ServerControllers.SimpleInventorySController::TryDetachItemFromInventory(Shared.Models.Items.SharedInventoryModel, System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextfloat-system-random--system-single--system-single---system-single">CandideCreator.Shared.Helpers.RandomHelper::NextFloat(System.Random, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextdouble-system-random--system-double--system-double---system-double">CandideCreator.Shared.Helpers.RandomHelper::NextDouble(System.Random, System.Double, System.Double)</a></code></li>
+<li><code>System.Math::Cos(System.Double)</code></li>
+<li><code>System.Math::Sin(System.Double)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(System.Single, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::get_UnitZ()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(Microsoft.Xna.Framework.Vector3, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Addition(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.CreateWorldItemArguments&gt;::Add(!0)</code></li>
+<li><code>CandideServer.ServerControllers.UpdateInventoryItemInstanceMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerControllers.UpdateInventoryItemInstanceMessage&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#hasmoneyfield----system-boolean">Shared.Models.Items.SharedInventoryModel::HasMoneyField()</a></code></li>
+<li><code>System.Nullable&lt;System.UInt64&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_ItemInstanceSController.html#createmoneyiteminstancesfrommoney-system-uint64--system-nullable-1-system-guid----system-collections-generic-list-1-shared-models-items-iteminstancemodel-">CandideServer.ServerControllers.ItemInstanceSController::CreateMoneyItemInstancesFromMoney(System.UInt64, System.Nullable&lt;System.Guid&gt;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Items.ItemInstanceModel&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Items.ItemInstanceModel&gt;::get_Current()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Items.ItemInstanceModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_WorldItemServerManager.html#spawnworlditems-system-collections-generic-list-1-candideserver-servermanagers-createworlditemarguments---system-guid--system-nullable-1-system-int32----system-void">CandideServer.ServerManagers.WorldItemServerManager::SpawnWorldItems(System.Collections.Generic.List&lt;CandideServer.ServerManagers.CreateWorldItemArguments&gt;, System.Guid, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code>CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerControllers.UpdateInventoryItemInstanceMessage&gt;::ToArray()</code></li>
+<li><code>System.Array::Empty()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_SimpleInventoryServerService.html#send-inventorieschanged-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage---system-void">CandideServer.ServerServices.SimpleInventoryServerService::Send_InventoriesChanged(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_MillController.html#ejectinventory----system-void"><code>CandideServer.Buildings.BuildingControllers.MillController::EjectInventory</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DropLootAtPosition public System.Void DropLootAtPosition(System.String dropTableId, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Nullable&lt;System.Int32&gt; owningPlayerId) System.Void dropTableId System.String position Microsoft.Xna.Framework.Vector3 extraVelocity Microsoft.Xna.Framework.Vector3 worldId System.Guid owningPlayerId System.Nullable&lt;System.Int32&gt;" id="droplootatposition-system-string--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void">
+<div class="method-heading">
+<h3><code>DropLootAtPosition</code></h3>
+<a class="permalink" href="#droplootatposition-system-string--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DropLootAtPosition(System.String dropTableId, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Nullable&lt;System.Int32&gt; owningPlayerId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.LootServerManager::DropLootAtPosition(System.String, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Guid, System.Nullable&lt;System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DropLootAtPosition(System.String dropTableId, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 extraVelocity, System.Guid worldId, System.Nullable&lt;System.Int32&gt; owningPlayerId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>41827379C8C8C2E5D699CFF4F98A465A669FAF2FD9B8C870CD2D36ED3852701B</code></li>
+<li><span>Body hash</span><code>E038849E27EB8BBE0EC0CCA006A6645CEB3B2F64F90643E50F0769C10D6A1C4A</code></li>
+<li><span>IL size</span><span>38</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Database_ServerDropTablesDataBase.html#getdroptableitemlistornull-system-string---candideserver-data-serverdatasetups-serverdroptabledata">CandideServer.Database.ServerDropTablesDataBase::GetDropTableItemListOrNull(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#generatedroppedgoods-shared-models-droptables-droptablesystem--system-single---shared-models-droptables-droppedgoods">CandideServer.ServerManagers.LootServerManager::GenerateDroppedGoods(Shared.Models.DropTables.DropTableSystem, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#dropgoods-shared-models-droptables-droppedgoods--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void">CandideServer.ServerManagers.LootServerManager::DropGoods(Shared.Models.DropTables.DroppedGoods, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Guid, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#onraidentityremoved-system-guid--candideserver-entities-serverentitymodel--shared-entity-entityremoveinfo---system-void"><code>CandideServer.ServerManagers.RaidsServerManager::OnRaidEntityRemoved</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="EntityDropGoods public System.Void EntityDropGoods(CandideServer.Entities.ServerEntityModel entity, Shared.Models.DropTables.DroppedGoods droppedGoods, System.Nullable&lt;System.Int32&gt; owningPlayerId, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; overrideDropLocation) System.Void entity CandideServer.Entities.ServerEntityModel droppedGoods Shared.Models.DropTables.DroppedGoods owningPlayerId System.Nullable&lt;System.Int32&gt; overrideDropLocation System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;" id="entitydropgoods-candideserver-entities-serverentitymodel--shared-models-droptables-droppedgoods--system-nullable-1-system-int32---system-nullable-1-microsoft-xna-framework-vector3----system-void">
+<div class="method-heading">
+<h3><code>EntityDropGoods</code></h3>
+<a class="permalink" href="#entitydropgoods-candideserver-entities-serverentitymodel--shared-models-droptables-droppedgoods--system-nullable-1-system-int32---system-nullable-1-microsoft-xna-framework-vector3----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void EntityDropGoods(CandideServer.Entities.ServerEntityModel entity, Shared.Models.DropTables.DroppedGoods droppedGoods, System.Nullable&lt;System.Int32&gt; owningPlayerId, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; overrideDropLocation)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.LootServerManager::EntityDropGoods(CandideServer.Entities.ServerEntityModel, Shared.Models.DropTables.DroppedGoods, System.Nullable&lt;System.Int32&gt;, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void EntityDropGoods(<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> entity, <a href="../../types/Shared/Shared_Models_DropTables_DroppedGoods.html">Shared.Models.DropTables.DroppedGoods</a> droppedGoods, System.Nullable&lt;System.Int32&gt; owningPlayerId, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; overrideDropLocation)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CBEC0B28F85E8D1E3A48DB813F933FAC5B779287C252A0255EFF73CF4A0F3B3C</code></li>
+<li><span>Body hash</span><code>77D9F6762689F8634C27CFFC7A5C86054CDD01870414E4FA2B8F6DC9356E7528</code></li>
+<li><span>IL size</span><span>56</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;::GetValueOrDefault()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Division(Microsoft.Xna.Framework.Vector3, System.Single)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#dropgoods-shared-models-droptables-droppedgoods--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void">CandideServer.ServerManagers.LootServerManager::DropGoods(Shared.Models.DropTables.DroppedGoods, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Guid, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#dropgoods-system-guid--shared-models-droptables-droppedgoods--system-nullable-1-system-int32---system-nullable-1-microsoft-xna-framework-vector3----system-void"><code>CandideServer.ServerManagers.EntityServerManager::DropGoods</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#removeanddropgoods-system-guid--shared-models-droptables-droppedgoods--shared-entity-entityremoveinfo--system-nullable-1-system-int32---system-nullable-1-microsoft-xna-framework-vector3----system-void"><code>CandideServer.ServerManagers.EntityServerManager::RemoveAndDropGoods</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="EntityDropInventory public System.Void EntityDropInventory(CandideServer.Entities.ServerEntityModel entity, Shared.Models.Items.SharedInventoryModel inventory, System.Nullable&lt;System.Int32&gt; owningPlayerId) System.Void entity CandideServer.Entities.ServerEntityModel inventory Shared.Models.Items.SharedInventoryModel owningPlayerId System.Nullable&lt;System.Int32&gt;" id="entitydropinventory-candideserver-entities-serverentitymodel--shared-models-items-sharedinventorymodel--system-nullable-1-system-int32----system-void">
+<div class="method-heading">
+<h3><code>EntityDropInventory</code></h3>
+<a class="permalink" href="#entitydropinventory-candideserver-entities-serverentitymodel--shared-models-items-sharedinventorymodel--system-nullable-1-system-int32----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void EntityDropInventory(CandideServer.Entities.ServerEntityModel entity, Shared.Models.Items.SharedInventoryModel inventory, System.Nullable&lt;System.Int32&gt; owningPlayerId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.LootServerManager::EntityDropInventory(CandideServer.Entities.ServerEntityModel, Shared.Models.Items.SharedInventoryModel, System.Nullable&lt;System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void EntityDropInventory(<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> entity, <a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> inventory, System.Nullable&lt;System.Int32&gt; owningPlayerId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8D09E90689DBC5CE987182D75FF5792C28600CA1BD4ACFEEF6372B3D0F4DFACD</code></li>
+<li><span>Body hash</span><code>F66AAA89761C6B2FE73799FF11B3080B73D37FC4394153C7C74206326E46BEBF</code></li>
+<li><span>IL size</span><span>36</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector3::op_Division(Microsoft.Xna.Framework.Vector3, System.Single)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#dropinventoryanddelete-shared-models-items-sharedinventorymodel--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void">CandideServer.ServerManagers.LootServerManager::DropInventoryAndDelete(Shared.Models.Items.SharedInventoryModel, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Guid, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#dropgoods-system-guid--shared-models-droptables-droppedgoods--system-nullable-1-system-int32---system-nullable-1-microsoft-xna-framework-vector3----system-void"><code>CandideServer.ServerManagers.EntityServerManager::DropGoods</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#removeanddropgoods-system-guid--shared-models-droptables-droppedgoods--shared-entity-entityremoveinfo--system-nullable-1-system-int32---system-nullable-1-microsoft-xna-framework-vector3----system-void"><code>CandideServer.ServerManagers.EntityServerManager::RemoveAndDropGoods</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateDroppedGoods public Shared.Models.DropTables.DroppedGoods GenerateDroppedGoods(Shared.Models.DropTables.DropTableSystem system, System.Single difficulty) Shared.Models.DropTables.DroppedGoods system Shared.Models.DropTables.DropTableSystem difficulty System.Single" id="generatedroppedgoods-shared-models-droptables-droptablesystem--system-single---shared-models-droptables-droppedgoods">
+<div class="method-heading">
+<h3><code>GenerateDroppedGoods</code></h3>
+<a class="permalink" href="#generatedroppedgoods-shared-models-droptables-droptablesystem--system-single---shared-models-droptables-droppedgoods" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Models.DropTables.DroppedGoods GenerateDroppedGoods(Shared.Models.DropTables.DropTableSystem system, System.Single difficulty)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.LootServerManager::GenerateDroppedGoods(Shared.Models.DropTables.DropTableSystem, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Models_DropTables_DroppedGoods.html">Shared.Models.DropTables.DroppedGoods</a> GenerateDroppedGoods(<a href="../../types/Shared/Shared_Models_DropTables_DropTableSystem.html">Shared.Models.DropTables.DropTableSystem</a> system, System.Single difficulty)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Models_DropTables_DroppedGoods.html">Shared.Models.DropTables.DroppedGoods</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5DD00C6DA603244497522B17675A8EDFEA80E33EB1B5314C225DF25610AAA267</code></li>
+<li><span>Body hash</span><code>DC0D8B832C2B8E40748886799F8D8F03ED3F8DDD1D7D719C352E26B107EEBB1E</code></li>
+<li><span>IL size</span><span>105</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Array::Empty()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.ValueTuple&lt;System.String, System.String&gt;, System.Int32&gt;::Clear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#processdropsystem-shared-models-droptables-droptablesystem--system-single---system-void">CandideServer.ServerManagers.LootServerManager::ProcessDropSystem(Shared.Models.DropTables.DropTableSystem, System.Single)</a></code></li>
+<li><code>LootServerManager.&lt;&gt;c::&lt;GenerateDroppedGoods&gt;b__9_0(System.Collections.Generic.KeyValuePair&lt;System.ValueTuple&lt;System.String, System.String&gt;, System.Int32&gt;)</code></li>
+<li><code>System.Func&lt;System.Collections.Generic.KeyValuePair&lt;System.ValueTuple&lt;System.String, System.String&gt;, System.Int32&gt;, System.ValueTuple&lt;System.String, System.Int32, System.String&gt;&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Linq.Enumerable::Select(System.Collections.Generic.IEnumerable&lt;!!0&gt;, System.Func&lt;!!0, !!1&gt;)</code></li>
+<li><code>System.Linq.Enumerable::ToArray(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Barbeque_ServerHarvestableObjectController.html#oninteract-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.Barbeque.ServerHarvestableObjectController::OnInteract</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerBasicFurnaceController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.Controllers.ServerBasicFurnaceController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerFlintController.html#onoutofhealth-shared-combat-damageresult---system-boolean"><code>CandideServer.Entities.Controllers.ServerFlintController::OnOutOfHealth</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerHiddenTreasureController.html#spawnchestfromentity-microsoft-xna-framework-vector3--system-guid--candidecreator-shared-helpers-parameters--serverchestcontroller-lootablechesttype--shared-models-entities-cheststyle---system-void"><code>CandideServer.Entities.Controllers.ServerHiddenTreasureController::SpawnChestFromEntity</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerInteriorFurnaceController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.Controllers.ServerInteriorFurnaceController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Chest_ServerChestController.html#fillinventorywithdrops-system-string--candideserver-models-dungeons-dungeonlocationmodel--system-boolean---system-void"><code>CandideServer.Entities.ControllerSets.Chest.ServerChestController::FillInventoryWithDrops</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_ServerSulphurVentController.html#launchhiddengoods----system-void"><code>CandideServer.Entities.ControllerSets.ServerSulphurVentController::LaunchHiddenGoods</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#dropgoodsandinventory-shared-entity-entitywrapper--system-nullable-1-system-int32----system-void"><code>CandideServer.ServerManagers.LootServerManager::DropGoodsAndInventory</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#droplootatposition-system-string--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void"><code>CandideServer.ServerManagers.LootServerManager::DropLootAtPosition</code></a></li>
+<li><a href="../../types/Romestead/Candide_TestAndDebug.html#testdroptablerolling----system-void"><code>Candide.TestAndDebug::TestDroptableRolling</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateDroppedGoods public Shared.Models.DropTables.DroppedGoods GenerateDroppedGoods(Shared.Models.DropTables.DropTableSystem system, System.Single difficulty, System.Func&lt;System.ValueTuple&lt;System.String, System.Int32, System.String&gt;, System.ValueTuple&lt;System.String, System.Int32, System.String&gt;&gt; itemFilter) Shared.Models.DropTables.DroppedGoods system Shared.Models.DropTables.DropTableSystem difficulty System.Single itemFilter System.Func&lt;System.ValueTuple&lt;System.String, System.Int32, System.String&gt;, System.ValueTuple&lt;System.String, System.Int32, System.String&gt;&gt;" id="generatedroppedgoods-shared-models-droptables-droptablesystem--system-single--system-func-2-system-valuetuple-3-system-string-system-int32-system-string--system-valuetuple-3-system-string-system-int32-system-string-----shared-models-droptables-droppedgoods">
+<div class="method-heading">
+<h3><code>GenerateDroppedGoods</code></h3>
+<a class="permalink" href="#generatedroppedgoods-shared-models-droptables-droptablesystem--system-single--system-func-2-system-valuetuple-3-system-string-system-int32-system-string--system-valuetuple-3-system-string-system-int32-system-string-----shared-models-droptables-droppedgoods" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Models.DropTables.DroppedGoods GenerateDroppedGoods(Shared.Models.DropTables.DropTableSystem system, System.Single difficulty, System.Func&lt;System.ValueTuple&lt;System.String, System.Int32, System.String&gt;, System.ValueTuple&lt;System.String, System.Int32, System.String&gt;&gt; itemFilter)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.LootServerManager::GenerateDroppedGoods(Shared.Models.DropTables.DropTableSystem, System.Single, System.Func&lt;System.ValueTuple&lt;System.String, System.Int32, System.String&gt;, System.ValueTuple&lt;System.String, System.Int32, System.String&gt;&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Models_DropTables_DroppedGoods.html">Shared.Models.DropTables.DroppedGoods</a> GenerateDroppedGoods(<a href="../../types/Shared/Shared_Models_DropTables_DropTableSystem.html">Shared.Models.DropTables.DropTableSystem</a> system, System.Single difficulty, System.Func&lt;System.ValueTuple&lt;System.String, System.Int32, System.String&gt;, System.ValueTuple&lt;System.String, System.Int32, System.String&gt;&gt; itemFilter)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Models_DropTables_DroppedGoods.html">Shared.Models.DropTables.DroppedGoods</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1945C8C31827F003B663150FB2F19411A66DF269A99A7EDA0E388CF427C7C6EF</code></li>
+<li><span>Body hash</span><code>3FC46661F00E78F4046A775E453B50559D9328CE40B11B206DB6F6E1A288DA59</code></li>
+<li><span>IL size</span><span>99</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>LootServerManager.&lt;&gt;c__DisplayClass10_0::.ctor()</code></li>
+<li><code>System.Array::Empty()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.ValueTuple&lt;System.String, System.String&gt;, System.Int32&gt;::Clear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#processdropsystem-shared-models-droptables-droptablesystem--system-single---system-void">CandideServer.ServerManagers.LootServerManager::ProcessDropSystem(Shared.Models.DropTables.DropTableSystem, System.Single)</a></code></li>
+<li><code>LootServerManager.&lt;&gt;c__DisplayClass10_0::&lt;GenerateDroppedGoods&gt;b__0(System.Collections.Generic.KeyValuePair&lt;System.ValueTuple&lt;System.String, System.String&gt;, System.Int32&gt;)</code></li>
+<li><code>System.Func&lt;System.Collections.Generic.KeyValuePair&lt;System.ValueTuple&lt;System.String, System.String&gt;, System.Int32&gt;, System.ValueTuple&lt;System.String, System.Int32, System.String&gt;&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Linq.Enumerable::Select(System.Collections.Generic.IEnumerable&lt;!!0&gt;, System.Func&lt;!!0, !!1&gt;)</code></li>
+<li><code>System.Linq.Enumerable::ToArray(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#getcropdroppedgoods-candideserver-models-cropservermodel--shared-models-droptables-droptablesystem--system-single--system-nullable-1-system-int32----shared-models-droptables-droppedgoods"><code>CandideServer.ServerManagers.CropServerManager::GetCropDroppedGoods</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ProcessDropSystem private System.Void ProcessDropSystem(Shared.Models.DropTables.DropTableSystem system, System.Single difficulty) System.Void system Shared.Models.DropTables.DropTableSystem difficulty System.Single" id="processdropsystem-shared-models-droptables-droptablesystem--system-single---system-void">
+<div class="method-heading">
+<h3><code>ProcessDropSystem</code></h3>
+<a class="permalink" href="#processdropsystem-shared-models-droptables-droptablesystem--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void ProcessDropSystem(Shared.Models.DropTables.DropTableSystem system, System.Single difficulty)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.LootServerManager::ProcessDropSystem(Shared.Models.DropTables.DropTableSystem, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void ProcessDropSystem(<a href="../../types/Shared/Shared_Models_DropTables_DropTableSystem.html">Shared.Models.DropTables.DropTableSystem</a> system, System.Single difficulty)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0C9B6DAD523A02C6B3CED65C6B74BAEDE3ED3D1B4D8E0CE272A2B909F284E3CD</code></li>
+<li><span>Body hash</span><code>98CC8DC9BCD1E5008346EB3AA51AEECC99B81484CF34B653398298C5930B144A</code></li>
+<li><span>IL size</span><span>215</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextfloat-system-random--system-single--system-single---system-single">CandideCreator.Shared.Helpers.RandomHelper::NextFloat(System.Random, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#adddroppeditem-shared-models-droptables-itemdrop--system-single---system-void">CandideServer.ServerManagers.LootServerManager::AddDroppedItem(Shared.Models.DropTables.ItemDrop, System.Single)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, Shared.Models.DropTables.DropTableSlot&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Int32, Shared.Models.DropTables.DropTableSlot&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.Int32, Shared.Models.DropTables.DropTableSlot&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Int32, Shared.Models.DropTables.DropTableSlot&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#adddroppeditem-shared-models-droptables-itemdrop--system-single---system-void"><code>CandideServer.ServerManagers.LootServerManager::AddDroppedItem</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#generatedroppedgoods-shared-models-droptables-droptablesystem--system-single---shared-models-droptables-droppedgoods"><code>CandideServer.ServerManagers.LootServerManager::GenerateDroppedGoods</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#generatedroppedgoods-shared-models-droptables-droptablesystem--system-single--system-func-2-system-valuetuple-3-system-string-system-int32-system-string--system-valuetuple-3-system-string-system-int32-system-string-----shared-models-droptables-droppedgoods"><code>CandideServer.ServerManagers.LootServerManager::GenerateDroppedGoods</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

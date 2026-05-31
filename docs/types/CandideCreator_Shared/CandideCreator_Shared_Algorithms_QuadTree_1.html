@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideCreator.Shared.Algorithms.QuadTree - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideCreator_Shared.html">CandideCreator.Shared</a></p>
+<div class="title-row">
+<h1>CandideCreator.Shared.Algorithms.QuadTree</h1>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.QuadTree">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideCreator.Shared.Algorithms.QuadTree
+
+- Assembly: `CandideCreator.Shared`
+- Namespace: `CandideCreator.Shared.Algorithms`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 3 methods, 0 properties, 3 fields, 0 events
+
+## Public Methods
+- `public System.Void GetAllInRectangleLoop(CandideCreator.Shared.Models.RectangleF rect, System.Collections.Generic.List&lt;T&gt; result)`
+- `public System.Void GetAllInRectangleRecursive(CandideCreator.Shared.Models.RectangleF rect, CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt; node, System.Collections.Generic.List&lt;T&gt; result)`
+- `public System.Void Insert(T value, Microsoft.Xna.Framework.Vector2 position)`
+">Copy markdown</button>
+<a class="button" href="CandideCreator_Shared_Algorithms_QuadTree_1.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideCreator.Shared.Algorithms</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>3</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>3</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideCreator.Shared</code></li>
+<li><span>Namespace</span><code>CandideCreator.Shared.Algorithms</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>E7B809FEF2894B608BDEFD801A3754D63762EEE848650849AA2F0A7259A95EC8</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Algorithms_QuadTreeNode_1.html"><code>CandideCreator.Shared.Algorithms.QuadTreeNode</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="MinimumQuadSize public System.Single MinimumQuadSize System.Single" id="minimumquadsize-system-single"><td><span class="member-name-cell"><code>MinimumQuadSize</code><a class="permalink" href="#minimumquadsize-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single MinimumQuadSize">Copy</button></span></td><td>public</td><td><code>public System.Single MinimumQuadSize</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Root public CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt; Root CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt;" id="root-candidecreator-shared-algorithms-quadtreenode-1--t-"><td><span class="member-name-cell"><code>Root</code><a class="permalink" href="#root-candidecreator-shared-algorithms-quadtreenode-1--t-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt; Root">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Algorithms_QuadTreeNode_1.html">CandideCreator.Shared.Algorithms.QuadTreeNode</a>&lt;T&gt; Root</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_nodeSearchQueue private System.Collections.Generic.Queue&lt;CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt;&gt; _nodeSearchQueue System.Collections.Generic.Queue&lt;CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt;&gt;" id="-nodesearchqueue-system-collections-generic-queue-1-candidecreator-shared-algorithms-quadtreenode-1--t--"><td><span class="member-name-cell"><code>_nodeSearchQueue</code><a class="permalink" href="#-nodesearchqueue-system-collections-generic-queue-1-candidecreator-shared-algorithms-quadtreenode-1--t--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Queue&lt;CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt;&gt; _nodeSearchQueue">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Queue&lt;<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Algorithms_QuadTreeNode_1.html">CandideCreator.Shared.Algorithms.QuadTreeNode</a>&lt;T&gt;&gt; _nodeSearchQueue</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetAllInRectangleLoop public System.Void GetAllInRectangleLoop(CandideCreator.Shared.Models.RectangleF rect, System.Collections.Generic.List&lt;T&gt; result) System.Void rect CandideCreator.Shared.Models.RectangleF result System.Collections.Generic.List&lt;T&gt;" id="getallinrectangleloop-candidecreator-shared-models-rectanglef--system-collections-generic-list-1--t----system-void">
+<div class="method-heading">
+<h3><code>GetAllInRectangleLoop</code></h3>
+<a class="permalink" href="#getallinrectangleloop-candidecreator-shared-models-rectanglef--system-collections-generic-list-1--t----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GetAllInRectangleLoop(CandideCreator.Shared.Models.RectangleF rect, System.Collections.Generic.List&lt;T&gt; result)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.QuadTree::GetAllInRectangleLoop(CandideCreator.Shared.Models.RectangleF, System.Collections.Generic.List&lt;T&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GetAllInRectangleLoop(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> rect, System.Collections.Generic.List&lt;T&gt; result)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>991654C4E5FDF89FD3DCC3C3AEE97916DEC07810D9A492EDCFD9408070711801</code></li>
+<li><span>Body hash</span><code>247CA60A377B0FEF30AAD8B1F6F604CF9B78D0014AA750D369BD1B184ED4603E</code></li>
+<li><span>IL size</span><span>398</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Queue&lt;CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt;&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Queue&lt;CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt;&gt;::Enqueue(!0)</code></li>
+<li><code>System.Collections.Generic.Queue&lt;CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt;&gt;::Dequeue()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#intersects-candidecreator-shared-models-rectanglef---system-boolean">CandideCreator.Shared.Models.RectangleF::Intersects(CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, T&gt;&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, T&gt;&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#contains-microsoft-xna-framework-vector2---system-boolean">CandideCreator.Shared.Models.RectangleF::Contains(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;T&gt;::Add(!0)</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, T&gt;&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.Queue&lt;CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt;&gt;::get_Count()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetAllInRectangleRecursive public System.Void GetAllInRectangleRecursive(CandideCreator.Shared.Models.RectangleF rect, CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt; node, System.Collections.Generic.List&lt;T&gt; result) System.Void rect CandideCreator.Shared.Models.RectangleF node CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt; result System.Collections.Generic.List&lt;T&gt;" id="getallinrectanglerecursive-candidecreator-shared-models-rectanglef--candidecreator-shared-algorithms-quadtreenode-1--t---system-collections-generic-list-1--t----system-void">
+<div class="method-heading">
+<h3><code>GetAllInRectangleRecursive</code></h3>
+<a class="permalink" href="#getallinrectanglerecursive-candidecreator-shared-models-rectanglef--candidecreator-shared-algorithms-quadtreenode-1--t---system-collections-generic-list-1--t----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GetAllInRectangleRecursive(CandideCreator.Shared.Models.RectangleF rect, CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt; node, System.Collections.Generic.List&lt;T&gt; result)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.QuadTree::GetAllInRectangleRecursive(CandideCreator.Shared.Models.RectangleF, CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt;, System.Collections.Generic.List&lt;T&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GetAllInRectangleRecursive(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> rect, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Algorithms_QuadTreeNode_1.html">CandideCreator.Shared.Algorithms.QuadTreeNode</a>&lt;T&gt; node, System.Collections.Generic.List&lt;T&gt; result)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8C97A8CEAA384E5A1143B558F3D08790CE36B56DF8BBBD0E5C5C59E4BCE4972F</code></li>
+<li><span>Body hash</span><code>149776CDF85A7CD1EFB8E7C73B38FE797F6CB8AE09556A57B966DD1C219613A5</code></li>
+<li><span>IL size</span><span>305</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#intersects-candidecreator-shared-models-rectanglef---system-boolean">CandideCreator.Shared.Models.RectangleF::Intersects(CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code>CandideCreator.Shared.Algorithms.QuadTree&lt;T&gt;::GetAllInRectangleRecursive(CandideCreator.Shared.Models.RectangleF, CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt;, System.Collections.Generic.List&lt;T&gt;)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, T&gt;&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, T&gt;&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#contains-microsoft-xna-framework-vector2---system-boolean">CandideCreator.Shared.Models.RectangleF::Contains(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;T&gt;::Add(!0)</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, T&gt;&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Insert public System.Void Insert(T value, Microsoft.Xna.Framework.Vector2 position) System.Void value T position Microsoft.Xna.Framework.Vector2" id="insert--t--microsoft-xna-framework-vector2---system-void">
+<div class="method-heading">
+<h3><code>Insert</code></h3>
+<a class="permalink" href="#insert--t--microsoft-xna-framework-vector2---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Insert(T value, Microsoft.Xna.Framework.Vector2 position)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Algorithms.QuadTree::Insert(T, Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Insert(T value, Microsoft.Xna.Framework.Vector2 position)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E949AD2DF3E0068FF8378A71FA0A179CFD3F3463402BC1E2035CFBDD98043A70</code></li>
+<li><span>Body hash</span><code>94903D53CD5AC01831761B143F93AB1DF9104D05D423FD68227F58F4FCDA5A16</code></li>
+<li><span>IL size</span><span>819</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, T&gt;::.ctor(!0, !1)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, T&gt;&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, T&gt;&gt;::Add(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, T&gt;&gt;::get_Item(System.Int32)</code></li>
+<li><code>CandideCreator.Shared.Algorithms.QuadTreeNode&lt;T&gt;::.ctor()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::.ctor(System.Single, System.Single, System.Single, System.Single)</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

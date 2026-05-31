@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shared.Analytics.AnalyticsHandler - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Shared.html">Shared</a></p>
+<div class="title-row">
+<h1>Shared.Analytics.AnalyticsHandler</h1>
+<button class="copy-button" type="button" data-copy="Shared.Analytics.AnalyticsHandler">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Shared.Analytics.AnalyticsHandler
+
+- Assembly: `Shared`
+- Namespace: `Shared.Analytics`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 8 methods, 0 properties, 5 fields, 0 events
+
+## Public Methods
+- `public System.Void Clear()`
+- `public System.Void EndSession()`
+- `public System.String GetBiomeKey(System.String biomeId)`
+- `public System.String GetWeaponKey(Shared.Models.Items.WeaponTypeEnum weaponType)`
+- `public System.Void Log(System.String key, AnalyticsHandler.LogType type)`
+- `public System.Void Log(System.String key, System.Double value, AnalyticsHandler.LogType type, System.Single initialValue)`
+- `public System.Void StartSession(System.Collections.Generic.HashSet&lt;System.String&gt; previousFirsts, System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt; previousAggregates)`
+- `public System.String ToIdString(System.String id)`
+">Copy markdown</button>
+<a class="button" href="Shared_Analytics_AnalyticsHandler.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Shared.Analytics</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>8</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>5</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Shared</code></li>
+<li><span>Namespace</span><code>Shared.Analytics</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>6EC4960D58C4726C853FCB28A8AB90551000631B46AFDDE684048C12EBC56DF8</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerRunState.html"><code>CandideServer.ServerRunState</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_PlayerGameState.html"><code>Candide.GameModels.PlayerGameState</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="CharacterAggregatedStats public System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt; CharacterAggregatedStats System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt;" id="characteraggregatedstats-system-collections-generic-dictionary-2-system-string-system-double-"><td><span class="member-name-cell"><code>CharacterAggregatedStats</code><a class="permalink" href="#characteraggregatedstats-system-collections-generic-dictionary-2-system-string-system-double-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt; CharacterAggregatedStats">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt; CharacterAggregatedStats</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Disabled public System.Boolean Disabled System.Boolean" id="disabled-system-boolean"><td><span class="member-name-cell"><code>Disabled</code><a class="permalink" href="#disabled-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean Disabled">Copy</button></span></td><td>public</td><td><code>public System.Boolean Disabled</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="FirstsTracker public System.Collections.Generic.HashSet&lt;System.String&gt; FirstsTracker System.Collections.Generic.HashSet&lt;System.String&gt;" id="firststracker-system-collections-generic-hashset-1-system-string-"><td><span class="member-name-cell"><code>FirstsTracker</code><a class="permalink" href="#firststracker-system-collections-generic-hashset-1-system-string-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.HashSet&lt;System.String&gt; FirstsTracker">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.HashSet&lt;System.String&gt; FirstsTracker</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="SessionAggregatedStats public System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt; SessionAggregatedStats System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt;" id="sessionaggregatedstats-system-collections-generic-dictionary-2-system-string-system-double-"><td><span class="member-name-cell"><code>SessionAggregatedStats</code><a class="permalink" href="#sessionaggregatedstats-system-collections-generic-dictionary-2-system-string-system-double-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt; SessionAggregatedStats">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt; SessionAggregatedStats</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="SetDimensions public System.Action SetDimensions System.Action" id="setdimensions-system-action"><td><span class="member-name-cell"><code>SetDimensions</code><a class="permalink" href="#setdimensions-system-action" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Action SetDimensions">Copy</button></span></td><td>public</td><td><code>public System.Action SetDimensions</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Clear public System.Void Clear() System.Void " id="clear----system-void">
+<div class="method-heading">
+<h3><code>Clear</code></h3>
+<a class="permalink" href="#clear----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Clear()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Analytics.AnalyticsHandler::Clear()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Clear()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C233F58B808338542350F32A81F7FD3A797B31B5F58A8EF5080290ABDF822595</code></li>
+<li><span>Body hash</span><code>275B149D6CA55E1196C6D16A9958F6CDCA4AB68BFE998A10708F3C4570F94C57</code></li>
+<li><span>IL size</span><span>39</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt;::Clear()</code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsManager.html#cleardimensions----system-void">Shared.Analytics.AnalyticsManager::ClearDimensions()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#startsession-system-collections-generic-hashset-1-system-string---system-collections-generic-dictionary-2-system-string-system-double----system-void"><code>Shared.Analytics.AnalyticsHandler::StartSession</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="EndSession public System.Void EndSession() System.Void " id="endsession----system-void">
+<div class="method-heading">
+<h3><code>EndSession</code></h3>
+<a class="permalink" href="#endsession----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void EndSession()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Analytics.AnalyticsHandler::EndSession()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void EndSession()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3DB5084520990954329597FA6E34FAAAAC433A345C3A2FCCCCCFF7AE8F058C33</code></li>
+<li><span>Body hash</span><code>85AD62B6EF58E7771B081A4D888DD2E62EF833A2A63D2C42566EC552D32CEE9D</code></li>
+<li><span>IL size</span><span>153</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsManager.html#cleardimensions----system-void">Shared.Analytics.AnalyticsManager::ClearDimensions()</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Double&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.Double&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsManager.html#adddesignevent-system-string--system-double---system-void">Shared.Analytics.AnalyticsManager::AddDesignEvent(System.String, System.Double)</a></code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Double&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ServerAnalyticsManager.html#endanalyticssession----system-void"><code>CandideServer.ServerManagers.ServerAnalyticsManager::EndAnalyticsSession</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_ClientAnalyticsManager.html#endanalyticssession----system-void"><code>Candide.GameModels.Managers.ClientAnalyticsManager::EndAnalyticsSession</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetBiomeKey public System.String GetBiomeKey(System.String biomeId) System.String biomeId System.String" id="getbiomekey-system-string---system-string">
+<div class="method-heading">
+<h3><code>GetBiomeKey</code></h3>
+<a class="permalink" href="#getbiomekey-system-string---system-string" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.String GetBiomeKey(System.String biomeId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Analytics.AnalyticsHandler::GetBiomeKey(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.String GetBiomeKey(System.String biomeId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.String</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>702C3FEFC0230193A761046265908687F8F53B2D4407202A142517B5CE712694</code></li>
+<li><span>Body hash</span><code>B11FC3A00F05776331C725A92FF544BBBE02C43DD53A545921F5FBE9FB5F3FBB</code></li>
+<li><span>IL size</span><span>946</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::get_Length()</code></li>
+<li><code>System.String::get_Chars(System.Int32)</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#createtown-system-guid--system-guid--system-nullable-1-shared-text-stringid---system-string---candideserver-models-town-servertownmodel"><code>CandideServer.ServerControllers.TownsServerController::CreateTown</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ServerAnalyticsManager.html#setanalyticsdimensions----system-void"><code>CandideServer.ServerManagers.ServerAnalyticsManager::SetAnalyticsDimensions</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_ClientAnalyticsManager.html#setanalyticsdimensions----system-void"><code>Candide.GameModels.Managers.ClientAnalyticsManager::SetAnalyticsDimensions</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Systems_AmbienceSystem.html#onplayerenteredbiome-system-string---system-void"><code>Candide.GameModels.Systems.AmbienceSystem::OnPlayerEnteredBiome</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Systems_AmbienceSystem.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.GameModels.Systems.AmbienceSystem::Update</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>biome:plains</code></li>
+<li><code>biome:desert</code></li>
+<li><code>biome:forest</code></li>
+<li><code>biome:plains_dry</code></li>
+<li><code>biome:lake_small</code></li>
+<li><code>biome:forest_light</code></li>
+<li><code>biome:road</code></li>
+<li><code>biome:lake</code></li>
+<li><code>biome:test</code></li>
+<li><code>biome:beach</code></li>
+<li><code>biome:ocean</code></li>
+<li><code>biome:river</code></li>
+<li><code>biome:desert_edge</code></li>
+<li><code>biome:forest_deep</code></li>
+<li><code>biome:lake_island</code></li>
+<li><code>biome:forest_autumn</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetWeaponKey public System.String GetWeaponKey(Shared.Models.Items.WeaponTypeEnum weaponType) System.String weaponType Shared.Models.Items.WeaponTypeEnum" id="getweaponkey-shared-models-items-weapontypeenum---system-string">
+<div class="method-heading">
+<h3><code>GetWeaponKey</code></h3>
+<a class="permalink" href="#getweaponkey-shared-models-items-weapontypeenum---system-string" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.String GetWeaponKey(Shared.Models.Items.WeaponTypeEnum weaponType)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Analytics.AnalyticsHandler::GetWeaponKey(Shared.Models.Items.WeaponTypeEnum)">Copy Harmony target</button>
+</div>
+<p><code>public System.String GetWeaponKey(<a href="../../types/Shared/Shared_Models_Items_WeaponTypeEnum.html">Shared.Models.Items.WeaponTypeEnum</a> weaponType)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.String</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E1DA0ACC4C9A4A9AF9EE40FE793C577FB8426A6A19D4E8AD0473FC160D21A99B</code></li>
+<li><span>Body hash</span><code>24348945A6730616197C889C400EF687BC049C02572996C2FEA2DD0534044D04</code></li>
+<li><span>IL size</span><span>192</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Object::ToString()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerController.html#onattackcast-candide-entities-playerstate-onattackcastargs---system-void"><code>Candide.Entities.PlayerState.PlayerController::OnAttackCast</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>undefined</code></li>
+<li><code>sword</code></li>
+<li><code>spear</code></li>
+<li><code>crossbow</code></li>
+<li><code>shield</code></li>
+<li><code>ammo</code></li>
+<li><code>spell</code></li>
+<li><code>dagger</code></li>
+<li><code>sledge_hammer</code></li>
+<li><code>bow</code></li>
+<li><code>unarmed</code></li>
+<li><code>grappling_hook</code></li>
+<li><code>javelin</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Log public System.Void Log(System.String key, AnalyticsHandler.LogType type) System.Void key System.String type AnalyticsHandler.LogType" id="log-system-string--analyticshandler-logtype---system-void">
+<div class="method-heading">
+<h3><code>Log</code></h3>
+<a class="permalink" href="#log-system-string--analyticshandler-logtype---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Log(System.String key, AnalyticsHandler.LogType type)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Analytics.AnalyticsHandler::Log(System.String, AnalyticsHandler.LogType)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Log(System.String key, <a href="../../types/Shared/AnalyticsHandler_LogType.html">AnalyticsHandler.LogType</a> type)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1D4FE11D98CBBE185EB01060B44F2BDBF304E262381C68B71510F237790B3F46</code></li>
+<li><span>Body hash</span><code>7B317CE4102F0942E56DE0A1B0522DCF92100D17EE47600D66ADD5039ED41A9A</code></li>
+<li><span>IL size</span><span>23</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#log-system-string--system-double--analyticshandler-logtype--system-single---system-void">Shared.Analytics.AnalyticsHandler::Log(System.String, System.Double, AnalyticsHandler.LogType, System.Single)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Log public System.Void Log(System.String key, System.Double value, AnalyticsHandler.LogType type, System.Single initialValue) System.Void key System.String value System.Double type AnalyticsHandler.LogType initialValue System.Single" id="log-system-string--system-double--analyticshandler-logtype--system-single---system-void">
+<div class="method-heading">
+<h3><code>Log</code></h3>
+<a class="permalink" href="#log-system-string--system-double--analyticshandler-logtype--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Log(System.String key, System.Double value, AnalyticsHandler.LogType type, System.Single initialValue)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Analytics.AnalyticsHandler::Log(System.String, System.Double, AnalyticsHandler.LogType, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Log(System.String key, System.Double value, <a href="../../types/Shared/AnalyticsHandler_LogType.html">AnalyticsHandler.LogType</a> type, System.Single initialValue)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D35432263FC875065F182BBD5B8062855410B77F090754D31C15ADBC74F85C6A</code></li>
+<li><span>Body hash</span><code>BD2C0A39A148F83989B22132D93A2C0CA484234859C5ED5A93E5362DF19AFEC4</code></li>
+<li><span>IL size</span><span>162</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Action::Invoke()</code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsManager.html#adddesignevent-system-string--system-double---system-void">Shared.Analytics.AnalyticsManager::AddDesignEvent(System.String, System.Double)</a></code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Add(!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt;::set_Item(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#removebossfight-candideserver-models-boss-bossfightmodel--system-boolean--system-boolean---candideserver-models-boss-bosslocationmodel"><code>CandideServer.ServerControllers.BossServerController::RemoveBossFight</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#updatebosslocationstate-candideserver-models-boss-bosslocationmodel--candideserver-models-boss-bosslocationstate---system-void"><code>CandideServer.ServerControllers.BossServerController::UpdateBossLocationState</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#spawnnewbuildingconstruction-system-string--system-guid--microsoft-xna-framework-rectangle--system-nullable-1-system-guid---system-collections-generic-dictionary-2-system-string-system-string----candideserver-simulationmodels-buildingsimulationmodel"><code>CandideServer.ServerControllers.BuildingsSController::SpawnNewBuildingConstruction</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#upgradebuilding-candideserver-simulationmodels-buildingsimulationmodel--shared-models-construction-constructionmodel--shared-models-buildings-buildingdata---system-void"><code>CandideServer.ServerControllers.BuildingsSController::UpgradeBuilding</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#updateactivedungeon-candideserver-models-dungeons-activedungeonmodel---system-void"><code>CandideServer.ServerControllers.DungeonServerController::UpdateActiveDungeon</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#createtown-system-guid--system-guid--system-nullable-1-shared-text-stringid---system-string---candideserver-models-town-servertownmodel"><code>CandideServer.ServerControllers.TownsServerController::CreateTown</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#harvestcrop-microsoft-xna-framework-point--system-nullable-1-system-int32----system-void"><code>CandideServer.ServerManagers.CropServerManager::HarvestCrop</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#spawncrop-system-string--microsoft-xna-framework-point--system-boolean--candideserver-syncstrategies-syncstrategy---candideserver-models-cropservermodel"><code>CandideServer.ServerManagers.CropServerManager::SpawnCrop</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_OfferingsServerManager.html#trysacrificecitizen-system-guid--system-nullable-1-system-guid----system-void"><code>CandideServer.ServerManagers.OfferingsServerManager::TrySacrificeCitizen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#finishquest-shared-models-quests-questdata--system-collections-generic-dictionary-2-system-string-shared-models-quests-questinstancemodel---system-collections-generic-hashset-1-system-string---system-nullable-1-system-guid---system-boolean---system-boolean"><code>CandideServer.ServerManagers.QuestsServerManager::FinishQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#onraidbeaten-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel---system-void"><code>CandideServer.ServerManagers.RaidsServerManager::OnRaidBeaten</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#onraidfailed-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel---system-void"><code>CandideServer.ServerManagers.RaidsServerManager::OnRaidFailed</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ServerAnalyticsManager.html#endanalyticssession----system-void"><code>CandideServer.ServerManagers.ServerAnalyticsManager::EndAnalyticsSession</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_WorshipServerManager.html#trybuyworshipunlock-system-string---system-boolean"><code>CandideServer.ServerManagers.WorshipServerManager::TryBuyWorshipUnlock</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Bridge_ClientEntitySystemBridge.html#onentitytookdamage-shared-entity-entitywrapper--system-single--system-single--system-single--shared-combat-damageinfo--system-single--system-boolean---system-void"><code>Candide.Entities.Bridge.ClientEntitySystemBridge::OnEntityTookDamage</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerController.html#onattackcast-candide-entities-playerstate-onattackcastargs---system-void"><code>Candide.Entities.PlayerState.PlayerController::OnAttackCast</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerController.html#trysendthrowing-shared-entity-entitywrapper--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3---system-boolean"><code>Candide.Entities.PlayerState.PlayerController::TrySendThrowing</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerController.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Entities.PlayerState.PlayerController::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_QuestsController.html#updatepersonalquests-candideserver-messagemodels-quests-updatepersonalquestsmessage---candide-gamemodels-controllers-updatequestsresult"><code>Candide.GameModels.Controllers.QuestsController::UpdatePersonalQuests</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_ClientAnalyticsManager.html#endanalyticssession----system-void"><code>Candide.GameModels.Managers.ClientAnalyticsManager::EndAnalyticsSession</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Systems_AmbienceSystem.html#onplayerenteredbiome-system-string---system-void"><code>Candide.GameModels.Systems.AmbienceSystem::OnPlayerEnteredBiome</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Systems_AmbienceSystem.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.GameModels.Systems.AmbienceSystem::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_PlayerDataController.html#localplayerdied----system-void"><code>Candide.Multiplayer.PlayerDataController::LocalPlayerDied</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_InteriorWorldHandler.html#checktransportnodes-system-single---system-void"><code>Candide.World.InteriorWorldHandler::CheckTransportNodes</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_WorldMap.html#updatepart-candide-world-worldmappart--system-int32--system-int32--system-int32--system-int32---system-void"><code>Candide.World.WorldMap::UpdatePart</code></a></li>
+<li><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#log-system-string--analyticshandler-logtype---system-void"><code>Shared.Analytics.AnalyticsHandler::Log</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="StartSession public System.Void StartSession(System.Collections.Generic.HashSet&lt;System.String&gt; previousFirsts, System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt; previousAggregates) System.Void previousFirsts System.Collections.Generic.HashSet&lt;System.String&gt; previousAggregates System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt;" id="startsession-system-collections-generic-hashset-1-system-string---system-collections-generic-dictionary-2-system-string-system-double----system-void">
+<div class="method-heading">
+<h3><code>StartSession</code></h3>
+<a class="permalink" href="#startsession-system-collections-generic-hashset-1-system-string---system-collections-generic-dictionary-2-system-string-system-double----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void StartSession(System.Collections.Generic.HashSet&lt;System.String&gt; previousFirsts, System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt; previousAggregates)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Analytics.AnalyticsHandler::StartSession(System.Collections.Generic.HashSet&lt;System.String&gt;, System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void StartSession(System.Collections.Generic.HashSet&lt;System.String&gt; previousFirsts, System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt; previousAggregates)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CF7E3CE98146BC368BC21C9B7385945A825E7CD692E1867F06E10A4EC1DEE13E</code></li>
+<li><span>Body hash</span><code>6150D2FCDEB4E5C619EA6DC28C4BA4F026A1287EEE2066C4904B0883AD53BA2D</code></li>
+<li><span>IL size</span><span>101</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#clear----system-void">Shared.Analytics.AnalyticsHandler::Clear()</a></code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::UnionWith(System.Collections.Generic.IEnumerable&lt;!0&gt;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Double&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.Double&gt;::get_Key()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.Double&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Double&gt;::set_Item(!0, !1)</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.Double&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ServerAnalyticsManager.html#startanalyticssession----system-void"><code>CandideServer.ServerManagers.ServerAnalyticsManager::StartAnalyticsSession</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_ClientAnalyticsManager.html#startanalyticssession-candideserver-serverservices-getfullgamestateresponse---system-void"><code>Candide.GameModels.Managers.ClientAnalyticsManager::StartAnalyticsSession</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ToIdString public System.String ToIdString(System.String id) System.String id System.String" id="toidstring-system-string---system-string">
+<div class="method-heading">
+<h3><code>ToIdString</code></h3>
+<a class="permalink" href="#toidstring-system-string---system-string" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.String ToIdString(System.String id)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Analytics.AnalyticsHandler::ToIdString(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.String ToIdString(System.String id)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.String</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F7E579596FB9ABF3F8BF804EB3DA288519F7FDD0024665842EC5B000267D47A8</code></li>
+<li><span>Body hash</span><code>BC3989B9800CB7B19ADA1A0974B26A357301EBE80E3F8B148742400BB8C63B2D</code></li>
+<li><span>IL size</span><span>11</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::Replace(System.Char, System.Char)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#removebossfight-candideserver-models-boss-bossfightmodel--system-boolean--system-boolean---candideserver-models-boss-bosslocationmodel"><code>CandideServer.ServerControllers.BossServerController::RemoveBossFight</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#updatebosslocationstate-candideserver-models-boss-bosslocationmodel--candideserver-models-boss-bosslocationstate---system-void"><code>CandideServer.ServerControllers.BossServerController::UpdateBossLocationState</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#spawnnewbuildingconstruction-system-string--system-guid--microsoft-xna-framework-rectangle--system-nullable-1-system-guid---system-collections-generic-dictionary-2-system-string-system-string----candideserver-simulationmodels-buildingsimulationmodel"><code>CandideServer.ServerControllers.BuildingsSController::SpawnNewBuildingConstruction</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#upgradebuilding-candideserver-simulationmodels-buildingsimulationmodel--shared-models-construction-constructionmodel--shared-models-buildings-buildingdata---system-void"><code>CandideServer.ServerControllers.BuildingsSController::UpgradeBuilding</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#updateactivedungeon-candideserver-models-dungeons-activedungeonmodel---system-void"><code>CandideServer.ServerControllers.DungeonServerController::UpdateActiveDungeon</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#harvestcrop-microsoft-xna-framework-point--system-nullable-1-system-int32----system-void"><code>CandideServer.ServerManagers.CropServerManager::HarvestCrop</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#spawncrop-system-string--microsoft-xna-framework-point--system-boolean--candideserver-syncstrategies-syncstrategy---candideserver-models-cropservermodel"><code>CandideServer.ServerManagers.CropServerManager::SpawnCrop</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#finishquest-shared-models-quests-questdata--system-collections-generic-dictionary-2-system-string-shared-models-quests-questinstancemodel---system-collections-generic-hashset-1-system-string---system-nullable-1-system-guid---system-boolean---system-boolean"><code>CandideServer.ServerManagers.QuestsServerManager::FinishQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#onraidbeaten-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel---system-void"><code>CandideServer.ServerManagers.RaidsServerManager::OnRaidBeaten</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#onraidfailed-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel---system-void"><code>CandideServer.ServerManagers.RaidsServerManager::OnRaidFailed</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_WorshipServerManager.html#trybuyworshipunlock-system-string---system-boolean"><code>CandideServer.ServerManagers.WorshipServerManager::TryBuyWorshipUnlock</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_QuestsController.html#updatepersonalquests-candideserver-messagemodels-quests-updatepersonalquestsmessage---candide-gamemodels-controllers-updatequestsresult"><code>Candide.GameModels.Controllers.QuestsController::UpdatePersonalQuests</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

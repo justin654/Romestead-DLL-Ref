@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.CandideUI.Components.InventoryQuickActionsPanel - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.CandideUI.Components.InventoryQuickActionsPanel</h1>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.InventoryQuickActionsPanel">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.CandideUI.Components.InventoryQuickActionsPanel
+
+- Assembly: `Romestead`
+- Namespace: `Candide.CandideUI.Components`
+- Kind: `public class`
+- Base type: `Candide.CandideUI.Containers.CandideGrid`
+- Members: 3 methods, 0 properties, 2 fields, 0 events
+
+## Public Methods
+- `public System.Void OnInventoryUpdated()`
+">Copy markdown</button>
+<a class="button" href="Candide_CandideUI_Components_InventoryQuickActionsPanel.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.CandideUI.Components</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>3</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>2</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.CandideUI.Components</code></li>
+<li><span>Base type</span><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideGrid.html">Candide.CandideUI.Containers.CandideGrid</a></code></li>
+<li><span>Hash</span><code>FD6AC219FC0CE1524D9B424A3C1B03262C919B3A6E413521207ECE6EEC0CA34F</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideGrid.html">Candide.CandideUI.Containers.CandideGrid</a></code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_JobUiNew_UserControls_SubControls_JobInventoryStorageControl.html"><code>Candide.CandideUI.JobUiNew.UserControls.SubControls.JobInventoryStorageControl</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ProximityWindows_InventoryWindow.html"><code>Candide.CandideUI.ProximityWindows.InventoryWindow</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_inventoryControl private Candide.CandideUI.UserControls.InventoryControl _inventoryControl Candide.CandideUI.UserControls.InventoryControl" id="-inventorycontrol-candide-candideui-usercontrols-inventorycontrol"><td><span class="member-name-cell"><code>_inventoryControl</code><a class="permalink" href="#-inventorycontrol-candide-candideui-usercontrols-inventorycontrol" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.UserControls.InventoryControl _inventoryControl">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryControl.html">Candide.CandideUI.UserControls.InventoryControl</a> _inventoryControl</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_quickStackButton private Candide.CandideUI.Components.Buttons.CandideLabelButton _quickStackButton Candide.CandideUI.Components.Buttons.CandideLabelButton" id="-quickstackbutton-candide-candideui-components-buttons-candidelabelbutton"><td><span class="member-name-cell"><code>_quickStackButton</code><a class="permalink" href="#-quickstackbutton-candide-candideui-components-buttons-candidelabelbutton" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Components.Buttons.CandideLabelButton _quickStackButton">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Components_Buttons_CandideLabelButton.html">Candide.CandideUI.Components.Buttons.CandideLabelButton</a> _quickStackButton</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnInventoryUpdated public System.Void OnInventoryUpdated() System.Void " id="oninventoryupdated----system-void">
+<div class="method-heading">
+<h3><code>OnInventoryUpdated</code></h3>
+<a class="permalink" href="#oninventoryupdated----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnInventoryUpdated()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.InventoryQuickActionsPanel::OnInventoryUpdated()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnInventoryUpdated()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CB36898F303771A2B0F07951ECFE50C2AF059245F728CB99D0171DC97B2894BC</code></li>
+<li><span>Body hash</span><code>746B9BB6F855D8C3C55F8DDDB0CF96CE329A0509786DE2C872B56CF22DC86637</code></li>
+<li><span>IL size</span><span>64</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.UserControls.InventoryControl::get_Inventory()</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Enabled(System.Boolean)</code></li>
+<li><code>Shared.Models.Items.SharedInventoryModel::get_IsLootOnly()</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Visible(System.Boolean)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_JobUiNew_UserControls_SubControls_JobInventoryStorageControl.html#updateslots----system-void"><code>Candide.CandideUI.JobUiNew.UserControls.SubControls.JobInventoryStorageControl::UpdateSlots</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ProximityWindows_InventoryWindow.html#invalidateinventoryid----system-void"><code>Candide.CandideUI.ProximityWindows.InventoryWindow::InvalidateInventoryId</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ProximityWindows_InventoryWindow.html#onerror-system-byte---system-void"><code>Candide.CandideUI.ProximityWindows.InventoryWindow::OnError</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="QuickActionLootAll private System.Void QuickActionLootAll() System.Void " id="quickactionlootall----system-void">
+<div class="method-heading">
+<h3><code>QuickActionLootAll</code></h3>
+<a class="permalink" href="#quickactionlootall----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void QuickActionLootAll()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.InventoryQuickActionsPanel::QuickActionLootAll()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void QuickActionLootAll()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E167CAF1F33B096DEB817305EEF5A6B6D5E4651FAABBC6C343024FABDF2D8D6F</code></li>
+<li><span>Body hash</span><code>6FA71BB6ACB66F2CAB4C59D7878F13AE1C89490EAF2E4D9CBAF5C511CB33C000</code></li>
+<li><span>IL size</span><span>52</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_GameModels_GameState.html#trygetlocalplayerinventory-candide-gamemodels-models-items-simpleinventory----system-boolean">Candide.GameModels.GameState::TryGetLocalPlayerInventory(Candide.GameModels.Models.Items.SimpleInventory&amp;)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_GameState.html#trygetlocalplayerequipmentinventory-candide-gamemodels-models-items-simpleinventory----system-boolean">Candide.GameModels.GameState::TryGetLocalPlayerEquipmentInventory(Candide.GameModels.Models.Items.SimpleInventory&amp;)</a></code></li>
+<li><code>Candide.CandideUI.UserControls.InventoryControl::get_Inventory()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#lootall-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--shared-inventory-models-lootallstrategy---system-void">Candide.GameModels.Managers.SimpleInventoryManager::LootAll(Candide.GameModels.Models.Items.SimpleInventory, Candide.GameModels.Models.Items.SimpleInventory, Candide.GameModels.Models.Items.SimpleInventory, Shared.Inventory.Models.LootAllStrategy)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="QuickActionQuickStack private System.Void QuickActionQuickStack() System.Void " id="quickactionquickstack----system-void">
+<div class="method-heading">
+<h3><code>QuickActionQuickStack</code></h3>
+<a class="permalink" href="#quickactionquickstack----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void QuickActionQuickStack()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.InventoryQuickActionsPanel::QuickActionQuickStack()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void QuickActionQuickStack()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0829FC6CCE1AC85A63A1F338AACB3D08E467908EE8F8DBBAB3CADD5A774D553D</code></li>
+<li><span>Body hash</span><code>4F14F38FEC982532D18DBEDE1B28DBF61B6177694071E90369959BD6CE5CECAA</code></li>
+<li><span>IL size</span><span>42</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_GameModels_GameState.html#trygetlocalplayerinventory-candide-gamemodels-models-items-simpleinventory----system-boolean">Candide.GameModels.GameState::TryGetLocalPlayerInventory(Candide.GameModels.Models.Items.SimpleInventory&amp;)</a></code></li>
+<li><code>Candide.CandideUI.UserControls.InventoryControl::get_Inventory()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#quickstack-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory---system-void">Candide.GameModels.Managers.SimpleInventoryManager::QuickStack(Candide.GameModels.Models.Items.SimpleInventory, Candide.GameModels.Models.Items.SimpleInventory)</a></code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

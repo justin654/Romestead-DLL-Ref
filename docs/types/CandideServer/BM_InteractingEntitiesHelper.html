@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BM.InteractingEntitiesHelper - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>BM.InteractingEntitiesHelper</h1>
+<button class="copy-button" type="button" data-copy="BM.InteractingEntitiesHelper">Copy type</button>
+<button class="copy-button" type="button" data-copy="# BM.InteractingEntitiesHelper
+
+- Assembly: `CandideServer`
+- Namespace: `BM`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 7 methods, 1 properties, 1 fields, 0 events
+
+## Public Methods
+- `public System.Void Initialize()`
+- `public System.Void OnInteract(Shared.Entity.EntityWrapper thisEntity, Shared.Entity.EntityWrapper otherEntity)`
+- `public System.Boolean TryGetLatest(Shared.Entity.EntityWrapper selfEntity, out Shared.Entity.EntityWrapper&amp; latest)`
+">Copy markdown</button>
+<a class="button" href="BM_InteractingEntitiesHelper.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>BM</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>7</strong></article>
+<article class="metric"><span>Properties</span><strong>1</strong></article>
+<article class="metric"><span>Fields</span><strong>1</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>BM</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>6C469D7463566A0BF080482CA10D49F1255F83A0917947CBC718E8B93DD801BE</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerGhostlyWomanController.html"><code>CandideServer.Entities.Controllers.Enemies.ServerGhostlyWomanController</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerWildCitizenEntityController.html"><code>CandideServer.Entities.Controllers.ServerWildCitizenEntityController</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_entities private System.Collections.Generic.List&lt;System.Guid&gt; _entities System.Collections.Generic.List&lt;System.Guid&gt;" id="-entities-system-collections-generic-list-1-system-guid-"><td><span class="member-name-cell"><code>_entities</code><a class="permalink" href="#-entities-system-collections-generic-list-1-system-guid-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;System.Guid&gt; _entities">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;System.Guid&gt; _entities</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="Count public System.Int32 Count System.Int32" id="count-system-int32"><td><span class="member-name-cell"><code>Count</code><a class="permalink" href="#count-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 Count">Copy</button></span></td><td>public</td><td><code>public System.Int32 Count</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="Add private System.Void Add(Shared.Entity.EntityWrapper entity) System.Void entity Shared.Entity.EntityWrapper" id="add-shared-entity-entitywrapper---system-void">
+<div class="method-heading">
+<h3><code>Add</code></h3>
+<a class="permalink" href="#add-shared-entity-entitywrapper---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void Add(Shared.Entity.EntityWrapper entity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.InteractingEntitiesHelper::Add(Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void Add(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>567A08A22BA5BDD95321FCBB9BEBC2DF5961AA4A060124B3CBCB1CEC05FA92E0</code></li>
+<li><span>Body hash</span><code>04E1B6C43EA2F61602233C549CAD1236C4ABB62B5DEACCFF8C741CF1D7B0197F</code></li>
+<li><span>IL size</span><span>37</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::Contains(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_InteractingEntitiesHelper.html#oninteract-shared-entity-entitywrapper--shared-entity-entitywrapper---system-void"><code>BM.InteractingEntitiesHelper::OnInteract</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Initialize public System.Void Initialize() System.Void " id="initialize----system-void">
+<div class="method-heading">
+<h3><code>Initialize</code></h3>
+<a class="permalink" href="#initialize----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Initialize()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.InteractingEntitiesHelper::Initialize()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Initialize()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E4995AD530D77BDBF8A5F4CC895EBA5AF2831A34FACC1B7C55EBF62C23AD9CC1</code></li>
+<li><span>Body hash</span><code>B4A49C75CD4C8D747ADC2AB02440BBE692C1466CA1E01AAAA46EA45C7174AD98</code></li>
+<li><span>IL size</span><span>12</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::.ctor()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerGhostlyWomanController.html#entityinitialize----system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerGhostlyWomanController::EntityInitialize</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerWildCitizenEntityController.html#entityinitialize----system-void"><code>CandideServer.Entities.Controllers.ServerWildCitizenEntityController::EntityInitialize</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnInteract public System.Void OnInteract(Shared.Entity.EntityWrapper thisEntity, Shared.Entity.EntityWrapper otherEntity) System.Void thisEntity Shared.Entity.EntityWrapper otherEntity Shared.Entity.EntityWrapper" id="oninteract-shared-entity-entitywrapper--shared-entity-entitywrapper---system-void">
+<div class="method-heading">
+<h3><code>OnInteract</code></h3>
+<a class="permalink" href="#oninteract-shared-entity-entitywrapper--shared-entity-entitywrapper---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnInteract(Shared.Entity.EntityWrapper thisEntity, Shared.Entity.EntityWrapper otherEntity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.InteractingEntitiesHelper::OnInteract(Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnInteract(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> thisEntity, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> otherEntity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>762C788DED85C40A9C790BB99E3EE473985EEFD9B6C2F76A2CEB1B4CA2333F19</code></li>
+<li><span>Body hash</span><code>5BD5C2F0051867DDE5A46E0516A3FF4AE5226778AF665E4ACDE5CABB6BDA14AF</code></li>
+<li><span>IL size</span><span>35</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_BaseGuid()</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code><a href="../../types/CandideServer/BM_InteractingEntitiesHelper.html#add-shared-entity-entitywrapper---system-void">BM.InteractingEntitiesHelper::Add(Shared.Entity.EntityWrapper)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_InteractingEntitiesHelper.html#stopothercitizensfromtalkingtoplayer-shared-entity-entitywrapper--shared-entity-entitywrapper---system-void">BM.InteractingEntitiesHelper::StopOtherCitizensFromTalkingToPlayer(Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerGhostlyWomanController.html#oninteract-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerGhostlyWomanController::OnInteract</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerWildCitizenEntityController.html#oninteract-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.ServerWildCitizenEntityController::OnInteract</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="Remove private System.Void Remove(Shared.Entity.EntityWrapper entity) System.Void entity Shared.Entity.EntityWrapper" id="remove-shared-entity-entitywrapper---system-void">
+<div class="method-heading">
+<h3><code>Remove</code></h3>
+<a class="permalink" href="#remove-shared-entity-entitywrapper---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void Remove(Shared.Entity.EntityWrapper entity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.InteractingEntitiesHelper::Remove(Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void Remove(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>00FDFD2BF4B1B3284E19F2D5F33A605A61A1FE6164804FDBA806083D031096CD</code></li>
+<li><span>Body hash</span><code>0F2FCF3D367F28D1A350262D66B00A9D46B30567BB89E8FE4B0CC0F868CF081D</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::Remove(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_InteractingEntitiesHelper.html#stopothercitizensfromtalkingtoplayer-shared-entity-entitywrapper--shared-entity-entitywrapper---system-void"><code>BM.InteractingEntitiesHelper::StopOtherCitizensFromTalkingToPlayer</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="RemoveInvalid private System.Void RemoveInvalid(Shared.Entity.EntityWrapper entity) System.Void entity Shared.Entity.EntityWrapper" id="removeinvalid-shared-entity-entitywrapper---system-void">
+<div class="method-heading">
+<h3><code>RemoveInvalid</code></h3>
+<a class="permalink" href="#removeinvalid-shared-entity-entitywrapper---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void RemoveInvalid(Shared.Entity.EntityWrapper entity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.InteractingEntitiesHelper::RemoveInvalid(Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void RemoveInvalid(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D3A76580CF9A8022665B5FCB0F4C20DE1FE34813F92A5D01AC1516C98DF09EAF</code></li>
+<li><span>Body hash</span><code>F95237DFE0DAB981687505A62271255233319E27A57FDEC5579095027498A79A</code></li>
+<li><span>IL size</span><span>124</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#isentityok-shared-entity-entitysystem--system-nullable-1-system-guid---shared-entity-entitywrapper----system-boolean">BM.EnemyUtil::IsEntityOk(Shared.Entity.EntitySystem, System.Nullable&lt;System.Guid&gt;, Shared.Entity.EntityWrapper&amp;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::RemoveAt(System.Int32)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position2()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::DistanceSquared(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_InteractingEntitiesHelper.html#trygetlatest-shared-entity-entitywrapper--shared-entity-entitywrapper----system-boolean"><code>BM.InteractingEntitiesHelper::TryGetLatest</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="StopOtherCitizensFromTalkingToPlayer private System.Void StopOtherCitizensFromTalkingToPlayer(Shared.Entity.EntityWrapper thisEntity, Shared.Entity.EntityWrapper otherEntity) System.Void thisEntity Shared.Entity.EntityWrapper otherEntity Shared.Entity.EntityWrapper" id="stopothercitizensfromtalkingtoplayer-shared-entity-entitywrapper--shared-entity-entitywrapper---system-void">
+<div class="method-heading">
+<h3><code>StopOtherCitizensFromTalkingToPlayer</code></h3>
+<a class="permalink" href="#stopothercitizensfromtalkingtoplayer-shared-entity-entitywrapper--shared-entity-entitywrapper---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void StopOtherCitizensFromTalkingToPlayer(Shared.Entity.EntityWrapper thisEntity, Shared.Entity.EntityWrapper otherEntity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.InteractingEntitiesHelper::StopOtherCitizensFromTalkingToPlayer(Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void StopOtherCitizensFromTalkingToPlayer(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> thisEntity, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> otherEntity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DBA5AFC28A5189B196EEE6E6F87DAE3B55625AB8141354960924826191CD2B34</code></li>
+<li><span>Body hash</span><code>494DE896DC588F8C33E7F868B1ED46452C531019A98ABCAFB13D5B0EB3C0D267</code></li>
+<li><span>IL size</span><span>119</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Position2()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#getentitiesincirclearea-microsoft-xna-framework-vector2--system-single---system-collections-generic-list-1-shared-entity-entitywrapper-">Shared.Entity.EntitySystem::GetEntitiesInCircleArea(Microsoft.Xna.Framework.Vector2, System.Single)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Entity.EntityWrapper&gt;::get_Current()</code></li>
+<li><code>System.Object::Equals(System.Object)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_BaseGuid()</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code><a href="../../types/CandideServer/BM_InteractingEntitiesHelper.html#remove-shared-entity-entitywrapper---system-void">BM.InteractingEntitiesHelper::Remove(Shared.Entity.EntityWrapper)</a></code></li>
+<li><code>List.Enumerator&lt;Shared.Entity.EntityWrapper&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_InteractingEntitiesHelper.html#oninteract-shared-entity-entitywrapper--shared-entity-entitywrapper---system-void"><code>BM.InteractingEntitiesHelper::OnInteract</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetLatest public System.Boolean TryGetLatest(Shared.Entity.EntityWrapper selfEntity, out Shared.Entity.EntityWrapper&amp; latest) System.Boolean selfEntity Shared.Entity.EntityWrapper latest Shared.Entity.EntityWrapper&amp;" id="trygetlatest-shared-entity-entitywrapper--shared-entity-entitywrapper----system-boolean">
+<div class="method-heading">
+<h3><code>TryGetLatest</code></h3>
+<a class="permalink" href="#trygetlatest-shared-entity-entitywrapper--shared-entity-entitywrapper----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetLatest(Shared.Entity.EntityWrapper selfEntity, out Shared.Entity.EntityWrapper&amp; latest)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.InteractingEntitiesHelper::TryGetLatest(Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetLatest(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> selfEntity, out <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a>&amp; latest)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5ED18FA988E4330CCB73B60E7B9FA6BD9BFE4706C8B5B77065855F26A40A5114</code></li>
+<li><span>Body hash</span><code>73B67DAD3ECF2798A8AAF33D003AB78F45964C02783CADDA92D66652361ECD66</code></li>
+<li><span>IL size</span><span>68</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_InteractingEntitiesHelper.html#removeinvalid-shared-entity-entitywrapper---system-void">BM.InteractingEntitiesHelper::RemoveInvalid(Shared.Entity.EntityWrapper)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::get_Item(System.Int32)</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#getentitybyid-system-guid---shared-entity-entitywrapper">Shared.Entity.EntitySystem::GetEntityById(System.Guid)</a></code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerServices.SimpleInventoryServerService - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerServices.SimpleInventoryServerService</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerServices.SimpleInventoryServerService
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerServices`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 19 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt; GetInventoriesListeners(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage msg)`
+- `public System.Void OnReceive_Disconnect(CandideServer.Server.Network.DisconnectReason reason, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_DropItem(CandideServer.ServerServices.DropItemMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_DropMoney(CandideServer.ServerServices.DropMoneyMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_GetAndListenOnSimpleInventory(CandideServer.MessageModels.Inventories.GetSimpleInventoryMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_GetSimpleInventory(CandideServer.MessageModels.Inventories.GetSimpleInventoryMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_InventoryApplyDelta(CandideServer.MessageModels.Inventories.InventoryApplyDeltaMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_InventoryApplyManyDelta(CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_LootAll(CandideServer.MessageModels.Inventories.LootAllMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_StopListeningOnSimpleInventory(CandideServer.MessageModels.Inventories.StopListeningOnSimpleInventoryMessage msg, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void Send_InventoriesChanged(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage msg)`
+- `public System.Void Send_InventoriesChanged(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage msg, System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt; listeners)`
+- `public System.Void Send_InventoriesChangedWithAddMessage(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesWithAddMessage msg)`
+- `public System.Void Send_NEWInventoriesChanged(CandideServer.MessageModels.Inventories.InventoryListenerUpdate[] updates)`
+- `public System.Void Send_NEWInventoryChanged(CandideServer.MessageModels.Inventories.InventoryListenerUpdate update)`
+- `public System.Void Send_PlayerInventoriesDesynced(System.Collections.Generic.HashSet&lt;System.Guid&gt; inventoryIds, CandideServer.Server.Network.ConnectedPeer peer)`
+- `public System.Void Send_RenameInventory(CandideServer.MessageModels.Inventories.RenameInventoryMessage msg)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerServices_SimpleInventoryServerService.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerServices</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>19</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerServices</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>2CDD14EEE5FCE40C00F6D7CF5D3546B2944E77BD277468DE1B2DD0A4B3BE1D56</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetInventoriesListeners public System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt; GetInventoriesListeners(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage msg) System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt; msg CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage" id="getinventorieslisteners-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage---system-collections-generic-dictionary-2-candideserver-server-network-connectedpeer-candideserver-messagemodels-inventories-inventoriesupdate-">
+<div class="method-heading">
+<h3><code>GetInventoriesListeners</code></h3>
+<a class="permalink" href="#getinventorieslisteners-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage---system-collections-generic-dictionary-2-candideserver-server-network-connectedpeer-candideserver-messagemodels-inventories-inventoriesupdate-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt; GetInventoriesListeners(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::GetInventoriesListeners(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.Dictionary&lt;<a href="../../types/CandideServer/CandideServer_Server_Network_ConnectedPeer.html">CandideServer.Server.Network.ConnectedPeer</a>, <a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_InventoriesUpdate.html">CandideServer.MessageModels.Inventories.InventoriesUpdate</a>&gt; GetInventoriesListeners(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_UpdateInventoriesItemInstancesMessage.html">CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.Dictionary&lt;<a href="../../types/CandideServer/CandideServer_Server_Network_ConnectedPeer.html">CandideServer.Server.Network.ConnectedPeer</a>, <a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_InventoriesUpdate.html">CandideServer.MessageModels.Inventories.InventoriesUpdate</a>&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1B32CBE5B6C9AE400009E4BA69F5AEC5C33FC1FEE8EAF5FEA230ED2A3BA21AE6</code></li>
+<li><span>Body hash</span><code>1A90C113A43564D6B3F37D87B8700BCC2A4E625F13EB49DB46FA659EBB918FCF</code></li>
+<li><span>IL size</span><span>308</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;CandideServer.Server.Network.ConnectedPeer&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;CandideServer.Server.Network.ConnectedPeer&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;CandideServer.Server.Network.ConnectedPeer&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerControllers.UpdateInventoryItemInstanceMessage&gt;::Add(!0)</code></li>
+<li><code>CandideServer.MessageModels.Inventories.InventoriesUpdate::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;::set_Item(!0, !1)</code></li>
+<li><code>HashSet.Enumerator&lt;CandideServer.Server.Network.ConnectedPeer&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerControllers.UpdateInventoryMoneyMessage&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_SimpleInventoryServerService.html#send-inventorieschanged-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage---system-void"><code>CandideServer.ServerServices.SimpleInventoryServerService::Send_InventoriesChanged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_SimpleInventoryServerService.html#send-inventorieschangedwithaddmessage-candideserver-messagemodels-inventories-updateinventoriesiteminstanceswithaddmessage---system-void"><code>CandideServer.ServerServices.SimpleInventoryServerService::Send_InventoriesChangedWithAddMessage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="OnReceive_AddItemCheat private System.Void OnReceive_AddItemCheat(CandideServer.MessageModels.Inventories.AddItemCheatMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Inventories.AddItemCheatMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-additemcheat-candideserver-messagemodels-inventories-additemcheatmessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_AddItemCheat</code></h3>
+<a class="permalink" href="#onreceive-additemcheat-candideserver-messagemodels-inventories-additemcheatmessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void OnReceive_AddItemCheat(CandideServer.MessageModels.Inventories.AddItemCheatMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::OnReceive_AddItemCheat(CandideServer.MessageModels.Inventories.AddItemCheatMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void OnReceive_AddItemCheat(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_AddItemCheatMessage.html">CandideServer.MessageModels.Inventories.AddItemCheatMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E144E64D1578D5DE2AFB7C523234FEB3DB07BD7AB8C37C4A5D71A2A9BD78281C</code></li>
+<li><span>Body hash</span><code>F7F59C490026EBDDC9E421D4F81A09AB404ED93476B2DF4F77AC821467505BAF</code></li>
+<li><span>IL size</span><span>69</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#tryadditemamounts-system-guid--system-string--system-int32--system-string--system-boolean--system-nullable-1-system-int32---system-boolean---system-boolean">CandideServer.ServerManagers.SimpleInventoryServerManager::TryAddItemAmounts(System.Guid, System.String, System.Int32, System.String, System.Boolean, System.Nullable&lt;System.Int32&gt;, System.Boolean)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_Disconnect public System.Void OnReceive_Disconnect(CandideServer.Server.Network.DisconnectReason reason, CandideServer.EventBus.EventBusArgs args) System.Void reason CandideServer.Server.Network.DisconnectReason args CandideServer.EventBus.EventBusArgs" id="onreceive-disconnect-candideserver-server-network-disconnectreason--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_Disconnect</code></h3>
+<a class="permalink" href="#onreceive-disconnect-candideserver-server-network-disconnectreason--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_Disconnect(CandideServer.Server.Network.DisconnectReason reason, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::OnReceive_Disconnect(CandideServer.Server.Network.DisconnectReason, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_Disconnect(<a href="../../types/CandideServer/CandideServer_Server_Network_DisconnectReason.html">CandideServer.Server.Network.DisconnectReason</a> reason, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9192DBC28BD8B4BC32CD23315D94FF22992DE638570BA16E5DD7A0C135B83FB9</code></li>
+<li><span>Body hash</span><code>1B18A06EBDC534099BCB013E3A4D58D2E3B3A8639711B17F781E9F6BE6187E72</code></li>
+<li><span>IL size</span><span>12</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_ServerState_InventoriesPlayerListenersController.html#unregisterlistener-candideserver-server-network-connectedpeer---system-void">CandideServer.ServerServices.ServerState_InventoriesPlayerListenersController::UnregisterListener(CandideServer.Server.Network.ConnectedPeer)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_DropItem public System.Void OnReceive_DropItem(CandideServer.ServerServices.DropItemMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.ServerServices.DropItemMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-dropitem-candideserver-serverservices-dropitemmessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_DropItem</code></h3>
+<a class="permalink" href="#onreceive-dropitem-candideserver-serverservices-dropitemmessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_DropItem(CandideServer.ServerServices.DropItemMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::OnReceive_DropItem(CandideServer.ServerServices.DropItemMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_DropItem(<a href="../../types/CandideServer/CandideServer_ServerServices_DropItemMessage.html">CandideServer.ServerServices.DropItemMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7908342A403177F4CA39E3F596378FF9A59626A60F3A510FC41A5F2252C37AF7</code></li>
+<li><span>Body hash</span><code>02091DF34BA9770ED9B39F7E2FD9D9258EE5122B8517AC7CCF6FB16C047C31A8</code></li>
+<li><span>IL size</span><span>255</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#getplayerinfofrompeerid-system-int32---system-nullable-1-system-valuetuple-2-candideserver-models-player-serverplayercharacter-candideserver-serverservices-serverjoinedplayermodel--">CandideServer.ServerServices.PlayerServerService::GetPlayerInfoFromPeerId(System.Int32)</a></code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#directiontovector3-system-single---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.VectorExtension::DirectionToVector3(System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextfloat-system-random--system-single--system-single---system-single">CandideCreator.Shared.Helpers.RandomHelper::NextFloat(System.Random, System.Single, System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Addition(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(Microsoft.Xna.Framework.Vector3, System.Single)</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::get_Value()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#trydropitem-system-guid--system-guid--system-nullable-1-system-int32---microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32---system-nullable-1-system-int32----system-boolean">CandideServer.ServerManagers.SimpleInventoryServerManager::TryDropItem(System.Guid, System.Guid, System.Nullable&lt;System.Int32&gt;, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Guid, System.Nullable&lt;System.Int32&gt;, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Player tried to drop an item but we could not find the player&#39;s data </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_DropMoney public System.Void OnReceive_DropMoney(CandideServer.ServerServices.DropMoneyMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.ServerServices.DropMoneyMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-dropmoney-candideserver-serverservices-dropmoneymessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_DropMoney</code></h3>
+<a class="permalink" href="#onreceive-dropmoney-candideserver-serverservices-dropmoneymessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_DropMoney(CandideServer.ServerServices.DropMoneyMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::OnReceive_DropMoney(CandideServer.ServerServices.DropMoneyMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_DropMoney(<a href="../../types/CandideServer/CandideServer_ServerServices_DropMoneyMessage.html">CandideServer.ServerServices.DropMoneyMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1C5E2F863E37570F5E03E0C59D1CA5DEDAAE26DF7407C178A93C359B107400A5</code></li>
+<li><span>Body hash</span><code>DC144645C607343E6E3D53CCFD69D1A2F2862B7B34A80DE794927E4F1C778C71</code></li>
+<li><span>IL size</span><span>277</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#getplayerinfofrompeerid-system-int32---system-nullable-1-system-valuetuple-2-candideserver-models-player-serverplayercharacter-candideserver-serverservices-serverjoinedplayermodel--">CandideServer.ServerServices.PlayerServerService::GetPlayerInfoFromPeerId(System.Int32)</a></code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#directiontovector3-system-single---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.VectorExtension::DirectionToVector3(System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextfloat-system-random--system-single--system-single---system-single">CandideCreator.Shared.Helpers.RandomHelper::NextFloat(System.Random, System.Single, System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Addition(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(Microsoft.Xna.Framework.Vector3, System.Single)</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::get_Value()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#trydropmoney-system-guid--system-uint64--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32---system-nullable-1-system-int32----system-boolean">CandideServer.ServerManagers.SimpleInventoryServerManager::TryDropMoney(System.Guid, System.UInt64, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Guid, System.Nullable&lt;System.Int32&gt;, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>OnReceive_DropMoney: Drop amount is larger than the long max value. Aborting</code></li>
+<li><code>Player tried to drop an item but we could not find the player&#39;s data </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_GetAndListenOnSimpleInventory public System.Void OnReceive_GetAndListenOnSimpleInventory(CandideServer.MessageModels.Inventories.GetSimpleInventoryMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Inventories.GetSimpleInventoryMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-getandlistenonsimpleinventory-candideserver-messagemodels-inventories-getsimpleinventorymessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_GetAndListenOnSimpleInventory</code></h3>
+<a class="permalink" href="#onreceive-getandlistenonsimpleinventory-candideserver-messagemodels-inventories-getsimpleinventorymessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_GetAndListenOnSimpleInventory(CandideServer.MessageModels.Inventories.GetSimpleInventoryMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::OnReceive_GetAndListenOnSimpleInventory(CandideServer.MessageModels.Inventories.GetSimpleInventoryMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_GetAndListenOnSimpleInventory(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_GetSimpleInventoryMessage.html">CandideServer.MessageModels.Inventories.GetSimpleInventoryMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3B1506ABE7B6751B4014DDD135CA4F65FC6E44E7BBA56AD9BC75B081ECF8A673</code></li>
+<li><span>Body hash</span><code>380473E7CB019BCFBEA0DECEA2CF1A486B13C73B6150FE5D7BE63FA83A666933</code></li>
+<li><span>IL size</span><span>25</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_SimpleInventoryServerService.html#onreceive-getsimpleinventory-candideserver-messagemodels-inventories-getsimpleinventorymessage--candideserver-eventbus-eventbusargs---system-void">CandideServer.ServerServices.SimpleInventoryServerService::OnReceive_GetSimpleInventory(CandideServer.MessageModels.Inventories.GetSimpleInventoryMessage, CandideServer.EventBus.EventBusArgs)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_ServerState_InventoriesPlayerListenersController.html#registerplayerinventorylistener-system-guid--candideserver-server-network-connectedpeer---system-void">CandideServer.ServerServices.ServerState_InventoriesPlayerListenersController::RegisterPlayerInventoryListener(System.Guid, CandideServer.Server.Network.ConnectedPeer)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_GetSimpleInventory public System.Void OnReceive_GetSimpleInventory(CandideServer.MessageModels.Inventories.GetSimpleInventoryMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Inventories.GetSimpleInventoryMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-getsimpleinventory-candideserver-messagemodels-inventories-getsimpleinventorymessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_GetSimpleInventory</code></h3>
+<a class="permalink" href="#onreceive-getsimpleinventory-candideserver-messagemodels-inventories-getsimpleinventorymessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_GetSimpleInventory(CandideServer.MessageModels.Inventories.GetSimpleInventoryMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::OnReceive_GetSimpleInventory(CandideServer.MessageModels.Inventories.GetSimpleInventoryMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_GetSimpleInventory(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_GetSimpleInventoryMessage.html">CandideServer.MessageModels.Inventories.GetSimpleInventoryMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>63A174097C934D62E87E269EF05554554EBF3D005F39B3DAF9084F836182F75F</code></li>
+<li><span>Body hash</span><code>EEC950F02883592D0D37D84D63FABD0972CC35A153231832FF499693AEAB94AC</code></li>
+<li><span>IL size</span><span>49</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Models.Items.SharedInventoryModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>CandideServer.MessageModels.Inventories.GetSimpleInventoryResponse::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendgetresponsemessage-candideserver-eventbus-eventbusargs--system-object--system-boolean---system-void">CandideServer.Server.BaseServer::SendGetResponseMessage(CandideServer.EventBus.EventBusArgs, System.Object, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_SimpleInventoryServerService.html#onreceive-getandlistenonsimpleinventory-candideserver-messagemodels-inventories-getsimpleinventorymessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.SimpleInventoryServerService::OnReceive_GetAndListenOnSimpleInventory</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_InventoryApplyDelta public System.Void OnReceive_InventoryApplyDelta(CandideServer.MessageModels.Inventories.InventoryApplyDeltaMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Inventories.InventoryApplyDeltaMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-inventoryapplydelta-candideserver-messagemodels-inventories-inventoryapplydeltamessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_InventoryApplyDelta</code></h3>
+<a class="permalink" href="#onreceive-inventoryapplydelta-candideserver-messagemodels-inventories-inventoryapplydeltamessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_InventoryApplyDelta(CandideServer.MessageModels.Inventories.InventoryApplyDeltaMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::OnReceive_InventoryApplyDelta(CandideServer.MessageModels.Inventories.InventoryApplyDeltaMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_InventoryApplyDelta(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_InventoryApplyDeltaMessage.html">CandideServer.MessageModels.Inventories.InventoryApplyDeltaMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A7E1FACD137EEF55DE82B842A90C24C835F5A7BFFE0389D8B84405A89385C42E</code></li>
+<li><span>Body hash</span><code>818E21E007700495E4D3D5B343D2393974BDCAF3AF50CFB8723C5ABEF974B220</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_ServerSimpleInventoryManager_Player.html#player-inventoryapplydelta-shared-inventory-deltamodels-deltaaction--candideserver-server-network-connectedpeer---system-void">CandideServer.ServerManagers.ServerSimpleInventoryManager_Player::Player_InventoryApplyDelta(Shared.Inventory.DeltaModels.DeltaAction, CandideServer.Server.Network.ConnectedPeer)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_InventoryApplyManyDelta public System.Void OnReceive_InventoryApplyManyDelta(CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-inventoryapplymanydelta-candideserver-messagemodels-inventories-inventoryapplymanydeltamessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_InventoryApplyManyDelta</code></h3>
+<a class="permalink" href="#onreceive-inventoryapplymanydelta-candideserver-messagemodels-inventories-inventoryapplymanydeltamessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_InventoryApplyManyDelta(CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::OnReceive_InventoryApplyManyDelta(CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_InventoryApplyManyDelta(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_InventoryApplyManyDeltaMessage.html">CandideServer.MessageModels.Inventories.InventoryApplyManyDeltaMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AD1C11B30261508A88CFEA034871A8E415294EEE4CA1FE0575FCE388E0E37605</code></li>
+<li><span>Body hash</span><code>A028B6F121AFECE3EA1C65107521837C93F718E4F8AD476183BCDBB8E8AD0082</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_ServerSimpleInventoryManager_Player.html#player-inventoryapplymanydelta-system-collections-generic-ireadonlycollection-1-shared-inventory-deltamodels-deltaaction---candideserver-server-network-connectedpeer---system-void">CandideServer.ServerManagers.ServerSimpleInventoryManager_Player::Player_InventoryApplyManyDelta(System.Collections.Generic.IReadOnlyCollection&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;, CandideServer.Server.Network.ConnectedPeer)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_JobsServerService.html#onreceive-createworkorder-candideserver-messagemodels-jobs-createworkordermessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.JobsServerService::OnReceive_CreateWorkOrder</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_JobsServerService.html#onreceive-gettrycraftfurniture-candideserver-messagemodels-jobs-gettrycraftfurnituremessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.JobsServerService::OnReceive_GetTryCraftFurniture</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_LootAll public System.Void OnReceive_LootAll(CandideServer.MessageModels.Inventories.LootAllMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Inventories.LootAllMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-lootall-candideserver-messagemodels-inventories-lootallmessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_LootAll</code></h3>
+<a class="permalink" href="#onreceive-lootall-candideserver-messagemodels-inventories-lootallmessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_LootAll(CandideServer.MessageModels.Inventories.LootAllMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::OnReceive_LootAll(CandideServer.MessageModels.Inventories.LootAllMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_LootAll(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_LootAllMessage.html">CandideServer.MessageModels.Inventories.LootAllMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>851E5BCF436C0DD0C37FD1A6008D15E95DC15064A1E12B8A0A1071159C4C6B5F</code></li>
+<li><span>Body hash</span><code>60AE201ED3814EA8D09724A391662F80D643A02E625130A6D21D8C7D3A127612</code></li>
+<li><span>IL size</span><span>42</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_ServerSimpleInventoryManager_Player.html#player-lootall-system-guid--system-guid--system-nullable-1-system-guid---system-boolean--shared-inventory-models-lootallstrategy--candideserver-server-network-connectedpeer---system-void">CandideServer.ServerManagers.ServerSimpleInventoryManager_Player::Player_LootAll(System.Guid, System.Guid, System.Nullable&lt;System.Guid&gt;, System.Boolean, Shared.Inventory.Models.LootAllStrategy, CandideServer.Server.Network.ConnectedPeer)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="OnReceive_RenameInventory private System.Void OnReceive_RenameInventory(CandideServer.MessageModels.Inventories.RenameInventoryMessage msg) System.Void msg CandideServer.MessageModels.Inventories.RenameInventoryMessage" id="onreceive-renameinventory-candideserver-messagemodels-inventories-renameinventorymessage---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_RenameInventory</code></h3>
+<a class="permalink" href="#onreceive-renameinventory-candideserver-messagemodels-inventories-renameinventorymessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void OnReceive_RenameInventory(CandideServer.MessageModels.Inventories.RenameInventoryMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::OnReceive_RenameInventory(CandideServer.MessageModels.Inventories.RenameInventoryMessage)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void OnReceive_RenameInventory(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_RenameInventoryMessage.html">CandideServer.MessageModels.Inventories.RenameInventoryMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5BBEBEDEE2C707C6DBA2DE854FF9707508601D6E654AE35E6019A40566BE5054</code></li>
+<li><span>Body hash</span><code>0DDB09A505C7F2ECE4CABFEB539C57BF7C3024FFCE68ABA2ADC424A6BEE52040</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#renameinventory-system-guid--system-string---system-void">CandideServer.ServerManagers.SimpleInventoryServerManager::RenameInventory(System.Guid, System.String)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_StopListeningOnSimpleInventory public System.Void OnReceive_StopListeningOnSimpleInventory(CandideServer.MessageModels.Inventories.StopListeningOnSimpleInventoryMessage msg, CandideServer.EventBus.EventBusArgs args) System.Void msg CandideServer.MessageModels.Inventories.StopListeningOnSimpleInventoryMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-stoplisteningonsimpleinventory-candideserver-messagemodels-inventories-stoplisteningonsimpleinventorymessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_StopListeningOnSimpleInventory</code></h3>
+<a class="permalink" href="#onreceive-stoplisteningonsimpleinventory-candideserver-messagemodels-inventories-stoplisteningonsimpleinventorymessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_StopListeningOnSimpleInventory(CandideServer.MessageModels.Inventories.StopListeningOnSimpleInventoryMessage msg, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::OnReceive_StopListeningOnSimpleInventory(CandideServer.MessageModels.Inventories.StopListeningOnSimpleInventoryMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_StopListeningOnSimpleInventory(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_StopListeningOnSimpleInventoryMessage.html">CandideServer.MessageModels.Inventories.StopListeningOnSimpleInventoryMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B8F6232CE813BF9006D0243A0EA17E7ED8CF0F0DB2AB7313CBE20A382641254C</code></li>
+<li><span>Body hash</span><code>4800AC44AA2502774C4EB0ACD7EE77BA8C25BE31C2E90D615875F43EEE0E1036</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_ServerState_InventoriesPlayerListenersController.html#unregisterplayerinventorylistener-system-guid--candideserver-server-network-connectedpeer---system-void">CandideServer.ServerServices.ServerState_InventoriesPlayerListenersController::UnregisterPlayerInventoryListener(System.Guid, CandideServer.Server.Network.ConnectedPeer)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Send_InventoriesChanged public System.Void Send_InventoriesChanged(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage msg) System.Void msg CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage" id="send-inventorieschanged-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage---system-void">
+<div class="method-heading">
+<h3><code>Send_InventoriesChanged</code></h3>
+<a class="permalink" href="#send-inventorieschanged-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Send_InventoriesChanged(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::Send_InventoriesChanged(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Send_InventoriesChanged(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_UpdateInventoriesItemInstancesMessage.html">CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>397F547582AADF474B728A67CD44ACB34F2C4AD979C69DFD1B02E41B52B9A546</code></li>
+<li><span>Body hash</span><code>E8F15706A785451A0AA5E26A91C1B5ED15E5164AB6F1BC27F1CEDA77B65D27BC</code></li>
+<li><span>IL size</span><span>13</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_SimpleInventoryServerService.html#getinventorieslisteners-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage---system-collections-generic-dictionary-2-candideserver-server-network-connectedpeer-candideserver-messagemodels-inventories-inventoriesupdate-">CandideServer.ServerServices.SimpleInventoryServerService::GetInventoriesListeners(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_SimpleInventoryServerService.html#send-inventorieschanged-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage--system-collections-generic-dictionary-2-candideserver-server-network-connectedpeer-candideserver-messagemodels-inventories-inventoriesupdate----system-void">CandideServer.ServerServices.SimpleInventoryServerService::Send_InventoriesChanged(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage, System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#dropinventorybutdonotdelete-shared-models-items-sharedinventorymodel--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-single--system-nullable-1-system-int32----system-void"><code>CandideServer.ServerManagers.LootServerManager::DropInventoryButDoNotDelete</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_OfferingsServerManager.html#tryhandinoffering-system-guid--system-nullable-1-system-guid----system-void"><code>CandideServer.ServerManagers.OfferingsServerManager::TryHandInOffering</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#tryremoveitems-candideserver-messagemodels-inventories-removeitemsfrominventorymessage---system-boolean"><code>CandideServer.ServerManagers.SimpleInventoryServerManager::TryRemoveItems</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#tryremoveitemsfrominventories-system-collections-generic-ireadonlycollection-1-candideserver-messagemodels-inventories-removeitemsfrominventorymessage----system-boolean"><code>CandideServer.ServerManagers.SimpleInventoryServerManager::TryRemoveItemsFromInventories</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Send_InventoriesChanged public System.Void Send_InventoriesChanged(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage msg, System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt; listeners) System.Void msg CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage listeners System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;" id="send-inventorieschanged-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage--system-collections-generic-dictionary-2-candideserver-server-network-connectedpeer-candideserver-messagemodels-inventories-inventoriesupdate----system-void">
+<div class="method-heading">
+<h3><code>Send_InventoriesChanged</code></h3>
+<a class="permalink" href="#send-inventorieschanged-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage--system-collections-generic-dictionary-2-candideserver-server-network-connectedpeer-candideserver-messagemodels-inventories-inventoriesupdate----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Send_InventoriesChanged(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage msg, System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt; listeners)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::Send_InventoriesChanged(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage, System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Send_InventoriesChanged(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_UpdateInventoriesItemInstancesMessage.html">CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage</a> msg, System.Collections.Generic.Dictionary&lt;<a href="../../types/CandideServer/CandideServer_Server_Network_ConnectedPeer.html">CandideServer.Server.Network.ConnectedPeer</a>, <a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_InventoriesUpdate.html">CandideServer.MessageModels.Inventories.InventoriesUpdate</a>&gt; listeners)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3566BD60FAA20C032EA10454C2268E9668CA64BC3D354CBE70326256BC43F43C</code></li>
+<li><span>Body hash</span><code>0683DCF1E21805A3328EC2182C5D6F13F35FD563FA72B55D4677AD0C6434FF25</code></li>
+<li><span>IL size</span><span>122</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnInventoriesChangedEvent.html#send-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage---system-void">CandideServer.Models.Quests.EventModels.OnInventoriesChangedEvent::Send(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;::get_Current()</code></li>
+<li><code>CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerControllers.UpdateInventoryItemInstanceMessage&gt;::ToArray()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerControllers.UpdateInventoryMoneyMessage&gt;::ToArray()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;::get_Key()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessage-system-string--system-object--candideserver-server-network-connectedpeer---system-void">CandideServer.Server.BaseServer::SendHostMessage(System.String, System.Object, CandideServer.Server.Network.ConnectedPeer)</a></code></li>
+<li><code>Dictionary.Enumerator&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_SimpleInventoryServerService.html#send-inventorieschanged-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage---system-void"><code>CandideServer.ServerServices.SimpleInventoryServerService::Send_InventoriesChanged</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>inventory-update-inventories-item-instances</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Send_InventoriesChangedWithAddMessage public System.Void Send_InventoriesChangedWithAddMessage(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesWithAddMessage msg) System.Void msg CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesWithAddMessage" id="send-inventorieschangedwithaddmessage-candideserver-messagemodels-inventories-updateinventoriesiteminstanceswithaddmessage---system-void">
+<div class="method-heading">
+<h3><code>Send_InventoriesChangedWithAddMessage</code></h3>
+<a class="permalink" href="#send-inventorieschangedwithaddmessage-candideserver-messagemodels-inventories-updateinventoriesiteminstanceswithaddmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Send_InventoriesChangedWithAddMessage(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesWithAddMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::Send_InventoriesChangedWithAddMessage(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesWithAddMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Send_InventoriesChangedWithAddMessage(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_UpdateInventoriesItemInstancesWithAddMessage.html">CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesWithAddMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8F696CD0EA3AFBA07A7629304F8FE7CAE3DC7B7738EE2BEED3ED7BE74BAE4932</code></li>
+<li><span>Body hash</span><code>67DFDADF21E5FBBFF41BE8F46E5182D66B116051116CB50840DDAF0E37E9EE12</code></li>
+<li><span>IL size</span><span>151</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnInventoriesChangedEvent.html#send-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage---system-void">CandideServer.Models.Quests.EventModels.OnInventoriesChangedEvent::Send(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_SimpleInventoryServerService.html#getinventorieslisteners-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage---system-collections-generic-dictionary-2-candideserver-server-network-connectedpeer-candideserver-messagemodels-inventories-inventoriesupdate-">CandideServer.ServerServices.SimpleInventoryServerService::GetInventoriesListeners(CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesMessage)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;::get_Current()</code></li>
+<li><code>CandideServer.MessageModels.Inventories.UpdateInventoriesItemInstancesWithAddMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerControllers.UpdateInventoryItemInstanceMessage&gt;::ToArray()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerControllers.UpdateInventoryMoneyMessage&gt;::ToArray()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;::get_Key()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessage-system-string--system-object--candideserver-server-network-connectedpeer---system-void">CandideServer.Server.BaseServer::SendHostMessage(System.String, System.Object, CandideServer.Server.Network.ConnectedPeer)</a></code></li>
+<li><code>Dictionary.Enumerator&lt;CandideServer.Server.Network.ConnectedPeer, CandideServer.MessageModels.Inventories.InventoriesUpdate&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>inventory-update-inventories-item-instances-with-add-message</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Send_NEWInventoriesChanged public System.Void Send_NEWInventoriesChanged(CandideServer.MessageModels.Inventories.InventoryListenerUpdate[] updates) System.Void updates CandideServer.MessageModels.Inventories.InventoryListenerUpdate[]" id="send-newinventorieschanged-candideserver-messagemodels-inventories-inventorylistenerupdate-----system-void">
+<div class="method-heading">
+<h3><code>Send_NEWInventoriesChanged</code></h3>
+<a class="permalink" href="#send-newinventorieschanged-candideserver-messagemodels-inventories-inventorylistenerupdate-----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Send_NEWInventoriesChanged(CandideServer.MessageModels.Inventories.InventoryListenerUpdate[] updates)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::Send_NEWInventoriesChanged(CandideServer.MessageModels.Inventories.InventoryListenerUpdate[])">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Send_NEWInventoriesChanged(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_InventoryListenerUpdate.html">CandideServer.MessageModels.Inventories.InventoryListenerUpdate</a>[] updates)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4C2B2199AA377730EA649D308DDC9C80CA5481831ECF2FDCDA8A9FFAB6C84D25</code></li>
+<li><span>Body hash</span><code>77110D7D4B9311FCB8AB10F37456B9FCDD0D40B4B4C9865C1457A4340F1B095F</code></li>
+<li><span>IL size</span><span>29</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_SimpleInventoryServerService.html#send-newinventorychanged-candideserver-messagemodels-inventories-inventorylistenerupdate---system-void">CandideServer.ServerServices.SimpleInventoryServerService::Send_NEWInventoryChanged(CandideServer.MessageModels.Inventories.InventoryListenerUpdate)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#oninventorieschanged-system-collections-generic-dictionary-2-system-guid-system-collections-generic-hashset-1-system-int32----system-collections-generic-hashset-1-system-guid----system-void"><code>CandideServer.ServerManagers.SimpleInventoryServerManager::OnInventoriesChanged</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Send_NEWInventoryChanged public System.Void Send_NEWInventoryChanged(CandideServer.MessageModels.Inventories.InventoryListenerUpdate update) System.Void update CandideServer.MessageModels.Inventories.InventoryListenerUpdate" id="send-newinventorychanged-candideserver-messagemodels-inventories-inventorylistenerupdate---system-void">
+<div class="method-heading">
+<h3><code>Send_NEWInventoryChanged</code></h3>
+<a class="permalink" href="#send-newinventorychanged-candideserver-messagemodels-inventories-inventorylistenerupdate---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Send_NEWInventoryChanged(CandideServer.MessageModels.Inventories.InventoryListenerUpdate update)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::Send_NEWInventoryChanged(CandideServer.MessageModels.Inventories.InventoryListenerUpdate)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Send_NEWInventoryChanged(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_InventoryListenerUpdate.html">CandideServer.MessageModels.Inventories.InventoryListenerUpdate</a> update)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AC5E7AE2B5696338394B00A13C7903C672E8650D937D504C423724B2ABB04985</code></li>
+<li><span>Body hash</span><code>DDE8F681A7905E2E5DB92CF9A36C30A73D781E03D06CE41B8D010F53D7957367</code></li>
+<li><span>IL size</span><span>117</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetinventory-system-guid--shared-models-items-sharedinventorymodel----system-boolean">CandideServer.ServerGameState::TryGetInventory(System.Guid, Shared.Models.Items.SharedInventoryModel&amp;)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetserverentity-system-guid--candideserver-entities-serverentitymodel---system-string---system-boolean">CandideServer.ServerGameState::TryGetServerEntity(System.Guid, CandideServer.Entities.ServerEntityModel&amp;, System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#calculatestate-candideserver-entities-serverentitymodel---system-void">CandideServer.ServerControllers.EntitySController::CalculateState(CandideServer.Entities.ServerEntityModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnInventoriesChangedEvent.html#send-candideserver-messagemodels-inventories-inventorylistenerupdate---system-void">CandideServer.Models.Quests.EventModels.OnInventoriesChangedEvent::Send(CandideServer.MessageModels.Inventories.InventoryListenerUpdate)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;CandideServer.Server.Network.ConnectedPeer&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetopeers-system-string--system-object--system-collections-generic-icollection-1-candideserver-server-network-connectedpeer----system-void">CandideServer.Server.BaseServer::SendHostMessageToPeers(System.String, System.Object, System.Collections.Generic.ICollection&lt;CandideServer.Server.Network.ConnectedPeer&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#oninventorychanged-system-guid--system-collections-generic-hashset-1-system-int32---system-nullable-1-system-uint64----system-void"><code>CandideServer.ServerManagers.SimpleInventoryServerManager::OnInventoryChanged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#oninventorychanged-money-system-guid--system-uint64---system-void"><code>CandideServer.ServerManagers.SimpleInventoryServerManager::OnInventoryChanged_Money</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#oninventorychanged-singleslot-system-guid--system-int32---system-void"><code>CandideServer.ServerManagers.SimpleInventoryServerManager::OnInventoryChanged_SingleSlot</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_SimpleInventoryServerService.html#send-newinventorieschanged-candideserver-messagemodels-inventories-inventorylistenerupdate-----system-void"><code>CandideServer.ServerServices.SimpleInventoryServerService::Send_NEWInventoriesChanged</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Send_NEWInventoryChanged</code></li>
+<li><code>inventory-inventory-listener-update</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Send_PlayerInventoriesDesynced public System.Void Send_PlayerInventoriesDesynced(System.Collections.Generic.HashSet&lt;System.Guid&gt; inventoryIds, CandideServer.Server.Network.ConnectedPeer peer) System.Void inventoryIds System.Collections.Generic.HashSet&lt;System.Guid&gt; peer CandideServer.Server.Network.ConnectedPeer" id="send-playerinventoriesdesynced-system-collections-generic-hashset-1-system-guid---candideserver-server-network-connectedpeer---system-void">
+<div class="method-heading">
+<h3><code>Send_PlayerInventoriesDesynced</code></h3>
+<a class="permalink" href="#send-playerinventoriesdesynced-system-collections-generic-hashset-1-system-guid---candideserver-server-network-connectedpeer---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Send_PlayerInventoriesDesynced(System.Collections.Generic.HashSet&lt;System.Guid&gt; inventoryIds, CandideServer.Server.Network.ConnectedPeer peer)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::Send_PlayerInventoriesDesynced(System.Collections.Generic.HashSet&lt;System.Guid&gt;, CandideServer.Server.Network.ConnectedPeer)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Send_PlayerInventoriesDesynced(System.Collections.Generic.HashSet&lt;System.Guid&gt; inventoryIds, <a href="../../types/CandideServer/CandideServer_Server_Network_ConnectedPeer.html">CandideServer.Server.Network.ConnectedPeer</a> peer)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6713CCF65AA5C4AF901D18EFD4CB4097782D5220EF71A4B77AC606BC93EDE449</code></li>
+<li><span>Body hash</span><code>3B8ACD57F79455A232C88857CCE7B628ACD0C44CD725C83315418033EE8EB9BE</code></li>
+<li><span>IL size</span><span>104</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetinventory-system-guid--shared-models-items-sharedinventorymodel----system-boolean">CandideServer.ServerGameState::TryGetInventory(System.Guid, Shared.Models.Items.SharedInventoryModel&amp;)</a></code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>CandideServer.MessageModels.Inventories.PlayerInventoriesDesyncedMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessage-system-string--system-object--candideserver-server-network-connectedpeer---system-void">CandideServer.Server.BaseServer::SendHostMessage(System.String, System.Object, CandideServer.Server.Network.ConnectedPeer)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ServerSimpleInventoryManager_Player.html#finish----system-void"><code>CandideServer.ServerManagers.ServerSimpleInventoryManager_Player::Finish</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>inventory-player-inventories-desynced</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Send_RenameInventory public System.Void Send_RenameInventory(CandideServer.MessageModels.Inventories.RenameInventoryMessage msg) System.Void msg CandideServer.MessageModels.Inventories.RenameInventoryMessage" id="send-renameinventory-candideserver-messagemodels-inventories-renameinventorymessage---system-void">
+<div class="method-heading">
+<h3><code>Send_RenameInventory</code></h3>
+<a class="permalink" href="#send-renameinventory-candideserver-messagemodels-inventories-renameinventorymessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Send_RenameInventory(CandideServer.MessageModels.Inventories.RenameInventoryMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.SimpleInventoryServerService::Send_RenameInventory(CandideServer.MessageModels.Inventories.RenameInventoryMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Send_RenameInventory(<a href="../../types/CandideServer/CandideServer_MessageModels_Inventories_RenameInventoryMessage.html">CandideServer.MessageModels.Inventories.RenameInventoryMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>87D773378A8C13C8FDD18C6AC42BCF5F1F6E0EB64E313B5D0031470F2E15329A</code></li>
+<li><span>Body hash</span><code>63B4033721D6CE0D49EEE693A8B15B046DF21ADBE668806C896E79567E5ED62B</code></li>
+<li><span>IL size</span><span>39</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;CandideServer.Server.Network.ConnectedPeer&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetopeers-system-string--system-object--system-collections-generic-icollection-1-candideserver-server-network-connectedpeer----system-void">CandideServer.Server.BaseServer::SendHostMessageToPeers(System.String, System.Object, System.Collections.Generic.ICollection&lt;CandideServer.Server.Network.ConnectedPeer&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#renameinventory-system-guid--system-string---system-void"><code>CandideServer.ServerManagers.SimpleInventoryServerManager::RenameInventory</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>inventory-rename-inventory</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

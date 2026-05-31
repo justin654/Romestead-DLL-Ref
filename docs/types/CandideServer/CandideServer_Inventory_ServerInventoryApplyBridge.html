@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.Inventory.ServerInventoryApplyBridge - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.Inventory.ServerInventoryApplyBridge</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.Inventory.ServerInventoryApplyBridge">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.Inventory.ServerInventoryApplyBridge
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.Inventory`
+- Kind: `public class`
+- Base type: `System.Object`
+- Interfaces: `Shared.Inventory.InventoryApplyBridge.IInventoryApplyBridge`
+- Members: 9 methods, 0 properties, 4 fields, 0 events
+
+## Public Methods
+- `public System.Void Cleanup()`
+- `public System.Void CriticalError(System.String msg)`
+- `public System.Void DeleteErrorItemInstance(Shared.Models.Items.ItemInstanceModel itemInstanceModel)`
+- `public System.Void DeleteItemInstance(Shared.Models.Items.SharedInventoryModel inventory, System.Int32 slotIndex)`
+- `public System.Void LogMoneyChanged(Shared.Models.Items.SharedInventoryModel inventory)`
+- `public System.Void LogSlotChanged(Shared.Models.Items.SharedInventoryModel inventory, System.Int32 slotIndex)`
+- `public System.Void SanityError(System.String msg, Shared.Models.Items.ItemInstanceModel item, Shared.Models.Items.SharedInventoryModel ownerInventory)`
+- `public System.Boolean TryCreateNewItemInstance(System.String itemId, System.Int32 stackAmount, out Shared.Models.Items.ItemInstanceModel&amp; itemInstanceModel)`
+- `public System.Boolean TryGetInventory(System.Guid id, out Shared.Models.Items.SharedInventoryModel&amp; inventory)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_Inventory_ServerInventoryApplyBridge.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.Inventory</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>9</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>4</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.Inventory</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Interfaces</span><code><a href="../../types/Shared/Shared_Inventory_InventoryApplyBridge_IInventoryApplyBridge.html">Shared.Inventory.InventoryApplyBridge.IInventoryApplyBridge</a></code></li>
+<li><span>Hash</span><code>F5F8F57718647D09C3DDC37DA234889F7FA4903F8425BCF56AAE631B7C503D89</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Interfaces</h3><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Inventory_InventoryApplyBridge_IInventoryApplyBridge.html">Shared.Inventory.InventoryApplyBridge.IInventoryApplyBridge</a></code></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ChangedInventoriesMoney public System.Collections.Generic.HashSet&lt;System.Guid&gt; ChangedInventoriesMoney System.Collections.Generic.HashSet&lt;System.Guid&gt;" id="changedinventoriesmoney-system-collections-generic-hashset-1-system-guid-"><td><span class="member-name-cell"><code>ChangedInventoriesMoney</code><a class="permalink" href="#changedinventoriesmoney-system-collections-generic-hashset-1-system-guid-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.HashSet&lt;System.Guid&gt; ChangedInventoriesMoney">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.HashSet&lt;System.Guid&gt; ChangedInventoriesMoney</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ChangedInventorySlotIndices public System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;System.Int32&gt;&gt; ChangedInventorySlotIndices System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;System.Int32&gt;&gt;" id="changedinventoryslotindices-system-collections-generic-dictionary-2-system-guid-system-collections-generic-hashset-1-system-int32--"><td><span class="member-name-cell"><code>ChangedInventorySlotIndices</code><a class="permalink" href="#changedinventoryslotindices-system-collections-generic-dictionary-2-system-guid-system-collections-generic-hashset-1-system-int32--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;System.Int32&gt;&gt; ChangedInventorySlotIndices">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;System.Int32&gt;&gt; ChangedInventorySlotIndices</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Instance public CandideServer.Inventory.ServerInventoryApplyBridge Instance CandideServer.Inventory.ServerInventoryApplyBridge" id="instance-candideserver-inventory-serverinventoryapplybridge"><td><span class="member-name-cell"><code>Instance</code><a class="permalink" href="#instance-candideserver-inventory-serverinventoryapplybridge" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public CandideServer.Inventory.ServerInventoryApplyBridge Instance">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/CandideServer_Inventory_ServerInventoryApplyBridge.html">CandideServer.Inventory.ServerInventoryApplyBridge</a> Instance</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="PlayerMode public System.Boolean PlayerMode System.Boolean" id="playermode-system-boolean"><td><span class="member-name-cell"><code>PlayerMode</code><a class="permalink" href="#playermode-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean PlayerMode">Copy</button></span></td><td>public</td><td><code>public System.Boolean PlayerMode</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Cleanup public System.Void Cleanup() System.Void " id="cleanup----system-void">
+<div class="method-heading">
+<h3><code>Cleanup</code></h3>
+<a class="permalink" href="#cleanup----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Cleanup()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Inventory.ServerInventoryApplyBridge::Cleanup()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Cleanup()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>89DE0F78C252F376F3B690DD9969954C10726AA6236AAD5FD91E88E366007DA9</code></li>
+<li><span>Body hash</span><code>595DBC07C3679FB5390D80BF8B24207B4B1099766788867835DE210B3AB0C3CC</code></li>
+<li><span>IL size</span><span>30</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;System.Int32&gt;&gt;::Clear()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ServerSimpleInventoryManager_Player.html#finish----system-void"><code>CandideServer.ServerManagers.ServerSimpleInventoryManager_Player::Finish</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ServerSimpleInventoryManager_Server.html#finish----system-void"><code>CandideServer.ServerManagers.ServerSimpleInventoryManager_Server::Finish</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CriticalError public System.Void CriticalError(System.String msg) System.Void msg System.String" id="criticalerror-system-string---system-void">
+<div class="method-heading">
+<h3><code>CriticalError</code></h3>
+<a class="permalink" href="#criticalerror-system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CriticalError(System.String msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Inventory.ServerInventoryApplyBridge::CriticalError(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CriticalError(System.String msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>A179FB467956C3245D7F784097D9B8C2C9939CD4EEF617DC61B423EF59EC722E</code></li>
+<li><span>Body hash</span><code>1672768F5859F18344EF8F8164DAA7C9842F6450241B2FA29C10CE938A36B149</code></li>
+<li><span>IL size</span><span>22</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>CandideServer.Inventory.ServerInventoryApplyException::.ctor(System.String)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DeleteErrorItemInstance public System.Void DeleteErrorItemInstance(Shared.Models.Items.ItemInstanceModel itemInstanceModel) System.Void itemInstanceModel Shared.Models.Items.ItemInstanceModel" id="deleteerroriteminstance-shared-models-items-iteminstancemodel---system-void">
+<div class="method-heading">
+<h3><code>DeleteErrorItemInstance</code></h3>
+<a class="permalink" href="#deleteerroriteminstance-shared-models-items-iteminstancemodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DeleteErrorItemInstance(Shared.Models.Items.ItemInstanceModel itemInstanceModel)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Inventory.ServerInventoryApplyBridge::DeleteErrorItemInstance(Shared.Models.Items.ItemInstanceModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DeleteErrorItemInstance(<a href="../../types/Shared/Shared_Models_Items_ItemInstanceModel.html">Shared.Models.Items.ItemInstanceModel</a> itemInstanceModel)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>C2C82FE439F4183404C16DDB0139BD9342CE9DCA5D3603F455A32E828EF4A71A</code></li>
+<li><span>Body hash</span><code>2A93A438E74F461096FE2B68320408154BBF1D349B861B55A92A986BC7C5BA4B</code></li>
+<li><span>IL size</span><span>7</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_ItemInstanceSController.html#removeiteminstancefromstate-shared-models-items-iteminstancemodel---system-void">CandideServer.ServerControllers.ItemInstanceSController::RemoveItemInstanceFromState(Shared.Models.Items.ItemInstanceModel)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DeleteItemInstance public System.Void DeleteItemInstance(Shared.Models.Items.SharedInventoryModel inventory, System.Int32 slotIndex) System.Void inventory Shared.Models.Items.SharedInventoryModel slotIndex System.Int32" id="deleteiteminstance-shared-models-items-sharedinventorymodel--system-int32---system-void">
+<div class="method-heading">
+<h3><code>DeleteItemInstance</code></h3>
+<a class="permalink" href="#deleteiteminstance-shared-models-items-sharedinventorymodel--system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DeleteItemInstance(Shared.Models.Items.SharedInventoryModel inventory, System.Int32 slotIndex)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Inventory.ServerInventoryApplyBridge::DeleteItemInstance(Shared.Models.Items.SharedInventoryModel, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DeleteItemInstance(<a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> inventory, System.Int32 slotIndex)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>A6E2215CFC4F0EE5273F6F7DFA2507CF8078DCD04287A18FBD723A5A85CD1BCC</code></li>
+<li><span>Body hash</span><code>702B78DC0ACCF123190804896D3979D6836DEED7CDCD729AB6A25AF955AFE438</code></li>
+<li><span>IL size</span><span>28</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideServer.Inventory.ServerInventoryApplyException::.ctor(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_ItemInstanceSController.html#removeiteminstancefromstate-shared-models-items-iteminstancemodel---system-void">CandideServer.ServerControllers.ItemInstanceSController::RemoveItemInstanceFromState(Shared.Models.Items.ItemInstanceModel)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Tried deleting item instance but we received a null slot.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LogMoneyChanged public System.Void LogMoneyChanged(Shared.Models.Items.SharedInventoryModel inventory) System.Void inventory Shared.Models.Items.SharedInventoryModel" id="logmoneychanged-shared-models-items-sharedinventorymodel---system-void">
+<div class="method-heading">
+<h3><code>LogMoneyChanged</code></h3>
+<a class="permalink" href="#logmoneychanged-shared-models-items-sharedinventorymodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void LogMoneyChanged(Shared.Models.Items.SharedInventoryModel inventory)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Inventory.ServerInventoryApplyBridge::LogMoneyChanged(Shared.Models.Items.SharedInventoryModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void LogMoneyChanged(<a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> inventory)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>6F30E8B29D8FC0527CF9CA5FB8CFB833D955324E942D8E93926A16C4F548F860</code></li>
+<li><span>Body hash</span><code>01AB1C26B9CF0BE8EB5A90888AD6D0FBF610C62B135D07E74F978AEB14BF5870</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Add(!0)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LogSlotChanged public System.Void LogSlotChanged(Shared.Models.Items.SharedInventoryModel inventory, System.Int32 slotIndex) System.Void inventory Shared.Models.Items.SharedInventoryModel slotIndex System.Int32" id="logslotchanged-shared-models-items-sharedinventorymodel--system-int32---system-void">
+<div class="method-heading">
+<h3><code>LogSlotChanged</code></h3>
+<a class="permalink" href="#logslotchanged-shared-models-items-sharedinventorymodel--system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void LogSlotChanged(Shared.Models.Items.SharedInventoryModel inventory, System.Int32 slotIndex)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Inventory.ServerInventoryApplyBridge::LogSlotChanged(Shared.Models.Items.SharedInventoryModel, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void LogSlotChanged(<a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> inventory, System.Int32 slotIndex)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>B68C80426C3EDFBE5B617DE404D37E3FC1E1A78280812F21F6FC49DB57B5DF1E</code></li>
+<li><span>Body hash</span><code>6594CB8623D8AED1D3FABBD0CF786000FF75AA1BA2FB9E1C9998E364E6C601D6</code></li>
+<li><span>IL size</span><span>61</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;System.Int32&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Int32&gt;::Add(!0)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Int32&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;System.Int32&gt;&gt;::set_Item(!0, !1)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SanityError public System.Void SanityError(System.String msg, Shared.Models.Items.ItemInstanceModel item, Shared.Models.Items.SharedInventoryModel ownerInventory) System.Void msg System.String item Shared.Models.Items.ItemInstanceModel ownerInventory Shared.Models.Items.SharedInventoryModel" id="sanityerror-system-string--shared-models-items-iteminstancemodel--shared-models-items-sharedinventorymodel---system-void">
+<div class="method-heading">
+<h3><code>SanityError</code></h3>
+<a class="permalink" href="#sanityerror-system-string--shared-models-items-iteminstancemodel--shared-models-items-sharedinventorymodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SanityError(System.String msg, Shared.Models.Items.ItemInstanceModel item, Shared.Models.Items.SharedInventoryModel ownerInventory)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Inventory.ServerInventoryApplyBridge::SanityError(System.String, Shared.Models.Items.ItemInstanceModel, Shared.Models.Items.SharedInventoryModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SanityError(System.String msg, <a href="../../types/Shared/Shared_Models_Items_ItemInstanceModel.html">Shared.Models.Items.ItemInstanceModel</a> item, <a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> ownerInventory)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>D1C70740423C9D466DDE33F2B93C2A2B80FEE8D0EA98A91B86794C20198CC5A5</code></li>
+<li><span>Body hash</span><code>22692D3CF1956C63ADAA78B7AE0D822C5D256B941C8564E31FDE87B0FA14E7BE</code></li>
+<li><span>IL size</span><span>32</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code>CandideServer.Inventory.ServerInventoryApplyException::.ctor(System.String)</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Sanity error - </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryCreateNewItemInstance public System.Boolean TryCreateNewItemInstance(System.String itemId, System.Int32 stackAmount, out Shared.Models.Items.ItemInstanceModel&amp; itemInstanceModel) System.Boolean itemId System.String stackAmount System.Int32 itemInstanceModel Shared.Models.Items.ItemInstanceModel&amp;" id="trycreatenewiteminstance-system-string--system-int32--shared-models-items-iteminstancemodel----system-boolean">
+<div class="method-heading">
+<h3><code>TryCreateNewItemInstance</code></h3>
+<a class="permalink" href="#trycreatenewiteminstance-system-string--system-int32--shared-models-items-iteminstancemodel----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryCreateNewItemInstance(System.String itemId, System.Int32 stackAmount, out Shared.Models.Items.ItemInstanceModel&amp; itemInstanceModel)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Inventory.ServerInventoryApplyBridge::TryCreateNewItemInstance(System.String, System.Int32, Shared.Models.Items.ItemInstanceModel&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryCreateNewItemInstance(System.String itemId, System.Int32 stackAmount, out <a href="../../types/Shared/Shared_Models_Items_ItemInstanceModel.html">Shared.Models.Items.ItemInstanceModel</a>&amp; itemInstanceModel)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>316587FBF77565C3D3DB6CD41F49E93D85D37B16BDF3B739A98FE25AF5911686</code></li>
+<li><span>Body hash</span><code>6B78E2BA12E1DB0DCC348745E531FAE4886FAFAB2FE42CB21C2FEEA2730B94B5</code></li>
+<li><span>IL size</span><span>30</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_ItemInstanceSController.html#createnewiteminstance-system-string--system-int32--system-guid--system-nullable-1-system-guid---system-string---shared-models-items-iteminstancemodel">CandideServer.ServerControllers.ItemInstanceSController::CreateNewItemInstance(System.String, System.Int32, System.Guid, System.Nullable&lt;System.Guid&gt;, System.String)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetInventory public System.Boolean TryGetInventory(System.Guid id, out Shared.Models.Items.SharedInventoryModel&amp; inventory) System.Boolean id System.Guid inventory Shared.Models.Items.SharedInventoryModel&amp;" id="trygetinventory-system-guid--shared-models-items-sharedinventorymodel----system-boolean">
+<div class="method-heading">
+<h3><code>TryGetInventory</code></h3>
+<a class="permalink" href="#trygetinventory-system-guid--shared-models-items-sharedinventorymodel----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetInventory(System.Guid id, out Shared.Models.Items.SharedInventoryModel&amp; inventory)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Inventory.ServerInventoryApplyBridge::TryGetInventory(System.Guid, Shared.Models.Items.SharedInventoryModel&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetInventory(System.Guid id, out <a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a>&amp; inventory)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>5E070CD0FD256F69F6B2882215ED41C396819BC2E10B82A240BD889CEEFE3182</code></li>
+<li><span>Body hash</span><code>F7E85275AC6AA852BDA361AF19C3D2A8AE5EF052D169E45CD599DF2A0FE6D95C</code></li>
+<li><span>IL size</span><span>20</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetinventory-system-guid--shared-models-items-sharedinventorymodel----system-boolean">CandideServer.ServerGameState::TryGetInventory(System.Guid, Shared.Models.Items.SharedInventoryModel&amp;)</a></code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

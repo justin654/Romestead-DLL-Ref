@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BM.SendBehaviorRequest - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>BM.SendBehaviorRequest</h1>
+<button class="copy-button" type="button" data-copy="BM.SendBehaviorRequest">Copy type</button>
+<button class="copy-button" type="button" data-copy="# BM.SendBehaviorRequest
+
+- Assembly: `CandideServer`
+- Namespace: `BM`
+- Kind: `public class`
+- Base type: `BM.Leaf`
+- Members: 7 methods, 0 properties, 7 fields, 0 events
+
+## Public Methods
+- `public BM.SendBehaviorRequest ForMultipleEntities(BM.BehaviorRequestData data, BM.NodeArg&lt;System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;&gt; receivers)`
+- `public BM.SendBehaviorRequest ForMultipleGuids(BM.BehaviorRequestData data, BM.NodeArg&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt; receiverGuids)`
+- `public BM.SendBehaviorRequest ForSingle(BM.BehaviorRequestData data, BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt; receiver)`
+- `public System.Void ReceiveResponse(BM.ReceiveBehaviorRequest receiverNode, CandideServer.Entities.Controllers.ServerBehaviorMachineController receiver)`
+">Copy markdown</button>
+<a class="button" href="BM_SendBehaviorRequest.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>BM</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>7</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>7</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>BM</code></li>
+<li><span>Base type</span><code><a href="../../types/CandideServer/BM_Leaf.html">BM.Leaf</a></code></li>
+<li><span>Hash</span><code>D86C2F1BE6225AA444750F40893BB7BA4D4EBE4B1BA8CD2A964594096CFDD071</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/CandideServer/BM_Leaf.html">BM.Leaf</a></code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_BehaviorRequest.html"><code>BM.BehaviorRequest</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_hasSent private System.Boolean _hasSent System.Boolean" id="-hassent-system-boolean"><td><span class="member-name-cell"><code>_hasSent</code><a class="permalink" href="#-hassent-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _hasSent">Copy</button></span></td><td>private</td><td><code>private System.Boolean _hasSent</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_multipleRequestReceiversEntityArg private System.Nullable&lt;BM.NodeArg&lt;System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;&gt;&gt; _multipleRequestReceiversEntityArg System.Nullable&lt;BM.NodeArg&lt;System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;&gt;&gt;" id="-multiplerequestreceiversentityarg-system-nullable-1-bm-nodearg-1-system-collections-generic-list-1-shared-entity-entitywrapper---"><td><span class="member-name-cell"><code>_multipleRequestReceiversEntityArg</code><a class="permalink" href="#-multiplerequestreceiversentityarg-system-nullable-1-bm-nodearg-1-system-collections-generic-list-1-shared-entity-entitywrapper---" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Nullable&lt;BM.NodeArg&lt;System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;&gt;&gt; _multipleRequestReceiversEntityArg">Copy</button></span></td><td>private</td><td><code>private System.Nullable&lt;<a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a>&gt;&gt;&gt; _multipleRequestReceiversEntityArg</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_multipleRequestReceiversGuidArg private System.Nullable&lt;BM.NodeArg&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt;&gt; _multipleRequestReceiversGuidArg System.Nullable&lt;BM.NodeArg&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt;&gt;" id="-multiplerequestreceiversguidarg-system-nullable-1-bm-nodearg-1-system-collections-generic-list-1-system-guid---"><td><span class="member-name-cell"><code>_multipleRequestReceiversGuidArg</code><a class="permalink" href="#-multiplerequestreceiversguidarg-system-nullable-1-bm-nodearg-1-system-collections-generic-list-1-system-guid---" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Nullable&lt;BM.NodeArg&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt;&gt; _multipleRequestReceiversGuidArg">Copy</button></span></td><td>private</td><td><code>private System.Nullable&lt;<a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt;&gt; _multipleRequestReceiversGuidArg</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_requestData private BM.BehaviorRequestData _requestData BM.BehaviorRequestData" id="-requestdata-bm-behaviorrequestdata"><td><span class="member-name-cell"><code>_requestData</code><a class="permalink" href="#-requestdata-bm-behaviorrequestdata" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.BehaviorRequestData _requestData">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_BehaviorRequestData.html">BM.BehaviorRequestData</a> _requestData</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_responses private System.Collections.Generic.List&lt;System.ValueTuple&lt;BM.ReceiveBehaviorRequest, CandideServer.Entities.Controllers.ServerBehaviorMachineController&gt;&gt; _responses System.Collections.Generic.List&lt;System.ValueTuple&lt;BM.ReceiveBehaviorRequest, CandideServer.Entities.Controllers.ServerBehaviorMachineController&gt;&gt;" id="-responses-system-collections-generic-list-1-system-valuetuple-2-bm-receivebehaviorrequest-candideserver-entities-controllers-serverbehaviormachinecontroller--"><td><span class="member-name-cell"><code>_responses</code><a class="permalink" href="#-responses-system-collections-generic-list-1-system-valuetuple-2-bm-receivebehaviorrequest-candideserver-entities-controllers-serverbehaviormachinecontroller--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;System.ValueTuple&lt;BM.ReceiveBehaviorRequest, CandideServer.Entities.Controllers.ServerBehaviorMachineController&gt;&gt; _responses">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;System.ValueTuple&lt;<a href="../../types/CandideServer/BM_ReceiveBehaviorRequest.html">BM.ReceiveBehaviorRequest</a>, <a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerBehaviorMachineController.html">CandideServer.Entities.Controllers.ServerBehaviorMachineController</a>&gt;&gt; _responses</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_singleRequestReceiverArg private System.Nullable&lt;BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;&gt; _singleRequestReceiverArg System.Nullable&lt;BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;&gt;" id="-singlerequestreceiverarg-system-nullable-1-bm-nodearg-1-shared-entity-entitywrapper--"><td><span class="member-name-cell"><code>_singleRequestReceiverArg</code><a class="permalink" href="#-singlerequestreceiverarg-system-nullable-1-bm-nodearg-1-shared-entity-entitywrapper--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Nullable&lt;BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;&gt; _singleRequestReceiverArg">Copy</button></span></td><td>private</td><td><code>private System.Nullable&lt;<a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a>&gt;&gt; _singleRequestReceiverArg</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_timer private System.Single _timer System.Single" id="-timer-system-single"><td><span class="member-name-cell"><code>_timer</code><a class="permalink" href="#-timer-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single _timer">Copy</button></span></td><td>private</td><td><code>private System.Single _timer</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ForMultipleEntities public BM.SendBehaviorRequest ForMultipleEntities(BM.BehaviorRequestData data, BM.NodeArg&lt;System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;&gt; receivers) BM.SendBehaviorRequest data BM.BehaviorRequestData receivers BM.NodeArg&lt;System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;&gt;" id="formultipleentities-bm-behaviorrequestdata--bm-nodearg-1-system-collections-generic-list-1-shared-entity-entitywrapper-----bm-sendbehaviorrequest">
+<div class="method-heading">
+<h3><code>ForMultipleEntities</code></h3>
+<a class="permalink" href="#formultipleentities-bm-behaviorrequestdata--bm-nodearg-1-system-collections-generic-list-1-shared-entity-entitywrapper-----bm-sendbehaviorrequest" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.SendBehaviorRequest ForMultipleEntities(BM.BehaviorRequestData data, BM.NodeArg&lt;System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;&gt; receivers)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.SendBehaviorRequest::ForMultipleEntities(BM.BehaviorRequestData, BM.NodeArg&lt;System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_SendBehaviorRequest.html">BM.SendBehaviorRequest</a> ForMultipleEntities(<a href="../../types/CandideServer/BM_BehaviorRequestData.html">BM.BehaviorRequestData</a> data, <a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a>&gt;&gt; receivers)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_SendBehaviorRequest.html">BM.SendBehaviorRequest</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DB0AD7228F3D0CE267641AF44BAA484E09F3282820F9D6EFDDBB1B38366E3825</code></li>
+<li><span>Body hash</span><code>73C38DFE902A5303902870E13386D98F9804BF638794A0358CD97F6159C42C50</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BM.SendBehaviorRequest::.ctor(BM.BehaviorRequestData)</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;&gt;&gt;::.ctor(!0)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ForMultipleGuids public BM.SendBehaviorRequest ForMultipleGuids(BM.BehaviorRequestData data, BM.NodeArg&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt; receiverGuids) BM.SendBehaviorRequest data BM.BehaviorRequestData receiverGuids BM.NodeArg&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt;" id="formultipleguids-bm-behaviorrequestdata--bm-nodearg-1-system-collections-generic-list-1-system-guid-----bm-sendbehaviorrequest">
+<div class="method-heading">
+<h3><code>ForMultipleGuids</code></h3>
+<a class="permalink" href="#formultipleguids-bm-behaviorrequestdata--bm-nodearg-1-system-collections-generic-list-1-system-guid-----bm-sendbehaviorrequest" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.SendBehaviorRequest ForMultipleGuids(BM.BehaviorRequestData data, BM.NodeArg&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt; receiverGuids)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.SendBehaviorRequest::ForMultipleGuids(BM.BehaviorRequestData, BM.NodeArg&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_SendBehaviorRequest.html">BM.SendBehaviorRequest</a> ForMultipleGuids(<a href="../../types/CandideServer/BM_BehaviorRequestData.html">BM.BehaviorRequestData</a> data, <a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt; receiverGuids)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_SendBehaviorRequest.html">BM.SendBehaviorRequest</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>ECC45DB3D18F7F230F18122BDD2145B230FF237B0769F36764A23A5E106F33B9</code></li>
+<li><span>Body hash</span><code>7739810AC4DB5763525E8DFF752AF5C3A4643C60F9BEBBCE5D99F4D3EDB3F334</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BM.SendBehaviorRequest::.ctor(BM.BehaviorRequestData)</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt;&gt;::.ctor(!0)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ForSingle public BM.SendBehaviorRequest ForSingle(BM.BehaviorRequestData data, BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt; receiver) BM.SendBehaviorRequest data BM.BehaviorRequestData receiver BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;" id="forsingle-bm-behaviorrequestdata--bm-nodearg-1-shared-entity-entitywrapper----bm-sendbehaviorrequest">
+<div class="method-heading">
+<h3><code>ForSingle</code></h3>
+<a class="permalink" href="#forsingle-bm-behaviorrequestdata--bm-nodearg-1-shared-entity-entitywrapper----bm-sendbehaviorrequest" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public BM.SendBehaviorRequest ForSingle(BM.BehaviorRequestData data, BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt; receiver)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.SendBehaviorRequest::ForSingle(BM.BehaviorRequestData, BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/BM_SendBehaviorRequest.html">BM.SendBehaviorRequest</a> ForSingle(<a href="../../types/CandideServer/BM_BehaviorRequestData.html">BM.BehaviorRequestData</a> data, <a href="../../types/CandideServer/BM_NodeArg_1.html">BM.NodeArg</a>&lt;<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a>&gt; receiver)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/BM_SendBehaviorRequest.html">BM.SendBehaviorRequest</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7C079FFBF902D3A49CF70454A32C1F3A0A4C63FF532210AF5AA4F564B95502DD</code></li>
+<li><span>Body hash</span><code>137A6BBD6D4D31C36B04F6936358D2EA7005AE2D3E57944A78A9BFCAEB62E810</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BM.SendBehaviorRequest::.ctor(BM.BehaviorRequestData)</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;&gt;::.ctor(!0)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="Initialize protected System.Void Initialize(BM.BTUpdateContext updateCtx, BM.Blackboard blackboard) System.Void updateCtx BM.BTUpdateContext blackboard BM.Blackboard" id="initialize-bm-btupdatecontext--bm-blackboard---system-void">
+<div class="method-heading">
+<h3><code>Initialize</code></h3>
+<a class="permalink" href="#initialize-bm-btupdatecontext--bm-blackboard---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected System.Void Initialize(BM.BTUpdateContext updateCtx, BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.SendBehaviorRequest::Initialize(BM.BTUpdateContext, BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>protected System.Void Initialize(<a href="../../types/CandideServer/BM_BTUpdateContext.html">BM.BTUpdateContext</a> updateCtx, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>C16F6592A092BB5148D5815B9E819803D170160AAA66ED4FA1789CCFAFC08C98</code></li>
+<li><span>Body hash</span><code>362B0F08A5070026BA69BD7392AE8B0687E2E3AFAB46B5D5DFC3436154BD0DBE</code></li>
+<li><span>IL size</span><span>30</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;BM.ReceiveBehaviorRequest, CandideServer.Entities.Controllers.ServerBehaviorMachineController&gt;&gt;::Clear()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ReceiveResponse public System.Void ReceiveResponse(BM.ReceiveBehaviorRequest receiverNode, CandideServer.Entities.Controllers.ServerBehaviorMachineController receiver) System.Void receiverNode BM.ReceiveBehaviorRequest receiver CandideServer.Entities.Controllers.ServerBehaviorMachineController" id="receiveresponse-bm-receivebehaviorrequest--candideserver-entities-controllers-serverbehaviormachinecontroller---system-void">
+<div class="method-heading">
+<h3><code>ReceiveResponse</code></h3>
+<a class="permalink" href="#receiveresponse-bm-receivebehaviorrequest--candideserver-entities-controllers-serverbehaviormachinecontroller---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ReceiveResponse(BM.ReceiveBehaviorRequest receiverNode, CandideServer.Entities.Controllers.ServerBehaviorMachineController receiver)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.SendBehaviorRequest::ReceiveResponse(BM.ReceiveBehaviorRequest, CandideServer.Entities.Controllers.ServerBehaviorMachineController)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ReceiveResponse(<a href="../../types/CandideServer/BM_ReceiveBehaviorRequest.html">BM.ReceiveBehaviorRequest</a> receiverNode, <a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerBehaviorMachineController.html">CandideServer.Entities.Controllers.ServerBehaviorMachineController</a> receiver)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6F295E746FB3C25B25B1A63067FDC040E60BD61E38CAB115F66E5703FF4C2BFB</code></li>
+<li><span>Body hash</span><code>3EC04FCBB2DDCF5067DE0376CF585B17A381F4C46A20AF45771AF792B93600E4</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.ValueTuple&lt;BM.ReceiveBehaviorRequest, CandideServer.Entities.Controllers.ServerBehaviorMachineController&gt;::.ctor(!0, !1)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;BM.ReceiveBehaviorRequest, CandideServer.Entities.Controllers.ServerBehaviorMachineController&gt;&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_ReceiveBehaviorRequest.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.ReceiveBehaviorRequest::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SendRequest private System.Void SendRequest(CandideServer.Entities.Controllers.ServerBehaviorMachineController sender, Shared.Entity.EntityWrapper entity) System.Void sender CandideServer.Entities.Controllers.ServerBehaviorMachineController entity Shared.Entity.EntityWrapper" id="sendrequest-candideserver-entities-controllers-serverbehaviormachinecontroller--shared-entity-entitywrapper---system-void">
+<div class="method-heading">
+<h3><code>SendRequest</code></h3>
+<a class="permalink" href="#sendrequest-candideserver-entities-controllers-serverbehaviormachinecontroller--shared-entity-entitywrapper---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SendRequest(CandideServer.Entities.Controllers.ServerBehaviorMachineController sender, Shared.Entity.EntityWrapper entity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.SendBehaviorRequest::SendRequest(CandideServer.Entities.Controllers.ServerBehaviorMachineController, Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SendRequest(<a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerBehaviorMachineController.html">CandideServer.Entities.Controllers.ServerBehaviorMachineController</a> sender, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8BEA2EBE9552A21AF684910E27E7B7C0212F689F82F8C962DA119ADB0246C525</code></li>
+<li><span>Body hash</span><code>D5C344AB5B7A1E5DFD4DEF74BED5295FA399CC99EC6CBC20CED2261AE2E0C315</code></li>
+<li><span>IL size</span><span>48</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code>BM.BehaviorRequest::.ctor(CandideServer.Entities.Controllers.ServerBehaviorMachineController, BM.BehaviorRequestData, BM.SendBehaviorRequest)</code></li>
+<li><code><a href="../../types/CandideServer/BM_PendingBehaviorRequests.html#enqueue-bm-behaviorrequest---system-void">BM.PendingBehaviorRequests::Enqueue(BM.BehaviorRequest)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_SendBehaviorRequest.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.SendBehaviorRequest::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="Update protected Node.Status Update(BM.BTUpdateContext updateCtx, BM.Blackboard blackboard) Node.Status updateCtx BM.BTUpdateContext blackboard BM.Blackboard" id="update-bm-btupdatecontext--bm-blackboard---node-status">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-bm-btupdatecontext--bm-blackboard---node-status" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected Node.Status Update(BM.BTUpdateContext updateCtx, BM.Blackboard blackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.SendBehaviorRequest::Update(BM.BTUpdateContext, BM.Blackboard)">Copy Harmony target</button>
+</div>
+<p><code>protected <a href="../../types/CandideServer/Node_Status.html">Node.Status</a> Update(<a href="../../types/CandideServer/BM_BTUpdateContext.html">BM.BTUpdateContext</a> updateCtx, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/Node_Status.html">Node.Status</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>E41F4FDDD52A3AF44BA60A834CCA4D0BD6189837A39258D424BB5534350CF786</code></li>
+<li><span>Body hash</span><code>34E313F55B42BDBDDDC8DA1BC206B46E4DD7187B334E6E3C51194ED578146A06</code></li>
+<li><span>IL size</span><span>699</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.ValueTuple&lt;System.Int32, System.Int32&gt;&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;System.Int32, System.Int32&gt;&gt;::get_Value()</code></li>
+<li><code>System.Random::Next(System.Int32, System.Int32)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code>BM.SendBehaviorRequest::&lt;Update&gt;g__FailIfRespondersRequired|12_0(SendBehaviorRequest.&lt;&gt;c__DisplayClass12_0&amp;)</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;&gt;::get_Value()</code></li>
+<li><code>BM.NodeArg&lt;Shared.Entity.EntityWrapper&gt;::TryGet(BM.Blackboard, T&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/BM_SendBehaviorRequest.html#sendrequest-candideserver-entities-controllers-serverbehaviormachinecontroller--shared-entity-entitywrapper---system-void">BM.SendBehaviorRequest::SendRequest(CandideServer.Entities.Controllers.ServerBehaviorMachineController, Shared.Entity.EntityWrapper)</a></code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;&gt;&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;&gt;&gt;::get_Value()</code></li>
+<li><code>BM.NodeArg&lt;System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;&gt;::TryGet(BM.Blackboard, T&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Entity.EntityWrapper&gt;::get_Current()</code></li>
+<li><code>List.Enumerator&lt;Shared.Entity.EntityWrapper&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt;&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;BM.NodeArg&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt;&gt;::get_Value()</code></li>
+<li><code>BM.NodeArg&lt;System.Collections.Generic.List&lt;System.Guid&gt;&gt;::TryGet(BM.Blackboard, T&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#getentitybyid-system-guid---shared-entity-entitywrapper">Shared.Entity.EntitySystem::GetEntityById(System.Guid)</a></code></li>
+<li><code>List.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;BM.ReceiveBehaviorRequest, CandideServer.Entities.Controllers.ServerBehaviorMachineController&gt;&gt;::get_Count()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::GetValueOrDefault(!0)</code></li>
+<li><code>System.Math::Min(System.Int32, System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;BM.ReceiveBehaviorRequest, CandideServer.Entities.Controllers.ServerBehaviorMachineController&gt;&gt;::get_Item(System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/BM_ReceiveBehaviorRequest.html#receiveconfirmation-system-boolean---system-void">BM.ReceiveBehaviorRequest::ReceiveConfirmation(System.Boolean)</a></code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shared.Inventory.InventoryDeltaEngine - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Shared.html">Shared</a></p>
+<div class="title-row">
+<h1>Shared.Inventory.InventoryDeltaEngine</h1>
+<button class="copy-button" type="button" data-copy="Shared.Inventory.InventoryDeltaEngine">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Shared.Inventory.InventoryDeltaEngine
+
+- Assembly: `Shared`
+- Namespace: `Shared.Inventory`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 6 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public Shared.Inventory.DeltaModels.DeltaResult MoveAmount(Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 sourceSlotIndex, Shared.Models.Items.SharedInventoryModel targetInventory, System.Int32 targetSlotIndex, System.Int32 amount)`
+- `public Shared.Inventory.DeltaModels.InventoryResult MoveAmountIntoExistingStacks(System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt; actions, Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 sourceSlotIndex, Shared.Models.Items.SharedInventoryModel targetInventory, System.Int32 amount, out System.Int32&amp; movedAmount)`
+- `public Shared.Inventory.DeltaModels.InventoryResult MoveCoinTypeIntoItems(System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt; actions, Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 coinType, System.Int32 amount, Shared.Models.Items.SharedInventoryModel targetInventory, out System.UInt64&amp; movedMoneyAmount)`
+- `public Shared.Inventory.DeltaModels.DeltaResult MoveMoneyIntoItem(Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 coinType, System.Int32 coinAmount, Shared.Models.Items.SharedInventoryModel targetInventory, System.Int32 targetSlotIndex, System.Boolean allowPartialStack)`
+- `public Shared.Inventory.DeltaModels.InventoryResult MoveMoneyItemsIntoMoney_Coin(System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt; actions, Shared.Models.Items.SharedInventoryModel sourceInventory, Shared.Inventory.Models.SearchStrategy sourceSearchStrategy, System.Int32 coinType, System.UInt64 moneyAmount, Shared.Models.Items.SharedInventoryModel targetInventory, out System.UInt64&amp; movedMoneyAmount, out System.UInt64&amp; changeToPutBack)`
+- `public Shared.Inventory.DeltaModels.DeltaResult SwapSlots(Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 sourceSlotIndex, Shared.Models.Items.SharedInventoryModel targetInventory, System.Int32 targetSlotIndex)`
+">Copy markdown</button>
+<a class="button" href="Shared_Inventory_InventoryDeltaEngine.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Shared.Inventory</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>6</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Shared</code></li>
+<li><span>Namespace</span><code>Shared.Inventory</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>D306A67401F42425448F525D44D56642BD944483EBED47370B33DC7870E191A8</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MoveAmount public Shared.Inventory.DeltaModels.DeltaResult MoveAmount(Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 sourceSlotIndex, Shared.Models.Items.SharedInventoryModel targetInventory, System.Int32 targetSlotIndex, System.Int32 amount) Shared.Inventory.DeltaModels.DeltaResult sourceInventory Shared.Models.Items.SharedInventoryModel sourceSlotIndex System.Int32 targetInventory Shared.Models.Items.SharedInventoryModel targetSlotIndex System.Int32 amount System.Int32" id="moveamount-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-int32---shared-inventory-deltamodels-deltaresult">
+<div class="method-heading">
+<h3><code>MoveAmount</code></h3>
+<a class="permalink" href="#moveamount-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-int32---shared-inventory-deltamodels-deltaresult" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Inventory.DeltaModels.DeltaResult MoveAmount(Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 sourceSlotIndex, Shared.Models.Items.SharedInventoryModel targetInventory, System.Int32 targetSlotIndex, System.Int32 amount)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Inventory.InventoryDeltaEngine::MoveAmount(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaResult.html">Shared.Inventory.DeltaModels.DeltaResult</a> MoveAmount(<a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> sourceInventory, System.Int32 sourceSlotIndex, <a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> targetInventory, System.Int32 targetSlotIndex, System.Int32 amount)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaResult.html">Shared.Inventory.DeltaModels.DeltaResult</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6FA4ED044D4CA7D3DCE7B5BA5F0CAB83713B5E0D9E097EEC9AE6796BEFBC07FC</code></li>
+<li><span>Body hash</span><code>963DD47548BBC44806294E07AB96E3805C77403CC9388B80600011A59D2E7B73</code></li>
+<li><span>IL size</span><span>232</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Inventory_ItemInstanceExtensions.html#ismoney-shared-models-items-iteminstancemodel---system-boolean">Shared.Inventory.ItemInstanceExtensions::IsMoney(Shared.Models.Items.ItemInstanceModel)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#hasmoneyfield----system-boolean">Shared.Models.Items.SharedInventoryModel::HasMoneyField()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#acceptsmoney----system-boolean">Shared.Models.Items.SharedInventoryModel::AcceptsMoney()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#turnmoneyitemamountintomoney-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::TurnMoneyItemAmountIntoMoney(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32)</a></code></li>
+<li><code>Shared.Inventory.DeltaModels.DeltaResult::.ctor(Shared.Inventory.DeltaModels.DeltaAction)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#acceptsitem-shared-models-items-iteminstancemodel--system-int32---system-boolean">Shared.Models.Items.SharedInventoryModel::AcceptsItem(Shared.Models.Items.ItemInstanceModel, System.Int32)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#swapitempositions-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::SwapItemPositions(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#movestackamount-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-int32---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::MoveStackAmount(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32, System.Int32)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_ItemInstanceModel.html#canstack-shared-models-items-iteminstancemodel--system-int32----system-boolean">Shared.Models.Items.ItemInstanceModel::CanStack(Shared.Models.Items.ItemInstanceModel, System.Int32&amp;)</a></code></li>
+<li><code>System.Math::Min(System.Int32, System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#emptytrashandsplitstack-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-int32--system-int32--system-int32---system-boolean"><code>Candide.GameModels.Managers.SimpleInventoryManager::EmptyTrashAndSplitStack</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#splitstack-system-guid--system-guid--system-int32--system-int32--system-int32---system-void"><code>Candide.GameModels.Managers.SimpleInventoryManager::SplitStack</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_Models_DeltaTransaction.html#move-returnrest-system-int32--system-int32--system-string--shared-inventory-models-searchstrategy--system-int32---system-valuetuple-2-system-int32-system-boolean-"><code>Shared.Inventory.Models.DeltaTransaction::Move_ReturnRest</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MoveAmountIntoExistingStacks public Shared.Inventory.DeltaModels.InventoryResult MoveAmountIntoExistingStacks(System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt; actions, Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 sourceSlotIndex, Shared.Models.Items.SharedInventoryModel targetInventory, System.Int32 amount, out System.Int32&amp; movedAmount) Shared.Inventory.DeltaModels.InventoryResult actions System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt; sourceInventory Shared.Models.Items.SharedInventoryModel sourceSlotIndex System.Int32 targetInventory Shared.Models.Items.SharedInventoryModel amount System.Int32 movedAmount System.Int32&amp;" id="moveamountintoexistingstacks-system-collections-generic-list-1-shared-inventory-deltamodels-deltaaction---shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-int32----shared-inventory-deltamodels-inventoryresult">
+<div class="method-heading">
+<h3><code>MoveAmountIntoExistingStacks</code></h3>
+<a class="permalink" href="#moveamountintoexistingstacks-system-collections-generic-list-1-shared-inventory-deltamodels-deltaaction---shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-int32----shared-inventory-deltamodels-inventoryresult" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Inventory.DeltaModels.InventoryResult MoveAmountIntoExistingStacks(System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt; actions, Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 sourceSlotIndex, Shared.Models.Items.SharedInventoryModel targetInventory, System.Int32 amount, out System.Int32&amp; movedAmount)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Inventory.InventoryDeltaEngine::MoveAmountIntoExistingStacks(System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;, Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32, System.Int32&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Inventory_DeltaModels_InventoryResult.html">Shared.Inventory.DeltaModels.InventoryResult</a> MoveAmountIntoExistingStacks(System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html">Shared.Inventory.DeltaModels.DeltaAction</a>&gt; actions, <a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> sourceInventory, System.Int32 sourceSlotIndex, <a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> targetInventory, System.Int32 amount, out System.Int32&amp; movedAmount)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_InventoryResult.html">Shared.Inventory.DeltaModels.InventoryResult</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E79CD39E0FE54682B692C088950F7485FF5EA41830BDE82798F289CE0C5F7B72</code></li>
+<li><span>Body hash</span><code>935A29D515945576A5FDBC4DCB8D1CBA8632636E98E712E96F242F0D9192D2B9</code></li>
+<li><span>IL size</span><span>208</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Inventory_ItemInstanceExtensions.html#ismoney-shared-models-items-iteminstancemodel---system-boolean">Shared.Inventory.ItemInstanceExtensions::IsMoney(Shared.Models.Items.ItemInstanceModel)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#hasmoneyfield----system-boolean">Shared.Models.Items.SharedInventoryModel::HasMoneyField()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#acceptsmoney----system-boolean">Shared.Models.Items.SharedInventoryModel::AcceptsMoney()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#turnmoneyitemamountintomoney-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::TurnMoneyItemAmountIntoMoney(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#filteracceptsitem-shared-models-items-iteminstancemodel---system-boolean">Shared.Models.Items.SharedInventoryModel::FilterAcceptsItem(Shared.Models.Items.ItemInstanceModel)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_ItemInstanceModel.html#canstack-shared-models-items-iteminstancemodel--system-int32----system-boolean">Shared.Models.Items.ItemInstanceModel::CanStack(Shared.Models.Items.ItemInstanceModel, System.Int32&amp;)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#slotacceptsitem-shared-models-items-iteminstancemodel--system-int32---system-boolean">Shared.Models.Items.SharedInventoryModel::SlotAcceptsItem(Shared.Models.Items.ItemInstanceModel, System.Int32)</a></code></li>
+<li><code>System.Math::Min(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#movestackamount-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-int32---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::MoveStackAmount(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32, System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#lootitemamountintomoney-candide-gamemodels-models-items-simpleinventory--system-int32--candide-gamemodels-models-items-simpleinventory--system-int32---system-void"><code>Candide.GameModels.Managers.SimpleInventoryManager::LootItemAmountIntoMoney</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_Models_DeltaTransaction.html#lootitem-system-int32--system-int32--system-boolean--system-int32---system-boolean"><code>Shared.Inventory.Models.DeltaTransaction::LootItem</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_Models_DeltaTransaction.html#move-returnrest-system-int32--system-int32--system-string--shared-inventory-models-searchstrategy--system-int32---system-valuetuple-2-system-int32-system-boolean-"><code>Shared.Inventory.Models.DeltaTransaction::Move_ReturnRest</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MoveCoinTypeIntoItems public Shared.Inventory.DeltaModels.InventoryResult MoveCoinTypeIntoItems(System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt; actions, Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 coinType, System.Int32 amount, Shared.Models.Items.SharedInventoryModel targetInventory, out System.UInt64&amp; movedMoneyAmount) Shared.Inventory.DeltaModels.InventoryResult actions System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt; sourceInventory Shared.Models.Items.SharedInventoryModel coinType System.Int32 amount System.Int32 targetInventory Shared.Models.Items.SharedInventoryModel movedMoneyAmount System.UInt64&amp;" id="movecointypeintoitems-system-collections-generic-list-1-shared-inventory-deltamodels-deltaaction---shared-models-items-sharedinventorymodel--system-int32--system-int32--shared-models-items-sharedinventorymodel--system-uint64----shared-inventory-deltamodels-inventoryresult">
+<div class="method-heading">
+<h3><code>MoveCoinTypeIntoItems</code></h3>
+<a class="permalink" href="#movecointypeintoitems-system-collections-generic-list-1-shared-inventory-deltamodels-deltaaction---shared-models-items-sharedinventorymodel--system-int32--system-int32--shared-models-items-sharedinventorymodel--system-uint64----shared-inventory-deltamodels-inventoryresult" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Inventory.DeltaModels.InventoryResult MoveCoinTypeIntoItems(System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt; actions, Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 coinType, System.Int32 amount, Shared.Models.Items.SharedInventoryModel targetInventory, out System.UInt64&amp; movedMoneyAmount)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Inventory.InventoryDeltaEngine::MoveCoinTypeIntoItems(System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;, Shared.Models.Items.SharedInventoryModel, System.Int32, System.Int32, Shared.Models.Items.SharedInventoryModel, System.UInt64&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Inventory_DeltaModels_InventoryResult.html">Shared.Inventory.DeltaModels.InventoryResult</a> MoveCoinTypeIntoItems(System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html">Shared.Inventory.DeltaModels.DeltaAction</a>&gt; actions, <a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> sourceInventory, System.Int32 coinType, System.Int32 amount, <a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> targetInventory, out System.UInt64&amp; movedMoneyAmount)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_InventoryResult.html">Shared.Inventory.DeltaModels.InventoryResult</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9A69B67AF97F3645D7E00F77E5604C4CD00B86305AA303AB4FE16477E17481E9</code></li>
+<li><span>Body hash</span><code>A1233B3CD3CD82C314D4CA5994972FF6855F3EE51AA67D45321B8E26AA30325E</code></li>
+<li><span>IL size</span><span>229</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getcoinitemid-system-int32---system-string">Shared.Helpers.MoneyHelper::GetCoinItemId(System.Int32)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Data_ItemDataBase.html#getitemdataornull-system-string---shared-models-items-itemdata">Shared.Data.ItemDataBase::GetItemDataOrNull(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#filteracceptsitemdata-shared-models-items-itemdata---system-boolean">Shared.Models.Items.SharedInventoryModel::FilterAcceptsItemData(Shared.Models.Items.ItemData)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getmultiplierforcointype-system-int32---system-uint64">Shared.Helpers.MoneyHelper::GetMultiplierForCoinType(System.Int32)</a></code></li>
+<li><code>System.Nullable&lt;System.UInt64&gt;::get_Value()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_ItemInstanceModel.html#canstack-shared-models-items-itemdata--system-int32--system-int32----system-boolean">Shared.Models.Items.ItemInstanceModel::CanStack(Shared.Models.Items.ItemData, System.Int32, System.Int32&amp;)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#turnmoneyintoitemstackamount-shared-models-items-sharedinventorymodel--shared-models-items-sharedinventorymodel--system-int32--system-uint64---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::TurnMoneyIntoItemStackAmount(Shared.Models.Items.SharedInventoryModel, Shared.Models.Items.SharedInventoryModel, System.Int32, System.UInt64)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#turnmoneyintoitem-shared-models-items-sharedinventorymodel--shared-models-items-sharedinventorymodel--system-int32--system-uint64---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::TurnMoneyIntoItem(Shared.Models.Items.SharedInventoryModel, Shared.Models.Items.SharedInventoryModel, System.Int32, System.UInt64)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Inventory_Models_DeltaTransaction.html#movemoney-returnrest-system-int32--system-uint64--shared-inventory-models-searchstrategy--system-int32---system-valuetuple-2-system-uint64-system-boolean-"><code>Shared.Inventory.Models.DeltaTransaction::MoveMoney_ReturnRest</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MoveMoneyIntoItem public Shared.Inventory.DeltaModels.DeltaResult MoveMoneyIntoItem(Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 coinType, System.Int32 coinAmount, Shared.Models.Items.SharedInventoryModel targetInventory, System.Int32 targetSlotIndex, System.Boolean allowPartialStack) Shared.Inventory.DeltaModels.DeltaResult sourceInventory Shared.Models.Items.SharedInventoryModel coinType System.Int32 coinAmount System.Int32 targetInventory Shared.Models.Items.SharedInventoryModel targetSlotIndex System.Int32 allowPartialStack System.Boolean" id="movemoneyintoitem-shared-models-items-sharedinventorymodel--system-int32--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-boolean---shared-inventory-deltamodels-deltaresult">
+<div class="method-heading">
+<h3><code>MoveMoneyIntoItem</code></h3>
+<a class="permalink" href="#movemoneyintoitem-shared-models-items-sharedinventorymodel--system-int32--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-boolean---shared-inventory-deltamodels-deltaresult" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Inventory.DeltaModels.DeltaResult MoveMoneyIntoItem(Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 coinType, System.Int32 coinAmount, Shared.Models.Items.SharedInventoryModel targetInventory, System.Int32 targetSlotIndex, System.Boolean allowPartialStack)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Inventory.InventoryDeltaEngine::MoveMoneyIntoItem(Shared.Models.Items.SharedInventoryModel, System.Int32, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaResult.html">Shared.Inventory.DeltaModels.DeltaResult</a> MoveMoneyIntoItem(<a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> sourceInventory, System.Int32 coinType, System.Int32 coinAmount, <a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> targetInventory, System.Int32 targetSlotIndex, System.Boolean allowPartialStack)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaResult.html">Shared.Inventory.DeltaModels.DeltaResult</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8CC2D5BA34A46125E2C165E2292C5520E212E8B5F5170901A503D7B2491065BD</code></li>
+<li><span>Body hash</span><code>85A86854C3870A5FB4B38D2FE55F91D445A966FB755E135F93D97A7EC36206F0</code></li>
+<li><span>IL size</span><span>218</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getmultiplierforcointype-system-int32---system-uint64">Shared.Helpers.MoneyHelper::GetMultiplierForCoinType(System.Int32)</a></code></li>
+<li><code>System.Nullable&lt;System.UInt64&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Nullable&lt;System.UInt64&gt;::get_HasValue()</code></li>
+<li><code>Shared.Models.Items.SharedInventoryModel::get_IsLootOnly()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#hasmoneyfield----system-boolean">Shared.Models.Items.SharedInventoryModel::HasMoneyField()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#movemoney-shared-models-items-sharedinventorymodel--shared-models-items-sharedinventorymodel--system-uint64---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::MoveMoney(Shared.Models.Items.SharedInventoryModel, Shared.Models.Items.SharedInventoryModel, System.UInt64)</a></code></li>
+<li><code>Shared.Inventory.DeltaModels.DeltaResult::.ctor(Shared.Inventory.DeltaModels.DeltaAction)</code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getcoinitemid-system-int32---system-string">Shared.Helpers.MoneyHelper::GetCoinItemId(System.Int32)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Data_ItemDataBase.html#getitemdataornull-system-string---shared-models-items-itemdata">Shared.Data.ItemDataBase::GetItemDataOrNull(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#acceptsitemdata-shared-models-items-itemdata--system-int32---system-boolean">Shared.Models.Items.SharedInventoryModel::AcceptsItemData(Shared.Models.Items.ItemData, System.Int32)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#turnmoneyintoitem-shared-models-items-sharedinventorymodel--shared-models-items-sharedinventorymodel--system-int32--system-uint64---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::TurnMoneyIntoItem(Shared.Models.Items.SharedInventoryModel, Shared.Models.Items.SharedInventoryModel, System.Int32, System.UInt64)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_ItemInstanceModel.html#canstack-shared-models-items-itemdata--system-int32--system-int32----system-boolean">Shared.Models.Items.ItemInstanceModel::CanStack(Shared.Models.Items.ItemData, System.Int32, System.Int32&amp;)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#turnmoneyintoitemstackamount-shared-models-items-sharedinventorymodel--shared-models-items-sharedinventorymodel--system-int32--system-uint64---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::TurnMoneyIntoItemStackAmount(Shared.Models.Items.SharedInventoryModel, Shared.Models.Items.SharedInventoryModel, System.Int32, System.UInt64)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#moneyswapaction-system-guid--system-uint64--system-int32--system-guid--system-int32--system-boolean---system-boolean"><code>Candide.GameModels.Managers.SimpleInventoryManager::MoneySwapAction</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MoveMoneyItemsIntoMoney_Coin public Shared.Inventory.DeltaModels.InventoryResult MoveMoneyItemsIntoMoney_Coin(System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt; actions, Shared.Models.Items.SharedInventoryModel sourceInventory, Shared.Inventory.Models.SearchStrategy sourceSearchStrategy, System.Int32 coinType, System.UInt64 moneyAmount, Shared.Models.Items.SharedInventoryModel targetInventory, out System.UInt64&amp; movedMoneyAmount, out System.UInt64&amp; changeToPutBack) Shared.Inventory.DeltaModels.InventoryResult actions System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt; sourceInventory Shared.Models.Items.SharedInventoryModel sourceSearchStrategy Shared.Inventory.Models.SearchStrategy coinType System.Int32 moneyAmount System.UInt64 targetInventory Shared.Models.Items.SharedInventoryModel movedMoneyAmount System.UInt64&amp; changeToPutBack System.UInt64&amp;" id="movemoneyitemsintomoney-coin-system-collections-generic-list-1-shared-inventory-deltamodels-deltaaction---shared-models-items-sharedinventorymodel--shared-inventory-models-searchstrategy--system-int32--system-uint64--shared-models-items-sharedinventorymodel--system-uint64---system-uint64----shared-inventory-deltamodels-inventoryresult">
+<div class="method-heading">
+<h3><code>MoveMoneyItemsIntoMoney_Coin</code></h3>
+<a class="permalink" href="#movemoneyitemsintomoney-coin-system-collections-generic-list-1-shared-inventory-deltamodels-deltaaction---shared-models-items-sharedinventorymodel--shared-inventory-models-searchstrategy--system-int32--system-uint64--shared-models-items-sharedinventorymodel--system-uint64---system-uint64----shared-inventory-deltamodels-inventoryresult" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Inventory.DeltaModels.InventoryResult MoveMoneyItemsIntoMoney_Coin(System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt; actions, Shared.Models.Items.SharedInventoryModel sourceInventory, Shared.Inventory.Models.SearchStrategy sourceSearchStrategy, System.Int32 coinType, System.UInt64 moneyAmount, Shared.Models.Items.SharedInventoryModel targetInventory, out System.UInt64&amp; movedMoneyAmount, out System.UInt64&amp; changeToPutBack)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Inventory.InventoryDeltaEngine::MoveMoneyItemsIntoMoney_Coin(System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;, Shared.Models.Items.SharedInventoryModel, Shared.Inventory.Models.SearchStrategy, System.Int32, System.UInt64, Shared.Models.Items.SharedInventoryModel, System.UInt64&amp;, System.UInt64&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Inventory_DeltaModels_InventoryResult.html">Shared.Inventory.DeltaModels.InventoryResult</a> MoveMoneyItemsIntoMoney_Coin(System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html">Shared.Inventory.DeltaModels.DeltaAction</a>&gt; actions, <a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> sourceInventory, <a href="../../types/Shared/Shared_Inventory_Models_SearchStrategy.html">Shared.Inventory.Models.SearchStrategy</a> sourceSearchStrategy, System.Int32 coinType, System.UInt64 moneyAmount, <a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> targetInventory, out System.UInt64&amp; movedMoneyAmount, out System.UInt64&amp; changeToPutBack)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_InventoryResult.html">Shared.Inventory.DeltaModels.InventoryResult</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DB635CF2E5B8F1A3E5CDD67742DD477AE7119A5438667C35578699082281F4FD</code></li>
+<li><span>Body hash</span><code>DABE03B690983390626BAC5D1021BED429062446B2FEE77760648F7883909707</code></li>
+<li><span>IL size</span><span>188</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Inventory.Models.SlotsEnumerator::.ctor(Shared.Models.Items.SharedInventoryModel, Shared.Inventory.Models.SearchStrategy)</code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getmultiplierforcointype-system-int32---system-uint64">Shared.Helpers.MoneyHelper::GetMultiplierForCoinType(System.Int32)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_Models_SlotsEnumerator.html#index----system-int32">Shared.Inventory.Models.SlotsEnumerator::Index()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_ItemInstanceExtensions.html#ismoney-shared-models-items-iteminstancemodel---system-boolean">Shared.Inventory.ItemInstanceExtensions::IsMoney(Shared.Models.Items.ItemInstanceModel)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_MoneyHelper.html#getcoinitemid-system-int32---system-string">Shared.Helpers.MoneyHelper::GetCoinItemId(System.Int32)</a></code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#turnmoneyitemamountintomoney-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::TurnMoneyItemAmountIntoMoney(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Inventory.DeltaModels.DeltaAction&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#turnmoneyitemintomoney-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::TurnMoneyItemIntoMoney(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_Models_SlotsEnumerator.html#increment----system-boolean">Shared.Inventory.Models.SlotsEnumerator::Increment()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Inventory_Models_DeltaTransaction.html#movemoney-returnrest-system-int32--system-uint64--shared-inventory-models-searchstrategy--system-int32---system-valuetuple-2-system-uint64-system-boolean-"><code>Shared.Inventory.Models.DeltaTransaction::MoveMoney_ReturnRest</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SwapSlots public Shared.Inventory.DeltaModels.DeltaResult SwapSlots(Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 sourceSlotIndex, Shared.Models.Items.SharedInventoryModel targetInventory, System.Int32 targetSlotIndex) Shared.Inventory.DeltaModels.DeltaResult sourceInventory Shared.Models.Items.SharedInventoryModel sourceSlotIndex System.Int32 targetInventory Shared.Models.Items.SharedInventoryModel targetSlotIndex System.Int32" id="swapslots-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32---shared-inventory-deltamodels-deltaresult">
+<div class="method-heading">
+<h3><code>SwapSlots</code></h3>
+<a class="permalink" href="#swapslots-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32---shared-inventory-deltamodels-deltaresult" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Inventory.DeltaModels.DeltaResult SwapSlots(Shared.Models.Items.SharedInventoryModel sourceInventory, System.Int32 sourceSlotIndex, Shared.Models.Items.SharedInventoryModel targetInventory, System.Int32 targetSlotIndex)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Inventory.InventoryDeltaEngine::SwapSlots(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaResult.html">Shared.Inventory.DeltaModels.DeltaResult</a> SwapSlots(<a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> sourceInventory, System.Int32 sourceSlotIndex, <a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> targetInventory, System.Int32 targetSlotIndex)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaResult.html">Shared.Inventory.DeltaModels.DeltaResult</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4BF6D2D13AB03EB232FA1550011E6CCC806C31613F0BF4F3394D022883626ED4</code></li>
+<li><span>Body hash</span><code>B35F50037703955D95F96E166E59368BC9C5E8D0FC430FCF29C0E311824CF39E</code></li>
+<li><span>IL size</span><span>264</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Inventory.Exceptions.InventoryDeltaException::.ctor(System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_ItemInstanceExtensions.html#ismoney-shared-models-items-iteminstancemodel---system-boolean">Shared.Inventory.ItemInstanceExtensions::IsMoney(Shared.Models.Items.ItemInstanceModel)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#hasmoneyfield----system-boolean">Shared.Models.Items.SharedInventoryModel::HasMoneyField()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#acceptsmoney----system-boolean">Shared.Models.Items.SharedInventoryModel::AcceptsMoney()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#turnmoneyitemintomoney-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::TurnMoneyItemIntoMoney(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel)</a></code></li>
+<li><code>Shared.Inventory.DeltaModels.DeltaResult::.ctor(Shared.Inventory.DeltaModels.DeltaAction)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html#acceptsitem-shared-models-items-iteminstancemodel--system-int32---system-boolean">Shared.Models.Items.SharedInventoryModel::AcceptsItem(Shared.Models.Items.ItemInstanceModel, System.Int32)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_ItemInstanceModel.html#canstack-shared-models-items-iteminstancemodel--system-int32----system-boolean">Shared.Models.Items.ItemInstanceModel::CanStack(Shared.Models.Items.ItemInstanceModel, System.Int32&amp;)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#movestackamount-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32--system-int32---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::MoveStackAmount(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32, System.Int32)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Inventory_DeltaModels_DeltaAction.html#swapitempositions-shared-models-items-sharedinventorymodel--system-int32--shared-models-items-sharedinventorymodel--system-int32---shared-inventory-deltamodels-deltaaction">Shared.Inventory.DeltaModels.DeltaAction::SwapItemPositions(Shared.Models.Items.SharedInventoryModel, System.Int32, Shared.Models.Items.SharedInventoryModel, System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#emptytrashandswapinitem-candide-gamemodels-models-items-simpleinventory--candide-gamemodels-models-items-simpleinventory--system-int32--system-int32---system-boolean"><code>Candide.GameModels.Managers.SimpleInventoryManager::EmptyTrashAndSwapInItem</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SimpleInventoryManager.html#itemswapaction-system-guid--system-int32--system-guid--system-int32---system-boolean"><code>Candide.GameModels.Managers.SimpleInventoryManager::ItemSwapAction</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_Models_DeltaTransaction.html#lootitem-system-int32--system-int32--system-boolean--system-int32---system-boolean"><code>Shared.Inventory.Models.DeltaTransaction::LootItem</code></a></li>
+<li><a href="../../types/Shared/Shared_Inventory_Models_DeltaTransaction.html#swap-system-int32--system-int32--system-int32--system-int32---system-boolean"><code>Shared.Inventory.Models.DeltaTransaction::Swap</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Tried to swap same item on itself</code></li>
+<li><code>Don&#39;t do unnecessary swaps</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

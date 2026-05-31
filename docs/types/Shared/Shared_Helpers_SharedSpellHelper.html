@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shared.Helpers.SharedSpellHelper - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Shared.html">Shared</a></p>
+<div class="title-row">
+<h1>Shared.Helpers.SharedSpellHelper</h1>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.SharedSpellHelper">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Shared.Helpers.SharedSpellHelper
+
+- Assembly: `Shared`
+- Namespace: `Shared.Helpers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 5 methods, 0 properties, 1 fields, 0 events
+
+## Public Methods
+- `public Shared.Helpers.SpellSnapshotData CreateSnapshotData(Shared.Models.Spells.AttackSpellArgs args, Shared.Entity.EntityWrapper entity)`
+- `public Shared.Helpers.CastSpellArgs CreateSpellArgs(System.String spellId, System.Object overrideSpellTypeArgs, Shared.Models.Spells.AttackSpellArgs overrideAttackSpellArgs, Shared.Entity.EntityWrapper castingEntity, System.UInt16&amp; nextCastId)`
+- `public Shared.Combat.Projectiles.Models.SpellData CreateSpellData(Shared.Helpers.SpellSnapshotData snapShotData, System.Int32 maxTargets)`
+- `public System.ValueTuple&lt;Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray&gt; GetDamage(Shared.Combat.DamageTypesArray baseMinDamage, Shared.Combat.DamageTypesArray baseMaxDamage, Shared.Entity.EntityWrapper castingEntity, System.String skillId, System.Single damageMultiplier)`
+">Copy markdown</button>
+<a class="button" href="Shared_Helpers_SharedSpellHelper.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Shared.Helpers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>5</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>1</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Shared</code></li>
+<li><span>Namespace</span><code>Shared.Helpers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>F299E8E0D7D54D229C003833B9AD503B740CE3375C7EFDC9DC2F35470E42A9FA</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ReuseSpellChainList private System.Collections.Generic.List&lt;System.ValueTuple&lt;Shared.Helpers.SpellEvent, Shared.Helpers.CastSpellArgs, Shared.Aura.Args.Target&gt;&gt; ReuseSpellChainList System.Collections.Generic.List&lt;System.ValueTuple&lt;Shared.Helpers.SpellEvent, Shared.Helpers.CastSpellArgs, Shared.Aura.Args.Target&gt;&gt;" id="reusespellchainlist-system-collections-generic-list-1-system-valuetuple-3-shared-helpers-spellevent-shared-helpers-castspellargs-shared-aura-args-target--"><td><span class="member-name-cell"><code>ReuseSpellChainList</code><a class="permalink" href="#reusespellchainlist-system-collections-generic-list-1-system-valuetuple-3-shared-helpers-spellevent-shared-helpers-castspellargs-shared-aura-args-target--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;System.ValueTuple&lt;Shared.Helpers.SpellEvent, Shared.Helpers.CastSpellArgs, Shared.Aura.Args.Target&gt;&gt; ReuseSpellChainList">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;System.ValueTuple&lt;<a href="../../types/Shared/Shared_Helpers_SpellEvent.html">Shared.Helpers.SpellEvent</a>, <a href="../../types/Shared/Shared_Helpers_CastSpellArgs.html">Shared.Helpers.CastSpellArgs</a>, <a href="../../types/Shared/Shared_Aura_Args_Target.html">Shared.Aura.Args.Target</a>&gt;&gt; ReuseSpellChainList</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateSnapshotData public Shared.Helpers.SpellSnapshotData CreateSnapshotData(Shared.Models.Spells.AttackSpellArgs args, Shared.Entity.EntityWrapper entity) Shared.Helpers.SpellSnapshotData args Shared.Models.Spells.AttackSpellArgs entity Shared.Entity.EntityWrapper" id="createsnapshotdata-shared-models-spells-attackspellargs--shared-entity-entitywrapper---shared-helpers-spellsnapshotdata">
+<div class="method-heading">
+<h3><code>CreateSnapshotData</code></h3>
+<a class="permalink" href="#createsnapshotdata-shared-models-spells-attackspellargs--shared-entity-entitywrapper---shared-helpers-spellsnapshotdata" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Helpers.SpellSnapshotData CreateSnapshotData(Shared.Models.Spells.AttackSpellArgs args, Shared.Entity.EntityWrapper entity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.SharedSpellHelper::CreateSnapshotData(Shared.Models.Spells.AttackSpellArgs, Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Helpers_SpellSnapshotData.html">Shared.Helpers.SpellSnapshotData</a> CreateSnapshotData(<a href="../../types/Shared/Shared_Models_Spells_AttackSpellArgs.html">Shared.Models.Spells.AttackSpellArgs</a> args, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Helpers_SpellSnapshotData.html">Shared.Helpers.SpellSnapshotData</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C7041E46011152E72C011D8CBF23DD37B1B54FD16B6650115FA48791CF2B34DD</code></li>
+<li><span>Body hash</span><code>B229BF5F1697B7541346D75C4C2E50471BEA7AFF3133E97D1F1EA7F083B9781E</code></li>
+<li><span>IL size</span><span>554</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Combat_DamageTypesArray.html#clone----shared-combat-damagetypesarray">Shared.Combat.DamageTypesArray::Clone()</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Stats()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_EntityStats.html#getcalculateddamagetypesarray-shared-combat-damagetypesarray--shared-combat-attacktype--system-single---system-void">Shared.Models.Stats.EntityStats::GetCalculatedDamageTypesArray(Shared.Combat.DamageTypesArray, Shared.Combat.AttackType, System.Single)</a></code></li>
+<li><code>System.String::IsNullOrEmpty(System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Interfaces_Entity_IEntitySystemBridge.html#getskilldamagemultiplier-shared-entity-entitywrapper--system-string---system-single">Shared.Interfaces.Entity.IEntitySystemBridge::GetSkillDamageMultiplier(Shared.Entity.EntityWrapper, System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_DamageTypesArray.html#scale-system-single---system-void">Shared.Combat.DamageTypesArray::Scale(System.Single)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_EntityStats.html#get-system-string---system-single">Shared.Models.Stats.EntityStats::Get(System.String)</a></code></li>
+<li><code>System.Nullable&lt;Shared.Combat.DamageVfxType&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_DamageTypesArray.html#getvfxtypebybiggestdamage----shared-combat-damagevfxtype">Shared.Combat.DamageTypesArray::GetVfxTypeByBiggestDamage()</a></code></li>
+<li><code>System.Nullable&lt;Shared.Combat.DamageVfxType&gt;::GetValueOrDefault()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_SpellServerManager.html#createspellargs-shared-models-spells-spelldatamodel--shared-models-spells-attackspellargs--candideserver-entities-serverentitymodel---shared-helpers-castspellargs"><code>CandideServer.ServerManagers.SpellServerManager::CreateSpellArgs</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_SpellManager.html#createspellargs-shared-models-spells-spelldatamodel--shared-models-spells-attackspellargs--shared-entity-entitywrapper---shared-helpers-castspellargs"><code>Candide.GameModels.Managers.SpellManager::CreateSpellArgs</code></a></li>
+<li><a href="../../types/Shared/Shared_Helpers_SharedSpellHelper.html#createspellargs-system-string--system-object--shared-models-spells-attackspellargs--shared-entity-entitywrapper--system-uint16----shared-helpers-castspellargs"><code>Shared.Helpers.SharedSpellHelper::CreateSpellArgs</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>CritDamage</code></li>
+<li><code>CritChance</code></li>
+<li><code>Knockback</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateSpellArgs public Shared.Helpers.CastSpellArgs CreateSpellArgs(System.String spellId, System.Object overrideSpellTypeArgs, Shared.Models.Spells.AttackSpellArgs overrideAttackSpellArgs, Shared.Entity.EntityWrapper castingEntity, System.UInt16&amp; nextCastId) Shared.Helpers.CastSpellArgs spellId System.String overrideSpellTypeArgs System.Object overrideAttackSpellArgs Shared.Models.Spells.AttackSpellArgs castingEntity Shared.Entity.EntityWrapper nextCastId System.UInt16&amp;" id="createspellargs-system-string--system-object--shared-models-spells-attackspellargs--shared-entity-entitywrapper--system-uint16----shared-helpers-castspellargs">
+<div class="method-heading">
+<h3><code>CreateSpellArgs</code></h3>
+<a class="permalink" href="#createspellargs-system-string--system-object--shared-models-spells-attackspellargs--shared-entity-entitywrapper--system-uint16----shared-helpers-castspellargs" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Helpers.CastSpellArgs CreateSpellArgs(System.String spellId, System.Object overrideSpellTypeArgs, Shared.Models.Spells.AttackSpellArgs overrideAttackSpellArgs, Shared.Entity.EntityWrapper castingEntity, System.UInt16&amp; nextCastId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.SharedSpellHelper::CreateSpellArgs(System.String, System.Object, Shared.Models.Spells.AttackSpellArgs, Shared.Entity.EntityWrapper, System.UInt16&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Helpers_CastSpellArgs.html">Shared.Helpers.CastSpellArgs</a> CreateSpellArgs(System.String spellId, System.Object overrideSpellTypeArgs, <a href="../../types/Shared/Shared_Models_Spells_AttackSpellArgs.html">Shared.Models.Spells.AttackSpellArgs</a> overrideAttackSpellArgs, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> castingEntity, System.UInt16&amp; nextCastId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Helpers_CastSpellArgs.html">Shared.Helpers.CastSpellArgs</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5D0DE322A8CF1FFC24902D0815BB737161CDC08C401A527AB26A66224E241F15</code></li>
+<li><span>Body hash</span><code>FE144D66BB68D18D53CEFF4C0C4BD09F63BA9DB551594665C1250D610BDF4581</code></li>
+<li><span>IL size</span><span>191</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Helpers_SharedSpellHelper.html#getspellandsanitycheck-system-string--system-object---shared-models-spells-spelldatamodel">Shared.Helpers.SharedSpellHelper::GetSpellAndSanityCheck(System.String, System.Object)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Shared.Helpers.SpellEvent, Shared.Helpers.CastSpellArgs, Shared.Aura.Args.Target&gt;&gt;::Clear()</code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_SharedSpellHelper.html#createspellargs-system-string--system-object--shared-models-spells-attackspellargs--shared-entity-entitywrapper--system-uint16----shared-helpers-castspellargs">Shared.Helpers.SharedSpellHelper::CreateSpellArgs(System.String, System.Object, Shared.Models.Spells.AttackSpellArgs, Shared.Entity.EntityWrapper, System.UInt16&amp;)</a></code></li>
+<li><code>System.ValueTuple&lt;Shared.Helpers.SpellEvent, Shared.Helpers.CastSpellArgs, Shared.Aura.Args.Target&gt;::.ctor(!0, !1, !2)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Shared.Helpers.SpellEvent, Shared.Helpers.CastSpellArgs, Shared.Aura.Args.Target&gt;&gt;::Add(!0)</code></li>
+<li><code>Shared.Helpers.CastSpellArgs::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;Shared.Helpers.SpellEvent, Shared.Helpers.CastSpellArgs, Shared.Aura.Args.Target&gt;&gt;::ToArray()</code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_SharedSpellHelper.html#createsnapshotdata-shared-models-spells-attackspellargs--shared-entity-entitywrapper---shared-helpers-spellsnapshotdata">Shared.Helpers.SharedSpellHelper::CreateSnapshotData(Shared.Models.Spells.AttackSpellArgs, Shared.Entity.EntityWrapper)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Catapult_ServerCatapultController.html#spellargs-nonplayer-shared-entity-entitywrapper--shared-entity-entitywrapper---shared-helpers-castspellargs"><code>CandideServer.Entities.ControllerSets.Catapult.ServerCatapultController::SpellArgs_NonPlayer</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#trythrow-candideserver-entities-serverentitymodel--candideserver-entities-serverentitymodel--microsoft-xna-framework-vector3---system-boolean"><code>CandideServer.ServerManagers.EntityServerManager::TryThrow</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#catapult-shared-entity-entitywrapper--shared-entity-entitywrapper--microsoft-xna-framework-vector3---system-void"><code>Candide.GameModels.Managers.EntityManager::Catapult</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#createcatapultsnapshotdata-shared-entity-entitywrapper--shared-entity-entitywrapper---shared-helpers-castspellargs"><code>Candide.GameModels.Managers.EntityManager::CreateCatapultSnapshotData</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#trythrow-shared-entity-entitywrapper--shared-entity-entitywrapper--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-boolean---system-boolean"><code>Candide.GameModels.Managers.EntityManager::TryThrow</code></a></li>
+<li><a href="../../types/Shared/Shared_Helpers_SharedSpellHelper.html#createspellargs-system-string--system-object--shared-models-spells-attackspellargs--shared-entity-entitywrapper--system-uint16----shared-helpers-castspellargs"><code>Shared.Helpers.SharedSpellHelper::CreateSpellArgs</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateSpellData public Shared.Combat.Projectiles.Models.SpellData CreateSpellData(Shared.Helpers.SpellSnapshotData snapShotData, System.Int32 maxTargets) Shared.Combat.Projectiles.Models.SpellData snapShotData Shared.Helpers.SpellSnapshotData maxTargets System.Int32" id="createspelldata-shared-helpers-spellsnapshotdata--system-int32---shared-combat-projectiles-models-spelldata">
+<div class="method-heading">
+<h3><code>CreateSpellData</code></h3>
+<a class="permalink" href="#createspelldata-shared-helpers-spellsnapshotdata--system-int32---shared-combat-projectiles-models-spelldata" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Combat.Projectiles.Models.SpellData CreateSpellData(Shared.Helpers.SpellSnapshotData snapShotData, System.Int32 maxTargets)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.SharedSpellHelper::CreateSpellData(Shared.Helpers.SpellSnapshotData, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Combat_Projectiles_Models_SpellData.html">Shared.Combat.Projectiles.Models.SpellData</a> CreateSpellData(<a href="../../types/Shared/Shared_Helpers_SpellSnapshotData.html">Shared.Helpers.SpellSnapshotData</a> snapShotData, System.Int32 maxTargets)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Combat_Projectiles_Models_SpellData.html">Shared.Combat.Projectiles.Models.SpellData</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>133055F5A75CBE2580A32979D38492FC82A36D49C570508D728074C3319034B5</code></li>
+<li><span>Body hash</span><code>AD84F4C5B9DA9EEF1971AAA0A74859274E17CF672D5CE49DC98D99952D5FEB0E</code></li>
+<li><span>IL size</span><span>130</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Combat_Spells_SharedAreaOfEffectSpell.html#getprojectileargs-shared-combat-projectiles-projectilesystem--shared-combat-spells-casting-spellcastingcontext--shared-helpers-castspellargs--system-action-2-shared-combat-projectiles-models-projectilehitdata-shared-combat-spells-casting-castspell----system-valuetuple-2-shared-combat-projectiles-projectilefactory-baseprojectileargs-shared-combat-projectiles-projectilefactory-areaofeffectprojectileargs-"><code>Shared.Combat.Spells.SharedAreaOfEffectSpell::GetProjectileArgs</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_SharedConeAttackSpell.html#getprojectileargs-shared-combat-projectiles-projectilesystem--shared-combat-spells-casting-spellcastingcontext--shared-helpers-castspellargs--castspell-onupdatedelegate--system-action-2-shared-combat-projectiles-models-projectilehitdata-shared-combat-spells-casting-castspell----system-valuetuple-2-shared-combat-projectiles-projectilefactory-baseprojectileargs-shared-combat-projectiles-projectilefactory-coneprojectileargs-"><code>Shared.Combat.Spells.SharedConeAttackSpell::GetProjectileArgs</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_SharedExplosionSpell.html#getprojectileargs-shared-combat-projectiles-projectilesystem--shared-combat-spells-casting-spellcastingcontext--shared-helpers-castspellargs--system-action-2-shared-combat-projectiles-models-projectilehitdata-shared-combat-spells-casting-castspell----system-valuetuple-2-shared-combat-projectiles-projectilefactory-baseprojectileargs-shared-combat-projectiles-projectilefactory-areaofeffectprojectileargs-"><code>Shared.Combat.Spells.SharedExplosionSpell::GetProjectileArgs</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_SharedHookSpell.html#cast-shared-combat-projectiles-projectilesystem--shared-combat-spells-casting-spellcastingcontext--shared-helpers-castspellargs--system-boolean--system-action-2-shared-combat-projectiles-models-projectilehitdata-shared-combat-spells-casting-castspell----system-void"><code>Shared.Combat.Spells.SharedHookSpell::Cast</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_SharedInstantSingleTargetSpell.html#cast-shared-combat-projectiles-projectilesystem--shared-combat-spells-casting-spellcastingcontext--shared-helpers-castspellargs--system-boolean--system-action-2-shared-combat-projectiles-models-projectilehitdata-shared-combat-spells-casting-castspell----system-void"><code>Shared.Combat.Spells.SharedInstantSingleTargetSpell::Cast</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_SharedLinearShockwaveSpell.html#getprojectileargs-shared-combat-projectiles-projectilesystem--shared-combat-spells-casting-spellcastingcontext--shared-helpers-castspellargs--system-action-2-shared-combat-projectiles-models-projectilehitdata-shared-combat-spells-casting-castspell---castspell-onupdatedelegate---system-valuetuple-2-shared-combat-projectiles-projectilefactory-baseprojectileargs-shared-combat-projectiles-projectilefactory-singleprojectileargs-"><code>Shared.Combat.Spells.SharedLinearShockwaveSpell::GetProjectileArgs</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_SharedLineAttackSpell.html#getprojectileargs-shared-combat-projectiles-projectilesystem--shared-combat-spells-casting-spellcastingcontext--shared-helpers-castspellargs--castspell-onupdatedelegate--system-action-2-shared-combat-projectiles-models-projectilehitdata-shared-combat-spells-casting-castspell----system-valuetuple-2-shared-combat-projectiles-projectilefactory-baseprojectileargs-shared-combat-projectiles-projectilefactory-lineprojectileargs-"><code>Shared.Combat.Spells.SharedLineAttackSpell::GetProjectileArgs</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_SharedLineGrappleHookSpell.html#getprojectileargs-shared-combat-projectiles-projectilesystem--shared-combat-spells-casting-spellcastingcontext--shared-helpers-castspellargs--system-action-2-shared-combat-projectiles-models-projectilehitdata-shared-combat-spells-casting-castspell----system-valuetuple-2-shared-combat-projectiles-projectilefactory-baseprojectileargs-shared-combat-projectiles-projectilefactory-singleprojectileargs-"><code>Shared.Combat.Spells.SharedLineGrappleHookSpell::GetProjectileArgs</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_SharedMultipleProjectileAttackSpell.html#createprojectiles-shared-combat-projectiles-projectilesystem--shared-combat-spells-casting-spellcastingcontext--shared-helpers-castspellargs--system-collections-generic-list-1-system-valuetuple-2-shared-combat-projectiles-projectilefactory-baseprojectileargs-shared-combat-projectiles-projectilefactory-singleprojectileargs----system-action-2-shared-combat-projectiles-models-projectilehitdata-shared-combat-spells-casting-castspell----system-void"><code>Shared.Combat.Spells.SharedMultipleProjectileAttackSpell::CreateProjectiles</code></a></li>
+<li><a href="../../types/Shared/Shared_Combat_Spells_SharedSingleProjectileAttackSpell.html#getprojectileargs-shared-combat-projectiles-projectilesystem--shared-combat-spells-casting-spellcastingcontext--shared-helpers-castspellargs--system-action-2-shared-combat-projectiles-models-projectilehitdata-shared-combat-spells-casting-castspell---castspell-onupdatedelegate---system-valuetuple-2-shared-combat-projectiles-projectilefactory-baseprojectileargs-shared-combat-projectiles-projectilefactory-singleprojectileargs-"><code>Shared.Combat.Spells.SharedSingleProjectileAttackSpell::GetProjectileArgs</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetDamage public System.ValueTuple&lt;Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray&gt; GetDamage(Shared.Combat.DamageTypesArray baseMinDamage, Shared.Combat.DamageTypesArray baseMaxDamage, Shared.Entity.EntityWrapper castingEntity, System.String skillId, System.Single damageMultiplier) System.ValueTuple&lt;Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray&gt; baseMinDamage Shared.Combat.DamageTypesArray baseMaxDamage Shared.Combat.DamageTypesArray castingEntity Shared.Entity.EntityWrapper skillId System.String damageMultiplier System.Single" id="getdamage-shared-combat-damagetypesarray--shared-combat-damagetypesarray--shared-entity-entitywrapper--system-string--system-single---system-valuetuple-2-shared-combat-damagetypesarray-shared-combat-damagetypesarray-">
+<div class="method-heading">
+<h3><code>GetDamage</code></h3>
+<a class="permalink" href="#getdamage-shared-combat-damagetypesarray--shared-combat-damagetypesarray--shared-entity-entitywrapper--system-string--system-single---system-valuetuple-2-shared-combat-damagetypesarray-shared-combat-damagetypesarray-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.ValueTuple&lt;Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray&gt; GetDamage(Shared.Combat.DamageTypesArray baseMinDamage, Shared.Combat.DamageTypesArray baseMaxDamage, Shared.Entity.EntityWrapper castingEntity, System.String skillId, System.Single damageMultiplier)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.SharedSpellHelper::GetDamage(Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray, Shared.Entity.EntityWrapper, System.String, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.ValueTuple&lt;<a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a>, <a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a>&gt; GetDamage(<a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a> baseMinDamage, <a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a> baseMaxDamage, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> castingEntity, System.String skillId, System.Single damageMultiplier)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.ValueTuple&lt;<a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a>, <a href="../../types/Shared/Shared_Combat_DamageTypesArray.html">Shared.Combat.DamageTypesArray</a>&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FF082DA41AECCB440EC124C73A02893484D729EBBEF868FEC6C25BD8AB44BEF1</code></li>
+<li><span>Body hash</span><code>3A3C9164E115FF6E017CFEEDC786EDC24620C742AE47A70E2858EA262FA0AB70</code></li>
+<li><span>IL size</span><span>53</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Combat_DamageTypesArray.html#clone----shared-combat-damagetypesarray">Shared.Combat.DamageTypesArray::Clone()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_SharedCombatHandler.html#calculateminmaxdamagearrays-shared-combat-damagetypesarray--shared-combat-damagetypesarray--system-single--system-string--shared-entity-entitywrapper--shared-combat-damagetypesarray--shared-combat-damagetypesarray---system-void">Shared.Combat.SharedCombatHandler::CalculateMinMaxDamageArrays(Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray, System.Single, System.String, Shared.Entity.EntityWrapper, Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray)</a></code></li>
+<li><code>System.ValueTuple&lt;Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray&gt;::.ctor(!0, !1)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="GetSpellAndSanityCheck private Shared.Models.Spells.SpellDataModel GetSpellAndSanityCheck(System.String spellId, System.Object overrideSpellTypeArgs) Shared.Models.Spells.SpellDataModel spellId System.String overrideSpellTypeArgs System.Object" id="getspellandsanitycheck-system-string--system-object---shared-models-spells-spelldatamodel">
+<div class="method-heading">
+<h3><code>GetSpellAndSanityCheck</code></h3>
+<a class="permalink" href="#getspellandsanitycheck-system-string--system-object---shared-models-spells-spelldatamodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private Shared.Models.Spells.SpellDataModel GetSpellAndSanityCheck(System.String spellId, System.Object overrideSpellTypeArgs)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.SharedSpellHelper::GetSpellAndSanityCheck(System.String, System.Object)">Copy Harmony target</button>
+</div>
+<p><code>private <a href="../../types/Shared/Shared_Models_Spells_SpellDataModel.html">Shared.Models.Spells.SpellDataModel</a> GetSpellAndSanityCheck(System.String spellId, System.Object overrideSpellTypeArgs)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Models_Spells_SpellDataModel.html">Shared.Models.Spells.SpellDataModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FD18D07B88FF99BEE48FD1497EE7F50808BB9ECEEA699AA87A67F6097FF58993</code></li>
+<li><span>Body hash</span><code>234C119F987F29A0A825B248476DF575EEBC7A047B780B719A3F4859568F81B0</code></li>
+<li><span>IL size</span><span>148</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_SpellDataBase.html#getspellornull-system-string---shared-models-spells-spelldatamodel">Shared.Data.SpellDataBase::GetSpellOrNull(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Object::GetType()</code></li>
+<li><code>System.Type::op_Inequality(System.Type, System.Type)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Helpers_SharedSpellHelper.html#createspellargs-system-string--system-object--shared-models-spells-attackspellargs--shared-entity-entitywrapper--system-uint16----shared-helpers-castspellargs"><code>Shared.Helpers.SharedSpellHelper::CreateSpellArgs</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>SharedSpellHelper: Could not find spell with ID </code></li>
+<li><code>SharedSpellHelper</code></li>
+<li><code>: Override arguments are not compatible with the cast spell. Got </code></li>
+<li><code>, expected </code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shared.Data.ConstructionDataBase - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Shared.html">Shared</a></p>
+<div class="title-row">
+<h1>Shared.Data.ConstructionDataBase</h1>
+<button class="copy-button" type="button" data-copy="Shared.Data.ConstructionDataBase">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Shared.Data.ConstructionDataBase
+
+- Assembly: `Shared`
+- Namespace: `Shared.Data`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 7 methods, 0 properties, 5 fields, 0 events
+
+## Public Methods
+- `public System.Void AddConstructions(System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt; constructionList)`
+- `public System.Void Clear()`
+- `public Shared.Models.Construction.ConstructionModel GetConstructionOrMissing(System.String id)`
+- `public Shared.Models.Construction.ConstructionModel GetConstructionOrNull(System.String id)`
+- `public Shared.Models.Construction.ConstructionModel[] GetConstructionsWithBaseId(System.String baseId, System.Boolean sortByUpgradeLevel)`
+- `public System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt; GetUpgradesForBuilding(System.String buildingId)`
+- `public System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt; GetUpgradesForDecoration(System.String decorationId)`
+">Copy markdown</button>
+<a class="button" href="Shared_Data_ConstructionDataBase.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Shared.Data</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>7</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>5</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Shared</code></li>
+<li><span>Namespace</span><code>Shared.Data</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>48380C71B910D846285F0BE5883398D887F0F646E2577CC7FCBD3C20580041E4</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="DataMap public System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Construction.ConstructionModel&gt; DataMap System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Construction.ConstructionModel&gt;" id="datamap-system-collections-generic-dictionary-2-system-string-shared-models-construction-constructionmodel-"><td><span class="member-name-cell"><code>DataMap</code><a class="permalink" href="#datamap-system-collections-generic-dictionary-2-system-string-shared-models-construction-constructionmodel-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Construction.ConstructionModel&gt; DataMap">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.String, <a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a>&gt; DataMap</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="MissingData public Shared.Models.Construction.ConstructionModel MissingData Shared.Models.Construction.ConstructionModel" id="missingdata-shared-models-construction-constructionmodel"><td><span class="member-name-cell"><code>MissingData</code><a class="permalink" href="#missingdata-shared-models-construction-constructionmodel" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Shared.Models.Construction.ConstructionModel MissingData">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a> MissingData</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="SuffixDescription public System.String SuffixDescription System.String" id="suffixdescription-system-string"><td><span class="member-name-cell"><code>SuffixDescription</code><a class="permalink" href="#suffixdescription-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String SuffixDescription">Copy</button></span></td><td>public</td><td><code>public System.String SuffixDescription</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="SuffixName public System.String SuffixName System.String" id="suffixname-system-string"><td><span class="member-name-cell"><code>SuffixName</code><a class="permalink" href="#suffixname-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String SuffixName">Copy</button></span></td><td>public</td><td><code>public System.String SuffixName</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="UpgradeMap public System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;&gt; UpgradeMap System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;&gt;" id="upgrademap-system-collections-generic-dictionary-2-system-string-system-collections-generic-list-1-shared-models-construction-constructionmodel--"><td><span class="member-name-cell"><code>UpgradeMap</code><a class="permalink" href="#upgrademap-system-collections-generic-dictionary-2-system-string-system-collections-generic-list-1-shared-models-construction-constructionmodel--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;&gt; UpgradeMap">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a>&gt;&gt; UpgradeMap</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddConstructions public System.Void AddConstructions(System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt; constructionList) System.Void constructionList System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;" id="addconstructions-system-collections-generic-list-1-shared-models-construction-constructionmodel----system-void">
+<div class="method-heading">
+<h3><code>AddConstructions</code></h3>
+<a class="permalink" href="#addconstructions-system-collections-generic-list-1-shared-models-construction-constructionmodel----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddConstructions(System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt; constructionList)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.ConstructionDataBase::AddConstructions(System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddConstructions(System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a>&gt; constructionList)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CD8E41BF12D74DBBB4FE9864ADCF25AE2650110BEF9573FA0C57176E2A3FCAF8</code></li>
+<li><span>Body hash</span><code>5539BF7DDE152D52D4F93DE5C5F60A2DE66E2F839F6B23C0B10102983351B7BD</code></li>
+<li><span>IL size</span><span>360</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Construction.ConstructionModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Construction.ConstructionModel&gt;::ContainsKey(!0)</code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Exception::.ctor(System.String)</code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code>Shared.Text.StringId::op_Implicit(System.String)</code></li>
+<li><code>System.Nullable&lt;Shared.Text.StringId&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Shared.Text.StringId&gt;::.ctor(!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Construction.ConstructionModel&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;::Add(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;&gt;::set_Item(!0, !1)</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Construction.ConstructionModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Data_SharedDataSetup.html#setup----system-void"><code>Shared.Data.SharedDataSetup::Setup</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Detected duplicate construction id &#39;</code></li>
+<li><code>&#39;.</code></li>
+<li><code>Construction </code></li>
+<li><code> is missing an area.</code></li>
+<li><code> does not have a main area.</code></li>
+<li><code>*construction:name</code></li>
+<li><code>*construction:description</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Clear public System.Void Clear() System.Void " id="clear----system-void">
+<div class="method-heading">
+<h3><code>Clear</code></h3>
+<a class="permalink" href="#clear----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Clear()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.ConstructionDataBase::Clear()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Clear()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1642B712F5EF49537E4CD3FF2C7D3FEC2C7C8C6B0A1DC2D79915AED910ED1DEA</code></li>
+<li><span>Body hash</span><code>3F9842D09DBCBB6420962C6A53B75D0CAD2BA5FA2195CB061268FBDAD2C4782A</code></li>
+<li><span>IL size</span><span>21</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Construction.ConstructionModel&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;&gt;::Clear()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Data_SharedDataSetup.html#clearshareddatabases----system-void"><code>Shared.Data.SharedDataSetup::ClearSharedDataBases</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetConstructionOrMissing public Shared.Models.Construction.ConstructionModel GetConstructionOrMissing(System.String id) Shared.Models.Construction.ConstructionModel id System.String" id="getconstructionormissing-system-string---shared-models-construction-constructionmodel">
+<div class="method-heading">
+<h3><code>GetConstructionOrMissing</code></h3>
+<a class="permalink" href="#getconstructionormissing-system-string---shared-models-construction-constructionmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Models.Construction.ConstructionModel GetConstructionOrMissing(System.String id)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.ConstructionDataBase::GetConstructionOrMissing(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a> GetConstructionOrMissing(System.String id)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>496CF05A71F176671DA16872283FB87018C0D567CE47D5717BDA0F3F1FA60C73</code></li>
+<li><span>Body hash</span><code>EC1FC530BC34A7D6080767A4540B347A809B5A2CB55621ED5DB9CB0A1ECB17FE</code></li>
+<li><span>IL size</span><span>26</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Construction.ConstructionModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_TryGetCarryableResourceOnConstructionSite_1.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.TryGetCarryableResourceOnConstructionSite::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_AbstractBuildingController.html#validateresourcestoragemaximums-system-func-2-system-int32-system-collections-generic-dictionary-2-system-string-system-int32-----system-void"><code>CandideServer.Buildings.BuildingControllers.AbstractBuildingController::ValidateResourceStorageMaximums</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_ClaypitController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.ClaypitController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_LumberYardController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.LumberYardController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_MaterialStorageController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.MaterialStorageController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_QuarryController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.QuarryController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Citizens_GenericServerCitizenController.html#constructionsitehasallrequiredresources-candideserver-models-constructionsitemodel--system-collections-generic-dictionary-2-system-string-system-int32----system-boolean"><code>CandideServer.Citizens.GenericServerCitizenController::ConstructionSiteHasAllRequiredResources</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_VulcanPuzzles_ServerVulcanOfferingPlatformController.html#checkentities----system-boolean"><code>CandideServer.Entities.ControllerSets.VulcanPuzzles.ServerVulcanOfferingPlatformController::CheckEntities</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Rewards_ConstructionRewardStrategy.html#getname-system-text-stringbuilder---system-void"><code>CandideServer.Models.Rewards.ConstructionRewardStrategy::GetName</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Rewards_ConstructionsRewardStrategy.html#getname-system-text-stringbuilder---system-void"><code>CandideServer.Models.Rewards.ConstructionsRewardStrategy::GetName</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#spawnnewbuildingconstruction-system-string--system-guid--microsoft-xna-framework-rectangle--system-nullable-1-system-guid---system-collections-generic-dictionary-2-system-string-system-string----candideserver-simulationmodels-buildingsimulationmodel"><code>CandideServer.ServerControllers.BuildingsSController::SpawnNewBuildingConstruction</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ConstructionSitesServerManager.html#trybuildconstructionsite-system-guid--shared-models-player-playercharactermodel--system-boolean---system-void"><code>CandideServer.ServerManagers.ConstructionSitesServerManager::TryBuildConstructionSite</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ConstructionsServerManager.html#spawnconstruction-system-string--microsoft-xna-framework-point--system-guid--system-guid--system-collections-generic-dictionary-2-system-string-system-string---system-nullable-1-system-guid---system-nullable-1-system-guid---system-nullable-1-system-guid----system-void"><code>CandideServer.ServerManagers.ConstructionsServerManager::SpawnConstruction</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_DecorationsServerManager.html#tryspawnnewdecorationconstruction-system-string--system-guid--microsoft-xna-framework-rectangle--system-nullable-1-system-guid---system-nullable-1-system-guid----system-boolean"><code>CandideServer.ServerManagers.DecorationsServerManager::TrySpawnNewDecorationConstruction</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionDescriptionWindow.html#setconstruction-system-string---system-void"><code>Candide.CandideUI.ConstructionsUi.ConstructionDescriptionWindow::SetConstruction</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionPlacementInfoTooltipWindow.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideUI.ConstructionsUi.ConstructionPlacementInfoTooltipWindow::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#showtooltip-system-string--system-boolean---system-void"><code>Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::ShowTooltip</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsUiWindow.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideUI.ConstructionsUi.ConstructionsUiWindow::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_SubConstructionsWindow.html#setsubconstruction-candide-playermode-construction-subplacingconstruction---system-void"><code>Candide.CandideUI.ConstructionsUi.SubConstructionsWindow::SetSubConstruction</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tooltip_CandideTooltipHelper.html#buildactivecitizentooltipcontent-candide-gamemodels-models-citizens-citizen---system-collections-generic-ienumerable-1-candide-candideui-candideuielement-"><code>Candide.CandideUI.Tooltip.CandideTooltipHelper::BuildActiveCitizenTooltipContent</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tooltip_CandideTooltipHelper.html#buildcitizentooltipcontent-candideserver-messagemodels-towns-citizentownoverviewdata---system-collections-generic-ienumerable-1-candide-candideui-candideuielement-"><code>Candide.CandideUI.Tooltip.CandideTooltipHelper::BuildCitizenTooltipContent</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_TownOverview_Components_TownOverviewCitizenHolder.html#oncitizenchanged----system-void"><code>Candide.CandideUI.TownOverview.Components.TownOverviewCitizenHolder::OnCitizenChanged</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_TownReport_TownReportDescriptionComponent.html#createcitizensummarydisplay-system-nullable-1-system-guid---system-string---candide-candideui-candideuielement"><code>Candide.CandideUI.TownReport.TownReportDescriptionComponent::CreateCitizenSummaryDisplay</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-playerbuiltconstruction-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_PlayerBuiltConstruction</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_WorshipUi_AltarMainMenu.html#teleportbutton-onclick----system-void"><code>Candide.CandideUI.WorshipUi.AltarMainMenu::TeleportButton_OnClick</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_ConstructionSitesController.html#syncfullgamestate-candideserver-serverservices-getfullgamestateresponse---system-void"><code>Candide.GameModels.Controllers.ConstructionSitesController::SyncFullGameState</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_LogisticsManager.html#trycreatenewconnection-candide-candideui-candidedesktop--system-guid--system-guid--system-action---system-boolean"><code>Candide.GameModels.Managers.LogisticsManager::TryCreateNewConnection</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_LogisticsManager.html#tryeditconnection-candide-candideui-candidedesktop--system-guid--system-action---system-boolean"><code>Candide.GameModels.Managers.LogisticsManager::TryEditConnection</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Models_ConstructionRecipes.html#add-system-string---system-void"><code>Candide.GameModels.Models.ConstructionRecipes::Add</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Models_Spells_PlaceConstructionSpell.html#gettooltiptext-system-text-stringbuilder--system-object---system-void"><code>Candide.GameModels.Models.Spells.PlaceConstructionSpell::GetToolTipText</code></a></li>
+<li><a href="../../types/Romestead/Candide_PlayerMode_Construction_Constructing_ConstructingHandler.html#update-candideserver-models-town-townmodel---system-void"><code>Candide.PlayerMode.Construction.Constructing.ConstructingHandler::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_PlayerMode_Construction_HighlightedBuilding.html#set-candide-gamemodels-models-constructions-building--system-nullable-1-system-guid----system-void"><code>Candide.PlayerMode.Construction.HighlightedBuilding::Set</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetConstructionOrNull public Shared.Models.Construction.ConstructionModel GetConstructionOrNull(System.String id) Shared.Models.Construction.ConstructionModel id System.String" id="getconstructionornull-system-string---shared-models-construction-constructionmodel">
+<div class="method-heading">
+<h3><code>GetConstructionOrNull</code></h3>
+<a class="permalink" href="#getconstructionornull-system-string---shared-models-construction-constructionmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Models.Construction.ConstructionModel GetConstructionOrNull(System.String id)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.ConstructionDataBase::GetConstructionOrNull(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a> GetConstructionOrNull(System.String id)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1CAAC3F0BAF4A9001D782D1831FF50985A3D46C3B91336B7A92E6B248B6DF27F</code></li>
+<li><span>Body hash</span><code>A4CCB3834CA6A111B0F740C8B9E2E17109173CD1B5676FE5C0384E2578AE9528</code></li>
+<li><span>IL size</span><span>22</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Construction.ConstructionModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Models_Rewards_ConstructionRewardStrategy.html#gettextdescription-system-text-stringbuilder---system-void"><code>CandideServer.Models.Rewards.ConstructionRewardStrategy::GetTextDescription</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Rewards_ConstructionsRewardStrategy.html#gettextdescription-system-text-stringbuilder---system-void"><code>CandideServer.Models.Rewards.ConstructionsRewardStrategy::GetTextDescription</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_ConstructionSitesSController.html#onservergamestateloaded-candideserver-gamedescription---system-void"><code>CandideServer.ServerControllers.ConstructionSitesSController::OnServerGameStateLoaded</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#tryupgradebuilding-system-guid--system-string--system-boolean---system-boolean"><code>CandideServer.ServerManagers.BuildingsServerManager::TryUpgradeBuilding</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ConstructionSitesServerManager.html#doconstructactioninprogress-system-guid--system-single---system-void"><code>CandideServer.ServerManagers.ConstructionSitesServerManager::DoConstructActionInProgress</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ConstructionSitesServerManager.html#doplayerconstructactioninprogress-system-guid--system-single--candideserver-server-network-connectedpeer--shared-models-player-playercharactermodel---system-void"><code>CandideServer.ServerManagers.ConstructionSitesServerManager::DoPlayerConstructActionInProgress</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ConstructionSitesServerManager.html#startconstructactioninprogress-system-guid--candideserver-server-network-connectedpeer---system-void"><code>CandideServer.ServerManagers.ConstructionSitesServerManager::StartConstructActionInProgress</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ConstructionsServerManager.html#tryplaceconstruction-microsoft-xna-framework-point--system-guid--system-guid--candideserver-eventbus-eventbusargs---system-nullable-1-system-int32-"><code>CandideServer.ServerManagers.ConstructionsServerManager::TryPlaceConstruction</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_DecorationsServerManager.html#tryupgradedecoration-system-guid--system-string--system-boolean--system-guid---system-boolean"><code>CandideServer.ServerManagers.DecorationsServerManager::TryUpgradeDecoration</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ConstructionsUi_ConstructionsOptionsControl.html#updateoptions----system-void"><code>Candide.CandideUI.ConstructionsUi.ConstructionsOptionsControl::UpdateOptions</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Helpers_ConstructionsUpgradeHelper.html#getavailableupgradesforconstruction-system-collections-generic-list-1-shared-models-construction-constructionmodel---system-string---system-void"><code>Candide.CandideUI.Helpers.ConstructionsUpgradeHelper::GetAvailableUpgradesForConstruction</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_JobUiNew_Components_CitizenDisplayData.html#fromcitizen-candide-gamemodels-models-citizens-citizen---candide-candideui-jobuinew-components-citizendisplaydata"><code>Candide.CandideUI.JobUiNew.Components.CitizenDisplayData::FromCitizen</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_WorshipUi_AltarMainMenu.html#updateteleportbtn----system-void"><code>Candide.CandideUI.WorshipUi.AltarMainMenu::UpdateTeleportBtn</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_BuildingsManager.html#buildingspawned-candideserver-messagemodels-buildings-buildingspawnedmessage---system-void"><code>Candide.GameModels.Managers.BuildingsManager::BuildingSpawned</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_DecorationsManager.html#syncdecorationspawned-candideserver-messagemodels-decorations-decorationspawnedmessage---system-void"><code>Candide.GameModels.Managers.DecorationsManager::SyncDecorationSpawned</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_TownsManager.html#findhighestlevelledcarpenterfortown-candideserver-models-town-townmodel---system-nullable-1-system-guid-"><code>Candide.GameModels.Managers.TownsManager::FindHighestLevelledCarpenterForTown</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Models_Spells_PlaceConstructionSpell.html#cancast-shared-combat-spells-casting-spellcastingcontext---shared-combat-spells-cancastspellresult"><code>Candide.GameModels.Models.Spells.PlaceConstructionSpell::CanCast</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Models_Spells_PlaceConstructionSpell.html#cast-candide-combat-clientprojectilesystem--shared-combat-spells-casting-spellcastingcontext--shared-helpers-castspellargs---system-void"><code>Candide.GameModels.Models.Spells.PlaceConstructionSpell::Cast</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_ConstructionSitesService.html#onreceive-createconstructionsite-candideserver-messagemodels-constructions-createconstructionsitemessage---system-void"><code>Candide.GameModels.Services.ConstructionSitesService::OnReceive_CreateConstructionSite</code></a></li>
+<li><a href="../../types/Romestead/Candide_PlayerMode_Construction_Constructing_ConstructingHandler.html#setselectedconstruction-system-string---system-void"><code>Candide.PlayerMode.Construction.Constructing.ConstructingHandler::SetSelectedConstruction</code></a></li>
+<li><a href="../../types/Romestead/Candide_PlayerMode_Construction_PlacingConstruction.html#setconstruction-system-string---system-void"><code>Candide.PlayerMode.Construction.PlacingConstruction::SetConstruction</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetConstructionsWithBaseId public Shared.Models.Construction.ConstructionModel[] GetConstructionsWithBaseId(System.String baseId, System.Boolean sortByUpgradeLevel) Shared.Models.Construction.ConstructionModel[] baseId System.String sortByUpgradeLevel System.Boolean" id="getconstructionswithbaseid-system-string--system-boolean---shared-models-construction-constructionmodel--">
+<div class="method-heading">
+<h3><code>GetConstructionsWithBaseId</code></h3>
+<a class="permalink" href="#getconstructionswithbaseid-system-string--system-boolean---shared-models-construction-constructionmodel--" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Models.Construction.ConstructionModel[] GetConstructionsWithBaseId(System.String baseId, System.Boolean sortByUpgradeLevel)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.ConstructionDataBase::GetConstructionsWithBaseId(System.String, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a>[] GetConstructionsWithBaseId(System.String baseId, System.Boolean sortByUpgradeLevel)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a>[]</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F9E532D48F95F1588AE76AF55F89DCC74E576BA3C14B3DED7BF342E08C0141D8</code></li>
+<li><span>Body hash</span><code>0FBFF020C7D143385418999D0700AD1FFB5A2E116D33EE6B370FB07F2F66E43B</code></li>
+<li><span>IL size</span><span>230</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Construction.ConstructionModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.String, Shared.Models.Construction.ConstructionModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.String, Shared.Models.Construction.ConstructionModel&gt;::get_Current()</code></li>
+<li><code>System.String::Split(System.Char, System.StringSplitOptions)</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;::Add(!0)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.String, Shared.Models.Construction.ConstructionModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;::get_Count()</code></li>
+<li><code>System.Array::Empty()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;::ToArray()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Construction.ConstructionModel&gt;::get_Current()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Construction.ConstructionModel&gt;::MoveNext()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;::Remove(!0)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetUpgradesForBuilding public System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt; GetUpgradesForBuilding(System.String buildingId) System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt; buildingId System.String" id="getupgradesforbuilding-system-string---system-collections-generic-list-1-shared-models-construction-constructionmodel-">
+<div class="method-heading">
+<h3><code>GetUpgradesForBuilding</code></h3>
+<a class="permalink" href="#getupgradesforbuilding-system-string---system-collections-generic-list-1-shared-models-construction-constructionmodel-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt; GetUpgradesForBuilding(System.String buildingId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.ConstructionDataBase::GetUpgradesForBuilding(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a>&gt; GetUpgradesForBuilding(System.String buildingId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a>&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B4DF92607D0DA45E20488AF1A476BE125ED3FAED89E5652345FE54F07AED6B6D</code></li>
+<li><span>Body hash</span><code>02B15CA3D66EE90C63D096208139D63446FB6142D3EA487599B26A0ECE8F589D</code></li>
+<li><span>IL size</span><span>23</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;::.ctor()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Helpers_ConstructionsUpgradeHelper.html#getavailableupgradesforconstruction-system-collections-generic-list-1-shared-models-construction-constructionmodel---system-string---system-void"><code>Candide.CandideUI.Helpers.ConstructionsUpgradeHelper::GetAvailableUpgradesForConstruction</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_BuildingsManager.html#createimgui----system-void"><code>Candide.GameModels.Managers.BuildingsManager::CreateImGui</code></a></li>
+<li><a href="../../types/Romestead/Candide_PlayerMode_Construction_HighlightedBuilding.html#set-candide-gamemodels-models-constructions-building--system-nullable-1-system-guid----system-void"><code>Candide.PlayerMode.Construction.HighlightedBuilding::Set</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetUpgradesForDecoration public System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt; GetUpgradesForDecoration(System.String decorationId) System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt; decorationId System.String" id="getupgradesfordecoration-system-string---system-collections-generic-list-1-shared-models-construction-constructionmodel-">
+<div class="method-heading">
+<h3><code>GetUpgradesForDecoration</code></h3>
+<a class="permalink" href="#getupgradesfordecoration-system-string---system-collections-generic-list-1-shared-models-construction-constructionmodel-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt; GetUpgradesForDecoration(System.String decorationId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.ConstructionDataBase::GetUpgradesForDecoration(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a>&gt; GetUpgradesForDecoration(System.String decorationId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a>&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E18989B5CE7487FFE22B22599D2F4DF13C95EAE038C0FC715EDF44CDDC94606F</code></li>
+<li><span>Body hash</span><code>02B15CA3D66EE90C63D096208139D63446FB6142D3EA487599B26A0ECE8F589D</code></li>
+<li><span>IL size</span><span>23</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Construction.ConstructionModel&gt;::.ctor()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Helpers_ConstructionsUpgradeHelper.html#getavailableupgradesforconstruction-system-collections-generic-list-1-shared-models-construction-constructionmodel---system-string---system-void"><code>Candide.CandideUI.Helpers.ConstructionsUpgradeHelper::GetAvailableUpgradesForConstruction</code></a></li>
+<li><a href="../../types/Romestead/Candide_PlayerMode_Construction_HighlightedBuilding.html#set-candide-gamemodels-models-constructions-decoration--system-nullable-1-system-guid----system-void"><code>Candide.PlayerMode.Construction.HighlightedBuilding::Set</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

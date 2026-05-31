@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideCreator.Shared.Undo.UndoHistory - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideCreator_Shared.html">CandideCreator.Shared</a></p>
+<div class="title-row">
+<h1>CandideCreator.Shared.Undo.UndoHistory</h1>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Undo.UndoHistory">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideCreator.Shared.Undo.UndoHistory
+
+- Assembly: `CandideCreator.Shared`
+- Namespace: `CandideCreator.Shared.Undo`
+- Kind: `public class`
+- Base type: `System.Object`
+- Interfaces: `System.ComponentModel.INotifyPropertyChanged`
+- Members: 12 methods, 4 properties, 3 fields, 1 events
+
+## Public Methods
+- `public System.Void AddHistory(CandideCreator.Shared.Undo.IUndo undo)`
+- `public System.Void AddRedoHistory(CandideCreator.Shared.Undo.IUndo redo)`
+- `public System.Void DoAndAdd(CandideCreator.Shared.Undo.IUndo undo)`
+- `public System.Void Redo()`
+- `public System.Void Redo(System.Int32 count)`
+- `public System.Void RemoveLastUndo()`
+- `public System.Void Undo()`
+- `public System.Void Undo(System.Int32 count)`
+- `public System.Void UndoAndAdd(CandideCreator.Shared.Undo.IUndo redo)`
+">Copy markdown</button>
+<a class="button" href="CandideCreator_Shared_Undo_UndoHistory.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideCreator.Shared.Undo</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>12</strong></article>
+<article class="metric"><span>Properties</span><strong>4</strong></article>
+<article class="metric"><span>Fields</span><strong>3</strong></article>
+<article class="metric"><span>Events</span><strong>1</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideCreator.Shared</code></li>
+<li><span>Namespace</span><code>CandideCreator.Shared.Undo</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Interfaces</span><code>System.ComponentModel.INotifyPropertyChanged</code></li>
+<li><span>Hash</span><code>D4D663811983D0E5E1432EABD7205AAE1D108C86BCC3200CCBCC3D7E2522E453</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Interfaces</h3><ul class="list compact">
+<li><code>System.ComponentModel.INotifyPropertyChanged</code></li>
+</ul></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_BigUndo.html"><code>CandideCreator.Shared.Undo.BigUndo</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="PropertyChanged private System.ComponentModel.PropertyChangedEventHandler PropertyChanged System.ComponentModel.PropertyChangedEventHandler" id="propertychanged-system-componentmodel-propertychangedeventhandler"><td><span class="member-name-cell"><code>PropertyChanged</code><a class="permalink" href="#propertychanged-system-componentmodel-propertychangedeventhandler" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.ComponentModel.PropertyChangedEventHandler PropertyChanged">Copy</button></span></td><td>private</td><td><code>private System.ComponentModel.PropertyChangedEventHandler PropertyChanged</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="internal" data-patch-target="false" data-member-text="RedoStack internal System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt; RedoStack System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;" id="redostack-system-collections-generic-stack-1-candidecreator-shared-undo-iundo-"><td><span class="member-name-cell"><code>RedoStack</code><a class="permalink" href="#redostack-system-collections-generic-stack-1-candidecreator-shared-undo-iundo-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="internal System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt; RedoStack">Copy</button></span></td><td>internal</td><td><code>internal System.Collections.Generic.Stack&lt;<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_IUndo.html">CandideCreator.Shared.Undo.IUndo</a>&gt; RedoStack</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="internal" data-patch-target="false" data-member-text="UndoStack internal System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt; UndoStack System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;" id="undostack-system-collections-generic-stack-1-candidecreator-shared-undo-iundo-"><td><span class="member-name-cell"><code>UndoStack</code><a class="permalink" href="#undostack-system-collections-generic-stack-1-candidecreator-shared-undo-iundo-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="internal System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt; UndoStack">Copy</button></span></td><td>internal</td><td><code>internal System.Collections.Generic.Stack&lt;<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_IUndo.html">CandideCreator.Shared.Undo.IUndo</a>&gt; UndoStack</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="History public System.Collections.Generic.IEnumerable&lt;CandideCreator.Shared.Undo.IUndo&gt; History System.Collections.Generic.IEnumerable&lt;CandideCreator.Shared.Undo.IUndo&gt;" id="history-system-collections-generic-ienumerable-1-candidecreator-shared-undo-iundo-"><td><span class="member-name-cell"><code>History</code><a class="permalink" href="#history-system-collections-generic-ienumerable-1-candidecreator-shared-undo-iundo-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.IEnumerable&lt;CandideCreator.Shared.Undo.IUndo&gt; History">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.IEnumerable&lt;<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_IUndo.html">CandideCreator.Shared.Undo.IUndo</a>&gt; History</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="HistoryIndex public System.Int32 HistoryIndex System.Int32" id="historyindex-system-int32"><td><span class="member-name-cell"><code>HistoryIndex</code><a class="permalink" href="#historyindex-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 HistoryIndex">Copy</button></span></td><td>public</td><td><code>public System.Int32 HistoryIndex</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="TotalCount public System.Int32 TotalCount System.Int32" id="totalcount-system-int32"><td><span class="member-name-cell"><code>TotalCount</code><a class="permalink" href="#totalcount-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 TotalCount">Copy</button></span></td><td>public</td><td><code>public System.Int32 TotalCount</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="UndoCount public System.Int32 UndoCount System.Int32" id="undocount-system-int32"><td><span class="member-name-cell"><code>UndoCount</code><a class="permalink" href="#undocount-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 UndoCount">Copy</button></span></td><td>public</td><td><code>public System.Int32 UndoCount</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Events</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="PropertyChanged public System.ComponentModel.PropertyChangedEventHandler PropertyChanged System.ComponentModel.PropertyChangedEventHandler" id="propertychanged-system-componentmodel-propertychangedeventhandler"><td><span class="member-name-cell"><code>PropertyChanged</code><a class="permalink" href="#propertychanged-system-componentmodel-propertychangedeventhandler" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.ComponentModel.PropertyChangedEventHandler PropertyChanged">Copy</button></span></td><td>public</td><td><code>public System.ComponentModel.PropertyChangedEventHandler PropertyChanged</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddHistory public System.Void AddHistory(CandideCreator.Shared.Undo.IUndo undo) System.Void undo CandideCreator.Shared.Undo.IUndo" id="addhistory-candidecreator-shared-undo-iundo---system-void">
+<div class="method-heading">
+<h3><code>AddHistory</code></h3>
+<a class="permalink" href="#addhistory-candidecreator-shared-undo-iundo---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddHistory(CandideCreator.Shared.Undo.IUndo undo)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Undo.UndoHistory::AddHistory(CandideCreator.Shared.Undo.IUndo)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddHistory(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_IUndo.html">CandideCreator.Shared.Undo.IUndo</a> undo)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>667317A758304A17FDC71BFBDBA65BE5103759AEC721C4921C7437AC142A4374</code></li>
+<li><span>Body hash</span><code>5ED603D04D36D4A087F481C44C66E74650B1693E87CAFD6F2AA10E4624BF94B0</code></li>
+<li><span>IL size</span><span>44</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;::Push(!0)</code></li>
+<li><code>System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;::Clear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#stackchanged----system-void">CandideCreator.Shared.Undo.UndoHistory::StackChanged()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#doandadd-candidecreator-shared-undo-iundo---system-void"><code>CandideCreator.Shared.Undo.UndoHistory::DoAndAdd</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddRedoHistory public System.Void AddRedoHistory(CandideCreator.Shared.Undo.IUndo redo) System.Void redo CandideCreator.Shared.Undo.IUndo" id="addredohistory-candidecreator-shared-undo-iundo---system-void">
+<div class="method-heading">
+<h3><code>AddRedoHistory</code></h3>
+<a class="permalink" href="#addredohistory-candidecreator-shared-undo-iundo---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddRedoHistory(CandideCreator.Shared.Undo.IUndo redo)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Undo.UndoHistory::AddRedoHistory(CandideCreator.Shared.Undo.IUndo)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddRedoHistory(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_IUndo.html">CandideCreator.Shared.Undo.IUndo</a> redo)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FDE30D372932E56D3397A31AA55B77A45A218E6650E2D66A9286086A8004A41D</code></li>
+<li><span>Body hash</span><code>4548682A0748C3FF4A190CCD94DB80BB526A09621B607195EA6A6761401B4E49</code></li>
+<li><span>IL size</span><span>32</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;::Push(!0)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#stackchanged----system-void">CandideCreator.Shared.Undo.UndoHistory::StackChanged()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#undoandadd-candidecreator-shared-undo-iundo---system-void"><code>CandideCreator.Shared.Undo.UndoHistory::UndoAndAdd</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="internal" data-patch-target="true" data-member-text="ChildChanged internal System.Void ChildChanged(CandideCreator.Shared.Undo.BigUndo bigUndo) System.Void bigUndo CandideCreator.Shared.Undo.BigUndo" id="childchanged-candidecreator-shared-undo-bigundo---system-void">
+<div class="method-heading">
+<h3><code>ChildChanged</code></h3>
+<a class="permalink" href="#childchanged-candidecreator-shared-undo-bigundo---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="internal System.Void ChildChanged(CandideCreator.Shared.Undo.BigUndo bigUndo)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Undo.UndoHistory::ChildChanged(CandideCreator.Shared.Undo.BigUndo)">Copy Harmony target</button>
+</div>
+<p><code>internal System.Void ChildChanged(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_BigUndo.html">CandideCreator.Shared.Undo.BigUndo</a> bigUndo)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>internal</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E40CC4B8D0D973BD94F8D39EA1A71A1225897286E19F5C20A61357862801BC22</code></li>
+<li><span>Body hash</span><code>B384E492715B53470318F2FCAF2B7A52092421A5AB6100FFDE47BE49FFA2C3F4</code></li>
+<li><span>IL size</span><span>14</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#onpropertychanged-system-string---system-void">CandideCreator.Shared.Undo.UndoHistory::OnPropertyChanged(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_BigUndo.html#history-propertychanged-system-object--system-componentmodel-propertychangedeventargs---system-void"><code>CandideCreator.Shared.Undo.BigUndo::History_PropertyChanged</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>History</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DoAndAdd public System.Void DoAndAdd(CandideCreator.Shared.Undo.IUndo undo) System.Void undo CandideCreator.Shared.Undo.IUndo" id="doandadd-candidecreator-shared-undo-iundo---system-void">
+<div class="method-heading">
+<h3><code>DoAndAdd</code></h3>
+<a class="permalink" href="#doandadd-candidecreator-shared-undo-iundo---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DoAndAdd(CandideCreator.Shared.Undo.IUndo undo)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Undo.UndoHistory::DoAndAdd(CandideCreator.Shared.Undo.IUndo)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DoAndAdd(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_IUndo.html">CandideCreator.Shared.Undo.IUndo</a> undo)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B9F3FD4890AE652A48E5DEB5F26E845FB102A477E0FA9C958286E3F5B63BF066</code></li>
+<li><span>Body hash</span><code>9AB1B6D71DE90CB3A52A3B1319CAF4AB2E38D4A72E0E1439A94270C81AD42656</code></li>
+<li><span>IL size</span><span>27</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_IUndo.html#do----system-boolean">CandideCreator.Shared.Undo.IUndo::Do()</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#addhistory-candidecreator-shared-undo-iundo---system-void">CandideCreator.Shared.Undo.UndoHistory::AddHistory(CandideCreator.Shared.Undo.IUndo)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="OnPropertyChanged private System.Void OnPropertyChanged(System.String propertyName) System.Void propertyName System.String" id="onpropertychanged-system-string---system-void">
+<div class="method-heading">
+<h3><code>OnPropertyChanged</code></h3>
+<a class="permalink" href="#onpropertychanged-system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void OnPropertyChanged(System.String propertyName)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Undo.UndoHistory::OnPropertyChanged(System.String)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void OnPropertyChanged(System.String propertyName)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>91F553C787554483234D2907142057B3ADCE8D5D227DD1E5B889FFBA4309B6D3</code></li>
+<li><span>Body hash</span><code>F6614A2C385336B16819C63ABBB3BC3739D3901C3A4752F27AB5153E92E6B3A4</code></li>
+<li><span>IL size</span><span>27</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.ComponentModel.PropertyChangedEventArgs::.ctor(System.String)</code></li>
+<li><code>System.ComponentModel.PropertyChangedEventHandler::Invoke(System.Object, System.ComponentModel.PropertyChangedEventArgs)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#childchanged-candidecreator-shared-undo-bigundo---system-void"><code>CandideCreator.Shared.Undo.UndoHistory::ChildChanged</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#stackchanged----system-void"><code>CandideCreator.Shared.Undo.UndoHistory::StackChanged</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Redo public System.Void Redo() System.Void " id="redo----system-void">
+<div class="method-heading">
+<h3><code>Redo</code></h3>
+<a class="permalink" href="#redo----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Redo()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Undo.UndoHistory::Redo()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Redo()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AA49E4544F455582C34836AE1EC5EDBE362D15FA3CE06699763EC7CBF2E03548</code></li>
+<li><span>Body hash</span><code>F5BBDF0C20370CC3CB1CC85FE755CC085E864B96E23F4DD20343E5697D78C438</code></li>
+<li><span>IL size</span><span>97</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#stackchanged----system-void">CandideCreator.Shared.Undo.UndoHistory::StackChanged()</a></code></li>
+<li><code>System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;::Pop()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_IUndo.html#do----system-boolean">CandideCreator.Shared.Undo.IUndo::Do()</a></code></li>
+<li><code>System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;::Push(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#redo-system-int32---system-void"><code>CandideCreator.Shared.Undo.UndoHistory::Redo</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Redo public System.Void Redo(System.Int32 count) System.Void count System.Int32" id="redo-system-int32---system-void">
+<div class="method-heading">
+<h3><code>Redo</code></h3>
+<a class="permalink" href="#redo-system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Redo(System.Int32 count)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Undo.UndoHistory::Redo(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Redo(System.Int32 count)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8F85618A236A8F3CDB9492A639AFC7D3B79E32388BC251663BE36B739E6CA6FF</code></li>
+<li><span>Body hash</span><code>F6D94AC35B8B5A22A706218F110D816223E23F8342D88BC557E2F4403ABD251A</code></li>
+<li><span>IL size</span><span>44</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#redo----system-void">CandideCreator.Shared.Undo.UndoHistory::Redo()</a></code></li>
+<li><code>System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;::get_Count()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_BigUndo.html#do----system-boolean"><code>CandideCreator.Shared.Undo.BigUndo::Do</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveLastUndo public System.Void RemoveLastUndo() System.Void " id="removelastundo----system-void">
+<div class="method-heading">
+<h3><code>RemoveLastUndo</code></h3>
+<a class="permalink" href="#removelastundo----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemoveLastUndo()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Undo.UndoHistory::RemoveLastUndo()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemoveLastUndo()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>60586F2C92074000551CFE776D78F57A9E3D16F1E91D6C025621AF9BD93E3A06</code></li>
+<li><span>Body hash</span><code>75963DFBE162973FD5EF76B9D4236BE3E13CB92AAF5952C79489B91C6C39BD23</code></li>
+<li><span>IL size</span><span>41</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;::Pop()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#stackchanged----system-void">CandideCreator.Shared.Undo.UndoHistory::StackChanged()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="StackChanged private System.Void StackChanged() System.Void " id="stackchanged----system-void">
+<div class="method-heading">
+<h3><code>StackChanged</code></h3>
+<a class="permalink" href="#stackchanged----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void StackChanged()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Undo.UndoHistory::StackChanged()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void StackChanged()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F5794B6AC0C15FE4DABD099E847FEDE739BD10B61F7754F8FF1BB85578112B01</code></li>
+<li><span>Body hash</span><code>F82506F460DB91F301E54448C359DEB8AA1155CBC83C4CC5DAF3520541046005</code></li>
+<li><span>IL size</span><span>26</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#onpropertychanged-system-string---system-void">CandideCreator.Shared.Undo.UndoHistory::OnPropertyChanged(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#addhistory-candidecreator-shared-undo-iundo---system-void"><code>CandideCreator.Shared.Undo.UndoHistory::AddHistory</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#addredohistory-candidecreator-shared-undo-iundo---system-void"><code>CandideCreator.Shared.Undo.UndoHistory::AddRedoHistory</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#redo----system-void"><code>CandideCreator.Shared.Undo.UndoHistory::Redo</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#removelastundo----system-void"><code>CandideCreator.Shared.Undo.UndoHistory::RemoveLastUndo</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#undo----system-void"><code>CandideCreator.Shared.Undo.UndoHistory::Undo</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>History</code></li>
+<li><code>HistoryIndex</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Undo public System.Void Undo() System.Void " id="undo----system-void">
+<div class="method-heading">
+<h3><code>Undo</code></h3>
+<a class="permalink" href="#undo----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Undo()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Undo.UndoHistory::Undo()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Undo()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>41392A67CACAE2723237E9A5B9A2DC6D186F3DCDD9CE2D122F024888EDA1B865</code></li>
+<li><span>Body hash</span><code>E0ABEBA1C215A9C43434E2F2D1A59F128FBBA3E012F98BDFA9C9D6AD7E75FC71</code></li>
+<li><span>IL size</span><span>97</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#stackchanged----system-void">CandideCreator.Shared.Undo.UndoHistory::StackChanged()</a></code></li>
+<li><code>System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;::Pop()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_IUndo.html#undo----system-boolean">CandideCreator.Shared.Undo.IUndo::Undo()</a></code></li>
+<li><code>System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;::Push(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#undo-system-int32---system-void"><code>CandideCreator.Shared.Undo.UndoHistory::Undo</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Undo public System.Void Undo(System.Int32 count) System.Void count System.Int32" id="undo-system-int32---system-void">
+<div class="method-heading">
+<h3><code>Undo</code></h3>
+<a class="permalink" href="#undo-system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Undo(System.Int32 count)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Undo.UndoHistory::Undo(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Undo(System.Int32 count)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9EC06BD4B30F7237627162F7510A090FF14022610C40748BC256BB0765BAC232</code></li>
+<li><span>Body hash</span><code>9F7FE3B4F52CA3857775977030ABF232DD565118BAF190650A6C059292744729</code></li>
+<li><span>IL size</span><span>44</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#undo----system-void">CandideCreator.Shared.Undo.UndoHistory::Undo()</a></code></li>
+<li><code>System.Collections.Generic.Stack&lt;CandideCreator.Shared.Undo.IUndo&gt;::get_Count()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_BigUndo.html#undo----system-boolean"><code>CandideCreator.Shared.Undo.BigUndo::Undo</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UndoAndAdd public System.Void UndoAndAdd(CandideCreator.Shared.Undo.IUndo redo) System.Void redo CandideCreator.Shared.Undo.IUndo" id="undoandadd-candidecreator-shared-undo-iundo---system-void">
+<div class="method-heading">
+<h3><code>UndoAndAdd</code></h3>
+<a class="permalink" href="#undoandadd-candidecreator-shared-undo-iundo---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UndoAndAdd(CandideCreator.Shared.Undo.IUndo redo)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Undo.UndoHistory::UndoAndAdd(CandideCreator.Shared.Undo.IUndo)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UndoAndAdd(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_IUndo.html">CandideCreator.Shared.Undo.IUndo</a> redo)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2108ACF1E7C51AD0F97D1676CCC08EED0BC54B87BE7D888E4F2A82743609BEB4</code></li>
+<li><span>Body hash</span><code>370F8F8DCB33EC8B9BE2CAD57D227B1F67A8C9DE9819F0677E9A4ED22B533EED</code></li>
+<li><span>IL size</span><span>27</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_IUndo.html#undo----system-boolean">CandideCreator.Shared.Undo.IUndo::Undo()</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Undo_UndoHistory.html#addredohistory-candidecreator-shared-undo-iundo---system-void">CandideCreator.Shared.Undo.UndoHistory::AddRedoHistory(CandideCreator.Shared.Undo.IUndo)</a></code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

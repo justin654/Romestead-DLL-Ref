@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.GameModels.Controllers.EntityController - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.GameModels.Controllers.EntityController</h1>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.GameModels.Controllers.EntityController
+
+- Assembly: `Romestead`
+- Namespace: `Candide.GameModels.Controllers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 22 methods, 0 properties, 5 fields, 0 events
+
+## Public Methods
+- `public System.Boolean AttractWorldItemEntity(CandideServer.MessageModels.ItemInstances.AttractWorldItemInstanceMessage msg)`
+- `public System.Void CleanUp()`
+- `public System.Void EndOfFrameCleanup()`
+- `public System.Void ForgetEntities(Shared.Entity.EntitySystem system, CandideCreator.Shared.Models.RectangleF rect)`
+- `public System.Void ForgetEntity(Shared.Entity.EntityWrapper entity, Shared.Entity.EntityRemoveInfo removeInfo, System.Boolean calledByEntityRemove)`
+- `public System.Void HandleUpdateEntityPositionMessage(System.Guid entityId, Microsoft.Xna.Framework.Vector3 position)`
+- `public System.Void MoveEntity(System.Guid entityId, Microsoft.Xna.Framework.Vector3 position)`
+- `public System.Void QueueUpdateEntitiesInfo(System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt; entityInfo, System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt; immovableEntityInfo, System.TimeSpan updateTime)`
+- `public Shared.Entity.EntityWrapper SpawnEntity(CandideServer.Entities.ServerEntityModel model)`
+- `public Shared.Entity.EntityWrapper SpawnEntityBase(System.Guid baseId, Microsoft.Xna.Framework.Vector3 position, System.Guid id, System.Guid worldId, System.Boolean initializeController, System.Boolean skipCalculateState)`
+- `public System.Void SyncFullGameState(CandideServer.ServerServices.GetFullGameStateResponse model)`
+- `public System.Void UpdateEntitiesInfo(CandideServer.MessageModels.Entities.EntitiesInfoMessage message)`
+- `public System.Void UpdateEntityAnimationMessage(CandideServer.MessageModels.Entities.EntityAnimationMessage msg)`
+- `public System.Void UpdateEntityControllerMessage(CandideServer.MessageModels.Entities.EntitiesControllerMessage msg)`
+- `public System.Void UpdateEntityHealth(System.Guid entityId, System.Single health)`
+- `public System.Void UpdateEntityInfos()`
+- `public System.Void UpdateEntityParameter(System.Guid entityId, System.String key, System.String value, System.Nullable&lt;System.Int32&gt; state)`
+- `public System.Void UpdateEntityParameters(System.Guid entityId, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; parameters, System.Int32 state)`
+- `public System.Void UpdateEntitySignalMessage(CandideServer.MessageModels.Entities.EntitySignalMessage msg)`
+- `public System.Void UpdateEntityState(System.Guid entityId, System.Int32 state)`
+- `public System.Void UpdateEntityVfxMessage(CandideServer.MessageModels.Entities.EntityVfxMessage msg)`
+">Copy markdown</button>
+<a class="button" href="Candide_GameModels_Controllers_EntityController.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.GameModels.Controllers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>22</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>5</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.GameModels.Controllers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>DF0179034A059883A2B7F71346EA9CEFB39CF6E78596223BD0540A2184975E05</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="EntityInfoPool private System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt;&gt; EntityInfoPool System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt;&gt;" id="entityinfopool-system-collections-generic-stack-1-system-collections-generic-list-1-candideserver-messagemodels-entities-entityinfomessage2--"><td><span class="member-name-cell"><code>EntityInfoPool</code><a class="permalink" href="#entityinfopool-system-collections-generic-stack-1-system-collections-generic-list-1-candideserver-messagemodels-entities-entityinfomessage2--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt;&gt; EntityInfoPool">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_MessageModels_Entities_EntityInfoMessage2.html">CandideServer.MessageModels.Entities.EntityInfoMessage2</a>&gt;&gt; EntityInfoPool</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ImmovableEntityInfoPool private System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt;&gt; ImmovableEntityInfoPool System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt;&gt;" id="immovableentityinfopool-system-collections-generic-stack-1-system-collections-generic-list-1-candideserver-messagemodels-entities-immovableentityinfomessage2--"><td><span class="member-name-cell"><code>ImmovableEntityInfoPool</code><a class="permalink" href="#immovableentityinfopool-system-collections-generic-stack-1-system-collections-generic-list-1-candideserver-messagemodels-entities-immovableentityinfomessage2--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt;&gt; ImmovableEntityInfoPool">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_MessageModels_Entities_ImmovableEntityInfoMessage2.html">CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2</a>&gt;&gt; ImmovableEntityInfoPool</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="MissingEntitiesReuseList private System.Collections.Generic.HashSet&lt;System.Guid&gt; MissingEntitiesReuseList System.Collections.Generic.HashSet&lt;System.Guid&gt;" id="missingentitiesreuselist-system-collections-generic-hashset-1-system-guid-"><td><span class="member-name-cell"><code>MissingEntitiesReuseList</code><a class="permalink" href="#missingentitiesreuselist-system-collections-generic-hashset-1-system-guid-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.HashSet&lt;System.Guid&gt; MissingEntitiesReuseList">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.HashSet&lt;System.Guid&gt; MissingEntitiesReuseList</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="Packages private System.Collections.Generic.List&lt;EntityController.EntityInfoPackage&gt; Packages System.Collections.Generic.List&lt;EntityController.EntityInfoPackage&gt;" id="packages-system-collections-generic-list-1-entitycontroller-entityinfopackage-"><td><span class="member-name-cell"><code>Packages</code><a class="permalink" href="#packages-system-collections-generic-list-1-entitycontroller-entityinfopackage-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;EntityController.EntityInfoPackage&gt; Packages">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;<a href="../../types/Romestead/EntityController_EntityInfoPackage.html">EntityController.EntityInfoPackage</a>&gt; Packages</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="TimestampedMessages private System.Collections.Generic.Dictionary&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt; TimestampedMessages System.Collections.Generic.Dictionary&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt;" id="timestampedmessages-system-collections-generic-dictionary-2-system-guid-entitycontroller-entityinfotimestampedmessage-"><td><span class="member-name-cell"><code>TimestampedMessages</code><a class="permalink" href="#timestampedmessages-system-collections-generic-dictionary-2-system-guid-entitycontroller-entityinfotimestampedmessage-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt; TimestampedMessages">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;System.Guid, <a href="../../types/Romestead/EntityController_EntityInfoTimeStampedMessage.html">EntityController.EntityInfoTimeStampedMessage</a>&gt; TimestampedMessages</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AttractWorldItemEntity public System.Boolean AttractWorldItemEntity(CandideServer.MessageModels.ItemInstances.AttractWorldItemInstanceMessage msg) System.Boolean msg CandideServer.MessageModels.ItemInstances.AttractWorldItemInstanceMessage" id="attractworlditementity-candideserver-messagemodels-iteminstances-attractworlditeminstancemessage---system-boolean">
+<div class="method-heading">
+<h3><code>AttractWorldItemEntity</code></h3>
+<a class="permalink" href="#attractworlditementity-candideserver-messagemodels-iteminstances-attractworlditeminstancemessage---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean AttractWorldItemEntity(CandideServer.MessageModels.ItemInstances.AttractWorldItemInstanceMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::AttractWorldItemEntity(CandideServer.MessageModels.ItemInstances.AttractWorldItemInstanceMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean AttractWorldItemEntity(<a href="../../types/CandideServer/CandideServer_MessageModels_ItemInstances_AttractWorldItemInstanceMessage.html">CandideServer.MessageModels.ItemInstances.AttractWorldItemInstanceMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>11DE84A41F57192B4E08E887032A51968FFC98BF47F21F4146882E881F8A27B2</code></li>
+<li><span>Body hash</span><code>28CE407124EEC7B8896CA3A14FA5B7DC2742099D7BAA28285E360D7456F8FD49</code></li>
+<li><span>IL size</span><span>2</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CleanUp public System.Void CleanUp() System.Void " id="cleanup----system-void">
+<div class="method-heading">
+<h3><code>CleanUp</code></h3>
+<a class="permalink" href="#cleanup----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CleanUp()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::CleanUp()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CleanUp()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BD15ECCA21A503C09003052CB84DBB4A60B55A40CAE956E490E5F7972A388AAE</code></li>
+<li><span>Body hash</span><code>FA31FBE65F2AB7677FC6859F38781E1BDECC2B7AF9DC042C34C2EA5CED6AF038</code></li>
+<li><span>IL size</span><span>41</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::Clear()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Systems_EntityNetworkSystem.html#cleanup----system-void">Candide.GameModels.Systems.EntityNetworkSystem::CleanUp()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#clear----system-void">Shared.Entity.EntitySystem::Clear()</a></code></li>
+<li><code>System.Collections.Generic.List&lt;EntityController.EntityInfoPackage&gt;::Clear()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Systems_DeadReckoningSystem.html#clearentitydata----system-void">Candide.GameModels.Systems.DeadReckoningSystem::ClearEntityData()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#onscenedeactivated----system-void"><code>Candide.CandideEngine::OnSceneDeactivated</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_WorldManager.html#switchworld-system-guid---system-boolean"><code>Candide.GameModels.Managers.WorldManager::SwitchWorld</code></a></li>
+<li><a href="../../types/Romestead/Candide_TestAndDebug.html#worldgentesting----system-void"><code>Candide.TestAndDebug::WorldGenTesting</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="EndOfFrameCleanup public System.Void EndOfFrameCleanup() System.Void " id="endofframecleanup----system-void">
+<div class="method-heading">
+<h3><code>EndOfFrameCleanup</code></h3>
+<a class="permalink" href="#endofframecleanup----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void EndOfFrameCleanup()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::EndOfFrameCleanup()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void EndOfFrameCleanup()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BF44334899B86585A04619FE884D13EBBBA6CE167E893F5D5DF1C9D0A40F698A</code></li>
+<li><span>Body hash</span><code>AD4F7791E0B66FF19FF2C82D57B6FDEF59B7167C4DE3AC4E456BC11DC420D450</code></li>
+<li><span>IL size</span><span>80</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Entity.EntityWrapper&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntityWrapper.html#delete-shared-entity-entityremoveinfo---system-void">Shared.Entity.EntityWrapper::Delete(Shared.Entity.EntityRemoveInfo)</a></code></li>
+<li><code>List.Enumerator&lt;Shared.Entity.EntityWrapper&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::Clear()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ForgetEntities public System.Void ForgetEntities(Shared.Entity.EntitySystem system, CandideCreator.Shared.Models.RectangleF rect) System.Void system Shared.Entity.EntitySystem rect CandideCreator.Shared.Models.RectangleF" id="forgetentities-shared-entity-entitysystem--candidecreator-shared-models-rectanglef---system-void">
+<div class="method-heading">
+<h3><code>ForgetEntities</code></h3>
+<a class="permalink" href="#forgetentities-shared-entity-entitysystem--candidecreator-shared-models-rectanglef---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ForgetEntities(Shared.Entity.EntitySystem system, CandideCreator.Shared.Models.RectangleF rect)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::ForgetEntities(Shared.Entity.EntitySystem, CandideCreator.Shared.Models.RectangleF)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ForgetEntities(<a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> system, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> rect)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B4D1E247C9AC52D0092D51FE2E3BB85A5C9C63159A6D545E12C2464C6AC3E9B5</code></li>
+<li><span>Body hash</span><code>ABBCDAA18459D17D2597670EA07DDEDE4D55C4D61BD6963DD3CD5BCBD7F86C3D</code></li>
+<li><span>IL size</span><span>100</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#getentitywrappers----entitysystem-entityenumerator">Shared.Entity.EntitySystem::GetEntityWrappers()</a></code></li>
+<li><code><a href="../../types/Shared/EntitySystem_EntityEnumerator.html#getenumerator----entitysystem-entityenumerator">EntitySystem.EntityEnumerator::GetEnumerator()</a></code></li>
+<li><code>EntitySystem.EntityEnumerator::get_Current()</code></li>
+<li><code>System.Object::Equals(System.Object, System.Object)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#contains-microsoft-xna-framework-vector2---system-boolean">CandideCreator.Shared.Models.RectangleF::Contains(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Controllers_EntityController.html#forgetentity-shared-entity-entitywrapper--shared-entity-entityremoveinfo--system-boolean---system-void">Candide.GameModels.Controllers.EntityController::ForgetEntity(Shared.Entity.EntityWrapper, Shared.Entity.EntityRemoveInfo, System.Boolean)</a></code></li>
+<li><code><a href="../../types/Shared/EntitySystem_EntityEnumerator.html#movenext----system-boolean">EntitySystem.EntityEnumerator::MoveNext()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#unload-candide-world-worldchunk---system-void"><code>Candide.World.ExteriorWorldHandler::Unload</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ForgetEntity public System.Void ForgetEntity(Shared.Entity.EntityWrapper entity, Shared.Entity.EntityRemoveInfo removeInfo, System.Boolean calledByEntityRemove) System.Void entity Shared.Entity.EntityWrapper removeInfo Shared.Entity.EntityRemoveInfo calledByEntityRemove System.Boolean" id="forgetentity-shared-entity-entitywrapper--shared-entity-entityremoveinfo--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>ForgetEntity</code></h3>
+<a class="permalink" href="#forgetentity-shared-entity-entitywrapper--shared-entity-entityremoveinfo--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ForgetEntity(Shared.Entity.EntityWrapper entity, Shared.Entity.EntityRemoveInfo removeInfo, System.Boolean calledByEntityRemove)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::ForgetEntity(Shared.Entity.EntityWrapper, Shared.Entity.EntityRemoveInfo, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ForgetEntity(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, <a href="../../types/Shared/Shared_Entity_EntityRemoveInfo.html">Shared.Entity.EntityRemoveInfo</a> removeInfo, System.Boolean calledByEntityRemove)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>566638AFE7FAC6B9F7E01C9B8BCFFC7B82212332481A019C52EB7BD7DD791A60</code></li>
+<li><span>Body hash</span><code>0374D2761F78EE6A4ADDC42FF779D0FA0638A35E00BF19704A37B822D18F51E5</code></li>
+<li><span>IL size</span><span>39</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::Remove(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Systems_DeadReckoningSystem.html#remove-system-guid---system-void">Candide.GameModels.Systems.DeadReckoningSystem::Remove(System.Guid)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntityWrapper.html#delete-shared-entity-entityremoveinfo---system-void">Shared.Entity.EntityWrapper::Delete(Shared.Entity.EntityRemoveInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_Bridge_ClientEntitySystemBridge.html#onentityremove-shared-entity-entitywrapper--shared-entity-entityremoveinfo---system-void"><code>Candide.Entities.Bridge.ClientEntitySystemBridge::OnEntityRemove</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_EntityController.html#forgetentities-shared-entity-entitysystem--candidecreator-shared-models-rectanglef---system-void"><code>Candide.GameModels.Controllers.EntityController::ForgetEntities</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_EntityController.html#spawnentitybase-system-guid--microsoft-xna-framework-vector3--system-guid--system-guid--system-boolean--system-boolean---shared-entity-entitywrapper"><code>Candide.GameModels.Controllers.EntityController::SpawnEntityBase</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#forgetallexceptplayer----system-void"><code>Candide.GameModels.Managers.EntityManager::ForgetAllExceptPlayer</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#forgetentity-system-guid--shared-entity-entityremoveinfo---system-void"><code>Candide.GameModels.Managers.EntityManager::ForgetEntity</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#syncremoveentity-system-guid--shared-entity-entityremoveinfo--shared-combat-damageresult---system-void"><code>Candide.GameModels.Managers.EntityManager::SyncRemoveEntity</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Systems_EntityNetworkSystem.html#updatecleanup-system-single---system-void"><code>Candide.GameModels.Systems.EntityNetworkSystem::UpdateCleanup</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_PlayerSystem.html#update----system-void"><code>Candide.Multiplayer.PlayerSystem::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_PlayerService.html#onreceive-playerdied-candideserver-messagemodels-playercharacters-playerdiedmessage---system-void"><code>Candide.Multiplayer.Services.PlayerService::OnReceive_PlayerDied</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="HandleUpdateEntityPositionMessage public System.Void HandleUpdateEntityPositionMessage(System.Guid entityId, Microsoft.Xna.Framework.Vector3 position) System.Void entityId System.Guid position Microsoft.Xna.Framework.Vector3" id="handleupdateentitypositionmessage-system-guid--microsoft-xna-framework-vector3---system-void">
+<div class="method-heading">
+<h3><code>HandleUpdateEntityPositionMessage</code></h3>
+<a class="permalink" href="#handleupdateentitypositionmessage-system-guid--microsoft-xna-framework-vector3---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void HandleUpdateEntityPositionMessage(System.Guid entityId, Microsoft.Xna.Framework.Vector3 position)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::HandleUpdateEntityPositionMessage(System.Guid, Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void HandleUpdateEntityPositionMessage(System.Guid entityId, Microsoft.Xna.Framework.Vector3 position)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>22B016FBB12FA93AAB166B55D2E4912E6003654330EEF122AC6C12872C8BDDA5</code></li>
+<li><span>Body hash</span><code>693710B2D588248C9AA058EF9588819D108D6F7330320147BFAFFEF565CD6707</code></li>
+<li><span>IL size</span><span>24</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Position(Microsoft.Xna.Framework.Vector3)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Services_EntityService.html#onreceive-entityanimationmessage-candideserver-messagemodels-entities-updateentitypositionmessage---system-void"><code>Candide.GameModels.Services.EntityService::OnReceive_EntityAnimationMessage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MoveEntity public System.Void MoveEntity(System.Guid entityId, Microsoft.Xna.Framework.Vector3 position) System.Void entityId System.Guid position Microsoft.Xna.Framework.Vector3" id="moveentity-system-guid--microsoft-xna-framework-vector3---system-void">
+<div class="method-heading">
+<h3><code>MoveEntity</code></h3>
+<a class="permalink" href="#moveentity-system-guid--microsoft-xna-framework-vector3---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void MoveEntity(System.Guid entityId, Microsoft.Xna.Framework.Vector3 position)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::MoveEntity(System.Guid, Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void MoveEntity(System.Guid entityId, Microsoft.Xna.Framework.Vector3 position)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0F69BDB18E7327C0FD5E5CAAA348D59760656326231CCA208E62343B7DAF345D</code></li>
+<li><span>Body hash</span><code>E33A6FEF52C728EE5DBE08C23702BD605A51A13FD4F80AB2B259BCBBD68700A6</code></li>
+<li><span>IL size</span><span>23</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_GameModels_GameState.html#trygetentity-system-guid--shared-entity-entitywrapper---system-string---system-boolean">Candide.GameModels.GameState::TryGetEntity(System.Guid, Shared.Entity.EntityWrapper&amp;, System.String)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Position(Microsoft.Xna.Framework.Vector3)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#moveentity-system-guid--microsoft-xna-framework-vector3---system-void"><code>Candide.GameModels.Managers.EntityManager::MoveEntity</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_PlayerCharacterManager.html#syncmoveplayer-candideserver-messagemodels-playercharacters-moveplayermessage---system-void"><code>Candide.GameModels.Managers.PlayerCharacterManager::SyncMovePlayer</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>MoveEntity</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="QueueUpdateEntitiesInfo public System.Void QueueUpdateEntitiesInfo(System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt; entityInfo, System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt; immovableEntityInfo, System.TimeSpan updateTime) System.Void entityInfo System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt; immovableEntityInfo System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt; updateTime System.TimeSpan" id="queueupdateentitiesinfo-system-collections-generic-list-1-candideserver-messagemodels-entities-entityinfomessage2---system-collections-generic-list-1-candideserver-messagemodels-entities-immovableentityinfomessage2---system-timespan---system-void">
+<div class="method-heading">
+<h3><code>QueueUpdateEntitiesInfo</code></h3>
+<a class="permalink" href="#queueupdateentitiesinfo-system-collections-generic-list-1-candideserver-messagemodels-entities-entityinfomessage2---system-collections-generic-list-1-candideserver-messagemodels-entities-immovableentityinfomessage2---system-timespan---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void QueueUpdateEntitiesInfo(System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt; entityInfo, System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt; immovableEntityInfo, System.TimeSpan updateTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::QueueUpdateEntitiesInfo(System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt;, System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt;, System.TimeSpan)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void QueueUpdateEntitiesInfo(System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_MessageModels_Entities_EntityInfoMessage2.html">CandideServer.MessageModels.Entities.EntityInfoMessage2</a>&gt; entityInfo, System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_MessageModels_Entities_ImmovableEntityInfoMessage2.html">CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2</a>&gt; immovableEntityInfo, System.TimeSpan updateTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EA3570F610E7C96DD7934B72B895557ECF208F9DBC72134BAF321B091F4EF45E</code></li>
+<li><span>Body hash</span><code>2D6ECE7AA5B24FADC5592F18E10D9817659410D1E9993189625FB549E6F7B03C</code></li>
+<li><span>IL size</span><span>116</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt;&gt;::TryPop(!0&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt;::.ctor(System.Collections.Generic.IEnumerable&lt;!0&gt;)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt;::AddRange(System.Collections.Generic.IEnumerable&lt;!0&gt;)</code></li>
+<li><code>System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt;&gt;::TryPop(!0&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt;::.ctor(System.Collections.Generic.IEnumerable&lt;!0&gt;)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt;::AddRange(System.Collections.Generic.IEnumerable&lt;!0&gt;)</code></li>
+<li><code>System.Collections.Generic.List&lt;EntityController.EntityInfoPackage&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#updateentitiesinfo-system-collections-generic-list-1-candideserver-messagemodels-entities-entityinfomessage2---system-collections-generic-list-1-candideserver-messagemodels-entities-immovableentityinfomessage2---system-timespan---system-void"><code>Candide.GameModels.Managers.EntityManager::UpdateEntitiesInfo</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnEntity public Shared.Entity.EntityWrapper SpawnEntity(CandideServer.Entities.ServerEntityModel model) Shared.Entity.EntityWrapper model CandideServer.Entities.ServerEntityModel" id="spawnentity-candideserver-entities-serverentitymodel---shared-entity-entitywrapper">
+<div class="method-heading">
+<h3><code>SpawnEntity</code></h3>
+<a class="permalink" href="#spawnentity-candideserver-entities-serverentitymodel---shared-entity-entitywrapper" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Entity.EntityWrapper SpawnEntity(CandideServer.Entities.ServerEntityModel model)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::SpawnEntity(CandideServer.Entities.ServerEntityModel)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> SpawnEntity(<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> model)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FB5BD7C102AD14E4075FB1F337902D8FB43FA0A34AE624D39BFD22E1BFC13F60</code></li>
+<li><span>Body hash</span><code>A176A43BE26222F7BBE519C5FB3A89D566BB811581F1C2C3EFC09691D81ADD4A</code></li>
+<li><span>IL size</span><span>851</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_GameModels_Controllers_EntityController.html#spawnentitybase-system-guid--microsoft-xna-framework-vector3--system-guid--system-guid--system-boolean--system-boolean---shared-entity-entitywrapper">Candide.GameModels.Controllers.EntityController::SpawnEntityBase(System.Guid, Microsoft.Xna.Framework.Vector3, System.Guid, System.Guid, System.Boolean, System.Boolean)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Direction(System.Single)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Velocity(Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Health(System.Single)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_MaxHealth(System.Single)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_SamsPlayerDebuggerHelper.html#entity-set-carriedid-shared-entity-entitysystem--system-int32--system-nullable-1-system-guid----system-void">Shared.Helpers.SamsPlayerDebuggerHelper::Entity_Set_CarriedId(Shared.Entity.EntitySystem, System.Int32, System.Nullable&lt;System.Guid&gt;)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_CarrierId(System.Nullable&lt;System.Guid&gt;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_IsThrown(System.Boolean)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_ThrowerId(System.Nullable&lt;System.Guid&gt;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_KillWhenThrown(System.Boolean)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_TargetOfAggro(Shared.Entity.EntityWrapper)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#addoroverwrite-system-collections-generic-dictionary-2-system-string-system-string----system-void">CandideCreator.Shared.Helpers.Parameters::AddOrOverwrite(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::GetValueOrDefault()</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Frame(System.Int32)</code></li>
+<li><code>System.Globalization.CultureInfo::get_InvariantCulture()</code></li>
+<li><code>System.Int32::ToString(System.IFormatProvider)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#set-system-string--system-string---system-void">CandideCreator.Shared.Helpers.Parameters::Set(System.String, System.String)</a></code></li>
+<li><code>System.Object::ToString()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_Value()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#entityinitialize----system-void">Shared.Entity.Base.AbstractController::EntityInitialize()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#worldinitialize----system-void">Shared.Entity.Base.AbstractController::WorldInitialize()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#worldload----system-void">Shared.Entity.Base.AbstractController::WorldLoad()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#onserversetstate-system-int32---system-void">Shared.Entity.Base.AbstractController::OnServerSetState(System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_DecorationsManager.html#syncdecorationspawned-candideserver-messagemodels-decorations-decorationspawnedmessage---system-void"><code>Candide.GameModels.Managers.DecorationsManager::SyncDecorationSpawned</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_EntityService.html#onreceive-constructionspawnentity-candideserver-messagemodels-constructions-constructionspawnentitymessage---system-void"><code>Candide.GameModels.Services.EntityService::OnReceive_ConstructionSpawnEntity</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_EntityService.html#onreceive-getworldentitiesresponse-system-guid--system-collections-generic-ireadonlycollection-1-candideserver-entities-serverentitymodel----system-void"><code>Candide.GameModels.Services.EntityService::OnReceive_GetWorldEntitiesResponse</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_EntityService.html#onreceive-spawnentities-candideserver-messagemodels-entities-spawnentitiesmessage---system-void"><code>Candide.GameModels.Services.EntityService::OnReceive_SpawnEntities</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_EntityService.html#onreceive-spawnentity-candideserver-entities-serverentitymodel---system-void"><code>Candide.GameModels.Services.EntityService::OnReceive_SpawnEntity</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_FurnitureService.html#onreceive-constructionspawnentity-candideserver-messagemodels-furniture-furnitureplacedmessage---system-void"><code>Candide.GameModels.Services.FurnitureService::OnReceive_ConstructionSpawnEntity</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Systems_EntityNetworkSystem.html#ongetentitiesresponse-candideserver-messagemodels-entities-getentitiesresponse---system-void"><code>Candide.GameModels.Systems.EntityNetworkSystem::OnGetEntitiesResponse</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#receivechunkdata-candideserver-messagemodels-chunks-chunkdatamessage---system-void"><code>Candide.World.ExteriorWorldHandler::ReceiveChunkData</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>override_frame</code></li>
+<li><code>vehicle_driver</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnEntityBase public Shared.Entity.EntityWrapper SpawnEntityBase(System.Guid baseId, Microsoft.Xna.Framework.Vector3 position, System.Guid id, System.Guid worldId, System.Boolean initializeController, System.Boolean skipCalculateState) Shared.Entity.EntityWrapper baseId System.Guid position Microsoft.Xna.Framework.Vector3 id System.Guid worldId System.Guid initializeController System.Boolean skipCalculateState System.Boolean" id="spawnentitybase-system-guid--microsoft-xna-framework-vector3--system-guid--system-guid--system-boolean--system-boolean---shared-entity-entitywrapper">
+<div class="method-heading">
+<h3><code>SpawnEntityBase</code></h3>
+<a class="permalink" href="#spawnentitybase-system-guid--microsoft-xna-framework-vector3--system-guid--system-guid--system-boolean--system-boolean---shared-entity-entitywrapper" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Entity.EntityWrapper SpawnEntityBase(System.Guid baseId, Microsoft.Xna.Framework.Vector3 position, System.Guid id, System.Guid worldId, System.Boolean initializeController, System.Boolean skipCalculateState)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::SpawnEntityBase(System.Guid, Microsoft.Xna.Framework.Vector3, System.Guid, System.Guid, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> SpawnEntityBase(System.Guid baseId, Microsoft.Xna.Framework.Vector3 position, System.Guid id, System.Guid worldId, System.Boolean initializeController, System.Boolean skipCalculateState)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B11C31E6ED58AAD63ED25092DF301289BF6712DD7FB8A5F5BD9F50C7F6FA9A29</code></li>
+<li><span>Body hash</span><code>F196CAFFD5AEEC4175FB42DA69A045DF60653F02B43231268990A7266E717421</code></li>
+<li><span>IL size</span><span>348</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::DistanceSquared(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_CarrierId()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Controllers_EntityController.html#forgetentity-shared-entity-entitywrapper--shared-entity-entityremoveinfo--system-boolean---system-void">Candide.GameModels.Controllers.EntityController::ForgetEntity(Shared.Entity.EntityWrapper, Shared.Entity.EntityRemoveInfo, System.Boolean)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Database_Doodad_DoodadDatabaseManager.html#spawndoodad-system-guid--shared-entity-entitysystem--system-boolean--system-boolean---shared-entity-entitywrapper">Candide.Database.Doodad.DoodadDatabaseManager::SpawnDoodad(System.Guid, Shared.Entity.EntitySystem, System.Boolean, System.Boolean)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Id(System.Guid)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Position(Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_CollisionInRest(System.SByte)</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#updatefloorheight-system-int32---system-void">Shared.Entity.EntitySystem::UpdateFloorHeight(System.Int32)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Stats()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_EntityStats.html#onload----system-void">Shared.Models.Stats.EntityStats::OnLoad()</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#entityinitialize----system-void">Shared.Entity.Base.AbstractController::EntityInitialize()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#worldinitialize----system-void">Shared.Entity.Base.AbstractController::WorldInitialize()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#worldload----system-void">Shared.Entity.Base.AbstractController::WorldLoad()</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::set_Item(!0, !1)</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_SharedEntityAuraManager.html#calculatestate-shared-entity-entitywrapper---system-void">Shared.Entity.SharedEntityAuraManager::CalculateState(Shared.Entity.EntityWrapper)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_MaskRef()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#removeflag-shared-entity-components-component---shared-entity-components-component---system-void">Shared.Entity.Components.ComponentExtension::RemoveFlag(Shared.Entity.Components.Component&amp;, Shared.Entity.Components.Component)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_MaterialStorageStackController.html#oninteract-shared-entity-entitywrapper---system-void"><code>Candide.Entities.Controllers.Other.MaterialStorageStackController::OnInteract</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_EntityController.html#spawnentity-candideserver-entities-serverentitymodel---shared-entity-entitywrapper"><code>Candide.GameModels.Controllers.EntityController::SpawnEntity</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_ConstructionsManager.html#tryplaceconstruction-microsoft-xna-framework-point--shared-models-construction-constructionmodel--shared-models-items-iteminstancemodel---system-void"><code>Candide.GameModels.Managers.ConstructionsManager::TryPlaceConstruction</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_FurnitureManager.html#tryplacefurniture-system-string--microsoft-xna-framework-vector3--system-int32--system-int32--system-int32---system-void"><code>Candide.GameModels.Managers.FurnitureManager::TryPlaceFurniture</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SyncFullGameState public System.Void SyncFullGameState(CandideServer.ServerServices.GetFullGameStateResponse model) System.Void model CandideServer.ServerServices.GetFullGameStateResponse" id="syncfullgamestate-candideserver-serverservices-getfullgamestateresponse---system-void">
+<div class="method-heading">
+<h3><code>SyncFullGameState</code></h3>
+<a class="permalink" href="#syncfullgamestate-candideserver-serverservices-getfullgamestateresponse---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SyncFullGameState(CandideServer.ServerServices.GetFullGameStateResponse model)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::SyncFullGameState(CandideServer.ServerServices.GetFullGameStateResponse)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SyncFullGameState(<a href="../../types/CandideServer/CandideServer_ServerServices_GetFullGameStateResponse.html">CandideServer.ServerServices.GetFullGameStateResponse</a> model)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D662277AA4EB2E482B6E54D050CC15CE4B5D79E72F656A33B1F995BE55E8003B</code></li>
+<li><span>Body hash</span><code>3B2AD33B53A0C94B8CE70E7CA2D463BDBF8F00C6AA3B1F28D2343070DABC082B</code></li>
+<li><span>IL size</span><span>54</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#removeall-shared-entity-components-component--shared-entity-entityremoveinfo---system-void">Shared.Entity.EntitySystem::RemoveAll(Shared.Entity.Components.Component, Shared.Entity.EntityRemoveInfo)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::Clear()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_GameStateManager.html#receivefullgamestate-candideserver-serverservices-getfullgamestateresponse---system-void"><code>Candide.GameModels.Managers.GameStateManager::ReceiveFullGameState</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="UpdateEntitiesInfo private System.Void UpdateEntitiesInfo(System.Collections.Generic.Dictionary&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt; entityInfo, System.TimeSpan updateTime) System.Void entityInfo System.Collections.Generic.Dictionary&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt; updateTime System.TimeSpan" id="updateentitiesinfo-system-collections-generic-dictionary-2-system-guid-entitycontroller-entityinfotimestampedmessage---system-timespan---system-void">
+<div class="method-heading">
+<h3><code>UpdateEntitiesInfo</code></h3>
+<a class="permalink" href="#updateentitiesinfo-system-collections-generic-dictionary-2-system-guid-entitycontroller-entityinfotimestampedmessage---system-timespan---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void UpdateEntitiesInfo(System.Collections.Generic.Dictionary&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt; entityInfo, System.TimeSpan updateTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::UpdateEntitiesInfo(System.Collections.Generic.Dictionary&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt;, System.TimeSpan)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void UpdateEntitiesInfo(System.Collections.Generic.Dictionary&lt;System.Guid, <a href="../../types/Romestead/EntityController_EntityInfoTimeStampedMessage.html">EntityController.EntityInfoTimeStampedMessage</a>&gt; entityInfo, System.TimeSpan updateTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1030AE16BA48EB3FFF871BC3DFFA8B3A828BA845BEECA4C3FFB42D7984EFDFA5</code></li>
+<li><span>Body hash</span><code>2B29B59E598FE1224008564062CAFF1D3E1E69E120A1BB7AF3B2BBE7F6D7EBBD</code></li>
+<li><span>IL size</span><span>256</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_GameModels_Systems_DeadReckoningSystem.html#newgroupofdata-system-timespan---system-void">Candide.GameModels.Systems.DeadReckoningSystem::NewGroupOfData(System.TimeSpan)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Direction(System.Single)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Health(System.Single)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Systems_DeadReckoningSystem.html#adddata-system-guid--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-single--shared-entity-entitywrapper--system-timespan---system-void">Candide.GameModels.Systems.DeadReckoningSystem::AddData(System.Guid, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Single, Shared.Entity.EntityWrapper, System.TimeSpan)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Position(Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Velocity(Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Acceleration(Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_AccelerationScale(System.Single)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateEntitiesInfo public System.Void UpdateEntitiesInfo(CandideServer.MessageModels.Entities.EntitiesInfoMessage message) System.Void message CandideServer.MessageModels.Entities.EntitiesInfoMessage" id="updateentitiesinfo-candideserver-messagemodels-entities-entitiesinfomessage---system-void">
+<div class="method-heading">
+<h3><code>UpdateEntitiesInfo</code></h3>
+<a class="permalink" href="#updateentitiesinfo-candideserver-messagemodels-entities-entitiesinfomessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateEntitiesInfo(CandideServer.MessageModels.Entities.EntitiesInfoMessage message)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::UpdateEntitiesInfo(CandideServer.MessageModels.Entities.EntitiesInfoMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateEntitiesInfo(<a href="../../types/CandideServer/CandideServer_MessageModels_Entities_EntitiesInfoMessage.html">CandideServer.MessageModels.Entities.EntitiesInfoMessage</a> message)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D828E9EC28C0067BD6E8F43F9BEEBAE94F75D730830DABFBA96DB4BA9542F473</code></li>
+<li><span>Body hash</span><code>5AD5A1672E2CEF1BD37342F419035801ECFD2E91E01273F1F58FFB4C88A44D16</code></li>
+<li><span>IL size</span><span>218</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Position(Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Direction(System.Single)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Velocity(Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_TargetOfAggro(Shared.Entity.EntityWrapper)</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_Value()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#onserversetstate-system-int32---system-void">Shared.Entity.Base.AbstractController::OnServerSetState(System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#updateentitiesinfo-candideserver-messagemodels-entities-entitiesinfomessage---system-void"><code>Candide.GameModels.Managers.EntityManager::UpdateEntitiesInfo</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateEntityAnimationMessage public System.Void UpdateEntityAnimationMessage(CandideServer.MessageModels.Entities.EntityAnimationMessage msg) System.Void msg CandideServer.MessageModels.Entities.EntityAnimationMessage" id="updateentityanimationmessage-candideserver-messagemodels-entities-entityanimationmessage---system-void">
+<div class="method-heading">
+<h3><code>UpdateEntityAnimationMessage</code></h3>
+<a class="permalink" href="#updateentityanimationmessage-candideserver-messagemodels-entities-entityanimationmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateEntityAnimationMessage(CandideServer.MessageModels.Entities.EntityAnimationMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::UpdateEntityAnimationMessage(CandideServer.MessageModels.Entities.EntityAnimationMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateEntityAnimationMessage(<a href="../../types/CandideServer/CandideServer_MessageModels_Entities_EntityAnimationMessage.html">CandideServer.MessageModels.Entities.EntityAnimationMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E3F573320BCF81B35C7E77A07B69D8761311B24C87AE7B2CC06AB4F6755257E8</code></li>
+<li><span>Body hash</span><code>734FB5C83DC30362408E9EE04FC4005854971163B6D882026714940E8E44B454</code></li>
+<li><span>IL size</span><span>47</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#receiveentityanimationmessage-system-byte---system-void">Shared.Entity.Base.AbstractController::ReceiveEntityAnimationMessage(System.Byte)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#handleentityanimationmessage-candideserver-messagemodels-entities-entityanimationmessage---system-void"><code>Candide.GameModels.Managers.EntityManager::HandleEntityAnimationMessage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateEntityControllerMessage public System.Void UpdateEntityControllerMessage(CandideServer.MessageModels.Entities.EntitiesControllerMessage msg) System.Void msg CandideServer.MessageModels.Entities.EntitiesControllerMessage" id="updateentitycontrollermessage-candideserver-messagemodels-entities-entitiescontrollermessage---system-void">
+<div class="method-heading">
+<h3><code>UpdateEntityControllerMessage</code></h3>
+<a class="permalink" href="#updateentitycontrollermessage-candideserver-messagemodels-entities-entitiescontrollermessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateEntityControllerMessage(CandideServer.MessageModels.Entities.EntitiesControllerMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::UpdateEntityControllerMessage(CandideServer.MessageModels.Entities.EntitiesControllerMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateEntityControllerMessage(<a href="../../types/CandideServer/CandideServer_MessageModels_Entities_EntitiesControllerMessage.html">CandideServer.MessageModels.Entities.EntitiesControllerMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F88C8A6217408F2E80D59981BB0BEC58E3D6C43990C9D4825745845863F49963</code></li>
+<li><span>Body hash</span><code>53306B4F1AE46DAC285F7F7EEDE5D9C01D7C8C34D3EBAD29C681B99A608DEC94</code></li>
+<li><span>IL size</span><span>47</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#receiveentitycontrollermessage-system-object---system-void">Shared.Entity.Base.AbstractController::ReceiveEntityControllerMessage(System.Object)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#handleentitycontrollermessage-candideserver-messagemodels-entities-entitiescontrollermessage---system-void"><code>Candide.GameModels.Managers.EntityManager::HandleEntityControllerMessage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateEntityHealth public System.Void UpdateEntityHealth(System.Guid entityId, System.Single health) System.Void entityId System.Guid health System.Single" id="updateentityhealth-system-guid--system-single---system-void">
+<div class="method-heading">
+<h3><code>UpdateEntityHealth</code></h3>
+<a class="permalink" href="#updateentityhealth-system-guid--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateEntityHealth(System.Guid entityId, System.Single health)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::UpdateEntityHealth(System.Guid, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateEntityHealth(System.Guid entityId, System.Single health)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5AF5DD897F424C21843B48150AE8E39E826B1FA7195A83C3395C3BA244779A17</code></li>
+<li><span>Body hash</span><code>3A72EC821D34DC6E085E3B8CF2C9A47016C2CEBC9062D9ACB5C00F16786B18C4</code></li>
+<li><span>IL size</span><span>24</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_GameModels_GameState.html#trygetentity-system-guid--shared-entity-entitywrapper---system-string---system-boolean">Candide.GameModels.GameState::TryGetEntity(System.Guid, Shared.Entity.EntityWrapper&amp;, System.String)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Health(System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Services_EntityService.html#onreceive-updateentityhealth-candideserver-messagemodels-entities-updateentityhealthmessage---system-void"><code>Candide.GameModels.Services.EntityService::OnReceive_UpdateEntityHealth</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>UpdateEntityHealth</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateEntityInfos public System.Void UpdateEntityInfos() System.Void " id="updateentityinfos----system-void">
+<div class="method-heading">
+<h3><code>UpdateEntityInfos</code></h3>
+<a class="permalink" href="#updateentityinfos----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateEntityInfos()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::UpdateEntityInfos()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateEntityInfos()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5808035480771230145D0AB41FC854A31E0AEDB96A5C103CBBBBA2FD8EA1FB51</code></li>
+<li><span>Body hash</span><code>4E42202859A3582786FD25BB25DD49D2554728DFA2C230E1E715E866E0399DD9</code></li>
+<li><span>IL size</span><span>1026</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;EntityController.EntityInfoPackage&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt;::Clear()</code></li>
+<li><code>EntityController.&lt;&gt;c::&lt;UpdateEntityInfos&gt;b__10_0(EntityController.EntityInfoPackage, EntityController.EntityInfoPackage)</code></li>
+<li><code>System.Comparison&lt;EntityController.EntityInfoPackage&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;EntityController.EntityInfoPackage&gt;::Sort(System.Comparison&lt;!0&gt;)</code></li>
+<li><code>System.Collections.Generic.List&lt;EntityController.EntityInfoPackage&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;EntityController.EntityInfoPackage&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Add(!0)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::GetValueOrDefault()</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Health(System.Single)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Direction(System.Single)</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_Value()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#onserversetstate-system-int32---system-void">Shared.Entity.Base.AbstractController::OnServerSetState(System.Int32)</a></code></li>
+<li><code>List.Enumerator&lt;CandideServer.MessageModels.Entities.EntityInfoMessage2&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;CandideServer.MessageModels.Entities.ImmovableEntityInfoMessage2&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, EntityController.EntityInfoTimeStampedMessage&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::get_Zero()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Inequality(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::DistanceSquared(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Systems_DeadReckoningSystem.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.GameModels.Systems.DeadReckoningSystem::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateEntityParameter public System.Void UpdateEntityParameter(System.Guid entityId, System.String key, System.String value, System.Nullable&lt;System.Int32&gt; state) System.Void entityId System.Guid key System.String value System.String state System.Nullable&lt;System.Int32&gt;" id="updateentityparameter-system-guid--system-string--system-string--system-nullable-1-system-int32----system-void">
+<div class="method-heading">
+<h3><code>UpdateEntityParameter</code></h3>
+<a class="permalink" href="#updateentityparameter-system-guid--system-string--system-string--system-nullable-1-system-int32----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateEntityParameter(System.Guid entityId, System.String key, System.String value, System.Nullable&lt;System.Int32&gt; state)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::UpdateEntityParameter(System.Guid, System.String, System.String, System.Nullable&lt;System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateEntityParameter(System.Guid entityId, System.String key, System.String value, System.Nullable&lt;System.Int32&gt; state)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1606B3452E543B26ABCEF3F52C74CE29B6C8FF741046685E74B3C7C0AC48C4F3</code></li>
+<li><span>Body hash</span><code>3A40FBCFCC2F8C80BE65BB01C43729235A19E5209B4FFA28A5389449D195D7B8</code></li>
+<li><span>IL size</span><span>92</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#set-system-string--system-string---system-void">CandideCreator.Shared.Helpers.Parameters::Set(System.String, System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::GetValueOrDefault()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#onserversetstate-system-int32---system-void">Shared.Entity.Base.AbstractController::OnServerSetState(System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#updateparameter-system-guid--system-string--system-string--system-int32---system-void"><code>Candide.GameModels.Managers.EntityManager::UpdateParameter</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_EntityService.html#onreceive-updateentityparameter-candideserver-messagemodels-entities-updateentityparametermessage---system-void"><code>Candide.GameModels.Services.EntityService::OnReceive_UpdateEntityParameter</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateEntityParameters public System.Void UpdateEntityParameters(System.Guid entityId, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; parameters, System.Int32 state) System.Void entityId System.Guid parameters System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; state System.Int32" id="updateentityparameters-system-guid--system-collections-generic-dictionary-2-system-string-system-string---system-int32---system-void">
+<div class="method-heading">
+<h3><code>UpdateEntityParameters</code></h3>
+<a class="permalink" href="#updateentityparameters-system-guid--system-collections-generic-dictionary-2-system-string-system-string---system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateEntityParameters(System.Guid entityId, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; parameters, System.Int32 state)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::UpdateEntityParameters(System.Guid, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateEntityParameters(System.Guid entityId, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; parameters, System.Int32 state)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B753DCB6ADD4856D8C5298D18DDB46CAD8A8843D208ACFEA15570D3FC383C9AB</code></li>
+<li><span>Body hash</span><code>54CC65E1BA756009CD012332D6B08425921ECE7613FECF7FEB43152AE85A0670</code></li>
+<li><span>IL size</span><span>61</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#addoroverwrite-system-collections-generic-dictionary-2-system-string-system-string----system-void">CandideCreator.Shared.Helpers.Parameters::AddOrOverwrite(System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#onserversetstate-system-int32---system-void">Shared.Entity.Base.AbstractController::OnServerSetState(System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Services_EntityService.html#onreceive-updateentityparameters-candideserver-messagemodels-entities-updateentityparametersmessage---system-void"><code>Candide.GameModels.Services.EntityService::OnReceive_UpdateEntityParameters</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateEntitySignalMessage public System.Void UpdateEntitySignalMessage(CandideServer.MessageModels.Entities.EntitySignalMessage msg) System.Void msg CandideServer.MessageModels.Entities.EntitySignalMessage" id="updateentitysignalmessage-candideserver-messagemodels-entities-entitysignalmessage---system-void">
+<div class="method-heading">
+<h3><code>UpdateEntitySignalMessage</code></h3>
+<a class="permalink" href="#updateentitysignalmessage-candideserver-messagemodels-entities-entitysignalmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateEntitySignalMessage(CandideServer.MessageModels.Entities.EntitySignalMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::UpdateEntitySignalMessage(CandideServer.MessageModels.Entities.EntitySignalMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateEntitySignalMessage(<a href="../../types/CandideServer/CandideServer_MessageModels_Entities_EntitySignalMessage.html">CandideServer.MessageModels.Entities.EntitySignalMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>020CC1FBE0FC743B70A27FED139AAA69211A0FB9FE495B01E768E25A2F477F1F</code></li>
+<li><span>Body hash</span><code>8F746E9E7EC9773168B81ACAB29B8DA94BE9FBD3CD519EFF3BCDF6CC10077F29</code></li>
+<li><span>IL size</span><span>47</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#receiveentitysignalmessage-system-byte---system-void">Shared.Entity.Base.AbstractController::ReceiveEntitySignalMessage(System.Byte)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#handleentitysignalmessage-candideserver-messagemodels-entities-entitysignalmessage---system-void"><code>Candide.GameModels.Managers.EntityManager::HandleEntitySignalMessage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateEntityState public System.Void UpdateEntityState(System.Guid entityId, System.Int32 state) System.Void entityId System.Guid state System.Int32" id="updateentitystate-system-guid--system-int32---system-void">
+<div class="method-heading">
+<h3><code>UpdateEntityState</code></h3>
+<a class="permalink" href="#updateentitystate-system-guid--system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateEntityState(System.Guid entityId, System.Int32 state)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::UpdateEntityState(System.Guid, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateEntityState(System.Guid entityId, System.Int32 state)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>ADE25379260DFD2AF68A93DEB0BBB3E0D147772D8E4C7A4B3A6978114D4462CA</code></li>
+<li><span>Body hash</span><code>5E5ED3D8685706BD1F1A040182CCB621979B004E2F72D6EFCCB30BCDAE4A8EC8</code></li>
+<li><span>IL size</span><span>44</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#onserversetstate-system-int32---system-void">Shared.Entity.Base.AbstractController::OnServerSetState(System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Services_EntityService.html#onreceive-updateentitystate-candideserver-messagemodels-entities-updateentitystatemessage---system-void"><code>Candide.GameModels.Services.EntityService::OnReceive_UpdateEntityState</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateEntityVfxMessage public System.Void UpdateEntityVfxMessage(CandideServer.MessageModels.Entities.EntityVfxMessage msg) System.Void msg CandideServer.MessageModels.Entities.EntityVfxMessage" id="updateentityvfxmessage-candideserver-messagemodels-entities-entityvfxmessage---system-void">
+<div class="method-heading">
+<h3><code>UpdateEntityVfxMessage</code></h3>
+<a class="permalink" href="#updateentityvfxmessage-candideserver-messagemodels-entities-entityvfxmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateEntityVfxMessage(CandideServer.MessageModels.Entities.EntityVfxMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.GameModels.Controllers.EntityController::UpdateEntityVfxMessage(CandideServer.MessageModels.Entities.EntityVfxMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateEntityVfxMessage(<a href="../../types/CandideServer/CandideServer_MessageModels_Entities_EntityVfxMessage.html">CandideServer.MessageModels.Entities.EntityVfxMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1561A0221A98E5C16137970BB3DAF6E9441B26F58C2872E01CABBA935C5F42EF</code></li>
+<li><span>Body hash</span><code>46DB3C336AA00291E35B3CE19647F3D834C2E44C197624DFC4FAAC28B0F2E05C</code></li>
+<li><span>IL size</span><span>47</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Entity.EntityWrapper&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Controller()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#receiveentityvfxmessage-system-byte---system-void">Shared.Entity.Base.AbstractController::ReceiveEntityVfxMessage(System.Byte)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#handleentityvfxmessage-candideserver-messagemodels-entities-entityvfxmessage---system-void"><code>Candide.GameModels.Managers.EntityManager::HandleEntityVfxMessage</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

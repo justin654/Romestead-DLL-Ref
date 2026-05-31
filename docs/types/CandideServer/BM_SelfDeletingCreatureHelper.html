@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BM.SelfDeletingCreatureHelper - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>BM.SelfDeletingCreatureHelper</h1>
+<button class="copy-button" type="button" data-copy="BM.SelfDeletingCreatureHelper">Copy type</button>
+<button class="copy-button" type="button" data-copy="# BM.SelfDeletingCreatureHelper
+
+- Assembly: `CandideServer`
+- Namespace: `BM`
+- Kind: `public struct`
+- Base type: `System.ValueType`
+- Members: 4 methods, 1 properties, 3 fields, 0 events
+
+## Public Methods
+- `public System.Void MarkForDeletion()`
+- `public System.Void OnRemove(Shared.Entity.EntityWrapper entity, Shared.Entity.EntityRemoveInfo info)`
+- `public System.Void TrySetKillDamageInfo(Shared.Combat.DamageResult damageResult)`
+- `public System.Boolean Update(Shared.Entity.EntityWrapper entity)`
+">Copy markdown</button>
+<a class="button" href="BM_SelfDeletingCreatureHelper.json">Type JSON</a>
+</div>
+<p class="lede">public struct in <code>BM</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>4</strong></article>
+<article class="metric"><span>Properties</span><strong>1</strong></article>
+<article class="metric"><span>Fields</span><strong>3</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>BM</code></li>
+<li><span>Base type</span><code>System.ValueType</code></li>
+<li><span>Hash</span><code>E2AB17FFFE68B4EDB4C50B72DC1855DB05F102547321678E35FC88C085449872</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.ValueType</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenBloatController.html"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenBloatController</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerJumpingSkullController.html"><code>CandideServer.Entities.Controllers.Enemies.ServerJumpingSkullController</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerLavaConstructController.html"><code>CandideServer.Entities.Controllers.Enemies.ServerLavaConstructController</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_TurtleNew_ServerTurtleController.html"><code>CandideServer.Entities.ControllerSets.TurtleNew.ServerTurtleController</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="HasBeenDeleted public System.Boolean HasBeenDeleted System.Boolean" id="hasbeendeleted-system-boolean"><td><span class="member-name-cell"><code>HasBeenDeleted</code><a class="permalink" href="#hasbeendeleted-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean HasBeenDeleted">Copy</button></span></td><td>public</td><td><code>public System.Boolean HasBeenDeleted</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="KillDamageInfo public Shared.Combat.DamageInfo KillDamageInfo Shared.Combat.DamageInfo" id="killdamageinfo-shared-combat-damageinfo"><td><span class="member-name-cell"><code>KillDamageInfo</code><a class="permalink" href="#killdamageinfo-shared-combat-damageinfo" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Shared.Combat.DamageInfo KillDamageInfo">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Shared/Shared_Combat_DamageInfo.html">Shared.Combat.DamageInfo</a> KillDamageInfo</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ShouldBeDeleted public System.Boolean ShouldBeDeleted System.Boolean" id="shouldbedeleted-system-boolean"><td><span class="member-name-cell"><code>ShouldBeDeleted</code><a class="permalink" href="#shouldbedeleted-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean ShouldBeDeleted">Copy</button></span></td><td>public</td><td><code>public System.Boolean ShouldBeDeleted</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="IsMarkedForDeletion public System.Boolean IsMarkedForDeletion System.Boolean" id="ismarkedfordeletion-system-boolean"><td><span class="member-name-cell"><code>IsMarkedForDeletion</code><a class="permalink" href="#ismarkedfordeletion-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean IsMarkedForDeletion">Copy</button></span></td><td>public</td><td><code>public System.Boolean IsMarkedForDeletion</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MarkForDeletion public System.Void MarkForDeletion() System.Void " id="markfordeletion----system-void">
+<div class="method-heading">
+<h3><code>MarkForDeletion</code></h3>
+<a class="permalink" href="#markfordeletion----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void MarkForDeletion()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.SelfDeletingCreatureHelper::MarkForDeletion()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void MarkForDeletion()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F2106375D1E4903482B6A9F81C2CD4600D9010ADE4573B8B450E7372834547BA</code></li>
+<li><span>Body hash</span><code>44FB2FF85C77C2480FE23E67EB2CFFE8B55F4E75A420367A422070B3F1A0C6B0</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerJumpingSkullController.html#onentitycollision-shared-entity-entitywrapper--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3----system-boolean"><code>CandideServer.Entities.Controllers.Enemies.ServerJumpingSkullController::OnEntityCollision</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_TurtleNew_ServerTurtleController.html#explodeturtle----system-void"><code>CandideServer.Entities.ControllerSets.TurtleNew.ServerTurtleController::ExplodeTurtle</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnRemove public System.Void OnRemove(Shared.Entity.EntityWrapper entity, Shared.Entity.EntityRemoveInfo info) System.Void entity Shared.Entity.EntityWrapper info Shared.Entity.EntityRemoveInfo" id="onremove-shared-entity-entitywrapper--shared-entity-entityremoveinfo---system-void">
+<div class="method-heading">
+<h3><code>OnRemove</code></h3>
+<a class="permalink" href="#onremove-shared-entity-entitywrapper--shared-entity-entityremoveinfo---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnRemove(Shared.Entity.EntityWrapper entity, Shared.Entity.EntityRemoveInfo info)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.SelfDeletingCreatureHelper::OnRemove(Shared.Entity.EntityWrapper, Shared.Entity.EntityRemoveInfo)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnRemove(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, <a href="../../types/Shared/Shared_Entity_EntityRemoveInfo.html">Shared.Entity.EntityRemoveInfo</a> info)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A65D6D248ABD1934E4274BD3F7E045717402ABB7A6A06787CF6B943264302EF0</code></li>
+<li><span>Body hash</span><code>EA4C7AB109E64D0FF6A9593C677B5BD8FDB384809A33006A14A087EBB48C1FB9</code></li>
+<li><span>IL size</span><span>54</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Entity_EntityWrapper.html#delete-shared-entity-entityremoveinfo---system-void">Shared.Entity.EntityWrapper::Delete(Shared.Entity.EntityRemoveInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenBloatController.html#onremove-shared-entity-entityremoveinfo---system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenBloatController::OnRemove</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_TurtleNew_ServerTurtleController.html#onremove-shared-entity-entityremoveinfo---system-void"><code>CandideServer.Entities.ControllerSets.TurtleNew.ServerTurtleController::OnRemove</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TrySetKillDamageInfo public System.Void TrySetKillDamageInfo(Shared.Combat.DamageResult damageResult) System.Void damageResult Shared.Combat.DamageResult" id="trysetkilldamageinfo-shared-combat-damageresult---system-void">
+<div class="method-heading">
+<h3><code>TrySetKillDamageInfo</code></h3>
+<a class="permalink" href="#trysetkilldamageinfo-shared-combat-damageresult---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void TrySetKillDamageInfo(Shared.Combat.DamageResult damageResult)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.SelfDeletingCreatureHelper::TrySetKillDamageInfo(Shared.Combat.DamageResult)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void TrySetKillDamageInfo(<a href="../../types/Shared/Shared_Combat_DamageResult.html">Shared.Combat.DamageResult</a> damageResult)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0BF3C67AA68A5482091D0A888B2C38FE9440994E7BCD1C22FF2974D2B229C08E</code></li>
+<li><span>Body hash</span><code>E2F039423C9E2087CEDADE6AA941F319025F4966B2FD2555F08229CA395469E0</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenBloatController.html#onoutofhealth-shared-combat-damageresult---system-boolean"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenBloatController::OnOutOfHealth</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerLavaConstructController.html#onoutofhealth-shared-combat-damageresult---system-boolean"><code>CandideServer.Entities.Controllers.Enemies.ServerLavaConstructController::OnOutOfHealth</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Boolean Update(Shared.Entity.EntityWrapper entity) System.Boolean entity Shared.Entity.EntityWrapper" id="update-shared-entity-entitywrapper---system-boolean">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-shared-entity-entitywrapper---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean Update(Shared.Entity.EntityWrapper entity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.SelfDeletingCreatureHelper::Update(Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean Update(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>88874754A404AD22B953A4C93A909145D61455F67F5E13B5A7CDB3978864A7FC</code></li>
+<li><span>Body hash</span><code>BF7E46164A85CCAE4345F5602AB228F7BCF191F8D2F0E025B25680336A55F83D</code></li>
+<li><span>IL size</span><span>93</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Interfaces_Entity_IEntitySystemBridge.html#onentitykilled-shared-combat-damageinfo--shared-entity-base-onkilledbehaviour--system-single---system-void">Shared.Interfaces.Entity.IEntitySystemBridge::OnEntityKilled(Shared.Combat.DamageInfo, Shared.Entity.Base.OnKilledBehaviour, System.Single)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntityWrapper.html#delete-shared-entity-entityremoveinfo---system-void">Shared.Entity.EntityWrapper::Delete(Shared.Entity.EntityRemoveInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenBloatController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenBloatController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerJumpingSkullController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerJumpingSkullController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerLavaConstructController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerLavaConstructController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_TurtleNew_ServerTurtleController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.ControllerSets.TurtleNew.ServerTurtleController::Update</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

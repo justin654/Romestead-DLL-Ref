@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shared.Helpers.ToolDamageHelper - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Shared.html">Shared</a></p>
+<div class="title-row">
+<h1>Shared.Helpers.ToolDamageHelper</h1>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.ToolDamageHelper">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Shared.Helpers.ToolDamageHelper
+
+- Assembly: `Shared`
+- Namespace: `Shared.Helpers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 4 methods, 0 properties, 1 fields, 0 events
+
+## Public Methods
+- `public Shared.Models.Items.ItemInstanceModel GetItemFromEquipmentType(Shared.Models.Items.ItemInstanceModel[] slots, Shared.Models.Items.EquipmentType type)`
+- `public System.Single GetSwingSpeedScaling(Shared.Models.Items.WeaponTypeEnum weaponType, System.Single swingSpeed)`
+- `public System.Single GetToolDamage(Shared.Models.Items.EquipmentType toolType, System.Nullable&lt;Shared.Models.Stats.EntityStats&gt; entityStats)`
+- `public Shared.Helpers.ToolDamageResult HandleResourceDamage(Shared.Models.Items.EquipmentType toolType, Shared.Entity.EntityWrapper damagedEntity, Shared.Entity.EntityWrapper damagingEntity, System.Nullable&lt;Shared.Models.Stats.EntityStats&gt; entityStats, Shared.Models.Items.ItemInstanceModel[] inventory, Shared.Combat.DamageResult damageResult, System.Boolean requireToolForMelee, System.Boolean requireMelee, System.Single multiplier, Shared.Models.Skill.CharacterSkill skillsCharacterSkill)`
+">Copy markdown</button>
+<a class="button" href="Shared_Helpers_ToolDamageHelper.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Shared.Helpers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>4</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>1</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Shared</code></li>
+<li><span>Namespace</span><code>Shared.Helpers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>D0CD2A69BF788903B05E250256597A38AC10788264286F6A68F78FA54AD6DDC5</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="UnarmedSwingTimer public System.Single UnarmedSwingTimer System.Single" id="unarmedswingtimer-system-single"><td><span class="member-name-cell"><code>UnarmedSwingTimer</code><a class="permalink" href="#unarmedswingtimer-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single UnarmedSwingTimer">Copy</button></span></td><td>public</td><td><code>public System.Single UnarmedSwingTimer</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetItemFromEquipmentType public Shared.Models.Items.ItemInstanceModel GetItemFromEquipmentType(Shared.Models.Items.ItemInstanceModel[] slots, Shared.Models.Items.EquipmentType type) Shared.Models.Items.ItemInstanceModel slots Shared.Models.Items.ItemInstanceModel[] type Shared.Models.Items.EquipmentType" id="getitemfromequipmenttype-shared-models-items-iteminstancemodel----shared-models-items-equipmenttype---shared-models-items-iteminstancemodel">
+<div class="method-heading">
+<h3><code>GetItemFromEquipmentType</code></h3>
+<a class="permalink" href="#getitemfromequipmenttype-shared-models-items-iteminstancemodel----shared-models-items-equipmenttype---shared-models-items-iteminstancemodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Models.Items.ItemInstanceModel GetItemFromEquipmentType(Shared.Models.Items.ItemInstanceModel[] slots, Shared.Models.Items.EquipmentType type)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.ToolDamageHelper::GetItemFromEquipmentType(Shared.Models.Items.ItemInstanceModel[], Shared.Models.Items.EquipmentType)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Models_Items_ItemInstanceModel.html">Shared.Models.Items.ItemInstanceModel</a> GetItemFromEquipmentType(<a href="../../types/Shared/Shared_Models_Items_ItemInstanceModel.html">Shared.Models.Items.ItemInstanceModel</a>[] slots, <a href="../../types/Shared/Shared_Models_Items_EquipmentType.html">Shared.Models.Items.EquipmentType</a> type)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Models_Items_ItemInstanceModel.html">Shared.Models.Items.ItemInstanceModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EE49001026C28CA77FCE6EA7B4CCB5E611C3F35032298E69FAFE4B470F46DF25</code></li>
+<li><span>Body hash</span><code>9DBA2A8A412FA6EF1B4A108A3A1069533A402BA7F94BBAD23F1748A6EBF4C10D</code></li>
+<li><span>IL size</span><span>59</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Models.Items.ItemInstanceModel::get_Data()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Helpers_ToolDamageHelper.html#handleresourcedamage-shared-models-items-equipmenttype--shared-entity-entitywrapper--shared-entity-entitywrapper--system-nullable-1-shared-models-stats-entitystats---shared-models-items-iteminstancemodel----shared-combat-damageresult--system-boolean--system-boolean--system-single--shared-models-skill-characterskill---shared-helpers-tooldamageresult"><code>Shared.Helpers.ToolDamageHelper::HandleResourceDamage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetSwingSpeedScaling public System.Single GetSwingSpeedScaling(Shared.Models.Items.WeaponTypeEnum weaponType, System.Single swingSpeed) System.Single weaponType Shared.Models.Items.WeaponTypeEnum swingSpeed System.Single" id="getswingspeedscaling-shared-models-items-weapontypeenum--system-single---system-single">
+<div class="method-heading">
+<h3><code>GetSwingSpeedScaling</code></h3>
+<a class="permalink" href="#getswingspeedscaling-shared-models-items-weapontypeenum--system-single---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single GetSwingSpeedScaling(Shared.Models.Items.WeaponTypeEnum weaponType, System.Single swingSpeed)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.ToolDamageHelper::GetSwingSpeedScaling(Shared.Models.Items.WeaponTypeEnum, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single GetSwingSpeedScaling(<a href="../../types/Shared/Shared_Models_Items_WeaponTypeEnum.html">Shared.Models.Items.WeaponTypeEnum</a> weaponType, System.Single swingSpeed)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>46812ED5A84D2993F364B531B4A14EA7AC140220E00D8C2EF37C818A400EB588</code></li>
+<li><span>Body hash</span><code>BF10745E2CD0616A98EE87B0BF61ED24D10F672E0587AB4F3061997D424D6C23</code></li>
+<li><span>IL size</span><span>296</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.ArgumentOutOfRangeException::.ctor(System.String, System.Object, System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Helpers_ToolDamageHelper.html#handleresourcedamage-shared-models-items-equipmenttype--shared-entity-entitywrapper--shared-entity-entitywrapper--system-nullable-1-shared-models-stats-entitystats---shared-models-items-iteminstancemodel----shared-combat-damageresult--system-boolean--system-boolean--system-single--shared-models-skill-characterskill---shared-helpers-tooldamageresult"><code>Shared.Helpers.ToolDamageHelper::HandleResourceDamage</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>weaponType</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetToolDamage public System.Single GetToolDamage(Shared.Models.Items.EquipmentType toolType, System.Nullable&lt;Shared.Models.Stats.EntityStats&gt; entityStats) System.Single toolType Shared.Models.Items.EquipmentType entityStats System.Nullable&lt;Shared.Models.Stats.EntityStats&gt;" id="gettooldamage-shared-models-items-equipmenttype--system-nullable-1-shared-models-stats-entitystats----system-single">
+<div class="method-heading">
+<h3><code>GetToolDamage</code></h3>
+<a class="permalink" href="#gettooldamage-shared-models-items-equipmenttype--system-nullable-1-shared-models-stats-entitystats----system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single GetToolDamage(Shared.Models.Items.EquipmentType toolType, System.Nullable&lt;Shared.Models.Stats.EntityStats&gt; entityStats)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.ToolDamageHelper::GetToolDamage(Shared.Models.Items.EquipmentType, System.Nullable&lt;Shared.Models.Stats.EntityStats&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single GetToolDamage(<a href="../../types/Shared/Shared_Models_Items_EquipmentType.html">Shared.Models.Items.EquipmentType</a> toolType, System.Nullable&lt;<a href="../../types/Shared/Shared_Models_Stats_EntityStats.html">Shared.Models.Stats.EntityStats</a>&gt; entityStats)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5DFB56239C9551537E38B9F5618ADEDD5B4ACAA90C267C804705003FC9126802</code></li>
+<li><span>Body hash</span><code>915DBE5CD26C890CE6F420D06AD2A96471039294E5A64A85237677D3087CD60A</code></li>
+<li><span>IL size</span><span>75</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;Shared.Models.Stats.EntityStats&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Shared.Models.Stats.EntityStats&gt;::GetValueOrDefault()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_EntityStats.html#get-system-string---system-single">Shared.Models.Stats.EntityStats::Get(System.String)</a></code></li>
+<li><code>System.ArgumentOutOfRangeException::.ctor()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Shared/Shared_Helpers_ToolDamageHelper.html#handleresourcedamage-shared-models-items-equipmenttype--shared-entity-entitywrapper--shared-entity-entitywrapper--system-nullable-1-shared-models-stats-entitystats---shared-models-items-iteminstancemodel----shared-combat-damageresult--system-boolean--system-boolean--system-single--shared-models-skill-characterskill---shared-helpers-tooldamageresult"><code>Shared.Helpers.ToolDamageHelper::HandleResourceDamage</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>AxePower</code></li>
+<li><code>PickaxePower</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="HandleResourceDamage public Shared.Helpers.ToolDamageResult HandleResourceDamage(Shared.Models.Items.EquipmentType toolType, Shared.Entity.EntityWrapper damagedEntity, Shared.Entity.EntityWrapper damagingEntity, System.Nullable&lt;Shared.Models.Stats.EntityStats&gt; entityStats, Shared.Models.Items.ItemInstanceModel[] inventory, Shared.Combat.DamageResult damageResult, System.Boolean requireToolForMelee, System.Boolean requireMelee, System.Single multiplier, Shared.Models.Skill.CharacterSkill skillsCharacterSkill) Shared.Helpers.ToolDamageResult toolType Shared.Models.Items.EquipmentType damagedEntity Shared.Entity.EntityWrapper damagingEntity Shared.Entity.EntityWrapper entityStats System.Nullable&lt;Shared.Models.Stats.EntityStats&gt; inventory Shared.Models.Items.ItemInstanceModel[] damageResult Shared.Combat.DamageResult requireToolForMelee System.Boolean requireMelee System.Boolean multiplier System.Single skillsCharacterSkill Shared.Models.Skill.CharacterSkill" id="handleresourcedamage-shared-models-items-equipmenttype--shared-entity-entitywrapper--shared-entity-entitywrapper--system-nullable-1-shared-models-stats-entitystats---shared-models-items-iteminstancemodel----shared-combat-damageresult--system-boolean--system-boolean--system-single--shared-models-skill-characterskill---shared-helpers-tooldamageresult">
+<div class="method-heading">
+<h3><code>HandleResourceDamage</code></h3>
+<a class="permalink" href="#handleresourcedamage-shared-models-items-equipmenttype--shared-entity-entitywrapper--shared-entity-entitywrapper--system-nullable-1-shared-models-stats-entitystats---shared-models-items-iteminstancemodel----shared-combat-damageresult--system-boolean--system-boolean--system-single--shared-models-skill-characterskill---shared-helpers-tooldamageresult" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Helpers.ToolDamageResult HandleResourceDamage(Shared.Models.Items.EquipmentType toolType, Shared.Entity.EntityWrapper damagedEntity, Shared.Entity.EntityWrapper damagingEntity, System.Nullable&lt;Shared.Models.Stats.EntityStats&gt; entityStats, Shared.Models.Items.ItemInstanceModel[] inventory, Shared.Combat.DamageResult damageResult, System.Boolean requireToolForMelee, System.Boolean requireMelee, System.Single multiplier, Shared.Models.Skill.CharacterSkill skillsCharacterSkill)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Helpers.ToolDamageHelper::HandleResourceDamage(Shared.Models.Items.EquipmentType, Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper, System.Nullable&lt;Shared.Models.Stats.EntityStats&gt;, Shared.Models.Items.ItemInstanceModel[], Shared.Combat.DamageResult, System.Boolean, System.Boolean, System.Single, Shared.Models.Skill.CharacterSkill)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Helpers_ToolDamageResult.html">Shared.Helpers.ToolDamageResult</a> HandleResourceDamage(<a href="../../types/Shared/Shared_Models_Items_EquipmentType.html">Shared.Models.Items.EquipmentType</a> toolType, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> damagedEntity, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> damagingEntity, System.Nullable&lt;<a href="../../types/Shared/Shared_Models_Stats_EntityStats.html">Shared.Models.Stats.EntityStats</a>&gt; entityStats, <a href="../../types/Shared/Shared_Models_Items_ItemInstanceModel.html">Shared.Models.Items.ItemInstanceModel</a>[] inventory, <a href="../../types/Shared/Shared_Combat_DamageResult.html">Shared.Combat.DamageResult</a> damageResult, System.Boolean requireToolForMelee, System.Boolean requireMelee, System.Single multiplier, <a href="../../types/Shared/Shared_Models_Skill_CharacterSkill.html">Shared.Models.Skill.CharacterSkill</a> skillsCharacterSkill)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Helpers_ToolDamageResult.html">Shared.Helpers.ToolDamageResult</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D4AB83DC85805CC3C96230BBDC7416C74084C1ECEF935E3ABDE11D048BA0FBBA</code></li>
+<li><span>Body hash</span><code>C416B504A196B2BD788AECD25B5FF9F3F9A618EA9AF461CC9E6766E4D3A3EC51</code></li>
+<li><span>IL size</span><span>705</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Enum::HasFlag(System.Enum)</code></li>
+<li><code><a href="../../types/Shared/Shared_Combat_AttackTypeExtensions.html#hasflags-shared-combat-attacktype--shared-combat-attacktype---system-boolean">Shared.Combat.AttackTypeExtensions::HasFlags(Shared.Combat.AttackType, Shared.Combat.AttackType)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_ToolDamageHelper.html#getitemfromequipmenttype-shared-models-items-iteminstancemodel----shared-models-items-equipmenttype---shared-models-items-iteminstancemodel">Shared.Helpers.ToolDamageHelper::GetItemFromEquipmentType(Shared.Models.Items.ItemInstanceModel[], Shared.Models.Items.EquipmentType)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_ToolDamageHelper.html#gettooldamage-shared-models-items-equipmenttype--system-nullable-1-shared-models-stats-entitystats----system-single">Shared.Helpers.ToolDamageHelper::GetToolDamage(Shared.Models.Items.EquipmentType, System.Nullable&lt;Shared.Models.Stats.EntityStats&gt;)</a></code></li>
+<li><code>Shared.Models.Skill.CharacterSkill::get_CurrentValue()</code></li>
+<li><code>Shared.Models.Items.ItemInstanceModel::get_Data()</code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_ToolDamageHelper.html#getswingspeedscaling-shared-models-items-weapontypeenum--system-single---system-single">Shared.Helpers.ToolDamageHelper::GetSwingSpeedScaling(Shared.Models.Items.WeaponTypeEnum, System.Single)</a></code></li>
+<li><code>System.Nullable&lt;Shared.Models.Stats.EntityStats&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Shared.Models.Stats.EntityStats&gt;::GetValueOrDefault()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_EntityStats.html#getcalculatedweaponcooldowntimer-system-single---system-single">Shared.Models.Stats.EntityStats::GetCalculatedWeaponCooldownTimer(System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerFruitTreeController.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.Controllers.ServerFruitTreeController::OnDamaged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerSkinnyTreeController.html#handleskinnytreedamage-shared-combat-damageresult--shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.ServerSkinnyTreeController::HandleSkinnyTreeDamage</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerTreeController.html#handletreedamage-shared-combat-damageresult--shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.ServerTreeController::HandleTreeDamage</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Veins_ServerVeinController.html#handleveindamage-shared-combat-damageresult--shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.ControllerSets.Veins.ServerVeinController::HandleVeinDamage</code></a></li>
+<li><a href="../../types/Romestead/Candide_Toolkit_ClientToolDamageHelper.html#handlerocktooldamage-shared-entity-entitywrapper--shared-combat-damageresult--system-boolean---system-void"><code>Candide.Toolkit.ClientToolDamageHelper::HandleRockToolDamage</code></a></li>
+<li><a href="../../types/Romestead/Candide_Toolkit_ClientToolDamageHelper.html#handletreetooldamage-shared-entity-entitywrapper--shared-combat-damageresult--system-boolean---system-void"><code>Candide.Toolkit.ClientToolDamageHelper::HandleTreeToolDamage</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

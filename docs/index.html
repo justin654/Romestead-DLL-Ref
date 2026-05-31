@@ -1,52 +1,374 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Romestead Assembly Reference</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #11150f;
-      color: #f3ead7;
-      display: grid;
-      min-height: 100vh;
-      place-items: center;
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Romestead Assembly Reference</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="search-index.js"></script>
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const entries = window.ROMESTEAD_REF_SEARCH_INDEX || [];
+  const input = document.getElementById("searchBox");
+  const results = document.getElementById("searchResults");
+  const kindFilters = Array.from(document.querySelectorAll(".search-kind"));
+  const publicOnly = document.getElementById("searchPublicOnly");
+  const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, character => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;"
+  }[character]));
+  const render = () => {
+    const query = (input.value || "").trim().toLowerCase();
+    const enabledKinds = new Set(kindFilters.filter(filter => filter.checked).map(filter => filter.value));
+    const onlyPublic = publicOnly?.checked ?? false;
+    if (!query) {
+      results.innerHTML = "";
+      return;
     }
+    const tokens = query.split(/\s+/).filter(Boolean);
+    const matches = entries
+      .filter(entry => enabledKinds.has(entry.kind))
+      .filter(entry => !onlyPublic || entry.visibility === "public" || entry.visibility === undefined)
+      .filter(entry => tokens.every(token => (entry.search || "").toLowerCase().includes(token)))
+      .slice(0, 120);
+    if (matches.length === 0) {
+      results.innerHTML = "<p class=\"muted\">No matches.</p>";
+      return;
+    }
+    results.innerHTML = matches.map(entry =>
+      `<a class="result" href="${escapeHtml(entry.link)}"><strong>${escapeHtml(entry.kind)}</strong><span>${escapeHtml(entry.title)}</span><small>${escapeHtml(entry.subtitle)}</small></a>`
+    ).join("");
+  };
+  input.addEventListener("input", render);
+  for (const filter of kindFilters) {
+    filter.addEventListener("change", render);
+  }
+  publicOnly?.addEventListener("change", render);
+  document.addEventListener("keydown", event => {
+    if (event.key !== "/" || event.ctrlKey || event.metaKey || event.altKey) {
+      return;
+    }
+    const tagName = document.activeElement?.tagName;
+    if (tagName === "INPUT" || tagName === "TEXTAREA" || document.activeElement?.isContentEditable) {
+      return;
+    }
+    event.preventDefault();
+    input.focus();
+  });
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
 
-    main {
-      max-width: 680px;
-      padding: 48px 28px;
-    }
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a class="active" aria-current="page" href="index.html">Home</a>
+<a href="guide.html">Guide</a>
+<a href="namespaces.html">Namespaces</a>
+<a href="topics.html">Topics</a>
+<a href="about.html">About</a>
+<a href="diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<header class="site-header">
+<div>
+<h1>Romestead Assembly Reference</h1>
+<p class="lede">4 assemblies, 4,794 types, 16,138 methods. Generated 2026-05-31 00:24:32Z.</p>
+<p class="notice">Unofficial generated reference for modding. Use public members first; treat private/internal members as patch targets that can change between updates.</p>
+</div>
+<nav class="header-actions">
+<a class="button primary-button" href="guide.html">Read the guide</a>
+<a class="button" href="snapshot.json">Snapshot JSON</a>
+<a class="button" href="site-manifest.json">Manifest</a>
+<a class="button" href="diff.html">Patch Diff</a>
+</nav>
+</header>
+<section class="search-panel">
+<label for="searchBox">Search classes, namespaces, methods, properties, and fields</label>
+<input id="searchBox" type="search" placeholder="InventoryApplyEngine, Candide.World, ItemFlag, GetPingMilliseconds">
+<p class="search-help">Press <kbd>/</kbd> to focus search. Results link directly to matching types and members.</p>
+<div class="search-filters" aria-label="Search filters">
+<label><input class="search-kind" type="checkbox" value="assembly" checked> Assemblies</label>
+<label><input class="search-kind" type="checkbox" value="namespace" checked> Namespaces</label>
+<label><input class="search-kind" type="checkbox" value="type" checked> Types</label>
+<label><input class="search-kind" type="checkbox" value="method" checked> Methods</label>
+<label><input class="search-kind" type="checkbox" value="property" checked> Properties</label>
+<label><input class="search-kind" type="checkbox" value="field" checked> Fields</label>
+<label><input id="searchPublicOnly" type="checkbox"> Public only</label>
+</div>
+<div id="searchResults" class="search-results"></div>
+</section>
+<section class="panel">
+<div class="section-heading"><h2>Start Here</h2><a href="guide.html">Open modder guide</a></div>
+<div class="guide-grid">
+<article><h3>Find a target</h3><p>Search by gameplay term, namespace, class name, field, or method signature. Start broad, then filter to public members if you want safer integration points.</p></article>
+<article><h3>Open the type page</h3><p>Type pages collect metadata, relationships, fields, properties, methods, caller/callee hints, and per-type JSON exports in one place.</p></article>
+<article><h3>Copy the patch target</h3><p>Use copy buttons for full signatures and Harmony-style target strings. Check method metadata before patching overloads or private members.</p></article>
+<article><h3>Check the diff</h3><p>When a patch ships, use the diff page and change badges to quickly find moved, added, removed, or changed members.</p></article>
+</div>
+</section>
+<section class="panel docs-panel">
+<div class="section-heading"><h2>Reference Scope</h2><a href="about.html">Read notes and limitations</a></div>
+<div class="docs-grid">
+<article><h3>What this is</h3><p>A generated reference for classes, interfaces, fields, properties, and methods discovered in the scanned Romestead assemblies.</p></article>
+<article><h3>For modding</h3><p>Type pages include copyable signatures, Harmony-style targets, caller/callee hints, JSON exports, and latest-patch change badges.</p></article>
+<article><h3>Stability</h3><p>Private and internal members are included for patch authors, but they are not stable API and may move between game updates.</p></article>
+</div>
+</section>
+<section class="panel">
+<div class="section-heading"><h2>Assemblies</h2><a href="namespaces.html">Browse all namespaces</a></div>
+<div class="assembly-grid">
+<article class="assembly-card">
+<h3><a href="assemblies/CandideCreator_Shared.html">CandideCreator.Shared</a></h3>
+<p>427 types, 1,449 methods, 354 properties, 1,371 fields</p>
+<p class="muted">CandideCreator.Shared.Annotations, CandideCreator.Shared.Models, CandideCreator.Shared.Serialization.Serializers, CandideCreator.Shared.Helpers</p>
+</article>
+<article class="assembly-card">
+<h3><a href="assemblies/CandideServer.html">CandideServer</a></h3>
+<p>1,837 types, 4,656 methods, 138 properties, 8,284 fields</p>
+<p class="muted">BM, &lt;global&gt;, CandideServer.ServerManagers, CandideServer.ServerServices</p>
+</article>
+<article class="assembly-card">
+<h3><a href="assemblies/Romestead.html">Romestead</a></h3>
+<p>1,962 types, 8,829 methods, 867 properties, 9,306 fields</p>
+<p class="muted">FMOD, &lt;global&gt;, Candide.Entities.Controllers.Other, Candide.GameModels.Managers</p>
+</article>
+<article class="assembly-card">
+<h3><a href="assemblies/Shared.html">Shared</a></h3>
+<p>568 types, 1,204 methods, 204 properties, 3,388 fields</p>
+<p class="muted">Shared.Data, Shared.Models.Items, &lt;global&gt;, Shared.Helpers</p>
+</article>
+</div>
+</section>
+<section class="panel">
+<div class="section-heading"><h2>Topic Index</h2><a href="topics.html">Open full topic index</a></div>
+<div class="topic-grid">
+<article class="topic-card">
+<h3><a href="topics.html#inventory---items">Inventory &amp; Items</a></h3>
+<p>351 matching types</p>
+<p class="muted">ItemStatsHelper, CandideInventoryItemSpecialInteractionsHandler, CandideInventoryMoneySpecialInteractionsHandler</p>
+</article>
+<article class="topic-card">
+<h3><a href="topics.html#world---map">World &amp; Map</a></h3>
+<p>575 matching types</p>
+<p class="muted">AutoTile16TileSet.AutoTile16TileType, CastParabolicProjectileSpell, GetAllTilePositionsOfType</p>
+</article>
+<article class="topic-card">
+<h3><a href="topics.html#combat---bosses">Combat &amp; Bosses</a></h3>
+<p>381 matching types</p>
+<p class="muted">BehaviorRequestKeys.SatyrBossThrowSatyr, CastParabolicProjectileSpell, CastSpellNode</p>
+</article>
+<article class="topic-card">
+<h3><a href="topics.html#ui---input">UI &amp; Input</a></h3>
+<p>1,594 matching types</p>
+<p class="muted">BanditBruteController.ControllerStates, BanditController.ControllerStates, BasicFurnaceController.States</p>
+</article>
+<article class="topic-card">
+<h3><a href="topics.html#networking">Networking</a></h3>
+<p>1,648 matching types</p>
+<p class="muted">BaseServer.NetworkStat, PlaySfxOnEntityFromServer, PlaySfxOnPositionFromServer</p>
+</article>
+<article class="topic-card">
+<h3><a href="topics.html#data---content">Data &amp; Content</a></h3>
+<p>503 matching types</p>
+<p class="muted">BehaviorRequestData, GetHighestValueResourceFromList, TryGetCarryableResourceOnConstructionSite</p>
+</article>
+<article class="topic-card">
+<h3><a href="topics.html#quests---progression">Quests &amp; Progression</a></h3>
+<p>313 matching types</p>
+<p class="muted">BehaviorRequestKeys.HelpMasterEngineerConstructBallista, BehaviorRequestKeys.SatyrBossThrowSatyr, BlessingsManager.GameStateAvailableBlessingsChanged</p>
+</article>
+<article class="topic-card">
+<h3><a href="topics.html#graphics---audio">Graphics &amp; Audio</a></h3>
+<p>564 matching types</p>
+<p class="muted">Batcher.VertexPositionColorTexture4, EmitParticlesOnPosition, PlaySfxVfxOnEntityFromServer</p>
+</article>
+</div>
+</section>
+<section class="panel">
+<div class="section-heading"><h2>Largest Namespaces</h2><a href="namespaces.html">View all</a></div>
+<table class="reference-table"><thead><tr><th>Namespace</th><th>Assembly</th><th>Types</th><th>Methods</th></tr></thead><tbody>
+<tr>
+<td><a href="namespaces.html#candideserver-bm"><code>BM</code></a></td>
+<td><a href="assemblies/CandideServer.html">CandideServer</a></td>
+<td>249</td>
+<td>478</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#candideserver--global-"><code>&lt;global&gt;</code></a></td>
+<td><a href="assemblies/CandideServer.html">CandideServer</a></td>
+<td>221</td>
+<td>85</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#romestead-fmod"><code>FMOD</code></a></td>
+<td><a href="assemblies/Romestead.html">Romestead</a></td>
+<td>198</td>
+<td>1,064</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#romestead--global-"><code>&lt;global&gt;</code></a></td>
+<td><a href="assemblies/Romestead.html">Romestead</a></td>
+<td>119</td>
+<td>164</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#romestead-candide-entities-controllers-other"><code>Candide.Entities.Controllers.Other</code></a></td>
+<td><a href="assemblies/Romestead.html">Romestead</a></td>
+<td>92</td>
+<td>424</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#candidecreator-shared-candidecreator-shared-annotations"><code>CandideCreator.Shared.Annotations</code></a></td>
+<td><a href="assemblies/CandideCreator_Shared.html">CandideCreator.Shared</a></td>
+<td>84</td>
+<td>0</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#candideserver-candideserver-servermanagers"><code>CandideServer.ServerManagers</code></a></td>
+<td><a href="assemblies/CandideServer.html">CandideServer</a></td>
+<td>73</td>
+<td>450</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#candideserver-candideserver-serverservices"><code>CandideServer.ServerServices</code></a></td>
+<td><a href="assemblies/CandideServer.html">CandideServer</a></td>
+<td>71</td>
+<td>395</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#romestead-candide-gamemodels-managers"><code>Candide.GameModels.Managers</code></a></td>
+<td><a href="assemblies/Romestead.html">Romestead</a></td>
+<td>70</td>
+<td>277</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#candideserver-candideserver-entities-controllers"><code>CandideServer.Entities.Controllers</code></a></td>
+<td><a href="assemblies/CandideServer.html">CandideServer</a></td>
+<td>64</td>
+<td>287</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#candideserver-candideserver-world-generation-biomegenerators"><code>CandideServer.World.Generation.BiomeGenerators</code></a></td>
+<td><a href="assemblies/CandideServer.html">CandideServer</a></td>
+<td>57</td>
+<td>74</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#shared-shared-data"><code>Shared.Data</code></a></td>
+<td><a href="assemblies/Shared.html">Shared</a></td>
+<td>51</td>
+<td>175</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#romestead-candide-gamemodels-services"><code>Candide.GameModels.Services</code></a></td>
+<td><a href="assemblies/Romestead.html">Romestead</a></td>
+<td>49</td>
+<td>343</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#romestead-candide-candideui"><code>Candide.CandideUI</code></a></td>
+<td><a href="assemblies/Romestead.html">Romestead</a></td>
+<td>47</td>
+<td>256</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#candidecreator-shared-candidecreator-shared-models"><code>CandideCreator.Shared.Models</code></a></td>
+<td><a href="assemblies/CandideCreator_Shared.html">CandideCreator.Shared</a></td>
+<td>47</td>
+<td>181</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#romestead-fmod-studio"><code>FMOD.Studio</code></a></td>
+<td><a href="assemblies/Romestead.html">Romestead</a></td>
+<td>47</td>
+<td>429</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#romestead-candide-gamemodels-controllers"><code>Candide.GameModels.Controllers</code></a></td>
+<td><a href="assemblies/Romestead.html">Romestead</a></td>
+<td>46</td>
+<td>186</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#candideserver-candideserver-servercontrollers"><code>CandideServer.ServerControllers</code></a></td>
+<td><a href="assemblies/CandideServer.html">CandideServer</a></td>
+<td>44</td>
+<td>266</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#candideserver-candideserver-entities-controllers-enemies"><code>CandideServer.Entities.Controllers.Enemies</code></a></td>
+<td><a href="assemblies/CandideServer.html">CandideServer</a></td>
+<td>40</td>
+<td>164</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#candidecreator-shared-candidecreator-shared-serialization-serializers"><code>CandideCreator.Shared.Serialization.Serializers</code></a></td>
+<td><a href="assemblies/CandideCreator_Shared.html">CandideCreator.Shared</a></td>
+<td>39</td>
+<td>80</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#romestead-candide-entities-playerstate-playerstates"><code>Candide.Entities.PlayerState.PlayerStates</code></a></td>
+<td><a href="assemblies/Romestead.html">Romestead</a></td>
+<td>38</td>
+<td>255</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#candidecreator-shared-candidecreator-shared-helpers"><code>CandideCreator.Shared.Helpers</code></a></td>
+<td><a href="assemblies/CandideCreator_Shared.html">CandideCreator.Shared</a></td>
+<td>38</td>
+<td>375</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#romestead-candide-graphics"><code>Candide.Graphics</code></a></td>
+<td><a href="assemblies/Romestead.html">Romestead</a></td>
+<td>36</td>
+<td>251</td>
+</tr>
+<tr>
+<td><a href="namespaces.html#candideserver-candideserver-messagemodels-entities"><code>CandideServer.MessageModels.Entities</code></a></td>
+<td><a href="assemblies/CandideServer.html">CandideServer</a></td>
+<td>36</td>
+<td>1</td>
+</tr>
+</tbody></table>
+</section>
+<section class="panel compact-panel">
+<div class="section-heading"><h2>Patch Diff</h2><a href="diff.html">Open diff</a></div>
+<ul class="stat-list">
+<li><span>Types</span><strong>+1 / -0 / ~46</strong></li>
+<li><span>Methods</span><strong>+9 / -4 / ~56</strong></li>
+<li><span>Fields</span><strong>+1 / -0 / ~0</strong></li>
+</ul>
+</section>
+<footer class="footer site-footer">
+<span>Generated reference package</span>
+<a href="about.html">about.html</a>
+<a href="README.md">README.md</a>
+<a href="site-manifest.json">site-manifest.json</a>
+</footer>
 
-    h1 {
-      font-size: clamp(2rem, 6vw, 4.5rem);
-      line-height: 0.95;
-      margin: 0 0 20px;
-    }
-
-    p {
-      color: #cfc3aa;
-      font-size: 1.05rem;
-      line-height: 1.6;
-      margin: 0 0 14px;
-    }
-
-    code {
-      background: #242a1d;
-      border: 1px solid #3b452f;
-      border-radius: 6px;
-      color: #f6d97a;
-      padding: 2px 6px;
-    }
-  </style>
-</head>
-<body>
-  <main>
-    <h1>Romestead Assembly Reference</h1>
-    <p>The GitHub Pages deploy path is ready.</p>
-    <p>Generate a catalog locally, run <code>scripts\publish_latest_to_docs.bat</code>, commit the updated <code>docs/</code> folder, and push to publish the real reference site.</p>
-  </main>
-</body>
-</html>
+</main></div></body></html>

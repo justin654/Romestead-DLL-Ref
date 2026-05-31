@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.CandideUI.Components.Dialogue.CandideOptionsComponent - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.CandideUI.Components.Dialogue.CandideOptionsComponent</h1>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.Dialogue.CandideOptionsComponent">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.CandideUI.Components.Dialogue.CandideOptionsComponent
+
+- Assembly: `Romestead`
+- Namespace: `Candide.CandideUI.Components.Dialogue`
+- Kind: `public class`
+- Base type: `Candide.CandideUI.Containers.CandidePanel`
+- Members: 2 methods, 0 properties, 3 fields, 2 events
+
+## Public Methods
+- `public System.Void ResetOptions()`
+- `public System.Void SetOptions(Candide.Dialogue.DialogueOption[] options, Candide.Dialogue.DialogueRunner runner)`
+">Copy markdown</button>
+<a class="button" href="Candide_CandideUI_Components_Dialogue_CandideOptionsComponent.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.CandideUI.Components.Dialogue</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>2</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>3</strong></article>
+<article class="metric"><span>Events</span><strong>2</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.CandideUI.Components.Dialogue</code></li>
+<li><span>Base type</span><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandidePanel.html">Candide.CandideUI.Containers.CandidePanel</a></code></li>
+<li><span>Hash</span><code>D9D6260D5984BD2F6A34D8C5D5B0901A08AF879A9CE52C01800CF31910DDDE80</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandidePanel.html">Candide.CandideUI.Containers.CandidePanel</a></code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Dialogue_CandideAltarDialogueComponent.html"><code>Candide.CandideUI.Components.Dialogue.CandideAltarDialogueComponent</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Dialogue_CandideDialogueComponent.html"><code>Candide.CandideUI.Components.Dialogue.CandideDialogueComponent</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Windows_DialogueWindow.html"><code>Candide.CandideUI.Windows.DialogueWindow</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="HideOptions private System.EventHandler HideOptions System.EventHandler" id="hideoptions-system-eventhandler"><td><span class="member-name-cell"><code>HideOptions</code><a class="permalink" href="#hideoptions-system-eventhandler" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.EventHandler HideOptions">Copy</button></span></td><td>private</td><td><code>private System.EventHandler HideOptions</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ShowOptions private System.EventHandler ShowOptions System.EventHandler" id="showoptions-system-eventhandler"><td><span class="member-name-cell"><code>ShowOptions</code><a class="permalink" href="#showoptions-system-eventhandler" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.EventHandler ShowOptions">Copy</button></span></td><td>private</td><td><code>private System.EventHandler ShowOptions</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_optionsPanel private Candide.CandideUI.Containers.CandideVerticalStackPanel _optionsPanel Candide.CandideUI.Containers.CandideVerticalStackPanel" id="-optionspanel-candide-candideui-containers-candideverticalstackpanel"><td><span class="member-name-cell"><code>_optionsPanel</code><a class="permalink" href="#-optionspanel-candide-candideui-containers-candideverticalstackpanel" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Containers.CandideVerticalStackPanel _optionsPanel">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Containers_CandideVerticalStackPanel.html">Candide.CandideUI.Containers.CandideVerticalStackPanel</a> _optionsPanel</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Events</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="HideOptions public System.EventHandler HideOptions System.EventHandler" id="hideoptions-system-eventhandler"><td><span class="member-name-cell"><code>HideOptions</code><a class="permalink" href="#hideoptions-system-eventhandler" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.EventHandler HideOptions">Copy</button></span></td><td>public</td><td><code>public System.EventHandler HideOptions</code></td></tr>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="ShowOptions public System.EventHandler ShowOptions System.EventHandler" id="showoptions-system-eventhandler"><td><span class="member-name-cell"><code>ShowOptions</code><a class="permalink" href="#showoptions-system-eventhandler" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.EventHandler ShowOptions">Copy</button></span></td><td>public</td><td><code>public System.EventHandler ShowOptions</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ResetOptions public System.Void ResetOptions() System.Void " id="resetoptions----system-void">
+<div class="method-heading">
+<h3><code>ResetOptions</code></h3>
+<a class="permalink" href="#resetoptions----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ResetOptions()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.Dialogue.CandideOptionsComponent::ResetOptions()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ResetOptions()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>72759CAEF5D63064017E6E537A871E7D7148414F831C4A56F7F8AF33BED8C045</code></li>
+<li><span>Body hash</span><code>C6A802B439B1BE29420CCAC5FFFAA9ED683876B566F899964B80258E5EADCD1D</code></li>
+<li><span>IL size</span><span>41</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideGrid.html#clearchildren----system-void">Candide.CandideUI.Containers.CandideGrid::ClearChildren()</a></code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Visible(System.Boolean)</code></li>
+<li><code>System.EventHandler::Invoke(System.Object, System.EventArgs)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Components_Dialogue_CandideDialogueComponent.html#startdialog-system-nullable-1-system-guid---system-string---system-void"><code>Candide.CandideUI.Components.Dialogue.CandideDialogueComponent::StartDialog</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetOptions public System.Void SetOptions(Candide.Dialogue.DialogueOption[] options, Candide.Dialogue.DialogueRunner runner) System.Void options Candide.Dialogue.DialogueOption[] runner Candide.Dialogue.DialogueRunner" id="setoptions-candide-dialogue-dialogueoption----candide-dialogue-dialoguerunner---system-void">
+<div class="method-heading">
+<h3><code>SetOptions</code></h3>
+<a class="permalink" href="#setoptions-candide-dialogue-dialogueoption----candide-dialogue-dialoguerunner---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetOptions(Candide.Dialogue.DialogueOption[] options, Candide.Dialogue.DialogueRunner runner)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.Dialogue.CandideOptionsComponent::SetOptions(Candide.Dialogue.DialogueOption[], Candide.Dialogue.DialogueRunner)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetOptions(<a href="../../types/Romestead/Candide_Dialogue_DialogueOption.html">Candide.Dialogue.DialogueOption</a>[] options, <a href="../../types/Romestead/Candide_Dialogue_DialogueRunner.html">Candide.Dialogue.DialogueRunner</a> runner)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>246875D7CD99338EB07C179D831B9241C43F68A7EBDE55B138C9A7E956223A97</code></li>
+<li><span>Body hash</span><code>4B7174535D9D0D1F451CE47F6BBA0489396EAA82069981DD19A61F08AB11E46A</code></li>
+<li><span>IL size</span><span>293</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideOptionsComponent.&lt;&gt;c__DisplayClass9_0::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideGrid.html#clearchildren----system-void">Candide.CandideUI.Containers.CandideGrid::ClearChildren()</a></code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Visible(System.Boolean)</code></li>
+<li><code>System.EventHandler::Invoke(System.Object, System.EventArgs)</code></li>
+<li><code>CandideOptionsComponent.&lt;&gt;c__DisplayClass9_1::.ctor()</code></li>
+<li><code>Candide.Dialogue.DialogueOption::get_IsAvailable()</code></li>
+<li><code>Candide.CandideUI.Components.Buttons.CandideButtonBase::.ctor()</code></li>
+<li><code>Candide.CandideUI.CandideThickness::.ctor(System.Int32, System.Int32, System.Int32, System.Int32)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Padding(Candide.CandideUI.CandideThickness)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Margin(Candide.CandideUI.CandideThickness)</code></li>
+<li><code>CandideOptionsComponent.&lt;&gt;c__DisplayClass9_1::&lt;SetOptions&gt;b__0()</code></li>
+<li><code>System.Action::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.CandideUI.Components.CandideTextLabel::.ctor()</code></li>
+<li><code>Candide.Dialogue.DialogueOption::get_Line()</code></li>
+<li><code>Candide.Dialogue.LocalizedLine::get_Text()</code></li>
+<li><code>Candide.CandideUI.Components.CandideTextLabel::set_Text(System.String)</code></li>
+<li><code>Candide.CandideUI.Components.CandideTextLabel::set_Wrap(System.Boolean)</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Width(System.Nullable&lt;System.Int32&gt;)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_HorizontalAlignment(Candide.CandideUI.HorizontalAlignment)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerSingleItem.html#setchild-candide-candideui-candideuielement---system-void">Candide.CandideUI.CandideUiContainerSingleItem::SetChild(Candide.CandideUI.CandideUiElement)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerMultipleItems.html#addchild-candide-candideui-candideuielement--system-boolean---system-void">Candide.CandideUI.CandideUiContainerMultipleItems::AddChild(Candide.CandideUI.CandideUiElement, System.Boolean)</a></code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

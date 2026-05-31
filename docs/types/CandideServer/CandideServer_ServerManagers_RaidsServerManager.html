@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerManagers.RaidsServerManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerManagers.RaidsServerManager</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.RaidsServerManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerManagers.RaidsServerManager
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerManagers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 12 methods, 0 properties, 3 fields, 0 events
+
+## Public Methods
+- `public Shared.Models.Raids.RaidInstanceModel CreateRaid(System.String raidDataId, CandideServer.Models.Town.ServerTownModel targetTown, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; position, System.Single approachTimeScale, System.Boolean startedByWarDeclaration)`
+- `public System.Void CreateRandomRaid()`
+- `public Shared.Data.DataModels.RaidData GetRandomRaid()`
+- `public CandideServer.Models.Town.ServerTownModel GetWeightedTown()`
+- `public System.Void OnNewDay()`
+- `public System.Void OnRaidArrived(Shared.Models.Raids.RaidInstanceModel raid, CandideServer.Models.Town.ServerTownModel town)`
+- `public System.Void OnRaidBeaten(Shared.Models.Raids.RaidInstanceModel raid, CandideServer.Models.Town.ServerTownModel town)`
+- `public System.Void OnRaidEntityRemoved(System.Guid raidId, CandideServer.Entities.ServerEntityModel entity, Shared.Entity.EntityRemoveInfo removeInfo)`
+- `public System.Void OnRaidFailed(Shared.Models.Raids.RaidInstanceModel raid, CandideServer.Models.Town.ServerTownModel town)`
+- `public System.Void OnRaidStartedApproach(Shared.Models.Raids.RaidInstanceModel raid, CandideServer.Models.Town.ServerTownModel targetTown, System.Single approachTimeLeftScale)`
+- `public System.Void RemoveRaid(Shared.Models.Raids.RaidInstanceModel raid)`
+- `public System.Void UseWarDeclaration(System.Guid itemInstanceId, CandideServer.ServerServices.ServerJoinedPlayerModel usingPlayer)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerManagers_RaidsServerManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerManagers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>12</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>3</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerManagers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>62BF7F06BFBA75F02964C3F729AA372E75F99EA87BA0EE8BD1016EE8C5025B95</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ReUseCitizenUpdates private System.Collections.Generic.List&lt;CandideServer.MessageModels.Citizens.UpdateCitizenMessage&gt; ReUseCitizenUpdates System.Collections.Generic.List&lt;CandideServer.MessageModels.Citizens.UpdateCitizenMessage&gt;" id="reusecitizenupdates-system-collections-generic-list-1-candideserver-messagemodels-citizens-updatecitizenmessage-"><td><span class="member-name-cell"><code>ReUseCitizenUpdates</code><a class="permalink" href="#reusecitizenupdates-system-collections-generic-list-1-candideserver-messagemodels-citizens-updatecitizenmessage-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;CandideServer.MessageModels.Citizens.UpdateCitizenMessage&gt; ReUseCitizenUpdates">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_MessageModels_Citizens_UpdateCitizenMessage.html">CandideServer.MessageModels.Citizens.UpdateCitizenMessage</a>&gt; ReUseCitizenUpdates</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ReUseRaidsList private System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, Shared.Data.DataModels.RaidData&gt;&gt; ReUseRaidsList System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, Shared.Data.DataModels.RaidData&gt;&gt;" id="reuseraidslist-system-collections-generic-list-1-system-valuetuple-2-system-single-shared-data-datamodels-raiddata--"><td><span class="member-name-cell"><code>ReUseRaidsList</code><a class="permalink" href="#reuseraidslist-system-collections-generic-list-1-system-valuetuple-2-system-single-shared-data-datamodels-raiddata--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, Shared.Data.DataModels.RaidData&gt;&gt; ReUseRaidsList">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, <a href="../../types/Shared/Shared_Data_DataModels_RaidData.html">Shared.Data.DataModels.RaidData</a>&gt;&gt; ReUseRaidsList</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ReUseTownsList private System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, CandideServer.Models.Town.ServerTownModel&gt;&gt; ReUseTownsList System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, CandideServer.Models.Town.ServerTownModel&gt;&gt;" id="reusetownslist-system-collections-generic-list-1-system-valuetuple-2-system-single-candideserver-models-town-servertownmodel--"><td><span class="member-name-cell"><code>ReUseTownsList</code><a class="permalink" href="#reusetownslist-system-collections-generic-list-1-system-valuetuple-2-system-single-candideserver-models-town-servertownmodel--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, CandideServer.Models.Town.ServerTownModel&gt;&gt; ReUseTownsList">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, <a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a>&gt;&gt; ReUseTownsList</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateRaid public Shared.Models.Raids.RaidInstanceModel CreateRaid(System.String raidDataId, CandideServer.Models.Town.ServerTownModel targetTown, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; position, System.Single approachTimeScale, System.Boolean startedByWarDeclaration) Shared.Models.Raids.RaidInstanceModel raidDataId System.String targetTown CandideServer.Models.Town.ServerTownModel position System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; approachTimeScale System.Single startedByWarDeclaration System.Boolean" id="createraid-system-string--candideserver-models-town-servertownmodel--system-nullable-1-microsoft-xna-framework-vector2---system-single--system-boolean---shared-models-raids-raidinstancemodel">
+<div class="method-heading">
+<h3><code>CreateRaid</code></h3>
+<a class="permalink" href="#createraid-system-string--candideserver-models-town-servertownmodel--system-nullable-1-microsoft-xna-framework-vector2---system-single--system-boolean---shared-models-raids-raidinstancemodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Models.Raids.RaidInstanceModel CreateRaid(System.String raidDataId, CandideServer.Models.Town.ServerTownModel targetTown, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; position, System.Single approachTimeScale, System.Boolean startedByWarDeclaration)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.RaidsServerManager::CreateRaid(System.String, CandideServer.Models.Town.ServerTownModel, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;, System.Single, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Models_Raids_RaidInstanceModel.html">Shared.Models.Raids.RaidInstanceModel</a> CreateRaid(System.String raidDataId, <a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> targetTown, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt; position, System.Single approachTimeScale, System.Boolean startedByWarDeclaration)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Models_Raids_RaidInstanceModel.html">Shared.Models.Raids.RaidInstanceModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BDF6C540AD82B5F55C77D69C2F917CF55690C03D492CC51F9C7A0FFFF9102378</code></li>
+<li><span>Body hash</span><code>5A448E5FE09B89D60FCD14C26CC5CE30F18F4EDA8C1BD73C058B63FB496ED6FD</code></li>
+<li><span>IL size</span><span>230</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Models.Raids.RaidInstanceModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, Shared.Models.Raids.RaidInstanceModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, Shared.Models.Raids.RaidInstanceModel&gt;::get_Current()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#removeraid-shared-models-raids-raidinstancemodel---system-void">CandideServer.ServerManagers.RaidsServerManager::RemoveRaid(Shared.Models.Raids.RaidInstanceModel)</a></code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, Shared.Models.Raids.RaidInstanceModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextpointinhollowcircle-system-random--system-single---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.RandomHelper::NextPointInHollowCircle(System.Random, System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Center()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>System.Array::GetLength(System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Addition(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;::.ctor(!0)</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_RaidsServerController.html#createraid-system-guid--system-string--microsoft-xna-framework-vector2--candideserver-models-town-servertownmodel--system-boolean---shared-models-raids-raidinstancemodel">CandideServer.ServerControllers.RaidsServerController::CreateRaid(System.Guid, System.String, Microsoft.Xna.Framework.Vector2, CandideServer.Models.Town.ServerTownModel, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_RaidsServerService.html#send-newraid-shared-models-raids-raidinstancemodel---system-void">CandideServer.ServerServices.RaidsServerService::Send_NewRaid(Shared.Models.Raids.RaidInstanceModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#createrandomraid----system-void"><code>CandideServer.ServerManagers.RaidsServerManager::CreateRandomRaid</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#usewardeclaration-system-guid--candideserver-serverservices-serverjoinedplayermodel---system-void"><code>CandideServer.ServerManagers.RaidsServerManager::UseWarDeclaration</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_RaidsServerService.html#onreceive-cheatspawnraid-candideserver-messagemodels-raids-spawnraidcheatmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.RaidsServerService::OnReceive_CheatSpawnRaid</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateRandomRaid public System.Void CreateRandomRaid() System.Void " id="createrandomraid----system-void">
+<div class="method-heading">
+<h3><code>CreateRandomRaid</code></h3>
+<a class="permalink" href="#createrandomraid----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CreateRandomRaid()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.RaidsServerManager::CreateRandomRaid()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CreateRandomRaid()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>370E667184A09920D81F616AE3A4BFC6DC21EAE918E5171F6DBB9CDF46CDF699</code></li>
+<li><span>Body hash</span><code>3DC9259EB24F5553C2B9CECDBCB950588AB22F99D0F590FBED4CC66594A9EF29</code></li>
+<li><span>IL size</span><span>49</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#getrandomraid----shared-data-datamodels-raiddata">CandideServer.ServerManagers.RaidsServerManager::GetRandomRaid()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#getweightedtown----candideserver-models-town-servertownmodel">CandideServer.ServerManagers.RaidsServerManager::GetWeightedTown()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#createraid-system-string--candideserver-models-town-servertownmodel--system-nullable-1-microsoft-xna-framework-vector2---system-single--system-boolean---shared-models-raids-raidinstancemodel">CandideServer.ServerManagers.RaidsServerManager::CreateRaid(System.String, CandideServer.Models.Town.ServerTownModel, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;, System.Single, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#onnewday----system-void"><code>CandideServer.ServerManagers.RaidsServerManager::OnNewDay</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetRandomRaid public Shared.Data.DataModels.RaidData GetRandomRaid() Shared.Data.DataModels.RaidData " id="getrandomraid----shared-data-datamodels-raiddata">
+<div class="method-heading">
+<h3><code>GetRandomRaid</code></h3>
+<a class="permalink" href="#getrandomraid----shared-data-datamodels-raiddata" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Data.DataModels.RaidData GetRandomRaid()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.RaidsServerManager::GetRandomRaid()">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Data_DataModels_RaidData.html">Shared.Data.DataModels.RaidData</a> GetRandomRaid()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Data_DataModels_RaidData.html">Shared.Data.DataModels.RaidData</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>89271BA055C3E6281292789B7C5E364A587087E386DDCFCE5D488F2D1167B7AE</code></li>
+<li><span>Body hash</span><code>8293B5AA5E8E31F93D504435C0ACDEB2E908F38FF7E6F83FB1E72AC679C3F7D3</code></li>
+<li><span>IL size</span><span>248</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Helpers_WorldTierHelper.html#getprogressiontier-system-collections-generic-hashset-1-system-string----system-int32">Shared.Helpers.WorldTierHelper::GetProgressionTier(System.Collections.Generic.HashSet&lt;System.String&gt;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, Shared.Data.DataModels.RaidData&gt;&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Data.DataModels.RaidData&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.String, Shared.Data.DataModels.RaidData&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.String, Shared.Data.DataModels.RaidData&gt;::get_Current()</code></li>
+<li><code>System.ValueTuple&lt;System.Single, Shared.Data.DataModels.RaidData&gt;::.ctor(!0, !1)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, Shared.Data.DataModels.RaidData&gt;&gt;::Add(!0)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.String, Shared.Data.DataModels.RaidData&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, Shared.Data.DataModels.RaidData&gt;&gt;::get_Count()</code></li>
+<li><code>System.Random::NextSingle()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, Shared.Data.DataModels.RaidData&gt;&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.Single, Shared.Data.DataModels.RaidData&gt;&gt;::get_Current()</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.Single, Shared.Data.DataModels.RaidData&gt;&gt;::MoveNext()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#createrandomraid----system-void"><code>CandideServer.ServerManagers.RaidsServerManager::CreateRandomRaid</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetWeightedTown public CandideServer.Models.Town.ServerTownModel GetWeightedTown() CandideServer.Models.Town.ServerTownModel " id="getweightedtown----candideserver-models-town-servertownmodel">
+<div class="method-heading">
+<h3><code>GetWeightedTown</code></h3>
+<a class="permalink" href="#getweightedtown----candideserver-models-town-servertownmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Town.ServerTownModel GetWeightedTown()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.RaidsServerManager::GetWeightedTown()">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> GetWeightedTown()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E692F0CA9C7F7B577D3B35ACD1E1994C11CCE19308E36F7E9B3ADA29ACB48DCE</code></li>
+<li><span>Body hash</span><code>B1206F18F78CCE3D3626FB9CBB20A5A947413AD9AEEC4DE27C424723BFA21A3D</code></li>
+<li><span>IL size</span><span>279</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, CandideServer.Models.Town.ServerTownModel&gt;&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>System.MathF::Log2(System.Single)</code></li>
+<li><code>System.ValueTuple&lt;System.Single, CandideServer.Models.Town.ServerTownModel&gt;::.ctor(!0, !1)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, CandideServer.Models.Town.ServerTownModel&gt;&gt;::Add(!0)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Random::NextSingle()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.Single, CandideServer.Models.Town.ServerTownModel&gt;&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.Single, CandideServer.Models.Town.ServerTownModel&gt;&gt;::get_Current()</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.Single, CandideServer.Models.Town.ServerTownModel&gt;&gt;::MoveNext()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#createrandomraid----system-void"><code>CandideServer.ServerManagers.RaidsServerManager::CreateRandomRaid</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#usewardeclaration-system-guid--candideserver-serverservices-serverjoinedplayermodel---system-void"><code>CandideServer.ServerManagers.RaidsServerManager::UseWarDeclaration</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnNewDay public System.Void OnNewDay() System.Void " id="onnewday----system-void">
+<div class="method-heading">
+<h3><code>OnNewDay</code></h3>
+<a class="permalink" href="#onnewday----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnNewDay()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.RaidsServerManager::OnNewDay()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnNewDay()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D79CCF0C8BC2BB4C3F20BCC1F2FA4F0107787B3DD70EE9E7F3004790B3EC62E6</code></li>
+<li><span>Body hash</span><code>92104388E6AC19136AE03CA77194AB89C3E189E4372EA5B877B9870CE1B94455</code></li>
+<li><span>IL size</span><span>68</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::get_Count()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_WorldStats.html#get-system-string---system-single">Shared.Models.WorldStats::Get(System.String)</a></code></li>
+<li><code>System.Random::NextSingle()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#createrandomraid----system-void">CandideServer.ServerManagers.RaidsServerManager::CreateRandomRaid()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_TimeServerSystem.html#handlenewday----system-void"><code>CandideServer.ServerSystems.TimeServerSystem::HandleNewDay</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>WorldStats_RaidsSpawnRateModifier</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnRaidArrived public System.Void OnRaidArrived(Shared.Models.Raids.RaidInstanceModel raid, CandideServer.Models.Town.ServerTownModel town) System.Void raid Shared.Models.Raids.RaidInstanceModel town CandideServer.Models.Town.ServerTownModel" id="onraidarrived-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel---system-void">
+<div class="method-heading">
+<h3><code>OnRaidArrived</code></h3>
+<a class="permalink" href="#onraidarrived-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnRaidArrived(Shared.Models.Raids.RaidInstanceModel raid, CandideServer.Models.Town.ServerTownModel town)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.RaidsServerManager::OnRaidArrived(Shared.Models.Raids.RaidInstanceModel, CandideServer.Models.Town.ServerTownModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnRaidArrived(<a href="../../types/Shared/Shared_Models_Raids_RaidInstanceModel.html">Shared.Models.Raids.RaidInstanceModel</a> raid, <a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> town)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0BC0D1A78C890502CEEB9F9F83298473CD0962404C278EA8242BE802314F61DB</code></li>
+<li><span>Body hash</span><code>45D38C4A418E42D166B22D30B179E5549AA161D4E298E5815390B214392703ED</code></li>
+<li><span>IL size</span><span>15</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_RaidsServerController.html#updateraidstate-shared-models-raids-raidinstancemodel--raidinstancemodel-raidstate---system-void">CandideServer.ServerControllers.RaidsServerController::UpdateRaidState(Shared.Models.Raids.RaidInstanceModel, RaidInstanceModel.RaidState)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_RaidsServerService.html#send-updateraid-shared-models-raids-raidinstancemodel--system-byte---system-void">CandideServer.ServerServices.RaidsServerService::Send_UpdateRaid(Shared.Models.Raids.RaidInstanceModel, System.Byte)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_RaidsServerService.html#onreceive-arrivespawnraid-candideserver-messagemodels-raids-arriveraidcheatmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.RaidsServerService::OnReceive_ArriveSpawnRaid</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_Raids_ServerRaidsSystem.html#update-system-single---system-void"><code>CandideServer.ServerSystems.Raids.ServerRaidsSystem::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnRaidBeaten public System.Void OnRaidBeaten(Shared.Models.Raids.RaidInstanceModel raid, CandideServer.Models.Town.ServerTownModel town) System.Void raid Shared.Models.Raids.RaidInstanceModel town CandideServer.Models.Town.ServerTownModel" id="onraidbeaten-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel---system-void">
+<div class="method-heading">
+<h3><code>OnRaidBeaten</code></h3>
+<a class="permalink" href="#onraidbeaten-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnRaidBeaten(Shared.Models.Raids.RaidInstanceModel raid, CandideServer.Models.Town.ServerTownModel town)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.RaidsServerManager::OnRaidBeaten(Shared.Models.Raids.RaidInstanceModel, CandideServer.Models.Town.ServerTownModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnRaidBeaten(<a href="../../types/Shared/Shared_Models_Raids_RaidInstanceModel.html">Shared.Models.Raids.RaidInstanceModel</a> raid, <a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> town)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>58B9C45DD7926687D3B381F72FA45B581AC9B85086D0186B0C959F3E14B3B56E</code></li>
+<li><span>Body hash</span><code>2DBE842DE0F382DD26439C5D677D17960B96ADB338E0AA913BE09DFF1C86211A</code></li>
+<li><span>IL size</span><span>795</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_RaidDataBase.html#getraidornull-system-string---shared-data-datamodels-raiddata">Shared.Data.RaidDataBase::GetRaidOrNull(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_RaidsServerController.html#removeraid-system-guid---system-void">CandideServer.ServerControllers.RaidsServerController::RemoveRaid(System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_RaidsServerService.html#send-removeraid-system-guid--system-byte---system-void">CandideServer.ServerServices.RaidsServerService::Send_RemoveRaid(System.Guid, System.Byte)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#toidstring-system-string---system-string">Shared.Analytics.AnalyticsHandler::ToIdString(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#getworldplaytimehours----system-double">CandideServer.ServerGameState::GetWorldPlayTimeHours()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#log-system-string--system-double--analyticshandler-logtype--system-single---system-void">Shared.Analytics.AnalyticsHandler::Log(System.String, System.Double, AnalyticsHandler.LogType, System.Single)</a></code></li>
+<li><code>System.ValueTuple&lt;Shared.Models.Raids.RaidInstanceModel, CandideServer.Models.Town.ServerTownModel&gt;::.ctor(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_EventBus_EventBusManager.html#sendevent-system-string--system-object--system-boolean---system-void">CandideServer.EventBus.EventBusManager::SendEvent(System.String, System.Object, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnRaidVictoryEvent.html#send-shared-models-raids-raidinstancemodel---system-void">CandideServer.Models.Quests.EventModels.OnRaidVictoryEvent::Send(Shared.Models.Raids.RaidInstanceModel)</a></code></li>
+<li><code>Shared.Models.Town.TownReportSummaryModel::.ctor()</code></li>
+<li><code>CandideServer.ServerSystems.TimeServerSystem::get_Day()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Town.TownReportCitizenSummaryModel&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizen-system-guid--candideserver-models-citizen-citizenmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizen(System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)</a></code></li>
+<li><code>CandideServer.Models.Citizen.CitizenModel::get_IsDead()</code></li>
+<li><code>Shared.Models.Town.TownReportCitizenSummaryModel::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Town.TownReportCitizenSummaryModel&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_CitizenStats.html#get-system-string---system-single">Shared.Models.Stats.CitizenStats::Get(System.String)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::.ctor()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Citizens.UpdateCitizenMessage&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Town.TownReportCitizenSummaryModel&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Town.TownReportCitizenSummaryModel&gt;::get_Current()</code></li>
+<li><code>CandideServer.ServerManagers.ServerCitizenException::.ctor(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#citizendied-candideserver-models-citizen-citizenmodel--shared-models-citizens-citizendeathtype---system-void">CandideServer.ServerManagers.CitizenServerManager::CitizenDied(CandideServer.Models.Citizen.CitizenModel, Shared.Models.Citizens.CitizenDeathType)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#addloyalty-candideserver-models-citizen-citizenmodel--system-single--system-boolean---system-void">CandideServer.ServerControllers.CitizensSController::AddLoyalty(CandideServer.Models.Citizen.CitizenModel, System.Single, System.Boolean)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.String&gt;::get_Current()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_RaidsServerService.html#onreceive-beatspawnraid-candideserver-messagemodels-raids-beatraidcheatmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.RaidsServerService::OnReceive_BeatSpawnRaid</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_Raids_ServerRaidsSystem.html#update-system-single---system-void"><code>CandideServer.ServerSystems.Raids.ServerRaidsSystem::Update</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>raid:beaten:</code></li>
+<li><code>raid-beat</code></li>
+<li><code>Citizen_LoyaltyGain</code></li>
+<li><code>Citizen was removed between setting up the summary report and actually applying its changes after a successful raid</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnRaidEntityRemoved public System.Void OnRaidEntityRemoved(System.Guid raidId, CandideServer.Entities.ServerEntityModel entity, Shared.Entity.EntityRemoveInfo removeInfo) System.Void raidId System.Guid entity CandideServer.Entities.ServerEntityModel removeInfo Shared.Entity.EntityRemoveInfo" id="onraidentityremoved-system-guid--candideserver-entities-serverentitymodel--shared-entity-entityremoveinfo---system-void">
+<div class="method-heading">
+<h3><code>OnRaidEntityRemoved</code></h3>
+<a class="permalink" href="#onraidentityremoved-system-guid--candideserver-entities-serverentitymodel--shared-entity-entityremoveinfo---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnRaidEntityRemoved(System.Guid raidId, CandideServer.Entities.ServerEntityModel entity, Shared.Entity.EntityRemoveInfo removeInfo)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.RaidsServerManager::OnRaidEntityRemoved(System.Guid, CandideServer.Entities.ServerEntityModel, Shared.Entity.EntityRemoveInfo)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnRaidEntityRemoved(System.Guid raidId, <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> entity, <a href="../../types/Shared/Shared_Entity_EntityRemoveInfo.html">Shared.Entity.EntityRemoveInfo</a> removeInfo)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>28950143488651FC7443C083271ABA147C0EBB65F4B2B5A9089A2E9E2C63885D</code></li>
+<li><span>Body hash</span><code>6CCB16B80E17899637881306C6956FEEC4003AEEB5924EAAA4AD748FCD3ADAF5</code></li>
+<li><span>IL size</span><span>117</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Models.Raids.RaidInstanceModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_RaidDataBase.html#getraidornull-system-string---shared-data-datamodels-raiddata">Shared.Data.RaidDataBase::GetRaidOrNull(System.String)</a></code></li>
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextfloat-system-random---system-single">CandideCreator.Shared.Helpers.RandomHelper::NextFloat(System.Random)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::get_Zero()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_LootServerManager.html#droplootatposition-system-string--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--system-guid--system-nullable-1-system-int32----system-void">CandideServer.ServerManagers.LootServerManager::DropLootAtPosition(System.String, Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3, System.Guid, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_RaidsServerController.html#updateprogress-shared-models-raids-raidinstancemodel--candideserver-entities-serverentitymodel---system-void">CandideServer.ServerControllers.RaidsServerController::UpdateProgress(Shared.Models.Raids.RaidInstanceModel, CandideServer.Entities.ServerEntityModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#removeentity-candideserver-entities-serverentitymodel--shared-entity-entityremoveinfo---system-void"><code>CandideServer.ServerControllers.EntitySController::RemoveEntity</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnRaidFailed public System.Void OnRaidFailed(Shared.Models.Raids.RaidInstanceModel raid, CandideServer.Models.Town.ServerTownModel town) System.Void raid Shared.Models.Raids.RaidInstanceModel town CandideServer.Models.Town.ServerTownModel" id="onraidfailed-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel---system-void">
+<div class="method-heading">
+<h3><code>OnRaidFailed</code></h3>
+<a class="permalink" href="#onraidfailed-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnRaidFailed(Shared.Models.Raids.RaidInstanceModel raid, CandideServer.Models.Town.ServerTownModel town)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.RaidsServerManager::OnRaidFailed(Shared.Models.Raids.RaidInstanceModel, CandideServer.Models.Town.ServerTownModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnRaidFailed(<a href="../../types/Shared/Shared_Models_Raids_RaidInstanceModel.html">Shared.Models.Raids.RaidInstanceModel</a> raid, <a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> town)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7662BF2B80D03347839E0F19E941ECD73B3F02D517B865AE2B65F270639ECF33</code></li>
+<li><span>Body hash</span><code>86218D5A915737523212E232755B07C22F822FED4571A59694DD608670ACB76D</code></li>
+<li><span>IL size</span><span>1882</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_RaidDataBase.html#getraidornull-system-string---shared-data-datamodels-raiddata">Shared.Data.RaidDataBase::GetRaidOrNull(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_RaidsServerController.html#removeraid-system-guid---system-void">CandideServer.ServerControllers.RaidsServerController::RemoveRaid(System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_RaidsServerService.html#send-removeraid-system-guid--system-byte---system-void">CandideServer.ServerServices.RaidsServerService::Send_RemoveRaid(System.Guid, System.Byte)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#toidstring-system-string---system-string">Shared.Analytics.AnalyticsHandler::ToIdString(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#log-system-string--system-double--analyticshandler-logtype--system-single---system-void">Shared.Analytics.AnalyticsHandler::Log(System.String, System.Double, AnalyticsHandler.LogType, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#getworldplaytimehours----system-double">CandideServer.ServerGameState::GetWorldPlayTimeHours()</a></code></li>
+<li><code>Shared.Models.Town.TownReportSummaryModel::.ctor()</code></li>
+<li><code>CandideServer.ServerSystems.TimeServerSystem::get_Day()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Town.TownReportCitizenSummaryModel&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>System.Linq.Enumerable::ToArray(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+<li><code>CandideCreator.Shared.Helpers.RandomHelper::Shuffle(!!0[], System.Random)</code></li>
+<li><code>System.MathF::Ceiling(System.Single)</code></li>
+<li><code>System.Random::Next(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizen-system-guid--candideserver-models-citizen-citizenmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizen(System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)</a></code></li>
+<li><code>Shared.Models.Town.TownReportCitizenSummaryModel::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Town.TownReportCitizenSummaryModel&gt;::Add(!0)</code></li>
+<li><code>System.Random::NextSingle()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::.ctor(System.Int32)</code></li>
+<li><code>System.Runtime.InteropServices.CollectionsMarshal::SetCount(System.Collections.Generic.List&lt;!!0&gt;, System.Int32)</code></li>
+<li><code>System.Runtime.InteropServices.CollectionsMarshal::AsSpan(System.Collections.Generic.List&lt;!!0&gt;)</code></li>
+<li><code>System.Span&lt;System.String&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetinternalresourcestorage-system-guid--candideserver-models-internalresourcestoragemodel----system-boolean">CandideServer.ServerGameState::TryGetInternalResourceStorage(System.Guid, CandideServer.Models.InternalResourceStorageModel&amp;)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::get_Count()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_RaidsServerService.html#onreceive-failspawnraid-candideserver-messagemodels-raids-failraidcheatmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.RaidsServerService::OnReceive_FailSpawnRaid</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_Raids_ServerRaidsSystem.html#update-system-single---system-void"><code>CandideServer.ServerSystems.Raids.ServerRaidsSystem::Update</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>raid:failed:</code></li>
+<li><code>raid:fail_time:</code></li>
+<li><code>material_storage</code></li>
+<li><code>Citizen was removed between setting up the summary report and actually applying its changes after a failed raid</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnRaidStartedApproach public System.Void OnRaidStartedApproach(Shared.Models.Raids.RaidInstanceModel raid, CandideServer.Models.Town.ServerTownModel targetTown, System.Single approachTimeLeftScale) System.Void raid Shared.Models.Raids.RaidInstanceModel targetTown CandideServer.Models.Town.ServerTownModel approachTimeLeftScale System.Single" id="onraidstartedapproach-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel--system-single---system-void">
+<div class="method-heading">
+<h3><code>OnRaidStartedApproach</code></h3>
+<a class="permalink" href="#onraidstartedapproach-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnRaidStartedApproach(Shared.Models.Raids.RaidInstanceModel raid, CandideServer.Models.Town.ServerTownModel targetTown, System.Single approachTimeLeftScale)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.RaidsServerManager::OnRaidStartedApproach(Shared.Models.Raids.RaidInstanceModel, CandideServer.Models.Town.ServerTownModel, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnRaidStartedApproach(<a href="../../types/Shared/Shared_Models_Raids_RaidInstanceModel.html">Shared.Models.Raids.RaidInstanceModel</a> raid, <a href="../../types/CandideServer/CandideServer_Models_Town_ServerTownModel.html">CandideServer.Models.Town.ServerTownModel</a> targetTown, System.Single approachTimeLeftScale)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5C33632F7C85E61969222677AEC3991830D086A68BCECB4C64EF140818D2F0AF</code></li>
+<li><span>Body hash</span><code>A225772F1E60331421B15708A1E267495CDD54864AD845D267DC83B1DE834ADA</code></li>
+<li><span>IL size</span><span>29</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_RaidsServerController.html#updateraidstate-shared-models-raids-raidinstancemodel--raidinstancemodel-raidstate---system-void">CandideServer.ServerControllers.RaidsServerController::UpdateRaidState(Shared.Models.Raids.RaidInstanceModel, RaidInstanceModel.RaidState)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_RaidsServerService.html#send-updateraid-shared-models-raids-raidinstancemodel--system-byte---system-void">CandideServer.ServerServices.RaidsServerService::Send_UpdateRaid(Shared.Models.Raids.RaidInstanceModel, System.Byte)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#usewardeclaration-system-guid--candideserver-serverservices-serverjoinedplayermodel---system-void"><code>CandideServer.ServerManagers.RaidsServerManager::UseWarDeclaration</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_Raids_ServerRaidsSystem.html#update-system-single---system-void"><code>CandideServer.ServerSystems.Raids.ServerRaidsSystem::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveRaid public System.Void RemoveRaid(Shared.Models.Raids.RaidInstanceModel raid) System.Void raid Shared.Models.Raids.RaidInstanceModel" id="removeraid-shared-models-raids-raidinstancemodel---system-void">
+<div class="method-heading">
+<h3><code>RemoveRaid</code></h3>
+<a class="permalink" href="#removeraid-shared-models-raids-raidinstancemodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemoveRaid(Shared.Models.Raids.RaidInstanceModel raid)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.RaidsServerManager::RemoveRaid(Shared.Models.Raids.RaidInstanceModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemoveRaid(<a href="../../types/Shared/Shared_Models_Raids_RaidInstanceModel.html">Shared.Models.Raids.RaidInstanceModel</a> raid)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FD59A1EF052096DBD505B2AF932B2F5CEC72A61A72F1E96774F5B52D10701F6C</code></li>
+<li><span>Body hash</span><code>67837359AC7B47D8BD006922F7ADE68146628843376A8CDF6271CDAA9B58D1A5</code></li>
+<li><span>IL size</span><span>24</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_RaidsServerController.html#removeraid-system-guid---system-void">CandideServer.ServerControllers.RaidsServerController::RemoveRaid(System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_RaidsServerService.html#send-removeraid-system-guid--system-byte---system-void">CandideServer.ServerServices.RaidsServerService::Send_RemoveRaid(System.Guid, System.Byte)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#createraid-system-string--candideserver-models-town-servertownmodel--system-nullable-1-microsoft-xna-framework-vector2---system-single--system-boolean---shared-models-raids-raidinstancemodel"><code>CandideServer.ServerManagers.RaidsServerManager::CreateRaid</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_TownsServerManager.html#removetown-candideserver-models-town-townmodel---system-void"><code>CandideServer.ServerManagers.TownsServerManager::RemoveTown</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UseWarDeclaration public System.Void UseWarDeclaration(System.Guid itemInstanceId, CandideServer.ServerServices.ServerJoinedPlayerModel usingPlayer) System.Void itemInstanceId System.Guid usingPlayer CandideServer.ServerServices.ServerJoinedPlayerModel" id="usewardeclaration-system-guid--candideserver-serverservices-serverjoinedplayermodel---system-void">
+<div class="method-heading">
+<h3><code>UseWarDeclaration</code></h3>
+<a class="permalink" href="#usewardeclaration-system-guid--candideserver-serverservices-serverjoinedplayermodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UseWarDeclaration(System.Guid itemInstanceId, CandideServer.ServerServices.ServerJoinedPlayerModel usingPlayer)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.RaidsServerManager::UseWarDeclaration(System.Guid, CandideServer.ServerServices.ServerJoinedPlayerModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UseWarDeclaration(System.Guid itemInstanceId, <a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> usingPlayer)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F0B5238175DA91EB1076ED1F9AAED2387C9E16E6C982FABB482F39A67FA63AE3</code></li>
+<li><span>Body hash</span><code>5618B37C8DE6BADC8712189C3B548DC247400E2A30C57782A20EC246E99BED74</code></li>
+<li><span>IL size</span><span>395</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetiteminstance-system-guid--shared-models-items-iteminstancemodel----system-boolean">CandideServer.ServerGameState::TryGetItemInstance(System.Guid, Shared.Models.Items.ItemInstanceModel&amp;)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>Shared.Models.Items.ItemInstanceModel::get_Data()</code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Contains(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_ItemInstanceServerManager.html#useexpenditem-shared-models-items-iteminstancemodel--system-int32---system-boolean">CandideServer.ServerManagers.ItemInstanceServerManager::UseExpendItem(Shared.Models.Items.ItemInstanceModel, System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_TownsServerManager.html#getclosesttown-microsoft-xna-framework-vector2---candideserver-models-town-servertownmodel">CandideServer.ServerManagers.TownsServerManager::GetClosestTown(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#getweightedtown----candideserver-models-town-servertownmodel">CandideServer.ServerManagers.RaidsServerManager::GetWeightedTown()</a></code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::get_Current()</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;::.ctor(!0)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#createraid-system-string--candideserver-models-town-servertownmodel--system-nullable-1-microsoft-xna-framework-vector2---system-single--system-boolean---shared-models-raids-raidinstancemodel">CandideServer.ServerManagers.RaidsServerManager::CreateRaid(System.String, CandideServer.Models.Town.ServerTownModel, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;, System.Single, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#onraidstartedapproach-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel--system-single---system-void">CandideServer.ServerManagers.RaidsServerManager::OnRaidStartedApproach(Shared.Models.Raids.RaidInstanceModel, CandideServer.Models.Town.ServerTownModel, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_RaidsServerService.html#onreceive-usewardeclaration-candideserver-messagemodels-raids-usewardeclarationmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.RaidsServerService::OnReceive_UseWarDeclaration</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>UseWarDeclaration failed because we could not find item instance with ID: </code></li>
+<li><code>UseWarDeclaration failed because we can&#39;t find StartRaidSpellArgs on item with ID: </code></li>
+<li><code>UseWarDeclaration failed because we can&#39;t use item with ID: </code></li>
+<li><code>raid:pyzifax</code></li>
+<li><code>raid:satyr</code></li>
+<li><code>satyr_pre_boss_arena</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

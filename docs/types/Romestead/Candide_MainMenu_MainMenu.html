@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.MainMenu.MainMenu - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.MainMenu.MainMenu</h1>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.MainMenu">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.MainMenu.MainMenu
+
+- Assembly: `Romestead`
+- Namespace: `Candide.MainMenu`
+- Kind: `public class`
+- Base type: `Candide.Scene.GameScene`
+- Members: 9 methods, 1 properties, 8 fields, 0 events
+
+## Public Methods
+- `public System.Void Draw(Microsoft.Xna.Framework.GameTime gameTime)`
+- `public System.Void Initialize()`
+- `public System.Void LoadContent()`
+- `public System.Void OnDisplaySettingsChanged()`
+- `public System.Void OnExiting(System.Object sender, System.EventArgs args)`
+- `public System.Void OnSceneActivated()`
+- `public System.Void OnSceneDeactivated()`
+- `public System.Void OnUiSizeChange()`
+- `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)`
+">Copy markdown</button>
+<a class="button" href="Candide_MainMenu_MainMenu.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.MainMenu</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>9</strong></article>
+<article class="metric"><span>Properties</span><strong>1</strong></article>
+<article class="metric"><span>Fields</span><strong>8</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.MainMenu</code></li>
+<li><span>Base type</span><code><a href="../../types/Romestead/Candide_Scene_GameScene.html">Candide.Scene.GameScene</a></code></li>
+<li><span>Hash</span><code>5A2A67AC837B303CA45CEDC5598CC6CBBC3D6C8F84CABC56FEEAFC16A1893BD9</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/Romestead/Candide_Scene_GameScene.html">Candide.Scene.GameScene</a></code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_MainMenuPanelState.html"><code>Candide.MainMenu.MainMenuPanelState</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_NewMainMenuBackground.html"><code>Candide.MainMenu.NewMainMenuBackground</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_MainMenuUiController.html"><code>Candide.MainMenu.Ui.MainMenuUiController</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Desktop public Candide.CandideUI.CandideDesktop Desktop Candide.CandideUI.CandideDesktop" id="desktop-candide-candideui-candidedesktop"><td><span class="member-name-cell"><code>Desktop</code><a class="permalink" href="#desktop-candide-candideui-candidedesktop" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.CandideUI.CandideDesktop Desktop">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_CandideUI_CandideDesktop.html">Candide.CandideUI.CandideDesktop</a> Desktop</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="UpdateNetwork public System.Boolean UpdateNetwork System.Boolean" id="updatenetwork-system-boolean"><td><span class="member-name-cell"><code>UpdateNetwork</code><a class="permalink" href="#updatenetwork-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean UpdateNetwork">Copy</button></span></td><td>public</td><td><code>public System.Boolean UpdateNetwork</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_candide private Candide.CandideEngine _candide Candide.CandideEngine" id="-candide-candide-candideengine"><td><span class="member-name-cell"><code>_candide</code><a class="permalink" href="#-candide-candide-candideengine" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideEngine _candide">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideEngine.html">Candide.CandideEngine</a> _candide</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_lastWindowPos private Microsoft.Xna.Framework.Point _lastWindowPos Microsoft.Xna.Framework.Point" id="-lastwindowpos-microsoft-xna-framework-point"><td><span class="member-name-cell"><code>_lastWindowPos</code><a class="permalink" href="#-lastwindowpos-microsoft-xna-framework-point" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Point _lastWindowPos">Copy</button></span></td><td>private</td><td><code>private Microsoft.Xna.Framework.Point _lastWindowPos</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_mainMenuBackground private Candide.MainMenu.MainMenuBackground _mainMenuBackground Candide.MainMenu.MainMenuBackground" id="-mainmenubackground-candide-mainmenu-mainmenubackground"><td><span class="member-name-cell"><code>_mainMenuBackground</code><a class="permalink" href="#-mainmenubackground-candide-mainmenu-mainmenubackground" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.MainMenu.MainMenuBackground _mainMenuBackground">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_MainMenu_MainMenuBackground.html">Candide.MainMenu.MainMenuBackground</a> _mainMenuBackground</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_newBackground private System.Boolean _newBackground System.Boolean" id="-newbackground-system-boolean"><td><span class="member-name-cell"><code>_newBackground</code><a class="permalink" href="#-newbackground-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _newBackground">Copy</button></span></td><td>private</td><td><code>private System.Boolean _newBackground</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_newMainMenuBackground private Candide.MainMenu.MainMenuBackground _newMainMenuBackground Candide.MainMenu.MainMenuBackground" id="-newmainmenubackground-candide-mainmenu-mainmenubackground"><td><span class="member-name-cell"><code>_newMainMenuBackground</code><a class="permalink" href="#-newmainmenubackground-candide-mainmenu-mainmenubackground" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.MainMenu.MainMenuBackground _newMainMenuBackground">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_MainMenu_MainMenuBackground.html">Candide.MainMenu.MainMenuBackground</a> _newMainMenuBackground</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_uiRender private Microsoft.Xna.Framework.Graphics.RenderTarget2D _uiRender Microsoft.Xna.Framework.Graphics.RenderTarget2D" id="-uirender-microsoft-xna-framework-graphics-rendertarget2d"><td><span class="member-name-cell"><code>_uiRender</code><a class="permalink" href="#-uirender-microsoft-xna-framework-graphics-rendertarget2d" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Graphics.RenderTarget2D _uiRender">Copy</button></span></td><td>private</td><td><code>private Microsoft.Xna.Framework.Graphics.RenderTarget2D _uiRender</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="UiSpriteBatch public Microsoft.Xna.Framework.Graphics.SpriteBatch UiSpriteBatch Microsoft.Xna.Framework.Graphics.SpriteBatch" id="uispritebatch-microsoft-xna-framework-graphics-spritebatch"><td><span class="member-name-cell"><code>UiSpriteBatch</code><a class="permalink" href="#uispritebatch-microsoft-xna-framework-graphics-spritebatch" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Graphics.SpriteBatch UiSpriteBatch">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Graphics.SpriteBatch UiSpriteBatch</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Draw public System.Void Draw(Microsoft.Xna.Framework.GameTime gameTime) System.Void gameTime Microsoft.Xna.Framework.GameTime" id="draw-microsoft-xna-framework-gametime---system-void">
+<div class="method-heading">
+<h3><code>Draw</code></h3>
+<a class="permalink" href="#draw-microsoft-xna-framework-gametime---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Draw(Microsoft.Xna.Framework.GameTime gameTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.MainMenu::Draw(Microsoft.Xna.Framework.GameTime)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Draw(Microsoft.Xna.Framework.GameTime gameTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>F294B25ACF0B3AD1DFC801D896F120D806DFC94115D523F787849B7CFEF59E7B</code></li>
+<li><span>Body hash</span><code>05ECB491B21E8544CCE3038BB4052B56AD8874B36407D9C26E780D2969D15F9B</code></li>
+<li><span>IL size</span><span>340</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Scene.GameScene::get_GraphicsDevice()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsDevice::SetRenderTarget(Microsoft.Xna.Framework.Graphics.RenderTarget2D)</code></li>
+<li><code>Microsoft.Xna.Framework.Color::.ctor(System.Int32, System.Int32, System.Int32, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsDevice::Clear(Microsoft.Xna.Framework.Color)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiSystem.html#draw----system-void">Candide.CandideUI.CandideUiSystem::Draw()</a></code></li>
+<li><code>Candide.MainMenu.MainMenu::get_UiSpriteBatch()</code></li>
+<li><code><a href="../../types/Romestead/Candide_MainMenu_MainMenuBackground.html#draw-microsoft-xna-framework-gametime--microsoft-xna-framework-graphics-spritebatch---system-void">Candide.MainMenu.MainMenuBackground::Draw(Microsoft.Xna.Framework.GameTime, Microsoft.Xna.Framework.Graphics.SpriteBatch)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.SpriteBatch::Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode, Microsoft.Xna.Framework.Graphics.BlendState, Microsoft.Xna.Framework.Graphics.SamplerState, Microsoft.Xna.Framework.Graphics.DepthStencilState, Microsoft.Xna.Framework.Graphics.RasterizerState, Microsoft.Xna.Framework.Graphics.Effect, System.Nullable&lt;Microsoft.Xna.Framework.Matrix&gt;)</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsDevice::get_Viewport()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.Viewport::get_Bounds()</code></li>
+<li><code>Microsoft.Xna.Framework.Color::get_White()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.SpriteBatch::Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Rectangle, System.Nullable&lt;Microsoft.Xna.Framework.Rectangle&gt;, Microsoft.Xna.Framework.Color)</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.SpriteBatch::End()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Graphics_SpriteSheet.html#draw-microsoft-xna-framework-graphics-spritebatch--microsoft-xna-framework-vector2--system-int32--system-single--system-single--system-single---system-void">CandideCreator.Shared.Graphics.SpriteSheet::Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch, Microsoft.Xna.Framework.Vector2, System.Int32, System.Single, System.Single, System.Single)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Initialize public System.Void Initialize() System.Void " id="initialize----system-void">
+<div class="method-heading">
+<h3><code>Initialize</code></h3>
+<a class="permalink" href="#initialize----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Initialize()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.MainMenu::Initialize()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Initialize()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>AC022637D220BCF11C5E8CF35F5828D4BCDF416007991A6FC5107EE4530678C6</code></li>
+<li><span>Body hash</span><code>C8824F122DEC4041797BADE499C5D38121BE83CCCEF9806EACA084F7F7D75CFA</code></li>
+<li><span>IL size</span><span>7</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LoadContent public System.Void LoadContent() System.Void " id="loadcontent----system-void">
+<div class="method-heading">
+<h3><code>LoadContent</code></h3>
+<a class="permalink" href="#loadcontent----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void LoadContent()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.MainMenu::LoadContent()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void LoadContent()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>B3DB573FF0381315008117C2AD9D9F6039310CE4FAC2E7323A521ABCA5E91C2E</code></li>
+<li><span>Body hash</span><code>B55DBDA266B45CD3001A8EF34B6AC0E8DA8F344E703D9DA36628ACCBFA63D8AB</code></li>
+<li><span>IL size</span><span>45</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.CandideDesktop::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_MainMenu_Ui_MainMenuUi.html#initialize-candide-candideui-candidedesktop---system-void">Candide.MainMenu.Ui.MainMenuUi::Initialize(Candide.CandideUI.CandideDesktop)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_MainMenu_MainMenuBackground.html#loadcontent----system-void">Candide.MainMenu.MainMenuBackground::LoadContent()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnDisplaySettingsChanged public System.Void OnDisplaySettingsChanged() System.Void " id="ondisplaysettingschanged----system-void">
+<div class="method-heading">
+<h3><code>OnDisplaySettingsChanged</code></h3>
+<a class="permalink" href="#ondisplaysettingschanged----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnDisplaySettingsChanged()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.MainMenu::OnDisplaySettingsChanged()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnDisplaySettingsChanged()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>B5B8FD4F0F4B1DD2A8357DEBD00A29A8A7C72E19B4B89B49CC2E8B1EBA9FF0F8</code></li>
+<li><span>Body hash</span><code>5CDD2F708575394C6925CEA787E2CF8CCBBD9319F82FACA6755B4CF94652572C</code></li>
+<li><span>IL size</span><span>7</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_MainMenu_MainMenu.html#onuisizechange----system-void">Candide.MainMenu.MainMenu::OnUiSizeChange()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnExiting public System.Void OnExiting(System.Object sender, System.EventArgs args) System.Void sender System.Object args System.EventArgs" id="onexiting-system-object--system-eventargs---system-void">
+<div class="method-heading">
+<h3><code>OnExiting</code></h3>
+<a class="permalink" href="#onexiting-system-object--system-eventargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnExiting(System.Object sender, System.EventArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.MainMenu::OnExiting(System.Object, System.EventArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnExiting(System.Object sender, System.EventArgs args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>7E85FA7E25E37BEFF63F066B0CD026A51A6A55C705FD532C60523018A339EC06</code></li>
+<li><span>Body hash</span><code>2459FECC5617E7FD052FA38FB9A7C9C6E11D094AC5315C9CED75247D84679EFE</code></li>
+<li><span>IL size</span><span>35</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Point&gt;::.ctor(!0)</code></li>
+<li><code>Candide.UserSettings.WindowUserSettings::set_WindowPosition(System.Nullable&lt;Microsoft.Xna.Framework.Point&gt;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_UserSettings_GameUserSettings.html#saveautosettings----system-void">Candide.UserSettings.GameUserSettings::SaveAutoSettings()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Scene_GameScene.html#onexiting-system-object--system-eventargs---system-void">Candide.Scene.GameScene::OnExiting(System.Object, System.EventArgs)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnSceneActivated public System.Void OnSceneActivated() System.Void " id="onsceneactivated----system-void">
+<div class="method-heading">
+<h3><code>OnSceneActivated</code></h3>
+<a class="permalink" href="#onsceneactivated----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnSceneActivated()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.MainMenu::OnSceneActivated()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnSceneActivated()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>2D1F195B69E0C3D6F222D8F1246B23E3032506EC3D6DF80785C52F27D2382944</code></li>
+<li><span>Body hash</span><code>303200AD57AB8D8AEA4DB38399CCE891C69E8D2ADD777450439F641B1F627531</code></li>
+<li><span>IL size</span><span>111</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiSystem.html#setdesktop-candide-candideui-candidedesktop---system-void">Candide.CandideUI.CandideUiSystem::SetDesktop(Candide.CandideUI.CandideDesktop)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_MainMenu_MainMenu.html#onuisizechange----system-void">Candide.MainMenu.MainMenu::OnUiSizeChange()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_MainMenu_Ui_MainMenuUiController.html#reset----system-void">Candide.MainMenu.Ui.MainMenuUiController::Reset()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_ObjectivesUi_CandideObjectivesWindow.html#resetremembered----system-void">Candide.CandideUI.ObjectivesUi.CandideObjectivesWindow::ResetRemembered()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_MainMenu_Ui_MainMenuUi.html#showui-candide-candideui-candidedesktop---system-void">Candide.MainMenu.Ui.MainMenuUi::ShowUi(Candide.CandideUI.CandideDesktop)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_UISystems_Notification_UiNotificationSystem.html#clearall----system-void">Candide.UISystems.Notification.UiNotificationSystem::ClearAll()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Sound_SoundPlayer.html#stopallevents----system-void">Candide.Sound.SoundPlayer::StopAllEvents()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Sound_MusicAmbienceSystems_MusicSoundSystem.html#stopall----system-void">Candide.Sound.MusicAmbienceSystems.MusicSoundSystem::StopAll()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Systems_AmbienceSystem.html#stopall----system-void">Candide.GameModels.Systems.AmbienceSystem::StopAll()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Sound_MusicAmbienceSystems_AmbienceSoundSystem.html#stopall----system-void">Candide.Sound.MusicAmbienceSystems.AmbienceSoundSystem::StopAll()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Sound_SoundPlayer.html#playeventoneshot-system-string--system-single--system-single---system-void">Candide.Sound.SoundPlayer::PlayEventOneShot(System.String, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_PostGameWindow.html#handlepostgamebehaviour----system-void">Candide.MainMenu.Ui.Steps.PostGameWindow::HandlePostGameBehaviour()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Steam_SteamIntegration.html#init----system-void">Candide.Steam.SteamIntegration::Init()</a></code></li>
+<li><code>Steamworks.SteamFriends::ClearRichPresence()</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>event:/music/main_menu/main_menu</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnSceneDeactivated public System.Void OnSceneDeactivated() System.Void " id="onscenedeactivated----system-void">
+<div class="method-heading">
+<h3><code>OnSceneDeactivated</code></h3>
+<a class="permalink" href="#onscenedeactivated----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnSceneDeactivated()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.MainMenu::OnSceneDeactivated()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnSceneDeactivated()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>D6D25553C802C91EAE7EB89C95BEFC2D054A5DA05D2082AA2A8382C94D5C117A</code></li>
+<li><span>Body hash</span><code>FF62614226EF3E5E7DA9D7349B61B79750C7B79FED2FCBCEF18B30DC0CE54A9F</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideDesktop.html#closeall----system-void">Candide.CandideUI.CandideDesktop::CloseAll()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Sound_SoundPlayer.html#stopallevents----system-void">Candide.Sound.SoundPlayer::StopAllEvents()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnUiSizeChange public System.Void OnUiSizeChange() System.Void " id="onuisizechange----system-void">
+<div class="method-heading">
+<h3><code>OnUiSizeChange</code></h3>
+<a class="permalink" href="#onuisizechange----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnUiSizeChange()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.MainMenu::OnUiSizeChange()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnUiSizeChange()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EFC8C1C571E2D778C87FB212154CECAF443DA4252F41C3634B952073B8480C58</code></li>
+<li><span>Body hash</span><code>E0CB27D9E43A16BED4A23A2A316D20808C53B0396DCD4ABF61B9C575D003C890</code></li>
+<li><span>IL size</span><span>85</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsResource::Dispose()</code></li>
+<li><code>Candide.Scene.GameScene::get_GraphicsDevice()</code></li>
+<li><code>Candide.CandideUI.Helpers.UiRenderHelper::get_GetUiRenderTargetWidth()</code></li>
+<li><code>Candide.CandideUI.Helpers.UiRenderHelper::get_GetUiRenderTargetHeight()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.RenderTarget2D::.ctor(Microsoft.Xna.Framework.Graphics.GraphicsDevice, System.Int32, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.Texture2D::get_Width()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.Texture2D::get_Height()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_MainMenu.html#ondisplaysettingschanged----system-void"><code>Candide.MainMenu.MainMenu::OnDisplaySettingsChanged</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_MainMenu.html#onsceneactivated----system-void"><code>Candide.MainMenu.MainMenu::OnSceneActivated</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime) System.Void gameTime Microsoft.Xna.Framework.GameTime" id="update-microsoft-xna-framework-gametime---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-microsoft-xna-framework-gametime---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.MainMenu.MainMenu::Update(Microsoft.Xna.Framework.GameTime)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>A5536DBE36243E559F8ADD1A7353A169566BB0CFA995CC59A99F29F119FE614A</code></li>
+<li><span>Body hash</span><code>DFEDB12E01A9E78BFB99D8C7D3989B96EB8ECA504BFDEEF7E52AF85BBFE87641</code></li>
+<li><span>IL size</span><span>377</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiSystem.html#setdesktop-candide-candideui-candidedesktop---system-void">Candide.CandideUI.CandideUiSystem::SetDesktop(Candide.CandideUI.CandideDesktop)</a></code></li>
+<li><code>Candide.Scene.GameScene::get_Window()</code></li>
+<li><code>Microsoft.Xna.Framework.GameWindow::get_Position()</code></li>
+<li><code>Microsoft.Xna.Framework.GameTime::get_ElapsedGameTime()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_NetworkManager.html#update-system-timespan---system-void">Candide.Multiplayer.Network.NetworkManager::Update(System.TimeSpan)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#update----system-void">Candide.Multiplayer.Services.ConnectService::Update()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_Keybinds.html#update----system-void">Candide.Input.Keybinds::Update()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#update-microsoft-xna-framework-gametime---system-void">Candide.Input.InputManager::Update(Microsoft.Xna.Framework.GameTime)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputState.html#update----system-void">Candide.Input.InputState::Update()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Accessibility_ControllerInputManager.html#update----system-void">Candide.Accessibility.ControllerInputManager::Update()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Sound_SoundPlayer.html#update-system-single--system-single--system-single---system-void">Candide.Sound.SoundPlayer::Update(System.Single, System.Single, System.Single)</a></code></li>
+<li><code>Candide.Scene.GameScene::get_IsActive()</code></li>
+<li><code>Microsoft.Xna.Framework.Game::set_IsMouseVisible(System.Boolean)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Terminal_KeyboardInput.html#update----system-void">Candide.Terminal.KeyboardInput::Update()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#down-microsoft-xna-framework-input-keys---system-boolean">Candide.Input.InputManager::Down(Microsoft.Xna.Framework.Input.Keys)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#pressed-microsoft-xna-framework-input-keys---system-boolean">Candide.Input.InputManager::Pressed(Microsoft.Xna.Framework.Input.Keys)</a></code></li>
+<li><code>Candide.UserSettings.DisplayUserSettings::get_DisplayMode()</code></li>
+<li><code>Candide.UserSettings.DisplayUserSettings::set_DisplayMode(Candide.UserSettings.CandideDisplayMode)</code></li>
+<li><code>Candide.UserSettings.UserSettingsCategory&lt;Candide.UserSettings.DisplayUserSettings&gt;::ApplySettings()</code></li>
+<li><code>Candide.MainMenu.Ui.MainMenuUiController::get_State()</code></li>
+<li><code>Microsoft.Xna.Framework.Game::Exit()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.Texture2D::get_Width()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.Texture2D::get_Height()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideExtendedInteractionsHandler.html#update-microsoft-xna-framework-gametime---system-void">Candide.CandideUI.CandideExtendedInteractionsHandler::Update(Microsoft.Xna.Framework.GameTime)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiSystem.html#preupdate----system-void">Candide.CandideUI.CandideUiSystem::PreUpdate()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiSystem.html#update-microsoft-xna-framework-gametime---system-void">Candide.CandideUI.CandideUiSystem::Update(Microsoft.Xna.Framework.GameTime)</a></code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.Input.Keybind - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.Input.Keybind</h1>
+<button class="copy-button" type="button" data-copy="Candide.Input.Keybind">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.Input.Keybind
+
+- Assembly: `Romestead`
+- Namespace: `Candide.Input`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 10 methods, 0 properties, 5 fields, 0 events
+
+## Public Methods
+- `public System.Boolean Down()`
+- `public System.Boolean Held()`
+- `public System.Boolean HeldRepeating(System.Double repeatsPerSecond)`
+- `public System.Boolean NotHeld()`
+- `public System.Boolean OldDown()`
+- `public System.Boolean OldUp()`
+- `public System.Boolean Pressed()`
+- `public System.Boolean Released()`
+- `public System.String ToString()`
+- `public System.Boolean Up()`
+">Copy markdown</button>
+<a class="button" href="Candide_Input_Keybind.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.Input</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>10</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>5</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.Input</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>7EFD63BC40FA0E09FFC55D921BE10C966C48BB34C658669041655C0AF6E92798</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Input_CinematicPlayerInputController.html"><code>Candide.Input.CinematicPlayerInputController</code></a></li>
+<li><a href="../../types/Romestead/Candide_Input_InputManager.html"><code>Candide.Input.InputManager</code></a></li>
+<li><a href="../../types/Romestead/Candide_Input_PlayerPlacingControllerManager.html"><code>Candide.Input.PlayerPlacingControllerManager</code></a></li>
+<li><a href="../../types/Romestead/Candide_Input_SuperKeybind.html"><code>Candide.Input.SuperKeybind</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Buttons public Microsoft.Xna.Framework.Input.Buttons[] Buttons Microsoft.Xna.Framework.Input.Buttons[]" id="buttons-microsoft-xna-framework-input-buttons--"><td><span class="member-name-cell"><code>Buttons</code><a class="permalink" href="#buttons-microsoft-xna-framework-input-buttons--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Input.Buttons[] Buttons">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Input.Buttons[] Buttons</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Keys public Microsoft.Xna.Framework.Input.Keys[] Keys Microsoft.Xna.Framework.Input.Keys[]" id="keys-microsoft-xna-framework-input-keys--"><td><span class="member-name-cell"><code>Keys</code><a class="permalink" href="#keys-microsoft-xna-framework-input-keys--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Input.Keys[] Keys">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Input.Keys[] Keys</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="MouseButtons public Candide.Input.MouseButtons[] MouseButtons Candide.Input.MouseButtons[]" id="mousebuttons-candide-input-mousebuttons--"><td><span class="member-name-cell"><code>MouseButtons</code><a class="permalink" href="#mousebuttons-candide-input-mousebuttons--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.Input.MouseButtons[] MouseButtons">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_Input_MouseButtons.html">Candide.Input.MouseButtons</a>[] MouseButtons</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_repeats private System.Int32 _repeats System.Int32" id="-repeats-system-int32"><td><span class="member-name-cell"><code>_repeats</code><a class="permalink" href="#-repeats-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _repeats">Copy</button></span></td><td>private</td><td><code>private System.Int32 _repeats</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_time private System.Double _time System.Double" id="-time-system-double"><td><span class="member-name-cell"><code>_time</code><a class="permalink" href="#-time-system-double" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Double _time">Copy</button></span></td><td>private</td><td><code>private System.Double _time</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Down public System.Boolean Down() System.Boolean " id="down----system-boolean">
+<div class="method-heading">
+<h3><code>Down</code></h3>
+<a class="permalink" href="#down----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean Down()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Input.Keybind::Down()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean Down()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A71A0F2BE434B103D1E156112929CEA6B1295800A8B45779B3EE712CE3F720AF</code></li>
+<li><span>Body hash</span><code>ABD7E6F54F10E4D310AE96C314380066E86095ABD42A998CBECDF3D6A11920D7</code></li>
+<li><span>IL size</span><span>101</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#down-microsoft-xna-framework-input-keys---system-boolean">Candide.Input.InputManager::Down(Microsoft.Xna.Framework.Input.Keys)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#down-microsoft-xna-framework-input-buttons---system-boolean">Candide.Input.InputManager::Down(Microsoft.Xna.Framework.Input.Buttons)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#down-candide-input-mousebuttons---system-boolean">Candide.Input.InputManager::Down(Candide.Input.MouseButtons)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Input_CinematicPlayerInputController.html#checkmovementkey-candide-input-keybind--candide-input-keybind--microsoft-xna-framework-vector2---system-single--system-single---system-void"><code>Candide.Input.CinematicPlayerInputController::CheckMovementKey</code></a></li>
+<li><a href="../../types/Romestead/Candide_Input_Keybind.html#up----system-boolean"><code>Candide.Input.Keybind::Up</code></a></li>
+<li><a href="../../types/Romestead/Candide_Input_PlayerPlacingControllerManager.html#checkmovementkey-candide-input-keybind--candide-input-keybind--microsoft-xna-framework-vector2---system-single--system-single---system-void"><code>Candide.Input.PlayerPlacingControllerManager::CheckMovementKey</code></a></li>
+<li><a href="../../types/Romestead/Candide_Input_SuperKeybind.html#down----system-boolean"><code>Candide.Input.SuperKeybind::Down</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Held public System.Boolean Held() System.Boolean " id="held----system-boolean">
+<div class="method-heading">
+<h3><code>Held</code></h3>
+<a class="permalink" href="#held----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean Held()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Input.Keybind::Held()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean Held()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2EAF68A620F67C5EF176AC2CDE27D8753D8A318081232EC5CAE4557E833D0869</code></li>
+<li><span>Body hash</span><code>5E744CA860A67B691F3E224FB6E04E282231CBAEE0E4DC54374B9BD8EC4E1F73</code></li>
+<li><span>IL size</span><span>101</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#held-microsoft-xna-framework-input-keys---system-boolean">Candide.Input.InputManager::Held(Microsoft.Xna.Framework.Input.Keys)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#held-microsoft-xna-framework-input-buttons---system-boolean">Candide.Input.InputManager::Held(Microsoft.Xna.Framework.Input.Buttons)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#held-candide-input-mousebuttons---system-boolean">Candide.Input.InputManager::Held(Candide.Input.MouseButtons)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Input_Keybind.html#heldrepeating-system-double---system-boolean"><code>Candide.Input.Keybind::HeldRepeating</code></a></li>
+<li><a href="../../types/Romestead/Candide_Input_SuperKeybind.html#held----system-boolean"><code>Candide.Input.SuperKeybind::Held</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="HeldRepeating public System.Boolean HeldRepeating(System.Double repeatsPerSecond) System.Boolean repeatsPerSecond System.Double" id="heldrepeating-system-double---system-boolean">
+<div class="method-heading">
+<h3><code>HeldRepeating</code></h3>
+<a class="permalink" href="#heldrepeating-system-double---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean HeldRepeating(System.Double repeatsPerSecond)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Input.Keybind::HeldRepeating(System.Double)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean HeldRepeating(System.Double repeatsPerSecond)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>17345FF961827A427EA17DD7BF90D514E7FA4C347EFF7F5B81997DFA76118754</code></li>
+<li><span>Body hash</span><code>22D541FE907DD90F3E2BD685ED686F51ECB6E86B5446EB6359A818B49FDDBA3F</code></li>
+<li><span>IL size</span><span>186</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Input_Keybind.html#held----system-boolean">Candide.Input.Keybind::Held()</a></code></li>
+<li><code>Microsoft.Xna.Framework.GameTime::get_TotalGameTime()</code></li>
+<li><code>System.TimeSpan::get_TotalSeconds()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Input_SuperKeybind.html#heldrepeating-system-double---system-boolean"><code>Candide.Input.SuperKeybind::HeldRepeating</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="NotHeld public System.Boolean NotHeld() System.Boolean " id="notheld----system-boolean">
+<div class="method-heading">
+<h3><code>NotHeld</code></h3>
+<a class="permalink" href="#notheld----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean NotHeld()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Input.Keybind::NotHeld()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean NotHeld()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B724BD53CD26F075E7FDE03BCD9BCAD8C2A37B60EA3F8DAE3F411C0156B99B37</code></li>
+<li><span>Body hash</span><code>7872A3F004D8977428C478327E63425138498380C93B124204246978AFA0A265</code></li>
+<li><span>IL size</span><span>101</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#notheld-microsoft-xna-framework-input-keys---system-boolean">Candide.Input.InputManager::NotHeld(Microsoft.Xna.Framework.Input.Keys)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#notheld-microsoft-xna-framework-input-buttons---system-boolean">Candide.Input.InputManager::NotHeld(Microsoft.Xna.Framework.Input.Buttons)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#notheld-candide-input-mousebuttons---system-boolean">Candide.Input.InputManager::NotHeld(Candide.Input.MouseButtons)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Input_SuperKeybind.html#notheld----system-boolean"><code>Candide.Input.SuperKeybind::NotHeld</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OldDown public System.Boolean OldDown() System.Boolean " id="olddown----system-boolean">
+<div class="method-heading">
+<h3><code>OldDown</code></h3>
+<a class="permalink" href="#olddown----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean OldDown()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Input.Keybind::OldDown()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean OldDown()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A9A6E804290F29B073456BCFA8E7E803A1E5BBAF1C44EB15F26BB04719CD2BB1</code></li>
+<li><span>Body hash</span><code>C214633BFC9DA14A8F0C58ADF8277C21FF0C1106681F5637C9318E15FAA5D482</code></li>
+<li><span>IL size</span><span>101</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#olddown-microsoft-xna-framework-input-keys---system-boolean">Candide.Input.InputManager::OldDown(Microsoft.Xna.Framework.Input.Keys)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#olddown-microsoft-xna-framework-input-buttons---system-boolean">Candide.Input.InputManager::OldDown(Microsoft.Xna.Framework.Input.Buttons)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#olddown-candide-input-mousebuttons---system-boolean">Candide.Input.InputManager::OldDown(Candide.Input.MouseButtons)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Input_Keybind.html#oldup----system-boolean"><code>Candide.Input.Keybind::OldUp</code></a></li>
+<li><a href="../../types/Romestead/Candide_Input_SuperKeybind.html#olddown----system-boolean"><code>Candide.Input.SuperKeybind::OldDown</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OldUp public System.Boolean OldUp() System.Boolean " id="oldup----system-boolean">
+<div class="method-heading">
+<h3><code>OldUp</code></h3>
+<a class="permalink" href="#oldup----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean OldUp()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Input.Keybind::OldUp()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean OldUp()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4CE35A9CD2C6116CA7C4AB307C5DBB4D415278035243781497960C4962ACC38B</code></li>
+<li><span>Body hash</span><code>6B5A161A2FDED8399EE7528909519C51911F425874043A44EA2742A27B1AB3AF</code></li>
+<li><span>IL size</span><span>10</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Input_Keybind.html#olddown----system-boolean">Candide.Input.Keybind::OldDown()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Input_SuperKeybind.html#oldup----system-boolean"><code>Candide.Input.SuperKeybind::OldUp</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Pressed public System.Boolean Pressed() System.Boolean " id="pressed----system-boolean">
+<div class="method-heading">
+<h3><code>Pressed</code></h3>
+<a class="permalink" href="#pressed----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean Pressed()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Input.Keybind::Pressed()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean Pressed()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4B2C3E594CF4521F521E6A31527D37958715031E6E1ED9BD2FB74AB9B36CE28F</code></li>
+<li><span>Body hash</span><code>883A5FA74D0E672B7AF36C71CAF60A22B63CC48D65FFC630340BFB52D8B14D70</code></li>
+<li><span>IL size</span><span>101</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#pressed-microsoft-xna-framework-input-keys---system-boolean">Candide.Input.InputManager::Pressed(Microsoft.Xna.Framework.Input.Keys)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#pressed-microsoft-xna-framework-input-buttons---system-boolean">Candide.Input.InputManager::Pressed(Microsoft.Xna.Framework.Input.Buttons)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#pressed-candide-input-mousebuttons---system-boolean">Candide.Input.InputManager::Pressed(Candide.Input.MouseButtons)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Input_SuperKeybind.html#pressed----system-boolean"><code>Candide.Input.SuperKeybind::Pressed</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Released public System.Boolean Released() System.Boolean " id="released----system-boolean">
+<div class="method-heading">
+<h3><code>Released</code></h3>
+<a class="permalink" href="#released----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean Released()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Input.Keybind::Released()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean Released()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C8C1DF17C1CF4605B7331B036F13F58182DA1B7EF535758A40A10ADC2DBE6DED</code></li>
+<li><span>Body hash</span><code>CE02608413A0E21DF6EC679F167AF35502CDD39BA3581C222D6DC5229599313B</code></li>
+<li><span>IL size</span><span>101</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#released-microsoft-xna-framework-input-keys---system-boolean">Candide.Input.InputManager::Released(Microsoft.Xna.Framework.Input.Keys)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#released-microsoft-xna-framework-input-buttons---system-boolean">Candide.Input.InputManager::Released(Microsoft.Xna.Framework.Input.Buttons)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_InputManager.html#released-candide-input-mousebuttons---system-boolean">Candide.Input.InputManager::Released(Candide.Input.MouseButtons)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Input_SuperKeybind.html#released----system-boolean"><code>Candide.Input.SuperKeybind::Released</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ToString public System.String ToString() System.String " id="tostring----system-string">
+<div class="method-heading">
+<h3><code>ToString</code></h3>
+<a class="permalink" href="#tostring----system-string" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.String ToString()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Input.Keybind::ToString()">Copy Harmony target</button>
+</div>
+<p><code>public System.String ToString()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.String</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>90CD32405F6242B0E4D4A7E545851CE3B3534C3D6BB68ED7ECAB23A3339829F7</code></li>
+<li><span>Body hash</span><code>F849D81881E7099CD1EA9F7A635B59F0411C8589DB1EFFC3A36BD106A50E991B</code></li>
+<li><span>IL size</span><span>105</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Object::ToString()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Up public System.Boolean Up() System.Boolean " id="up----system-boolean">
+<div class="method-heading">
+<h3><code>Up</code></h3>
+<a class="permalink" href="#up----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean Up()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Input.Keybind::Up()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean Up()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>62DD6D5462EC8D85C4B41966CB5A7691EC6120BDFF0374AE0213049CB4554C97</code></li>
+<li><span>Body hash</span><code>5746F49B1972EBC105D8EF1F99EC7BCC144359AEDD29671C2268A5D18350D593</code></li>
+<li><span>IL size</span><span>10</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Input_Keybind.html#down----system-boolean">Candide.Input.Keybind::Down()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Input_CinematicPlayerInputController.html#checkmovementkey-candide-input-keybind--candide-input-keybind--microsoft-xna-framework-vector2---system-single--system-single---system-void"><code>Candide.Input.CinematicPlayerInputController::CheckMovementKey</code></a></li>
+<li><a href="../../types/Romestead/Candide_Input_PlayerPlacingControllerManager.html#checkmovementkey-candide-input-keybind--candide-input-keybind--microsoft-xna-framework-vector2---system-single--system-single---system-void"><code>Candide.Input.PlayerPlacingControllerManager::CheckMovementKey</code></a></li>
+<li><a href="../../types/Romestead/Candide_Input_PlayerPlacingControllerManager.html#getmovementdelta----microsoft-xna-framework-vector2"><code>Candide.Input.PlayerPlacingControllerManager::GetMovementDelta</code></a></li>
+<li><a href="../../types/Romestead/Candide_Input_SuperKeybind.html#up----system-boolean"><code>Candide.Input.SuperKeybind::Up</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

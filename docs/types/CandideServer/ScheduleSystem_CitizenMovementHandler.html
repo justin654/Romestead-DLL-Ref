@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ScheduleSystem.CitizenMovementHandler - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>ScheduleSystem.CitizenMovementHandler</h1>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler">Copy type</button>
+<button class="copy-button" type="button" data-copy="# ScheduleSystem.CitizenMovementHandler
+
+- Assembly: `CandideServer`
+- Namespace: `ScheduleSystem`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 13 methods, 2 properties, 16 fields, 0 events
+
+## Public Methods
+- `public System.Void ClearGoal()`
+- `public System.Void SetGoalPosition(ScheduleSystem.WorldPosition goalPosition, System.Single stopDistance)`
+- `public System.Void Update(System.Single dt)`
+">Copy markdown</button>
+<a class="button" href="ScheduleSystem_CitizenMovementHandler.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>ScheduleSystem</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>13</strong></article>
+<article class="metric"><span>Properties</span><strong>2</strong></article>
+<article class="metric"><span>Fields</span><strong>16</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>ScheduleSystem</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>B939D6337647561FCA1B4472C4F70DD7BFE4EAC10B05D2CAC3B72B56E4382A0A</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Citizens_Base_AbstractCitizenController.html"><code>CandideServer.Citizens.Base.AbstractCitizenController</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Schedule.html"><code>CandideServer.Entities.ScheduleSystem.Schedule</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Failed public System.Boolean Failed System.Boolean" id="failed-system-boolean"><td><span class="member-name-cell"><code>Failed</code><a class="permalink" href="#failed-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean Failed">Copy</button></span></td><td>public</td><td><code>public System.Boolean Failed</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ListPool private System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;&gt; ListPool System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;&gt;" id="listpool-system-collections-generic-stack-1-system-collections-generic-list-1-microsoft-xna-framework-vector2--"><td><span class="member-name-cell"><code>ListPool</code><a class="permalink" href="#listpool-system-collections-generic-stack-1-system-collections-generic-list-1-microsoft-xna-framework-vector2--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;&gt; ListPool">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;&gt; ListPool</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="MovementSpeed public System.Single MovementSpeed System.Single" id="movementspeed-system-single"><td><span class="member-name-cell"><code>MovementSpeed</code><a class="permalink" href="#movementspeed-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single MovementSpeed">Copy</button></span></td><td>public</td><td><code>public System.Single MovementSpeed</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="StopDistance public System.Single StopDistance System.Single" id="stopdistance-system-single"><td><span class="member-name-cell"><code>StopDistance</code><a class="permalink" href="#stopdistance-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single StopDistance">Copy</button></span></td><td>public</td><td><code>public System.Single StopDistance</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_citizenModel private CandideServer.Models.Citizen.CitizenModel _citizenModel CandideServer.Models.Citizen.CitizenModel" id="-citizenmodel-candideserver-models-citizen-citizenmodel"><td><span class="member-name-cell"><code>_citizenModel</code><a class="permalink" href="#-citizenmodel-candideserver-models-citizen-citizenmodel" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private CandideServer.Models.Citizen.CitizenModel _citizenModel">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> _citizenModel</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_controller private CandideServer.Citizens.Base.AbstractCitizenController _controller CandideServer.Citizens.Base.AbstractCitizenController" id="-controller-candideserver-citizens-base-abstractcitizencontroller"><td><span class="member-name-cell"><code>_controller</code><a class="permalink" href="#-controller-candideserver-citizens-base-abstractcitizencontroller" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private CandideServer.Citizens.Base.AbstractCitizenController _controller">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/CandideServer_Citizens_Base_AbstractCitizenController.html">CandideServer.Citizens.Base.AbstractCitizenController</a> _controller</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_currentGoalPosition private ScheduleSystem.WorldPosition _currentGoalPosition ScheduleSystem.WorldPosition" id="-currentgoalposition-schedulesystem-worldposition"><td><span class="member-name-cell"><code>_currentGoalPosition</code><a class="permalink" href="#-currentgoalposition-schedulesystem-worldposition" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private ScheduleSystem.WorldPosition _currentGoalPosition">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/ScheduleSystem_WorldPosition.html">ScheduleSystem.WorldPosition</a> _currentGoalPosition</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_currentNodeIndex private System.Int32 _currentNodeIndex System.Int32" id="-currentnodeindex-system-int32"><td><span class="member-name-cell"><code>_currentNodeIndex</code><a class="permalink" href="#-currentnodeindex-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _currentNodeIndex">Copy</button></span></td><td>private</td><td><code>private System.Int32 _currentNodeIndex</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_currentStage private ScheduleSystem.PathStage _currentStage ScheduleSystem.PathStage" id="-currentstage-schedulesystem-pathstage"><td><span class="member-name-cell"><code>_currentStage</code><a class="permalink" href="#-currentstage-schedulesystem-pathstage" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private ScheduleSystem.PathStage _currentStage">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/ScheduleSystem_PathStage.html">ScheduleSystem.PathStage</a> _currentStage</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_endDirection private System.Nullable&lt;System.Single&gt; _endDirection System.Nullable&lt;System.Single&gt;" id="-enddirection-system-nullable-1-system-single-"><td><span class="member-name-cell"><code>_endDirection</code><a class="permalink" href="#-enddirection-system-nullable-1-system-single-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Nullable&lt;System.Single&gt; _endDirection">Copy</button></span></td><td>private</td><td><code>private System.Nullable&lt;System.Single&gt; _endDirection</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_entityModel private CandideServer.Entities.ServerEntityModel _entityModel CandideServer.Entities.ServerEntityModel" id="-entitymodel-candideserver-entities-serverentitymodel"><td><span class="member-name-cell"><code>_entityModel</code><a class="permalink" href="#-entitymodel-candideserver-entities-serverentitymodel" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private CandideServer.Entities.ServerEntityModel _entityModel">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> _entityModel</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_hasPath private System.Boolean _hasPath System.Boolean" id="-haspath-system-boolean"><td><span class="member-name-cell"><code>_hasPath</code><a class="permalink" href="#-haspath-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _hasPath">Copy</button></span></td><td>private</td><td><code>private System.Boolean _hasPath</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_lastPosition private Microsoft.Xna.Framework.Vector3 _lastPosition Microsoft.Xna.Framework.Vector3" id="-lastposition-microsoft-xna-framework-vector3"><td><span class="member-name-cell"><code>_lastPosition</code><a class="permalink" href="#-lastposition-microsoft-xna-framework-vector3" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Vector3 _lastPosition">Copy</button></span></td><td>private</td><td><code>private Microsoft.Xna.Framework.Vector3 _lastPosition</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_stages private System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt; _stages System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt;" id="-stages-system-collections-generic-list-1-schedulesystem-pathstage-"><td><span class="member-name-cell"><code>_stages</code><a class="permalink" href="#-stages-system-collections-generic-list-1-schedulesystem-pathstage-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt; _stages">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;<a href="../../types/CandideServer/ScheduleSystem_PathStage.html">ScheduleSystem.PathStage</a>&gt; _stages</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_startDirectionToNextNode private Microsoft.Xna.Framework.Vector2 _startDirectionToNextNode Microsoft.Xna.Framework.Vector2" id="-startdirectiontonextnode-microsoft-xna-framework-vector2"><td><span class="member-name-cell"><code>_startDirectionToNextNode</code><a class="permalink" href="#-startdirectiontonextnode-microsoft-xna-framework-vector2" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Vector2 _startDirectionToNextNode">Copy</button></span></td><td>private</td><td><code>private Microsoft.Xna.Framework.Vector2 _startDirectionToNextNode</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_stuckTimer private System.Single _stuckTimer System.Single" id="-stucktimer-system-single"><td><span class="member-name-cell"><code>_stuckTimer</code><a class="permalink" href="#-stucktimer-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single _stuckTimer">Copy</button></span></td><td>private</td><td><code>private System.Single _stuckTimer</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="Done public System.Boolean Done System.Boolean" id="done-system-boolean"><td><span class="member-name-cell"><code>Done</code><a class="permalink" href="#done-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean Done">Copy</button></span></td><td>public</td><td><code>public System.Boolean Done</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="private" data-patch-target="false" data-member-text="Entity private Shared.Entity.EntityWrapper Entity Shared.Entity.EntityWrapper" id="entity-shared-entity-entitywrapper"><td><span class="member-name-cell"><code>Entity</code><a class="permalink" href="#entity-shared-entity-entitywrapper" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Shared.Entity.EntityWrapper Entity">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> Entity</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="CheckForPathfindTaskResults private System.Void CheckForPathfindTaskResults() System.Void " id="checkforpathfindtaskresults----system-void">
+<div class="method-heading">
+<h3><code>CheckForPathfindTaskResults</code></h3>
+<a class="permalink" href="#checkforpathfindtaskresults----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void CheckForPathfindTaskResults()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler::CheckForPathfindTaskResults()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void CheckForPathfindTaskResults()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1119A4F89C38CB483AD19DD2D95A47A8309B0F71858620714720C98AAF5ECDD9</code></li>
+<li><span>Body hash</span><code>F72463484F306FB69B211BFF99134D0FC7A37B31C4EADB1A6275E2A8BF40C6D9</code></li>
+<li><span>IL size</span><span>137</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_PathFinding_PathFindSystem.html#checkforpathfindresult-system-int32--system-collections-generic-list-1-microsoft-xna-framework-vector2----candideserver-pathfinding-pathfindstatus">CandideServer.PathFinding.PathFindSystem::CheckForPathFindResult(System.Int32, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt;::set_Item(System.Int32, !0)</code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#cleargoal----system-void">ScheduleSystem.CitizenMovementHandler::ClearGoal()</a></code></li>
+<li><code>System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt;::get_Count()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#update-system-single---system-void"><code>ScheduleSystem.CitizenMovementHandler::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="CheckIfCurrentStageIsWaitingForPathfindTask private System.Boolean CheckIfCurrentStageIsWaitingForPathfindTask() System.Boolean " id="checkifcurrentstageiswaitingforpathfindtask----system-boolean">
+<div class="method-heading">
+<h3><code>CheckIfCurrentStageIsWaitingForPathfindTask</code></h3>
+<a class="permalink" href="#checkifcurrentstageiswaitingforpathfindtask----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean CheckIfCurrentStageIsWaitingForPathfindTask()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler::CheckIfCurrentStageIsWaitingForPathfindTask()">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean CheckIfCurrentStageIsWaitingForPathfindTask()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7948164EE2CF4FFE8D0CD76BC9E26D3220AA87F2024DF16DDE17434BD0F64979</code></li>
+<li><span>Body hash</span><code>FE9596E7952FBEC5D1BF1955FBA092FC17BEF6FCDB32F11814D567B415F027C0</code></li>
+<li><span>IL size</span><span>140</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_PathFinding_PathFindSystem.html#checkforpathfindresult-system-int32--system-collections-generic-list-1-microsoft-xna-framework-vector2----candideserver-pathfinding-pathfindstatus">CandideServer.PathFinding.PathFindSystem::CheckForPathFindResult(System.Int32, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;)</a></code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#cleargoal----system-void">ScheduleSystem.CitizenMovementHandler::ClearGoal()</a></code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#nextnode----system-void">ScheduleSystem.CitizenMovementHandler::NextNode()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#followpath-system-single---system-void"><code>ScheduleSystem.CitizenMovementHandler::FollowPath</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ClearGoal public System.Void ClearGoal() System.Void " id="cleargoal----system-void">
+<div class="method-heading">
+<h3><code>ClearGoal</code></h3>
+<a class="permalink" href="#cleargoal----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ClearGoal()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler::ClearGoal()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ClearGoal()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B6FB555ACA18F3CEEFF19CE183D9C3CEB3A434E43202FB609D2D61B255E023A9</code></li>
+<li><span>Body hash</span><code>40931310D7591B2DBCCC117AAB16B4FD14C33F8D6B2E07DA7AB4F4DBC26CCB09</code></li>
+<li><span>IL size</span><span>240</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>ScheduleSystem.WorldPosition::.ctor(System.Guid, Microsoft.Xna.Framework.Vector2, System.Nullable&lt;System.Single&gt;, System.Nullable&lt;System.Guid&gt;)</code></li>
+<li><code>System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;ScheduleSystem.PathStage&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#returnlist-system-collections-generic-list-1-microsoft-xna-framework-vector2----system-void">ScheduleSystem.CitizenMovementHandler::ReturnList(System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;)</a></code></li>
+<li><code>List.Enumerator&lt;ScheduleSystem.PathStage&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt;::Clear()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html#everyone----candideserver-syncstrategies-syncstrategy">CandideServer.SyncStrategies.SyncStrategy::Everyone()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#updateentitystate-system-guid--system-int32--system-boolean--candideserver-syncstrategies-syncstrategy---system-void">CandideServer.ServerManagers.EntityServerManager::UpdateEntityState(System.Guid, System.Int32, System.Boolean, CandideServer.SyncStrategies.SyncStrategy)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Citizens_GenericServerCitizenController.html#resetcitizen----system-void"><code>CandideServer.Citizens.GenericServerCitizenController::ResetCitizen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Schedule.html#initwalkinghomeduetonotask----system-void"><code>CandideServer.Entities.ScheduleSystem.Schedule::InitWalkingHomeDueToNoTask</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Schedule.html#resetcitizen----system-void"><code>CandideServer.Entities.ScheduleSystem.Schedule::ResetCitizen</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#checkforpathfindtaskresults----system-void"><code>ScheduleSystem.CitizenMovementHandler::CheckForPathfindTaskResults</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#checkifcurrentstageiswaitingforpathfindtask----system-boolean"><code>ScheduleSystem.CitizenMovementHandler::CheckIfCurrentStageIsWaitingForPathfindTask</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#endstage----system-void"><code>ScheduleSystem.CitizenMovementHandler::EndStage</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#nextstage----system-void"><code>ScheduleSystem.CitizenMovementHandler::NextStage</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#setgoalposition-schedulesystem-worldposition--system-single---system-void"><code>ScheduleSystem.CitizenMovementHandler::SetGoalPosition</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="EndStage private System.Void EndStage() System.Void " id="endstage----system-void">
+<div class="method-heading">
+<h3><code>EndStage</code></h3>
+<a class="permalink" href="#endstage----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void EndStage()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler::EndStage()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void EndStage()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>911A86F99A1466FB32512DF44D7986CFC7416817B0E1714D59EB6A31681A5D5D</code></li>
+<li><span>Body hash</span><code>8173C8C0FDCFC634C13232223B8F962CD338C1973D853BD1A6DFA223EA432519</code></li>
+<li><span>IL size</span><span>137</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#nextstage----system-void">ScheduleSystem.CitizenMovementHandler::NextStage()</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#cleargoal----system-void">ScheduleSystem.CitizenMovementHandler::ClearGoal()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#enterbuilding-candideserver-models-citizen-citizenmodel--candideserver-simulationmodels-buildingsimulationmodel---system-boolean">CandideServer.ServerManagers.CitizenServerManager::EnterBuilding(CandideServer.Models.Citizen.CitizenModel, CandideServer.SimulationModels.BuildingSimulationModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#exitbuilding-candideserver-models-citizen-citizenmodel---system-boolean">CandideServer.ServerManagers.CitizenServerManager::ExitBuilding(CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#followpath-system-single---system-void"><code>ScheduleSystem.CitizenMovementHandler::FollowPath</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#nextnode----system-void"><code>ScheduleSystem.CitizenMovementHandler::NextNode</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="FollowPath private System.Void FollowPath(System.Single dt) System.Void dt System.Single" id="followpath-system-single---system-void">
+<div class="method-heading">
+<h3><code>FollowPath</code></h3>
+<a class="permalink" href="#followpath-system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void FollowPath(System.Single dt)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler::FollowPath(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void FollowPath(System.Single dt)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B3B6EC5B151130E1C2803F3229681201DF334AE24459E095E9AA8327489E69B3</code></li>
+<li><span>Body hash</span><code>7B05A5B3F78AAF5117E96F3AF496556B96534C13CC280798162FB88EF7F403F6</code></li>
+<li><span>IL size</span><span>497</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#checkifcurrentstageiswaitingforpathfindtask----system-boolean">ScheduleSystem.CitizenMovementHandler::CheckIfCurrentStageIsWaitingForPathfindTask()</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;::get_Item(System.Int32)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::Distance(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#setgoalposition-schedulesystem-worldposition--system-single---system-void">ScheduleSystem.CitizenMovementHandler::SetGoalPosition(ScheduleSystem.WorldPosition, System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Dot(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Normalize(Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector3xy-microsoft-xna-framework-vector2---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.VectorExtension::ToVector3Xy(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Addition(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#movecitizen-candideserver-models-citizen-citizenmodel--microsoft-xna-framework-vector3--system-guid---system-void">CandideServer.ServerControllers.CitizensSController::MoveCitizen(CandideServer.Models.Citizen.CitizenModel, Microsoft.Xna.Framework.Vector3, System.Guid)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#updateentitystate-system-guid--system-int32--system-boolean--candideserver-syncstrategies-syncstrategy---system-void">CandideServer.ServerManagers.EntityServerManager::UpdateEntityState(System.Guid, System.Int32, System.Boolean, CandideServer.SyncStrategies.SyncStrategy)</a></code></li>
+<li><code>ScheduleSystem.CitizenMovementHandler::get_Entity()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tofloatdirection-microsoft-xna-framework-vector2---system-single">CandideCreator.Shared.Helpers.VectorExtension::ToFloatDirection(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Direction(System.Single)</code></li>
+<li><code>System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt;::get_Count()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Length()</code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#nextnode----system-void">ScheduleSystem.CitizenMovementHandler::NextNode()</a></code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#followpath-system-single---system-void">ScheduleSystem.CitizenMovementHandler::FollowPath(System.Single)</a></code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#endstage----system-void">ScheduleSystem.CitizenMovementHandler::EndStage()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#followpath-system-single---system-void"><code>ScheduleSystem.CitizenMovementHandler::FollowPath</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#update-system-single---system-void"><code>ScheduleSystem.CitizenMovementHandler::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="GetList private System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt; GetList() System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt; " id="getlist----system-collections-generic-list-1-microsoft-xna-framework-vector2-">
+<div class="method-heading">
+<h3><code>GetList</code></h3>
+<a class="permalink" href="#getlist----system-collections-generic-list-1-microsoft-xna-framework-vector2-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt; GetList()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler::GetList()">Copy Harmony target</button>
+</div>
+<p><code>private System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt; GetList()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EE8AA2600993432B108A7FDA1661606FC7A57BD6E22FFDB8BBA4AC053B14BDEA</code></li>
+<li><span>Body hash</span><code>AF272AD139326E98C59B3AFC66780EEDCD593A1B35118054C50AFC1C74780120</code></li>
+<li><span>IL size</span><span>22</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;&gt;::TryPop(!0&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;::.ctor()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#interiorpathstage-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--candideserver-models-worlds-worldmodel---schedulesystem-pathstage"><code>ScheduleSystem.CitizenMovementHandler::InteriorPathStage</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#outsidepathstage-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--candideserver-models-worlds-worldmodel--candideserver-simulationmodels-buildingsimulationmodel--candideserver-simulationmodels-buildingsimulationmodel---schedulesystem-pathstage"><code>ScheduleSystem.CitizenMovementHandler::OutsidePathStage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="InteriorPathStage private ScheduleSystem.PathStage InteriorPathStage(Microsoft.Xna.Framework.Vector2 startPosition, Microsoft.Xna.Framework.Vector2 endPosition, CandideServer.Models.Worlds.WorldModel worldModel) ScheduleSystem.PathStage startPosition Microsoft.Xna.Framework.Vector2 endPosition Microsoft.Xna.Framework.Vector2 worldModel CandideServer.Models.Worlds.WorldModel" id="interiorpathstage-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--candideserver-models-worlds-worldmodel---schedulesystem-pathstage">
+<div class="method-heading">
+<h3><code>InteriorPathStage</code></h3>
+<a class="permalink" href="#interiorpathstage-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--candideserver-models-worlds-worldmodel---schedulesystem-pathstage" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private ScheduleSystem.PathStage InteriorPathStage(Microsoft.Xna.Framework.Vector2 startPosition, Microsoft.Xna.Framework.Vector2 endPosition, CandideServer.Models.Worlds.WorldModel worldModel)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler::InteriorPathStage(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, CandideServer.Models.Worlds.WorldModel)">Copy Harmony target</button>
+</div>
+<p><code>private <a href="../../types/CandideServer/ScheduleSystem_PathStage.html">ScheduleSystem.PathStage</a> InteriorPathStage(Microsoft.Xna.Framework.Vector2 startPosition, Microsoft.Xna.Framework.Vector2 endPosition, <a href="../../types/CandideServer/CandideServer_Models_Worlds_WorldModel.html">CandideServer.Models.Worlds.WorldModel</a> worldModel)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/ScheduleSystem_PathStage.html">ScheduleSystem.PathStage</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>19B2BD23CEA824703C8D068E99BFBE2F3E873A614A099E222BF5CFA4F2C78879</code></li>
+<li><span>Body hash</span><code>ADC45E6EA029230D30159002F19431EF297E4EDF542E323325B56AD7ED80A2E1</code></li>
+<li><span>IL size</span><span>91</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#getlist----system-collections-generic-list-1-microsoft-xna-framework-vector2-">ScheduleSystem.CitizenMovementHandler::GetList()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_PathFinding_PathFindArgs.html#interiorpathfind-candideserver-citizens-base-abstractcitizencontroller--microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--system-guid---candideserver-pathfinding-pathfindargs">CandideServer.PathFinding.PathFindArgs::InteriorPathFind(CandideServer.Citizens.Base.AbstractCitizenController, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_PathFinding_PathFindSystem.html#queuepathfindtask-candideserver-pathfinding-pathfindargs---system-int32">CandideServer.PathFinding.PathFindSystem::QueuePathFindTask(CandideServer.PathFinding.PathFindArgs)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#setgoalposition-schedulesystem-worldposition--system-single---system-void"><code>ScheduleSystem.CitizenMovementHandler::SetGoalPosition</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="NextNode private System.Void NextNode() System.Void " id="nextnode----system-void">
+<div class="method-heading">
+<h3><code>NextNode</code></h3>
+<a class="permalink" href="#nextnode----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void NextNode()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler::NextNode()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void NextNode()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F1AFE45E2394D15B0E1BFAF4B92E0861FF44075F241B008AFC0D28DB0801C898</code></li>
+<li><span>Body hash</span><code>E94BA0B5EBC3C2360E5AF3A311B3C1AD31260C5E66B31F3BAE6B615ED7FCEFD0</code></li>
+<li><span>IL size</span><span>113</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#endstage----system-void">ScheduleSystem.CitizenMovementHandler::EndStage()</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;::get_Item(System.Int32)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#checkifcurrentstageiswaitingforpathfindtask----system-boolean"><code>ScheduleSystem.CitizenMovementHandler::CheckIfCurrentStageIsWaitingForPathfindTask</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#followpath-system-single---system-void"><code>ScheduleSystem.CitizenMovementHandler::FollowPath</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#nextstage----system-void"><code>ScheduleSystem.CitizenMovementHandler::NextStage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="NextStage private System.Void NextStage() System.Void " id="nextstage----system-void">
+<div class="method-heading">
+<h3><code>NextStage</code></h3>
+<a class="permalink" href="#nextstage----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void NextStage()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler::NextStage()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void NextStage()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4743238B466EA83AA72B6E869F201B48781FCFC193DEE4056EF180A9544926DD</code></li>
+<li><span>Body hash</span><code>1D51BD06B0AFBB77132C1C6DC40D3127F08E543BA66D4106262D181DB83DB79C</code></li>
+<li><span>IL size</span><span>228</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt;::get_Count()</code></li>
+<li><code>System.Nullable&lt;System.Single&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Single&gt;::get_Value()</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Direction(System.Single)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_FloorHeight()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector3xyz-microsoft-xna-framework-vector2--system-single---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.VectorExtension::ToVector3Xyz(Microsoft.Xna.Framework.Vector2, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#movecitizen-candideserver-models-citizen-citizenmodel--microsoft-xna-framework-vector3--system-guid---system-void">CandideServer.ServerControllers.CitizensSController::MoveCitizen(CandideServer.Models.Citizen.CitizenModel, Microsoft.Xna.Framework.Vector3, System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#cleargoal----system-void">ScheduleSystem.CitizenMovementHandler::ClearGoal()</a></code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#returnlist-system-collections-generic-list-1-microsoft-xna-framework-vector2----system-void">ScheduleSystem.CitizenMovementHandler::ReturnList(System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt;::RemoveAt(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#nextnode----system-void">ScheduleSystem.CitizenMovementHandler::NextNode()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#endstage----system-void"><code>ScheduleSystem.CitizenMovementHandler::EndStage</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#update-system-single---system-void"><code>ScheduleSystem.CitizenMovementHandler::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="OutsidePathStage private ScheduleSystem.PathStage OutsidePathStage(Microsoft.Xna.Framework.Vector2 startPosition, Microsoft.Xna.Framework.Vector2 endPosition, CandideServer.Models.Worlds.WorldModel worldModel, CandideServer.SimulationModels.BuildingSimulationModel fromBuilding, CandideServer.SimulationModels.BuildingSimulationModel toBuilding) ScheduleSystem.PathStage startPosition Microsoft.Xna.Framework.Vector2 endPosition Microsoft.Xna.Framework.Vector2 worldModel CandideServer.Models.Worlds.WorldModel fromBuilding CandideServer.SimulationModels.BuildingSimulationModel toBuilding CandideServer.SimulationModels.BuildingSimulationModel" id="outsidepathstage-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--candideserver-models-worlds-worldmodel--candideserver-simulationmodels-buildingsimulationmodel--candideserver-simulationmodels-buildingsimulationmodel---schedulesystem-pathstage">
+<div class="method-heading">
+<h3><code>OutsidePathStage</code></h3>
+<a class="permalink" href="#outsidepathstage-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--candideserver-models-worlds-worldmodel--candideserver-simulationmodels-buildingsimulationmodel--candideserver-simulationmodels-buildingsimulationmodel---schedulesystem-pathstage" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private ScheduleSystem.PathStage OutsidePathStage(Microsoft.Xna.Framework.Vector2 startPosition, Microsoft.Xna.Framework.Vector2 endPosition, CandideServer.Models.Worlds.WorldModel worldModel, CandideServer.SimulationModels.BuildingSimulationModel fromBuilding, CandideServer.SimulationModels.BuildingSimulationModel toBuilding)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler::OutsidePathStage(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, CandideServer.Models.Worlds.WorldModel, CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.BuildingSimulationModel)">Copy Harmony target</button>
+</div>
+<p><code>private <a href="../../types/CandideServer/ScheduleSystem_PathStage.html">ScheduleSystem.PathStage</a> OutsidePathStage(Microsoft.Xna.Framework.Vector2 startPosition, Microsoft.Xna.Framework.Vector2 endPosition, <a href="../../types/CandideServer/CandideServer_Models_Worlds_WorldModel.html">CandideServer.Models.Worlds.WorldModel</a> worldModel, <a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> fromBuilding, <a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> toBuilding)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/ScheduleSystem_PathStage.html">ScheduleSystem.PathStage</a></code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F4A98EB00BA34B5346EA4D3839223CA0280EB2A901D090D93B32DBF17DB1BAAB</code></li>
+<li><span>Body hash</span><code>EDD16DF43B9CD3A6B5234AC4090C8920B78EA1A739A80CB51873B266B0655A55</code></li>
+<li><span>IL size</span><span>236</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#getlist----system-collections-generic-list-1-microsoft-xna-framework-vector2-">ScheduleSystem.CitizenMovementHandler::GetList()</a></code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_PathFinding_PathFindArgs.html#roadpathfind-candideserver-citizens-base-abstractcitizencontroller--system-nullable-1-microsoft-xna-framework-vector2---system-nullable-1-microsoft-xna-framework-vector2---system-guid--candideserver-simulationmodels-buildingsimulationmodel--candideserver-simulationmodels-buildingsimulationmodel--system-nullable-1-system-guid----candideserver-pathfinding-pathfindargs">CandideServer.PathFinding.PathFindArgs::RoadPathFind(CandideServer.Citizens.Base.AbstractCitizenController, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;, System.Guid, CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.BuildingSimulationModel, System.Nullable&lt;System.Guid&gt;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_PathFinding_PathFindSystem.html#queuepathfindtask-candideserver-pathfinding-pathfindargs---system-int32">CandideServer.PathFinding.PathFindSystem::QueuePathFindTask(CandideServer.PathFinding.PathFindArgs)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#setgoalposition-schedulesystem-worldposition--system-single---system-void"><code>ScheduleSystem.CitizenMovementHandler::SetGoalPosition</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ReturnList private System.Void ReturnList(System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt; list) System.Void list System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;" id="returnlist-system-collections-generic-list-1-microsoft-xna-framework-vector2----system-void">
+<div class="method-heading">
+<h3><code>ReturnList</code></h3>
+<a class="permalink" href="#returnlist-system-collections-generic-list-1-microsoft-xna-framework-vector2----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void ReturnList(System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt; list)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler::ReturnList(System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void ReturnList(System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt; list)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6BE05F77F8681720B98B6681A9C60FCA6FD49ED7F63054415305C5150007A797</code></li>
+<li><span>Body hash</span><code>D7483BB80F2BFDE9E498B49EBACB320BF90A496C48D594E953BEB0E02260F5AD</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Stack&lt;System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;&gt;::Push(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#cleargoal----system-void"><code>ScheduleSystem.CitizenMovementHandler::ClearGoal</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#nextstage----system-void"><code>ScheduleSystem.CitizenMovementHandler::NextStage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetGoalPosition public System.Void SetGoalPosition(ScheduleSystem.WorldPosition goalPosition, System.Single stopDistance) System.Void goalPosition ScheduleSystem.WorldPosition stopDistance System.Single" id="setgoalposition-schedulesystem-worldposition--system-single---system-void">
+<div class="method-heading">
+<h3><code>SetGoalPosition</code></h3>
+<a class="permalink" href="#setgoalposition-schedulesystem-worldposition--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetGoalPosition(ScheduleSystem.WorldPosition goalPosition, System.Single stopDistance)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler::SetGoalPosition(ScheduleSystem.WorldPosition, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetGoalPosition(<a href="../../types/CandideServer/ScheduleSystem_WorldPosition.html">ScheduleSystem.WorldPosition</a> goalPosition, System.Single stopDistance)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D4AA6A8CC572BF2358C46F2977BF1D582A4C2EB5A812B14F2D11094B2B97727E</code></li>
+<li><span>Body hash</span><code>9C51066C41316642515A266B793E7469CF5759A84E2EC01830522924A638597E</code></li>
+<li><span>IL size</span><span>747</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>ScheduleSystem.WorldPosition::op_Equality(ScheduleSystem.WorldPosition, ScheduleSystem.WorldPosition)</code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#cleargoal----system-void">ScheduleSystem.CitizenMovementHandler::ClearGoal()</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>System.Diagnostics.Stopwatch::StartNew()</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#trygetbuildinginteriordoorposition-candideserver-simulationmodels-buildingsimulationmodel--microsoft-xna-framework-vector2----system-boolean">CandideServer.ServerManagers.CitizenServerManager::TryGetBuildingInteriorDoorPosition(CandideServer.SimulationModels.BuildingSimulationModel, Microsoft.Xna.Framework.Vector2&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#trygetbuildingexteriordoorposition-candideserver-simulationmodels-buildingsimulationmodel--microsoft-xna-framework-vector2----system-boolean">CandideServer.ServerManagers.CitizenServerManager::TryGetBuildingExteriorDoorPosition(CandideServer.SimulationModels.BuildingSimulationModel, Microsoft.Xna.Framework.Vector2&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#interiorpathstage-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--candideserver-models-worlds-worldmodel---schedulesystem-pathstage">ScheduleSystem.CitizenMovementHandler::InteriorPathStage(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, CandideServer.Models.Worlds.WorldModel)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#outsidepathstage-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--candideserver-models-worlds-worldmodel--candideserver-simulationmodels-buildingsimulationmodel--candideserver-simulationmodels-buildingsimulationmodel---schedulesystem-pathstage">ScheduleSystem.CitizenMovementHandler::OutsidePathStage(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, CandideServer.Models.Worlds.WorldModel, CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.SimulationModels.BuildingSimulationModel)</a></code></li>
+<li><code>System.Diagnostics.Stopwatch::get_Elapsed()</code></li>
+<li><code>System.TimeSpan::get_TotalSeconds()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0, System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_MoveCitizen.html#initialize-bm-btupdatecontext--bm-blackboard---system-void"><code>BM.MoveCitizen::Initialize</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Schedule.html#setmovementgoal-schedulesystem-worldposition--system-single---system-void"><code>CandideServer.Entities.ScheduleSystem.Schedule::SetMovementGoal</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#followpath-system-single---system-void"><code>ScheduleSystem.CitizenMovementHandler::FollowPath</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Citizen pathfinding took long! Time taken: </code></li>
+<li><code>F3</code></li>
+<li><code>s.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(System.Single dt) System.Void dt System.Single" id="update-system-single---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(System.Single dt)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="ScheduleSystem.CitizenMovementHandler::Update(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(System.Single dt)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CD014C74CD2BC65CB82BBCD0902DD53E33DC1C353517B0266B49D1DF00948CE7</code></li>
+<li><span>Body hash</span><code>FD23986D097BCEFBF909853088B69CE2E72D26BB5527F41825B60CF9ADE823A3</code></li>
+<li><span>IL size</span><span>42</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;ScheduleSystem.PathStage&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#nextstage----system-void">ScheduleSystem.CitizenMovementHandler::NextStage()</a></code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#checkforpathfindtaskresults----system-void">ScheduleSystem.CitizenMovementHandler::CheckForPathfindTaskResults()</a></code></li>
+<li><code><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#followpath-system-single---system-void">ScheduleSystem.CitizenMovementHandler::FollowPath(System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_MoveCitizen.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.MoveCitizen::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Schedule.html#updatecontinuetodeskafterflee-system-single---system-void"><code>CandideServer.Entities.ScheduleSystem.Schedule::UpdateContinueToDeskAfterFlee</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Schedule.html#updatefleeingtosafety-system-single---system-void"><code>CandideServer.Entities.ScheduleSystem.Schedule::UpdateFleeingToSafety</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Schedule.html#updatemovementtask-system-single---system-void"><code>CandideServer.Entities.ScheduleSystem.Schedule::UpdateMovementTask</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Schedule.html#updatevisitingupgradedbuilding-system-single---system-void"><code>CandideServer.Entities.ScheduleSystem.Schedule::UpdateVisitingUpgradedBuilding</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Schedule.html#updatewalkinghomeduetointeraction-system-single---system-void"><code>CandideServer.Entities.ScheduleSystem.Schedule::UpdateWalkingHomeDueToInteraction</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Schedule.html#updatewalkinghomeduetonotask-system-single---system-void"><code>CandideServer.Entities.ScheduleSystem.Schedule::UpdateWalkingHomeDueToNoTask</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Schedule.html#updatewalkinghomeduetotownchange-system-single---system-void"><code>CandideServer.Entities.ScheduleSystem.Schedule::UpdateWalkingHomeDueToTownChange</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

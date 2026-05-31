@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.CandideUI.PauseMenuUi.CandideDisplaySettings - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.CandideUI.PauseMenuUi.CandideDisplaySettings</h1>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.PauseMenuUi.CandideDisplaySettings">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.CandideUI.PauseMenuUi.CandideDisplaySettings
+
+- Assembly: `Romestead`
+- Namespace: `Candide.CandideUI.PauseMenuUi`
+- Kind: `public class`
+- Base type: `Candide.CandideUI.Containers.CandideVerticalStackPanel`
+- Interfaces: `Candide.CandideUI.PauseMenuUi.ISettingsCategoryUi`
+- Members: 4 methods, 0 properties, 4 fields, 0 events
+
+## Public Methods
+- `public System.Boolean HasChanges()`
+- `public System.Void Undo()`
+- `public System.Void UserSave()`
+">Copy markdown</button>
+<a class="button" href="Candide_CandideUI_PauseMenuUi_CandideDisplaySettings.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.CandideUI.PauseMenuUi</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>4</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>4</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.CandideUI.PauseMenuUi</code></li>
+<li><span>Base type</span><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideVerticalStackPanel.html">Candide.CandideUI.Containers.CandideVerticalStackPanel</a></code></li>
+<li><span>Interfaces</span><code><a href="../../types/Romestead/Candide_CandideUI_PauseMenuUi_ISettingsCategoryUi.html">Candide.CandideUI.PauseMenuUi.ISettingsCategoryUi</a></code></li>
+<li><span>Hash</span><code>56598AEB1EDC24374422B7C53558E7B6FB5FE01FE455C475CF7F36278D8BE289</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideVerticalStackPanel.html">Candide.CandideUI.Containers.CandideVerticalStackPanel</a></code></p></article>
+<article><h3>Interfaces</h3><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_PauseMenuUi_ISettingsCategoryUi.html">Candide.CandideUI.PauseMenuUi.ISettingsCategoryUi</a></code></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_modalHasFired private System.Boolean _modalHasFired System.Boolean" id="-modalhasfired-system-boolean"><td><span class="member-name-cell"><code>_modalHasFired</code><a class="permalink" href="#-modalhasfired-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _modalHasFired">Copy</button></span></td><td>private</td><td><code>private System.Boolean _modalHasFired</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_originalSettings private Candide.UserSettings.DisplayUserSettings _originalSettings Candide.UserSettings.DisplayUserSettings" id="-originalsettings-candide-usersettings-displayusersettings"><td><span class="member-name-cell"><code>_originalSettings</code><a class="permalink" href="#-originalsettings-candide-usersettings-displayusersettings" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.UserSettings.DisplayUserSettings _originalSettings">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_UserSettings_DisplayUserSettings.html">Candide.UserSettings.DisplayUserSettings</a> _originalSettings</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_settings private Candide.UserSettings.DisplayUserSettings _settings Candide.UserSettings.DisplayUserSettings" id="-settings-candide-usersettings-displayusersettings"><td><span class="member-name-cell"><code>_settings</code><a class="permalink" href="#-settings-candide-usersettings-displayusersettings" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.UserSettings.DisplayUserSettings _settings">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_UserSettings_DisplayUserSettings.html">Candide.UserSettings.DisplayUserSettings</a> _settings</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_settingsPanel private Candide.CandideUI.Containers.CandideVerticalStackPanel _settingsPanel Candide.CandideUI.Containers.CandideVerticalStackPanel" id="-settingspanel-candide-candideui-containers-candideverticalstackpanel"><td><span class="member-name-cell"><code>_settingsPanel</code><a class="permalink" href="#-settingspanel-candide-candideui-containers-candideverticalstackpanel" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Containers.CandideVerticalStackPanel _settingsPanel">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Containers_CandideVerticalStackPanel.html">Candide.CandideUI.Containers.CandideVerticalStackPanel</a> _settingsPanel</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="BuildUi private System.Void BuildUi() System.Void " id="buildui----system-void">
+<div class="method-heading">
+<h3><code>BuildUi</code></h3>
+<a class="permalink" href="#buildui----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void BuildUi()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.PauseMenuUi.CandideDisplaySettings::BuildUi()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void BuildUi()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BD71A47E398497DA9BB33FCF91BDB7DCDA9BCF32E16279FAB11CA8D0FBE84B93</code></li>
+<li><span>Body hash</span><code>1473E584FE9EA930C8569B4085C96DB1C052A6FBBB1182E52A1A675742D47FC5</code></li>
+<li><span>IL size</span><span>1022</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideDisplaySettings.&lt;&gt;c__DisplayClass4_0::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideGrid.html#clearchildren----system-void">Candide.CandideUI.Containers.CandideGrid::ClearChildren()</a></code></li>
+<li><code>Candide.UserSettings.DisplayUserSettings::get_GameResolution()</code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringDefinitions.html#getstring-system-string---system-string">Shared.Text.StringDefinitions::GetString(System.String)</a></code></li>
+<li><code>CandideDisplaySettings.&lt;&gt;c::&lt;BuildUi&gt;b__4_0(Candide.UserSettings.ScreenResolution)</code></li>
+<li><code>System.Func&lt;Candide.UserSettings.ScreenResolution, Candide.CandideUI.Input.ValueSpinnerValue&lt;Microsoft.Xna.Framework.Point&gt;&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Linq.Enumerable::Select(System.Collections.Generic.IEnumerable&lt;!!0&gt;, System.Func&lt;!!0, !!1&gt;)</code></li>
+<li><code>System.Linq.Enumerable::ToArray(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+<li><code>CandideDisplaySettings.&lt;&gt;c__DisplayClass4_0::&lt;BuildUi&gt;b__1(Microsoft.Xna.Framework.Point)</code></li>
+<li><code>System.Action&lt;Microsoft.Xna.Framework.Point&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.CandideUI.PauseMenuUi.CandideUiSettingsHelper::CreateEnumSpinnerSetting(T, System.String, System.Collections.Generic.IReadOnlyCollection&lt;Candide.CandideUI.Input.ValueSpinnerValue&lt;T&gt;&gt;, System.Action&lt;T&gt;)</code></li>
+<li><code>Candide.UserSettings.DisplayUserSettings::get_DisplayMode()</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Visible(System.Boolean)</code></li>
+<li><code>Candide.CandideUI.Input.ValueSpinnerValue&lt;Candide.UserSettings.CandideDisplayMode&gt;::.ctor()</code></li>
+<li><code>CandideDisplaySettings.&lt;&gt;c__DisplayClass4_0::&lt;BuildUi&gt;b__2(Candide.UserSettings.CandideDisplayMode)</code></li>
+<li><code>System.Action&lt;Candide.UserSettings.CandideDisplayMode&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerMultipleItems.html#addchild-candide-candideui-candideuielement--system-boolean---system-void">Candide.CandideUI.CandideUiContainerMultipleItems::AddChild(Candide.CandideUI.CandideUiElement, System.Boolean)</a></code></li>
+<li><code>Candide.UserSettings.DisplayUserSettings::get_UiScale()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code>Candide.CandideUI.CandideUiSystem::get_Scale()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::GetValueOrDefault()</code></li>
+<li><code><a href="../../types/Romestead/Candide_UserSettings_DisplayUserSettings.html#getmaxuiscale----system-int32">Candide.UserSettings.DisplayUserSettings::GetMaxUiScale()</a></code></li>
+<li><code>CandideDisplaySettings.&lt;&gt;c__DisplayClass4_0::&lt;BuildUi&gt;b__3(System.Int32)</code></li>
+<li><code>System.Action&lt;System.Int32&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_PauseMenuUi_CandideUiSettingsHelper.html#createintspinnersetting-system-int32--system-int32--system-int32--system-string--system-string--system-action-1-system-int32----candide-candideui-input-candideintspinnerlabel">Candide.CandideUI.PauseMenuUi.CandideUiSettingsHelper::CreateIntSpinnerSetting(System.Int32, System.Int32, System.Int32, System.String, System.String, System.Action&lt;System.Int32&gt;)</a></code></li>
+<li><code>Candide.CandideUI.CandideThickness::.ctor(System.Int32, System.Int32, System.Int32, System.Int32)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Margin(Candide.CandideUI.CandideThickness)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Enabled(System.Boolean)</code></li>
+<li><code>CandideDisplaySettings.&lt;&gt;c__DisplayClass4_0::&lt;BuildUi&gt;b__4(System.Boolean)</code></li>
+<li><code>System.Action&lt;System.Boolean&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_PauseMenuUi_CandideUiSettingsHelper.html#createcheckboxsetting-system-boolean--system-string--system-string--system-action-1-system-boolean----candide-candideui-input-candidecheckboxlabel">Candide.CandideUI.PauseMenuUi.CandideUiSettingsHelper::CreateCheckboxSetting(System.Boolean, System.String, System.String, System.Action&lt;System.Boolean&gt;)</a></code></li>
+<li><code>Candide.UserSettings.DisplayUserSettings::get_CameraScale()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_PauseMenuUi_CandideDisplaySettings.html#undo----system-void"><code>Candide.CandideUI.PauseMenuUi.CandideDisplaySettings::Undo</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Settings_Display_WindowSize</code></li>
+<li><code>Settings_Display_Windowed</code></li>
+<li><code>Settings_Display_WindowedFullscreen</code></li>
+<li><code>Settings_Display_Fullscreen</code></li>
+<li><code>Settings_Display_DisplayMode</code></li>
+<li><code>Settings_Display_UiScale</code></li>
+<li><code>Settings_Display_AutomaticUiScale</code></li>
+<li><code>Settings_Display_AutomaticUiScale_Description</code></li>
+<li><code>Settings_Display_CameraScale</code></li>
+<li><code>Settings_Display_AutomaticCameraScale</code></li>
+<li><code>Settings_Display_AutomaticCameraScale_Description</code></li>
+<li><code>Settings_Display_CursorScale</code></li>
+<li><code>Settings_Display_AutomaticCursorScale</code></li>
+<li><code>Settings_Display_AutomaticCursorScale_Description</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="HasChanges public System.Boolean HasChanges() System.Boolean " id="haschanges----system-boolean">
+<div class="method-heading">
+<h3><code>HasChanges</code></h3>
+<a class="permalink" href="#haschanges----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean HasChanges()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.PauseMenuUi.CandideDisplaySettings::HasChanges()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean HasChanges()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>8623D4206081473F0760369EEC573A8D8E5BC161EF6A9A269A2563E4FF8D197E</code></li>
+<li><span>Body hash</span><code>759EE1997A5A17C818A798F3FA3F85F97E241A7A40A6CF5E17ADE23027ECFD67</code></li>
+<li><span>IL size</span><span>12</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Undo public System.Void Undo() System.Void " id="undo----system-void">
+<div class="method-heading">
+<h3><code>Undo</code></h3>
+<a class="permalink" href="#undo----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Undo()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.PauseMenuUi.CandideDisplaySettings::Undo()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Undo()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>12FB65C1E6309305238666BF86D3E9741BD24D79F97F613BF35047877F895811</code></li>
+<li><span>Body hash</span><code>D37E9B9A0B8DFC6D799FAF2DAEBA062252F8FE3EC4FCFFAD6117CF86DF9B7F84</code></li>
+<li><span>IL size</span><span>49</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.UserSettings.UserSettingsCategory&lt;Candide.UserSettings.DisplayUserSettings&gt;::Load(T)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_PauseMenuUi_CandideDisplaySettings.html#buildui----system-void">Candide.CandideUI.PauseMenuUi.CandideDisplaySettings::BuildUi()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UserSave public System.Void UserSave() System.Void " id="usersave----system-void">
+<div class="method-heading">
+<h3><code>UserSave</code></h3>
+<a class="permalink" href="#usersave----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UserSave()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.PauseMenuUi.CandideDisplaySettings::UserSave()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UserSave()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>F43DFD2DBD97C1DB85ACA271E853287F0302B8EE012CF36A47FC86B575E0660A</code></li>
+<li><span>Body hash</span><code>35A45E736F8988B008D2B3715FE5FDAA6F1132E5EA4C0D5E267839AF42904555</code></li>
+<li><span>IL size</span><span>91</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.CandideUiElement::get_Desktop()</code></li>
+<li><code>Candide.CandideUI.Exceptions.CandideUiException::.ctor(System.String)</code></li>
+<li><code>Candide.CandideUI.PauseMenuUi.CandideDisplaySettings::&lt;UserSave&gt;g__ShowModal|8_0(System.Object, Candide.CandideUI.CandideDesktop)</code></li>
+<li><code>System.EventHandler&lt;Candide.CandideUI.CandideDesktop&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.CandideUI.CandideDesktop::add_ResolutionChanged(System.EventHandler&lt;Candide.CandideUI.CandideDesktop&gt;)</code></li>
+<li><code>Candide.UserSettings.UserSettingsCategory&lt;Candide.UserSettings.DisplayUserSettings&gt;::ApplySettings()</code></li>
+<li><code>Candide.CandideUI.CandideDesktop::remove_ResolutionChanged(System.EventHandler&lt;Candide.CandideUI.CandideDesktop&gt;)</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Don&#39;t know what to do if we don&#39;t have a Desktop to display the modal on</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

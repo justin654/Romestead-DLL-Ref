@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerManagers.DungeonServerManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerManagers.DungeonServerManager</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerManagers.DungeonServerManager
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerManagers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 20 methods, 0 properties, 1 fields, 0 events
+
+## Public Methods
+- `public CandideServer.Models.Dungeons.DungeonLocationModel AddChallengeDungeonExterior(CandideServer.Data.Dungeons.ChallengeDungeonData dungeonData, CandideServer.Models.PoiData poi, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.Boolean hidden)`
+- `public CandideServer.Models.Dungeons.DungeonLocationModel AddChallengeDungeonExterior(CandideServer.Data.Dungeons.DungeonType dungeonType, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.String exteriorWorldMapId, System.String challengeDungeonDataId, CandideServer.Models.DropTables dropTables)`
+- `public CandideServer.Models.Dungeons.DungeonLocationModel AddHandcraftedDungeonExterior(CandideServer.Models.Dungeons.DungeonRoomDataModel dungeonRoom, CandideServer.Models.PoiData poi, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.Boolean hidden)`
+- `public CandideServer.Models.Dungeons.DungeonLocationModel AddHandcraftedDungeonExterior(System.String id, System.Nullable&lt;Shared.Text.StringId&gt; displayName, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.String exteriorWorldMapId, CandideServer.Models.DropTables dropTables, System.String iconId, System.Single exitDirection, System.Boolean hidden, System.Boolean bossDungeon)`
+- `public System.Void CheckDungeonClear(System.Guid worldId)`
+- `public System.Void CheckIfDungeonQuestItemHasBeenTaken(CandideServer.Models.Dungeons.DungeonLocationModel location)`
+- `public System.Void ClearPreRolledDrops(CandideServer.Models.Dungeons.DungeonLocationModel location)`
+- `public System.Void DiscoverDungeon(System.Guid locationModelId, System.Nullable&lt;System.Int32&gt; discoveredByPlayer)`
+- `public System.Void EnterInterior(CandideServer.Models.Dungeons.DungeonLocationModel locationModel, CandideServer.Models.Dungeons.ActiveDungeonModel activeDungeonModel, CandideServer.Models.Worlds.WorldModel worldModel, System.Nullable&lt;System.Guid&gt; roomId, System.Int32 exitDirection)`
+- `public System.Void GenerateNewChallengeDungeon(CandideServer.Data.Dungeons.ChallengeDungeonData data, CandideServer.Models.Dungeons.DungeonLocationModel dungeonLocationModel)`
+- `public CandideServer.Models.Dungeons.DungeonLocationModel GetDungeonLocationFromWorldId(System.Guid worldId)`
+- `public CandideServer.Models.Dungeons.DungeonLocationRoomModel GetDungeonRoomFromWorldId(System.Guid worldId)`
+- `public System.Void ResetDungeon(CandideServer.Models.Dungeons.ActiveDungeonModel activeDungeon, CandideServer.Models.Dungeons.DungeonLocationModel dungeonLocation)`
+- `public System.Void ResetDungeonCompletely(CandideServer.Models.Dungeons.DungeonLocationModel location)`
+- `public System.Void SetupDungeonQuest(CandideServer.Models.Dungeons.DungeonLocationModel location, System.String questId)`
+- `public System.Void SetupFetchQuestLoot(CandideServer.Models.Dungeons.DungeonLocationModel location, System.Collections.Generic.List&lt;Shared.Models.Items.ItemAmount&gt; itemAmounts, System.String questId, System.Boolean resetDungeon)`
+- `public System.Void TryEnterDungeon(System.Guid locationId)`
+- `public System.Void TryEnterRoom(System.Guid locationId, System.Guid targetRoomId, System.Int32 nextExitDirection)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerManagers_DungeonServerManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerManagers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>20</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>1</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerManagers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>DF2A862811B3CFDABE2A2010158EA4665BE79F36DA6E544D6F40C0407080DECC</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ReUseSwitchConnections private System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; ReUseSwitchConnections System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;" id="reuseswitchconnections-system-collections-generic-dictionary-2-system-string-system-string-"><td><span class="member-name-cell"><code>ReUseSwitchConnections</code><a class="permalink" href="#reuseswitchconnections-system-collections-generic-dictionary-2-system-string-system-string-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; ReUseSwitchConnections">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; ReUseSwitchConnections</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddChallengeDungeonExterior public CandideServer.Models.Dungeons.DungeonLocationModel AddChallengeDungeonExterior(CandideServer.Data.Dungeons.ChallengeDungeonData dungeonData, CandideServer.Models.PoiData poi, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.Boolean hidden) CandideServer.Models.Dungeons.DungeonLocationModel dungeonData CandideServer.Data.Dungeons.ChallengeDungeonData poi CandideServer.Models.PoiData tilePosition Microsoft.Xna.Framework.Point worldId System.Guid difficulty System.Single hidden System.Boolean" id="addchallengedungeonexterior-candideserver-data-dungeons-challengedungeondata--candideserver-models-poidata--microsoft-xna-framework-point--system-guid--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel">
+<div class="method-heading">
+<h3><code>AddChallengeDungeonExterior</code></h3>
+<a class="permalink" href="#addchallengedungeonexterior-candideserver-data-dungeons-challengedungeondata--candideserver-models-poidata--microsoft-xna-framework-point--system-guid--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Dungeons.DungeonLocationModel AddChallengeDungeonExterior(CandideServer.Data.Dungeons.ChallengeDungeonData dungeonData, CandideServer.Models.PoiData poi, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.Boolean hidden)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::AddChallengeDungeonExterior(CandideServer.Data.Dungeons.ChallengeDungeonData, CandideServer.Models.PoiData, Microsoft.Xna.Framework.Point, System.Guid, System.Single, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> AddChallengeDungeonExterior(<a href="../../types/CandideServer/CandideServer_Data_Dungeons_ChallengeDungeonData.html">CandideServer.Data.Dungeons.ChallengeDungeonData</a> dungeonData, <a href="../../types/CandideServer/CandideServer_Models_PoiData.html">CandideServer.Models.PoiData</a> poi, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.Boolean hidden)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>22A23D731927DAF7EDC6AC1A99BE68E4CF4F4D86FB7F147A58D5D086292CD3E6</code></li>
+<li><span>Body hash</span><code>420BF3A050E582A781D8F55A9571F6232DD33BED6782333C9095B1211FB42A31</code></li>
+<li><span>IL size</span><span>84</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenNameServerManager.html#getrandomdungeonname-system-string--candideserver-data-dungeons-dungeontype---system-valuetuple-2-system-string-shared-text-stringid-">CandideServer.ServerManagers.CitizenNameServerManager::GetRandomDungeonName(System.String, CandideServer.Data.Dungeons.DungeonType)</a></code></li>
+<li><code>System.Nullable&lt;Shared.Text.StringId&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#adddungeonexterior-system-string--microsoft-xna-framework-point--system-guid--system-single--system-string--candideserver-models-droptables--system-string--system-nullable-1-shared-text-stringid---system-string--system-boolean--system-string--system-boolean--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel">CandideServer.ServerManagers.DungeonServerManager::AddDungeonExterior(System.String, Microsoft.Xna.Framework.Point, System.Guid, System.Single, System.String, CandideServer.Models.DropTables, System.String, System.Nullable&lt;Shared.Text.StringId&gt;, System.String, System.Boolean, System.String, System.Boolean, System.Single, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnchallengedungeonpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld---system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnChallengeDungeonPoi</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>dungeon</code></li>
+<li><code>dungeon_skull_red_eyes</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddChallengeDungeonExterior public CandideServer.Models.Dungeons.DungeonLocationModel AddChallengeDungeonExterior(CandideServer.Data.Dungeons.DungeonType dungeonType, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.String exteriorWorldMapId, System.String challengeDungeonDataId, CandideServer.Models.DropTables dropTables) CandideServer.Models.Dungeons.DungeonLocationModel dungeonType CandideServer.Data.Dungeons.DungeonType tilePosition Microsoft.Xna.Framework.Point worldId System.Guid difficulty System.Single exteriorWorldMapId System.String challengeDungeonDataId System.String dropTables CandideServer.Models.DropTables" id="addchallengedungeonexterior-candideserver-data-dungeons-dungeontype--microsoft-xna-framework-point--system-guid--system-single--system-string--system-string--candideserver-models-droptables---candideserver-models-dungeons-dungeonlocationmodel">
+<div class="method-heading">
+<h3><code>AddChallengeDungeonExterior</code></h3>
+<a class="permalink" href="#addchallengedungeonexterior-candideserver-data-dungeons-dungeontype--microsoft-xna-framework-point--system-guid--system-single--system-string--system-string--candideserver-models-droptables---candideserver-models-dungeons-dungeonlocationmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Dungeons.DungeonLocationModel AddChallengeDungeonExterior(CandideServer.Data.Dungeons.DungeonType dungeonType, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.String exteriorWorldMapId, System.String challengeDungeonDataId, CandideServer.Models.DropTables dropTables)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::AddChallengeDungeonExterior(CandideServer.Data.Dungeons.DungeonType, Microsoft.Xna.Framework.Point, System.Guid, System.Single, System.String, System.String, CandideServer.Models.DropTables)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> AddChallengeDungeonExterior(<a href="../../types/CandideServer/CandideServer_Data_Dungeons_DungeonType.html">CandideServer.Data.Dungeons.DungeonType</a> dungeonType, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.String exteriorWorldMapId, System.String challengeDungeonDataId, <a href="../../types/CandideServer/CandideServer_Models_DropTables.html">CandideServer.Models.DropTables</a> dropTables)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EF307DF15B721D88CA1153D7E1F675AC65E1FD721C38DD13B1033B005E2428CE</code></li>
+<li><span>Body hash</span><code>F4549E3A6F891DA05CDD45DEC1BF2E783D20436A3093EBFD0444773E39C6B89F</code></li>
+<li><span>IL size</span><span>60</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenNameServerManager.html#getrandomdungeonname-system-string--candideserver-data-dungeons-dungeontype---system-valuetuple-2-system-string-shared-text-stringid-">CandideServer.ServerManagers.CitizenNameServerManager::GetRandomDungeonName(System.String, CandideServer.Data.Dungeons.DungeonType)</a></code></li>
+<li><code>System.Nullable&lt;Shared.Text.StringId&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#adddungeonexterior-system-string--microsoft-xna-framework-point--system-guid--system-single--system-string--candideserver-models-droptables--system-string--system-nullable-1-shared-text-stringid---system-string--system-boolean--system-string--system-boolean--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel">CandideServer.ServerManagers.DungeonServerManager::AddDungeonExterior(System.String, Microsoft.Xna.Framework.Point, System.Guid, System.Single, System.String, CandideServer.Models.DropTables, System.String, System.Nullable&lt;Shared.Text.StringId&gt;, System.String, System.Boolean, System.String, System.Boolean, System.Single, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_DungeonServerService.html#onreceive-spawndungeoncheat-candideserver-messagemodels-dungeons-spawndungeoncheatmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.DungeonServerService::OnReceive_SpawnDungeonCheat</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>dungeon</code></li>
+<li><code>dungeon_skull_red_eyes</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="AddDungeonExterior private CandideServer.Models.Dungeons.DungeonLocationModel AddDungeonExterior(System.String id, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.String exteriorWorldMapId, CandideServer.Models.DropTables dropTables, System.String iconId, System.Nullable&lt;Shared.Text.StringId&gt; dungeonName, System.String dungeonPrefixKey, System.Boolean isChallengeDungeon, System.String poiDataId, System.Boolean hidden, System.Single exitDirection, System.Boolean bossDungeon) CandideServer.Models.Dungeons.DungeonLocationModel id System.String tilePosition Microsoft.Xna.Framework.Point worldId System.Guid difficulty System.Single exteriorWorldMapId System.String dropTables CandideServer.Models.DropTables iconId System.String dungeonName System.Nullable&lt;Shared.Text.StringId&gt; dungeonPrefixKey System.String isChallengeDungeon System.Boolean poiDataId System.String hidden System.Boolean exitDirection System.Single bossDungeon System.Boolean" id="adddungeonexterior-system-string--microsoft-xna-framework-point--system-guid--system-single--system-string--candideserver-models-droptables--system-string--system-nullable-1-shared-text-stringid---system-string--system-boolean--system-string--system-boolean--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel">
+<div class="method-heading">
+<h3><code>AddDungeonExterior</code></h3>
+<a class="permalink" href="#adddungeonexterior-system-string--microsoft-xna-framework-point--system-guid--system-single--system-string--candideserver-models-droptables--system-string--system-nullable-1-shared-text-stringid---system-string--system-boolean--system-string--system-boolean--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private CandideServer.Models.Dungeons.DungeonLocationModel AddDungeonExterior(System.String id, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.String exteriorWorldMapId, CandideServer.Models.DropTables dropTables, System.String iconId, System.Nullable&lt;Shared.Text.StringId&gt; dungeonName, System.String dungeonPrefixKey, System.Boolean isChallengeDungeon, System.String poiDataId, System.Boolean hidden, System.Single exitDirection, System.Boolean bossDungeon)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::AddDungeonExterior(System.String, Microsoft.Xna.Framework.Point, System.Guid, System.Single, System.String, CandideServer.Models.DropTables, System.String, System.Nullable&lt;Shared.Text.StringId&gt;, System.String, System.Boolean, System.String, System.Boolean, System.Single, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>private <a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> AddDungeonExterior(System.String id, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.String exteriorWorldMapId, <a href="../../types/CandideServer/CandideServer_Models_DropTables.html">CandideServer.Models.DropTables</a> dropTables, System.String iconId, System.Nullable&lt;<a href="../../types/Shared/Shared_Text_StringId.html">Shared.Text.StringId</a>&gt; dungeonName, System.String dungeonPrefixKey, System.Boolean isChallengeDungeon, System.String poiDataId, System.Boolean hidden, System.Single exitDirection, System.Boolean bossDungeon)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1F4A1D0C91E6402AA89940CEE41E3F466ADD6F2A149471F412957255C03AD49D</code></li>
+<li><span>Body hash</span><code>74ED7079733305ED20948F0286D3902BFAA1C23BDD48AF4E1E90444A94980641</code></li>
+<li><span>IL size</span><span>345</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>DungeonServerManager.&lt;&gt;c__DisplayClass5_0::.ctor()</code></li>
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code>CandideServer.Models.Dungeons.DungeonLocationModel::.ctor()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::get_Zero()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::Clear()</code></li>
+<li><code>DungeonServerManager.&lt;&gt;c__DisplayClass5_0::&lt;AddDungeonExterior&gt;b__0(CandideServer.ServerControllers.SpawnEntityArgs)</code></li>
+<li><code>System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_PointOfInterestInserter.html#loadinworldat-system-string--microsoft-xna-framework-point--system-boolean--system-action-1-candideserver-servercontrollers-spawnentityargs----system-void">CandideServer.World.Generation.PointOfInterestInserter::LoadInWorldAt(System.String, Microsoft.Xna.Framework.Point, System.Boolean, System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt;)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Equality(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#updatedungeonlocation-candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerControllers.DungeonServerController::UpdateDungeonLocation(CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#addchallengedungeonexterior-candideserver-data-dungeons-challengedungeondata--candideserver-models-poidata--microsoft-xna-framework-point--system-guid--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel"><code>CandideServer.ServerManagers.DungeonServerManager::AddChallengeDungeonExterior</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#addchallengedungeonexterior-candideserver-data-dungeons-dungeontype--microsoft-xna-framework-point--system-guid--system-single--system-string--system-string--candideserver-models-droptables---candideserver-models-dungeons-dungeonlocationmodel"><code>CandideServer.ServerManagers.DungeonServerManager::AddChallengeDungeonExterior</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#addhandcrafteddungeonexterior-candideserver-models-dungeons-dungeonroomdatamodel--candideserver-models-poidata--microsoft-xna-framework-point--system-guid--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel"><code>CandideServer.ServerManagers.DungeonServerManager::AddHandcraftedDungeonExterior</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#addhandcrafteddungeonexterior-system-string--system-nullable-1-shared-text-stringid---microsoft-xna-framework-point--system-guid--system-single--system-string--candideserver-models-droptables--system-string--system-single--system-boolean--system-boolean---candideserver-models-dungeons-dungeonlocationmodel"><code>CandideServer.ServerManagers.DungeonServerManager::AddHandcraftedDungeonExterior</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>AddDungeonExterior - Dungeon: </code></li>
+<li><code> does not have an exterior world</code></li>
+<li><code>Did not find a dungeon entrance entity when spawning in dungeon &#39;</code></li>
+<li><code>&#39; with map id &#39;</code></li>
+<li><code>&#39;</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddHandcraftedDungeonExterior public CandideServer.Models.Dungeons.DungeonLocationModel AddHandcraftedDungeonExterior(CandideServer.Models.Dungeons.DungeonRoomDataModel dungeonRoom, CandideServer.Models.PoiData poi, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.Boolean hidden) CandideServer.Models.Dungeons.DungeonLocationModel dungeonRoom CandideServer.Models.Dungeons.DungeonRoomDataModel poi CandideServer.Models.PoiData tilePosition Microsoft.Xna.Framework.Point worldId System.Guid difficulty System.Single hidden System.Boolean" id="addhandcrafteddungeonexterior-candideserver-models-dungeons-dungeonroomdatamodel--candideserver-models-poidata--microsoft-xna-framework-point--system-guid--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel">
+<div class="method-heading">
+<h3><code>AddHandcraftedDungeonExterior</code></h3>
+<a class="permalink" href="#addhandcrafteddungeonexterior-candideserver-models-dungeons-dungeonroomdatamodel--candideserver-models-poidata--microsoft-xna-framework-point--system-guid--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Dungeons.DungeonLocationModel AddHandcraftedDungeonExterior(CandideServer.Models.Dungeons.DungeonRoomDataModel dungeonRoom, CandideServer.Models.PoiData poi, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.Boolean hidden)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::AddHandcraftedDungeonExterior(CandideServer.Models.Dungeons.DungeonRoomDataModel, CandideServer.Models.PoiData, Microsoft.Xna.Framework.Point, System.Guid, System.Single, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> AddHandcraftedDungeonExterior(<a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonRoomDataModel.html">CandideServer.Models.Dungeons.DungeonRoomDataModel</a> dungeonRoom, <a href="../../types/CandideServer/CandideServer_Models_PoiData.html">CandideServer.Models.PoiData</a> poi, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.Boolean hidden)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B67780A8336D6A9DBECF00285A5F5470012E0E3536C9CA8F4DAC8569656C687D</code></li>
+<li><span>Body hash</span><code>03345CFA703D5E95E22B23AB66433FB015D28AA6D02A8E76CBCB2556C4DA4605</code></li>
+<li><span>IL size</span><span>77</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#adddungeonexterior-system-string--microsoft-xna-framework-point--system-guid--system-single--system-string--candideserver-models-droptables--system-string--system-nullable-1-shared-text-stringid---system-string--system-boolean--system-string--system-boolean--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel">CandideServer.ServerManagers.DungeonServerManager::AddDungeonExterior(System.String, Microsoft.Xna.Framework.Point, System.Guid, System.Single, System.String, CandideServer.Models.DropTables, System.String, System.Nullable&lt;Shared.Text.StringId&gt;, System.String, System.Boolean, System.String, System.Boolean, System.Single, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnhandcrafteddungeonpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld---system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnHandcraftedDungeonPoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnrandomdungeonspoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld--system-random---system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnRandomDungeonsPoi</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>dungeon_skull</code></li>
+<li><code>Dungeons_Simple_DisplayName</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddHandcraftedDungeonExterior public CandideServer.Models.Dungeons.DungeonLocationModel AddHandcraftedDungeonExterior(System.String id, System.Nullable&lt;Shared.Text.StringId&gt; displayName, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.String exteriorWorldMapId, CandideServer.Models.DropTables dropTables, System.String iconId, System.Single exitDirection, System.Boolean hidden, System.Boolean bossDungeon) CandideServer.Models.Dungeons.DungeonLocationModel id System.String displayName System.Nullable&lt;Shared.Text.StringId&gt; tilePosition Microsoft.Xna.Framework.Point worldId System.Guid difficulty System.Single exteriorWorldMapId System.String dropTables CandideServer.Models.DropTables iconId System.String exitDirection System.Single hidden System.Boolean bossDungeon System.Boolean" id="addhandcrafteddungeonexterior-system-string--system-nullable-1-shared-text-stringid---microsoft-xna-framework-point--system-guid--system-single--system-string--candideserver-models-droptables--system-string--system-single--system-boolean--system-boolean---candideserver-models-dungeons-dungeonlocationmodel">
+<div class="method-heading">
+<h3><code>AddHandcraftedDungeonExterior</code></h3>
+<a class="permalink" href="#addhandcrafteddungeonexterior-system-string--system-nullable-1-shared-text-stringid---microsoft-xna-framework-point--system-guid--system-single--system-string--candideserver-models-droptables--system-string--system-single--system-boolean--system-boolean---candideserver-models-dungeons-dungeonlocationmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Dungeons.DungeonLocationModel AddHandcraftedDungeonExterior(System.String id, System.Nullable&lt;Shared.Text.StringId&gt; displayName, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.String exteriorWorldMapId, CandideServer.Models.DropTables dropTables, System.String iconId, System.Single exitDirection, System.Boolean hidden, System.Boolean bossDungeon)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::AddHandcraftedDungeonExterior(System.String, System.Nullable&lt;Shared.Text.StringId&gt;, Microsoft.Xna.Framework.Point, System.Guid, System.Single, System.String, CandideServer.Models.DropTables, System.String, System.Single, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> AddHandcraftedDungeonExterior(System.String id, System.Nullable&lt;<a href="../../types/Shared/Shared_Text_StringId.html">Shared.Text.StringId</a>&gt; displayName, Microsoft.Xna.Framework.Point tilePosition, System.Guid worldId, System.Single difficulty, System.String exteriorWorldMapId, <a href="../../types/CandideServer/CandideServer_Models_DropTables.html">CandideServer.Models.DropTables</a> dropTables, System.String iconId, System.Single exitDirection, System.Boolean hidden, System.Boolean bossDungeon)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0A7F38110EBC47610D2D3F5485B11B57D1187514F473797E1AEA79807EA00951</code></li>
+<li><span>Body hash</span><code>EABA2A1FCEABB208716A20AC3AF8A61DEFCC5E4F7F3205B927F5E8210C51BFB0</code></li>
+<li><span>IL size</span><span>42</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#adddungeonexterior-system-string--microsoft-xna-framework-point--system-guid--system-single--system-string--candideserver-models-droptables--system-string--system-nullable-1-shared-text-stringid---system-string--system-boolean--system-string--system-boolean--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel">CandideServer.ServerManagers.DungeonServerManager::AddDungeonExterior(System.String, Microsoft.Xna.Framework.Point, System.Guid, System.Single, System.String, CandideServer.Models.DropTables, System.String, System.Nullable&lt;Shared.Text.StringId&gt;, System.String, System.Boolean, System.String, System.Boolean, System.Single, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_DungeonServerService.html#onreceive-spawndungeoncheat-candideserver-messagemodels-dungeons-spawndungeoncheatmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.DungeonServerService::OnReceive_SpawnDungeonCheat</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>dungeon_skull</code></li>
+<li><code>Dungeons_Simple_DisplayName</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CheckDungeonClear public System.Void CheckDungeonClear(System.Guid worldId) System.Void worldId System.Guid" id="checkdungeonclear-system-guid---system-void">
+<div class="method-heading">
+<h3><code>CheckDungeonClear</code></h3>
+<a class="permalink" href="#checkdungeonclear-system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CheckDungeonClear(System.Guid worldId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::CheckDungeonClear(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CheckDungeonClear(System.Guid worldId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>44FFBF5A2EFDDAFBCD0DC44E0F91016D3143957FAD11AC73878BE74B963210ED</code></li>
+<li><span>Body hash</span><code>77D01DF878F9D3CB38AAF3A459310130E09D372E9EA884616FA8E190A9F03690</code></li>
+<li><span>IL size</span><span>134</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.ActiveDungeonModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#updatedungeonlocationclearedstate-candideserver-models-dungeons-activedungeonmodel--candideserver-models-dungeons-dungeonlocationmodel---system-boolean">CandideServer.ServerControllers.DungeonServerController::UpdateDungeonLocationClearedState(CandideServer.Models.Dungeons.ActiveDungeonModel, CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+<li><code>CandideServer.MessageModels.Dungeons.DungeonLocationMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_DungeonServerService.html#send-dungeonlocationtoeveryone-candideserver-messagemodels-dungeons-dungeonlocationmessage---system-void">CandideServer.ServerServices.DungeonServerService::Send_DungeonLocationToEveryone(CandideServer.MessageModels.Dungeons.DungeonLocationMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Chest_ServerChestController.html#generateinventory----system-void"><code>CandideServer.Entities.ControllerSets.Chest.ServerChestController::GenerateInventory</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CheckIfDungeonQuestItemHasBeenTaken public System.Void CheckIfDungeonQuestItemHasBeenTaken(CandideServer.Models.Dungeons.DungeonLocationModel location) System.Void location CandideServer.Models.Dungeons.DungeonLocationModel" id="checkifdungeonquestitemhasbeentaken-candideserver-models-dungeons-dungeonlocationmodel---system-void">
+<div class="method-heading">
+<h3><code>CheckIfDungeonQuestItemHasBeenTaken</code></h3>
+<a class="permalink" href="#checkifdungeonquestitemhasbeentaken-candideserver-models-dungeons-dungeonlocationmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CheckIfDungeonQuestItemHasBeenTaken(CandideServer.Models.Dungeons.DungeonLocationModel location)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::CheckIfDungeonQuestItemHasBeenTaken(CandideServer.Models.Dungeons.DungeonLocationModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CheckIfDungeonQuestItemHasBeenTaken(<a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> location)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1D30A43421B50C0D0372085C65B125E5793D36BD6114A77AC049BA848720C44D</code></li>
+<li><span>Body hash</span><code>DB2422B3C931524B388969EC694281B30435B694A935D33D368492F467275037</code></li>
+<li><span>IL size</span><span>275</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Int32&gt;&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, System.Guid&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Int32, System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Int32, System.Guid&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Models.Items.SharedInventoryModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Models.Items.ItemInstanceModel::get_Data()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Items_ItemFlagExtensions.html#hasflags-shared-models-items-itemflag--shared-models-items-itemflag---system-boolean">Shared.Models.Items.ItemFlagExtensions::HasFlags(Shared.Models.Items.ItemFlag, Shared.Models.Items.ItemFlag)</a></code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Int32, System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::MoveNext()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#clearquesttag-candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerControllers.DungeonServerController::ClearQuestTag(CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+<li><code>CandideServer.MessageModels.Dungeons.DungeonLocationMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_DungeonServerService.html#send-dungeonlocationtoeveryone-candideserver-messagemodels-dungeons-dungeonlocationmessage---system-void">CandideServer.ServerServices.DungeonServerService::Send_DungeonLocationToEveryone(CandideServer.MessageModels.Dungeons.DungeonLocationMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Chest_ServerChestController.html#onkilled-shared-entity-entitykillinfo---shared-entity-base-onkilledbehaviour"><code>CandideServer.Entities.ControllerSets.Chest.ServerChestController::OnKilled</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Chest_ServerChestController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.ControllerSets.Chest.ServerChestController::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ClearPreRolledDrops public System.Void ClearPreRolledDrops(CandideServer.Models.Dungeons.DungeonLocationModel location) System.Void location CandideServer.Models.Dungeons.DungeonLocationModel" id="clearprerolleddrops-candideserver-models-dungeons-dungeonlocationmodel---system-void">
+<div class="method-heading">
+<h3><code>ClearPreRolledDrops</code></h3>
+<a class="permalink" href="#clearprerolleddrops-candideserver-models-dungeons-dungeonlocationmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ClearPreRolledDrops(CandideServer.Models.Dungeons.DungeonLocationModel location)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::ClearPreRolledDrops(CandideServer.Models.Dungeons.DungeonLocationModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ClearPreRolledDrops(<a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> location)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C687C7C88F0ECC0E6EA41C180D5D03F7B5F7050F01A24B6CC135B760F30DA612</code></li>
+<li><span>Body hash</span><code>F612105DB4465717403040B0F048EFCA38704CA3CD8310C2D506E322E8BA4056</code></li>
+<li><span>IL size</span><span>7</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#clearprerolleddrops-candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerControllers.DungeonServerController::ClearPreRolledDrops(CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Chest_ServerChestController.html#fillinventorywithdrops-system-string--candideserver-models-dungeons-dungeonlocationmodel--system-boolean---system-void"><code>CandideServer.Entities.ControllerSets.Chest.ServerChestController::FillInventoryWithDrops</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DiscoverDungeon public System.Void DiscoverDungeon(System.Guid locationModelId, System.Nullable&lt;System.Int32&gt; discoveredByPlayer) System.Void locationModelId System.Guid discoveredByPlayer System.Nullable&lt;System.Int32&gt;" id="discoverdungeon-system-guid--system-nullable-1-system-int32----system-void">
+<div class="method-heading">
+<h3><code>DiscoverDungeon</code></h3>
+<a class="permalink" href="#discoverdungeon-system-guid--system-nullable-1-system-int32----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DiscoverDungeon(System.Guid locationModelId, System.Nullable&lt;System.Int32&gt; discoveredByPlayer)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::DiscoverDungeon(System.Guid, System.Nullable&lt;System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DiscoverDungeon(System.Guid locationModelId, System.Nullable&lt;System.Int32&gt; discoveredByPlayer)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C29D7EE19FDB107F2EA08DA77A731B6F44E08E4549B5AEB5F6B4EE5FC79B943A</code></li>
+<li><span>Body hash</span><code>DD59EEDE8C069C7625E3E4F78FD7F9801AB14B29C521ADFD721EFA325114B077</code></li>
+<li><span>IL size</span><span>66</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#updatedungeonlocation-candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerControllers.DungeonServerController::UpdateDungeonLocation(CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+<li><code>CandideServer.MessageModels.Dungeons.DiscoverDungeonLocationMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_DungeonServerService.html#send-discoverdungeonlocationtoeveryone-candideserver-messagemodels-dungeons-discoverdungeonlocationmessage---system-void">CandideServer.ServerServices.DungeonServerService::Send_DiscoverDungeonLocationToEveryone(CandideServer.MessageModels.Dungeons.DiscoverDungeonLocationMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Models_Rewards_MapMarkerRewardStrategy.html#applyreward-system-nullable-1-system-guid---system-boolean---system-void"><code>CandideServer.Models.Rewards.MapMarkerRewardStrategy::ApplyReward</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_DungeonServerService.html#onreceive-discoverdungeon-candideserver-messagemodels-dungeons-discoverdungeonmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.DungeonServerService::OnReceive_DiscoverDungeon</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="EnterInterior public System.Void EnterInterior(CandideServer.Models.Dungeons.DungeonLocationModel locationModel, CandideServer.Models.Dungeons.ActiveDungeonModel activeDungeonModel, CandideServer.Models.Worlds.WorldModel worldModel, System.Nullable&lt;System.Guid&gt; roomId, System.Int32 exitDirection) System.Void locationModel CandideServer.Models.Dungeons.DungeonLocationModel activeDungeonModel CandideServer.Models.Dungeons.ActiveDungeonModel worldModel CandideServer.Models.Worlds.WorldModel roomId System.Nullable&lt;System.Guid&gt; exitDirection System.Int32" id="enterinterior-candideserver-models-dungeons-dungeonlocationmodel--candideserver-models-dungeons-activedungeonmodel--candideserver-models-worlds-worldmodel--system-nullable-1-system-guid---system-int32---system-void">
+<div class="method-heading">
+<h3><code>EnterInterior</code></h3>
+<a class="permalink" href="#enterinterior-candideserver-models-dungeons-dungeonlocationmodel--candideserver-models-dungeons-activedungeonmodel--candideserver-models-worlds-worldmodel--system-nullable-1-system-guid---system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void EnterInterior(CandideServer.Models.Dungeons.DungeonLocationModel locationModel, CandideServer.Models.Dungeons.ActiveDungeonModel activeDungeonModel, CandideServer.Models.Worlds.WorldModel worldModel, System.Nullable&lt;System.Guid&gt; roomId, System.Int32 exitDirection)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::EnterInterior(CandideServer.Models.Dungeons.DungeonLocationModel, CandideServer.Models.Dungeons.ActiveDungeonModel, CandideServer.Models.Worlds.WorldModel, System.Nullable&lt;System.Guid&gt;, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void EnterInterior(<a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> locationModel, <a href="../../types/CandideServer/CandideServer_Models_Dungeons_ActiveDungeonModel.html">CandideServer.Models.Dungeons.ActiveDungeonModel</a> activeDungeonModel, <a href="../../types/CandideServer/CandideServer_Models_Worlds_WorldModel.html">CandideServer.Models.Worlds.WorldModel</a> worldModel, System.Nullable&lt;System.Guid&gt; roomId, System.Int32 exitDirection)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E9A83F42C7A6C72A8D52FA328E6AFF1D942533CE9F51C12A8DD9BE0326C6FC1E</code></li>
+<li><span>Body hash</span><code>4DD379B685AD1EDFC19EF6559E00C2DFD209D9FD70CE6A261A0FCF0AAE59EBEF</code></li>
+<li><span>IL size</span><span>149</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#updateactivedungeon-candideserver-models-dungeons-activedungeonmodel---system-void">CandideServer.ServerControllers.DungeonServerController::UpdateActiveDungeon(CandideServer.Models.Dungeons.ActiveDungeonModel)</a></code></li>
+<li><code>CandideServer.MessageModels.Dungeons.ActiveDungeonMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_DungeonServerService.html#send-activedungeon-candideserver-messagemodels-dungeons-activedungeonmessage---system-void">CandideServer.ServerServices.DungeonServerService::Send_ActiveDungeon(CandideServer.MessageModels.Dungeons.ActiveDungeonMessage)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::get_Item(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#enterroom-candideserver-models-dungeons-dungeonlocationroommodel--system-int32--system-single--system-boolean---system-void">CandideServer.ServerManagers.DungeonServerManager::EnterRoom(CandideServer.Models.Dungeons.DungeonLocationRoomModel, System.Int32, System.Single, System.Boolean)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#tryenterdungeon-system-guid---system-void"><code>CandideServer.ServerManagers.DungeonServerManager::TryEnterDungeon</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#tryenterroom-system-guid--system-guid--system-int32---system-void"><code>CandideServer.ServerManagers.DungeonServerManager::TryEnterRoom</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="EnterRoom private System.Void EnterRoom(CandideServer.Models.Dungeons.DungeonLocationRoomModel model, System.Int32 exitDirection, System.Single distanceForwardFromTransitionZoneEdge, System.Boolean enterDungeon) System.Void model CandideServer.Models.Dungeons.DungeonLocationRoomModel exitDirection System.Int32 distanceForwardFromTransitionZoneEdge System.Single enterDungeon System.Boolean" id="enterroom-candideserver-models-dungeons-dungeonlocationroommodel--system-int32--system-single--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>EnterRoom</code></h3>
+<a class="permalink" href="#enterroom-candideserver-models-dungeons-dungeonlocationroommodel--system-int32--system-single--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void EnterRoom(CandideServer.Models.Dungeons.DungeonLocationRoomModel model, System.Int32 exitDirection, System.Single distanceForwardFromTransitionZoneEdge, System.Boolean enterDungeon)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::EnterRoom(CandideServer.Models.Dungeons.DungeonLocationRoomModel, System.Int32, System.Single, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void EnterRoom(<a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationRoomModel.html">CandideServer.Models.Dungeons.DungeonLocationRoomModel</a> model, System.Int32 exitDirection, System.Single distanceForwardFromTransitionZoneEdge, System.Boolean enterDungeon)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>322BB463E79D986195AB5C17966D0FCBF041CFB5A4F81C5514489CB2FD62D9B1</code></li>
+<li><span>Body hash</span><code>9EEEC095A5EC15322C3AF1CC3AB34D95D77F18946D57E5DD1F0D2F7B76F8C47F</code></li>
+<li><span>IL size</span><span>276</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, CandideServer.Models.Dungeons.DungeonTransitionArea&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#directiontovector3-system-single---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.VectorExtension::DirectionToVector3(System.Single)</a></code></li>
+<li><code>CandideCreator.Shared.Models.AxisAlignedBox::get_Size()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Division(Microsoft.Xna.Framework.Vector3, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Addition(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Multiply(Microsoft.Xna.Framework.Vector3, System.Single)</code></li>
+<li><code>CandideServer.MessageModels.PlayerCharacters.EnterDungeonMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#sendenterdungeon-candideserver-messagemodels-playercharacters-enterdungeonmessage--candideserver-eventbus-eventbusargs---system-void">CandideServer.ServerServices.PlayerServerService::SendEnterDungeon(CandideServer.MessageModels.PlayerCharacters.EnterDungeonMessage, CandideServer.EventBus.EventBusArgs)</a></code></li>
+<li><code>CandideServer.MessageModels.PlayerCharacters.EnterRoomMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#sendenterdungeonroom-candideserver-messagemodels-playercharacters-enterroommessage--candideserver-eventbus-eventbusargs---system-void">CandideServer.ServerServices.PlayerServerService::SendEnterDungeonRoom(CandideServer.MessageModels.PlayerCharacters.EnterRoomMessage, CandideServer.EventBus.EventBusArgs)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#enterinterior-candideserver-models-dungeons-dungeonlocationmodel--candideserver-models-dungeons-activedungeonmodel--candideserver-models-worlds-worldmodel--system-nullable-1-system-guid---system-int32---system-void"><code>CandideServer.ServerManagers.DungeonServerManager::EnterInterior</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Tried to enter dungeon room </code></li>
+<li><code> in direction </code></li>
+<li><code> but could not find a transition zone</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateNewChallengeDungeon public System.Void GenerateNewChallengeDungeon(CandideServer.Data.Dungeons.ChallengeDungeonData data, CandideServer.Models.Dungeons.DungeonLocationModel dungeonLocationModel) System.Void data CandideServer.Data.Dungeons.ChallengeDungeonData dungeonLocationModel CandideServer.Models.Dungeons.DungeonLocationModel" id="generatenewchallengedungeon-candideserver-data-dungeons-challengedungeondata--candideserver-models-dungeons-dungeonlocationmodel---system-void">
+<div class="method-heading">
+<h3><code>GenerateNewChallengeDungeon</code></h3>
+<a class="permalink" href="#generatenewchallengedungeon-candideserver-data-dungeons-challengedungeondata--candideserver-models-dungeons-dungeonlocationmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GenerateNewChallengeDungeon(CandideServer.Data.Dungeons.ChallengeDungeonData data, CandideServer.Models.Dungeons.DungeonLocationModel dungeonLocationModel)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::GenerateNewChallengeDungeon(CandideServer.Data.Dungeons.ChallengeDungeonData, CandideServer.Models.Dungeons.DungeonLocationModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GenerateNewChallengeDungeon(<a href="../../types/CandideServer/CandideServer_Data_Dungeons_ChallengeDungeonData.html">CandideServer.Data.Dungeons.ChallengeDungeonData</a> data, <a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> dungeonLocationModel)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>88B66DE10A2718B287514170085265BC09E3E411566E296BB30190077D5E6FDF</code></li>
+<li><span>Body hash</span><code>9995BFF5C2B69AFEB66D90A647315FC25A07D7B565D4864B6730CE5350F153DE</code></li>
+<li><span>IL size</span><span>122</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Database_Dungeons_ChallengeDungeonConfigDataBase.html#trygetconfigdata-system-string--candideserver-data-dungeons-challengedungeonconfig----system-boolean">CandideServer.Database.Dungeons.ChallengeDungeonConfigDataBase::TryGetConfigData(System.String, CandideServer.Data.Dungeons.ChallengeDungeonConfig&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_Dungeons_EnemiesBaseConfigDataBase.html#trygetconfigdata-system-string--candideserver-data-dungeons-enemiesbaseconfig----system-boolean">CandideServer.Database.Dungeons.EnemiesBaseConfigDataBase::TryGetConfigData(System.String, CandideServer.Data.Dungeons.EnemiesBaseConfig&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_Dungeons_DestructablesBaseConfigDataBase.html#trygetconfigdata-system-string--candideserver-data-dungeons-destructablesbaseconfig----system-boolean">CandideServer.Database.Dungeons.DestructablesBaseConfigDataBase::TryGetConfigData(System.String, CandideServer.Data.Dungeons.DestructablesBaseConfig&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_Dungeons_PropsBaseConfigDataBase.html#trygetconfigdata-system-string--candideserver-data-dungeons-propsbaseconfig----system-boolean">CandideServer.Database.Dungeons.PropsBaseConfigDataBase::TryGetConfigData(System.String, CandideServer.Data.Dungeons.PropsBaseConfig&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerChallengeDungeonGenerator.html#generatenewchallengedungeon-candideserver-models-dungeons-dungeonlocationmodel--candideserver-data-dungeons-challengedungeonconfig--candideserver-generators-dungeon-generatechallengedungeonargs---system-boolean">CandideServer.Generators.Dungeon.ServerChallengeDungeonGenerator::GenerateNewChallengeDungeon(CandideServer.Models.Dungeons.DungeonLocationModel, CandideServer.Data.Dungeons.ChallengeDungeonConfig, CandideServer.Generators.Dungeon.GenerateChallengeDungeonArgs)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#updatedungeonlocation-candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerControllers.DungeonServerController::UpdateDungeonLocation(CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+<li><code>CandideServer.MessageModels.Dungeons.DungeonLocationMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_DungeonServerService.html#send-dungeonlocationtoeveryone-candideserver-messagemodels-dungeons-dungeonlocationmessage---system-void">CandideServer.ServerServices.DungeonServerService::Send_DungeonLocationToEveryone(CandideServer.MessageModels.Dungeons.DungeonLocationMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_DungeonServerService.html#onreceive-spawndungeoncheat-candideserver-messagemodels-dungeons-spawndungeoncheatmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.DungeonServerService::OnReceive_SpawnDungeonCheat</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetDungeonLocationFromWorldId public CandideServer.Models.Dungeons.DungeonLocationModel GetDungeonLocationFromWorldId(System.Guid worldId) CandideServer.Models.Dungeons.DungeonLocationModel worldId System.Guid" id="getdungeonlocationfromworldid-system-guid---candideserver-models-dungeons-dungeonlocationmodel">
+<div class="method-heading">
+<h3><code>GetDungeonLocationFromWorldId</code></h3>
+<a class="permalink" href="#getdungeonlocationfromworldid-system-guid---candideserver-models-dungeons-dungeonlocationmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Dungeons.DungeonLocationModel GetDungeonLocationFromWorldId(System.Guid worldId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::GetDungeonLocationFromWorldId(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> GetDungeonLocationFromWorldId(System.Guid worldId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F5950FA01014D15BC03855ED65A26A69C289F7071C90FE1B6FF51A73CA189B1C</code></li>
+<li><span>Body hash</span><code>B92CE8320C98F655D1D21C59B861BD51C1199626021D6E306352DC7605046952</code></li>
+<li><span>IL size</span><span>100</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerWildCitizenEntityController.html#entityinitialize----system-void"><code>CandideServer.Entities.Controllers.ServerWildCitizenEntityController::EntityInitialize</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Chest_ServerChestController.html#getdroptableidfromparameters-candidecreator-shared-helpers-parameters--serverchestcontroller-lootablechesttype--system-guid--microsoft-xna-framework-vector2---system-valuetuple-3-system-string-system-boolean-candideserver-models-dungeons-dungeonlocationmodel-"><code>CandideServer.Entities.ControllerSets.Chest.ServerChestController::GetDropTableIdFromParameters</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Chest_ServerChestController.html#onkilled-shared-entity-entitykillinfo---shared-entity-base-onkilledbehaviour"><code>CandideServer.Entities.ControllerSets.Chest.ServerChestController::OnKilled</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Chest_ServerChestController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.ControllerSets.Chest.ServerChestController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaController.html#handlearenawipereset-system-single---system-void"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController::HandleArenaWipeReset</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#removebossfight-candideserver-models-boss-bossfightmodel--system-boolean--system-boolean---system-void"><code>CandideServer.ServerManagers.BossServerManager::RemoveBossFight</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#getdungeonroomfromworldid-system-guid---candideserver-models-dungeons-dungeonlocationroommodel"><code>CandideServer.ServerManagers.DungeonServerManager::GetDungeonRoomFromWorldId</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#onplayerdied-candideserver-serverservices-serverjoinedplayermodel--candideserver-messagemodels-playercharacters-playerdiedmessage--system-nullable-1-candideserver-server-network-connectedpeer----system-void"><code>CandideServer.ServerManagers.PlayerServerManager::OnPlayerDied</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetDungeonRoomFromWorldId public CandideServer.Models.Dungeons.DungeonLocationRoomModel GetDungeonRoomFromWorldId(System.Guid worldId) CandideServer.Models.Dungeons.DungeonLocationRoomModel worldId System.Guid" id="getdungeonroomfromworldid-system-guid---candideserver-models-dungeons-dungeonlocationroommodel">
+<div class="method-heading">
+<h3><code>GetDungeonRoomFromWorldId</code></h3>
+<a class="permalink" href="#getdungeonroomfromworldid-system-guid---candideserver-models-dungeons-dungeonlocationroommodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Dungeons.DungeonLocationRoomModel GetDungeonRoomFromWorldId(System.Guid worldId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::GetDungeonRoomFromWorldId(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationRoomModel.html">CandideServer.Models.Dungeons.DungeonLocationRoomModel</a> GetDungeonRoomFromWorldId(System.Guid worldId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationRoomModel.html">CandideServer.Models.Dungeons.DungeonLocationRoomModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>52478692F1368BC11D3820742DA7B83C11D106DB8A2B6AC755E3FAE8BD92D63A</code></li>
+<li><span>Body hash</span><code>F8B73B1B9EFE6AA81E06F1C9AF2F44112651AE73300A3D53682D7C8C6B5889B9</code></li>
+<li><span>IL size</span><span>32</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#getdungeonlocationfromworldid-system-guid---candideserver-models-dungeons-dungeonlocationmodel">CandideServer.ServerManagers.DungeonServerManager::GetDungeonLocationFromWorldId(System.Guid)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Chest_ServerChestController.html#onkilled-shared-entity-entitykillinfo---shared-entity-base-onkilledbehaviour"><code>CandideServer.Entities.ControllerSets.Chest.ServerChestController::OnKilled</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#onplayerdied-candideserver-serverservices-serverjoinedplayermodel--candideserver-messagemodels-playercharacters-playerdiedmessage--system-nullable-1-candideserver-server-network-connectedpeer----system-void"><code>CandideServer.ServerManagers.PlayerServerManager::OnPlayerDied</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ResetDungeon public System.Void ResetDungeon(CandideServer.Models.Dungeons.ActiveDungeonModel activeDungeon, CandideServer.Models.Dungeons.DungeonLocationModel dungeonLocation) System.Void activeDungeon CandideServer.Models.Dungeons.ActiveDungeonModel dungeonLocation CandideServer.Models.Dungeons.DungeonLocationModel" id="resetdungeon-candideserver-models-dungeons-activedungeonmodel--candideserver-models-dungeons-dungeonlocationmodel---system-void">
+<div class="method-heading">
+<h3><code>ResetDungeon</code></h3>
+<a class="permalink" href="#resetdungeon-candideserver-models-dungeons-activedungeonmodel--candideserver-models-dungeons-dungeonlocationmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ResetDungeon(CandideServer.Models.Dungeons.ActiveDungeonModel activeDungeon, CandideServer.Models.Dungeons.DungeonLocationModel dungeonLocation)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::ResetDungeon(CandideServer.Models.Dungeons.ActiveDungeonModel, CandideServer.Models.Dungeons.DungeonLocationModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ResetDungeon(<a href="../../types/CandideServer/CandideServer_Models_Dungeons_ActiveDungeonModel.html">CandideServer.Models.Dungeons.ActiveDungeonModel</a> activeDungeon, <a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> dungeonLocation)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>235DE916E2E948425407746C063028255AE83C9F2CE6D61DEF497FC7B9218D01</code></li>
+<li><span>Body hash</span><code>638712F382CFC194130B41F0381C97134E6E37C3A60445FBE150733D72E9D7B6</code></li>
+<li><span>IL size</span><span>15</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#updatedungeonlocationclearedstate-candideserver-models-dungeons-activedungeonmodel--candideserver-models-dungeons-dungeonlocationmodel---system-boolean">CandideServer.ServerControllers.DungeonServerController::UpdateDungeonLocationClearedState(CandideServer.Models.Dungeons.ActiveDungeonModel, CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#resetdungeon-candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerControllers.DungeonServerController::ResetDungeon(CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaController.html#handlearenawipereset-system-single---system-void"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController::HandleArenaWipeReset</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#removebossfight-candideserver-models-boss-bossfightmodel--system-boolean--system-boolean---system-void"><code>CandideServer.ServerManagers.BossServerManager::RemoveBossFight</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#resetbossspawnlocation-candideserver-models-boss-bosslocationmodel--system-boolean--system-boolean---system-void"><code>CandideServer.ServerManagers.BossServerManager::ResetBossSpawnLocation</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#resetdungeoncompletely-candideserver-models-dungeons-dungeonlocationmodel---system-void"><code>CandideServer.ServerManagers.DungeonServerManager::ResetDungeonCompletely</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_DungeonServerSystem.html#checkifshouldresetdungeon----system-void"><code>CandideServer.ServerSystems.DungeonServerSystem::CheckIfShouldResetDungeon</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ResetDungeonCompletely public System.Void ResetDungeonCompletely(CandideServer.Models.Dungeons.DungeonLocationModel location) System.Void location CandideServer.Models.Dungeons.DungeonLocationModel" id="resetdungeoncompletely-candideserver-models-dungeons-dungeonlocationmodel---system-void">
+<div class="method-heading">
+<h3><code>ResetDungeonCompletely</code></h3>
+<a class="permalink" href="#resetdungeoncompletely-candideserver-models-dungeons-dungeonlocationmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ResetDungeonCompletely(CandideServer.Models.Dungeons.DungeonLocationModel location)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::ResetDungeonCompletely(CandideServer.Models.Dungeons.DungeonLocationModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ResetDungeonCompletely(<a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> location)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EC492D665032A8CCA000744F66BB4BD5E5E5D585D88189FF410D140567582278</code></li>
+<li><span>Body hash</span><code>C6873C9B0EB77BEA91852D9075339F19269FF4C683CB41A2B96B5B4FDFBF828F</code></li>
+<li><span>IL size</span><span>305</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.ActiveDungeonModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#resetdungeon-candideserver-models-dungeons-activedungeonmodel--candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerManagers.DungeonServerManager::ResetDungeon(CandideServer.Models.Dungeons.ActiveDungeonModel, CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.UInt16&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, System.Int32&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, System.Guid&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, System.Guid&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Int32, System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Int32, System.Guid&gt;::get_Current()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_SimpleInventorySController.html#removeinventory-system-guid--system-boolean---system-void">CandideServer.ServerControllers.SimpleInventorySController::RemoveInventory(System.Guid, System.Boolean)</a></code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Int32, System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::MoveNext()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::Clear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#updatedungeonlocation-candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerControllers.DungeonServerController::UpdateDungeonLocation(CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#setupdungeonquest-candideserver-models-dungeons-dungeonlocationmodel--system-string---system-void"><code>CandideServer.ServerManagers.DungeonServerManager::SetupDungeonQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#setupfetchquestloot-candideserver-models-dungeons-dungeonlocationmodel--system-collections-generic-list-1-shared-models-items-itemamount---system-string--system-boolean---system-void"><code>CandideServer.ServerManagers.DungeonServerManager::SetupFetchQuestLoot</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetupDungeonQuest public System.Void SetupDungeonQuest(CandideServer.Models.Dungeons.DungeonLocationModel location, System.String questId) System.Void location CandideServer.Models.Dungeons.DungeonLocationModel questId System.String" id="setupdungeonquest-candideserver-models-dungeons-dungeonlocationmodel--system-string---system-void">
+<div class="method-heading">
+<h3><code>SetupDungeonQuest</code></h3>
+<a class="permalink" href="#setupdungeonquest-candideserver-models-dungeons-dungeonlocationmodel--system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetupDungeonQuest(CandideServer.Models.Dungeons.DungeonLocationModel location, System.String questId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::SetupDungeonQuest(CandideServer.Models.Dungeons.DungeonLocationModel, System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetupDungeonQuest(<a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> location, System.String questId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C42CE09016E80DB4E9E9CCD12DA5316206CB7D6FA0340B4D936D50D0654F7CB1</code></li>
+<li><span>Body hash</span><code>640A8A9CF627AFFEE20EFC79B3B37B9DA22D9F5FC472BC87F0E9106CCA88AC0D</code></li>
+<li><span>IL size</span><span>44</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#resetdungeoncompletely-candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerManagers.DungeonServerManager::ResetDungeonCompletely(CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#updatedungeonlocation-candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerControllers.DungeonServerController::UpdateDungeonLocation(CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+<li><code>CandideServer.MessageModels.Dungeons.DungeonLocationMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_DungeonServerService.html#send-dungeonlocationtoeveryone-candideserver-messagemodels-dungeons-dungeonlocationmessage---system-void">CandideServer.ServerServices.DungeonServerService::Send_DungeonLocationToEveryone(CandideServer.MessageModels.Dungeons.DungeonLocationMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#createactiveworldquest-shared-models-quests-questdata---shared-models-quests-questinstancemodel"><code>CandideServer.ServerManagers.QuestsServerManager::CreateActiveWorldQuest</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetupFetchQuestLoot public System.Void SetupFetchQuestLoot(CandideServer.Models.Dungeons.DungeonLocationModel location, System.Collections.Generic.List&lt;Shared.Models.Items.ItemAmount&gt; itemAmounts, System.String questId, System.Boolean resetDungeon) System.Void location CandideServer.Models.Dungeons.DungeonLocationModel itemAmounts System.Collections.Generic.List&lt;Shared.Models.Items.ItemAmount&gt; questId System.String resetDungeon System.Boolean" id="setupfetchquestloot-candideserver-models-dungeons-dungeonlocationmodel--system-collections-generic-list-1-shared-models-items-itemamount---system-string--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>SetupFetchQuestLoot</code></h3>
+<a class="permalink" href="#setupfetchquestloot-candideserver-models-dungeons-dungeonlocationmodel--system-collections-generic-list-1-shared-models-items-itemamount---system-string--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetupFetchQuestLoot(CandideServer.Models.Dungeons.DungeonLocationModel location, System.Collections.Generic.List&lt;Shared.Models.Items.ItemAmount&gt; itemAmounts, System.String questId, System.Boolean resetDungeon)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::SetupFetchQuestLoot(CandideServer.Models.Dungeons.DungeonLocationModel, System.Collections.Generic.List&lt;Shared.Models.Items.ItemAmount&gt;, System.String, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetupFetchQuestLoot(<a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> location, System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Models_Items_ItemAmount.html">Shared.Models.Items.ItemAmount</a>&gt; itemAmounts, System.String questId, System.Boolean resetDungeon)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F988C965E92FEF6E97AEC22C4350B5B4C16F9BF2DB8B4423654ECC01DBEB134E</code></li>
+<li><span>Body hash</span><code>5FF51E66EE74E9A05B7088201C3A54E4CA7B05B5DB6AC071F6F41D136622F64C</code></li>
+<li><span>IL size</span><span>138</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#resetdungeoncompletely-candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerManagers.DungeonServerManager::ResetDungeonCompletely(CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Int32&gt;&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Items.ItemAmount&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Items.ItemAmount&gt;::get_Current()</code></li>
+<li><code>System.ValueTuple&lt;System.String, System.Int32&gt;::.ctor(!0, !1)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, System.Int32&gt;&gt;::Add(!0)</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Items.ItemAmount&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_DungeonServerController.html#updatedungeonlocation-candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerControllers.DungeonServerController::UpdateDungeonLocation(CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+<li><code>CandideServer.MessageModels.Dungeons.DungeonLocationMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_DungeonServerService.html#send-dungeonlocationtoeveryone-candideserver-messagemodels-dungeons-dungeonlocationmessage---system-void">CandideServer.ServerServices.DungeonServerService::Send_DungeonLocationToEveryone(CandideServer.MessageModels.Dungeons.DungeonLocationMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#setupfetchquest-shared-models-quests-questdata--shared-models-quests-questinstancemodel--system-single---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::SetupFetchQuest</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryEnterDungeon public System.Void TryEnterDungeon(System.Guid locationId) System.Void locationId System.Guid" id="tryenterdungeon-system-guid---system-void">
+<div class="method-heading">
+<h3><code>TryEnterDungeon</code></h3>
+<a class="permalink" href="#tryenterdungeon-system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void TryEnterDungeon(System.Guid locationId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::TryEnterDungeon(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void TryEnterDungeon(System.Guid locationId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8013CA1E6925AA6AD3B5B09A2C8DB819FF6EF6DEDA44B38B306162F8853EC9A6</code></li>
+<li><span>Body hash</span><code>AE6F4ED0985E352D19344416F63A67F69B52802011E80DF683A4CADB44AD703D</code></li>
+<li><span>IL size</span><span>697</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::get_Current()</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.ActiveDungeonModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_Dungeons_ChallengeDungeonDataBase.html#trygetdata-system-string--candideserver-data-dungeons-challengedungeondata----system-boolean">CandideServer.Database.Dungeons.ChallengeDungeonDataBase::TryGetData(System.String, CandideServer.Data.Dungeons.ChallengeDungeonData&amp;)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_Dungeons_ChallengeDungeonConfigDataBase.html#trygetconfigdata-system-string--candideserver-data-dungeons-challengedungeonconfig----system-boolean">CandideServer.Database.Dungeons.ChallengeDungeonConfigDataBase::TryGetConfigData(System.String, CandideServer.Data.Dungeons.ChallengeDungeonConfig&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerChallengeDungeonGenerator.html#generatenewchallengedungeon-candideserver-models-dungeons-dungeonlocationmodel--candideserver-data-dungeons-challengedungeonconfig--candideserver-generators-dungeon-generatechallengedungeonargs---system-boolean">CandideServer.Generators.Dungeon.ServerChallengeDungeonGenerator::GenerateNewChallengeDungeon(CandideServer.Models.Dungeons.DungeonLocationModel, CandideServer.Data.Dungeons.ChallengeDungeonConfig, CandideServer.Generators.Dungeon.GenerateChallengeDungeonArgs)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_DungeonRoomDataBase.html#trygetdungeonroomdata-system-string--candideserver-models-dungeons-dungeonroomdatamodel----system-boolean">CandideServer.Database.DungeonRoomDataBase::TryGetDungeonRoomData(System.String, CandideServer.Models.Dungeons.DungeonRoomDataModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerDungeonLoader.html#generatedungeonlayout-candideserver-models-dungeons-dungeonroomdatamodel--candideserver-models-dungeons-dungeonlocationmodel---system-boolean">CandideServer.Generators.Dungeon.ServerDungeonLoader::GenerateDungeonLayout(CandideServer.Models.Dungeons.DungeonRoomDataModel, CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerChallengeDungeonSetup.html#tryloadindungeonlayout-candideserver-models-dungeons-dungeonlocationmodel--candideserver-models-worlds-worldmodel---candideserver-models-dungeons-activedungeonmodel----system-boolean">CandideServer.Generators.Dungeon.ServerChallengeDungeonSetup::TryLoadInDungeonLayout(CandideServer.Models.Dungeons.DungeonLocationModel, CandideServer.Models.Worlds.WorldModel&amp;, CandideServer.Models.Dungeons.ActiveDungeonModel&amp;)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerDungeonLoader.html#tryloadindungeonlayout-candideserver-models-dungeons-dungeonlocationmodel--candideserver-models-worlds-worldmodel---candideserver-models-dungeons-activedungeonmodel----system-boolean">CandideServer.Generators.Dungeon.ServerDungeonLoader::TryLoadInDungeonLayout(CandideServer.Models.Dungeons.DungeonLocationModel, CandideServer.Models.Worlds.WorldModel&amp;, CandideServer.Models.Dungeons.ActiveDungeonModel&amp;)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_MathExtension.html#mod-system-single--system-single---system-single">CandideCreator.Shared.Helpers.MathExtension::Mod(System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#enterinterior-candideserver-models-dungeons-dungeonlocationmodel--candideserver-models-dungeons-activedungeonmodel--candideserver-models-worlds-worldmodel--system-nullable-1-system-guid---system-int32---system-void">CandideServer.ServerManagers.DungeonServerManager::EnterInterior(CandideServer.Models.Dungeons.DungeonLocationModel, CandideServer.Models.Dungeons.ActiveDungeonModel, CandideServer.Models.Worlds.WorldModel, System.Nullable&lt;System.Guid&gt;, System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_DungeonServerService.html#onreceive-tryenterdungeon-candideserver-messagemodels-dungeons-tryenterdungeonmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.DungeonServerService::OnReceive_TryEnterDungeon</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>TryEnterDungeon - location ID could not be found in ServerGameState</code></li>
+<li><code>TryEnterDungeon - challenge dungeon data id &#39;</code></li>
+<li><code>&#39; could not be found</code></li>
+<li><code>TryEnterDungeon - challenge dungeon config &#39;</code></li>
+<li><code>TryEnterDungeon - failed to generate dungeon &#39;</code></li>
+<li><code>&#39;</code></li>
+<li><code>TryEnterDungeon - dungeon room data id &#39;</code></li>
+<li><code>TryEnterDungeon</code></li>
+<li><code> - failed to load in challenge dungeon layout for dungeon location &#39;</code></li>
+<li><code> - failed to load in dungeon layout for dungeon location &#39;</code></li>
+<li><code>- active dungeon world ID could not be found in ServerGameState, id:</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryEnterRoom public System.Void TryEnterRoom(System.Guid locationId, System.Guid targetRoomId, System.Int32 nextExitDirection) System.Void locationId System.Guid targetRoomId System.Guid nextExitDirection System.Int32" id="tryenterroom-system-guid--system-guid--system-int32---system-void">
+<div class="method-heading">
+<h3><code>TryEnterRoom</code></h3>
+<a class="permalink" href="#tryenterroom-system-guid--system-guid--system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void TryEnterRoom(System.Guid locationId, System.Guid targetRoomId, System.Int32 nextExitDirection)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.DungeonServerManager::TryEnterRoom(System.Guid, System.Guid, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void TryEnterRoom(System.Guid locationId, System.Guid targetRoomId, System.Int32 nextExitDirection)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C016D8B41A6756FADA566511553B5021D5A4BE69A9BFE77D6BB156A6A626869D</code></li>
+<li><span>Body hash</span><code>8412F9F823CB39CFCB76EB0F001A0381773FE9D2560BFC76588215D95F3E079D</code></li>
+<li><span>IL size</span><span>99</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.ActiveDungeonModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::ContainsKey(!0)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#enterinterior-candideserver-models-dungeons-dungeonlocationmodel--candideserver-models-dungeons-activedungeonmodel--candideserver-models-worlds-worldmodel--system-nullable-1-system-guid---system-int32---system-void">CandideServer.ServerManagers.DungeonServerManager::EnterInterior(CandideServer.Models.Dungeons.DungeonLocationModel, CandideServer.Models.Dungeons.ActiveDungeonModel, CandideServer.Models.Worlds.WorldModel, System.Nullable&lt;System.Guid&gt;, System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_DungeonServerService.html#onreceive-tryenterroom-candideserver-messagemodels-dungeons-tryenterdungeonroommessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.DungeonServerService::OnReceive_TryEnterRoom</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>DungeonServerManager.TryEnterRoom - location ID could not be found in ServerGameState</code></li>
+<li><code>DungeonServerManager.TryEnterRoom - world ID could not be found in ServerGameState</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

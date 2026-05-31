@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerManagers.PoiServerManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerManagers.PoiServerManager</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerManagers.PoiServerManager
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerManagers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 14 methods, 0 properties, 3 fields, 0 events
+
+## Public Methods
+- `public System.Void DecidePoiLocations(CandideServer.World.Generation.WorldGenerator worldGenerator)`
+- `public System.Void GeneratePois(CandideServer.World.Generation.WorldGenerator worldGenerator, Microsoft.Xna.Framework.Vector2 spawnCenterTile, System.Guid worldId, CandideServer.Game.GameConfig config)`
+- `public System.Int32 GetAreaForSize(CandideServer.Models.PoiSize size)`
+- `public Microsoft.Xna.Framework.Point GetSpawnPointForWorldInSlot(System.String worldDataId, Microsoft.Xna.Framework.Vector2 center)`
+- `public Microsoft.Xna.Framework.Point GetWorldSizeForPoi(System.String worldDataId)`
+- `public System.Void SpawnExteriorMapPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF bounds, System.Single difficulty, System.Random random, System.Nullable&lt;System.Boolean&gt; overrideFlippable, System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt; entitySpawnAction)`
+- `public System.Void SpawnPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF tileBounds, System.Single difficulty, System.Random random, System.Nullable&lt;System.Boolean&gt; overrideFlipped)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerManagers_PoiServerManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerManagers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>14</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>3</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerManagers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>16C9FDFA04965EA80F3E94C29A4566B933C0810386FACAE72D51B045181E95DF</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ForbiddenTags private System.Collections.Generic.HashSet&lt;System.String&gt; ForbiddenTags System.Collections.Generic.HashSet&lt;System.String&gt;" id="forbiddentags-system-collections-generic-hashset-1-system-string-"><td><span class="member-name-cell"><code>ForbiddenTags</code><a class="permalink" href="#forbiddentags-system-collections-generic-hashset-1-system-string-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.HashSet&lt;System.String&gt; ForbiddenTags">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.HashSet&lt;System.String&gt; ForbiddenTags</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="PreRollDropTables private System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;CandideServer.Models.Dungeons.DungeonLocationModel&gt;&gt; PreRollDropTables System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;CandideServer.Models.Dungeons.DungeonLocationModel&gt;&gt;" id="prerolldroptables-system-collections-generic-dictionary-2-system-string-system-collections-generic-list-1-candideserver-models-dungeons-dungeonlocationmodel--"><td><span class="member-name-cell"><code>PreRollDropTables</code><a class="permalink" href="#prerolldroptables-system-collections-generic-dictionary-2-system-string-system-collections-generic-list-1-candideserver-models-dungeons-dungeonlocationmodel--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;CandideServer.Models.Dungeons.DungeonLocationModel&gt;&gt; PreRollDropTables">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a>&gt;&gt; PreRollDropTables</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="PriorityPoiTables private System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiSize, System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;&gt; PriorityPoiTables System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiSize, System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;&gt;" id="prioritypoitables-system-collections-generic-dictionary-2-candideserver-models-poisize-system-collections-generic-dictionary-2-candideserver-models-poilocationtype-system-collections-generic-hashset-1-candideserver-models-poidata---"><td><span class="member-name-cell"><code>PriorityPoiTables</code><a class="permalink" href="#prioritypoitables-system-collections-generic-dictionary-2-candideserver-models-poisize-system-collections-generic-dictionary-2-candideserver-models-poilocationtype-system-collections-generic-hashset-1-candideserver-models-poidata---" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiSize, System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;&gt; PriorityPoiTables">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;<a href="../../types/CandideServer/CandideServer_Models_PoiSize.html">CandideServer.Models.PoiSize</a>, System.Collections.Generic.Dictionary&lt;<a href="../../types/CandideServer/CandideServer_Models_PoiLocationType.html">CandideServer.Models.PoiLocationType</a>, System.Collections.Generic.HashSet&lt;<a href="../../types/CandideServer/CandideServer_Models_PoiData.html">CandideServer.Models.PoiData</a>&gt;&gt;&gt; PriorityPoiTables</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DecidePoiLocations public System.Void DecidePoiLocations(CandideServer.World.Generation.WorldGenerator worldGenerator) System.Void worldGenerator CandideServer.World.Generation.WorldGenerator" id="decidepoilocations-candideserver-world-generation-worldgenerator---system-void">
+<div class="method-heading">
+<h3><code>DecidePoiLocations</code></h3>
+<a class="permalink" href="#decidepoilocations-candideserver-world-generation-worldgenerator---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DecidePoiLocations(CandideServer.World.Generation.WorldGenerator worldGenerator)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::DecidePoiLocations(CandideServer.World.Generation.WorldGenerator)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DecidePoiLocations(<a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html">CandideServer.World.Generation.WorldGenerator</a> worldGenerator)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>95A7C08C4DAE6B43AC4979707C3372AAB385EB53E981D71556FAF74572E54911</code></li>
+<li><span>Body hash</span><code>C284E2FB3491C21A9B8B3935F7E13F4AE40B1109B5EBE6A20472E74E8A375F77</code></li>
+<li><span>IL size</span><span>1755</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiSize, System.Collections.Generic.List&lt;CandideServer.ServerManagers.PotentialPoiSpaceModel&gt;&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.PotentialPoiSpaceModel&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiSize, System.Collections.Generic.List&lt;CandideServer.ServerManagers.PotentialPoiSpaceModel&gt;&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.PotentialPoiSpaceModel&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;CandideServer.ServerManagers.PotentialPoiSpaceModel&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#getpoisize-candidecreator-shared-models-rectanglef---candideserver-models-poisize">CandideServer.ServerManagers.PoiServerManager::GetPoiSize(CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiSize, System.Collections.Generic.List&lt;CandideServer.ServerManagers.PotentialPoiSpaceModel&gt;&gt;::get_Item(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.PotentialPoiSpaceModel&gt;::Add(!0)</code></li>
+<li><code>List.Enumerator&lt;CandideServer.ServerManagers.PotentialPoiSpaceModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Random::.ctor(System.Int32)</code></li>
+<li><code>System.ReadOnlySpan&lt;CandideServer.Models.PoiSize&gt;::.ctor(System.Void*, System.Int32)</code></li>
+<li><code>System.ReadOnlySpan&lt;CandideServer.Models.PoiSize&gt;::get_Item(System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#getareaforsize-candideserver-models-poisize---system-int32">CandideServer.ServerManagers.PoiServerManager::GetAreaForSize(CandideServer.Models.PoiSize)</a></code></li>
+<li><code>System.Runtime.InteropServices.CollectionsMarshal::AsSpan(System.Collections.Generic.List&lt;!!0&gt;)</code></li>
+<li><code>System.Random::Shuffle(System.Span&lt;!!0&gt;)</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Center()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::.ctor(Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#halfinflate-system-single--system-single---system-void">CandideCreator.Shared.Models.RectangleF::HalfInflate(System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#inflate-system-single--system-single---system-void">CandideCreator.Shared.Models.RectangleF::Inflate(System.Single, System.Single)</a></code></li>
+<li><code>System.Collections.Generic.HashSet&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::.ctor()</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::QueryFast(CandideCreator.Shared.Models.RectangleF)</code></li>
+<li><code>AabbTree.QueryRect&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::GetEnumerator()</code></li>
+<li><code>AabbTree.QueryRect&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::get_Current()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Distance(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::Add(!0)</code></li>
+<li><code>AabbTree.QueryRect&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::MoveNext()</code></li>
+<li><code>CandideServer.ServerManagers.PoiSpaceModel::.ctor()</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::Add(CandideCreator.Shared.Models.RectangleF, !0)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::get_Current()</code></li>
+<li><code>HashSet.Enumerator&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::MoveNext()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#generatepois-candideserver-world-generation-worldgenerator--microsoft-xna-framework-vector2--system-guid--candideserver-game-gameconfig---system-void"><code>CandideServer.ServerManagers.PoiServerManager::GeneratePois</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>biome:volcanic</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="FindPoiForSlot private CandideServer.Models.PoiData FindPoiForSlot(CandideServer.ServerManagers.PoiSpaceModel poiSlot, CandideServer.Database.PoiFastLookupTable dataLookup, System.String biomeId, System.Single difficulty, System.Random random) CandideServer.Models.PoiData poiSlot CandideServer.ServerManagers.PoiSpaceModel dataLookup CandideServer.Database.PoiFastLookupTable biomeId System.String difficulty System.Single random System.Random" id="findpoiforslot-candideserver-servermanagers-poispacemodel--candideserver-database-poifastlookuptable--system-string--system-single--system-random---candideserver-models-poidata">
+<div class="method-heading">
+<h3><code>FindPoiForSlot</code></h3>
+<a class="permalink" href="#findpoiforslot-candideserver-servermanagers-poispacemodel--candideserver-database-poifastlookuptable--system-string--system-single--system-random---candideserver-models-poidata" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private CandideServer.Models.PoiData FindPoiForSlot(CandideServer.ServerManagers.PoiSpaceModel poiSlot, CandideServer.Database.PoiFastLookupTable dataLookup, System.String biomeId, System.Single difficulty, System.Random random)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::FindPoiForSlot(CandideServer.ServerManagers.PoiSpaceModel, CandideServer.Database.PoiFastLookupTable, System.String, System.Single, System.Random)">Copy Harmony target</button>
+</div>
+<p><code>private <a href="../../types/CandideServer/CandideServer_Models_PoiData.html">CandideServer.Models.PoiData</a> FindPoiForSlot(<a href="../../types/CandideServer/CandideServer_ServerManagers_PoiSpaceModel.html">CandideServer.ServerManagers.PoiSpaceModel</a> poiSlot, <a href="../../types/CandideServer/CandideServer_Database_PoiFastLookupTable.html">CandideServer.Database.PoiFastLookupTable</a> dataLookup, System.String biomeId, System.Single difficulty, System.Random random)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_PoiData.html">CandideServer.Models.PoiData</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>714756FD141D7283313AA2BF81BF5B80886826994EAF63D49E0E6153F7DD576E</code></li>
+<li><span>Body hash</span><code>CC1D8C96E6ED3C9232C3007FC297812C4AA54600580D075D7AC3D5E2A7171AFE</code></li>
+<li><span>IL size</span><span>443</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiSize, System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;CandideServer.Models.PoiData&gt;::get_Current()</code></li>
+<li><code>System.Linq.Enumerable::Contains(System.Collections.Generic.IEnumerable&lt;!!0&gt;, !!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, System.Single&gt;::ContainsKey(!0)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;::Remove(!0)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;::Remove(!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiSize, System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;&gt;::Remove(!0)</code></li>
+<li><code>HashSet.Enumerator&lt;CandideServer.Models.PoiData&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Add(!0)</code></li>
+<li><code>HashSet.Enumerator&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::MoveNext()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_PoiFastLookupTable.html#getrandompoi-system-string--system-int32--candideserver-models-poisize--system-random--candideserver-models-poilocationtype--system-collections-generic-hashset-1-system-string----candideserver-models-poidata">CandideServer.Database.PoiFastLookupTable::GetRandomPoi(System.String, System.Int32, CandideServer.Models.PoiSize, System.Random, CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;System.String&gt;)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GeneratePois public System.Void GeneratePois(CandideServer.World.Generation.WorldGenerator worldGenerator, Microsoft.Xna.Framework.Vector2 spawnCenterTile, System.Guid worldId, CandideServer.Game.GameConfig config) System.Void worldGenerator CandideServer.World.Generation.WorldGenerator spawnCenterTile Microsoft.Xna.Framework.Vector2 worldId System.Guid config CandideServer.Game.GameConfig" id="generatepois-candideserver-world-generation-worldgenerator--microsoft-xna-framework-vector2--system-guid--candideserver-game-gameconfig---system-void">
+<div class="method-heading">
+<h3><code>GeneratePois</code></h3>
+<a class="permalink" href="#generatepois-candideserver-world-generation-worldgenerator--microsoft-xna-framework-vector2--system-guid--candideserver-game-gameconfig---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GeneratePois(CandideServer.World.Generation.WorldGenerator worldGenerator, Microsoft.Xna.Framework.Vector2 spawnCenterTile, System.Guid worldId, CandideServer.Game.GameConfig config)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::GeneratePois(CandideServer.World.Generation.WorldGenerator, Microsoft.Xna.Framework.Vector2, System.Guid, CandideServer.Game.GameConfig)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GeneratePois(<a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html">CandideServer.World.Generation.WorldGenerator</a> worldGenerator, Microsoft.Xna.Framework.Vector2 spawnCenterTile, System.Guid worldId, <a href="../../types/CandideServer/CandideServer_Game_GameConfig.html">CandideServer.Game.GameConfig</a> config)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>612BFDD859C84086680FF9AF721503C7F3F3B60B8F60E78425EE5CC52F2CA6CE</code></li>
+<li><span>Body hash</span><code>5202159990B18E3B9934816D69AA07C0628F9E3537598DB83D56EB8A0D361768</code></li>
+<li><span>IL size</span><span>1696</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>PoiServerManager.&lt;&gt;c__DisplayClass2_0::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#decidepoilocations-candideserver-world-generation-worldgenerator---system-void">CandideServer.ServerManagers.PoiServerManager::DecidePoiLocations(CandideServer.World.Generation.WorldGenerator)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;CandideServer.Models.Dungeons.DungeonLocationModel&gt;&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.BossPoISpawnModel&gt;::.ctor()</code></li>
+<li><code>CandideServer.ServerManagers.BossPoISpawnModel::.ctor()</code></li>
+<li><code>PoiServerManager.&lt;&gt;c__DisplayClass2_0::&lt;GeneratePois&gt;b__0(System.String, CandideServer.ServerManagers.PoiSpaceModel)</code></li>
+<li><code>BossPoISpawnModel.CheckIfCanSpawn::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.BossPoISpawnModel&gt;::Add(!0)</code></li>
+<li><code>PoiServerManager.&lt;&gt;c::&lt;GeneratePois&gt;b__2_1(System.String, CandideServer.ServerManagers.PoiSpaceModel)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.SinglePoISpawnModel&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiSize, System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.Models.PoiData&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.String, CandideServer.Models.PoiData&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.String, CandideServer.Models.PoiData&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiSize, System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiSize, System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;CandideServer.Models.PoiLocationType, System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;CandideServer.Models.PoiData&gt;::Add(!0)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.String, CandideServer.Models.PoiData&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Random::.ctor(System.Int32)</code></li>
+<li><code>CandideServer.Database.PoiFastLookupTable::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_PoiFastLookupTable.html#build-system-collections-generic-dictionary-2-system-string-candideserver-models-poidata----system-void">CandideServer.Database.PoiFastLookupTable::Build(System.Collections.Generic.Dictionary&lt;System.String, CandideServer.Models.PoiData&gt;)</a></code></li>
+<li><code>System.Array::GetLength(System.Int32)</code></li>
+<li><code>System.Linq.Enumerable::ToArray(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+<li><code>CandideCreator.Shared.Helpers.RandomHelper::Shuffle(!!0[], System.Random)</code></li>
+<li><code>System.Single[,]::Get(System.Int32, System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.BossPoISpawnModel&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;CandideServer.ServerManagers.BossPoISpawnModel&gt;::get_Current()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>boss:minervas_owl</code></li>
+<li><code>boss:owl</code></li>
+<li><code>Giant Egg Nest</code></li>
+<li><code>boss:cyclops_eye</code></li>
+<li><code>boss:cyclops</code></li>
+<li><code>Satyr Temple</code></li>
+<li><code>Could not find poi with id &#39;</code></li>
+<li><code>&#39; for boss &#39;</code></li>
+<li><code>&#39;</code></li>
+<li><code>Could not find dungeon room with id &#39;</code></li>
+<li><code>Could not find drop table </code></li>
+<li><code> when pre rolling loot.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetAreaForSize public System.Int32 GetAreaForSize(CandideServer.Models.PoiSize size) System.Int32 size CandideServer.Models.PoiSize" id="getareaforsize-candideserver-models-poisize---system-int32">
+<div class="method-heading">
+<h3><code>GetAreaForSize</code></h3>
+<a class="permalink" href="#getareaforsize-candideserver-models-poisize---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 GetAreaForSize(CandideServer.Models.PoiSize size)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::GetAreaForSize(CandideServer.Models.PoiSize)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 GetAreaForSize(<a href="../../types/CandideServer/CandideServer_Models_PoiSize.html">CandideServer.Models.PoiSize</a> size)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6C67CFDCCFD3C1E48D82DE423E82C436E374C0F62E647C6C97F38884E9E9B31F</code></li>
+<li><span>Body hash</span><code>535B54F3D1D019C90EBE57753EDEA491ED79C442148AE47C6AE69A417CD55035</code></li>
+<li><span>IL size</span><span>61</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#decidepoilocations-candideserver-world-generation-worldgenerator---system-void"><code>CandideServer.ServerManagers.PoiServerManager::DecidePoiLocations</code></a></li>
+<li><a href="../../types/Romestead/Candide_World_ExteriorWorldHandler.html#debugdrawground-microsoft-xna-framework-graphics-spritebatch--microsoft-xna-framework-vector2---system-void"><code>Candide.World.ExteriorWorldHandler::DebugDrawGround</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="GetPoiSize private CandideServer.Models.PoiSize GetPoiSize(CandideCreator.Shared.Models.RectangleF tileBounds) CandideServer.Models.PoiSize tileBounds CandideCreator.Shared.Models.RectangleF" id="getpoisize-candidecreator-shared-models-rectanglef---candideserver-models-poisize">
+<div class="method-heading">
+<h3><code>GetPoiSize</code></h3>
+<a class="permalink" href="#getpoisize-candidecreator-shared-models-rectanglef---candideserver-models-poisize" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private CandideServer.Models.PoiSize GetPoiSize(CandideCreator.Shared.Models.RectangleF tileBounds)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::GetPoiSize(CandideCreator.Shared.Models.RectangleF)">Copy Harmony target</button>
+</div>
+<p><code>private <a href="../../types/CandideServer/CandideServer_Models_PoiSize.html">CandideServer.Models.PoiSize</a> GetPoiSize(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> tileBounds)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_PoiSize.html">CandideServer.Models.PoiSize</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C25A2A311560147F8715A6841A0724F89BB5D4CBA56E3AA5B83B99D322A956FF</code></li>
+<li><span>Body hash</span><code>2103E4523126F76EBCA8310F574DF5A8BB8A4F240812D8F615011C88D884C80D</code></li>
+<li><span>IL size</span><span>40</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Area()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#decidepoilocations-candideserver-world-generation-worldgenerator---system-void"><code>CandideServer.ServerManagers.PoiServerManager::DecidePoiLocations</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetSpawnPointForWorldInSlot public Microsoft.Xna.Framework.Point GetSpawnPointForWorldInSlot(System.String worldDataId, Microsoft.Xna.Framework.Vector2 center) Microsoft.Xna.Framework.Point worldDataId System.String center Microsoft.Xna.Framework.Vector2" id="getspawnpointforworldinslot-system-string--microsoft-xna-framework-vector2---microsoft-xna-framework-point">
+<div class="method-heading">
+<h3><code>GetSpawnPointForWorldInSlot</code></h3>
+<a class="permalink" href="#getspawnpointforworldinslot-system-string--microsoft-xna-framework-vector2---microsoft-xna-framework-point" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point GetSpawnPointForWorldInSlot(System.String worldDataId, Microsoft.Xna.Framework.Vector2 center)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::GetSpawnPointForWorldInSlot(System.String, Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Point GetSpawnPointForWorldInSlot(System.String worldDataId, Microsoft.Xna.Framework.Vector2 center)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Point</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A6C9F561BE109B176010F857416317E38D50A653CE26DFE008C8182B2B7B64A3</code></li>
+<li><span>Body hash</span><code>7071C308683BB2226F63D9C699B772C03E353EE7AB4CC381B6232822CF066189</code></li>
+<li><span>IL size</span><span>47</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#getworldsizeforpoi-system-string---microsoft-xna-framework-point">CandideServer.ServerManagers.PoiServerManager::GetWorldSizeForPoi(System.String)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnchallengedungeonpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld---system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnChallengeDungeonPoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnexteriormappoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean---system-action-1-candideserver-servercontrollers-spawnentityargs----system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnExteriorMapPoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnhandcrafteddungeonpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld---system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnHandcraftedDungeonPoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnrandomdungeonspoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld--system-random---system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnRandomDungeonsPoi</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetWorldSizeForPoi public Microsoft.Xna.Framework.Point GetWorldSizeForPoi(System.String worldDataId) Microsoft.Xna.Framework.Point worldDataId System.String" id="getworldsizeforpoi-system-string---microsoft-xna-framework-point">
+<div class="method-heading">
+<h3><code>GetWorldSizeForPoi</code></h3>
+<a class="permalink" href="#getworldsizeforpoi-system-string---microsoft-xna-framework-point" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point GetWorldSizeForPoi(System.String worldDataId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::GetWorldSizeForPoi(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Point GetWorldSizeForPoi(System.String worldDataId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Point</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EA7A2CB1000C909EC07F0095DB13667DB8C59CB7226D0E013BB5DB41D716F2A2</code></li>
+<li><span>Body hash</span><code>BFA3898E9BAD2BC3ABD11865CD352610268AF6B5807D8A889388812DD4825510</code></li>
+<li><span>IL size</span><span>108</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#getworlddataornull-system-string---candideserver-world-serverworlddata">CandideServer.World.ServerWorldDataManager::GetWorldDataOrNull(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#getspawnpointforworldinslot-system-string--microsoft-xna-framework-vector2---microsoft-xna-framework-point"><code>CandideServer.ServerManagers.PoiServerManager::GetSpawnPointForWorldInSlot</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnscatteredpoispoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld--system-random---system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnScatteredPoisPoi</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Tried to spawn poi but could not find cmx file: </code></li>
+<li><code>Tried to spawn poi with cmx </code></li>
+<li><code> but it did not have a tmx file</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="RegisterPreRolledLootTableIds private System.Void RegisterPreRolledLootTableIds(CandideServer.Models.Dungeons.DungeonLocationModel location, System.Collections.Generic.List&lt;System.String&gt; preRolledLootTableIds) System.Void location CandideServer.Models.Dungeons.DungeonLocationModel preRolledLootTableIds System.Collections.Generic.List&lt;System.String&gt;" id="registerprerolledloottableids-candideserver-models-dungeons-dungeonlocationmodel--system-collections-generic-list-1-system-string----system-void">
+<div class="method-heading">
+<h3><code>RegisterPreRolledLootTableIds</code></h3>
+<a class="permalink" href="#registerprerolledloottableids-candideserver-models-dungeons-dungeonlocationmodel--system-collections-generic-list-1-system-string----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void RegisterPreRolledLootTableIds(CandideServer.Models.Dungeons.DungeonLocationModel location, System.Collections.Generic.List&lt;System.String&gt; preRolledLootTableIds)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::RegisterPreRolledLootTableIds(CandideServer.Models.Dungeons.DungeonLocationModel, System.Collections.Generic.List&lt;System.String&gt;)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void RegisterPreRolledLootTableIds(<a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> location, System.Collections.Generic.List&lt;System.String&gt; preRolledLootTableIds)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>93AD983039C7644F195E3F972F5A87CD485BC76FC87DD1F78AE202D7CF52DB86</code></li>
+<li><span>Body hash</span><code>EC454E4A1F50ED4C8F42D5CC52D96A2D16C6D712C69688E2ED79F50BD53119B5</code></li>
+<li><span>IL size</span><span>115</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.String&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;CandideServer.Models.Dungeons.DungeonLocationModel&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.Dungeons.DungeonLocationModel&gt;::Add(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.Dungeons.DungeonLocationModel&gt;::.ctor(System.Int32)</code></li>
+<li><code>System.Runtime.InteropServices.CollectionsMarshal::SetCount(System.Collections.Generic.List&lt;!!0&gt;, System.Int32)</code></li>
+<li><code>System.Runtime.InteropServices.CollectionsMarshal::AsSpan(System.Collections.Generic.List&lt;!!0&gt;)</code></li>
+<li><code>System.Span&lt;CandideServer.Models.Dungeons.DungeonLocationModel&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Collections.Generic.List&lt;CandideServer.Models.Dungeons.DungeonLocationModel&gt;&gt;::set_Item(!0, !1)</code></li>
+<li><code>List.Enumerator&lt;System.String&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnchallengedungeonpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld---system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnChallengeDungeonPoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnhandcrafteddungeonpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld---system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnHandcraftedDungeonPoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnrandomdungeonspoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld--system-random---system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnRandomDungeonsPoi</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SpawnChallengeDungeonPoi private System.Void SpawnChallengeDungeonPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF bounds, System.Single difficulty, CandideServer.Models.ServerChunkedWorld world) System.Void poi CandideServer.Models.PoiData bounds CandideCreator.Shared.Models.RectangleF difficulty System.Single world CandideServer.Models.ServerChunkedWorld" id="spawnchallengedungeonpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld---system-void">
+<div class="method-heading">
+<h3><code>SpawnChallengeDungeonPoi</code></h3>
+<a class="permalink" href="#spawnchallengedungeonpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SpawnChallengeDungeonPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF bounds, System.Single difficulty, CandideServer.Models.ServerChunkedWorld world)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::SpawnChallengeDungeonPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, CandideServer.Models.ServerChunkedWorld)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SpawnChallengeDungeonPoi(<a href="../../types/CandideServer/CandideServer_Models_PoiData.html">CandideServer.Models.PoiData</a> poi, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> bounds, System.Single difficulty, <a href="../../types/CandideServer/CandideServer_Models_ServerChunkedWorld.html">CandideServer.Models.ServerChunkedWorld</a> world)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7B5AD9541D2E4B845D87722E50E926E82E2C7754A28CD1121157D2EE076304EB</code></li>
+<li><span>Body hash</span><code>BBC9842306FB65D1B7E9FF0AEBA1DD0AF6D882348AFBBAA7BC2909B3764D02D9</code></li>
+<li><span>IL size</span><span>189</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Database_Dungeons_ChallengeDungeonDataBase.html#trygetdata-system-string--candideserver-data-dungeons-challengedungeondata----system-boolean">CandideServer.Database.Dungeons.ChallengeDungeonDataBase::TryGetData(System.String, CandideServer.Data.Dungeons.ChallengeDungeonData&amp;)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Center()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#getspawnpointforworldinslot-system-string--microsoft-xna-framework-vector2---microsoft-xna-framework-point">CandideServer.ServerManagers.PoiServerManager::GetSpawnPointForWorldInSlot(System.String, Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Equality(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_PoiLocationTypeExtensions.html#hasflags-candideserver-models-poilocationtype--candideserver-models-poilocationtype---system-boolean">CandideServer.Models.PoiLocationTypeExtensions::HasFlags(CandideServer.Models.PoiLocationType, CandideServer.Models.PoiLocationType)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#addchallengedungeonexterior-candideserver-data-dungeons-challengedungeondata--candideserver-models-poidata--microsoft-xna-framework-point--system-guid--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel">CandideServer.ServerManagers.DungeonServerManager::AddChallengeDungeonExterior(CandideServer.Data.Dungeons.ChallengeDungeonData, CandideServer.Models.PoiData, Microsoft.Xna.Framework.Point, System.Guid, System.Single, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#registerprerolledloottableids-candideserver-models-dungeons-dungeonlocationmodel--system-collections-generic-list-1-system-string----system-void">CandideServer.ServerManagers.PoiServerManager::RegisterPreRolledLootTableIds(CandideServer.Models.Dungeons.DungeonLocationModel, System.Collections.Generic.List&lt;System.String&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean----system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnPoi</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Could not find challenge dungeon data with id &#39;</code></li>
+<li><code>&#39; when spawning poi &#39;</code></li>
+<li><code>&#39;</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnExteriorMapPoi public System.Void SpawnExteriorMapPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF bounds, System.Single difficulty, System.Random random, System.Nullable&lt;System.Boolean&gt; overrideFlippable, System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt; entitySpawnAction) System.Void poi CandideServer.Models.PoiData bounds CandideCreator.Shared.Models.RectangleF difficulty System.Single random System.Random overrideFlippable System.Nullable&lt;System.Boolean&gt; entitySpawnAction System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt;" id="spawnexteriormappoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean---system-action-1-candideserver-servercontrollers-spawnentityargs----system-void">
+<div class="method-heading">
+<h3><code>SpawnExteriorMapPoi</code></h3>
+<a class="permalink" href="#spawnexteriormappoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean---system-action-1-candideserver-servercontrollers-spawnentityargs----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SpawnExteriorMapPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF bounds, System.Single difficulty, System.Random random, System.Nullable&lt;System.Boolean&gt; overrideFlippable, System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt; entitySpawnAction)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::SpawnExteriorMapPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, System.Random, System.Nullable&lt;System.Boolean&gt;, System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SpawnExteriorMapPoi(<a href="../../types/CandideServer/CandideServer_Models_PoiData.html">CandideServer.Models.PoiData</a> poi, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> bounds, System.Single difficulty, System.Random random, System.Nullable&lt;System.Boolean&gt; overrideFlippable, System.Action&lt;<a href="../../types/CandideServer/CandideServer_ServerControllers_SpawnEntityArgs.html">CandideServer.ServerControllers.SpawnEntityArgs</a>&gt; entitySpawnAction)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>672160F1AC590D647D7D34E4D2C64B6C0CA19BAD9C119F419DACA9C86CE40528</code></li>
+<li><span>Body hash</span><code>623D9B7C1C5B16355A74A064355E9D4C52F97C50380970B982797F1828E08B6E</code></li>
+<li><span>IL size</span><span>185</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>PoiServerManager.&lt;&gt;c__DisplayClass10_0::.ctor()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Center()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#getspawnpointforworldinslot-system-string--microsoft-xna-framework-vector2---microsoft-xna-framework-point">CandideServer.ServerManagers.PoiServerManager::GetSpawnPointForWorldInSlot(System.String, Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Equality(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>System.Nullable&lt;System.Boolean&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextbool-system-random---system-boolean">CandideCreator.Shared.Helpers.RandomHelper::NextBool(System.Random)</a></code></li>
+<li><code>System.Nullable&lt;System.Boolean&gt;::GetValueOrDefault()</code></li>
+<li><code>PoiServerManager.&lt;&gt;c__DisplayClass10_0::&lt;SpawnExteriorMapPoi&gt;b__0(CandideServer.ServerControllers.SpawnEntityArgs)</code></li>
+<li><code>System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_PointOfInterestInserter.html#loadinworldat-system-string--microsoft-xna-framework-point--system-boolean--system-action-1-candideserver-servercontrollers-spawnentityargs----system-void">CandideServer.World.Generation.PointOfInterestInserter::LoadInWorldAt(System.String, Microsoft.Xna.Framework.Point, System.Boolean, System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt;)</a></code></li>
+<li><code>PoiServerManager.&lt;&gt;c__DisplayClass10_0::&lt;SpawnExteriorMapPoi&gt;b__1(CandideServer.ServerControllers.SpawnEntityArgs)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean----system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnPoi</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SpawnHandcraftedDungeonPoi private System.Void SpawnHandcraftedDungeonPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF bounds, System.Single difficulty, CandideServer.Models.ServerChunkedWorld world) System.Void poi CandideServer.Models.PoiData bounds CandideCreator.Shared.Models.RectangleF difficulty System.Single world CandideServer.Models.ServerChunkedWorld" id="spawnhandcrafteddungeonpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld---system-void">
+<div class="method-heading">
+<h3><code>SpawnHandcraftedDungeonPoi</code></h3>
+<a class="permalink" href="#spawnhandcrafteddungeonpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SpawnHandcraftedDungeonPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF bounds, System.Single difficulty, CandideServer.Models.ServerChunkedWorld world)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::SpawnHandcraftedDungeonPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, CandideServer.Models.ServerChunkedWorld)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SpawnHandcraftedDungeonPoi(<a href="../../types/CandideServer/CandideServer_Models_PoiData.html">CandideServer.Models.PoiData</a> poi, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> bounds, System.Single difficulty, <a href="../../types/CandideServer/CandideServer_Models_ServerChunkedWorld.html">CandideServer.Models.ServerChunkedWorld</a> world)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E7D000940A96982D5C82A4AE6AA558D89FBD2744E5E34B971E348D4722CB3809</code></li>
+<li><span>Body hash</span><code>ED07E36378531006E6DB1F13AA077B3FE996B5E3564A48A7717AF37B4D107D0A</code></li>
+<li><span>IL size</span><span>222</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Database_DungeonRoomDataBase.html#trygetdungeonroomdata-system-string--candideserver-models-dungeons-dungeonroomdatamodel----system-boolean">CandideServer.Database.DungeonRoomDataBase::TryGetDungeonRoomData(System.String, CandideServer.Models.Dungeons.DungeonRoomDataModel&amp;)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Center()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#getspawnpointforworldinslot-system-string--microsoft-xna-framework-vector2---microsoft-xna-framework-point">CandideServer.ServerManagers.PoiServerManager::GetSpawnPointForWorldInSlot(System.String, Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Equality(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_PoiLocationTypeExtensions.html#hasflags-candideserver-models-poilocationtype--candideserver-models-poilocationtype---system-boolean">CandideServer.Models.PoiLocationTypeExtensions::HasFlags(CandideServer.Models.PoiLocationType, CandideServer.Models.PoiLocationType)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#addhandcrafteddungeonexterior-candideserver-models-dungeons-dungeonroomdatamodel--candideserver-models-poidata--microsoft-xna-framework-point--system-guid--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel">CandideServer.ServerManagers.DungeonServerManager::AddHandcraftedDungeonExterior(CandideServer.Models.Dungeons.DungeonRoomDataModel, CandideServer.Models.PoiData, Microsoft.Xna.Framework.Point, System.Guid, System.Single, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#registerprerolledloottableids-candideserver-models-dungeons-dungeonlocationmodel--system-collections-generic-list-1-system-string----system-void">CandideServer.ServerManagers.PoiServerManager::RegisterPreRolledLootTableIds(CandideServer.Models.Dungeons.DungeonLocationModel, System.Collections.Generic.List&lt;System.String&gt;)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Data_BossDataBase.html#getbossornull-system-string---shared-models-boss-bossdata">Shared.Data.BossDataBase::GetBossOrNull(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#addbossspawnlocation-shared-models-boss-bossdata--candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerManagers.BossServerManager::AddBossSpawnLocation(Shared.Models.Boss.BossData, CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean----system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnPoi</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Could not find dungeon room data with id &#39;</code></li>
+<li><code>&#39; when spawning poi &#39;</code></li>
+<li><code>&#39;</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnPoi public System.Void SpawnPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF tileBounds, System.Single difficulty, System.Random random, System.Nullable&lt;System.Boolean&gt; overrideFlipped) System.Void poi CandideServer.Models.PoiData tileBounds CandideCreator.Shared.Models.RectangleF difficulty System.Single random System.Random overrideFlipped System.Nullable&lt;System.Boolean&gt;" id="spawnpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean----system-void">
+<div class="method-heading">
+<h3><code>SpawnPoi</code></h3>
+<a class="permalink" href="#spawnpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SpawnPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF tileBounds, System.Single difficulty, System.Random random, System.Nullable&lt;System.Boolean&gt; overrideFlipped)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::SpawnPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, System.Random, System.Nullable&lt;System.Boolean&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SpawnPoi(<a href="../../types/CandideServer/CandideServer_Models_PoiData.html">CandideServer.Models.PoiData</a> poi, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> tileBounds, System.Single difficulty, System.Random random, System.Nullable&lt;System.Boolean&gt; overrideFlipped)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D9905EE560D40C7C450D46CECB326003713EC4A220D8D5B28995DC67D73D3FA3</code></li>
+<li><span>Body hash</span><code>9DB9ADD207E8421BC92C9C11E766F2B094FBCA85F04D7D4AAF1B25B4BDB9574C</code></li>
+<li><span>IL size</span><span>146</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnchallengedungeonpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld---system-void">CandideServer.ServerManagers.PoiServerManager::SpawnChallengeDungeonPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, CandideServer.Models.ServerChunkedWorld)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnhandcrafteddungeonpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld---system-void">CandideServer.ServerManagers.PoiServerManager::SpawnHandcraftedDungeonPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, CandideServer.Models.ServerChunkedWorld)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnexteriormappoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean---system-action-1-candideserver-servercontrollers-spawnentityargs----system-void">CandideServer.ServerManagers.PoiServerManager::SpawnExteriorMapPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, System.Random, System.Nullable&lt;System.Boolean&gt;, System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnscatteredpoispoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld--system-random---system-void">CandideServer.ServerManagers.PoiServerManager::SpawnScatteredPoisPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, CandideServer.Models.ServerChunkedWorld, System.Random)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnrandomdungeonspoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld--system-random---system-void">CandideServer.ServerManagers.PoiServerManager::SpawnRandomDungeonsPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, CandideServer.Models.ServerChunkedWorld, System.Random)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ExceptionHelper.html#throwinvalidoperationexception-system-string---system-void">CandideCreator.Shared.Helpers.ExceptionHelper::ThrowInvalidOperationException(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnscatteredpoispoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld--system-random---system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnScatteredPoisPoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_WorldServerService.html#onreceive-spawnpoicheat-candideserver-messagemodels-worlds-spawnpoicheatmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.WorldServerService::OnReceive_SpawnPoiCheat</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#adddesertsatyrcamppoi----system-void"><code>CandideServer.World.Generation.WorldGenerator::AddDesertSatyrCampPoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#adddesertwallentrancepoi----system-void"><code>CandideServer.World.Generation.WorldGenerator::AddDesertWallEntrancePoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#addvulcantemplepoi----system-void"><code>CandideServer.World.Generation.WorldGenerator::AddVulcanTemplePoi</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Tried to spawn unhandled poi type </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SpawnRandomDungeonsPoi private System.Void SpawnRandomDungeonsPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF bounds, System.Single difficulty, CandideServer.Models.ServerChunkedWorld world, System.Random random) System.Void poi CandideServer.Models.PoiData bounds CandideCreator.Shared.Models.RectangleF difficulty System.Single world CandideServer.Models.ServerChunkedWorld random System.Random" id="spawnrandomdungeonspoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld--system-random---system-void">
+<div class="method-heading">
+<h3><code>SpawnRandomDungeonsPoi</code></h3>
+<a class="permalink" href="#spawnrandomdungeonspoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld--system-random---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SpawnRandomDungeonsPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF bounds, System.Single difficulty, CandideServer.Models.ServerChunkedWorld world, System.Random random)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::SpawnRandomDungeonsPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, CandideServer.Models.ServerChunkedWorld, System.Random)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SpawnRandomDungeonsPoi(<a href="../../types/CandideServer/CandideServer_Models_PoiData.html">CandideServer.Models.PoiData</a> poi, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> bounds, System.Single difficulty, <a href="../../types/CandideServer/CandideServer_Models_ServerChunkedWorld.html">CandideServer.Models.ServerChunkedWorld</a> world, System.Random random)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8F8E4980B0DF2FF0EA236A83FB6F8801B47D9C5B2B61C01EA326E739F06AC500</code></li>
+<li><span>Body hash</span><code>D6C1CD37E087BE00EC90FE077DD9C83CB81D99B350039F9A081E68B6C7E5F8D0</code></li>
+<li><span>IL size</span><span>151</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::get_Count()</code></li>
+<li><code>System.Random::Next(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::get_Item(System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_DungeonRoomDataBase.html#trygetdungeonroomdata-system-string--candideserver-models-dungeons-dungeonroomdatamodel----system-boolean">CandideServer.Database.DungeonRoomDataBase::TryGetDungeonRoomData(System.String, CandideServer.Models.Dungeons.DungeonRoomDataModel&amp;)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Center()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#getspawnpointforworldinslot-system-string--microsoft-xna-framework-vector2---microsoft-xna-framework-point">CandideServer.ServerManagers.PoiServerManager::GetSpawnPointForWorldInSlot(System.String, Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Equality(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_PoiLocationTypeExtensions.html#hasflags-candideserver-models-poilocationtype--candideserver-models-poilocationtype---system-boolean">CandideServer.Models.PoiLocationTypeExtensions::HasFlags(CandideServer.Models.PoiLocationType, CandideServer.Models.PoiLocationType)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#addhandcrafteddungeonexterior-candideserver-models-dungeons-dungeonroomdatamodel--candideserver-models-poidata--microsoft-xna-framework-point--system-guid--system-single--system-boolean---candideserver-models-dungeons-dungeonlocationmodel">CandideServer.ServerManagers.DungeonServerManager::AddHandcraftedDungeonExterior(CandideServer.Models.Dungeons.DungeonRoomDataModel, CandideServer.Models.PoiData, Microsoft.Xna.Framework.Point, System.Guid, System.Single, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#registerprerolledloottableids-candideserver-models-dungeons-dungeonlocationmodel--system-collections-generic-list-1-system-string----system-void">CandideServer.ServerManagers.PoiServerManager::RegisterPreRolledLootTableIds(CandideServer.Models.Dungeons.DungeonLocationModel, System.Collections.Generic.List&lt;System.String&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean----system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnPoi</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SpawnScatteredPoisPoi private System.Void SpawnScatteredPoisPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF bounds, System.Single difficulty, CandideServer.Models.ServerChunkedWorld world, System.Random random1) System.Void poi CandideServer.Models.PoiData bounds CandideCreator.Shared.Models.RectangleF difficulty System.Single world CandideServer.Models.ServerChunkedWorld random1 System.Random" id="spawnscatteredpoispoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld--system-random---system-void">
+<div class="method-heading">
+<h3><code>SpawnScatteredPoisPoi</code></h3>
+<a class="permalink" href="#spawnscatteredpoispoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld--system-random---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SpawnScatteredPoisPoi(CandideServer.Models.PoiData poi, CandideCreator.Shared.Models.RectangleF bounds, System.Single difficulty, CandideServer.Models.ServerChunkedWorld world, System.Random random1)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PoiServerManager::SpawnScatteredPoisPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, CandideServer.Models.ServerChunkedWorld, System.Random)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SpawnScatteredPoisPoi(<a href="../../types/CandideServer/CandideServer_Models_PoiData.html">CandideServer.Models.PoiData</a> poi, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> bounds, System.Single difficulty, <a href="../../types/CandideServer/CandideServer_Models_ServerChunkedWorld.html">CandideServer.Models.ServerChunkedWorld</a> world, System.Random random1)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4F559B13A3B0B9B44B0DD6E43CCFEA3F793C73A92B679D5A1AD1C2100BF097C0</code></li>
+<li><span>Body hash</span><code>31A6E41BAC0BEBF41A35B576767B81FCD9B097225162508C8E2537E5B1E9D714</code></li>
+<li><span>IL size</span><span>390</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::get_Count()</code></li>
+<li><code>System.Linq.Enumerable::ToList(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Left()</code></li>
+<li><code>System.Single::GetHashCode()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Top()</code></li>
+<li><code>System.Random::.ctor(System.Int32)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#inflatereturn-system-single--system-single---candidecreator-shared-models-rectanglef">CandideCreator.Shared.Models.RectangleF::InflateReturn(System.Single, System.Single)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;CandideCreator.Shared.Models.RectangleF&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideCreator.Shared.Models.RectangleF&gt;::get_Count()</code></li>
+<li><code>System.Random::Next(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::get_Item(System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_PoiDataBase.html#trygetpoidata-system-string--candideserver-models-poidata----system-boolean">CandideServer.Database.PoiDataBase::TryGetPoiData(System.String, CandideServer.Models.PoiData&amp;)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextinrectangle-system-random--candidecreator-shared-models-rectanglef---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.RandomHelper::NextInRectangle(System.Random, CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::.ctor(Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#getworldsizeforpoi-system-string---microsoft-xna-framework-point">CandideServer.ServerManagers.PoiServerManager::GetWorldSizeForPoi(System.String)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#halfinflate-system-single--system-single---system-void">CandideCreator.Shared.Models.RectangleF::HalfInflate(System.Single, System.Single)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;CandideCreator.Shared.Models.RectangleF&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;CandideCreator.Shared.Models.RectangleF&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#intersects-candidecreator-shared-models-rectanglef---system-boolean">CandideCreator.Shared.Models.RectangleF::Intersects(CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Center()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Distance(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>List.Enumerator&lt;CandideCreator.Shared.Models.RectangleF&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::Remove(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideCreator.Shared.Models.RectangleF&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean----system-void">CandideServer.ServerManagers.PoiServerManager::SpawnPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, System.Random, System.Nullable&lt;System.Boolean&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean----system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnPoi</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

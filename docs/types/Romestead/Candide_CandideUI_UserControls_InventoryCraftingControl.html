@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.CandideUI.UserControls.InventoryCraftingControl - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.CandideUI.UserControls.InventoryCraftingControl</h1>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.InventoryCraftingControl">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.CandideUI.UserControls.InventoryCraftingControl
+
+- Assembly: `Romestead`
+- Namespace: `Candide.CandideUI.UserControls`
+- Kind: `public class`
+- Base type: `Candide.CandideUI.Containers.CandidePanel`
+- Members: 10 methods, 1 properties, 11 fields, 0 events
+
+## Public Methods
+- `public System.Void Extra()`
+- `public System.Void OnInventoryChanged()`
+- `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)`
+">Copy markdown</button>
+<a class="button" href="Candide_CandideUI_UserControls_InventoryCraftingControl.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.CandideUI.UserControls</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>10</strong></article>
+<article class="metric"><span>Properties</span><strong>1</strong></article>
+<article class="metric"><span>Fields</span><strong>11</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.CandideUI.UserControls</code></li>
+<li><span>Base type</span><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandidePanel.html">Candide.CandideUI.Containers.CandidePanel</a></code></li>
+<li><span>Hash</span><code>9DE6F47AEF088B98DACC24B7D0C4FAF382BA1C1D4F801F8F00556CC18179ECB3</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandidePanel.html">Candide.CandideUI.Containers.CandidePanel</a></code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_ItemRecipeButton.html"><code>Candide.CandideUI.UserControls.ItemRecipeButton</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Windows_InventoryCraftingWindow.html"><code>Candide.CandideUI.Windows.InventoryCraftingWindow</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Windows_SecondaryCraftingWindow.html"><code>Candide.CandideUI.Windows.SecondaryCraftingWindow</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="LastSelectedRecipeId public System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; LastSelectedRecipeId System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;" id="lastselectedrecipeid-system-collections-generic-dictionary-2-system-string-system-string-"><td><span class="member-name-cell"><code>LastSelectedRecipeId</code><a class="permalink" href="#lastselectedrecipeid-system-collections-generic-dictionary-2-system-string-system-string-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; LastSelectedRecipeId">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; LastSelectedRecipeId</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="RecipeGrid public Candide.CandideUI.UserControls.HolderGridRecipesScrollView RecipeGrid Candide.CandideUI.UserControls.HolderGridRecipesScrollView" id="recipegrid-candide-candideui-usercontrols-holdergridrecipesscrollview"><td><span class="member-name-cell"><code>RecipeGrid</code><a class="permalink" href="#recipegrid-candide-candideui-usercontrols-holdergridrecipesscrollview" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.CandideUI.UserControls.HolderGridRecipesScrollView RecipeGrid">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_CandideUI_UserControls_HolderGridRecipesScrollView.html">Candide.CandideUI.UserControls.HolderGridRecipesScrollView</a> RecipeGrid</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="SelectedRecipe public Shared.Data.ItemRecipe SelectedRecipe Shared.Data.ItemRecipe" id="selectedrecipe-shared-data-itemrecipe"><td><span class="member-name-cell"><code>SelectedRecipe</code><a class="permalink" href="#selectedrecipe-shared-data-itemrecipe" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Shared.Data.ItemRecipe SelectedRecipe">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Shared/Shared_Data_ItemRecipe.html">Shared.Data.ItemRecipe</a> SelectedRecipe</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_craftBtn private Candide.CandideUI.Components.Buttons.CandideLabelButton _craftBtn Candide.CandideUI.Components.Buttons.CandideLabelButton" id="-craftbtn-candide-candideui-components-buttons-candidelabelbutton"><td><span class="member-name-cell"><code>_craftBtn</code><a class="permalink" href="#-craftbtn-candide-candideui-components-buttons-candidelabelbutton" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Components.Buttons.CandideLabelButton _craftBtn">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Components_Buttons_CandideLabelButton.html">Candide.CandideUI.Components.Buttons.CandideLabelButton</a> _craftBtn</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_craftBtnPanel private Candide.CandideUI.Containers.CandideGrid _craftBtnPanel Candide.CandideUI.Containers.CandideGrid" id="-craftbtnpanel-candide-candideui-containers-candidegrid"><td><span class="member-name-cell"><code>_craftBtnPanel</code><a class="permalink" href="#-craftbtnpanel-candide-candideui-containers-candidegrid" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Containers.CandideGrid _craftBtnPanel">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Containers_CandideGrid.html">Candide.CandideUI.Containers.CandideGrid</a> _craftBtnPanel</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_craftingStations private System.String[] _craftingStations System.String[]" id="-craftingstations-system-string--"><td><span class="member-name-cell"><code>_craftingStations</code><a class="permalink" href="#-craftingstations-system-string--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.String[] _craftingStations">Copy</button></span></td><td>private</td><td><code>private System.String[] _craftingStations</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_inventory private Candide.GameModels.Models.Items.SimpleInventory _inventory Candide.GameModels.Models.Items.SimpleInventory" id="-inventory-candide-gamemodels-models-items-simpleinventory"><td><span class="member-name-cell"><code>_inventory</code><a class="permalink" href="#-inventory-candide-gamemodels-models-items-simpleinventory" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.GameModels.Models.Items.SimpleInventory _inventory">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> _inventory</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_quickCraftBtn private Candide.CandideUI.Components.Buttons.CandideLabelButton _quickCraftBtn Candide.CandideUI.Components.Buttons.CandideLabelButton" id="-quickcraftbtn-candide-candideui-components-buttons-candidelabelbutton"><td><span class="member-name-cell"><code>_quickCraftBtn</code><a class="permalink" href="#-quickcraftbtn-candide-candideui-components-buttons-candidelabelbutton" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Components.Buttons.CandideLabelButton _quickCraftBtn">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Components_Buttons_CandideLabelButton.html">Candide.CandideUI.Components.Buttons.CandideLabelButton</a> _quickCraftBtn</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_recipeName private Candide.CandideUI.Components.TranslationCenteredIconLabel _recipeName Candide.CandideUI.Components.TranslationCenteredIconLabel" id="-recipename-candide-candideui-components-translationcenterediconlabel"><td><span class="member-name-cell"><code>_recipeName</code><a class="permalink" href="#-recipename-candide-candideui-components-translationcenterediconlabel" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Components.TranslationCenteredIconLabel _recipeName">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Components_TranslationCenteredIconLabel.html">Candide.CandideUI.Components.TranslationCenteredIconLabel</a> _recipeName</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_requirementsGrid private Candide.CandideUI.Containers.CandideGrid _requirementsGrid Candide.CandideUI.Containers.CandideGrid" id="-requirementsgrid-candide-candideui-containers-candidegrid"><td><span class="member-name-cell"><code>_requirementsGrid</code><a class="permalink" href="#-requirementsgrid-candide-candideui-containers-candidegrid" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Containers.CandideGrid _requirementsGrid">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Containers_CandideGrid.html">Candide.CandideUI.Containers.CandideGrid</a> _requirementsGrid</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_uniqueIdentifier private System.String _uniqueIdentifier System.String" id="-uniqueidentifier-system-string"><td><span class="member-name-cell"><code>_uniqueIdentifier</code><a class="permalink" href="#-uniqueidentifier-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.String _uniqueIdentifier">Copy</button></span></td><td>private</td><td><code>private System.String _uniqueIdentifier</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="Inventory public Candide.GameModels.Models.Items.SimpleInventory Inventory Candide.GameModels.Models.Items.SimpleInventory" id="inventory-candide-gamemodels-models-items-simpleinventory"><td><span class="member-name-cell"><code>Inventory</code><a class="permalink" href="#inventory-candide-gamemodels-models-items-simpleinventory" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.GameModels.Models.Items.SimpleInventory Inventory">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_GameModels_Models_Items_SimpleInventory.html">Candide.GameModels.Models.Items.SimpleInventory</a> Inventory</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="CandideExtendedInteractionsHandlerOnDraggedContentChanged private System.Void CandideExtendedInteractionsHandlerOnDraggedContentChanged(System.Object sender, Candide.CandideUI.Components.Holder.ICandideDraggableHolderContent e) System.Void sender System.Object e Candide.CandideUI.Components.Holder.ICandideDraggableHolderContent" id="candideextendedinteractionshandlerondraggedcontentchanged-system-object--candide-candideui-components-holder-icandidedraggableholdercontent---system-void">
+<div class="method-heading">
+<h3><code>CandideExtendedInteractionsHandlerOnDraggedContentChanged</code></h3>
+<a class="permalink" href="#candideextendedinteractionshandlerondraggedcontentchanged-system-object--candide-candideui-components-holder-icandidedraggableholdercontent---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void CandideExtendedInteractionsHandlerOnDraggedContentChanged(System.Object sender, Candide.CandideUI.Components.Holder.ICandideDraggableHolderContent e)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.InventoryCraftingControl::CandideExtendedInteractionsHandlerOnDraggedContentChanged(System.Object, Candide.CandideUI.Components.Holder.ICandideDraggableHolderContent)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void CandideExtendedInteractionsHandlerOnDraggedContentChanged(System.Object sender, <a href="../../types/Romestead/Candide_CandideUI_Components_Holder_ICandideDraggableHolderContent.html">Candide.CandideUI.Components.Holder.ICandideDraggableHolderContent</a> e)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FDEC19EAB1C36A6A989D61F7B80CA5D4E171AF430EF64E8E3CFEFA6DC1F69513</code></li>
+<li><span>Body hash</span><code>194FD4F892B383583FD329D95A44428184D6B8FDCF4EE4588BDBEC22778FEA3F</code></li>
+<li><span>IL size</span><span>37</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#extra----system-void">Candide.CandideUI.UserControls.InventoryCraftingControl::Extra()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_SuperKeybind.html#pressed----system-boolean">Candide.Input.SuperKeybind::Pressed()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#ondismount----system-void"><code>Candide.CandideUI.UserControls.InventoryCraftingControl::OnDismount</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#onmount----system-void"><code>Candide.CandideUI.UserControls.InventoryCraftingControl::OnMount</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Extra public System.Void Extra() System.Void " id="extra----system-void">
+<div class="method-heading">
+<h3><code>Extra</code></h3>
+<a class="permalink" href="#extra----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Extra()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.InventoryCraftingControl::Extra()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Extra()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>08A309E0929482AD4CA188F7B802F736251154581C90CDDBE798154492217193</code></li>
+<li><span>Body hash</span><code>DF3589FC0B8208FB3A5FB0691D99FC63A6818B4F12F4DDF661F434505A653C93</code></li>
+<li><span>IL size</span><span>195</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.UserControls.InventoryCraftingControl::get_Inventory()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#updaterequirementsgrid-shared-data-itemrecipe---system-void">Candide.CandideUI.UserControls.InventoryCraftingControl::UpdateRequirementsGrid(Shared.Data.ItemRecipe)</a></code></li>
+<li><code>Candide.CandideUI.CandideExtendedInteractionsHandler::get_DraggedContent()</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>Candide.CandideUI.Components.Holder.CraftingCandideDraggableHolderContent::get_Amount()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_ItemRecipeManager.html#cancraftmanyitem-candide-gamemodels-models-items-simpleinventory--shared-data-itemrecipe--system-int32---system-boolean">Candide.GameModels.Managers.ItemRecipeManager::CanCraftManyItem(Candide.GameModels.Models.Items.SimpleInventory, Shared.Data.ItemRecipe, System.Int32)</a></code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Enabled(System.Boolean)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html#invalidatemeasure----system-void">Candide.CandideUI.CandideUiElement::InvalidateMeasure()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#candideextendedinteractionshandlerondraggedcontentchanged-system-object--candide-candideui-components-holder-icandidedraggableholdercontent---system-void"><code>Candide.CandideUI.UserControls.InventoryCraftingControl::CandideExtendedInteractionsHandlerOnDraggedContentChanged</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#oninventorychanged----system-void"><code>Candide.CandideUI.UserControls.InventoryCraftingControl::OnInventoryChanged</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="InvalidateInventory private System.Void InvalidateInventory() System.Void " id="invalidateinventory----system-void">
+<div class="method-heading">
+<h3><code>InvalidateInventory</code></h3>
+<a class="permalink" href="#invalidateinventory----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void InvalidateInventory()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.InventoryCraftingControl::InvalidateInventory()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void InvalidateInventory()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>329E692A52441AB05FF1F65D3C98DD001C36838857357B076D10BA1B0724C804</code></li>
+<li><span>Body hash</span><code>782F344B6B86EE48653F1FC64A33DCA27119BAAA1669D5C2634E329085A2E8D7</code></li>
+<li><span>IL size</span><span>28</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_ItemRecipeManager.html#getlocalplayerrecipesforstation-system-string-----system-collections-generic-ienumerable-1-shared-data-itemrecipe-">Candide.GameModels.Managers.ItemRecipeManager::GetLocalPlayerRecipesForStation(System.String[])</a></code></li>
+<li><code>System.Linq.Enumerable::ToList(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_UserControls_HolderGridRecipesScrollView.html#setrecipes-system-collections-generic-list-1-shared-data-itemrecipe----system-void">Candide.CandideUI.UserControls.HolderGridRecipesScrollView::SetRecipes(System.Collections.Generic.List&lt;Shared.Data.ItemRecipe&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#questsmanageronpersonalquestschanged-candide-gamemodels-managers-gamestatepersonalquestschangedargs---system-void"><code>Candide.CandideUI.UserControls.InventoryCraftingControl::QuestsManagerOnPersonalQuestsChanged</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="OnDismount protected System.Void OnDismount() System.Void " id="ondismount----system-void">
+<div class="method-heading">
+<h3><code>OnDismount</code></h3>
+<a class="permalink" href="#ondismount----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected System.Void OnDismount()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.InventoryCraftingControl::OnDismount()">Copy Harmony target</button>
+</div>
+<p><code>protected System.Void OnDismount()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>7DDC41B93BC32167088906352826418B0CA25E1DD3CA9775C809B505BF046987</code></li>
+<li><span>Body hash</span><code>0BAB930D9BDFFEED4FCC02040E3EE9B48B3536991675A37F06CED0B14C23BD8D</code></li>
+<li><span>IL size</span><span>41</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#candideextendedinteractionshandlerondraggedcontentchanged-system-object--candide-candideui-components-holder-icandidedraggableholdercontent---system-void">Candide.CandideUI.UserControls.InventoryCraftingControl::CandideExtendedInteractionsHandlerOnDraggedContentChanged(System.Object, Candide.CandideUI.Components.Holder.ICandideDraggableHolderContent)</a></code></li>
+<li><code>System.EventHandler&lt;Candide.CandideUI.Components.Holder.ICandideDraggableHolderContent&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.CandideUI.CandideExtendedInteractionsHandler::remove_DraggedContentChanged(System.EventHandler&lt;Candide.CandideUI.Components.Holder.ICandideDraggableHolderContent&gt;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#questsmanageronpersonalquestschanged-candide-gamemodels-managers-gamestatepersonalquestschangedargs---system-void">Candide.CandideUI.UserControls.InventoryCraftingControl::QuestsManagerOnPersonalQuestsChanged(Candide.GameModels.Managers.GameStatePersonalQuestsChangedArgs)</a></code></li>
+<li><code>QuestsManager.GameStatePersonalQuestsChanged::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.GameModels.Managers.QuestsManager::remove_PersonalQuestsChanged(QuestsManager.GameStatePersonalQuestsChanged)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html#ondismount----system-void">Candide.CandideUI.CandideUiElement::OnDismount()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnInventoryChanged public System.Void OnInventoryChanged() System.Void " id="oninventorychanged----system-void">
+<div class="method-heading">
+<h3><code>OnInventoryChanged</code></h3>
+<a class="permalink" href="#oninventorychanged----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnInventoryChanged()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.InventoryCraftingControl::OnInventoryChanged()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnInventoryChanged()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A64CECCE5F8C0C13AA80DF51F75EF4F209CAEA4DF3A94ACF23EAC644DA759F85</code></li>
+<li><span>Body hash</span><code>FFD3259F03BB480E86056B65473D1B540C8D2C264136787DD6B7FACC2D4B1E9E</code></li>
+<li><span>IL size</span><span>137</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_UserControls_HolderGridRecipesScrollView.html#invalidaterecipes----system-void">Candide.CandideUI.UserControls.HolderGridRecipesScrollView::InvalidateRecipes()</a></code></li>
+<li><code>Candide.CandideUI.CandideUiContainerMultipleItems::get_ChildrenEnumerable()</code></li>
+<li><code>System.Collections.Generic.IEnumerable&lt;Candide.CandideUI.CandideUiElement&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;Candide.CandideUI.CandideUiElement&gt;::get_Current()</code></li>
+<li><code>Candide.CandideUI.Components.Holder.CandideItemRecipe::get_ItemRecipe()</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>System.Collections.IEnumerator::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#extra----system-void">Candide.CandideUI.UserControls.InventoryCraftingControl::Extra()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Windows_InventoryCraftingWindow.html#oninventorychanged----system-void"><code>Candide.CandideUI.Windows.InventoryCraftingWindow::OnInventoryChanged</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Windows_SecondaryCraftingWindow.html#oninventorychanged-candide-gamemodels-controllers-gamestateactiveinventoriesargs---system-void"><code>Candide.CandideUI.Windows.SecondaryCraftingWindow::OnInventoryChanged</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="OnMount protected System.Void OnMount() System.Void " id="onmount----system-void">
+<div class="method-heading">
+<h3><code>OnMount</code></h3>
+<a class="permalink" href="#onmount----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected System.Void OnMount()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.InventoryCraftingControl::OnMount()">Copy Harmony target</button>
+</div>
+<p><code>protected System.Void OnMount()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>EFC3FAE21E20DF28E157E8FB8E341FFD08CDD628524CD8264CBCE50F10794645</code></li>
+<li><span>Body hash</span><code>C2E1EAFDF00210C29526C7A441CF0203D6823EC353847E20BDA5F23462511382</code></li>
+<li><span>IL size</span><span>72</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#candideextendedinteractionshandlerondraggedcontentchanged-system-object--candide-candideui-components-holder-icandidedraggableholdercontent---system-void">Candide.CandideUI.UserControls.InventoryCraftingControl::CandideExtendedInteractionsHandlerOnDraggedContentChanged(System.Object, Candide.CandideUI.Components.Holder.ICandideDraggableHolderContent)</a></code></li>
+<li><code>System.EventHandler&lt;Candide.CandideUI.Components.Holder.ICandideDraggableHolderContent&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.CandideUI.CandideExtendedInteractionsHandler::add_DraggedContentChanged(System.EventHandler&lt;Candide.CandideUI.Components.Holder.ICandideDraggableHolderContent&gt;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#questsmanageronpersonalquestschanged-candide-gamemodels-managers-gamestatepersonalquestschangedargs---system-void">Candide.CandideUI.UserControls.InventoryCraftingControl::QuestsManagerOnPersonalQuestsChanged(Candide.GameModels.Managers.GameStatePersonalQuestsChangedArgs)</a></code></li>
+<li><code>QuestsManager.GameStatePersonalQuestsChanged::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.GameModels.Managers.QuestsManager::add_PersonalQuestsChanged(QuestsManager.GameStatePersonalQuestsChanged)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html#onmount----system-void">Candide.CandideUI.CandideUiElement::OnMount()</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_UserControls_HolderGridRecipesScrollView.html#setselectedrecipe-system-string---system-void">Candide.CandideUI.UserControls.HolderGridRecipesScrollView::SetSelectedRecipe(System.String)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="QuestsManagerOnPersonalQuestsChanged private System.Void QuestsManagerOnPersonalQuestsChanged(Candide.GameModels.Managers.GameStatePersonalQuestsChangedArgs args) System.Void args Candide.GameModels.Managers.GameStatePersonalQuestsChangedArgs" id="questsmanageronpersonalquestschanged-candide-gamemodels-managers-gamestatepersonalquestschangedargs---system-void">
+<div class="method-heading">
+<h3><code>QuestsManagerOnPersonalQuestsChanged</code></h3>
+<a class="permalink" href="#questsmanageronpersonalquestschanged-candide-gamemodels-managers-gamestatepersonalquestschangedargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void QuestsManagerOnPersonalQuestsChanged(Candide.GameModels.Managers.GameStatePersonalQuestsChangedArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.InventoryCraftingControl::QuestsManagerOnPersonalQuestsChanged(Candide.GameModels.Managers.GameStatePersonalQuestsChangedArgs)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void QuestsManagerOnPersonalQuestsChanged(<a href="../../types/Romestead/Candide_GameModels_Managers_GameStatePersonalQuestsChangedArgs.html">Candide.GameModels.Managers.GameStatePersonalQuestsChangedArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B90C4CE8253B300281D19860DA92327CFF9E20B97F46B7E6B08A4B0BBE9783B4</code></li>
+<li><span>Body hash</span><code>5954B4E260820ADF7DD84ED27B589D0B0A6714F448FB828F8FA42501E64D5E41</code></li>
+<li><span>IL size</span><span>7</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#invalidateinventory----system-void">Candide.CandideUI.UserControls.InventoryCraftingControl::InvalidateInventory()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#ondismount----system-void"><code>Candide.CandideUI.UserControls.InventoryCraftingControl::OnDismount</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#onmount----system-void"><code>Candide.CandideUI.UserControls.InventoryCraftingControl::OnMount</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime) System.Void gameTime Microsoft.Xna.Framework.GameTime" id="update-microsoft-xna-framework-gametime---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-microsoft-xna-framework-gametime---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.InventoryCraftingControl::Update(Microsoft.Xna.Framework.GameTime)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>04717CAECC89CC69AF5A4A5741E6281C637819D273C573E2D54012B658674A81</code></li>
+<li><span>Body hash</span><code>CD1353EE565FB83EEB2C3E24F8015FC56E2D388C8B025BE4BCDE8070CD816FD1</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerMultipleItems.html#update-microsoft-xna-framework-gametime---system-void">Candide.CandideUI.CandideUiContainerMultipleItems::Update(Microsoft.Xna.Framework.GameTime)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="UpdateRecipes private System.Void UpdateRecipes(Candide.CandideUI.Components.Holder.CandideItemRecipe itemRecipeComponent) System.Void itemRecipeComponent Candide.CandideUI.Components.Holder.CandideItemRecipe" id="updaterecipes-candide-candideui-components-holder-candideitemrecipe---system-void">
+<div class="method-heading">
+<h3><code>UpdateRecipes</code></h3>
+<a class="permalink" href="#updaterecipes-candide-candideui-components-holder-candideitemrecipe---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void UpdateRecipes(Candide.CandideUI.Components.Holder.CandideItemRecipe itemRecipeComponent)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.InventoryCraftingControl::UpdateRecipes(Candide.CandideUI.Components.Holder.CandideItemRecipe)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void UpdateRecipes(<a href="../../types/Romestead/Candide_CandideUI_Components_Holder_CandideItemRecipe.html">Candide.CandideUI.Components.Holder.CandideItemRecipe</a> itemRecipeComponent)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FCDFF18D9D51E3FBD95E438D4BEB34834E00C792253A15FEA63CB5F9ADB6A5FD</code></li>
+<li><span>Body hash</span><code>9FB4FFD82FCBC6D25D8E4787009E8ACA800CA724F2CB9F4A8ACE720E08810A84</code></li>
+<li><span>IL size</span><span>94</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.CandideUiContainerMultipleItems::get_ChildrenEnumerable()</code></li>
+<li><code>System.Collections.Generic.IEnumerable&lt;Candide.CandideUI.CandideUiElement&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;Candide.CandideUI.CandideUiElement&gt;::get_Current()</code></li>
+<li><code>System.Collections.IEnumerator::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="UpdateRequirementsGrid private System.Void UpdateRequirementsGrid(Shared.Data.ItemRecipe recipe) System.Void recipe Shared.Data.ItemRecipe" id="updaterequirementsgrid-shared-data-itemrecipe---system-void">
+<div class="method-heading">
+<h3><code>UpdateRequirementsGrid</code></h3>
+<a class="permalink" href="#updaterequirementsgrid-shared-data-itemrecipe---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void UpdateRequirementsGrid(Shared.Data.ItemRecipe recipe)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.InventoryCraftingControl::UpdateRequirementsGrid(Shared.Data.ItemRecipe)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void UpdateRequirementsGrid(<a href="../../types/Shared/Shared_Data_ItemRecipe.html">Shared.Data.ItemRecipe</a> recipe)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>997922515DDD48B79AF8A2984DC61F23954022695EFE4251DD6A5A51B8D0D3A6</code></li>
+<li><span>Body hash</span><code>A12136210C7DC6DD7E976DD9002816121C5AC97199F94415FB59B82977C37A7D</code></li>
+<li><span>IL size</span><span>258</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideGrid.html#clearchildren----system-void">Candide.CandideUI.Containers.CandideGrid::ClearChildren()</a></code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Visible(System.Boolean)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_ItemDataBase.html#getitemdataormissing-system-string---shared-models-items-itemdata">Shared.Data.ItemDataBase::GetItemDataOrMissing(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringExtensions.html#gettranslation-shared-text-stringid---system-string">Shared.Text.StringExtensions::GetTranslation(Shared.Text.StringId)</a></code></li>
+<li><code>Candide.CandideUI.Components.TranslationCenteredIconLabel::set_Text(System.String)</code></li>
+<li><code>Candide.CandideUI.Components.TranslationCenteredIconLabel::set_Icon(System.String)</code></li>
+<li><code>Candide.CandideUI.UserControls.ItemRequirementControl::.ctor(Shared.Models.Items.ItemAmount)</code></li>
+<li><code>Candide.CandideUI.UserControls.ItemRequirementControl::set_MainInventory(Candide.GameModels.Models.Items.SimpleInventory)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_GridColumn(System.Int32)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_GridRow(System.Int32)</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code>Candide.CandideUI.UserControls.ItemRequirementControl::set_LabelWidth(System.Nullable&lt;System.Int32&gt;)</code></li>
+<li><code>Candide.CandideUI.CandideThickness::.ctor(System.Int32)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Margin(Candide.CandideUI.CandideThickness)</code></li>
+<li><code>Candide.CandideUI.CandideThickness::.ctor(System.Int32, System.Int32, System.Int32, System.Int32)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_HorizontalAlignment(Candide.CandideUI.HorizontalAlignment)</code></li>
+<li><code>Candide.CandideUI.Components.CandideTextLabel::set_TextAlign(FontStashSharp.RichText.TextHorizontalAlignment)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerMultipleItems.html#addchild-candide-candideui-candideuielement--system-boolean---system-void">Candide.CandideUI.CandideUiContainerMultipleItems::AddChild(Candide.CandideUI.CandideUiElement, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_UserControls_InventoryCraftingControl.html#extra----system-void"><code>Candide.CandideUI.UserControls.InventoryCraftingControl::Extra</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

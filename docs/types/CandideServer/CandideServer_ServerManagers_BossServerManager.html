@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerManagers.BossServerManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerManagers.BossServerManager</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerManagers.BossServerManager
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerManagers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 21 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public System.Void AddBossSpawnLocation(Shared.Models.Boss.BossData bossData, CandideServer.Models.Dungeons.DungeonLocationModel location)`
+- `public System.Void AddBossSpawnLocation(System.Guid worldId, CandideCreator.Shared.Models.RectangleF tileBounds, System.String mapName, System.String bossDataId, System.Guid spawnEntityBaseId)`
+- `public CandideServer.Models.Boss.BossLocationModel DiscoverBossLocation(CandideServer.Entities.ControllerSets.TorchBearerStatue.ServerTorchBearerStatueController statue)`
+- `public System.Void DiscoverBossLocation(System.Guid locationId)`
+- `public System.Void DiscoverBossLocation(System.Guid locationId, CandideServer.ServerServices.ServerJoinedPlayerModel player)`
+- `public System.Void DiscoverBossLocation(System.String bossId)`
+- `public System.Boolean IsBossDead(System.String bossId)`
+- `public System.Void OnBossEntityKilled(System.Guid entityId)`
+- `public System.Void RemoveBossFight(CandideServer.Models.Boss.BossFightModel bossFight, System.Boolean despawned, System.Boolean defeated)`
+- `public System.Void RemoveBossLocation(System.Guid locationId)`
+- `public System.Void ResetBossSpawnLocation(CandideServer.Models.Boss.BossLocationModel location, System.Boolean sendMessage, System.Boolean resetEvenIfPlayersInside)`
+- `public System.Int32 ScaleBossHealth(System.Int32 players, System.Single baseHealth, System.Single initialIncrease, System.Single decreaseRate, System.Single minIncrease)`
+- `public System.Single ScaleBossHealthNoRounding(System.Int32 players, System.Single baseHealth, System.Single initialIncrease, System.Single decreaseRate, System.Single minIncrease)`
+- `public System.Void SetBossFightLocked(System.Guid bossFightId, System.Boolean locked)`
+- `public System.Void SetBossFightMusicParameter(System.Guid entityId, System.Nullable&lt;System.Int32&gt; parameterValue)`
+- `public System.Void SpawnBoss(System.String bossId, System.Nullable&lt;System.Guid&gt; locationId, Microsoft.Xna.Framework.Vector3 spawnPos, System.Guid worldId)`
+- `public CandideServer.Entities.ServerEntityModel SpawnBossLootChest(System.Guid worldId, System.String bossId, Microsoft.Xna.Framework.Vector3 position)`
+- `public System.Void SpawnBossLootChestForBossEntity(System.Guid entityId, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position)`
+- `public CandideServer.Models.Boss.BossFightModel StartBossFight(System.String bossId, Shared.Entity.EntityWrapper entity, System.Int32 playerCount, System.String bossFightLocationBossId)`
+- `public System.Boolean TryDropLoot(System.Guid entityId, out CandideServer.Entities.ServerEntityModel&amp; outLoot, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerManagers_BossServerManager.json">Type JSON</a>
+<span class="change-badge change-changed">changed</span>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerManagers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>21</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerManagers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>0AF263E83E6020EF328E579BF52711893D3DF253847E28F6F105D5A14D6A3ABA</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddBossSpawnLocation public System.Void AddBossSpawnLocation(Shared.Models.Boss.BossData bossData, CandideServer.Models.Dungeons.DungeonLocationModel location) System.Void bossData Shared.Models.Boss.BossData location CandideServer.Models.Dungeons.DungeonLocationModel" id="addbossspawnlocation-shared-models-boss-bossdata--candideserver-models-dungeons-dungeonlocationmodel---system-void">
+<div class="method-heading">
+<h3><code>AddBossSpawnLocation</code></h3>
+<a class="permalink" href="#addbossspawnlocation-shared-models-boss-bossdata--candideserver-models-dungeons-dungeonlocationmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddBossSpawnLocation(Shared.Models.Boss.BossData bossData, CandideServer.Models.Dungeons.DungeonLocationModel location)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::AddBossSpawnLocation(Shared.Models.Boss.BossData, CandideServer.Models.Dungeons.DungeonLocationModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddBossSpawnLocation(<a href="../../types/Shared/Shared_Models_Boss_BossData.html">Shared.Models.Boss.BossData</a> bossData, <a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> location)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>28A51195C338EC5812389AB9563B28B966B1C6E6EB5603BBFE098D4958CB8605</code></li>
+<li><span>Body hash</span><code>8AD3E34F1F48FA22C27BC866180977A12582B0EBF4212444C7126B7849B51ADC</code></li>
+<li><span>IL size</span><span>106</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideServer.Models.Boss.BossLocationModel::.ctor()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#toscreenspace-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToScreenSpace(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::Add(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnhandcrafteddungeonpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--candideserver-models-serverchunkedworld---system-void"><code>CandideServer.ServerManagers.PoiServerManager::SpawnHandcraftedDungeonPoi</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddBossSpawnLocation public System.Void AddBossSpawnLocation(System.Guid worldId, CandideCreator.Shared.Models.RectangleF tileBounds, System.String mapName, System.String bossDataId, System.Guid spawnEntityBaseId) System.Void worldId System.Guid tileBounds CandideCreator.Shared.Models.RectangleF mapName System.String bossDataId System.String spawnEntityBaseId System.Guid" id="addbossspawnlocation-system-guid--candidecreator-shared-models-rectanglef--system-string--system-string--system-guid---system-void">
+<div class="method-heading">
+<h3><code>AddBossSpawnLocation</code></h3>
+<a class="permalink" href="#addbossspawnlocation-system-guid--candidecreator-shared-models-rectanglef--system-string--system-string--system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddBossSpawnLocation(System.Guid worldId, CandideCreator.Shared.Models.RectangleF tileBounds, System.String mapName, System.String bossDataId, System.Guid spawnEntityBaseId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::AddBossSpawnLocation(System.Guid, CandideCreator.Shared.Models.RectangleF, System.String, System.String, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddBossSpawnLocation(System.Guid worldId, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> tileBounds, System.String mapName, System.String bossDataId, System.Guid spawnEntityBaseId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7B22396AA0B651FF45987416096E8026149A99C44CDECF398F3525CDE2BA4C21</code></li>
+<li><span>Body hash</span><code>5A420FB6DF988EF70117BEEF6928231D36C13E0552A274B8317511ABF835CD8F</code></li>
+<li><span>IL size</span><span>192</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BossServerManager.&lt;&gt;c__DisplayClass5_0::.ctor()</code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Center()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Position()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::ToPoint()</code></li>
+<li><code>BossServerManager.&lt;&gt;c__DisplayClass5_0::&lt;AddBossSpawnLocation&gt;b__0(CandideServer.ServerControllers.SpawnEntityArgs)</code></li>
+<li><code>System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_PointOfInterestInserter.html#loadinworldat-system-string--microsoft-xna-framework-point--system-boolean--system-action-1-candideserver-servercontrollers-spawnentityargs----system-void">CandideServer.World.Generation.PointOfInterestInserter::LoadInWorldAt(System.String, Microsoft.Xna.Framework.Point, System.Boolean, System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt;)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Data_BossDataBase.html#getbossornull-system-string---shared-models-boss-bossdata">Shared.Data.BossDataBase::GetBossOrNull(System.String)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ExceptionHelper.html#throwexception-system-string---system-void">CandideCreator.Shared.Helpers.ExceptionHelper::ThrowException(System.String)</a></code></li>
+<li><code>CandideServer.Models.Boss.BossLocationModel::.ctor()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::Add(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#addphoenixarenapoi----system-void"><code>CandideServer.World.Generation.WorldGenerator::AddPhoenixArenaPoi</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Could not find Boss Data</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DiscoverBossLocation public CandideServer.Models.Boss.BossLocationModel DiscoverBossLocation(CandideServer.Entities.ControllerSets.TorchBearerStatue.ServerTorchBearerStatueController statue) CandideServer.Models.Boss.BossLocationModel statue CandideServer.Entities.ControllerSets.TorchBearerStatue.ServerTorchBearerStatueController" id="discoverbosslocation-candideserver-entities-controllersets-torchbearerstatue-servertorchbearerstatuecontroller---candideserver-models-boss-bosslocationmodel">
+<div class="method-heading">
+<h3><code>DiscoverBossLocation</code></h3>
+<a class="permalink" href="#discoverbosslocation-candideserver-entities-controllersets-torchbearerstatue-servertorchbearerstatuecontroller---candideserver-models-boss-bosslocationmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Boss.BossLocationModel DiscoverBossLocation(CandideServer.Entities.ControllerSets.TorchBearerStatue.ServerTorchBearerStatueController statue)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::DiscoverBossLocation(CandideServer.Entities.ControllerSets.TorchBearerStatue.ServerTorchBearerStatueController)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Boss_BossLocationModel.html">CandideServer.Models.Boss.BossLocationModel</a> DiscoverBossLocation(<a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_TorchBearerStatue_ServerTorchBearerStatueController.html">CandideServer.Entities.ControllerSets.TorchBearerStatue.ServerTorchBearerStatueController</a> statue)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Boss_BossLocationModel.html">CandideServer.Models.Boss.BossLocationModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F36FA5584056CF9A85FC2524FB947DF461952E1F6D3A31410AA8659814B3D7EA</code></li>
+<li><span>Body hash</span><code>21FB0B0B559145B17604931E979802771ECF188038150A0C3551829230879B90</code></li>
+<li><span>IL size</span><span>213</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Position2()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#getstringnullifempty-system-string--system-string---system-string">CandideCreator.Shared.Helpers.Parameters::GetStringNullIfEmpty(System.String, System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Length()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#updatebosslocationstate-system-guid--candideserver-models-boss-bosslocationstate---candideserver-models-boss-bosslocationmodel">CandideServer.ServerControllers.BossServerController::UpdateBossLocationState(System.Guid, CandideServer.Models.Boss.BossLocationState)</a></code></li>
+<li><code>CandideServer.MessageModels.Bosses.DiscoverBossLocationMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BossServerService.html#send-discoverbossspawnlocation-candideserver-messagemodels-bosses-discoverbosslocationmessage---system-void">CandideServer.ServerServices.BossServerService::Send_DiscoverBossSpawnLocation(CandideServer.MessageModels.Bosses.DiscoverBossLocationMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_TorchBearerStatue_ServerTorchBearerStatueController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.ControllerSets.TorchBearerStatue.ServerTorchBearerStatueController::Update</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>boss_id</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DiscoverBossLocation public System.Void DiscoverBossLocation(System.Guid locationId) System.Void locationId System.Guid" id="discoverbosslocation-system-guid---system-void">
+<div class="method-heading">
+<h3><code>DiscoverBossLocation</code></h3>
+<a class="permalink" href="#discoverbosslocation-system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DiscoverBossLocation(System.Guid locationId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::DiscoverBossLocation(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DiscoverBossLocation(System.Guid locationId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>021B617A59860B49758F27CA8F6017A2719ECD1EE15856C958B9088CF6EA0E5C</code></li>
+<li><span>Body hash</span><code>48C3E1D9551B9D1CBF616C69573BF00A6D5DADDC083EDFD8352D8FAD1193670E</code></li>
+<li><span>IL size</span><span>64</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#updatebosslocationstate-candideserver-models-boss-bosslocationmodel--candideserver-models-boss-bosslocationstate---system-void">CandideServer.ServerControllers.BossServerController::UpdateBossLocationState(CandideServer.Models.Boss.BossLocationModel, CandideServer.Models.Boss.BossLocationState)</a></code></li>
+<li><code>CandideServer.MessageModels.Bosses.DiscoverBossLocationMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BossServerService.html#send-discoverbossspawnlocation-candideserver-messagemodels-bosses-discoverbosslocationmessage---system-void">CandideServer.ServerServices.BossServerService::Send_DiscoverBossSpawnLocation(CandideServer.MessageModels.Bosses.DiscoverBossLocationMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Models_Rewards_MapMarkerRewardStrategy.html#applyreward-system-nullable-1-system-guid---system-boolean---system-void"><code>CandideServer.Models.Rewards.MapMarkerRewardStrategy::ApplyReward</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#discoverbosslocation-system-string---system-void"><code>CandideServer.ServerManagers.BossServerManager::DiscoverBossLocation</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DiscoverBossLocation public System.Void DiscoverBossLocation(System.Guid locationId, CandideServer.ServerServices.ServerJoinedPlayerModel player) System.Void locationId System.Guid player CandideServer.ServerServices.ServerJoinedPlayerModel" id="discoverbosslocation-system-guid--candideserver-serverservices-serverjoinedplayermodel---system-void">
+<div class="method-heading">
+<h3><code>DiscoverBossLocation</code></h3>
+<a class="permalink" href="#discoverbosslocation-system-guid--candideserver-serverservices-serverjoinedplayermodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DiscoverBossLocation(System.Guid locationId, CandideServer.ServerServices.ServerJoinedPlayerModel player)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::DiscoverBossLocation(System.Guid, CandideServer.ServerServices.ServerJoinedPlayerModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DiscoverBossLocation(System.Guid locationId, <a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> player)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BAA8034CC861AE27373CE3C14BCDE3AF6C2C58BAD7A7ADB390CF669688CC01CC</code></li>
+<li><span>Body hash</span><code>506DC34A3736A1F485182F79F564DA0D726247FFFE97DB56C734136F654271DA</code></li>
+<li><span>IL size</span><span>69</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#updatebosslocationstate-candideserver-models-boss-bosslocationmodel--candideserver-models-boss-bosslocationstate---system-void">CandideServer.ServerControllers.BossServerController::UpdateBossLocationState(CandideServer.Models.Boss.BossLocationModel, CandideServer.Models.Boss.BossLocationState)</a></code></li>
+<li><code>CandideServer.MessageModels.Bosses.DiscoverBossLocationMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BossServerService.html#send-discoverbossspawnlocation-candideserver-messagemodels-bosses-discoverbosslocationmessage---system-void">CandideServer.ServerServices.BossServerService::Send_DiscoverBossSpawnLocation(CandideServer.MessageModels.Bosses.DiscoverBossLocationMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_BossServerSystem.html#update-system-single---system-void"><code>CandideServer.ServerSystems.BossServerSystem::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DiscoverBossLocation public System.Void DiscoverBossLocation(System.String bossId) System.Void bossId System.String" id="discoverbosslocation-system-string---system-void">
+<div class="method-heading">
+<h3><code>DiscoverBossLocation</code></h3>
+<a class="permalink" href="#discoverbosslocation-system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DiscoverBossLocation(System.String bossId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::DiscoverBossLocation(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DiscoverBossLocation(System.String bossId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>80DC2F8E1E0FBF0DB86073D930E1012C16FAF0E88849A637283EC9375EE630E6</code></li>
+<li><span>Body hash</span><code>10B02B1E223F860D7C28B9A2F1CF257EF849BEB8F140AD01D48DD0CA51B4886B</code></li>
+<li><span>IL size</span><span>87</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::get_Current()</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#discoverbosslocation-system-guid---system-void">CandideServer.ServerManagers.BossServerManager::DiscoverBossLocation(System.Guid)</a></code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#createactiveworldquest-shared-models-quests-questdata---shared-models-quests-questinstancemodel"><code>CandideServer.ServerManagers.QuestsServerManager::CreateActiveWorldQuest</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="DropLootInternal private System.Boolean DropLootInternal(System.Guid entityId, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position, out CandideServer.Entities.ServerEntityModel&amp; outLoot) System.Boolean entityId System.Guid position System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; outLoot CandideServer.Entities.ServerEntityModel&amp;" id="droplootinternal-system-guid--system-nullable-1-microsoft-xna-framework-vector3---candideserver-entities-serverentitymodel----system-boolean">
+<div class="method-heading">
+<h3><code>DropLootInternal</code></h3>
+<a class="permalink" href="#droplootinternal-system-guid--system-nullable-1-microsoft-xna-framework-vector3---candideserver-entities-serverentitymodel----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean DropLootInternal(System.Guid entityId, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position, out CandideServer.Entities.ServerEntityModel&amp; outLoot)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::DropLootInternal(System.Guid, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, CandideServer.Entities.ServerEntityModel&amp;)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean DropLootInternal(System.Guid entityId, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position, out <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a>&amp; outLoot)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>07E81069A886D26134D8A8F0D41E60A4B6602D646729710BCEC0ADAF1B9D02CB</code></li>
+<li><span>Body hash</span><code>D762006C0B096AC64E71019C2E11AF0A4004064F9FB870BF93BA0B01A4A332DA</code></li>
+<li><span>IL size</span><span>249</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::get_Current()</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_BossDataBase.html#getbossornull-system-string---shared-models-boss-bossdata">Shared.Data.BossDataBase::GetBossOrNull(System.String)</a></code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_FloorHeight()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#spawnbosslootchest-system-guid--system-string--microsoft-xna-framework-vector3---candideserver-entities-serverentitymodel">CandideServer.ServerManagers.BossServerManager::SpawnBossLootChest(System.Guid, System.String, Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#spawnbosslootchestforbossentity-system-guid--system-nullable-1-microsoft-xna-framework-vector3----system-void"><code>CandideServer.ServerManagers.BossServerManager::SpawnBossLootChestForBossEntity</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#trydroploot-system-guid--candideserver-entities-serverentitymodel---system-nullable-1-microsoft-xna-framework-vector3----system-boolean"><code>CandideServer.ServerManagers.BossServerManager::TryDropLoot</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IsBossDead public System.Boolean IsBossDead(System.String bossId) System.Boolean bossId System.String" id="isbossdead-system-string---system-boolean">
+<div class="method-heading">
+<h3><code>IsBossDead</code></h3>
+<a class="permalink" href="#isbossdead-system-string---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean IsBossDead(System.String bossId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::IsBossDead(System.String)">Copy Harmony target</button>
+<span class="change-badge change-added">added</span>
+</div>
+<p><code>public System.Boolean IsBossDead(System.String bossId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C430A315CFEE0CD1614768E8E5E8A2E3E94DE01DEB23B19F35284D81E50071CA</code></li>
+<li><span>Body hash</span><code>81D5FC1A512D180FFEBFD36D4E7EBFE238246E077CA10875E895EBE624E22EA7</code></li>
+<li><span>IL size</span><span>81</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::get_Current()</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Cyclops_ServerCyclopsArenaController.html#entityinitialize----system-void"><code>CandideServer.Entities.ControllerSets.Cyclops.ServerCyclopsArenaController::EntityInitialize</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaController.html#entityinitialize----system-void"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController::EntityInitialize</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Talos_ServerTalosArenaController.html#entityinitialize----system-void"><code>CandideServer.Entities.ControllerSets.Talos.ServerTalosArenaController::EntityInitialize</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnBossEntityKilled public System.Void OnBossEntityKilled(System.Guid entityId) System.Void entityId System.Guid" id="onbossentitykilled-system-guid---system-void">
+<div class="method-heading">
+<h3><code>OnBossEntityKilled</code></h3>
+<a class="permalink" href="#onbossentitykilled-system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnBossEntityKilled(System.Guid entityId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::OnBossEntityKilled(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnBossEntityKilled(System.Guid entityId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>16303878C8DEBBAF326EA8558F5988C99CB33AA12C918C8564BBE02CA13AD335</code></li>
+<li><span>Body hash</span><code>7F9F98D11B7AD4E91BF1B1C5A290784CF6066CAD36E2A6774911902E4763D7E0</code></li>
+<li><span>IL size</span><span>83</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#removebossfight-candideserver-models-boss-bossfightmodel--system-boolean--system-boolean---system-void">CandideServer.ServerManagers.BossServerManager::RemoveBossFight(CandideServer.Models.Boss.BossFightModel, System.Boolean, System.Boolean)</a></code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_MinervasOwl_ServerMinervasOwlBossController.html#onoutofhealth-shared-combat-damageresult---system-boolean"><code>CandideServer.Entities.ControllerSets.MinervasOwl.ServerMinervasOwlBossController::OnOutOfHealth</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_PhoenixBoss_ServerPhoenixBossController.html#onoutofhealth-shared-combat-damageresult---system-boolean"><code>CandideServer.Entities.ControllerSets.PhoenixBoss.ServerPhoenixBossController::OnOutOfHealth</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#removeentity-system-guid--shared-entity-entityremoveinfo---candideserver-entities-serverentitymodel"><code>CandideServer.ServerControllers.EntitySController::RemoveEntity</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveBossFight public System.Void RemoveBossFight(CandideServer.Models.Boss.BossFightModel bossFight, System.Boolean despawned, System.Boolean defeated) System.Void bossFight CandideServer.Models.Boss.BossFightModel despawned System.Boolean defeated System.Boolean" id="removebossfight-candideserver-models-boss-bossfightmodel--system-boolean--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>RemoveBossFight</code></h3>
+<a class="permalink" href="#removebossfight-candideserver-models-boss-bossfightmodel--system-boolean--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemoveBossFight(CandideServer.Models.Boss.BossFightModel bossFight, System.Boolean despawned, System.Boolean defeated)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::RemoveBossFight(CandideServer.Models.Boss.BossFightModel, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemoveBossFight(<a href="../../types/CandideServer/CandideServer_Models_Boss_BossFightModel.html">CandideServer.Models.Boss.BossFightModel</a> bossFight, System.Boolean despawned, System.Boolean defeated)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9E663FD29C7CF8306044B7AD9D2B7D548AE08C30D15BB68E7B27FDE9A4DBEB77</code></li>
+<li><span>Body hash</span><code>FA97141BF8ABCAAC4E7196C6E9AA87457C30C119E7AE2E715AFE2149338888C7</code></li>
+<li><span>IL size</span><span>234</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#updatebosslocationstate-system-guid--candideserver-models-boss-bosslocationstate---candideserver-models-boss-bosslocationmodel">CandideServer.ServerControllers.BossServerController::UpdateBossLocationState(System.Guid, CandideServer.Models.Boss.BossLocationState)</a></code></li>
+<li><code>CandideServer.MessageModels.Bosses.BossLocationMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BossServerService.html#send-bossspawnlocation-candideserver-messagemodels-bosses-bosslocationmessage---system-void">CandideServer.ServerServices.BossServerService::Send_BossSpawnLocation(CandideServer.MessageModels.Bosses.BossLocationMessage)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BossServerService.html#send-removebossfight-system-guid--system-boolean--system-boolean---system-void">CandideServer.ServerServices.BossServerService::Send_RemoveBossFight(System.Guid, System.Boolean, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#removebossfight-candideserver-models-boss-bossfightmodel--system-boolean--system-boolean---candideserver-models-boss-bosslocationmodel">CandideServer.ServerControllers.BossServerController::RemoveBossFight(CandideServer.Models.Boss.BossFightModel, System.Boolean, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#removeentity-system-guid--shared-entity-entityremoveinfo---system-void">CandideServer.ServerManagers.EntityServerManager::RemoveEntity(System.Guid, Shared.Entity.EntityRemoveInfo)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#getdungeonlocationfromworldid-system-guid---candideserver-models-dungeons-dungeonlocationmodel">CandideServer.ServerManagers.DungeonServerManager::GetDungeonLocationFromWorldId(System.Guid)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.ActiveDungeonModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#resetdungeon-candideserver-models-dungeons-activedungeonmodel--candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerManagers.DungeonServerManager::ResetDungeon(CandideServer.Models.Dungeons.ActiveDungeonModel, CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Cyclops_ServerCyclopsArenaController.html#removebossfight-system-boolean--system-boolean---system-void"><code>CandideServer.Entities.ControllerSets.Cyclops.ServerCyclopsArenaController::RemoveBossFight</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_RobotBoss_ServerRobotBossController.html#reset----system-void"><code>CandideServer.Entities.ControllerSets.RobotBoss.ServerRobotBossController::Reset</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Talos_ServerTalosArenaController.html#removebossfight-system-boolean--system-boolean---system-void"><code>CandideServer.Entities.ControllerSets.Talos.ServerTalosArenaController::RemoveBossFight</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#onbossentitykilled-system-guid---system-void"><code>CandideServer.ServerManagers.BossServerManager::OnBossEntityKilled</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_BossServerSystem.html#update-system-single---system-void"><code>CandideServer.ServerSystems.BossServerSystem::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveBossLocation public System.Void RemoveBossLocation(System.Guid locationId) System.Void locationId System.Guid" id="removebosslocation-system-guid---system-void">
+<div class="method-heading">
+<h3><code>RemoveBossLocation</code></h3>
+<a class="permalink" href="#removebosslocation-system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemoveBossLocation(System.Guid locationId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::RemoveBossLocation(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemoveBossLocation(System.Guid locationId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2C36F634839EAFA877B57C8DA520E38095C4196B4BBC0CC223776FDED7C74DBD</code></li>
+<li><span>Body hash</span><code>EA9E4337C20E77E752E4906877942B0BF33C883621FEAD5F6A4524BFBF4310A2</code></li>
+<li><span>IL size</span><span>28</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#removebosslocation-system-guid---candideserver-models-boss-bosslocationmodel">CandideServer.ServerControllers.BossServerController::RemoveBossLocation(System.Guid)</a></code></li>
+<li><code>CandideServer.MessageModels.Bosses.BossLocationMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BossServerService.html#send-removebossspawnlocation-candideserver-messagemodels-bosses-bosslocationmessage---system-void">CandideServer.ServerServices.BossServerService::Send_RemoveBossSpawnLocation(CandideServer.MessageModels.Bosses.BossLocationMessage)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ResetBossSpawnLocation public System.Void ResetBossSpawnLocation(CandideServer.Models.Boss.BossLocationModel location, System.Boolean sendMessage, System.Boolean resetEvenIfPlayersInside) System.Void location CandideServer.Models.Boss.BossLocationModel sendMessage System.Boolean resetEvenIfPlayersInside System.Boolean" id="resetbossspawnlocation-candideserver-models-boss-bosslocationmodel--system-boolean--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>ResetBossSpawnLocation</code></h3>
+<a class="permalink" href="#resetbossspawnlocation-candideserver-models-boss-bosslocationmodel--system-boolean--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ResetBossSpawnLocation(CandideServer.Models.Boss.BossLocationModel location, System.Boolean sendMessage, System.Boolean resetEvenIfPlayersInside)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::ResetBossSpawnLocation(CandideServer.Models.Boss.BossLocationModel, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ResetBossSpawnLocation(<a href="../../types/CandideServer/CandideServer_Models_Boss_BossLocationModel.html">CandideServer.Models.Boss.BossLocationModel</a> location, System.Boolean sendMessage, System.Boolean resetEvenIfPlayersInside)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C32857CFB1018EDDE9DCF404FEC43206A09AE77CE63EFA87F1ED5860FB7EEF4C</code></li>
+<li><span>Body hash</span><code>4CA2BAADA0FAA7D462A9ADCA8FBC45E0D1D6FAE748DD0911AAFF4589A29A6586</code></li>
+<li><span>IL size</span><span>286</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.ActiveDungeonModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerSystems_DungeonServerSystem.html#anyplayerindungeon-system-guid---system-boolean">CandideServer.ServerSystems.DungeonServerSystem::AnyPlayerInDungeon(System.Guid)</a></code></li>
+<li><code>System.DateTime::op_Subtraction(System.DateTime, System.DateTime)</code></li>
+<li><code>System.TimeSpan::get_TotalDays()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#resetdungeon-candideserver-models-dungeons-activedungeonmodel--candideserver-models-dungeons-dungeonlocationmodel---system-void">CandideServer.ServerManagers.DungeonServerManager::ResetDungeon(CandideServer.Models.Dungeons.ActiveDungeonModel, CandideServer.Models.Dungeons.DungeonLocationModel)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::ContainsKey(!0)</code></li>
+<li><code>CandideServer.ServerControllers.SpawnEntityArgs::.ctor()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector3xy-microsoft-xna-framework-vector2---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.VectorExtension::ToVector3Xy(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::.ctor()</code></li>
+<li><code>System.Object::ToString()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::Add(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#spawnentity-candideserver-servercontrollers-spawnentityargs---candideserver-entities-serverentitymodel">CandideServer.ServerManagers.EntityServerManager::SpawnEntity(CandideServer.ServerControllers.SpawnEntityArgs)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#updatebosslocationstate-system-guid--candideserver-models-boss-bosslocationstate---candideserver-models-boss-bosslocationmodel">CandideServer.ServerControllers.BossServerController::UpdateBossLocationState(System.Guid, CandideServer.Models.Boss.BossLocationState)</a></code></li>
+<li><code>CandideServer.MessageModels.Bosses.BossLocationMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BossServerService.html#send-bossspawnlocation-candideserver-messagemodels-bosses-bosslocationmessage---system-void">CandideServer.ServerServices.BossServerService::Send_BossSpawnLocation(CandideServer.MessageModels.Bosses.BossLocationMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Models_Spells_ServerResetBossSpell.html#docast-shared-combat-projectiles-projectilesystem--candideserver-models-spells-serverspellcastingcontext--shared-helpers-castspellargs---system-void"><code>CandideServer.Models.Spells.ServerResetBossSpell::DoCast</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#afterworldgamestateloaded----system-void"><code>CandideServer.ServerControllers.BossServerController::AfterWorldGameStateLoaded</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#updatebosslocationstate-candideserver-models-boss-bosslocationmodel--candideserver-models-boss-bosslocationstate---system-void"><code>CandideServer.ServerControllers.BossServerController::UpdateBossLocationState</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_BossServerSystem.html#newday----system-void"><code>CandideServer.ServerSystems.BossServerSystem::NewDay</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>locationId</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ScaleBossHealth public System.Int32 ScaleBossHealth(System.Int32 players, System.Single baseHealth, System.Single initialIncrease, System.Single decreaseRate, System.Single minIncrease) System.Int32 players System.Int32 baseHealth System.Single initialIncrease System.Single decreaseRate System.Single minIncrease System.Single" id="scalebosshealth-system-int32--system-single--system-single--system-single--system-single---system-int32">
+<div class="method-heading">
+<h3><code>ScaleBossHealth</code></h3>
+<a class="permalink" href="#scalebosshealth-system-int32--system-single--system-single--system-single--system-single---system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 ScaleBossHealth(System.Int32 players, System.Single baseHealth, System.Single initialIncrease, System.Single decreaseRate, System.Single minIncrease)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::ScaleBossHealth(System.Int32, System.Single, System.Single, System.Single, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 ScaleBossHealth(System.Int32 players, System.Single baseHealth, System.Single initialIncrease, System.Single decreaseRate, System.Single minIncrease)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7AB34CFE7D04FEB08B01E6AAB1EAEA57928BF5EF4BF6DD31B9914FA449788518</code></li>
+<li><span>Body hash</span><code>E41B03640712FFD410A481ADB153ACC1A26CC62B23FAFE6A4DB599297516A7F3</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_CandideMathHelper.html#scalevalueup-system-int32--system-single--system-single--system-single--system-single---system-single">CandideCreator.Shared.Helpers.CandideMathHelper::ScaleValueUp(System.Int32, System.Single, System.Single, System.Single, System.Single)</a></code></li>
+<li><code>System.MathF::Round(System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Cyclops_ServerCyclopsArenaController.html#setup----system-void"><code>CandideServer.Entities.ControllerSets.Cyclops.ServerCyclopsArenaController::Setup</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Talos_ServerTalosArenaController.html#configurefight----system-void"><code>CandideServer.Entities.ControllerSets.Talos.ServerTalosArenaController::ConfigureFight</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ScaleBossHealthNoRounding public System.Single ScaleBossHealthNoRounding(System.Int32 players, System.Single baseHealth, System.Single initialIncrease, System.Single decreaseRate, System.Single minIncrease) System.Single players System.Int32 baseHealth System.Single initialIncrease System.Single decreaseRate System.Single minIncrease System.Single" id="scalebosshealthnorounding-system-int32--system-single--system-single--system-single--system-single---system-single">
+<div class="method-heading">
+<h3><code>ScaleBossHealthNoRounding</code></h3>
+<a class="permalink" href="#scalebosshealthnorounding-system-int32--system-single--system-single--system-single--system-single---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single ScaleBossHealthNoRounding(System.Int32 players, System.Single baseHealth, System.Single initialIncrease, System.Single decreaseRate, System.Single minIncrease)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::ScaleBossHealthNoRounding(System.Int32, System.Single, System.Single, System.Single, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single ScaleBossHealthNoRounding(System.Int32 players, System.Single baseHealth, System.Single initialIncrease, System.Single decreaseRate, System.Single minIncrease)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F9E88EA9753DF0EA8A5688DC26DDA3868782EFD1E6FD1D101DCD84EBBDED0951</code></li>
+<li><span>Body hash</span><code>86BA058B51B352B6EC9D99D1E877DCD1FBAE418D1DA194C92B61093D1FBEB5A3</code></li>
+<li><span>IL size</span><span>12</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_CandideMathHelper.html#scalevalueup-system-int32--system-single--system-single--system-single--system-single---system-single">CandideCreator.Shared.Helpers.CandideMathHelper::ScaleValueUp(System.Int32, System.Single, System.Single, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Cyclops_ServerCyclopsArenaController.html#setup----system-void"><code>CandideServer.Entities.ControllerSets.Cyclops.ServerCyclopsArenaController::Setup</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetBossFightLocked public System.Void SetBossFightLocked(System.Guid bossFightId, System.Boolean locked) System.Void bossFightId System.Guid locked System.Boolean" id="setbossfightlocked-system-guid--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>SetBossFightLocked</code></h3>
+<a class="permalink" href="#setbossfightlocked-system-guid--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetBossFightLocked(System.Guid bossFightId, System.Boolean locked)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::SetBossFightLocked(System.Guid, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetBossFightLocked(System.Guid bossFightId, System.Boolean locked)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>216E3029847F8D8A686F44611D83037C669039CED9C9A6765A9375E771BA99A3</code></li>
+<li><span>Body hash</span><code>517FE99A1045EBB6C9C9AFAAC0715686AF0B4DC11CDB68412A56A008506F01E7</code></li>
+<li><span>IL size</span><span>41</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#setbossfightlocked-candideserver-models-boss-bossfightmodel--system-boolean---system-void">CandideServer.ServerControllers.BossServerController::SetBossFightLocked(CandideServer.Models.Boss.BossFightModel, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BossServerService.html#send-bossworldlock-system-guid--system-boolean---system-void">CandideServer.ServerServices.BossServerService::Send_BossWorldLock(System.Guid, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Cyclops_ServerCyclopsArenaController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.ControllerSets.Cyclops.ServerCyclopsArenaController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Talos_ServerTalosArenaController.html#lockarena----system-void"><code>CandideServer.Entities.ControllerSets.Talos.ServerTalosArenaController::LockArena</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetBossFightMusicParameter public System.Void SetBossFightMusicParameter(System.Guid entityId, System.Nullable&lt;System.Int32&gt; parameterValue) System.Void entityId System.Guid parameterValue System.Nullable&lt;System.Int32&gt;" id="setbossfightmusicparameter-system-guid--system-nullable-1-system-int32----system-void">
+<div class="method-heading">
+<h3><code>SetBossFightMusicParameter</code></h3>
+<a class="permalink" href="#setbossfightmusicparameter-system-guid--system-nullable-1-system-int32----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetBossFightMusicParameter(System.Guid entityId, System.Nullable&lt;System.Int32&gt; parameterValue)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::SetBossFightMusicParameter(System.Guid, System.Nullable&lt;System.Int32&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetBossFightMusicParameter(System.Guid entityId, System.Nullable&lt;System.Int32&gt; parameterValue)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>279AF3573A88A397D769BE8BA32DDE7C9D35D0DD717BB5B332CDA5141FF19C14</code></li>
+<li><span>Body hash</span><code>0BDCB64590DF81DE335FD74B5A1C01B3E311949A7D2AB13D860846B54E216B9E</code></li>
+<li><span>IL size</span><span>110</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::get_Current()</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BossServerService.html#send-bossmusicupdate-candideserver-messagemodels-bosses-bossmusicupdatemessage---system-void">CandideServer.ServerServices.BossServerService::Send_BossMusicUpdate(CandideServer.MessageModels.Bosses.BossMusicUpdateMessage)</a></code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossFightModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_MinervasOwl_MinervasOwlBossAi.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.ControllerSets.MinervasOwl.MinervasOwlBossAi::OnDamaged</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnBoss public System.Void SpawnBoss(System.String bossId, System.Nullable&lt;System.Guid&gt; locationId, Microsoft.Xna.Framework.Vector3 spawnPos, System.Guid worldId) System.Void bossId System.String locationId System.Nullable&lt;System.Guid&gt; spawnPos Microsoft.Xna.Framework.Vector3 worldId System.Guid" id="spawnboss-system-string--system-nullable-1-system-guid---microsoft-xna-framework-vector3--system-guid---system-void">
+<div class="method-heading">
+<h3><code>SpawnBoss</code></h3>
+<a class="permalink" href="#spawnboss-system-string--system-nullable-1-system-guid---microsoft-xna-framework-vector3--system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SpawnBoss(System.String bossId, System.Nullable&lt;System.Guid&gt; locationId, Microsoft.Xna.Framework.Vector3 spawnPos, System.Guid worldId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::SpawnBoss(System.String, System.Nullable&lt;System.Guid&gt;, Microsoft.Xna.Framework.Vector3, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SpawnBoss(System.String bossId, System.Nullable&lt;System.Guid&gt; locationId, Microsoft.Xna.Framework.Vector3 spawnPos, System.Guid worldId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A388178DA7E63ED1D915F23B2508015B0248895C05975929B7ACEC810DD1701F</code></li>
+<li><span>Body hash</span><code>F377EE97DCCC6418EE056EC9BAC9CF85BE00576FA186293875C99AEEC817E04A</code></li>
+<li><span>IL size</span><span>478</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#updatebosslocationstate-system-guid--candideserver-models-boss-bosslocationstate---candideserver-models-boss-bosslocationmodel">CandideServer.ServerControllers.BossServerController::UpdateBossLocationState(System.Guid, CandideServer.Models.Boss.BossLocationState)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Data_BossDataBase.html#getbossornull-system-string---shared-models-boss-bossdata">Shared.Data.BossDataBase::GetBossOrNull(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::get_Count()</code></li>
+<li><code>System.MathF::Round(System.Single)</code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code>CandideServer.Models.Boss.BossFightModel::.ctor()</code></li>
+<li><code>CandideServer.ServerControllers.SpawnEntityArgs::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::.ctor()</code></li>
+<li><code>System.Nullable&lt;System.Single&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#spawnentity-candideserver-servercontrollers-spawnentityargs---candideserver-entities-serverentitymodel">CandideServer.ServerManagers.EntityServerManager::SpawnEntity(CandideServer.ServerControllers.SpawnEntityArgs)</a></code></li>
+<li><code>Shared.Aura.Args.BaseStatsAuraArgs::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Single&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Single&gt;::Add(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_AuraServerManager.html#tryapplyauratoentity-system-string--candideserver-entities-serverentitymodel--system-nullable-1-system-guid---shared-aura-args-abstractauraargs--candideserver-syncstrategies-syncstrategy--system-boolean---system-boolean">CandideServer.ServerManagers.AuraServerManager::TryApplyAuraToEntity(System.String, CandideServer.Entities.ServerEntityModel, System.Nullable&lt;System.Guid&gt;, Shared.Aura.Args.AbstractAuraArgs, CandideServer.SyncStrategies.SyncStrategy, System.Boolean)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Health(System.Single)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#updatebossfight-candideserver-models-boss-bossfightmodel---system-void">CandideServer.ServerControllers.BossServerController::UpdateBossFight(CandideServer.Models.Boss.BossFightModel)</a></code></li>
+<li><code>CandideServer.MessageModels.Bosses.BossFightMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BossServerService.html#send-bossfightupdate-candideserver-messagemodels-bosses-bossfightmessage---system-void">CandideServer.ServerServices.BossServerService::Send_BossFightUpdate(CandideServer.MessageModels.Bosses.BossFightMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_MinervasOwl_ServerOwlBossEggController.html#onkilled-shared-entity-entitykillinfo---shared-entity-base-onkilledbehaviour"><code>CandideServer.Entities.ControllerSets.MinervasOwl.ServerOwlBossEggController::OnKilled</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_PhoenixBoss_ServerPhoenixBossEggController.html#onkilled-shared-entity-entitykillinfo---shared-entity-base-onkilledbehaviour"><code>CandideServer.Entities.ControllerSets.PhoenixBoss.ServerPhoenixBossEggController::OnKilled</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_BossServerService.html#onreceive-bossspawncheat-candideserver-messagemodels-bosses-bossspawncheatmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.BossServerService::OnReceive_BossSpawnCheat</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>aura:special:set_max_health</code></li>
+<li><code>Health</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnBossLootChest public CandideServer.Entities.ServerEntityModel SpawnBossLootChest(System.Guid worldId, System.String bossId, Microsoft.Xna.Framework.Vector3 position) CandideServer.Entities.ServerEntityModel worldId System.Guid bossId System.String position Microsoft.Xna.Framework.Vector3" id="spawnbosslootchest-system-guid--system-string--microsoft-xna-framework-vector3---candideserver-entities-serverentitymodel">
+<div class="method-heading">
+<h3><code>SpawnBossLootChest</code></h3>
+<a class="permalink" href="#spawnbosslootchest-system-guid--system-string--microsoft-xna-framework-vector3---candideserver-entities-serverentitymodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Entities.ServerEntityModel SpawnBossLootChest(System.Guid worldId, System.String bossId, Microsoft.Xna.Framework.Vector3 position)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::SpawnBossLootChest(System.Guid, System.String, Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> SpawnBossLootChest(System.Guid worldId, System.String bossId, Microsoft.Xna.Framework.Vector3 position)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FC007E7CA2F5F0CC42987E79053A6564781C85754E62DEFC8E67F7F19191C01C</code></li>
+<li><span>Body hash</span><code>B55306F636979E9ADFFCB87536E06B7B6B51167D0F9DA3DD0932F60524585B13</code></li>
+<li><span>IL size</span><span>214</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_BossDataBase.html#getbossornull-system-string---shared-models-boss-bossdata">Shared.Data.BossDataBase::GetBossOrNull(System.String)</a></code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code>CandideServer.ServerControllers.SpawnEntityArgs::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::Add(!0, !1)</code></li>
+<li><code>System.Object::ToString()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#spawnentity-candideserver-servercontrollers-spawnentityargs---candideserver-entities-serverentitymodel">CandideServer.ServerManagers.EntityServerManager::SpawnEntity(CandideServer.ServerControllers.SpawnEntityArgs)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Talos_ServerTalosArenaController.html#enddyinganimation----system-void"><code>CandideServer.Entities.ControllerSets.Talos.ServerTalosArenaController::EndDyingAnimation</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#droplootinternal-system-guid--system-nullable-1-microsoft-xna-framework-vector3---candideserver-entities-serverentitymodel----system-boolean"><code>CandideServer.ServerManagers.BossServerManager::DropLootInternal</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>drop-table-id</code></li>
+<li><code>inventory_id</code></li>
+<li><code>special_chest</code></li>
+<li><code>true</code></li>
+<li><code>inventory_name</code></li>
+<li><code>Object_DivineChest</code></li>
+<li><code>style</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnBossLootChestForBossEntity public System.Void SpawnBossLootChestForBossEntity(System.Guid entityId, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position) System.Void entityId System.Guid position System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;" id="spawnbosslootchestforbossentity-system-guid--system-nullable-1-microsoft-xna-framework-vector3----system-void">
+<div class="method-heading">
+<h3><code>SpawnBossLootChestForBossEntity</code></h3>
+<a class="permalink" href="#spawnbosslootchestforbossentity-system-guid--system-nullable-1-microsoft-xna-framework-vector3----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SpawnBossLootChestForBossEntity(System.Guid entityId, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::SpawnBossLootChestForBossEntity(System.Guid, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SpawnBossLootChestForBossEntity(System.Guid entityId, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>061BE78D85CBA623C5FB97CE0C0C1289FD875CDD5BDE3E14C913B554BC9FE74F</code></li>
+<li><span>Body hash</span><code>FB89C23295D594AA58C979248BDDE60101B53279558A7E7403FAC287274DDF46</code></li>
+<li><span>IL size</span><span>11</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#droplootinternal-system-guid--system-nullable-1-microsoft-xna-framework-vector3---candideserver-entities-serverentitymodel----system-boolean">CandideServer.ServerManagers.BossServerManager::DropLootInternal(System.Guid, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, CandideServer.Entities.ServerEntityModel&amp;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_MinervasOwl_ServerMinervasOwlBossController.html#onoutofhealth-shared-combat-damageresult---system-boolean"><code>CandideServer.Entities.ControllerSets.MinervasOwl.ServerMinervasOwlBossController::OnOutOfHealth</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_PhoenixBoss_ServerPhoenixBossController.html#onoutofhealth-shared-combat-damageresult---system-boolean"><code>CandideServer.Entities.ControllerSets.PhoenixBoss.ServerPhoenixBossController::OnOutOfHealth</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="StartBossFight public CandideServer.Models.Boss.BossFightModel StartBossFight(System.String bossId, Shared.Entity.EntityWrapper entity, System.Int32 playerCount, System.String bossFightLocationBossId) CandideServer.Models.Boss.BossFightModel bossId System.String entity Shared.Entity.EntityWrapper playerCount System.Int32 bossFightLocationBossId System.String" id="startbossfight-system-string--shared-entity-entitywrapper--system-int32--system-string---candideserver-models-boss-bossfightmodel">
+<div class="method-heading">
+<h3><code>StartBossFight</code></h3>
+<a class="permalink" href="#startbossfight-system-string--shared-entity-entitywrapper--system-int32--system-string---candideserver-models-boss-bossfightmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Boss.BossFightModel StartBossFight(System.String bossId, Shared.Entity.EntityWrapper entity, System.Int32 playerCount, System.String bossFightLocationBossId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::StartBossFight(System.String, Shared.Entity.EntityWrapper, System.Int32, System.String)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Boss_BossFightModel.html">CandideServer.Models.Boss.BossFightModel</a> StartBossFight(System.String bossId, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, System.Int32 playerCount, System.String bossFightLocationBossId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Boss_BossFightModel.html">CandideServer.Models.Boss.BossFightModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EAF64DF8CEE0246C5AD2A8089508C3DEC95EB3C23B8ED3B58330099449A94492</code></li>
+<li><span>Body hash</span><code>5F8772387E184BC0A22B6B64D78079425DB94F3063D74E3C335EF5ED3951380E</code></li>
+<li><span>IL size</span><span>279</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_BossDataBase.html#getbossornull-system-string---shared-models-boss-bossdata">Shared.Data.BossDataBase::GetBossOrNull(System.String)</a></code></li>
+<li><code>CandideServer.Models.Boss.BossFightModel::.ctor()</code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::get_Current()</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Boss.BossLocationModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BossServerController.html#updatebossfight-candideserver-models-boss-bossfightmodel---system-void">CandideServer.ServerControllers.BossServerController::UpdateBossFight(CandideServer.Models.Boss.BossFightModel)</a></code></li>
+<li><code>CandideServer.MessageModels.Bosses.BossFightMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BossServerService.html#send-bossfightupdate-candideserver-messagemodels-bosses-bossfightmessage---system-void">CandideServer.ServerServices.BossServerService::Send_BossFightUpdate(CandideServer.MessageModels.Bosses.BossFightMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_RobotBoss_ServerRobotBossController.html#starttransitioninactivetophase1-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.ControllerSets.RobotBoss.ServerRobotBossController::StartTransitionInactiveToPhase1</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaController.html#enter-on----system-void"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController::Enter_On</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Talos_ServerTalosArenaController.html#startfight----system-void"><code>CandideServer.Entities.ControllerSets.Talos.ServerTalosArenaController::StartFight</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryDropLoot public System.Boolean TryDropLoot(System.Guid entityId, out CandideServer.Entities.ServerEntityModel&amp; outLoot, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position) System.Boolean entityId System.Guid outLoot CandideServer.Entities.ServerEntityModel&amp; position System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;" id="trydroploot-system-guid--candideserver-entities-serverentitymodel---system-nullable-1-microsoft-xna-framework-vector3----system-boolean">
+<div class="method-heading">
+<h3><code>TryDropLoot</code></h3>
+<a class="permalink" href="#trydroploot-system-guid--candideserver-entities-serverentitymodel---system-nullable-1-microsoft-xna-framework-vector3----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryDropLoot(System.Guid entityId, out CandideServer.Entities.ServerEntityModel&amp; outLoot, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BossServerManager::TryDropLoot(System.Guid, CandideServer.Entities.ServerEntityModel&amp;, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryDropLoot(System.Guid entityId, out <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a>&amp; outLoot, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F0D0A55A0CAB7E2274DC0C0B7CA708DA4CC5A3E0AC4631DA47EBAC4D84F3A37C</code></li>
+<li><span>Body hash</span><code>E50301446F6EB22307F61A585697CD030F836B28C70D58AD78DB8F8519938D01</code></li>
+<li><span>IL size</span><span>9</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#droplootinternal-system-guid--system-nullable-1-microsoft-xna-framework-vector3---candideserver-entities-serverentitymodel----system-boolean">CandideServer.ServerManagers.BossServerManager::DropLootInternal(System.Guid, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;, CandideServer.Entities.ServerEntityModel&amp;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaController.html#onpyzifaxkilled-system-guid---system-void"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController::OnPyzifaxKilled</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerControllers.JobsSController - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerControllers.JobsSController</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.JobsSController">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerControllers.JobsSController
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerControllers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 7 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public System.Void CreateJob(System.Guid newId, System.String jobBaseId, System.Nullable&lt;System.Guid&gt; buildingId)`
+- `public System.Boolean FlagWorkOrderForRemoval(CandideServer.MessageModels.Jobs.CancelWorkOrderMessage msg)`
+- `public System.Void RemoveJob(System.Guid jobId)`
+- `public System.Void SetOrderStatus(CandideServer.Models.JobModel job, CandideServer.Models.WorkOrders.WorkOrderModel workOrder, CandideServer.Models.WorkOrders.WorkOrderStatus status)`
+- `public System.Boolean SetUserSettings(System.Guid jobId, CandideServer.Models.Job.JobUserSettings jobUserSettings)`
+- `public System.Boolean TryCreateWorkOrder(System.Guid newGuid, System.String recipeId, System.Guid jobId, System.Boolean isRepeating)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerControllers_JobsSController.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerControllers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>7</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerControllers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>BA1FDA60180820DAA89DCD0E64A027CBB362A9A07E46B39C372E0F1B3ACA6B05</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateJob public System.Void CreateJob(System.Guid newId, System.String jobBaseId, System.Nullable&lt;System.Guid&gt; buildingId) System.Void newId System.Guid jobBaseId System.String buildingId System.Nullable&lt;System.Guid&gt;" id="createjob-system-guid--system-string--system-nullable-1-system-guid----system-void">
+<div class="method-heading">
+<h3><code>CreateJob</code></h3>
+<a class="permalink" href="#createjob-system-guid--system-string--system-nullable-1-system-guid----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CreateJob(System.Guid newId, System.String jobBaseId, System.Nullable&lt;System.Guid&gt; buildingId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.JobsSController::CreateJob(System.Guid, System.String, System.Nullable&lt;System.Guid&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CreateJob(System.Guid newId, System.String jobBaseId, System.Nullable&lt;System.Guid&gt; buildingId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B6E390A56995E9403FD5512D6F99F3CA15BD6013C567739503DB24115D9A5435</code></li>
+<li><span>Body hash</span><code>674CD7D8A43E825C0A292E103CCCEE6DB307A62081B6A4478E6ACD9D752D6127</code></li>
+<li><span>IL size</span><span>47</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_JobDataBase.html#getjobornull-system-string---shared-data-datamodels-jobdata">Shared.Data.JobDataBase::GetJobOrNull(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code>CandideServer.ServerControllers.ServerJobException::.ctor(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_JobModel.html#fromjobdata-shared-data-datamodels-jobdata--system-guid--system-nullable-1-system-guid----candideserver-models-jobmodel">CandideServer.Models.JobModel::FromJobData(Shared.Data.DataModels.JobData, System.Guid, System.Nullable&lt;System.Guid&gt;)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.JobModel&gt;::Add(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#createcitizenslots-system-collections-generic-ienumerable-1-candideserver-messagemodels-citizens-createcitizenslotmessage---system-int32---system-collections-generic-list-1-system-guid-"><code>CandideServer.ServerControllers.CitizenSlotsSController::CreateCitizenSlots</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Couldn&#39;t find Job with base ID: </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="FlagWorkOrderForRemoval public System.Boolean FlagWorkOrderForRemoval(CandideServer.MessageModels.Jobs.CancelWorkOrderMessage msg) System.Boolean msg CandideServer.MessageModels.Jobs.CancelWorkOrderMessage" id="flagworkorderforremoval-candideserver-messagemodels-jobs-cancelworkordermessage---system-boolean">
+<div class="method-heading">
+<h3><code>FlagWorkOrderForRemoval</code></h3>
+<a class="permalink" href="#flagworkorderforremoval-candideserver-messagemodels-jobs-cancelworkordermessage---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean FlagWorkOrderForRemoval(CandideServer.MessageModels.Jobs.CancelWorkOrderMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.JobsSController::FlagWorkOrderForRemoval(CandideServer.MessageModels.Jobs.CancelWorkOrderMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean FlagWorkOrderForRemoval(<a href="../../types/CandideServer/CandideServer_MessageModels_Jobs_CancelWorkOrderMessage.html">CandideServer.MessageModels.Jobs.CancelWorkOrderMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6D1D2ACE73B4BFC74DBA9F875823294176625E40664AAC2A753A6367CDD085C7</code></li>
+<li><span>Body hash</span><code>F2DB78C653DE4FA069823CDD75BEA4A291CF88C15E458BD5420A0DB3AA0F8E84</code></li>
+<li><span>IL size</span><span>150</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>JobsSController.&lt;&gt;c__DisplayClass3_0::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetjob-system-guid--candideserver-models-jobmodel----system-boolean">CandideServer.ServerGameState::TryGetJob(System.Guid, CandideServer.Models.JobModel&amp;)</a></code></li>
+<li><code>JobsSController.&lt;&gt;c__DisplayClass3_0::&lt;FlagWorkOrderForRemoval&gt;b__0(CandideServer.Models.WorkOrders.WorkOrderModel)</code></li>
+<li><code>System.Predicate&lt;CandideServer.Models.WorkOrders.WorkOrderModel&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.WorkOrders.WorkOrderModel&gt;::Find(System.Predicate&lt;!0&gt;)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_JobsServerService.html#onreceive-cancelworkorder-candideserver-messagemodels-jobs-cancelworkordermessage---system-void"><code>CandideServer.ServerServices.JobsServerService::OnReceive_CancelWorkOrder</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Couldn&#39;t find work order with ID: </code></li>
+<li><code> on Job with ID: </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="OnServerGameStateLoaded private System.Void OnServerGameStateLoaded(CandideServer.GameDescription gameDescription) System.Void gameDescription CandideServer.GameDescription" id="onservergamestateloaded-candideserver-gamedescription---system-void">
+<div class="method-heading">
+<h3><code>OnServerGameStateLoaded</code></h3>
+<a class="permalink" href="#onservergamestateloaded-candideserver-gamedescription---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void OnServerGameStateLoaded(CandideServer.GameDescription gameDescription)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.JobsSController::OnServerGameStateLoaded(CandideServer.GameDescription)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void OnServerGameStateLoaded(<a href="../../types/CandideServer/CandideServer_GameDescription.html">CandideServer.GameDescription</a> gameDescription)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>ED85928B3AA36C9D50F3A5583D8502E4B39CF80F02805C566F992BC8CE813ACF</code></li>
+<li><span>Body hash</span><code>DEA520AE8F4C9D9F0838980600FA14AC85323F664E6B5378549DFC491D48421C</code></li>
+<li><span>IL size</span><span>173</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.JobModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.JobModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.JobModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.SourceModel&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.SourceModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.SourceModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.SourceModel&gt;::get_Current()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.SourceModel&gt;::Add(!0)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.SourceModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.JobModel&gt;::MoveNext()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveJob public System.Void RemoveJob(System.Guid jobId) System.Void jobId System.Guid" id="removejob-system-guid---system-void">
+<div class="method-heading">
+<h3><code>RemoveJob</code></h3>
+<a class="permalink" href="#removejob-system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemoveJob(System.Guid jobId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.JobsSController::RemoveJob(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemoveJob(System.Guid jobId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>26BB0AA75A5C43B3F74B0834FE0CCCD5B3B902B6CDA97BA4029C5B2F788A10EF</code></li>
+<li><span>Body hash</span><code>F8081A83227871F26A65D7034D393E42DD8BF4A07FD0C87ACEEFB8F479124E41</code></li>
+<li><span>IL size</span><span>30</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetjob-system-guid--candideserver-models-jobmodel----system-boolean">CandideServer.ServerGameState::TryGetJob(System.Guid, CandideServer.Models.JobModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_ServerState_JobsPlayerListenersController.html#removejob-system-guid---system-void">CandideServer.ServerServices.ServerState_JobsPlayerListenersController::RemoveJob(System.Guid)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.JobModel&gt;::Remove(!0)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetOrderStatus public System.Void SetOrderStatus(CandideServer.Models.JobModel job, CandideServer.Models.WorkOrders.WorkOrderModel workOrder, CandideServer.Models.WorkOrders.WorkOrderStatus status) System.Void job CandideServer.Models.JobModel workOrder CandideServer.Models.WorkOrders.WorkOrderModel status CandideServer.Models.WorkOrders.WorkOrderStatus" id="setorderstatus-candideserver-models-jobmodel--candideserver-models-workorders-workordermodel--candideserver-models-workorders-workorderstatus---system-void">
+<div class="method-heading">
+<h3><code>SetOrderStatus</code></h3>
+<a class="permalink" href="#setorderstatus-candideserver-models-jobmodel--candideserver-models-workorders-workordermodel--candideserver-models-workorders-workorderstatus---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetOrderStatus(CandideServer.Models.JobModel job, CandideServer.Models.WorkOrders.WorkOrderModel workOrder, CandideServer.Models.WorkOrders.WorkOrderStatus status)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.JobsSController::SetOrderStatus(CandideServer.Models.JobModel, CandideServer.Models.WorkOrders.WorkOrderModel, CandideServer.Models.WorkOrders.WorkOrderStatus)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetOrderStatus(<a href="../../types/CandideServer/CandideServer_Models_JobModel.html">CandideServer.Models.JobModel</a> job, <a href="../../types/CandideServer/CandideServer_Models_WorkOrders_WorkOrderModel.html">CandideServer.Models.WorkOrders.WorkOrderModel</a> workOrder, <a href="../../types/CandideServer/CandideServer_Models_WorkOrders_WorkOrderStatus.html">CandideServer.Models.WorkOrders.WorkOrderStatus</a> status)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A95CE5427DCD61B192C3E3F5E9CE23895B4C70B5F655B2E8645D6D938DA96C2F</code></li>
+<li><span>Body hash</span><code>8C1BECBF9EC1B031105CC691FF91C21AB1073D363847A5C9626BACEDA3AB4999</code></li>
+<li><span>IL size</span><span>64</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_JobServerManager.html#building-finishcurrentworkorder-candideserver-buildings-buildingcontrollers-abstractbuildingcontroller--candideserver-models-jobmodel--candideserver-models-citizen-citizenmodel---system-boolean"><code>CandideServer.ServerManagers.JobServerManager::Building_FinishCurrentWorkOrder</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_JobServerManager.html#building-updatejobstatus-candideserver-models-buildings-buildinginstancemodel--candideserver-models-jobmodel---system-boolean"><code>CandideServer.ServerManagers.JobServerManager::Building_UpdateJobStatus</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_JobServerManager.html#findandsetnewcurrentworkorder-candideserver-models-jobmodel--candideserver-models-buildings-buildinginstancemodel--system-boolean---system-boolean"><code>CandideServer.ServerManagers.JobServerManager::FindAndSetNewCurrentWorkOrder</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetUserSettings public System.Boolean SetUserSettings(System.Guid jobId, CandideServer.Models.Job.JobUserSettings jobUserSettings) System.Boolean jobId System.Guid jobUserSettings CandideServer.Models.Job.JobUserSettings" id="setusersettings-system-guid--candideserver-models-job-jobusersettings---system-boolean">
+<div class="method-heading">
+<h3><code>SetUserSettings</code></h3>
+<a class="permalink" href="#setusersettings-system-guid--candideserver-models-job-jobusersettings---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean SetUserSettings(System.Guid jobId, CandideServer.Models.Job.JobUserSettings jobUserSettings)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.JobsSController::SetUserSettings(System.Guid, CandideServer.Models.Job.JobUserSettings)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean SetUserSettings(System.Guid jobId, <a href="../../types/CandideServer/CandideServer_Models_Job_JobUserSettings.html">CandideServer.Models.Job.JobUserSettings</a> jobUserSettings)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A33EC456F70C7ABD7454FB4EA8E4A622B000C7619EA8533C2FE57B5FADCE114F</code></li>
+<li><span>Body hash</span><code>AC609BF1BD29227BDD67C2330DAD10ABABEF2BF7C05DCC5AA4704B518EEA8A67</code></li>
+<li><span>IL size</span><span>21</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetjob-system-guid--candideserver-models-jobmodel----system-boolean">CandideServer.ServerGameState::TryGetJob(System.Guid, CandideServer.Models.JobModel&amp;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_JobServerManager.html#trysetusersettings-system-guid--candideserver-models-job-jobusersettings---candideserver-messagemodels-jobs-updatejobusersettingsmessage"><code>CandideServer.ServerManagers.JobServerManager::TrySetUserSettings</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryCreateWorkOrder public System.Boolean TryCreateWorkOrder(System.Guid newGuid, System.String recipeId, System.Guid jobId, System.Boolean isRepeating) System.Boolean newGuid System.Guid recipeId System.String jobId System.Guid isRepeating System.Boolean" id="trycreateworkorder-system-guid--system-string--system-guid--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>TryCreateWorkOrder</code></h3>
+<a class="permalink" href="#trycreateworkorder-system-guid--system-string--system-guid--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryCreateWorkOrder(System.Guid newGuid, System.String recipeId, System.Guid jobId, System.Boolean isRepeating)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.JobsSController::TryCreateWorkOrder(System.Guid, System.String, System.Guid, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryCreateWorkOrder(System.Guid newGuid, System.String recipeId, System.Guid jobId, System.Boolean isRepeating)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>60DC66CE2CFC4FF6EA3C7BC7993D3487D71B536149CF0E0A6C1EFE49C8B5FB0D</code></li>
+<li><span>Body hash</span><code>8DACD0D87971000AA5D9831E05067D7E62FFA39413A1B6FA2FF4516EFC142581</code></li>
+<li><span>IL size</span><span>529</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetjob-system-guid--candideserver-models-jobmodel----system-boolean">CandideServer.ServerGameState::TryGetJob(System.Guid, CandideServer.Models.JobModel&amp;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.WorkOrders.WorkOrderModel&gt;::get_Count()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Citizen.CitizenModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_WorkRecipeDataBase.html#getrecipeormissing-system-string---shared-data-datamodels-workrecipemodel">Shared.Data.WorkRecipeDataBase::GetRecipeOrMissing(System.String)</a></code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Contains(!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_WorkOrders_WorkOrderModel.html#fromrecipe-shared-data-datamodels-workrecipemodel---candideserver-models-workorders-workordermodel">CandideServer.Models.WorkOrders.WorkOrderModel::FromRecipe(Shared.Data.DataModels.WorkRecipeModel)</a></code></li>
+<li><code>JobsSController.&lt;&gt;c::&lt;TryCreateWorkOrder&gt;b__2_0(CandideServer.Models.WorkOrders.WorkOrderModel)</code></li>
+<li><code>System.Predicate&lt;CandideServer.Models.WorkOrders.WorkOrderModel&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.WorkOrders.WorkOrderModel&gt;::FindIndex(System.Predicate&lt;!0&gt;)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.WorkOrders.WorkOrderModel&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.WorkOrders.WorkOrderModel&gt;::RemoveAt(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.WorkOrders.WorkOrderModel&gt;::Add(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.WorkOrders.WorkOrderModel&gt;::Insert(System.Int32, !0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_ClaypitController.html#oncitizenassignedtoslot-candideserver-models-citizen-citizenmodel--candideserver-models-citizen-citizenslotmodel---system-void"><code>CandideServer.Buildings.BuildingControllers.ClaypitController::OnCitizenAssignedToSlot</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_FarmsteadController.html#oncitizenassignedtoslot-candideserver-models-citizen-citizenmodel--candideserver-models-citizen-citizenslotmodel---system-void"><code>CandideServer.Buildings.BuildingControllers.FarmsteadController::OnCitizenAssignedToSlot</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_LumberYardController.html#oncitizenassignedtoslot-candideserver-models-citizen-citizenmodel--candideserver-models-citizen-citizenslotmodel---system-void"><code>CandideServer.Buildings.BuildingControllers.LumberYardController::OnCitizenAssignedToSlot</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_QuarryController.html#oncitizenassignedtoslot-candideserver-models-citizen-citizenmodel--candideserver-models-citizen-citizenslotmodel---system-void"><code>CandideServer.Buildings.BuildingControllers.QuarryController::OnCitizenAssignedToSlot</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_JobServerManager.html#trycreateworkorder-system-guid--system-string--system-guid--system-boolean--system-boolean---system-boolean"><code>CandideServer.ServerManagers.JobServerManager::TryCreateWorkOrder</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Work queue is full for job with ID </code></li>
+<li><code>Job doesn&#39;t have a citizen.</code></li>
+<li><code>Couldn&#39;t find citizen with ID: </code></li>
+<li><code>TryCreateWorkOrder</code></li>
+<li><code>: We got a request to do </code></li>
+<li><code> producing reward id </code></li>
+<li><code> but we already have it unlocked.</code></li>
+<li><code>TryCreateWorkOrder: We got a request to do </code></li>
+<li><code> as a repeated work order but it is set as unrepeatable in the database.</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

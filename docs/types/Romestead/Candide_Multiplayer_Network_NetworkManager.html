@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.Multiplayer.Network.NetworkManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.Multiplayer.Network.NetworkManager</h1>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.Multiplayer.Network.NetworkManager
+
+- Assembly: `Romestead`
+- Namespace: `Candide.Multiplayer.Network`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 15 methods, 0 properties, 15 fields, 0 events
+
+## Public Methods
+- `public System.Void Desynced(System.String methodName)`
+- `public System.Void DisableNetworkStats()`
+- `public System.Void EnableNetworkStats()`
+- `public Candide.Multiplayer.Network.GetResponseHandler Get&lt;T&gt;(System.String key, System.Object message, System.Action&lt;T&gt; onResponse, System.Single timeOutSeconds, System.Action&lt;System.Byte&gt; onError, System.Boolean ignorePreviousResponses)`
+- `public System.String GetNetworkStatsText(System.Text.StringBuilder s)`
+- `public System.Int32 GetRoundTripTimeMilliseconds()`
+- `public System.Void LogStat(System.String key, System.Int64 size)`
+- `public System.Void LogStatReceived(System.String key, System.Int64 size)`
+- `public System.Void ResetNetworkStats()`
+- `public System.Void SendMessage(System.String key, System.Object message, System.Byte type)`
+- `public System.Void StartClient(System.String address, System.Int32 port, CandideServer.Server.MultiplayerConfiguration config)`
+- `public System.Void StopClient()`
+- `public System.Void Update(System.TimeSpan elapsedTime)`
+">Copy markdown</button>
+<a class="button" href="Candide_Multiplayer_Network_NetworkManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.Multiplayer.Network</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>15</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>15</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.Multiplayer.Network</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>F85B64706B6C1059CCF642B6966DEA6C2499D38029B54770354651EE1347A31B</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="BinaryWriter private CandideCreator.Shared.Storage.ExtendedBinaryWriter BinaryWriter CandideCreator.Shared.Storage.ExtendedBinaryWriter" id="binarywriter-candidecreator-shared-storage-extendedbinarywriter"><td><span class="member-name-cell"><code>BinaryWriter</code><a class="permalink" href="#binarywriter-candidecreator-shared-storage-extendedbinarywriter" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private CandideCreator.Shared.Storage.ExtendedBinaryWriter BinaryWriter">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Storage_ExtendedBinaryWriter.html">CandideCreator.Shared.Storage.ExtendedBinaryWriter</a> BinaryWriter</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ClientActive public System.Boolean ClientActive System.Boolean" id="clientactive-system-boolean"><td><span class="member-name-cell"><code>ClientActive</code><a class="permalink" href="#clientactive-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean ClientActive">Copy</button></span></td><td>public</td><td><code>public System.Boolean ClientActive</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ClientManager public Candide.Multiplayer.Network.IClientManager ClientManager Candide.Multiplayer.Network.IClientManager" id="clientmanager-candide-multiplayer-network-iclientmanager"><td><span class="member-name-cell"><code>ClientManager</code><a class="permalink" href="#clientmanager-candide-multiplayer-network-iclientmanager" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.Multiplayer.Network.IClientManager ClientManager">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_Multiplayer_Network_IClientManager.html">Candide.Multiplayer.Network.IClientManager</a> ClientManager</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ExclusiveGetResponseHandlerIds private System.Collections.Generic.Dictionary&lt;System.String, System.UInt16&gt; ExclusiveGetResponseHandlerIds System.Collections.Generic.Dictionary&lt;System.String, System.UInt16&gt;" id="exclusivegetresponsehandlerids-system-collections-generic-dictionary-2-system-string-system-uint16-"><td><span class="member-name-cell"><code>ExclusiveGetResponseHandlerIds</code><a class="permalink" href="#exclusivegetresponsehandlerids-system-collections-generic-dictionary-2-system-string-system-uint16-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;System.String, System.UInt16&gt; ExclusiveGetResponseHandlerIds">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;System.String, System.UInt16&gt; ExclusiveGetResponseHandlerIds</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Lib public CandideServer.Server.NetworkLib Lib CandideServer.Server.NetworkLib" id="lib-candideserver-server-networklib"><td><span class="member-name-cell"><code>Lib</code><a class="permalink" href="#lib-candideserver-server-networklib" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public CandideServer.Server.NetworkLib Lib">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/CandideServer_Server_NetworkLib.html">CandideServer.Server.NetworkLib</a> Lib</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="LogNetworkStats public System.Boolean LogNetworkStats System.Boolean" id="lognetworkstats-system-boolean"><td><span class="member-name-cell"><code>LogNetworkStats</code><a class="permalink" href="#lognetworkstats-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean LogNetworkStats">Copy</button></span></td><td>public</td><td><code>public System.Boolean LogNetworkStats</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="NetworkStatsLogTime public System.Double NetworkStatsLogTime System.Double" id="networkstatslogtime-system-double"><td><span class="member-name-cell"><code>NetworkStatsLogTime</code><a class="permalink" href="#networkstatslogtime-system-double" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Double NetworkStatsLogTime">Copy</button></span></td><td>public</td><td><code>public System.Double NetworkStatsLogTime</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ResponseHandlers public System.Collections.Generic.Dictionary&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt; ResponseHandlers System.Collections.Generic.Dictionary&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt;" id="responsehandlers-system-collections-generic-dictionary-2-system-uint16-candide-multiplayer-network-getresponsehandler-"><td><span class="member-name-cell"><code>ResponseHandlers</code><a class="permalink" href="#responsehandlers-system-collections-generic-dictionary-2-system-uint16-candide-multiplayer-network-getresponsehandler-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt; ResponseHandlers">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.UInt16, <a href="../../types/Romestead/Candide_Multiplayer_Network_GetResponseHandler.html">Candide.Multiplayer.Network.GetResponseHandler</a>&gt; ResponseHandlers</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ResponseHandlerTimer public System.TimeSpan ResponseHandlerTimer System.TimeSpan" id="responsehandlertimer-system-timespan"><td><span class="member-name-cell"><code>ResponseHandlerTimer</code><a class="permalink" href="#responsehandlertimer-system-timespan" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.TimeSpan ResponseHandlerTimer">Copy</button></span></td><td>public</td><td><code>public System.TimeSpan ResponseHandlerTimer</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="SerializationStream private System.IO.MemoryStream SerializationStream System.IO.MemoryStream" id="serializationstream-system-io-memorystream"><td><span class="member-name-cell"><code>SerializationStream</code><a class="permalink" href="#serializationstream-system-io-memorystream" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.IO.MemoryStream SerializationStream">Copy</button></span></td><td>private</td><td><code>private System.IO.MemoryStream SerializationStream</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="Serializer private CandideCreator.Shared.Serialization.CandideSerializer Serializer CandideCreator.Shared.Serialization.CandideSerializer" id="serializer-candidecreator-shared-serialization-candideserializer"><td><span class="member-name-cell"><code>Serializer</code><a class="permalink" href="#serializer-candidecreator-shared-serialization-candideserializer" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private CandideCreator.Shared.Serialization.CandideSerializer Serializer">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideSerializer.html">CandideCreator.Shared.Serialization.CandideSerializer</a> Serializer</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="StatsReceived public System.Collections.Generic.Dictionary&lt;System.String, NetworkManager.NetworkStat&gt; StatsReceived System.Collections.Generic.Dictionary&lt;System.String, NetworkManager.NetworkStat&gt;" id="statsreceived-system-collections-generic-dictionary-2-system-string-networkmanager-networkstat-"><td><span class="member-name-cell"><code>StatsReceived</code><a class="permalink" href="#statsreceived-system-collections-generic-dictionary-2-system-string-networkmanager-networkstat-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.String, NetworkManager.NetworkStat&gt; StatsReceived">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.String, <a href="../../types/Romestead/NetworkManager_NetworkStat.html">NetworkManager.NetworkStat</a>&gt; StatsReceived</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="StatsSent public System.Collections.Generic.Dictionary&lt;System.String, NetworkManager.NetworkStat&gt; StatsSent System.Collections.Generic.Dictionary&lt;System.String, NetworkManager.NetworkStat&gt;" id="statssent-system-collections-generic-dictionary-2-system-string-networkmanager-networkstat-"><td><span class="member-name-cell"><code>StatsSent</code><a class="permalink" href="#statssent-system-collections-generic-dictionary-2-system-string-networkmanager-networkstat-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.String, NetworkManager.NetworkStat&gt; StatsSent">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.String, <a href="../../types/Romestead/NetworkManager_NetworkStat.html">NetworkManager.NetworkStat</a>&gt; StatsSent</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ToRemoveHandlers private System.Collections.Generic.List&lt;System.UInt16&gt; ToRemoveHandlers System.Collections.Generic.List&lt;System.UInt16&gt;" id="toremovehandlers-system-collections-generic-list-1-system-uint16-"><td><span class="member-name-cell"><code>ToRemoveHandlers</code><a class="permalink" href="#toremovehandlers-system-collections-generic-list-1-system-uint16-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;System.UInt16&gt; ToRemoveHandlers">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;System.UInt16&gt; ToRemoveHandlers</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_nextGetHandlerId private System.UInt16 _nextGetHandlerId System.UInt16" id="-nextgethandlerid-system-uint16"><td><span class="member-name-cell"><code>_nextGetHandlerId</code><a class="permalink" href="#-nextgethandlerid-system-uint16" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.UInt16 _nextGetHandlerId">Copy</button></span></td><td>private</td><td><code>private System.UInt16 _nextGetHandlerId</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Desynced public System.Void Desynced(System.String methodName) System.Void methodName System.String" id="desynced-system-string---system-void">
+<div class="method-heading">
+<h3><code>Desynced</code></h3>
+<a class="permalink" href="#desynced-system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Desynced(System.String methodName)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::Desynced(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Desynced(System.String methodName)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>12531B65ED639E110D2FC8DBDC38062AB7ECA18879C9B2324A284854900ECA44</code></li>
+<li><span>Body hash</span><code>E451E6110F0DA754BC98A3EB1B03A68605FACE78D5C80BBBE8AABCBB5CAA813E</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#errordisconnect-candide-multiplayer-services-disconnectreason--system-string---system-void">Candide.Multiplayer.Services.ConnectService::ErrorDisconnect(Candide.Multiplayer.Services.DisconnectReason, System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Services_ConstructionSitesService.html#onreceive-createconstructionsite-candideserver-messagemodels-constructions-createconstructionsitemessage---system-void"><code>Candide.GameModels.Services.ConstructionSitesService::OnReceive_CreateConstructionSite</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DisableNetworkStats public System.Void DisableNetworkStats() System.Void " id="disablenetworkstats----system-void">
+<div class="method-heading">
+<h3><code>DisableNetworkStats</code></h3>
+<a class="permalink" href="#disablenetworkstats----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DisableNetworkStats()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::DisableNetworkStats()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DisableNetworkStats()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CA5C36BA220361BB8872A85DAF8AE8167046E2BDCD88A967909F5BEFF7C33489</code></li>
+<li><span>Body hash</span><code>9CEE1466EF605371E5CA1BA2EEEF09DF71FEA2CECF1E38CB2D143D0021457B9F</code></li>
+<li><span>IL size</span><span>40</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Toolkit_NetworkStatsWindow.html#createwindow----system-void"><code>Candide.Toolkit.NetworkStatsWindow::CreateWindow</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="EnableNetworkStats public System.Void EnableNetworkStats() System.Void " id="enablenetworkstats----system-void">
+<div class="method-heading">
+<h3><code>EnableNetworkStats</code></h3>
+<a class="permalink" href="#enablenetworkstats----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void EnableNetworkStats()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::EnableNetworkStats()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void EnableNetworkStats()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8E7EECA18ADE897D0CFCDA66F41DA5BEBDE74B921A2017B91BDF169131FEE8AA</code></li>
+<li><span>Body hash</span><code>BCC5C690F03671261062E6A6F579CCC39A77A779E28D4AE879E83C9127D9BF1C</code></li>
+<li><span>IL size</span><span>40</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Toolkit_NetworkStatsWindow.html#createwindow----system-void"><code>Candide.Toolkit.NetworkStatsWindow::CreateWindow</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Get public Candide.Multiplayer.Network.GetResponseHandler Get&lt;T&gt;(System.String key, System.Object message, System.Action&lt;T&gt; onResponse, System.Single timeOutSeconds, System.Action&lt;System.Byte&gt; onError, System.Boolean ignorePreviousResponses) Candide.Multiplayer.Network.GetResponseHandler key System.String message System.Object onResponse System.Action&lt;T&gt; timeOutSeconds System.Single onError System.Action&lt;System.Byte&gt; ignorePreviousResponses System.Boolean" id="get-1-system-string--system-object--system-action-1--t---system-single--system-action-1-system-byte---system-boolean---candide-multiplayer-network-getresponsehandler">
+<div class="method-heading">
+<h3><code>Get</code></h3>
+<a class="permalink" href="#get-1-system-string--system-object--system-action-1--t---system-single--system-action-1-system-byte---system-boolean---candide-multiplayer-network-getresponsehandler" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Candide.Multiplayer.Network.GetResponseHandler Get&lt;T&gt;(System.String key, System.Object message, System.Action&lt;T&gt; onResponse, System.Single timeOutSeconds, System.Action&lt;System.Byte&gt; onError, System.Boolean ignorePreviousResponses)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::Get(System.String, System.Object, System.Action&lt;T&gt;, System.Single, System.Action&lt;System.Byte&gt;, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Romestead/Candide_Multiplayer_Network_GetResponseHandler.html">Candide.Multiplayer.Network.GetResponseHandler</a> Get&lt;T&gt;(System.String key, System.Object message, System.Action&lt;T&gt; onResponse, System.Single timeOutSeconds, System.Action&lt;System.Byte&gt; onError, System.Boolean ignorePreviousResponses)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Romestead/Candide_Multiplayer_Network_GetResponseHandler.html">Candide.Multiplayer.Network.GetResponseHandler</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>164E9251B8D6F1204BE5BDD6E8ABE01D88083328F12F87079DB378F58BBC6167</code></li>
+<li><span>Body hash</span><code>2341A2CE279841A1B2C6656B0B8B4D1D67F7EEAA63BDA22264EE8321E7BA7AC2</code></li>
+<li><span>IL size</span><span>392</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>NetworkManager.&lt;&gt;c__DisplayClass16_0&lt;T&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.UInt16&gt;::Remove(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>NetworkManager.&lt;&gt;c__DisplayClass16_0&lt;T&gt;::&lt;Get&gt;b__0(System.Object)</code></li>
+<li><code>System.Action&lt;System.Object&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.Multiplayer.Network.GetResponseHandler::.ctor(System.Action&lt;System.Object&gt;, System.Single, System.Action&lt;System.Byte&gt;)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Action&lt;System.Byte&gt;::Invoke(!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.IO.Stream::set_Position(System.Int64)</code></li>
+<li><code>System.IO.BinaryWriter::Write(System.Byte)</code></li>
+<li><code>System.IO.BinaryWriter::Write(System.UInt16)</code></li>
+<li><code>System.IO.BinaryWriter::Write(System.String)</code></li>
+<li><code>CandideCreator.Shared.Serialization.CandideSerializer::Serialize(CandideCreator.Shared.Serialization.CandideReflection, System.IO.Stream, !!0, System.Boolean)</code></li>
+<li><code>System.IO.MemoryStream::GetBuffer()</code></li>
+<li><code>System.IO.Stream::get_Position()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_IClientManager.html#sendmessage-system-byte----system-int32--system-byte---system-void">Candide.Multiplayer.Network.IClientManager::SendMessage(System.Byte[], System.Int32, System.Byte)</a></code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Old response handler found at id </code></li>
+<li><code>, with timeout </code></li>
+<li><code>. Make sure your timeouts are not too long!</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetNetworkStatsText public System.String GetNetworkStatsText(System.Text.StringBuilder s) System.String s System.Text.StringBuilder" id="getnetworkstatstext-system-text-stringbuilder---system-string">
+<div class="method-heading">
+<h3><code>GetNetworkStatsText</code></h3>
+<a class="permalink" href="#getnetworkstatstext-system-text-stringbuilder---system-string" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.String GetNetworkStatsText(System.Text.StringBuilder s)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::GetNetworkStatsText(System.Text.StringBuilder)">Copy Harmony target</button>
+</div>
+<p><code>public System.String GetNetworkStatsText(System.Text.StringBuilder s)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.String</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F1FFE1EF9B26BF0547B1E1F921068B0F1A33255504E3F5484963C1877B44A0E6</code></li>
+<li><span>Body hash</span><code>2E57D87B76D4DD76AA53356A6707AEC803B5EA1F12558873AFB756A896DFA6BF</code></li>
+<li><span>IL size</span><span>990</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Text.StringBuilder::Append(System.String)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, NetworkManager.NetworkStat&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.String, NetworkManager.NetworkStat&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.String, NetworkManager.NetworkStat&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Romestead/NetworkManager_NetworkStat.html#append-system-text-stringbuilder--system-double---system-void">NetworkManager.NetworkStat::Append(System.Text.StringBuilder, System.Double)</a></code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.String, NetworkManager.NetworkStat&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>StringBuilder.AppendInterpolatedStringHandler::.ctor(System.Int32, System.Int32, System.Text.StringBuilder)</code></li>
+<li><code>StringBuilder.AppendInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Helpers_NetworkStatisticsHelper.html#toreadablestring-litenetlib-netstatistics--system-double---system-string">CandideServer.Helpers.NetworkStatisticsHelper::ToReadableString(LiteNetLib.NetStatistics, System.Double)</a></code></li>
+<li><code>StringBuilder.AppendInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Text.StringBuilder::Append(StringBuilder.AppendInterpolatedStringHandler&amp;)</code></li>
+<li><code>Riptide.Client::get_Connection()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Helpers_NetworkStatisticsHelper.html#toreadablestring-riptide-utils-connectionmetrics--system-double---system-string">CandideServer.Helpers.NetworkStatisticsHelper::ToReadableString(Riptide.Utils.ConnectionMetrics, System.Double)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, BaseServer.NetworkStat&gt;::get_Values()</code></li>
+<li><code>System.Linq.Enumerable::ToArray(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/BaseServer_NetworkStat.html#append-system-text-stringbuilder--system-double---system-void">BaseServer.NetworkStat::Append(System.Text.StringBuilder, System.Double)</a></code></li>
+<li><code>LiteNetLib.NetManager::get_ConnectedPeerList()</code></li>
+<li><code>System.Collections.Generic.List&lt;LiteNetLib.NetPeer&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;LiteNetLib.NetPeer&gt;::get_Current()</code></li>
+<li><code>StringBuilder.AppendInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>List.Enumerator&lt;LiteNetLib.NetPeer&gt;::MoveNext()</code></li>
+<li><code>Riptide.Server::get_Clients()</code></li>
+<li><code>System.Object::ToString()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Toolkit_NetworkStatsWindow.html#createwindow----system-void"><code>Candide.Toolkit.NetworkStatsWindow::CreateWindow</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Client Sent:
+</code></li>
+<li><code>
+Client Received:
+</code></li>
+<li><code>
+Client Statistics:
+</code></li>
+<li><code>--Total--
+</code></li>
+<li><code>
+Server Sent:
+</code></li>
+<li><code>
+Server Sent (Get Responses):
+</code></li>
+<li><code>
+Server Received:
+</code></li>
+<li><code>
+Server Statistics:
+</code></li>
+<li><code>--</code></li>
+<li><code>--
+</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetRoundTripTimeMilliseconds public System.Int32 GetRoundTripTimeMilliseconds() System.Int32 " id="getroundtriptimemilliseconds----system-int32">
+<div class="method-heading">
+<h3><code>GetRoundTripTimeMilliseconds</code></h3>
+<a class="permalink" href="#getroundtriptimemilliseconds----system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 GetRoundTripTimeMilliseconds()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::GetRoundTripTimeMilliseconds()">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 GetRoundTripTimeMilliseconds()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D7880AF02056FD30C2CB8C61272DDF05084E4CED8BC601E37171BC2CC4A4B2DC</code></li>
+<li><span>Body hash</span><code>C7C5148B64E7BD7665909CF65150FD32AAB543D37E7DF24226D3DF671352501B</code></li>
+<li><span>IL size</span><span>48</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Riptide.Client::get_RTT()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerStates_NormalState.html#onenter----system-void"><code>Candide.Entities.PlayerState.PlayerStates.NormalState::OnEnter</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LogStat public System.Void LogStat(System.String key, System.Int64 size) System.Void key System.String size System.Int64" id="logstat-system-string--system-int64---system-void">
+<div class="method-heading">
+<h3><code>LogStat</code></h3>
+<a class="permalink" href="#logstat-system-string--system-int64---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void LogStat(System.String key, System.Int64 size)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::LogStat(System.String, System.Int64)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void LogStat(System.String key, System.Int64 size)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AC11E69EE794BC8DEA98852922059DDADA81CDEFBE681151FCA82CBB158C1019</code></li>
+<li><span>Body hash</span><code>0281AD7BFEA6161BC69373CCB0A4FABF27A4D5AE315CAF1B22E6C3C56F1D24BB</code></li>
+<li><span>IL size</span><span>92</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, NetworkManager.NetworkStat&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>NetworkManager.NetworkStat::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, NetworkManager.NetworkStat&gt;::set_Item(!0, !1)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LogStatReceived public System.Void LogStatReceived(System.String key, System.Int64 size) System.Void key System.String size System.Int64" id="logstatreceived-system-string--system-int64---system-void">
+<div class="method-heading">
+<h3><code>LogStatReceived</code></h3>
+<a class="permalink" href="#logstatreceived-system-string--system-int64---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void LogStatReceived(System.String key, System.Int64 size)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::LogStatReceived(System.String, System.Int64)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void LogStatReceived(System.String key, System.Int64 size)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B8067057C2D6CBC3CC5D771B173683E634B6BC075592A5135B859C3C138EDFDD</code></li>
+<li><span>Body hash</span><code>89A894FF88A2199BAEDA3BF1372997794192C6C27387DE513F19CDDE8A261277</code></li>
+<li><span>IL size</span><span>92</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, NetworkManager.NetworkStat&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>NetworkManager.NetworkStat::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, NetworkManager.NetworkStat&gt;::set_Item(!0, !1)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ResetNetworkStats public System.Void ResetNetworkStats() System.Void " id="resetnetworkstats----system-void">
+<div class="method-heading">
+<h3><code>ResetNetworkStats</code></h3>
+<a class="permalink" href="#resetnetworkstats----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ResetNetworkStats()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::ResetNetworkStats()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ResetNetworkStats()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BF4F84839350B70E60AA0BF5BF5FA54DA5EDB93843EEF98DA78498535AB5E145</code></li>
+<li><span>Body hash</span><code>17DA953B6BF47BCD97CCE563AB2ACB19BD7294A9AF64E59D3DF04597A05AD47F</code></li>
+<li><span>IL size</span><span>72</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, NetworkManager.NetworkStat&gt;::Clear()</code></li>
+<li><code>LiteNetLib.NetStatistics::Reset()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Toolkit_NetworkStatsWindow.html#createwindow----system-void"><code>Candide.Toolkit.NetworkStatsWindow::CreateWindow</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SendMessage public System.Void SendMessage(System.String key, System.Object message, System.Byte type) System.Void key System.String message System.Object type System.Byte" id="sendmessage-system-string--system-object--system-byte---system-void">
+<div class="method-heading">
+<h3><code>SendMessage</code></h3>
+<a class="permalink" href="#sendmessage-system-string--system-object--system-byte---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SendMessage(System.String key, System.Object message, System.Byte type)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::SendMessage(System.String, System.Object, System.Byte)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SendMessage(System.String key, System.Object message, System.Byte type)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0E3554B7B4D948A331DC4DA8AE644BCBE7AAE412D5E5104C3875BCBBAB52F456</code></li>
+<li><span>Body hash</span><code>72BB2800258DCBD20805F604C9EC1F9BF24793D9D8CE80900D8250D057D69827</code></li>
+<li><span>IL size</span><span>167</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_EventBus_EventBusManager.html#sendevent-system-string--system-object--system-boolean---system-void">CandideServer.EventBus.EventBusManager::SendEvent(System.String, System.Object, System.Boolean)</a></code></li>
+<li><code>System.IO.Stream::set_Position(System.Int64)</code></li>
+<li><code>System.IO.BinaryWriter::Write(System.Byte)</code></li>
+<li><code>System.IO.BinaryWriter::Write(System.String)</code></li>
+<li><code>CandideCreator.Shared.Serialization.CandideSerializer::Serialize(CandideCreator.Shared.Serialization.CandideReflection, System.IO.Stream, !!0, System.Boolean)</code></li>
+<li><code>System.IO.MemoryStream::GetBuffer()</code></li>
+<li><code>System.IO.Stream::get_Position()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_IClientManager.html#sendmessage-system-byte----system-int32--system-byte---system-void">Candide.Multiplayer.Network.IClientManager::SendMessage(System.Byte[], System.Int32, System.Byte)</a></code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_Bridge_ClientEntitySystemBridge.html#onentitytookdamage-shared-entity-entitywrapper--system-single--system-single--system-single--shared-combat-damageinfo--system-single--system-boolean---system-void"><code>Candide.Entities.Bridge.ClientEntitySystemBridge::OnEntityTookDamage</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_WorldManager.html#moveplayertoworldandposition-system-guid--microsoft-xna-framework-vector3---system-boolean"><code>Candide.GameModels.Managers.WorldManager::MovePlayerToWorldAndPosition</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_AuraService.html#send-applyentityaura-candideserver-messagemodels-auras-applyentityauramessage---system-void"><code>Candide.GameModels.Services.AuraService::Send_ApplyEntityAura</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_AuraService.html#send-removeaurafromentity-candideserver-messagemodels-auras-removeaurafromentity---system-void"><code>Candide.GameModels.Services.AuraService::Send_RemoveAuraFromEntity</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_BlessingsService.html#send-requestapplyblessing-candideserver-messagemodels-gods-requestapplyblessingmessage---system-void"><code>Candide.GameModels.Services.BlessingsService::Send_RequestApplyBlessing</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_BossService.html#send-spawnbosscheat-system-string--microsoft-xna-framework-vector3---system-void"><code>Candide.GameModels.Services.BossService::Send_SpawnBossCheat</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_BuildingsService.html#senddepositentityintostorage-system-guid--system-guid--system-nullable-1-microsoft-xna-framework-vector3----system-void"><code>Candide.GameModels.Services.BuildingsService::SendDepositEntityIntoStorage</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_BuildingsService.html#send-removebuilding-candideserver-messagemodels-buildings-removebuildingmessage---system-void"><code>Candide.GameModels.Services.BuildingsService::Send_RemoveBuilding</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_BuildingsService.html#send-tryturnitemintofuelforsource-candideserver-messagemodels-buildings-tryturnitemintofuelforsourcemessage---system-void"><code>Candide.GameModels.Services.BuildingsService::Send_TryTurnItemIntoFuelForSource</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_BuildingsService.html#send-upgradebuildingcheat-system-guid--system-string---system-void"><code>Candide.GameModels.Services.BuildingsService::Send_UpgradeBuildingCheat</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_CitizenService.html#sendapplycitizenaura-candideserver-messagemodels-citizens-applycitizenauramessage---system-void"><code>Candide.GameModels.Services.CitizenService::SendApplyCitizenAura</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_CitizenService.html#sendstoplisteningtocitizens-candideserver-messagemodels-citizens-stoplisteningtocitizensmessage---system-void"><code>Candide.GameModels.Services.CitizenService::SendStopListeningToCitizens</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_CitizenService.html#sendwildcitizentoclosesttown-candideserver-messagemodels-citizens-sendwildcitizentoclosesttownmessage---system-void"><code>Candide.GameModels.Services.CitizenService::SendWildCitizenToClosestTown</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_CitizenService.html#send-acquirequest-candideserver-messagemodels-citizens-acquirecitizenquestmessage---system-void"><code>Candide.GameModels.Services.CitizenService::Send_AcquireQuest</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_CitizenService.html#send-cheataddgenericcitizen----system-void"><code>Candide.GameModels.Services.CitizenService::Send_CheatAddGenericCitizen</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_CitizenService.html#send-cheatkillallcitizens----system-void"><code>Candide.GameModels.Services.CitizenService::Send_CheatKillAllCitizens</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_CombatService.html#sendshieldblock-candideserver-serverservices-shieldblockmessage---system-void"><code>Candide.GameModels.Services.CombatService::SendShieldBlock</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_ConstructionSitesService.html#buildconstructionsite-candideserver-messagemodels-constructions-buildconstructionsitemessage---system-void"><code>Candide.GameModels.Services.ConstructionSitesService::BuildConstructionSite</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_ConstructionSitesService.html#createconstructionsite-candideserver-messagemodels-constructions-createconstructionsitemessage---system-void"><code>Candide.GameModels.Services.ConstructionSitesService::CreateConstructionSite</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_ConstructionSitesService.html#sendremoveconstructionsite-candideserver-messagemodels-constructions-removeconstructionsitemessage---system-void"><code>Candide.GameModels.Services.ConstructionSitesService::SendRemoveConstructionSite</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_ConstructionSitesService.html#send-constructactioninprogressdoprogress-candideserver-messagemodels-constructions-constructactioninprogressdoprogressmessage---system-void"><code>Candide.GameModels.Services.ConstructionSitesService::Send_ConstructActionInProgressDoProgress</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_ConstructionSitesService.html#send-startconstructactioninprogress-candideserver-messagemodels-constructions-startconstructactioninprogressmessage---system-void"><code>Candide.GameModels.Services.ConstructionSitesService::Send_StartConstructActionInProgress</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_ConstructionSitesService.html#send-stopconstructactioninprogress-candideserver-messagemodels-constructions-stopconstructactioninprogressmessage---system-void"><code>Candide.GameModels.Services.ConstructionSitesService::Send_StopConstructActionInProgress</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_ConstructionsService.html#sendcreateconstructioncheat-system-string--microsoft-xna-framework-vector2--system-nullable-1-system-guid----system-void"><code>Candide.GameModels.Services.ConstructionsService::SendCreateConstructionCheat</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_CropService.html#sendplacecrop-microsoft-xna-framework-point--system-string---system-void"><code>Candide.GameModels.Services.CropService::SendPlaceCrop</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_CropService.html#sendplayerharvestcrop-microsoft-xna-framework-point---system-void"><code>Candide.GameModels.Services.CropService::SendPlayerHarvestCrop</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_CropService.html#send-tryremovecrop-microsoft-xna-framework-point---system-void"><code>Candide.GameModels.Services.CropService::Send_TryRemoveCrop</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_DecorationsService.html#send-removedecoration-candideserver-messagemodels-decorations-removedecorationmessage---system-void"><code>Candide.GameModels.Services.DecorationsService::Send_RemoveDecoration</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_DungeonService.html#send-discoverdungeonlocation-system-guid---system-void"><code>Candide.GameModels.Services.DungeonService::Send_DiscoverDungeonLocation</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_DungeonService.html#send-spawndungeoncheat-system-string--microsoft-xna-framework-vector3---system-void"><code>Candide.GameModels.Services.DungeonService::Send_SpawnDungeonCheat</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_DungeonService.html#send-tryenterdoor-system-guid--system-guid--system-int32---system-void"><code>Candide.GameModels.Services.DungeonService::Send_TryEnterDoor</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Services_DungeonService.html#send-tryenterdungeon-system-guid---system-void"><code>Candide.GameModels.Services.DungeonService::Send_TryEnterDungeon</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="StartClient public System.Void StartClient(System.String address, System.Int32 port, CandideServer.Server.MultiplayerConfiguration config) System.Void address System.String port System.Int32 config CandideServer.Server.MultiplayerConfiguration" id="startclient-system-string--system-int32--candideserver-server-multiplayerconfiguration---system-void">
+<div class="method-heading">
+<h3><code>StartClient</code></h3>
+<a class="permalink" href="#startclient-system-string--system-int32--candideserver-server-multiplayerconfiguration---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void StartClient(System.String address, System.Int32 port, CandideServer.Server.MultiplayerConfiguration config)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::StartClient(System.String, System.Int32, CandideServer.Server.MultiplayerConfiguration)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void StartClient(System.String address, System.Int32 port, <a href="../../types/CandideServer/CandideServer_Server_MultiplayerConfiguration.html">CandideServer.Server.MultiplayerConfiguration</a> config)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>59540ACBC749D1135913A4EC0AB915FC8B5D379965C359B715162CD74FA6A415</code></li>
+<li><span>Body hash</span><code>74D9E18A40412E26394D62D86001ECAB7AAB97649E7E8E4E083A86FAC4FB8F16</code></li>
+<li><span>IL size</span><span>234</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Multiplayer.Network.LiteNetLibClientManager::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_Network_RiptideHelper.html#initializeriptidelogger----system-void">CandideServer.Server.Network.RiptideHelper::InitializeRiptideLogger()</a></code></li>
+<li><code>System.Diagnostics.Stopwatch::StartNew()</code></li>
+<li><code>System.Diagnostics.Stopwatch::get_ElapsedMilliseconds()</code></li>
+<li><code>CandideServer.Server.RiptideSteam.SteamClient::.ctor(System.Boolean, CandideServer.Server.RiptideSteam.SteamServer)</code></li>
+<li><code>Riptide.Transports.Udp.UdpClient::.ctor(Riptide.Transports.Udp.SocketMode, System.Int32)</code></li>
+<li><code>Candide.Multiplayer.Network.RiptideClientManager::.ctor(Riptide.Transports.IClient)</code></li>
+<li><code>Candide.Multiplayer.Network.ClientConfiguration::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_IClientManager.html#startclient-candideserver-server-multiplayerconfiguration--candide-multiplayer-network-clientconfiguration---system-void">Candide.Multiplayer.Network.IClientManager::StartClient(CandideServer.Server.MultiplayerConfiguration, Candide.Multiplayer.Network.ClientConfiguration)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#connect----system-void"><code>Candide.Multiplayer.Services.ConnectService::Connect</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="StopClient public System.Void StopClient() System.Void " id="stopclient----system-void">
+<div class="method-heading">
+<h3><code>StopClient</code></h3>
+<a class="permalink" href="#stopclient----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void StopClient()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::StopClient()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void StopClient()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A6AF38782782867D1DB3DEEDB83770E31AC61EA2E285FA18EC5C92FC2B3B8BA1</code></li>
+<li><span>Body hash</span><code>64D5B7C2A0B0700A4DAB6824B3D4F36C4914CF24B89A0090617AF17D244E573E</code></li>
+<li><span>IL size</span><span>25</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_IClientManager.html#stopclient----system-void">Candide.Multiplayer.Network.IClientManager::StopClient()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_MainMenu_Ui_Steps_PostGameWindow.html#handlepostgamebehaviour----system-void"><code>Candide.MainMenu.Ui.Steps.PostGameWindow::HandlePostGameBehaviour</code></a></li>
+<li><a href="../../types/Romestead/Candide_Program.html#onexit----system-void"><code>Candide.Program::OnExit</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(System.TimeSpan elapsedTime) System.Void elapsedTime System.TimeSpan" id="update-system-timespan---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-system-timespan---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(System.TimeSpan elapsedTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::Update(System.TimeSpan)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(System.TimeSpan elapsedTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>55A2DA9E33921AE9079A9F60B4CBA6516C16E3382732AAB69EB75F0C75F284D5</code></li>
+<li><span>Body hash</span><code>1AB7740E2A9182DC925B641CB9AB6F5FE3FB07806C8338B4162BA5F08D4A6365</code></li>
+<li><span>IL size</span><span>49</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_NetworkManager.html#updateresponsehandlers-system-timespan---system-void">Candide.Multiplayer.Network.NetworkManager::UpdateResponseHandlers(System.TimeSpan)</a></code></li>
+<li><code>System.TimeSpan::get_TotalSeconds()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_IClientManager.html#updateclient----system-void">Candide.Multiplayer.Network.IClientManager::UpdateClient()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideEngine::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_MainMenu_MainMenu.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.MainMenu.MainMenu::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="UpdateResponseHandlers private System.Void UpdateResponseHandlers(System.TimeSpan elapsedTime) System.Void elapsedTime System.TimeSpan" id="updateresponsehandlers-system-timespan---system-void">
+<div class="method-heading">
+<h3><code>UpdateResponseHandlers</code></h3>
+<a class="permalink" href="#updateresponsehandlers-system-timespan---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void UpdateResponseHandlers(System.TimeSpan elapsedTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::UpdateResponseHandlers(System.TimeSpan)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void UpdateResponseHandlers(System.TimeSpan elapsedTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A7F9AFE2936C0AF30D542498BD50A654CC83801CDFD0653BAFD04159C4F34AF5</code></li>
+<li><span>Body hash</span><code>737F437DFC0FD757A4520866AD954382C387D2E7D7FDCD8310847F80863EEC4B</code></li>
+<li><span>IL size</span><span>206</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt;::get_Count()</code></li>
+<li><code>System.TimeSpan::op_Addition(System.TimeSpan, System.TimeSpan)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code>System.TimeSpan::op_GreaterThan(System.TimeSpan, System.TimeSpan)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.UInt16&gt;::Add(!0)</code></li>
+<li><code>Dictionary.Enumerator&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.UInt16&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.UInt16&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt;::Remove(!0, !1&amp;)</code></li>
+<li><code>System.Action&lt;System.Byte&gt;::Invoke(!0)</code></li>
+<li><code>List.Enumerator&lt;System.UInt16&gt;::MoveNext()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Network_NetworkManager.html#update-system-timespan---system-void"><code>Candide.Multiplayer.Network.NetworkManager::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="WeDisconnected private System.Void WeDisconnected(Candide.Multiplayer.Services.DisconnectReason reason) System.Void reason Candide.Multiplayer.Services.DisconnectReason" id="wedisconnected-candide-multiplayer-services-disconnectreason---system-void">
+<div class="method-heading">
+<h3><code>WeDisconnected</code></h3>
+<a class="permalink" href="#wedisconnected-candide-multiplayer-services-disconnectreason---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void WeDisconnected(Candide.Multiplayer.Services.DisconnectReason reason)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.Network.NetworkManager::WeDisconnected(Candide.Multiplayer.Services.DisconnectReason)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void WeDisconnected(<a href="../../types/Romestead/Candide_Multiplayer_Services_DisconnectReason.html">Candide.Multiplayer.Services.DisconnectReason</a> reason)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CA9B0AA2B533A98F71FEC3F7E0DB9C5EBB78A673A88C65475BD9957D683687FA</code></li>
+<li><span>Body hash</span><code>04C893F1BEF6D96C94C2E28CC61B79447CEB277858739476153F45EB76DF861B</code></li>
+<li><span>IL size</span><span>11</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.UInt16, Candide.Multiplayer.Network.GetResponseHandler&gt;::Clear()</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

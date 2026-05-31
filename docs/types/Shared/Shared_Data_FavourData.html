@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shared.Data.FavourData - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Shared.html">Shared</a></p>
+<div class="title-row">
+<h1>Shared.Data.FavourData</h1>
+<button class="copy-button" type="button" data-copy="Shared.Data.FavourData">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Shared.Data.FavourData
+
+- Assembly: `Shared`
+- Namespace: `Shared.Data`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 1 methods, 0 properties, 14 fields, 0 events
+
+## Public Methods
+- `public System.Void GetDescription(System.Text.StringBuilder sb, Shared.Models.Auras.ApplyAuraContext context)`
+">Copy markdown</button>
+<a class="button" href="Shared_Data_FavourData.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Shared.Data</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>1</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>14</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Shared</code></li>
+<li><span>Namespace</span><code>Shared.Data</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>67FD2F779F19FA5915470D4F1AFFCDB1C9E6AFD3794B005334B9CB87C4542A00</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_FavourServerManager.html"><code>CandideServer.ServerManagers.FavourServerManager</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_SkillsAndFavourUi_NewFavourHolder.html"><code>Candide.CandideUI.SkillsAndFavourUi.NewFavourHolder</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tooltip_CandideTooltipHelper.html"><code>Candide.CandideUI.Tooltip.CandideTooltipHelper</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_FavourManager.html"><code>Candide.GameModels.Managers.FavourManager</code></a></li>
+<li><a href="../../types/Shared/Shared_Data_Favour_GodFavourSetup.html"><code>Shared.Data.Favour.GodFavourSetup</code></a></li>
+<li><a href="../../types/Shared/Shared_Data_FavourDataBase.html"><code>Shared.Data.FavourDataBase</code></a></li>
+<li><a href="../../types/Shared/Shared_Data_SharedDataSetup.html"><code>Shared.Data.SharedDataSetup</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="AuraId public System.String AuraId System.String" id="auraid-system-string"><td><span class="member-name-cell"><code>AuraId</code><a class="permalink" href="#auraid-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String AuraId">Copy</button></span></td><td>public</td><td><code>public System.String AuraId</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Description public System.Nullable&lt;Shared.Text.StringId&gt; Description System.Nullable&lt;Shared.Text.StringId&gt;" id="description-system-nullable-1-shared-text-stringid-"><td><span class="member-name-cell"><code>Description</code><a class="permalink" href="#description-system-nullable-1-shared-text-stringid-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Nullable&lt;Shared.Text.StringId&gt; Description">Copy</button></span></td><td>public</td><td><code>public System.Nullable&lt;<a href="../../types/Shared/Shared_Text_StringId.html">Shared.Text.StringId</a>&gt; Description</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="FlagId public System.String FlagId System.String" id="flagid-system-string"><td><span class="member-name-cell"><code>FlagId</code><a class="permalink" href="#flagid-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String FlagId">Copy</button></span></td><td>public</td><td><code>public System.String FlagId</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="FlagValue1 public System.Single FlagValue1 System.Single" id="flagvalue1-system-single"><td><span class="member-name-cell"><code>FlagValue1</code><a class="permalink" href="#flagvalue1-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single FlagValue1">Copy</button></span></td><td>public</td><td><code>public System.Single FlagValue1</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="FlagValue2 public System.Single FlagValue2 System.Single" id="flagvalue2-system-single"><td><span class="member-name-cell"><code>FlagValue2</code><a class="permalink" href="#flagvalue2-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single FlagValue2">Copy</button></span></td><td>public</td><td><code>public System.Single FlagValue2</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="GodId public System.String GodId System.String" id="godid-system-string"><td><span class="member-name-cell"><code>GodId</code><a class="permalink" href="#godid-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String GodId">Copy</button></span></td><td>public</td><td><code>public System.String GodId</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Icon public System.String Icon System.String" id="icon-system-string"><td><span class="member-name-cell"><code>Icon</code><a class="permalink" href="#icon-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String Icon">Copy</button></span></td><td>public</td><td><code>public System.String Icon</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Id public System.String Id System.String" id="id-system-string"><td><span class="member-name-cell"><code>Id</code><a class="permalink" href="#id-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String Id">Copy</button></span></td><td>public</td><td><code>public System.String Id</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Name public Shared.Text.StringId Name Shared.Text.StringId" id="name-shared-text-stringid"><td><span class="member-name-cell"><code>Name</code><a class="permalink" href="#name-shared-text-stringid" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Shared.Text.StringId Name">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Shared/Shared_Text_StringId.html">Shared.Text.StringId</a> Name</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="PlayerCraftingRecipeId public System.String PlayerCraftingRecipeId System.String" id="playercraftingrecipeid-system-string"><td><span class="member-name-cell"><code>PlayerCraftingRecipeId</code><a class="permalink" href="#playercraftingrecipeid-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String PlayerCraftingRecipeId">Copy</button></span></td><td>public</td><td><code>public System.String PlayerCraftingRecipeId</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="RequiredId public System.String RequiredId System.String" id="requiredid-system-string"><td><span class="member-name-cell"><code>RequiredId</code><a class="permalink" href="#requiredid-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String RequiredId">Copy</button></span></td><td>public</td><td><code>public System.String RequiredId</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="RequirementForId public System.String RequirementForId System.String" id="requirementforid-system-string"><td><span class="member-name-cell"><code>RequirementForId</code><a class="permalink" href="#requirementforid-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String RequirementForId">Copy</button></span></td><td>public</td><td><code>public System.String RequirementForId</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="TierRow public System.Int32 TierRow System.Int32" id="tierrow-system-int32"><td><span class="member-name-cell"><code>TierRow</code><a class="permalink" href="#tierrow-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 TierRow">Copy</button></span></td><td>public</td><td><code>public System.Int32 TierRow</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="UiColumn public System.Int32 UiColumn System.Int32" id="uicolumn-system-int32"><td><span class="member-name-cell"><code>UiColumn</code><a class="permalink" href="#uicolumn-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 UiColumn">Copy</button></span></td><td>public</td><td><code>public System.Int32 UiColumn</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetDescription public System.Void GetDescription(System.Text.StringBuilder sb, Shared.Models.Auras.ApplyAuraContext context) System.Void sb System.Text.StringBuilder context Shared.Models.Auras.ApplyAuraContext" id="getdescription-system-text-stringbuilder--shared-models-auras-applyauracontext---system-void">
+<div class="method-heading">
+<h3><code>GetDescription</code></h3>
+<a class="permalink" href="#getdescription-system-text-stringbuilder--shared-models-auras-applyauracontext---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GetDescription(System.Text.StringBuilder sb, Shared.Models.Auras.ApplyAuraContext context)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.FavourData::GetDescription(System.Text.StringBuilder, Shared.Models.Auras.ApplyAuraContext)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GetDescription(System.Text.StringBuilder sb, <a href="../../types/Shared/Shared_Models_Auras_ApplyAuraContext.html">Shared.Models.Auras.ApplyAuraContext</a> context)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1F2499F7328B1B899115C3FE165843727FA4414B8776EA82141B58EDF49FAFA0</code></li>
+<li><span>Body hash</span><code>F8AF0A3FFB0FEB485C740538832B501B5E8FDB2A948397C65EDA3414D361DF74</code></li>
+<li><span>IL size</span><span>159</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;Shared.Text.StringId&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_AuraDataBase.html#getauraormissing-system-string---shared-models-auras-entityaurainfo">Shared.Data.AuraDataBase::GetAuraOrMissing(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Auras_EntityAuraInfo.html#gettextdescription-system-text-stringbuilder--shared-models-auras-applyauracontext---system-void">Shared.Models.Auras.EntityAuraInfo::GetTextDescription(System.Text.StringBuilder, Shared.Models.Auras.ApplyAuraContext)</a></code></li>
+<li><code>System.String::IsNullOrEmpty(System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_ItemRecipeDataBase.html#getitemrecipeormissing-system-string---shared-data-itemrecipe">Shared.Data.ItemRecipeDataBase::GetItemRecipeOrMissing(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Data_ItemDataBase.html#getitemdataormissing-system-string---shared-models-items-itemdata">Shared.Data.ItemDataBase::GetItemDataOrMissing(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringDefinitions.html#getstring-system-string---system-string">Shared.Text.StringDefinitions::GetString(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringExtensions.html#gettranslation-shared-text-stringid---system-string">Shared.Text.StringExtensions::GetTranslation(Shared.Text.StringId)</a></code></li>
+<li><code>System.String::Format(System.String, System.Object)</code></li>
+<li><code>System.Text.StringBuilder::AppendLine(System.String)</code></li>
+<li><code>System.Nullable&lt;Shared.Text.StringId&gt;::get_Value()</code></li>
+<li><code>System.String::Format(System.String, System.Object, System.Object)</code></li>
+<li><code>System.Text.StringBuilder::Append(System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Tooltip_CandideTooltipHelper.html#buildfavourtooltipcontent-shared-data-favourdata---system-collections-generic-ienumerable-1-candide-candideui-candideuielement-"><code>Candide.CandideUI.Tooltip.CandideTooltipHelper::BuildFavourTooltipContent</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Favours_UnlocksRecipe</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

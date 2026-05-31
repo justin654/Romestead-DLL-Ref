@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerManagers.BuildingsServerManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerManagers.BuildingsServerManager</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerManagers.BuildingsServerManager
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerManagers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 13 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public CandideServer.Models.InternalResourceStorageModel CreateInternalResourceStorageForBuilding(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, CandideServer.MessageModels.InternalResourceStorage.CreateNewInternalResourceStorageMessage msg, CandideServer.ServerControllers.IOStorageCreationType type)`
+- `public System.Nullable&lt;System.Int32&gt; DepleteOutputResourceStorage(CandideServer.ServerManagers.DepleteOutputResourceStorageArgs args)`
+- `public System.Guid GetBuildingOutsideWorldId(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstanceModel)`
+- `public System.Collections.Generic.IEnumerable&lt;CandideServer.SimulationModels.BuildingSimulationModel&gt; GetBuildingsIntersectingCircleArea(Microsoft.Xna.Framework.Vector2 circlePos, System.Single radius)`
+- `public CandideServer.SimulationModels.BuildingSimulationModel GetClosestBuilding(Microsoft.Xna.Framework.Vector2 circlePos, System.String exclusiveBuildingTypeId)`
+- `public CandideServer.SimulationModels.BuildingSimulationModel GetClosestBuildingIntersectingCircleArea(Microsoft.Xna.Framework.Vector2 circlePos, System.Single radius, System.Nullable&lt;System.Guid&gt; townId, System.String exclusiveBuildingTypeId)`
+- `public System.Boolean TryAddResourceAggregateIntoStorage(Shared.Models.Construction.ConstructionMaterialsAggregate resourceAggregate, CandideServer.SimulationModels.BuildingSimulationModel building)`
+- `public System.Boolean TryAddResourceAggregateIntoStorage(System.String resourceId, System.Int32 resourceAmount, CandideServer.SimulationModels.BuildingSimulationModel building)`
+- `public System.Boolean TryAdjustInternalResourceStorage(CandideServer.SimulationModels.BuildingSimulationModel building, Shared.Models.Construction.ConstructionMaterialsAggregate constructionMaterials)`
+- `public System.Boolean TryDepositResourceEntityIntoStorage(CandideServer.Entities.ServerEntityModel entity, System.Guid buildingId)`
+- `public System.Boolean TryRemoveBuilding(System.Guid buildingId, CandideServer.SyncStrategies.SyncStrategy syncStrategy)`
+- `public System.Boolean TryUpgradeBuilding(System.Guid buildingId, System.String constructionId, System.Boolean consumeMaterials)`
+- `public System.Void UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage msg)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerManagers_BuildingsServerManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerManagers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>13</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerManagers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>C07723569B7C6F33084FF57EE70E075D811323340CACD8DE11A7249FB9A6EF63</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateInternalResourceStorageForBuilding public CandideServer.Models.InternalResourceStorageModel CreateInternalResourceStorageForBuilding(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, CandideServer.MessageModels.InternalResourceStorage.CreateNewInternalResourceStorageMessage msg, CandideServer.ServerControllers.IOStorageCreationType type) CandideServer.Models.InternalResourceStorageModel buildingInstance CandideServer.Models.Buildings.BuildingInstanceModel msg CandideServer.MessageModels.InternalResourceStorage.CreateNewInternalResourceStorageMessage type CandideServer.ServerControllers.IOStorageCreationType" id="createinternalresourcestorageforbuilding-candideserver-models-buildings-buildinginstancemodel--candideserver-messagemodels-internalresourcestorage-createnewinternalresourcestoragemessage--candideserver-servercontrollers-iostoragecreationtype---candideserver-models-internalresourcestoragemodel">
+<div class="method-heading">
+<h3><code>CreateInternalResourceStorageForBuilding</code></h3>
+<a class="permalink" href="#createinternalresourcestorageforbuilding-candideserver-models-buildings-buildinginstancemodel--candideserver-messagemodels-internalresourcestorage-createnewinternalresourcestoragemessage--candideserver-servercontrollers-iostoragecreationtype---candideserver-models-internalresourcestoragemodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.InternalResourceStorageModel CreateInternalResourceStorageForBuilding(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, CandideServer.MessageModels.InternalResourceStorage.CreateNewInternalResourceStorageMessage msg, CandideServer.ServerControllers.IOStorageCreationType type)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager::CreateInternalResourceStorageForBuilding(CandideServer.Models.Buildings.BuildingInstanceModel, CandideServer.MessageModels.InternalResourceStorage.CreateNewInternalResourceStorageMessage, CandideServer.ServerControllers.IOStorageCreationType)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_InternalResourceStorageModel.html">CandideServer.Models.InternalResourceStorageModel</a> CreateInternalResourceStorageForBuilding(<a href="../../types/CandideServer/CandideServer_Models_Buildings_BuildingInstanceModel.html">CandideServer.Models.Buildings.BuildingInstanceModel</a> buildingInstance, <a href="../../types/CandideServer/CandideServer_MessageModels_InternalResourceStorage_CreateNewInternalResourceStorageMessage.html">CandideServer.MessageModels.InternalResourceStorage.CreateNewInternalResourceStorageMessage</a> msg, <a href="../../types/CandideServer/CandideServer_ServerControllers_IOStorageCreationType.html">CandideServer.ServerControllers.IOStorageCreationType</a> type)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_InternalResourceStorageModel.html">CandideServer.Models.InternalResourceStorageModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A42E5C21CE3FC58117EE27E3DBF9BAE8C4D1332DC90C76AFF7D361E76554D3DF</code></li>
+<li><span>Body hash</span><code>3731BED19C5DD4BE577D9AE979DCBC4F017BCF5D0054D3644463B40079BCCFF3</code></li>
+<li><span>IL size</span><span>99</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_InternalResourceStorageSController.html#createinternalresourcestorage-candideserver-messagemodels-internalresourcestorage-createnewinternalresourcestoragemessage---candideserver-models-internalresourcestoragemodel">CandideServer.ServerControllers.InternalResourceStorageSController::CreateInternalResourceStorage(CandideServer.MessageModels.InternalResourceStorage.CreateNewInternalResourceStorageMessage)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#registerinternalresourcestorage-candideserver-models-buildings-buildinginstancemodel--system-guid--candideserver-servercontrollers-iostoragecreationtype---system-void">CandideServer.ServerControllers.BuildingsSController::RegisterInternalResourceStorage(CandideServer.Models.Buildings.BuildingInstanceModel, System.Guid, CandideServer.ServerControllers.IOStorageCreationType)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_BrickOvenController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.BrickOvenController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_CarpenterController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.CarpenterController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_ClaypitController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.ClaypitController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_ConcreteMixerController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.ConcreteMixerController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_LumberYardController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.LumberYardController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_MaterialStorageController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.MaterialStorageController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_PotteryController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.PotteryController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_QuarryController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.QuarryController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_SculptorController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.SculptorController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_TradingPostController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.TradingPostController::OnNewlyCreated</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Failed creating InternalResourceStorage for building </code></li>
+<li><code> with ID </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DepleteOutputResourceStorage public System.Nullable&lt;System.Int32&gt; DepleteOutputResourceStorage(CandideServer.ServerManagers.DepleteOutputResourceStorageArgs args) System.Nullable&lt;System.Int32&gt; args CandideServer.ServerManagers.DepleteOutputResourceStorageArgs" id="depleteoutputresourcestorage-candideserver-servermanagers-depleteoutputresourcestorageargs---system-nullable-1-system-int32-">
+<div class="method-heading">
+<h3><code>DepleteOutputResourceStorage</code></h3>
+<a class="permalink" href="#depleteoutputresourcestorage-candideserver-servermanagers-depleteoutputresourcestorageargs---system-nullable-1-system-int32-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Nullable&lt;System.Int32&gt; DepleteOutputResourceStorage(CandideServer.ServerManagers.DepleteOutputResourceStorageArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager::DepleteOutputResourceStorage(CandideServer.ServerManagers.DepleteOutputResourceStorageArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Nullable&lt;System.Int32&gt; DepleteOutputResourceStorage(<a href="../../types/CandideServer/CandideServer_ServerManagers_DepleteOutputResourceStorageArgs.html">CandideServer.ServerManagers.DepleteOutputResourceStorageArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Nullable&lt;System.Int32&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4C0F8CF23AE9C4B1AE63B31C750D668FB40A3C385CDEF06D2ABDBF8001B0F9A9</code></li>
+<li><span>Body hash</span><code>84EAA72EF9F40AB5D5804BFB2B0583AA8126515CB4D1C933E17D39D708D0B3F5</code></li>
+<li><span>IL size</span><span>412</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Data_ConstructionResourcesDataBase.html#getconstructionresourceornull-system-string---system-nullable-1-shared-models-construction-constructionresourcedatamodel-">Shared.Data.ConstructionResourcesDataBase::GetConstructionResourceOrNull(System.String)</a></code></li>
+<li><code>System.Nullable&lt;Shared.Models.Construction.ConstructionResourceDataModel&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetresourcestorage-system-guid--candideserver-models-internalresourcestoragemodel----system-boolean">CandideServer.ServerGameState::TryGetResourceStorage(System.Guid, CandideServer.Models.InternalResourceStorageModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_InternalResourceStorageSController.html#depleteresource-candideserver-models-internalresourcestoragemodel--system-string--system-int32---candideserver-messagemodels-internalresourcestorage-updateinternalresourcestoragechangedmessage">CandideServer.ServerControllers.InternalResourceStorageSController::DepleteResource(CandideServer.Models.InternalResourceStorageModel, System.String, System.Int32)</a></code></li>
+<li><code>System.Nullable&lt;CandideServer.ServerManagers.DepleteResourceStorageSpawnEntityArgs&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Shared.Models.Construction.ConstructionResourceDataModel&gt;::get_Value()</code></li>
+<li><code>System.Nullable&lt;CandideServer.ServerManagers.DepleteResourceStorageSpawnEntityArgs&gt;::get_Value()</code></li>
+<li><code>CandideServer.ServerControllers.SpawnEntityArgs::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#spawnentity-candideserver-servercontrollers-spawnentityargs---candideserver-entities-serverentitymodel">CandideServer.ServerManagers.EntityServerManager::SpawnEntity(CandideServer.ServerControllers.SpawnEntityArgs)</a></code></li>
+<li><code>CandideServer.MessageModels.InternalResourceStorage.UpdateManyInternalResourceStorageChangedMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_InternalResourceStorageServerService.html#send-internalresourcestoragechanged-candideserver-messagemodels-internalresourcestorage-updatemanyinternalresourcestoragechangedmessage---system-void">CandideServer.ServerServices.InternalResourceStorageServerService::Send_InternalResourceStorageChanged(CandideServer.MessageModels.InternalResourceStorage.UpdateManyInternalResourceStorageChangedMessage)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_InternalResourceStorageModel.html#getresourceamount-system-string---system-int32">CandideServer.Models.InternalResourceStorageModel::GetResourceAmount(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Citizens_GenericServerCitizenController.html#trydepletematerialstorageandsetpickup----system-boolean"><code>CandideServer.Citizens.GenericServerCitizenController::TryDepleteMaterialStorageAndSetPickup</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerConcreteMixerController.html#oninteract-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.ServerConcreteMixerController::OnInteract</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#onreceive-gettrybucketdepleteresourcestorageendpoint-candideserver-messagemodels-buildings-getbucketdepleteresourcestorageendpointrequest--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.BuildingsServerService::OnReceive_GetTryBucketDepleteResourceStorageEndpoint</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerCharacterServerService.html#onreceive-getplayerdepleteresourcestorageendpointandaction-candideserver-messagemodels-playercharacters-complexactions-getplayerdepleteresourcestorageendpointandactionrequest--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.PlayerCharacterServerService::OnReceive_GetPlayerDepleteResourceStorageEndpointAndAction</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Building </code></li>
+<li><code> with ID </code></li>
+<li><code> does not have an internal resource storage.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetBuildingOutsideWorldId public System.Guid GetBuildingOutsideWorldId(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstanceModel) System.Guid buildingInstanceModel CandideServer.Models.Buildings.BuildingInstanceModel" id="getbuildingoutsideworldid-candideserver-models-buildings-buildinginstancemodel---system-guid">
+<div class="method-heading">
+<h3><code>GetBuildingOutsideWorldId</code></h3>
+<a class="permalink" href="#getbuildingoutsideworldid-candideserver-models-buildings-buildinginstancemodel---system-guid" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Guid GetBuildingOutsideWorldId(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstanceModel)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager::GetBuildingOutsideWorldId(CandideServer.Models.Buildings.BuildingInstanceModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Guid GetBuildingOutsideWorldId(<a href="../../types/CandideServer/CandideServer_Models_Buildings_BuildingInstanceModel.html">CandideServer.Models.Buildings.BuildingInstanceModel</a> buildingInstanceModel)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Guid</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DCB2B7407E06232E54A58C71DEE2C13EFB0D083CBA107EAA64AAFEBE33E819C0</code></li>
+<li><span>Body hash</span><code>3D8A5B728ED20254B685DC7988E7868D07615F5142CC0C133B7F4A419B25E55F</code></li>
+<li><span>IL size</span><span>6</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.NotImplementedException::.ctor()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetBuildingsIntersectingCircleArea public System.Collections.Generic.IEnumerable&lt;CandideServer.SimulationModels.BuildingSimulationModel&gt; GetBuildingsIntersectingCircleArea(Microsoft.Xna.Framework.Vector2 circlePos, System.Single radius) System.Collections.Generic.IEnumerable&lt;CandideServer.SimulationModels.BuildingSimulationModel&gt; circlePos Microsoft.Xna.Framework.Vector2 radius System.Single" id="getbuildingsintersectingcirclearea-microsoft-xna-framework-vector2--system-single---system-collections-generic-ienumerable-1-candideserver-simulationmodels-buildingsimulationmodel-">
+<div class="method-heading">
+<h3><code>GetBuildingsIntersectingCircleArea</code></h3>
+<a class="permalink" href="#getbuildingsintersectingcirclearea-microsoft-xna-framework-vector2--system-single---system-collections-generic-ienumerable-1-candideserver-simulationmodels-buildingsimulationmodel-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.IEnumerable&lt;CandideServer.SimulationModels.BuildingSimulationModel&gt; GetBuildingsIntersectingCircleArea(Microsoft.Xna.Framework.Vector2 circlePos, System.Single radius)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager::GetBuildingsIntersectingCircleArea(Microsoft.Xna.Framework.Vector2, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.IEnumerable&lt;<a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a>&gt; GetBuildingsIntersectingCircleArea(Microsoft.Xna.Framework.Vector2 circlePos, System.Single radius)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.IEnumerable&lt;<a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a>&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>699D69F2695607C2AB27FF703A0C39220CB1E458F89066E0B6E892FDE91F404F</code></li>
+<li><span>Body hash</span><code>F3CBA3BB4786723AD280A3B4A0B1BBC290D07A3BC1B43BC2F3C45C9B7E61F6A6</code></li>
+<li><span>IL size</span><span>22</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BuildingsServerManager.&lt;GetBuildingsIntersectingCircleArea&gt;d__9::.ctor(System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_FarmsteadController.html#checkforwell----system-void"><code>CandideServer.Buildings.BuildingControllers.FarmsteadController::CheckForWell</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_DecorationsSController.html#removedecoration-candideserver-models-decorations-decorationinstancemodel--system-boolean---system-void"><code>CandideServer.ServerControllers.DecorationsSController::RemoveDecoration</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_DecorationsSController.html#updatenearbybuildingstats-shared-data-decorations-decorationdata--microsoft-xna-framework-rectangle--system-guid--system-boolean---system-void"><code>CandideServer.ServerControllers.DecorationsSController::UpdateNearbyBuildingStats</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetClosestBuilding public CandideServer.SimulationModels.BuildingSimulationModel GetClosestBuilding(Microsoft.Xna.Framework.Vector2 circlePos, System.String exclusiveBuildingTypeId) CandideServer.SimulationModels.BuildingSimulationModel circlePos Microsoft.Xna.Framework.Vector2 exclusiveBuildingTypeId System.String" id="getclosestbuilding-microsoft-xna-framework-vector2--system-string---candideserver-simulationmodels-buildingsimulationmodel">
+<div class="method-heading">
+<h3><code>GetClosestBuilding</code></h3>
+<a class="permalink" href="#getclosestbuilding-microsoft-xna-framework-vector2--system-string---candideserver-simulationmodels-buildingsimulationmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.SimulationModels.BuildingSimulationModel GetClosestBuilding(Microsoft.Xna.Framework.Vector2 circlePos, System.String exclusiveBuildingTypeId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager::GetClosestBuilding(Microsoft.Xna.Framework.Vector2, System.String)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> GetClosestBuilding(Microsoft.Xna.Framework.Vector2 circlePos, System.String exclusiveBuildingTypeId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B21DD99D426B1E035B4A766443E42D4C175975E37B200FB329FF4F8A7B3279F4</code></li>
+<li><span>Body hash</span><code>C63195A5C1FC5A5AADDB4CF8CC8C3BEBB8164A6AE6CCE38F92B2468C00349E82</code></li>
+<li><span>IL size</span><span>130</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::get_Current()</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Toolkit_TileBoundsHelper.html#getcenteredpositionfromtilebounds-microsoft-xna-framework-rectangle---microsoft-xna-framework-vector2">CandideServer.Toolkit.TileBoundsHelper::GetCenteredPositionFromTileBounds(Microsoft.Xna.Framework.Rectangle)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::LengthSquared()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetClosestBuildingIntersectingCircleArea public CandideServer.SimulationModels.BuildingSimulationModel GetClosestBuildingIntersectingCircleArea(Microsoft.Xna.Framework.Vector2 circlePos, System.Single radius, System.Nullable&lt;System.Guid&gt; townId, System.String exclusiveBuildingTypeId) CandideServer.SimulationModels.BuildingSimulationModel circlePos Microsoft.Xna.Framework.Vector2 radius System.Single townId System.Nullable&lt;System.Guid&gt; exclusiveBuildingTypeId System.String" id="getclosestbuildingintersectingcirclearea-microsoft-xna-framework-vector2--system-single--system-nullable-1-system-guid---system-string---candideserver-simulationmodels-buildingsimulationmodel">
+<div class="method-heading">
+<h3><code>GetClosestBuildingIntersectingCircleArea</code></h3>
+<a class="permalink" href="#getclosestbuildingintersectingcirclearea-microsoft-xna-framework-vector2--system-single--system-nullable-1-system-guid---system-string---candideserver-simulationmodels-buildingsimulationmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.SimulationModels.BuildingSimulationModel GetClosestBuildingIntersectingCircleArea(Microsoft.Xna.Framework.Vector2 circlePos, System.Single radius, System.Nullable&lt;System.Guid&gt; townId, System.String exclusiveBuildingTypeId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager::GetClosestBuildingIntersectingCircleArea(Microsoft.Xna.Framework.Vector2, System.Single, System.Nullable&lt;System.Guid&gt;, System.String)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> GetClosestBuildingIntersectingCircleArea(Microsoft.Xna.Framework.Vector2 circlePos, System.Single radius, System.Nullable&lt;System.Guid&gt; townId, System.String exclusiveBuildingTypeId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2FD07C4B17740A120386584CBFC99CE87E205C050C9BAFEBE2068DA5B6F7D732</code></li>
+<li><span>Body hash</span><code>0127F92B1DEF167D275EAD243A00BB170607FD80DA7FAF1FAD33EEEE1A608D54</code></li>
+<li><span>IL size</span><span>261</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::get_Current()</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Toolkit_TileBoundsHelper.html#getcenteredpositionfromtilebounds-microsoft-xna-framework-rectangle---microsoft-xna-framework-vector2">CandideServer.Toolkit.TileBoundsHelper::GetCenteredPositionFromTileBounds(Microsoft.Xna.Framework.Rectangle)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_CandideMathHelper.html#rectangleintersectscircle-microsoft-xna-framework-vector2--system-single--system-single--microsoft-xna-framework-vector2--system-single---system-boolean">CandideCreator.Shared.Helpers.CandideMathHelper::RectangleIntersectsCircle(Microsoft.Xna.Framework.Vector2, System.Single, System.Single, Microsoft.Xna.Framework.Vector2, System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::LengthSquared()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_CarpenterController.html#findmaterialstorageandcreateconnection-system-nullable-1-system-guid---candideserver-simulationmodels-buildingsimulationmodel--system-boolean---system-nullable-1-system-guid-"><code>CandideServer.Buildings.BuildingControllers.CarpenterController::FindMaterialStorageAndCreateConnection</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_SculptorController.html#findmaterialstorageandcreateconnection-system-nullable-1-system-guid---candideserver-simulationmodels-buildingsimulationmodel--system-boolean---system-nullable-1-system-guid-"><code>CandideServer.Buildings.BuildingControllers.SculptorController::FindMaterialStorageAndCreateConnection</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryAddResourceAggregateIntoStorage public System.Boolean TryAddResourceAggregateIntoStorage(Shared.Models.Construction.ConstructionMaterialsAggregate resourceAggregate, CandideServer.SimulationModels.BuildingSimulationModel building) System.Boolean resourceAggregate Shared.Models.Construction.ConstructionMaterialsAggregate building CandideServer.SimulationModels.BuildingSimulationModel" id="tryaddresourceaggregateintostorage-shared-models-construction-constructionmaterialsaggregate--candideserver-simulationmodels-buildingsimulationmodel---system-boolean">
+<div class="method-heading">
+<h3><code>TryAddResourceAggregateIntoStorage</code></h3>
+<a class="permalink" href="#tryaddresourceaggregateintostorage-shared-models-construction-constructionmaterialsaggregate--candideserver-simulationmodels-buildingsimulationmodel---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryAddResourceAggregateIntoStorage(Shared.Models.Construction.ConstructionMaterialsAggregate resourceAggregate, CandideServer.SimulationModels.BuildingSimulationModel building)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager::TryAddResourceAggregateIntoStorage(Shared.Models.Construction.ConstructionMaterialsAggregate, CandideServer.SimulationModels.BuildingSimulationModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryAddResourceAggregateIntoStorage(<a href="../../types/Shared/Shared_Models_Construction_ConstructionMaterialsAggregate.html">Shared.Models.Construction.ConstructionMaterialsAggregate</a> resourceAggregate, <a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> building)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>65266D56D0943C607984014D5CCADD316E7F59DDCE8D75D9A11A7FD35BC868C7</code></li>
+<li><span>Body hash</span><code>0DA3B8AF42EF23A5E79993292CECAF7B443B47EEB19D45188A2D8F40DB8579C8</code></li>
+<li><span>IL size</span><span>184</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetresourcestorage-system-guid--candideserver-models-internalresourcestoragemodel----system-boolean">CandideServer.ServerGameState::TryGetResourceStorage(System.Guid, CandideServer.Models.InternalResourceStorageModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_InternalResourceStorageSController.html#adjuststoragewithresourceaggregate-candideserver-models-internalresourcestoragemodel--shared-models-construction-constructionmaterialsaggregate---candideserver-messagemodels-internalresourcestorage-updateinternalresourcestoragechangedmessage">CandideServer.ServerControllers.InternalResourceStorageSController::AdjustStorageWithResourceAggregate(CandideServer.Models.InternalResourceStorageModel, Shared.Models.Construction.ConstructionMaterialsAggregate)</a></code></li>
+<li><code>CandideServer.MessageModels.InternalResourceStorage.UpdateManyInternalResourceStorageChangedMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_InternalResourceStorageServerService.html#send-internalresourcestoragechanged-candideserver-messagemodels-internalresourcestorage-updatemanyinternalresourcestoragechangedmessage---system-void">CandideServer.ServerServices.InternalResourceStorageServerService::Send_InternalResourceStorageChanged(CandideServer.MessageModels.InternalResourceStorage.UpdateManyInternalResourceStorageChangedMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#trydepositresourceentityintostorage-candideserver-entities-serverentitymodel--system-guid---system-boolean"><code>CandideServer.ServerManagers.BuildingsServerManager::TryDepositResourceEntityIntoStorage</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>TryAddResourceAggregateIntoStorage</code></li>
+<li><code>: Building does not have an internal resource storage ID set. Building with data </code></li>
+<li><code> and Guid: </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryAddResourceAggregateIntoStorage public System.Boolean TryAddResourceAggregateIntoStorage(System.String resourceId, System.Int32 resourceAmount, CandideServer.SimulationModels.BuildingSimulationModel building) System.Boolean resourceId System.String resourceAmount System.Int32 building CandideServer.SimulationModels.BuildingSimulationModel" id="tryaddresourceaggregateintostorage-system-string--system-int32--candideserver-simulationmodels-buildingsimulationmodel---system-boolean">
+<div class="method-heading">
+<h3><code>TryAddResourceAggregateIntoStorage</code></h3>
+<a class="permalink" href="#tryaddresourceaggregateintostorage-system-string--system-int32--candideserver-simulationmodels-buildingsimulationmodel---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryAddResourceAggregateIntoStorage(System.String resourceId, System.Int32 resourceAmount, CandideServer.SimulationModels.BuildingSimulationModel building)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager::TryAddResourceAggregateIntoStorage(System.String, System.Int32, CandideServer.SimulationModels.BuildingSimulationModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryAddResourceAggregateIntoStorage(System.String resourceId, System.Int32 resourceAmount, <a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> building)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7276C3CF1648E9122C5682DF1D53CC549E526DB9BECF2E87757E87049A3BEEF3</code></li>
+<li><span>Body hash</span><code>D561F37D2A19DB742A1B3C3767C1802C04CDE78E40D6BF37D2CAC7C14A13F28E</code></li>
+<li><span>IL size</span><span>185</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetresourcestorage-system-guid--candideserver-models-internalresourcestoragemodel----system-boolean">CandideServer.ServerGameState::TryGetResourceStorage(System.Guid, CandideServer.Models.InternalResourceStorageModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_InternalResourceStorageSController.html#tryaddtostorage-candideserver-models-internalresourcestoragemodel--system-string--system-int32---candideserver-messagemodels-internalresourcestorage-updateinternalresourcestoragechangedmessage">CandideServer.ServerControllers.InternalResourceStorageSController::TryAddToStorage(CandideServer.Models.InternalResourceStorageModel, System.String, System.Int32)</a></code></li>
+<li><code>CandideServer.MessageModels.InternalResourceStorage.UpdateManyInternalResourceStorageChangedMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_InternalResourceStorageServerService.html#send-internalresourcestoragechanged-candideserver-messagemodels-internalresourcestorage-updatemanyinternalresourcestoragechangedmessage---system-void">CandideServer.ServerServices.InternalResourceStorageServerService::Send_InternalResourceStorageChanged(CandideServer.MessageModels.InternalResourceStorage.UpdateManyInternalResourceStorageChangedMessage)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>TryAddResourceAggregateIntoStorage</code></li>
+<li><code>: Building does not have an internal resource storage ID set. Building with data </code></li>
+<li><code> and Guid: </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryAdjustInternalResourceStorage public System.Boolean TryAdjustInternalResourceStorage(CandideServer.SimulationModels.BuildingSimulationModel building, Shared.Models.Construction.ConstructionMaterialsAggregate constructionMaterials) System.Boolean building CandideServer.SimulationModels.BuildingSimulationModel constructionMaterials Shared.Models.Construction.ConstructionMaterialsAggregate" id="tryadjustinternalresourcestorage-candideserver-simulationmodels-buildingsimulationmodel--shared-models-construction-constructionmaterialsaggregate---system-boolean">
+<div class="method-heading">
+<h3><code>TryAdjustInternalResourceStorage</code></h3>
+<a class="permalink" href="#tryadjustinternalresourcestorage-candideserver-simulationmodels-buildingsimulationmodel--shared-models-construction-constructionmaterialsaggregate---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryAdjustInternalResourceStorage(CandideServer.SimulationModels.BuildingSimulationModel building, Shared.Models.Construction.ConstructionMaterialsAggregate constructionMaterials)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager::TryAdjustInternalResourceStorage(CandideServer.SimulationModels.BuildingSimulationModel, Shared.Models.Construction.ConstructionMaterialsAggregate)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryAdjustInternalResourceStorage(<a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> building, <a href="../../types/Shared/Shared_Models_Construction_ConstructionMaterialsAggregate.html">Shared.Models.Construction.ConstructionMaterialsAggregate</a> constructionMaterials)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>EAAB39320BE96F8E0B2EF0F5E304EC1C4A6BF2A934C7B534BFC513944BBDDD71</code></li>
+<li><span>Body hash</span><code>7099D82E99CFD583489248AB88BEC4BFDFDB51B69DE6152CE3F7BA411A4C3256</code></li>
+<li><span>IL size</span><span>184</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetresourcestorage-system-guid--candideserver-models-internalresourcestoragemodel----system-boolean">CandideServer.ServerGameState::TryGetResourceStorage(System.Guid, CandideServer.Models.InternalResourceStorageModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_InternalResourceStorageSController.html#adjuststoragewithresourceaggregate-candideserver-models-internalresourcestoragemodel--shared-models-construction-constructionmaterialsaggregate---candideserver-messagemodels-internalresourcestorage-updateinternalresourcestoragechangedmessage">CandideServer.ServerControllers.InternalResourceStorageSController::AdjustStorageWithResourceAggregate(CandideServer.Models.InternalResourceStorageModel, Shared.Models.Construction.ConstructionMaterialsAggregate)</a></code></li>
+<li><code>CandideServer.MessageModels.InternalResourceStorage.UpdateManyInternalResourceStorageChangedMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_InternalResourceStorageServerService.html#send-internalresourcestoragechanged-candideserver-messagemodels-internalresourcestorage-updatemanyinternalresourcestoragechangedmessage---system-void">CandideServer.ServerServices.InternalResourceStorageServerService::Send_InternalResourceStorageChanged(CandideServer.MessageModels.InternalResourceStorage.UpdateManyInternalResourceStorageChangedMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerConcreteMixerController.html#oninteract-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.ServerConcreteMixerController::OnInteract</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#onreceive-gettrybucketdepositresourcestorageendpoint-candideserver-messagemodels-buildings-getbucketdepositresourcestorageendpointrequest--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.BuildingsServerService::OnReceive_GetTryBucketDepositResourceStorageEndpoint</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>BuildingsServerManager</code></li>
+<li><code>: Building does not have an internal resource storage ID set. Building with data </code></li>
+<li><code> and Guid: </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryDepositResourceEntityIntoStorage public System.Boolean TryDepositResourceEntityIntoStorage(CandideServer.Entities.ServerEntityModel entity, System.Guid buildingId) System.Boolean entity CandideServer.Entities.ServerEntityModel buildingId System.Guid" id="trydepositresourceentityintostorage-candideserver-entities-serverentitymodel--system-guid---system-boolean">
+<div class="method-heading">
+<h3><code>TryDepositResourceEntityIntoStorage</code></h3>
+<a class="permalink" href="#trydepositresourceentityintostorage-candideserver-entities-serverentitymodel--system-guid---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryDepositResourceEntityIntoStorage(CandideServer.Entities.ServerEntityModel entity, System.Guid buildingId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager::TryDepositResourceEntityIntoStorage(CandideServer.Entities.ServerEntityModel, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryDepositResourceEntityIntoStorage(<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> entity, System.Guid buildingId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CA041C7C55C8E5115523BC7A7AD059094608D705FE56CCEFF11D0D93A2B46F2A</code></li>
+<li><span>Body hash</span><code>E434C226C487BC32327C6A4BA61D0E66B2977E1D8D45D897A2D36CEE0A9C1872</code></li>
+<li><span>IL size</span><span>126</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Models.Construction.ConstructionMaterialsAggregate::get_IsEmpty()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#tryaddresourceaggregateintostorage-shared-models-construction-constructionmaterialsaggregate--candideserver-simulationmodels-buildingsimulationmodel---system-boolean">CandideServer.ServerManagers.BuildingsServerManager::TryAddResourceAggregateIntoStorage(Shared.Models.Construction.ConstructionMaterialsAggregate, CandideServer.SimulationModels.BuildingSimulationModel)</a></code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Construction_ConstructionMaterialsAggregate.html#emptyallexcept-system-string---system-void">Shared.Models.Construction.ConstructionMaterialsAggregate::EmptyAllExcept(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#removeentity-system-guid--shared-entity-entityremoveinfo---system-void">CandideServer.ServerManagers.EntityServerManager::RemoveEntity(System.Guid, Shared.Entity.EntityRemoveInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#onreceive-depositentityintostorage-candideserver-messagemodels-buildings-depositentityintostoragemessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.BuildingsServerService::OnReceive_DepositEntityIntoStorage</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>TryDepositResourceEntityIntoStorage: Entity does not have any ConstructionMaterials defined or it&#39;s empty.</code></li>
+<li><code>resource:bucket</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryRemoveBuilding public System.Boolean TryRemoveBuilding(System.Guid buildingId, CandideServer.SyncStrategies.SyncStrategy syncStrategy) System.Boolean buildingId System.Guid syncStrategy CandideServer.SyncStrategies.SyncStrategy" id="tryremovebuilding-system-guid--candideserver-syncstrategies-syncstrategy---system-boolean">
+<div class="method-heading">
+<h3><code>TryRemoveBuilding</code></h3>
+<a class="permalink" href="#tryremovebuilding-system-guid--candideserver-syncstrategies-syncstrategy---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryRemoveBuilding(System.Guid buildingId, CandideServer.SyncStrategies.SyncStrategy syncStrategy)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager::TryRemoveBuilding(System.Guid, CandideServer.SyncStrategies.SyncStrategy)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryRemoveBuilding(System.Guid buildingId, <a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html">CandideServer.SyncStrategies.SyncStrategy</a> syncStrategy)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AB17EB4E26ED0C6A1DE0EB345001BD40F5B9F562C2898A02460E6AD8CD87BCBB</code></li>
+<li><span>Body hash</span><code>432FFC03632F76A0587BC5D5FC8747B01ED702DC4ADC112D77384622E7F36D29</code></li>
+<li><span>IL size</span><span>20</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#removebuilding-system-guid---candideserver-messagemodels-buildings-buildingremovedmessage">CandideServer.ServerControllers.BuildingsSController::RemoveBuilding(System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#send-buildingremoved-candideserver-messagemodels-buildings-buildingremovedmessage---system-void">CandideServer.ServerServices.BuildingsServerService::Send_BuildingRemoved(CandideServer.MessageModels.Buildings.BuildingRemovedMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#onreceive-removebuilding-candideserver-messagemodels-buildings-removebuildingmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.BuildingsServerService::OnReceive_RemoveBuilding</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryUpgradeBuilding public System.Boolean TryUpgradeBuilding(System.Guid buildingId, System.String constructionId, System.Boolean consumeMaterials) System.Boolean buildingId System.Guid constructionId System.String consumeMaterials System.Boolean" id="tryupgradebuilding-system-guid--system-string--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>TryUpgradeBuilding</code></h3>
+<a class="permalink" href="#tryupgradebuilding-system-guid--system-string--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryUpgradeBuilding(System.Guid buildingId, System.String constructionId, System.Boolean consumeMaterials)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager::TryUpgradeBuilding(System.Guid, System.String, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryUpgradeBuilding(System.Guid buildingId, System.String constructionId, System.Boolean consumeMaterials)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A6B3AB6861D38E76FC12AD39B8298C363E0F3A6020D9009159211A1D70CA2B88</code></li>
+<li><span>Body hash</span><code>1D8C777046F665714F167FEB54E65E3090F5EE0334CD3D37B14F0309FB70BCCC</code></li>
+<li><span>IL size</span><span>434</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Data_ConstructionDataBase.html#getconstructionornull-system-string---shared-models-construction-constructionmodel">Shared.Data.ConstructionDataBase::GetConstructionOrNull(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Data_BuildingDataBase.html#getbuildingornull-system-string---shared-models-buildings-buildingdata">Shared.Data.BuildingDataBase::GetBuildingOrNull(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_ConstructionsServerManager.html#tryspendconstructionupgradecostfortown-shared-models-construction-constructionmodel--system-guid---system-boolean">CandideServer.ServerManagers.ConstructionsServerManager::TrySpendConstructionUpgradeCostForTown(Shared.Models.Construction.ConstructionModel, System.Guid)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#upgradebuilding-candideserver-simulationmodels-buildingsimulationmodel--shared-models-construction-constructionmodel--shared-models-buildings-buildingdata---system-void">CandideServer.ServerControllers.BuildingsSController::UpgradeBuilding(CandideServer.SimulationModels.BuildingSimulationModel, Shared.Models.Construction.ConstructionModel, Shared.Models.Buildings.BuildingData)</a></code></li>
+<li><code>CandideServer.MessageModels.Buildings.BuildingUpgradedMessage::.ctor()</code></li>
+<li><code>BuildingsServerManager.&lt;&gt;c::&lt;TryUpgradeBuilding&gt;b__1_0(System.Guid)</code></li>
+<li><code>System.Func&lt;System.Guid, CandideServer.Models.Citizen.CitizenSlotModel&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Linq.Enumerable::Select(System.Collections.Generic.IEnumerable&lt;!!0&gt;, System.Func&lt;!!0, !!1&gt;)</code></li>
+<li><code>System.Linq.Enumerable::ToList(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#send-buildingupgraded-candideserver-messagemodels-buildings-buildingupgradedmessage---system-void">CandideServer.ServerServices.BuildingsServerService::Send_BuildingUpgraded(CandideServer.MessageModels.Buildings.BuildingUpgradedMessage)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_ExteriorWorldServerController.html#onbuildingupgraded-candideserver-simulationmodels-buildingsimulationmodel--shared-models-buildings-buildingdata---system-void">CandideServer.ServerControllers.ExteriorWorldServerController::OnBuildingUpgraded(CandideServer.SimulationModels.BuildingSimulationModel, Shared.Models.Buildings.BuildingData)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#getworlddataornull-system-string---candideserver-world-serverworlddata">CandideServer.World.ServerWorldDataManager::GetWorldDataOrNull(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html#updateexteriorpathnodehandler-candideserver-world-serverworlddata---system-void">CandideServer.SimulationModels.BuildingSimulationModel::UpdateExteriorPathNodeHandler(CandideServer.World.ServerWorldData)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html#updateinteriorpathnodehandler-candideserver-world-serverworlddata---system-void">CandideServer.SimulationModels.BuildingSimulationModel::UpdateInteriorPathNodeHandler(CandideServer.World.ServerWorldData)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_WorldServerManager.html#ejectplayersandcitizens-candideserver-simulationmodels-buildingsimulationmodel---system-void">CandideServer.ServerManagers.WorldServerManager::EjectPlayersAndCitizens(CandideServer.SimulationModels.BuildingSimulationModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_WorldSController.html#removeworld-system-guid--system-boolean---system-void">CandideServer.ServerControllers.WorldSController::RemoveWorld(System.Guid, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_WorldServerManager.html#changeworldmap-candideserver-models-worlds-worldmodel--system-string--system-boolean---system-void">CandideServer.ServerManagers.WorldServerManager::ChangeWorldMap(CandideServer.Models.Worlds.WorldModel, System.String, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#onbuildingupgraded-candideserver-simulationmodels-buildingsimulationmodel---system-void">CandideServer.ServerManagers.CitizenServerManager::OnBuildingUpgraded(CandideServer.SimulationModels.BuildingSimulationModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#onreceive-tryupgradebuilding-candideserver-messagemodels-buildings-tryupgradebuildingrequest--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.BuildingsServerService::OnReceive_TryUpgradeBuilding</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#onreceive-upgradebuildingcheat-candideserver-messagemodels-buildings-upgradebuildingcheatmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.BuildingsServerService::OnReceive_UpgradeBuildingCheat</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>TryUpgradeBuilding: Can&#39;t consume materials for upgrade because building doesn&#39;t have a town ID.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateBuildingParameters public System.Void UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage msg) System.Void msg CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage" id="updatebuildingparameters-candideserver-messagemodels-buildings-updatebuildingparametersmessage---system-void">
+<div class="method-heading">
+<h3><code>UpdateBuildingParameters</code></h3>
+<a class="permalink" href="#updatebuildingparameters-candideserver-messagemodels-buildings-updatebuildingparametersmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.BuildingsServerManager::UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateBuildingParameters(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_UpdateBuildingParametersMessage.html">CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>530432C4A2C87EBE06503A261F8EDBE4FDFB3CCE835DD2F061E892863E2850F3</code></li>
+<li><span>Body hash</span><code>C0DE6702D6DF054839954F527EE2962BA41A18E54C44721E542C061021DE24BF</code></li>
+<li><span>IL size</span><span>13</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#updatebuildingparameters-candideserver-messagemodels-buildings-updatebuildingparametersmessage---system-void">CandideServer.ServerControllers.BuildingsSController::UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#send-updatebuildingparameters-candideserver-messagemodels-buildings-updatebuildingparametersmessage---system-void">CandideServer.ServerServices.BuildingsServerService::Send_UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Helpers_BuildingFurnaceHelper.html#tick-candideserver-simulationmodels-buildingsimulationmodel--candideserver-models-sourcemodel--system-boolean---system-void"><code>CandideServer.Helpers.BuildingFurnaceHelper::Tick</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shared.Data.QuestsDataBase - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Shared.html">Shared</a></p>
+<div class="title-row">
+<h1>Shared.Data.QuestsDataBase</h1>
+<button class="copy-button" type="button" data-copy="Shared.Data.QuestsDataBase">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Shared.Data.QuestsDataBase
+
+- Assembly: `Shared`
+- Namespace: `Shared.Data`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 6 methods, 0 properties, 4 fields, 0 events
+
+## Public Methods
+- `public System.Void AddQuests(System.Collections.Generic.List&lt;Shared.Models.Quests.QuestData&gt; questsList)`
+- `public System.Collections.Generic.IEnumerable&lt;Shared.Models.Quests.QuestData&gt; GetAllQuestsOfType(Shared.Models.Quests.QuestType type)`
+- `public System.Collections.Generic.IEnumerable&lt;Shared.Models.Quests.QuestData&gt; GetAllWorldQuestsForGod(System.String godId)`
+- `public Shared.Models.Quests.QuestData GetQuestOrMissing(System.String id)`
+- `public Shared.Models.Quests.QuestData GetQuestOrNull(System.String id)`
+- `public Shared.Models.Quests.QuestData GetRandomCitizenQuest()`
+">Copy markdown</button>
+<a class="button" href="Shared_Data_QuestsDataBase.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Shared.Data</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>6</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>4</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Shared</code></li>
+<li><span>Namespace</span><code>Shared.Data</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>E86E815ED1EED2F8B7CD3BE201A64ABE3769A6080A11F7073151805A10AB8D80</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="DataMap public System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestData&gt; DataMap System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestData&gt;" id="datamap-system-collections-generic-dictionary-2-system-string-shared-models-quests-questdata-"><td><span class="member-name-cell"><code>DataMap</code><a class="permalink" href="#datamap-system-collections-generic-dictionary-2-system-string-shared-models-quests-questdata-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestData&gt; DataMap">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.String, <a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a>&gt; DataMap</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="MissingData public Shared.Models.Quests.QuestData MissingData Shared.Models.Quests.QuestData" id="missingdata-shared-models-quests-questdata"><td><span class="member-name-cell"><code>MissingData</code><a class="permalink" href="#missingdata-shared-models-quests-questdata" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Shared.Models.Quests.QuestData MissingData">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a> MissingData</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="SuffixDescription public System.String SuffixDescription System.String" id="suffixdescription-system-string"><td><span class="member-name-cell"><code>SuffixDescription</code><a class="permalink" href="#suffixdescription-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String SuffixDescription">Copy</button></span></td><td>public</td><td><code>public System.String SuffixDescription</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="SuffixName public System.String SuffixName System.String" id="suffixname-system-string"><td><span class="member-name-cell"><code>SuffixName</code><a class="permalink" href="#suffixname-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String SuffixName">Copy</button></span></td><td>public</td><td><code>public System.String SuffixName</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddQuests public System.Void AddQuests(System.Collections.Generic.List&lt;Shared.Models.Quests.QuestData&gt; questsList) System.Void questsList System.Collections.Generic.List&lt;Shared.Models.Quests.QuestData&gt;" id="addquests-system-collections-generic-list-1-shared-models-quests-questdata----system-void">
+<div class="method-heading">
+<h3><code>AddQuests</code></h3>
+<a class="permalink" href="#addquests-system-collections-generic-list-1-shared-models-quests-questdata----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddQuests(System.Collections.Generic.List&lt;Shared.Models.Quests.QuestData&gt; questsList)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.QuestsDataBase::AddQuests(System.Collections.Generic.List&lt;Shared.Models.Quests.QuestData&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddQuests(System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a>&gt; questsList)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>200B3CC86202774DF5B9A93D9292850105D9C2060199EAF60F8B802A6250F21F</code></li>
+<li><span>Body hash</span><code>4838E18D03CAE636662B59DBA0E1FA59C5F7E427B62D462973174B5D81D88E7E</code></li>
+<li><span>IL size</span><span>160</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Quests.QuestData&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Quests.QuestData&gt;::get_Current()</code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code>Shared.Text.StringId::op_Implicit(System.String)</code></li>
+<li><code>System.Nullable&lt;Shared.Text.StringId&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Shared.Text.StringId&gt;::.ctor(!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestData&gt;::TryAdd(!0, !1)</code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Quests.QuestData&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>*quest:name</code></li>
+<li><code>*quest:description</code></li>
+<li><code>Detected duplicate quest id &#39;</code></li>
+<li><code>&#39;.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetAllQuestsOfType public System.Collections.Generic.IEnumerable&lt;Shared.Models.Quests.QuestData&gt; GetAllQuestsOfType(Shared.Models.Quests.QuestType type) System.Collections.Generic.IEnumerable&lt;Shared.Models.Quests.QuestData&gt; type Shared.Models.Quests.QuestType" id="getallquestsoftype-shared-models-quests-questtype---system-collections-generic-ienumerable-1-shared-models-quests-questdata-">
+<div class="method-heading">
+<h3><code>GetAllQuestsOfType</code></h3>
+<a class="permalink" href="#getallquestsoftype-shared-models-quests-questtype---system-collections-generic-ienumerable-1-shared-models-quests-questdata-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.IEnumerable&lt;Shared.Models.Quests.QuestData&gt; GetAllQuestsOfType(Shared.Models.Quests.QuestType type)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.QuestsDataBase::GetAllQuestsOfType(Shared.Models.Quests.QuestType)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.IEnumerable&lt;<a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a>&gt; GetAllQuestsOfType(<a href="../../types/Shared/Shared_Models_Quests_QuestType.html">Shared.Models.Quests.QuestType</a> type)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.IEnumerable&lt;<a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a>&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CE2BE5423C7087FA07ED14F6D42DF1D862C154224C91D005D089E3DF3106DA66</code></li>
+<li><span>Body hash</span><code>97DDF4C54D98A205EEB5039929A6C13768FD89F12FB8E240C07DD932DFAACAC3</code></li>
+<li><span>IL size</span><span>15</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>QuestsDataBase.&lt;GetAllQuestsOfType&gt;d__7::.ctor(System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_QuestsSController.html#ongamestateloaded-candideserver-gamedescription---system-void"><code>CandideServer.ServerControllers.QuestsSController::OnGameStateLoaded</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#checkandaddavailablepersonalquests-candideserver-models-player-serverplayercharacter--system-boolean---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::CheckAndAddAvailablePersonalQuests</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#checkandaddavailableworldquests-system-boolean---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::CheckAndAddAvailableWorldQuests</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetAllWorldQuestsForGod public System.Collections.Generic.IEnumerable&lt;Shared.Models.Quests.QuestData&gt; GetAllWorldQuestsForGod(System.String godId) System.Collections.Generic.IEnumerable&lt;Shared.Models.Quests.QuestData&gt; godId System.String" id="getallworldquestsforgod-system-string---system-collections-generic-ienumerable-1-shared-models-quests-questdata-">
+<div class="method-heading">
+<h3><code>GetAllWorldQuestsForGod</code></h3>
+<a class="permalink" href="#getallworldquestsforgod-system-string---system-collections-generic-ienumerable-1-shared-models-quests-questdata-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.IEnumerable&lt;Shared.Models.Quests.QuestData&gt; GetAllWorldQuestsForGod(System.String godId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.QuestsDataBase::GetAllWorldQuestsForGod(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.IEnumerable&lt;<a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a>&gt; GetAllWorldQuestsForGod(System.String godId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.IEnumerable&lt;<a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a>&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E28860CE604217EA513879F637307EFB45CDA71081812D644C15D73FCA15AD35</code></li>
+<li><span>Body hash</span><code>DCB0EB62F48E95243E27BDA4CDCCAACF0720ED42431FCBDD206866459BDF85D3</code></li>
+<li><span>IL size</span><span>15</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>QuestsDataBase.&lt;GetAllWorldQuestsForGod&gt;d__8::.ctor(System.Int32)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetQuestOrMissing public Shared.Models.Quests.QuestData GetQuestOrMissing(System.String id) Shared.Models.Quests.QuestData id System.String" id="getquestormissing-system-string---shared-models-quests-questdata">
+<div class="method-heading">
+<h3><code>GetQuestOrMissing</code></h3>
+<a class="permalink" href="#getquestormissing-system-string---shared-models-quests-questdata" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Models.Quests.QuestData GetQuestOrMissing(System.String id)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.QuestsDataBase::GetQuestOrMissing(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a> GetQuestOrMissing(System.String id)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DC1F60D3C2FED77DB303B5AF08F2A017062EF654EB24DE887D8424449CEDDEDE</code></li>
+<li><span>Body hash</span><code>DB8185740D068AFEE7C958DDCD3929A8165CAC899DC4375435FD30D5D8529224</code></li>
+<li><span>IL size</span><span>26</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestData&gt;::TryGetValue(!0, !1&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_ObjectivesUi_CandideObjectivesWindow.html#updatequests-system-collections-generic-list-1-system-string---system-collections-generic-list-1-system-string---system-collections-generic-list-1-system-string----system-void"><code>Candide.CandideUI.ObjectivesUi.CandideObjectivesWindow::UpdateQuests</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ObjectivesUi_QuestDisplayTrackingController.html#onquestsupdated----system-void"><code>Candide.CandideUI.ObjectivesUi.QuestDisplayTrackingController::OnQuestsUpdated</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ObjectivesUi_QuestList.html#updatequests-system-boolean--system-boolean--system-string---system-void"><code>Candide.CandideUI.ObjectivesUi.QuestList::UpdateQuests</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_WorshipUi_Altar2_AltarQuestsView.html#updatequests-system-collections-generic-list-1-system-string---system-collections-generic-list-1-system-string---system-collections-generic-list-1-system-string---system-boolean---system-void"><code>Candide.CandideUI.WorshipUi.Altar2.AltarQuestsView::UpdateQuests</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_QuestsController.html#checkautopin-system-string---system-boolean"><code>Candide.GameModels.Controllers.QuestsController::CheckAutoPin</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_QuestsController.html#updatepersonalquests-candideserver-messagemodels-quests-updatepersonalquestsmessage---candide-gamemodels-controllers-updatequestsresult"><code>Candide.GameModels.Controllers.QuestsController::UpdatePersonalQuests</code></a></li>
+<li><a href="../../types/Romestead/Candide_UISystems_Notification_NotificationSystem.html#newpersonalquestsadded-system-object---system-void"><code>Candide.UISystems.Notification.NotificationSystem::NewPersonalQuestsAdded</code></a></li>
+<li><a href="../../types/Romestead/Candide_UISystems_Notification_NotificationSystem.html#newworldquests-system-object---system-void"><code>Candide.UISystems.Notification.NotificationSystem::NewWorldQuests</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetQuestOrNull public Shared.Models.Quests.QuestData GetQuestOrNull(System.String id) Shared.Models.Quests.QuestData id System.String" id="getquestornull-system-string---shared-models-quests-questdata">
+<div class="method-heading">
+<h3><code>GetQuestOrNull</code></h3>
+<a class="permalink" href="#getquestornull-system-string---shared-models-quests-questdata" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Models.Quests.QuestData GetQuestOrNull(System.String id)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.QuestsDataBase::GetQuestOrNull(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a> GetQuestOrNull(System.String id)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>76FC0EE79EC420CE02560E1437671CE941490F0F40FE7F0EA31DB8F6C5A27366</code></li>
+<li><span>Body hash</span><code>1A657399C3E6CCDED2D7E84E2ECA00623735D247527D822BB15AAE4F9E3FB3B6</code></li>
+<li><span>IL size</span><span>22</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestData&gt;::TryGetValue(!0, !1&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_QuestsSController.html#ongamestateloaded-candideserver-gamedescription---system-void"><code>CandideServer.ServerControllers.QuestsSController::OnGameStateLoaded</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_QuestsSController.html#updatequestinstancewithevent-shared-models-quests-questinstancemodel--system-object---candideserver-messagemodels-quests-updatequestmessage"><code>CandideServer.ServerControllers.QuestsSController::UpdateQuestInstanceWithEvent</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#finishquest-system-string--system-nullable-1-system-guid---system-boolean---system-boolean"><code>CandideServer.ServerManagers.QuestsServerManager::FinishQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#forcefinishquest-system-string---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::ForceFinishQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#synchupdateactivepersonalquests-shared-models-player-playercharactermodel---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::SynchUpdateActivePersonalQuests</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#tryaddnpcquest-system-string--system-boolean---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::TryAddNpcQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#updatepersonalquestsobjectives-candideserver-models-player-serverplayercharacter--system-object---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::UpdatePersonalQuestsObjectives</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#updateworldquestsobjectives-system-object---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::UpdateWorldQuestsObjectives</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RewardsServerManager.html#unlockquestreward-system-string--system-nullable-1-system-guid---candideserver-syncstrategies-syncstrategy---system-void"><code>CandideServer.ServerManagers.RewardsServerManager::UnlockQuestReward</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Simulations_CitizenServerSystem.html#newday----system-void"><code>CandideServer.Simulations.CitizenServerSystem::NewDay</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_ObjectivesUi_CandideObjectivesWindow.html#setselectedquest-system-string---system-void"><code>Candide.CandideUI.ObjectivesUi.CandideObjectivesWindow::SetSelectedQuest</code></a></li>
+<li><a href="../../types/Romestead/Candide_Dialogue_CustomYarnCommands.html#isquestavailable-system-string---system-boolean"><code>Candide.Dialogue.CustomYarnCommands::IsQuestAvailable</code></a></li>
+<li><a href="../../types/Romestead/Candide_Dialogue_CustomYarnCommands.html#isquestfinished-system-string---system-boolean"><code>Candide.Dialogue.CustomYarnCommands::IsQuestFinished</code></a></li>
+<li><a href="../../types/Romestead/Candide_Dialogue_CustomYarnCommands.html#isquestobjectivescomplete-system-string---system-boolean"><code>Candide.Dialogue.CustomYarnCommands::IsQuestObjectivesComplete</code></a></li>
+<li><a href="../../types/Romestead/Candide_Dialogue_DialogueRunner.html#handinitem-system-string-----system-void"><code>Candide.Dialogue.DialogueRunner::HandInItem</code></a></li>
+<li><a href="../../types/Romestead/Candide_Dialogue_DialogueRunner.html#startnpcquest-system-string-----system-void"><code>Candide.Dialogue.DialogueRunner::StartNpcQuest</code></a></li>
+<li><a href="../../types/Romestead/Candide_Dialogue_DialogueRunner.html#tryfinishquest-system-string-----system-void"><code>Candide.Dialogue.DialogueRunner::TryFinishQuest</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Controllers_QuestsController.html#updateworldquests-candideserver-messagemodels-quests-updatequestsmessage---candide-gamemodels-controllers-updatequestsresult"><code>Candide.GameModels.Controllers.QuestsController::UpdateWorldQuests</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetRandomCitizenQuest public Shared.Models.Quests.QuestData GetRandomCitizenQuest() Shared.Models.Quests.QuestData " id="getrandomcitizenquest----shared-models-quests-questdata">
+<div class="method-heading">
+<h3><code>GetRandomCitizenQuest</code></h3>
+<a class="permalink" href="#getrandomcitizenquest----shared-models-quests-questdata" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Models.Quests.QuestData GetRandomCitizenQuest()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Data.QuestsDataBase::GetRandomCitizenQuest()">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a> GetRandomCitizenQuest()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>02437F9A390F39CAEF80AC91F1749BF2659D9C03084DEE43C8D63570B06ACFC3</code></li>
+<li><span>Body hash</span><code>93558041155FDF9AC489B10A52402A2CBC15718F3ED90232C95A98CAC17FCEA7</code></li>
+<li><span>IL size</span><span>114</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>QuestsDataBase.&lt;&gt;c::&lt;GetRandomCitizenQuest&gt;b__9_0(System.Collections.Generic.KeyValuePair&lt;System.String, Shared.Models.Quests.QuestData&gt;)</code></li>
+<li><code>System.Func&lt;System.Collections.Generic.KeyValuePair&lt;System.String, Shared.Models.Quests.QuestData&gt;, System.Boolean&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Linq.Enumerable::Where(System.Collections.Generic.IEnumerable&lt;!!0&gt;, System.Func&lt;!!0, System.Boolean&gt;)</code></li>
+<li><code>QuestsDataBase.&lt;&gt;c::&lt;GetRandomCitizenQuest&gt;b__9_1(System.Collections.Generic.KeyValuePair&lt;System.String, Shared.Models.Quests.QuestData&gt;)</code></li>
+<li><code>System.Func&lt;System.Collections.Generic.KeyValuePair&lt;System.String, Shared.Models.Quests.QuestData&gt;, System.String&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Linq.Enumerable::Select(System.Collections.Generic.IEnumerable&lt;!!0&gt;, System.Func&lt;!!0, !!1&gt;)</code></li>
+<li><code>System.Linq.Enumerable::ToArray(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+<li><code>CandideCreator.Shared.Helpers.RandomHelper::Shuffle(!!0[], System.Random)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestData&gt;::get_Item(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#generatequestforcitizen-candideserver-models-citizen-citizenmodel---system-string"><code>CandideServer.ServerManagers.CitizenServerManager::GenerateQuestForCitizen</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

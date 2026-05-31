@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerManagers.QuestsServerManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerManagers.QuestsServerManager</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerManagers.QuestsServerManager
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerManagers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 19 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public System.Void BackupSetupFetchQuest(Shared.Models.Quests.QuestData questData)`
+- `public System.Void CheckAndAddAvailablePersonalQuests(CandideServer.Models.Player.ServerPlayerCharacter playerCharacter, System.Boolean sendToClient)`
+- `public System.Void CheckAndAddAvailableWorldQuests(System.Boolean sendToNetwork)`
+- `public Shared.Models.Quests.QuestInstanceModel CreateActiveWorldQuest(Shared.Models.Quests.QuestData quest)`
+- `public System.Void DebugSetupFetchQuest(Shared.Models.Quests.QuestData questData)`
+- `public System.Void ForceFinishQuest(System.String questId)`
+- `public System.Void OnEventReceived(System.Object eventObject)`
+- `public System.Void OnPlayerEventReceived(CandideServer.Models.Quests.EventModels.PlayerCharacterEvent message)`
+- `public System.Void OnPlayerEventReceived(System.Guid playerCharacterId, System.Object eventObject)`
+- `public System.Void SynchUpdateActivePersonalQuests(Shared.Models.Player.PlayerCharacterModel characterCharacter)`
+- `public System.Void TryAddNpcQuest(System.String questId, System.Boolean sendToNetwork)`
+- `public System.Boolean TryFinishPersonalQuest(System.String questId, System.Nullable&lt;System.Guid&gt; playerCharacterId, System.Boolean skipObjectivesCheck)`
+- `public System.Void TryFinishQuest(CandideServer.MessageModels.Quests.FinishQuestMessage msg, CandideServer.EventBus.EventBusArgs args, System.Boolean skipObjectivesCheck)`
+- `public System.Boolean TryFinishWorldQuest(System.String questId, System.Boolean skipObjectivesCheck)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerManagers_QuestsServerManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerManagers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>19</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerManagers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>CD63AAC0B68C72902A8F1267A1276B74FE43DC2AE82C82289EBF039B3C49D2DD</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="BackupSetupFetchQuest public System.Void BackupSetupFetchQuest(Shared.Models.Quests.QuestData questData) System.Void questData Shared.Models.Quests.QuestData" id="backupsetupfetchquest-shared-models-quests-questdata---system-void">
+<div class="method-heading">
+<h3><code>BackupSetupFetchQuest</code></h3>
+<a class="permalink" href="#backupsetupfetchquest-shared-models-quests-questdata---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void BackupSetupFetchQuest(Shared.Models.Quests.QuestData questData)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::BackupSetupFetchQuest(Shared.Models.Quests.QuestData)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void BackupSetupFetchQuest(<a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a> questData)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>38748ED80A5B7CD61FA3CE66E69356B127F08CF2EDBD147449BE41B9C1CE156F</code></li>
+<li><span>Body hash</span><code>D69BCE3038AA4CCEBDECA99B998BF4BD13944F6474A91B6C6907603F6B519E3E</code></li>
+<li><span>IL size</span><span>13</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#setupfetchquest-shared-models-quests-questdata--shared-models-quests-questinstancemodel--system-single---system-void">CandideServer.ServerManagers.QuestsServerManager::SetupFetchQuest(Shared.Models.Quests.QuestData, Shared.Models.Quests.QuestInstanceModel, System.Single)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CheckAndAddAvailablePersonalQuests public System.Void CheckAndAddAvailablePersonalQuests(CandideServer.Models.Player.ServerPlayerCharacter playerCharacter, System.Boolean sendToClient) System.Void playerCharacter CandideServer.Models.Player.ServerPlayerCharacter sendToClient System.Boolean" id="checkandaddavailablepersonalquests-candideserver-models-player-serverplayercharacter--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>CheckAndAddAvailablePersonalQuests</code></h3>
+<a class="permalink" href="#checkandaddavailablepersonalquests-candideserver-models-player-serverplayercharacter--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CheckAndAddAvailablePersonalQuests(CandideServer.Models.Player.ServerPlayerCharacter playerCharacter, System.Boolean sendToClient)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::CheckAndAddAvailablePersonalQuests(CandideServer.Models.Player.ServerPlayerCharacter, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CheckAndAddAvailablePersonalQuests(<a href="../../types/CandideServer/CandideServer_Models_Player_ServerPlayerCharacter.html">CandideServer.Models.Player.ServerPlayerCharacter</a> playerCharacter, System.Boolean sendToClient)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AFFA121BA6479E2C2FAE7765117196F6026093E4FCFEB320006AA689D4F29400</code></li>
+<li><span>Body hash</span><code>F8401B906A5FE9F0E3C09FA87B7907803D7A1A4446D98D54AD6A617EC650A1D1</code></li>
+<li><span>IL size</span><span>323</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_QuestsDataBase.html#getallquestsoftype-shared-models-quests-questtype---system-collections-generic-ienumerable-1-shared-models-quests-questdata-">Shared.Data.QuestsDataBase::GetAllQuestsOfType(Shared.Models.Quests.QuestType)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Quests.QuestInstanceModel&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.IEnumerable&lt;Shared.Models.Quests.QuestData&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;Shared.Models.Quests.QuestData&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::ContainsKey(!0)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Contains(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Quests.IQuestRequirement&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Quests.IQuestRequirement&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Quests_IQuestRequirement.html#requirementsmet-shared-models-quests-questrequirementsmetargs---system-boolean">Shared.Models.Quests.IQuestRequirement::RequirementsMet(Shared.Models.Quests.QuestRequirementsMetArgs)</a></code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Quests.IQuestRequirement&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_QuestsSController.html#createactivepersonalquest-shared-models-player-playercharactermodel--shared-models-quests-questdata---shared-models-quests-questinstancemodel">CandideServer.ServerControllers.QuestsSController::CreateActivePersonalQuest(Shared.Models.Player.PlayerCharacterModel, Shared.Models.Quests.QuestData)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Quests.QuestInstanceModel&gt;::Add(!0)</code></li>
+<li><code>System.Collections.IEnumerator::MoveNext()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Quests.QuestInstanceModel&gt;::get_Count()</code></li>
+<li><code>CandideServer.MessageModels.Quests.AddQuestsMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Quests.QuestInstanceModel&gt;::ToArray()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#sendaddpersonalquests-candideserver-models-player-serverplayercharacter--candideserver-messagemodels-quests-addquestsmessage---system-void">CandideServer.ServerServices.QuestsServerService::SendAddPersonalQuests(CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.MessageModels.Quests.AddQuestsMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#finishquest-system-string--system-nullable-1-system-guid---system-boolean---system-boolean"><code>CandideServer.ServerManagers.QuestsServerManager::FinishQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#updatepersonalquestsobjectives-candideserver-models-player-serverplayercharacter--system-object---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::UpdatePersonalQuestsObjectives</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CheckAndAddAvailableWorldQuests public System.Void CheckAndAddAvailableWorldQuests(System.Boolean sendToNetwork) System.Void sendToNetwork System.Boolean" id="checkandaddavailableworldquests-system-boolean---system-void">
+<div class="method-heading">
+<h3><code>CheckAndAddAvailableWorldQuests</code></h3>
+<a class="permalink" href="#checkandaddavailableworldquests-system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CheckAndAddAvailableWorldQuests(System.Boolean sendToNetwork)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::CheckAndAddAvailableWorldQuests(System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CheckAndAddAvailableWorldQuests(System.Boolean sendToNetwork)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CAD08AACFE8FE3E01D4CDE424D2F580E3D4F78F4D217435D408CFBA32E7D50F7</code></li>
+<li><span>Body hash</span><code>390A6B40E9DEE380D7969E65D66E7D06105BF12A5363B7D5207A234AE6C6E67E</code></li>
+<li><span>IL size</span><span>292</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_QuestsDataBase.html#getallquestsoftype-shared-models-quests-questtype---system-collections-generic-ienumerable-1-shared-models-quests-questdata-">Shared.Data.QuestsDataBase::GetAllQuestsOfType(Shared.Models.Quests.QuestType)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Quests.QuestInstanceModel&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.IEnumerable&lt;Shared.Models.Quests.QuestData&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;Shared.Models.Quests.QuestData&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::ContainsKey(!0)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Contains(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Quests.IQuestRequirement&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Quests.IQuestRequirement&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Quests_IQuestRequirement.html#requirementsmet-shared-models-quests-questrequirementsmetargs---system-boolean">Shared.Models.Quests.IQuestRequirement::RequirementsMet(Shared.Models.Quests.QuestRequirementsMetArgs)</a></code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Quests.IQuestRequirement&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#createactiveworldquest-shared-models-quests-questdata---shared-models-quests-questinstancemodel">CandideServer.ServerManagers.QuestsServerManager::CreateActiveWorldQuest(Shared.Models.Quests.QuestData)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Quests.QuestInstanceModel&gt;::Add(!0)</code></li>
+<li><code>System.Collections.IEnumerator::MoveNext()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Quests.QuestInstanceModel&gt;::get_Count()</code></li>
+<li><code>CandideServer.MessageModels.Quests.AddQuestsMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Quests.QuestInstanceModel&gt;::ToArray()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#sendaddworldquests-candideserver-messagemodels-quests-addquestsmessage---system-void">CandideServer.ServerServices.QuestsServerService::SendAddWorldQuests(CandideServer.MessageModels.Quests.AddQuestsMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Game_ServerGameSetup.html#setupnewgamestate-candideserver-game-gameconfig---system-void"><code>CandideServer.Game.ServerGameSetup::SetupNewGameState</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_OfferingsServerManager.html#tryhandinoffering-system-guid--system-nullable-1-system-guid----system-void"><code>CandideServer.ServerManagers.OfferingsServerManager::TryHandInOffering</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_OfferingsServerManager.html#trysacrificecitizen-system-guid--system-nullable-1-system-guid----system-void"><code>CandideServer.ServerManagers.OfferingsServerManager::TrySacrificeCitizen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#finishquest-system-string--system-nullable-1-system-guid---system-boolean---system-boolean"><code>CandideServer.ServerManagers.QuestsServerManager::FinishQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#forcefinishquest-system-string---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::ForceFinishQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#updateworldquestsobjectives-system-object---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::UpdateWorldQuestsObjectives</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_WorldFlagsServerManager.html#setflagvalue-system-string--system-nullable-1-system-int32---system-nullable-1-system-single----system-void"><code>CandideServer.ServerManagers.WorldFlagsServerManager::SetFlagValue</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateActiveWorldQuest public Shared.Models.Quests.QuestInstanceModel CreateActiveWorldQuest(Shared.Models.Quests.QuestData quest) Shared.Models.Quests.QuestInstanceModel quest Shared.Models.Quests.QuestData" id="createactiveworldquest-shared-models-quests-questdata---shared-models-quests-questinstancemodel">
+<div class="method-heading">
+<h3><code>CreateActiveWorldQuest</code></h3>
+<a class="permalink" href="#createactiveworldquest-shared-models-quests-questdata---shared-models-quests-questinstancemodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Models.Quests.QuestInstanceModel CreateActiveWorldQuest(Shared.Models.Quests.QuestData quest)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::CreateActiveWorldQuest(Shared.Models.Quests.QuestData)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Models_Quests_QuestInstanceModel.html">Shared.Models.Quests.QuestInstanceModel</a> CreateActiveWorldQuest(<a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a> quest)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Models_Quests_QuestInstanceModel.html">Shared.Models.Quests.QuestInstanceModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>60A13A025F69D516980871EDB0BC7EDE3281DD7B6B0D84AA7BFD2E175BB94013</code></li>
+<li><span>Body hash</span><code>D43DEDBD17150B96569178C934D632FD0381F9FABBD66638A9C9F620FDD8067C</code></li>
+<li><span>IL size</span><span>144</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_QuestsSController.html#createactiveworldquest-shared-models-quests-questdata---shared-models-quests-questinstancemodel">CandideServer.ServerControllers.QuestsSController::CreateActiveWorldQuest(Shared.Models.Quests.QuestData)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#setupfetchquest-shared-models-quests-questdata--shared-models-quests-questinstancemodel--system-single---system-void">CandideServer.ServerManagers.QuestsServerManager::SetupFetchQuest(Shared.Models.Quests.QuestData, Shared.Models.Quests.QuestInstanceModel, System.Single)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::get_Current()</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#setupdungeonquest-candideserver-models-dungeons-dungeonlocationmodel--system-string---system-void">CandideServer.ServerManagers.DungeonServerManager::SetupDungeonQuest(CandideServer.Models.Dungeons.DungeonLocationModel, System.String)</a></code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#discoverbosslocation-system-string---system-void">CandideServer.ServerManagers.BossServerManager::DiscoverBossLocation(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#checkandaddavailableworldquests-system-boolean---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::CheckAndAddAvailableWorldQuests</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#tryaddnpcquest-system-string--system-boolean---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::TryAddNpcQuest</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DebugSetupFetchQuest public System.Void DebugSetupFetchQuest(Shared.Models.Quests.QuestData questData) System.Void questData Shared.Models.Quests.QuestData" id="debugsetupfetchquest-shared-models-quests-questdata---system-void">
+<div class="method-heading">
+<h3><code>DebugSetupFetchQuest</code></h3>
+<a class="permalink" href="#debugsetupfetchquest-shared-models-quests-questdata---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DebugSetupFetchQuest(Shared.Models.Quests.QuestData questData)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::DebugSetupFetchQuest(Shared.Models.Quests.QuestData)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DebugSetupFetchQuest(<a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a> questData)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DAEA372003C9E0456DF104052B93DAA270E99A2E27CCE7422EF5CEB57CEFBAD3</code></li>
+<li><span>Body hash</span><code>D69BCE3038AA4CCEBDECA99B998BF4BD13944F6474A91B6C6907603F6B519E3E</code></li>
+<li><span>IL size</span><span>13</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#setupfetchquest-shared-models-quests-questdata--shared-models-quests-questinstancemodel--system-single---system-void">CandideServer.ServerManagers.QuestsServerManager::SetupFetchQuest(Shared.Models.Quests.QuestData, Shared.Models.Quests.QuestInstanceModel, System.Single)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="FinishQuest private System.Boolean FinishQuest(Shared.Models.Quests.QuestData questData, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt; activeCollection, System.Collections.Generic.HashSet&lt;System.String&gt; completedCollection, System.Nullable&lt;System.Guid&gt; playerCharacterId, System.Boolean skipObjectivesCheck) System.Boolean questData Shared.Models.Quests.QuestData activeCollection System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt; completedCollection System.Collections.Generic.HashSet&lt;System.String&gt; playerCharacterId System.Nullable&lt;System.Guid&gt; skipObjectivesCheck System.Boolean" id="finishquest-shared-models-quests-questdata--system-collections-generic-dictionary-2-system-string-shared-models-quests-questinstancemodel---system-collections-generic-hashset-1-system-string---system-nullable-1-system-guid---system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>FinishQuest</code></h3>
+<a class="permalink" href="#finishquest-shared-models-quests-questdata--system-collections-generic-dictionary-2-system-string-shared-models-quests-questinstancemodel---system-collections-generic-hashset-1-system-string---system-nullable-1-system-guid---system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean FinishQuest(Shared.Models.Quests.QuestData questData, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt; activeCollection, System.Collections.Generic.HashSet&lt;System.String&gt; completedCollection, System.Nullable&lt;System.Guid&gt; playerCharacterId, System.Boolean skipObjectivesCheck)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::FinishQuest(Shared.Models.Quests.QuestData, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;, System.Collections.Generic.HashSet&lt;System.String&gt;, System.Nullable&lt;System.Guid&gt;, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean FinishQuest(<a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a> questData, System.Collections.Generic.Dictionary&lt;System.String, <a href="../../types/Shared/Shared_Models_Quests_QuestInstanceModel.html">Shared.Models.Quests.QuestInstanceModel</a>&gt; activeCollection, System.Collections.Generic.HashSet&lt;System.String&gt; completedCollection, System.Nullable&lt;System.Guid&gt; playerCharacterId, System.Boolean skipObjectivesCheck)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CCE2A892444BEF16B13AF303921B58007CB7AE520DA3A520DEF29A399EF6E6A9</code></li>
+<li><span>Body hash</span><code>4CC21D263FA4480F06FE598CBFA0B23748D34FCD857A09F06C4287660E570E06</code></li>
+<li><span>IL size</span><span>193</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_QuestsSController.html#questsetfinished-shared-models-quests-questdata--shared-models-quests-questinstancemodel--system-collections-generic-dictionary-2-system-string-shared-models-quests-questinstancemodel----system-collections-generic-hashset-1-system-string-----system-boolean">CandideServer.ServerControllers.QuestsSController::QuestSetFinished(Shared.Models.Quests.QuestData, Shared.Models.Quests.QuestInstanceModel, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;&amp;, System.Collections.Generic.HashSet&lt;System.String&gt;&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html#everyone----candideserver-syncstrategies-syncstrategy">CandideServer.SyncStrategies.SyncStrategy::Everyone()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_RewardsServerManager.html#unlockquestreward-system-string--system-nullable-1-system-guid---candideserver-syncstrategies-syncstrategy---system-void">CandideServer.ServerManagers.RewardsServerManager::UnlockQuestReward(System.String, System.Nullable&lt;System.Guid&gt;, CandideServer.SyncStrategies.SyncStrategy)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#toidstring-system-string---system-string">Shared.Analytics.AnalyticsHandler::ToIdString(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#getworldplaytimehours----system-double">CandideServer.ServerGameState::GetWorldPlayTimeHours()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#log-system-string--system-double--analyticshandler-logtype--system-single---system-void">Shared.Analytics.AnalyticsHandler::Log(System.String, System.Double, AnalyticsHandler.LogType, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#finishquest-system-string--system-nullable-1-system-guid---system-boolean---system-boolean"><code>CandideServer.ServerManagers.QuestsServerManager::FinishQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#forcefinishquest-system-string---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::ForceFinishQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#updatepersonalquestsobjectives-candideserver-models-player-serverplayercharacter--system-object---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::UpdatePersonalQuestsObjectives</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#updateworldquestsobjectives-system-object---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::UpdateWorldQuestsObjectives</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Can&#39;t finish quest with ID </code></li>
+<li><code> since it&#39;s not part of the active collection.</code></li>
+<li><code>Quest </code></li>
+<li><code> is already finished.</code></li>
+<li><code>Quest&#39;s objectives are not completed. Unable to finish quest </code></li>
+<li><code>quest:completed:</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="FinishQuest private System.Boolean FinishQuest(System.String questId, System.Nullable&lt;System.Guid&gt; playerCharacterId, System.Boolean skipObjectivesCheck) System.Boolean questId System.String playerCharacterId System.Nullable&lt;System.Guid&gt; skipObjectivesCheck System.Boolean" id="finishquest-system-string--system-nullable-1-system-guid---system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>FinishQuest</code></h3>
+<a class="permalink" href="#finishquest-system-string--system-nullable-1-system-guid---system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean FinishQuest(System.String questId, System.Nullable&lt;System.Guid&gt; playerCharacterId, System.Boolean skipObjectivesCheck)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::FinishQuest(System.String, System.Nullable&lt;System.Guid&gt;, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean FinishQuest(System.String questId, System.Nullable&lt;System.Guid&gt; playerCharacterId, System.Boolean skipObjectivesCheck)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>22E187C94E8DDF353BA735463D64F50FB16E597FEB2BBB3A919A98E5F78315C3</code></li>
+<li><span>Body hash</span><code>CD56DCB93CABBA5E5C337C187AAC70CA06720170190701CA410891A8D84F9F3D</code></li>
+<li><span>IL size</span><span>178</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_QuestsDataBase.html#getquestornull-system-string---shared-models-quests-questdata">Shared.Data.QuestsDataBase::GetQuestOrNull(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Player.ServerPlayerCharacter&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#finishquest-shared-models-quests-questdata--system-collections-generic-dictionary-2-system-string-shared-models-quests-questinstancemodel---system-collections-generic-hashset-1-system-string---system-nullable-1-system-guid---system-boolean---system-boolean">CandideServer.ServerManagers.QuestsServerManager::FinishQuest(Shared.Models.Quests.QuestData, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;, System.Collections.Generic.HashSet&lt;System.String&gt;, System.Nullable&lt;System.Guid&gt;, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#checkandaddavailablepersonalquests-candideserver-models-player-serverplayercharacter--system-boolean---system-void">CandideServer.ServerManagers.QuestsServerManager::CheckAndAddAvailablePersonalQuests(CandideServer.Models.Player.ServerPlayerCharacter, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#checkandaddavailableworldquests-system-boolean---system-void">CandideServer.ServerManagers.QuestsServerManager::CheckAndAddAvailableWorldQuests(System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#tryfinishpersonalquest-system-string--system-nullable-1-system-guid---system-boolean---system-boolean"><code>CandideServer.ServerManagers.QuestsServerManager::TryFinishPersonalQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#tryfinishworldquest-system-string--system-boolean---system-boolean"><code>CandideServer.ServerManagers.QuestsServerManager::TryFinishWorldQuest</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Can&#39;t find quest with ID </code></li>
+<li><code> in the DataBase</code></li>
+<li><code>Can&#39;t find player character with ID </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ForceFinishQuest public System.Void ForceFinishQuest(System.String questId) System.Void questId System.String" id="forcefinishquest-system-string---system-void">
+<div class="method-heading">
+<h3><code>ForceFinishQuest</code></h3>
+<a class="permalink" href="#forcefinishquest-system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ForceFinishQuest(System.String questId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::ForceFinishQuest(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ForceFinishQuest(System.String questId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6CBE43CE34F434582A909E885C60CA5E322852A7962868110FCD82FE37582993</code></li>
+<li><span>Body hash</span><code>691EFFFBF2BB7190F15304C2AC30FA0C02D03854EEF49B63A4D82E432A0C2FE9</code></li>
+<li><span>IL size</span><span>120</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_QuestsDataBase.html#getquestornull-system-string---shared-models-quests-questdata">Shared.Data.QuestsDataBase::GetQuestOrNull(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#finishquest-shared-models-quests-questdata--system-collections-generic-dictionary-2-system-string-shared-models-quests-questinstancemodel---system-collections-generic-hashset-1-system-string---system-nullable-1-system-guid---system-boolean---system-boolean">CandideServer.ServerManagers.QuestsServerManager::FinishQuest(Shared.Models.Quests.QuestData, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;, System.Collections.Generic.HashSet&lt;System.String&gt;, System.Nullable&lt;System.Guid&gt;, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#checkandaddavailableworldquests-system-boolean---system-void">CandideServer.ServerManagers.QuestsServerManager::CheckAndAddAvailableWorldQuests(System.Boolean)</a></code></li>
+<li><code>CandideServer.MessageModels.Quests.UpdateQuestsMessage::.ctor()</code></li>
+<li><code>CandideServer.MessageModels.Quests.UpdateQuestMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#sendupdateworldquests-candideserver-messagemodels-quests-updatequestsmessage---system-void">CandideServer.ServerServices.QuestsServerService::SendUpdateWorldQuests(CandideServer.MessageModels.Quests.UpdateQuestsMessage)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Can&#39;t find quest with ID </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnEventReceived public System.Void OnEventReceived(System.Object eventObject) System.Void eventObject System.Object" id="oneventreceived-system-object---system-void">
+<div class="method-heading">
+<h3><code>OnEventReceived</code></h3>
+<a class="permalink" href="#oneventreceived-system-object---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnEventReceived(System.Object eventObject)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::OnEventReceived(System.Object)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnEventReceived(System.Object eventObject)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>935C3337BF4F303C5F5D877A0A81540900F7AE875C1823BA41775D10FD09449E</code></li>
+<li><span>Body hash</span><code>DE188F8B07E3D2F28A199AD6777057715753F347C66E3D72148A88C40AC756E1</code></li>
+<li><span>IL size</span><span>7</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#updateworldquestsobjectives-system-object---system-void">CandideServer.ServerManagers.QuestsServerManager::UpdateWorldQuestsObjectives(System.Object)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnAdvancementAcquiredEvent.html#send----system-void"><code>CandideServer.Models.Quests.EventModels.OnAdvancementAcquiredEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnCitizenArrivedEvent.html#send-candideserver-models-citizen-citizenmodel---system-void"><code>CandideServer.Models.Quests.EventModels.OnCitizenArrivedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnConstructionSpawnedEvent.html#send-system-string--system-nullable-1-system-guid----system-void"><code>CandideServer.Models.Quests.EventModels.OnConstructionSpawnedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnConstructionSpawnedEvent.html#sendtoallplayers-system-string---system-void"><code>CandideServer.Models.Quests.EventModels.OnConstructionSpawnedEvent::SendToAllPlayers</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnCropHarvestedEvent.html#send-candideserver-models-cropservermodel--shared-models-droptables-droppedgoods--system-nullable-1-system-guid----system-void"><code>CandideServer.Models.Quests.EventModels.OnCropHarvestedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnCropPlantedEvent.html#send-candideserver-models-cropservermodel--system-nullable-1-system-guid----system-void"><code>CandideServer.Models.Quests.EventModels.OnCropPlantedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnEntityKilledEvent.html#send-system-guid--system-guid--system-guid--system-guid--shared-models-items-weapontypeenum---system-void"><code>CandideServer.Models.Quests.EventModels.OnEntityKilledEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnEntitySpawnedByBuildingEvent.html#send-candideserver-entities-serverentitymodel--candideserver-models-buildings-buildinginstancemodel---system-void"><code>CandideServer.Models.Quests.EventModels.OnEntitySpawnedByBuildingEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnGodLevelledUpEvent.html#send-system-string--system-int32---system-void"><code>CandideServer.Models.Quests.EventModels.OnGodLevelledUpEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnHandInItemEvent.html#send-system-string--system-int32---system-void"><code>CandideServer.Models.Quests.EventModels.OnHandInItemEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnOfferingPerformedEvent.html#send-system-string--system-int32---system-void"><code>CandideServer.Models.Quests.EventModels.OnOfferingPerformedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnPlayerCoinsChangedEvent.html#send-system-int32--system-int32--system-guid---system-void"><code>CandideServer.Models.Quests.EventModels.OnPlayerCoinsChangedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnPlayerCraftedItemEvent.html#send-shared-data-itemrecipe--system-nullable-1-system-guid----system-void"><code>CandideServer.Models.Quests.EventModels.OnPlayerCraftedItemEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnPlayerLootItemEvent.html#send-system-guid--system-string--system-int32--system-guid---system-void"><code>CandideServer.Models.Quests.EventModels.OnPlayerLootItemEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnRaidVictoryEvent.html#send-shared-models-raids-raidinstancemodel---system-void"><code>CandideServer.Models.Quests.EventModels.OnRaidVictoryEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnStorageChangedEvent.html#send-system-guid---system-void"><code>CandideServer.Models.Quests.EventModels.OnStorageChangedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnTreeFelledEvent.html#send-system-guid--system-guid--system-guid--system-guid---system-void"><code>CandideServer.Models.Quests.EventModels.OnTreeFelledEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_PeriodicUpdateEvent.html#send----system-void"><code>CandideServer.Models.Quests.EventModels.PeriodicUpdateEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#onreceive-questevent-candideserver-messagemodels-quests-questeventmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.QuestsServerService::OnReceive_QuestEvent</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnPlayerEventReceived public System.Void OnPlayerEventReceived(CandideServer.Models.Quests.EventModels.PlayerCharacterEvent message) System.Void message CandideServer.Models.Quests.EventModels.PlayerCharacterEvent" id="onplayereventreceived-candideserver-models-quests-eventmodels-playercharacterevent---system-void">
+<div class="method-heading">
+<h3><code>OnPlayerEventReceived</code></h3>
+<a class="permalink" href="#onplayereventreceived-candideserver-models-quests-eventmodels-playercharacterevent---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnPlayerEventReceived(CandideServer.Models.Quests.EventModels.PlayerCharacterEvent message)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::OnPlayerEventReceived(CandideServer.Models.Quests.EventModels.PlayerCharacterEvent)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnPlayerEventReceived(<a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_PlayerCharacterEvent.html">CandideServer.Models.Quests.EventModels.PlayerCharacterEvent</a> message)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>50B43F60BFCDFFB5C9DE7E3E592C556DBE9E20C5B4FAA8190C8C61940427659C</code></li>
+<li><span>Body hash</span><code>85C3788E53D876457BF548559F319362FB08755680F099092F4E41AF3096751B</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#onplayereventreceived-system-guid--system-object---system-void">CandideServer.ServerManagers.QuestsServerManager::OnPlayerEventReceived(System.Guid, System.Object)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnPlayerEventReceived public System.Void OnPlayerEventReceived(System.Guid playerCharacterId, System.Object eventObject) System.Void playerCharacterId System.Guid eventObject System.Object" id="onplayereventreceived-system-guid--system-object---system-void">
+<div class="method-heading">
+<h3><code>OnPlayerEventReceived</code></h3>
+<a class="permalink" href="#onplayereventreceived-system-guid--system-object---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnPlayerEventReceived(System.Guid playerCharacterId, System.Object eventObject)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::OnPlayerEventReceived(System.Guid, System.Object)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnPlayerEventReceived(System.Guid playerCharacterId, System.Object eventObject)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8ECFE2C75CFC780AC5B1EF7B91DE266FEE2B2075DEABD753BA43C50C6A704B41</code></li>
+<li><span>Body hash</span><code>D1BE6D1E89D4CD889BB285AFE755DD97146BF82527F75A21B0BA9000D2D328BD</code></li>
+<li><span>IL size</span><span>86</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Player.ServerPlayerCharacter&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#updatepersonalquestsobjectives-candideserver-models-player-serverplayercharacter--system-object---system-void">CandideServer.ServerManagers.QuestsServerManager::UpdatePersonalQuestsObjectives(CandideServer.Models.Player.ServerPlayerCharacter, System.Object)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnConstructionSpawnedEvent.html#send-system-string--system-nullable-1-system-guid----system-void"><code>CandideServer.Models.Quests.EventModels.OnConstructionSpawnedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnConstructionSpawnedEvent.html#sendtoallplayers-system-string---system-void"><code>CandideServer.Models.Quests.EventModels.OnConstructionSpawnedEvent::SendToAllPlayers</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnCropHarvestedEvent.html#send-candideserver-models-cropservermodel--shared-models-droptables-droppedgoods--system-nullable-1-system-guid----system-void"><code>CandideServer.Models.Quests.EventModels.OnCropHarvestedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnCropPlantedEvent.html#send-candideserver-models-cropservermodel--system-nullable-1-system-guid----system-void"><code>CandideServer.Models.Quests.EventModels.OnCropPlantedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnEntityKilledEvent.html#send-system-guid--system-guid--system-guid--system-guid--shared-models-items-weapontypeenum---system-void"><code>CandideServer.Models.Quests.EventModels.OnEntityKilledEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnFlintSharpenedEvent.html#send-system-guid---system-void"><code>CandideServer.Models.Quests.EventModels.OnFlintSharpenedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnInventoriesChangedEvent.html#send-candideserver-messagemodels-inventories-inventorylistenerupdate---system-void"><code>CandideServer.Models.Quests.EventModels.OnInventoriesChangedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnInventoriesChangedEvent.html#send-candideserver-messagemodels-inventories-updateinventoriesiteminstancesmessage---system-void"><code>CandideServer.Models.Quests.EventModels.OnInventoriesChangedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnPlayerCoinsChangedEvent.html#send-system-int32--system-int32--system-guid---system-void"><code>CandideServer.Models.Quests.EventModels.OnPlayerCoinsChangedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnPlayerCraftedItemEvent.html#send-shared-data-itemrecipe--system-nullable-1-system-guid----system-void"><code>CandideServer.Models.Quests.EventModels.OnPlayerCraftedItemEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnPlayerLootItemEvent.html#send-system-guid--system-string--system-int32--system-guid---system-void"><code>CandideServer.Models.Quests.EventModels.OnPlayerLootItemEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnPlayerObjectiveInteractionTypeEvent.html#send-shared-models-quests-objectives-playerobjectiveinteractiontype--system-guid---system-void"><code>CandideServer.Models.Quests.EventModels.OnPlayerObjectiveInteractionTypeEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnPlayerSkillLevelChangedEvent.html#send-system-string--system-int32--system-int32--system-guid---system-void"><code>CandideServer.Models.Quests.EventModels.OnPlayerSkillLevelChangedEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Quests_EventModels_OnTreeFelledEvent.html#send-system-guid--system-guid--system-guid--system-guid---system-void"><code>CandideServer.Models.Quests.EventModels.OnTreeFelledEvent::Send</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#onplayereventreceived-candideserver-models-quests-eventmodels-playercharacterevent---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::OnPlayerEventReceived</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#onreceive-questevent-candideserver-messagemodels-quests-questeventmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.QuestsServerService::OnReceive_QuestEvent</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Got quest event for unknown player character </code></li>
+<li><code> - data </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SetupFetchQuest private System.Void SetupFetchQuest(Shared.Models.Quests.QuestData questData, Shared.Models.Quests.QuestInstanceModel instance, System.Single maxDistanceMultiplier) System.Void questData Shared.Models.Quests.QuestData instance Shared.Models.Quests.QuestInstanceModel maxDistanceMultiplier System.Single" id="setupfetchquest-shared-models-quests-questdata--shared-models-quests-questinstancemodel--system-single---system-void">
+<div class="method-heading">
+<h3><code>SetupFetchQuest</code></h3>
+<a class="permalink" href="#setupfetchquest-shared-models-quests-questdata--shared-models-quests-questinstancemodel--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SetupFetchQuest(Shared.Models.Quests.QuestData questData, Shared.Models.Quests.QuestInstanceModel instance, System.Single maxDistanceMultiplier)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::SetupFetchQuest(Shared.Models.Quests.QuestData, Shared.Models.Quests.QuestInstanceModel, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SetupFetchQuest(<a href="../../types/Shared/Shared_Models_Quests_QuestData.html">Shared.Models.Quests.QuestData</a> questData, <a href="../../types/Shared/Shared_Models_Quests_QuestInstanceModel.html">Shared.Models.Quests.QuestInstanceModel</a> instance, System.Single maxDistanceMultiplier)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CA5435060657E3141623D3F3FF426159D8A0FB07CEA2D2CE3CD3045345E3EF3C</code></li>
+<li><span>Body hash</span><code>51597B84D501DE081348181548C5B2D93CAE97EA29AD3E734D649BA19E88AA8C</code></li>
+<li><span>IL size</span><span>1011</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.PriorityQueue&lt;CandideServer.Models.Dungeons.DungeonLocationModel, System.Single&gt;::.ctor()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Division(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Distance(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_PoiDataBase.html#trygetpoidata-system-string--candideserver-models-poidata----system-boolean">CandideServer.Database.PoiDataBase::TryGetPoiData(System.String, CandideServer.Models.PoiData&amp;)</a></code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_DungeonRoomDataBase.html#trygetdungeonroomdata-system-string--candideserver-models-dungeons-dungeonroomdatamodel----system-boolean">CandideServer.Database.DungeonRoomDataBase::TryGetDungeonRoomData(System.String, CandideServer.Models.Dungeons.DungeonRoomDataModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#getworlddataornull-system-string---candideserver-world-serverworlddata">CandideServer.World.ServerWorldDataManager::GetWorldDataOrNull(System.String)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.World.ServerEntitySpawnData&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;CandideServer.World.ServerEntitySpawnData&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Chest_ServerChestController.html#ismajorchest-candideserver-world-serverentityspawndata---system-boolean">CandideServer.Entities.ControllerSets.Chest.ServerChestController::IsMajorChest(CandideServer.World.ServerEntitySpawnData)</a></code></li>
+<li><code>List.Enumerator&lt;CandideServer.World.ServerEntitySpawnData&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Contains(!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, System.Guid&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Models.Items.SharedInventoryModel&gt;::ContainsKey(!0)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationRoomModel&gt;::MoveNext()</code></li>
+<li><code>System.Collections.Generic.PriorityQueue&lt;CandideServer.Models.Dungeons.DungeonLocationModel, System.Single&gt;::Enqueue(!0, !1)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::MoveNext()</code></li>
+<li><code>System.Collections.Generic.PriorityQueue&lt;CandideServer.Models.Dungeons.DungeonLocationModel, System.Single&gt;::TryDequeue(!0&amp;, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#setupfetchquestloot-candideserver-models-dungeons-dungeonlocationmodel--system-collections-generic-list-1-shared-models-items-itemamount---system-string--system-boolean---system-void">CandideServer.ServerManagers.DungeonServerManager::SetupFetchQuestLoot(CandideServer.Models.Dungeons.DungeonLocationModel, System.Collections.Generic.List&lt;Shared.Models.Items.ItemAmount&gt;, System.String, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#backupsetupfetchquest-shared-models-quests-questdata---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::BackupSetupFetchQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#createactiveworldquest-shared-models-quests-questdata---shared-models-quests-questinstancemodel"><code>CandideServer.ServerManagers.QuestsServerManager::CreateActiveWorldQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#debugsetupfetchquest-shared-models-quests-questdata---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::DebugSetupFetchQuest</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>biome:plains</code></li>
+<li><code>biome:plains_dry</code></li>
+<li><code>biome:forest_light</code></li>
+<li><code>biome:forest</code></li>
+<li><code>Could not setup fetch quest! No suitable location found.</code></li>
+<li><code>Failed to set up fetch quest &#39;</code></li>
+<li><code>&#39; on world with seed &#39;</code></li>
+<li><code>&#39; size &#39;</code></li>
+<li><code>&#39;</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SynchUpdateActivePersonalQuests public System.Void SynchUpdateActivePersonalQuests(Shared.Models.Player.PlayerCharacterModel characterCharacter) System.Void characterCharacter Shared.Models.Player.PlayerCharacterModel" id="synchupdateactivepersonalquests-shared-models-player-playercharactermodel---system-void">
+<div class="method-heading">
+<h3><code>SynchUpdateActivePersonalQuests</code></h3>
+<a class="permalink" href="#synchupdateactivepersonalquests-shared-models-player-playercharactermodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SynchUpdateActivePersonalQuests(Shared.Models.Player.PlayerCharacterModel characterCharacter)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::SynchUpdateActivePersonalQuests(Shared.Models.Player.PlayerCharacterModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SynchUpdateActivePersonalQuests(<a href="../../types/Shared/Shared_Models_Player_PlayerCharacterModel.html">Shared.Models.Player.PlayerCharacterModel</a> characterCharacter)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D8B4F69000FF34F60B0A55A2820ED75C732CC4FE8653E7AC8311E3C836061BB9</code></li>
+<li><span>Body hash</span><code>81A8B39DB0E560BE92E84CEE0E4AD33EA519FEE0E9B86A820AE4ED187EDEAE4B</code></li>
+<li><span>IL size</span><span>209</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::get_Key()</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_QuestsDataBase.html#getquestornull-system-string---shared-models-quests-questdata">Shared.Data.QuestsDataBase::GetQuestOrNull(System.String)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Quests_QuestInstanceModel.html#fromquestdata-shared-models-quests-questdata---shared-models-quests-questinstancemodel">Shared.Models.Quests.QuestInstanceModel::FromQuestData(Shared.Models.Quests.QuestData)</a></code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::set_Item(!0, !1)</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.String&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::Remove(!0)</code></li>
+<li><code>List.Enumerator&lt;System.String&gt;::MoveNext()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerCharacterServerManager.html#setupcharacter-shared-models-player-playercharactermodel--shared-models-items-iteminstancemodel----shared-models-items-iteminstancemodel----shared-models-items-iteminstancemodel----system-uint64--system-int32---candideserver-models-player-serverplayercharacter"><code>CandideServer.ServerManagers.PlayerCharacterServerManager::SetupCharacter</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryAddNpcQuest public System.Void TryAddNpcQuest(System.String questId, System.Boolean sendToNetwork) System.Void questId System.String sendToNetwork System.Boolean" id="tryaddnpcquest-system-string--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>TryAddNpcQuest</code></h3>
+<a class="permalink" href="#tryaddnpcquest-system-string--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void TryAddNpcQuest(System.String questId, System.Boolean sendToNetwork)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::TryAddNpcQuest(System.String, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void TryAddNpcQuest(System.String questId, System.Boolean sendToNetwork)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>32D8085AB56089B6362C374843549FD2BB7436916E62606A77DC1D00FB81D74E</code></li>
+<li><span>Body hash</span><code>6F3452DBC5CE27B3AEC4B5D402C0A985DB7A01B1F733F3FEC214F900A1686AD3</code></li>
+<li><span>IL size</span><span>310</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::ContainsKey(!0)</code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::Contains(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_QuestsDataBase.html#getquestornull-system-string---shared-models-quests-questdata">Shared.Data.QuestsDataBase::GetQuestOrNull(System.String)</a></code></li>
+<li><code>System.Exception::.ctor(System.String)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Quests.IQuestRequirement&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Quests.IQuestRequirement&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Quests_IQuestRequirement.html#requirementsmet-shared-models-quests-questrequirementsmetargs---system-boolean">Shared.Models.Quests.IQuestRequirement::RequirementsMet(Shared.Models.Quests.QuestRequirementsMetArgs)</a></code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Quests.IQuestRequirement&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#createactiveworldquest-shared-models-quests-questdata---shared-models-quests-questinstancemodel">CandideServer.ServerManagers.QuestsServerManager::CreateActiveWorldQuest(Shared.Models.Quests.QuestData)</a></code></li>
+<li><code>CandideServer.MessageModels.Quests.AddQuestsMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#sendaddworldquests-candideserver-messagemodels-quests-addquestsmessage---system-void">CandideServer.ServerServices.QuestsServerService::SendAddWorldQuests(CandideServer.MessageModels.Quests.AddQuestsMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#onreceive-tryaddnpcquest-candideserver-messagemodels-quests-tryaddnpcquestmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.QuestsServerService::OnReceive_TryAddNpcQuest</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Quest &#39;</code></li>
+<li><code>&#39; is already in active world quests</code></li>
+<li><code>&#39; is already finished</code></li>
+<li><code>Couldn&#39;t find quest with ID &#39;</code></li>
+<li><code>&#39;</code></li>
+<li><code>TryAddNpcQuest: Haven&#39;t added support for any other quest types than NPC here /Sam</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryFinishPersonalQuest public System.Boolean TryFinishPersonalQuest(System.String questId, System.Nullable&lt;System.Guid&gt; playerCharacterId, System.Boolean skipObjectivesCheck) System.Boolean questId System.String playerCharacterId System.Nullable&lt;System.Guid&gt; skipObjectivesCheck System.Boolean" id="tryfinishpersonalquest-system-string--system-nullable-1-system-guid---system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>TryFinishPersonalQuest</code></h3>
+<a class="permalink" href="#tryfinishpersonalquest-system-string--system-nullable-1-system-guid---system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryFinishPersonalQuest(System.String questId, System.Nullable&lt;System.Guid&gt; playerCharacterId, System.Boolean skipObjectivesCheck)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::TryFinishPersonalQuest(System.String, System.Nullable&lt;System.Guid&gt;, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryFinishPersonalQuest(System.String questId, System.Nullable&lt;System.Guid&gt; playerCharacterId, System.Boolean skipObjectivesCheck)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>49E6CE6D19A459008409AA2CA020C63D1B93D7E2543F1B706D531110B2823610</code></li>
+<li><span>Body hash</span><code>D4BDB80FAB636DBBD2BC4AE3B4212B6DA0B19955448F722015E965E115575DB0</code></li>
+<li><span>IL size</span><span>9</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#finishquest-system-string--system-nullable-1-system-guid---system-boolean---system-boolean">CandideServer.ServerManagers.QuestsServerManager::FinishQuest(System.String, System.Nullable&lt;System.Guid&gt;, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#tryfinishquest-candideserver-messagemodels-quests-finishquestmessage--candideserver-eventbus-eventbusargs--system-boolean---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::TryFinishQuest</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryFinishQuest public System.Void TryFinishQuest(CandideServer.MessageModels.Quests.FinishQuestMessage msg, CandideServer.EventBus.EventBusArgs args, System.Boolean skipObjectivesCheck) System.Void msg CandideServer.MessageModels.Quests.FinishQuestMessage args CandideServer.EventBus.EventBusArgs skipObjectivesCheck System.Boolean" id="tryfinishquest-candideserver-messagemodels-quests-finishquestmessage--candideserver-eventbus-eventbusargs--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>TryFinishQuest</code></h3>
+<a class="permalink" href="#tryfinishquest-candideserver-messagemodels-quests-finishquestmessage--candideserver-eventbus-eventbusargs--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void TryFinishQuest(CandideServer.MessageModels.Quests.FinishQuestMessage msg, CandideServer.EventBus.EventBusArgs args, System.Boolean skipObjectivesCheck)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::TryFinishQuest(CandideServer.MessageModels.Quests.FinishQuestMessage, CandideServer.EventBus.EventBusArgs, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void TryFinishQuest(<a href="../../types/CandideServer/CandideServer_MessageModels_Quests_FinishQuestMessage.html">CandideServer.MessageModels.Quests.FinishQuestMessage</a> msg, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args, System.Boolean skipObjectivesCheck)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>99CCED8198F785B166AB9012C4E3D75E421020F4FE1643FB32B2B513E68EEA17</code></li>
+<li><span>Body hash</span><code>FB43407EE06DBD45538F1EF66D6E08A37968DA6823497C53979E5E7293FD67D0</code></li>
+<li><span>IL size</span><span>513</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#getplayerinfofrompeer-candideserver-server-network-connectedpeer---system-nullable-1-system-valuetuple-2-candideserver-models-player-serverplayercharacter-candideserver-serverservices-serverjoinedplayermodel--">CandideServer.ServerServices.PlayerServerService::GetPlayerInfoFromPeer(CandideServer.Server.Network.ConnectedPeer)</a></code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.ValueTuple&lt;CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;&gt;::get_Value()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#tryfinishpersonalquest-system-string--system-nullable-1-system-guid---system-boolean---system-boolean">CandideServer.ServerManagers.QuestsServerManager::TryFinishPersonalQuest(System.String, System.Nullable&lt;System.Guid&gt;, System.Boolean)</a></code></li>
+<li><code>CandideServer.MessageModels.Quests.UpdateQuestsMessage::.ctor()</code></li>
+<li><code>CandideServer.MessageModels.Quests.UpdateQuestMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Int32&gt;::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#sendupdatepersonalquests-candideserver-models-player-serverplayercharacter--candideserver-messagemodels-quests-updatequestsmessage---system-void">CandideServer.ServerServices.QuestsServerService::SendUpdatePersonalQuests(CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.MessageModels.Quests.UpdateQuestsMessage)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#tryfinishworldquest-system-string--system-boolean---system-boolean">CandideServer.ServerManagers.QuestsServerManager::TryFinishWorldQuest(System.String, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#sendupdateworldquests-candideserver-messagemodels-quests-updatequestsmessage---system-void">CandideServer.ServerServices.QuestsServerService::SendUpdateWorldQuests(CandideServer.MessageModels.Quests.UpdateQuestsMessage)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::ContainsKey(!0)</code></li>
+<li><code>System.ArgumentOutOfRangeException::.ctor()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#onreceive-cheatfinishquest-candideserver-messagemodels-quests-finishquestmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.QuestsServerService::OnReceive_CheatFinishQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#onreceive-tryfinishquest-candideserver-messagemodels-quests-finishquestmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.QuestsServerService::OnReceive_TryFinishQuest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#onreceive-tryperformhandinobjective-candideserver-messagemodels-quests-tryperformhandinobjectivemessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.QuestsServerService::OnReceive_TryPerformHandInObjective</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Failed to finish quest because player was not found from the NetPeer.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryFinishWorldQuest public System.Boolean TryFinishWorldQuest(System.String questId, System.Boolean skipObjectivesCheck) System.Boolean questId System.String skipObjectivesCheck System.Boolean" id="tryfinishworldquest-system-string--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>TryFinishWorldQuest</code></h3>
+<a class="permalink" href="#tryfinishworldquest-system-string--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryFinishWorldQuest(System.String questId, System.Boolean skipObjectivesCheck)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::TryFinishWorldQuest(System.String, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryFinishWorldQuest(System.String questId, System.Boolean skipObjectivesCheck)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>77C086A1ED1BD511482A3CA275454B12FF7E4C58A0A3FC3D98BA86FA12E2A593</code></li>
+<li><span>Body hash</span><code>BAFE94586264AFCF82BF84390970E93C8AA5B37B3E7D34810DAEFE1AF5E6B2F3</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#finishquest-system-string--system-nullable-1-system-guid---system-boolean---system-boolean">CandideServer.ServerManagers.QuestsServerManager::FinishQuest(System.String, System.Nullable&lt;System.Guid&gt;, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#tryfinishquest-candideserver-messagemodels-quests-finishquestmessage--candideserver-eventbus-eventbusargs--system-boolean---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::TryFinishQuest</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="UpdatePersonalQuestsObjectives private System.Void UpdatePersonalQuestsObjectives(CandideServer.Models.Player.ServerPlayerCharacter playerCharacter, System.Object eventObject) System.Void playerCharacter CandideServer.Models.Player.ServerPlayerCharacter eventObject System.Object" id="updatepersonalquestsobjectives-candideserver-models-player-serverplayercharacter--system-object---system-void">
+<div class="method-heading">
+<h3><code>UpdatePersonalQuestsObjectives</code></h3>
+<a class="permalink" href="#updatepersonalquestsobjectives-candideserver-models-player-serverplayercharacter--system-object---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void UpdatePersonalQuestsObjectives(CandideServer.Models.Player.ServerPlayerCharacter playerCharacter, System.Object eventObject)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::UpdatePersonalQuestsObjectives(CandideServer.Models.Player.ServerPlayerCharacter, System.Object)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void UpdatePersonalQuestsObjectives(<a href="../../types/CandideServer/CandideServer_Models_Player_ServerPlayerCharacter.html">CandideServer.Models.Player.ServerPlayerCharacter</a> playerCharacter, System.Object eventObject)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C348E18F0B11DBD6CB21A496F10A84F10188CA8A313A31D234A7CBD22334C37A</code></li>
+<li><span>Body hash</span><code>A9AEDBA393D24E1365C8C5908E1F454647843C7459CB74A73B2BF6E3AA71B394</code></li>
+<li><span>IL size</span><span>220</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::get_Values()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_QuestsSController.html#updatequestinstanceswithevent-system-collections-generic-ienumerable-1-shared-models-quests-questinstancemodel---system-object---system-collections-generic-ienumerable-1-candideserver-messagemodels-quests-updatequestmessage-">CandideServer.ServerControllers.QuestsSController::UpdateQuestInstancesWithEvent(System.Collections.Generic.IEnumerable&lt;Shared.Models.Quests.QuestInstanceModel&gt;, System.Object)</a></code></li>
+<li><code>System.Linq.Enumerable::ToArray(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_QuestsDataBase.html#getquestornull-system-string---shared-models-quests-questdata">Shared.Data.QuestsDataBase::GetQuestOrNull(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#finishquest-shared-models-quests-questdata--system-collections-generic-dictionary-2-system-string-shared-models-quests-questinstancemodel---system-collections-generic-hashset-1-system-string---system-nullable-1-system-guid---system-boolean---system-boolean">CandideServer.ServerManagers.QuestsServerManager::FinishQuest(Shared.Models.Quests.QuestData, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;, System.Collections.Generic.HashSet&lt;System.String&gt;, System.Nullable&lt;System.Guid&gt;, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#checkandaddavailablepersonalquests-candideserver-models-player-serverplayercharacter--system-boolean---system-void">CandideServer.ServerManagers.QuestsServerManager::CheckAndAddAvailablePersonalQuests(CandideServer.Models.Player.ServerPlayerCharacter, System.Boolean)</a></code></li>
+<li><code>CandideServer.MessageModels.Quests.UpdateQuestsMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#sendupdatepersonalquests-candideserver-models-player-serverplayercharacter--candideserver-messagemodels-quests-updatequestsmessage---system-void">CandideServer.ServerServices.QuestsServerService::SendUpdatePersonalQuests(CandideServer.Models.Player.ServerPlayerCharacter, CandideServer.MessageModels.Quests.UpdateQuestsMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#onplayereventreceived-system-guid--system-object---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::OnPlayerEventReceived</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>We completed personal quest with ID </code></li>
+<li><code> but it couldn&#39;t be found in the DataBase. World data might be corrupted.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="UpdateWorldQuestsObjectives private System.Void UpdateWorldQuestsObjectives(System.Object eventObject) System.Void eventObject System.Object" id="updateworldquestsobjectives-system-object---system-void">
+<div class="method-heading">
+<h3><code>UpdateWorldQuestsObjectives</code></h3>
+<a class="permalink" href="#updateworldquestsobjectives-system-object---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void UpdateWorldQuestsObjectives(System.Object eventObject)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.QuestsServerManager::UpdateWorldQuestsObjectives(System.Object)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void UpdateWorldQuestsObjectives(System.Object eventObject)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E4F9C11D0A34BAE5C00F79F5BB3AA60E4E708DC191814D760BBFD76ABA48D5A8</code></li>
+<li><span>Body hash</span><code>729336DE9B8400697BAA658A1081CF77E264B65F35F1E5903680D98A5AD5F5C5</code></li>
+<li><span>IL size</span><span>183</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;::get_Values()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_QuestsSController.html#updatequestinstanceswithevent-system-collections-generic-ienumerable-1-shared-models-quests-questinstancemodel---system-object---system-collections-generic-ienumerable-1-candideserver-messagemodels-quests-updatequestmessage-">CandideServer.ServerControllers.QuestsSController::UpdateQuestInstancesWithEvent(System.Collections.Generic.IEnumerable&lt;Shared.Models.Quests.QuestInstanceModel&gt;, System.Object)</a></code></li>
+<li><code>System.Linq.Enumerable::ToArray(System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_QuestsDataBase.html#getquestornull-system-string---shared-models-quests-questdata">Shared.Data.QuestsDataBase::GetQuestOrNull(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#finishquest-shared-models-quests-questdata--system-collections-generic-dictionary-2-system-string-shared-models-quests-questinstancemodel---system-collections-generic-hashset-1-system-string---system-nullable-1-system-guid---system-boolean---system-boolean">CandideServer.ServerManagers.QuestsServerManager::FinishQuest(Shared.Models.Quests.QuestData, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Quests.QuestInstanceModel&gt;, System.Collections.Generic.HashSet&lt;System.String&gt;, System.Nullable&lt;System.Guid&gt;, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#checkandaddavailableworldquests-system-boolean---system-void">CandideServer.ServerManagers.QuestsServerManager::CheckAndAddAvailableWorldQuests(System.Boolean)</a></code></li>
+<li><code>CandideServer.MessageModels.Quests.UpdateQuestsMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_QuestsServerService.html#sendupdateworldquests-candideserver-messagemodels-quests-updatequestsmessage---system-void">CandideServer.ServerServices.QuestsServerService::SendUpdateWorldQuests(CandideServer.MessageModels.Quests.UpdateQuestsMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_QuestsServerManager.html#oneventreceived-system-object---system-void"><code>CandideServer.ServerManagers.QuestsServerManager::OnEventReceived</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>We completed quest with ID </code></li>
+<li><code> but it couldn&#39;t be found in the DataBase. World data might be corrupted.</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

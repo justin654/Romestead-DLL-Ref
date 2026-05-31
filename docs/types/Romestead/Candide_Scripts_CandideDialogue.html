@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.Scripts.CandideDialogue - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.Scripts.CandideDialogue</h1>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.Scripts.CandideDialogue
+
+- Assembly: `Romestead`
+- Namespace: `Candide.Scripts`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 14 methods, 1 properties, 12 fields, 1 events
+
+## Public Methods
+- `public System.Boolean Continue()`
+- `public System.Void ConvertText()`
+- `public System.Int32 GetVisibleCharacters()`
+- `public System.Void InvokeFinish()`
+- `public System.Boolean IsReady()`
+- `public System.Void Update(System.Double&amp; dt)`
+">Copy markdown</button>
+<a class="button" href="Candide_Scripts_CandideDialogue.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.Scripts</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>14</strong></article>
+<article class="metric"><span>Properties</span><strong>1</strong></article>
+<article class="metric"><span>Fields</span><strong>12</strong></article>
+<article class="metric"><span>Events</span><strong>1</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.Scripts</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>C52CC9E96E274E71DA7750D2BC91D8049627CE7E3CF3B553D95A777BD825A1F2</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Dialogue_CandideDialoguePresenter.html"><code>Candide.Dialogue.CandideDialoguePresenter</code></a></li>
+<li><a href="../../types/Romestead/Candide_Dialogue_DialogueRunner.html"><code>Candide.Dialogue.DialogueRunner</code></a></li>
+<li><a href="../../types/Romestead/Candide_Scripts_DialogueComponents_ElementaryComponents_ButtonPressWait.html"><code>Candide.Scripts.DialogueComponents.ElementaryComponents.ButtonPressWait</code></a></li>
+<li><a href="../../types/Romestead/Candide_Scripts_DialogueComponents_ElementaryComponents_InstantContinue.html"><code>Candide.Scripts.DialogueComponents.ElementaryComponents.InstantContinue</code></a></li>
+<li><a href="../../types/Romestead/Candide_Scripts_Script.html"><code>Candide.Scripts.Script</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="DialogueInfo public Candide.Scripts.DialogueInfo DialogueInfo Candide.Scripts.DialogueInfo" id="dialogueinfo-candide-scripts-dialogueinfo"><td><span class="member-name-cell"><code>DialogueInfo</code><a class="permalink" href="#dialogueinfo-candide-scripts-dialogueinfo" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.Scripts.DialogueInfo DialogueInfo">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_Scripts_DialogueInfo.html">Candide.Scripts.DialogueInfo</a> DialogueInfo</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="EnableRichTextLayoutCommands public System.Boolean EnableRichTextLayoutCommands System.Boolean" id="enablerichtextlayoutcommands-system-boolean"><td><span class="member-name-cell"><code>EnableRichTextLayoutCommands</code><a class="permalink" href="#enablerichtextlayoutcommands-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean EnableRichTextLayoutCommands">Copy</button></span></td><td>public</td><td><code>public System.Boolean EnableRichTextLayoutCommands</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="InvokeContinue private System.EventHandler InvokeContinue System.EventHandler" id="invokecontinue-system-eventhandler"><td><span class="member-name-cell"><code>InvokeContinue</code><a class="permalink" href="#invokecontinue-system-eventhandler" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.EventHandler InvokeContinue">Copy</button></span></td><td>private</td><td><code>private System.EventHandler InvokeContinue</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="IsWaitingForInput public System.Boolean IsWaitingForInput System.Boolean" id="iswaitingforinput-system-boolean"><td><span class="member-name-cell"><code>IsWaitingForInput</code><a class="permalink" href="#iswaitingforinput-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean IsWaitingForInput">Copy</button></span></td><td>public</td><td><code>public System.Boolean IsWaitingForInput</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="RichTextCommands public System.String RichTextCommands System.String" id="richtextcommands-system-string"><td><span class="member-name-cell"><code>RichTextCommands</code><a class="permalink" href="#richtextcommands-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String RichTextCommands">Copy</button></span></td><td>public</td><td><code>public System.String RichTextCommands</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="RichTextLayoutCommandIndicator public System.Char RichTextLayoutCommandIndicator System.Char" id="richtextlayoutcommandindicator-system-char"><td><span class="member-name-cell"><code>RichTextLayoutCommandIndicator</code><a class="permalink" href="#richtextlayoutcommandindicator-system-char" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Char RichTextLayoutCommandIndicator">Copy</button></span></td><td>public</td><td><code>public System.Char RichTextLayoutCommandIndicator</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_dialogueSimulator private Candide.Scripts.DialogueComponents.DialogueSimulator _dialogueSimulator Candide.Scripts.DialogueComponents.DialogueSimulator" id="-dialoguesimulator-candide-scripts-dialoguecomponents-dialoguesimulator"><td><span class="member-name-cell"><code>_dialogueSimulator</code><a class="permalink" href="#-dialoguesimulator-candide-scripts-dialoguecomponents-dialoguesimulator" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.Scripts.DialogueComponents.DialogueSimulator _dialogueSimulator">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_Scripts_DialogueComponents_DialogueSimulator.html">Candide.Scripts.DialogueComponents.DialogueSimulator</a> _dialogueSimulator</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_index private System.Int32 _index System.Int32" id="-index-system-int32"><td><span class="member-name-cell"><code>_index</code><a class="permalink" href="#-index-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _index">Copy</button></span></td><td>private</td><td><code>private System.Int32 _index</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_sentence private Candide.Scripts.DialogueComponents.Sentence _sentence Candide.Scripts.DialogueComponents.Sentence" id="-sentence-candide-scripts-dialoguecomponents-sentence"><td><span class="member-name-cell"><code>_sentence</code><a class="permalink" href="#-sentence-candide-scripts-dialoguecomponents-sentence" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.Scripts.DialogueComponents.Sentence _sentence">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_Scripts_DialogueComponents_Sentence.html">Candide.Scripts.DialogueComponents.Sentence</a> _sentence</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_sentenceIsClosing private System.Boolean _sentenceIsClosing System.Boolean" id="-sentenceisclosing-system-boolean"><td><span class="member-name-cell"><code>_sentenceIsClosing</code><a class="permalink" href="#-sentenceisclosing-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _sentenceIsClosing">Copy</button></span></td><td>private</td><td><code>private System.Boolean _sentenceIsClosing</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_text private System.String _text System.String" id="-text-system-string"><td><span class="member-name-cell"><code>_text</code><a class="permalink" href="#-text-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.String _text">Copy</button></span></td><td>private</td><td><code>private System.String _text</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_word private Candide.Scripts.DialogueComponents.Word _word Candide.Scripts.DialogueComponents.Word" id="-word-candide-scripts-dialoguecomponents-word"><td><span class="member-name-cell"><code>_word</code><a class="permalink" href="#-word-candide-scripts-dialoguecomponents-word" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.Scripts.DialogueComponents.Word _word">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_Scripts_DialogueComponents_Word.html">Candide.Scripts.DialogueComponents.Word</a> _word</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="TextWithoutCommands public System.String TextWithoutCommands System.String" id="textwithoutcommands-system-string"><td><span class="member-name-cell"><code>TextWithoutCommands</code><a class="permalink" href="#textwithoutcommands-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String TextWithoutCommands">Copy</button></span></td><td>public</td><td><code>public System.String TextWithoutCommands</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Events</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="InvokeContinue public System.EventHandler InvokeContinue System.EventHandler" id="invokecontinue-system-eventhandler"><td><span class="member-name-cell"><code>InvokeContinue</code><a class="permalink" href="#invokecontinue-system-eventhandler" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.EventHandler InvokeContinue">Copy</button></span></td><td>public</td><td><code>public System.EventHandler InvokeContinue</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Continue public System.Boolean Continue() System.Boolean " id="continue----system-boolean">
+<div class="method-heading">
+<h3><code>Continue</code></h3>
+<a class="permalink" href="#continue----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean Continue()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::Continue()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean Continue()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>62AC34DD1FB0FD48478B5F79FDBD107750075D548EE9A4C969A65EC3A27E1F62</code></li>
+<li><span>Body hash</span><code>56200325241A8ED49609603443119D7D53EB93C36926E9AB07BB5E7224766A81</code></li>
+<li><span>IL size</span><span>27</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Scripts_DialogueComponents_AbstractDialogueComponentParent.html#continue----system-boolean">Candide.Scripts.DialogueComponents.AbstractDialogueComponentParent::Continue()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Dialogue_DialogueRunner.html#continue----system-void"><code>Candide.Dialogue.DialogueRunner::Continue</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ConvertText public System.Void ConvertText() System.Void " id="converttext----system-void">
+<div class="method-heading">
+<h3><code>ConvertText</code></h3>
+<a class="permalink" href="#converttext----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ConvertText()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::ConvertText()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ConvertText()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>28C4594DE9661BBBE3C9FF42C97A7DD5DF877D35C2B940A0F08ED8EABB7CEF9E</code></li>
+<li><span>Body hash</span><code>4DAC9FD67F9A6AC0FC7C5A01FDF0C955E80656B1F71CCAED829F02438916E032</code></li>
+<li><span>IL size</span><span>490</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Scripts.DialogueComponents.DialogueSimulator::.ctor()</code></li>
+<li><code>Candide.Scripts.DialogueComponents.Sentence::.ctor()</code></li>
+<li><code>Candide.Scripts.DialogueComponents.Word::.ctor()</code></li>
+<li><code>System.String::get_Chars(System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#endword-system-boolean---system-void">Candide.Scripts.CandideDialogue::EndWord(System.Boolean)</a></code></li>
+<li><code>Candide.Scripts.DialogueComponents.ElementaryComponents.Pause::.ctor(System.Double)</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.Scripts.DialogueComponents.IDialogueComponent&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#endsentence----system-void">Candide.Scripts.CandideDialogue::EndSentence()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#identifytextcommand----system-void">Candide.Scripts.CandideDialogue::IdentifyTextCommand()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#isrichtextlayoutcommand-system-int32---system-boolean">Candide.Scripts.CandideDialogue::IsRichTextLayoutCommand(System.Int32)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#identifyrichtextcommand----system-void">Candide.Scripts.CandideDialogue::IdentifyRichTextCommand()</a></code></li>
+<li><code>Candide.Scripts.DialogueComponents.ElementaryComponents.Character::.ctor(System.Char)</code></li>
+<li><code>System.String::get_Length()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_DialogueComponents_Word.html#isempty----system-boolean">Candide.Scripts.DialogueComponents.Word::IsEmpty()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_DialogueComponents_AbstractDialogueComponentParent.html#getfinishedtexttodisplay----system-string">Candide.Scripts.DialogueComponents.AbstractDialogueComponentParent::GetFinishedTextToDisplay()</a></code></li>
+<li><code>Candide.Scripts.CandideDialogue::set_TextWithoutCommands(System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Dialogue_CandideDialoguePresenter.html#presentline-candide-dialogue-localizedline---system-void"><code>Candide.Dialogue.CandideDialoguePresenter::PresentLine</code></a></li>
+<li><a href="../../types/Romestead/Candide_Scripts_ScriptHandler.html#startdialogue-system-int32---system-void"><code>Candide.Scripts.ScriptHandler::StartDialogue</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="EndSentence private System.Void EndSentence() System.Void " id="endsentence----system-void">
+<div class="method-heading">
+<h3><code>EndSentence</code></h3>
+<a class="permalink" href="#endsentence----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void EndSentence()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::EndSentence()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void EndSentence()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A215DFCFB1ED40EC7CC5EB8E91496364B24BEEF69F8C9425A83491E015E176DE</code></li>
+<li><span>Body hash</span><code>A8AAD00C526653E20F48FCA56F7028047FE637DA42A0355530B1CC25C0D01E27</code></li>
+<li><span>IL size</span><span>41</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;Candide.Scripts.DialogueComponents.IDialogueComponent&gt;::Add(!0)</code></li>
+<li><code>Candide.Scripts.DialogueComponents.Sentence::.ctor()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#converttext----system-void"><code>Candide.Scripts.CandideDialogue::ConvertText</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="EndWord private System.Void EndWord(System.Boolean addCurrentCharAsWord) System.Void addCurrentCharAsWord System.Boolean" id="endword-system-boolean---system-void">
+<div class="method-heading">
+<h3><code>EndWord</code></h3>
+<a class="permalink" href="#endword-system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void EndWord(System.Boolean addCurrentCharAsWord)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::EndWord(System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void EndWord(System.Boolean addCurrentCharAsWord)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B196EC6E5E594686B8FF99AF9535FB0CF088B1C4D5CCFDE35F02AD5742DEECC6</code></li>
+<li><span>Body hash</span><code>AA1A662EE388E96496F7AE7C7C85C50FCF6E7A9497AF4DAE3AF517478454A2F7</code></li>
+<li><span>IL size</span><span>89</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Scripts_DialogueComponents_Word.html#isempty----system-boolean">Candide.Scripts.DialogueComponents.Word::IsEmpty()</a></code></li>
+<li><code>System.String::get_Chars(System.Int32)</code></li>
+<li><code>Candide.Scripts.DialogueComponents.ElementaryComponents.Character::.ctor(System.Char)</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.Scripts.DialogueComponents.IDialogueComponent&gt;::Add(!0)</code></li>
+<li><code>Candide.Scripts.DialogueComponents.Word::.ctor()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#converttext----system-void"><code>Candide.Scripts.CandideDialogue::ConvertText</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetVisibleCharacters public System.Int32 GetVisibleCharacters() System.Int32 " id="getvisiblecharacters----system-int32">
+<div class="method-heading">
+<h3><code>GetVisibleCharacters</code></h3>
+<a class="permalink" href="#getvisiblecharacters----system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Int32 GetVisibleCharacters()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::GetVisibleCharacters()">Copy Harmony target</button>
+</div>
+<p><code>public System.Int32 GetVisibleCharacters()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DAF60485AE39A6CC6992D12A2B77EACC8846D0E867B8567B89CF0F1E9F2A6EFE</code></li>
+<li><span>Body hash</span><code>2EFAB5C8EFB05D1603C507E68680308548E6B25E932FF94AD13805C9B8A022BF</code></li>
+<li><span>IL size</span><span>12</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Scripts_DialogueComponents_AbstractDialogueComponentParent.html#getcurrentcharacterindex----system-int32">Candide.Scripts.DialogueComponents.AbstractDialogueComponentParent::GetCurrentCharacterIndex()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Dialogue_CandideDialoguePresenter.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Dialogue.CandideDialoguePresenter::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_Dialogue_DialogueRunner.html#update-system-double---system-void"><code>Candide.Dialogue.DialogueRunner::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="HasIntegerParam private System.Boolean HasIntegerParam(System.Int32 i) System.Boolean i System.Int32" id="hasintegerparam-system-int32---system-boolean">
+<div class="method-heading">
+<h3><code>HasIntegerParam</code></h3>
+<a class="permalink" href="#hasintegerparam-system-int32---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean HasIntegerParam(System.Int32 i)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::HasIntegerParam(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean HasIntegerParam(System.Int32 i)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0D18CC36B3B8ECF0B1A421009FBCBB0AA8962B32CB8781F34CF3A22BFB3F0A44</code></li>
+<li><span>Body hash</span><code>E1DE858DB2AD0EB662CCD01D0045C0A83BFA86763ACE61991380CC54B0B49E82</code></li>
+<li><span>IL size</span><span>152</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::get_Chars(System.Int32)</code></li>
+<li><code>System.Char::IsDigit(System.Char)</code></li>
+<li><code>System.String::get_Length()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#isrichtextlayoutcommand-system-int32---system-boolean"><code>Candide.Scripts.CandideDialogue::IsRichTextLayoutCommand</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="IdentifyRichTextCommand private System.Void IdentifyRichTextCommand() System.Void " id="identifyrichtextcommand----system-void">
+<div class="method-heading">
+<h3><code>IdentifyRichTextCommand</code></h3>
+<a class="permalink" href="#identifyrichtextcommand----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void IdentifyRichTextCommand()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::IdentifyRichTextCommand()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void IdentifyRichTextCommand()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>473EE34686FAE618CBEE1AAE8D7CC4203A32D900706828149E9B9D4E153D2CB3</code></li>
+<li><span>Body hash</span><code>750AD360F824EC8E0358F41250EB05D36F7D919594D6B2DFD40B2105DDE332BA</code></li>
+<li><span>IL size</span><span>72</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#processrichtextcommand-system-int32--system-int32----system-int32">Candide.Scripts.CandideDialogue::ProcessRichTextCommand(System.Int32, System.Int32&amp;)</a></code></li>
+<li><code>System.String::Substring(System.Int32, System.Int32)</code></li>
+<li><code>Candide.Scripts.DialogueComponents.ElementaryComponents.SkippedString::.ctor(System.String, System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.Scripts.DialogueComponents.IDialogueComponent&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#converttext----system-void"><code>Candide.Scripts.CandideDialogue::ConvertText</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="IdentifyTextCommand private System.Void IdentifyTextCommand() System.Void " id="identifytextcommand----system-void">
+<div class="method-heading">
+<h3><code>IdentifyTextCommand</code></h3>
+<a class="permalink" href="#identifytextcommand----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void IdentifyTextCommand()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::IdentifyTextCommand()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void IdentifyTextCommand()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B4BE308FF56F748EBFE32F4C5F16DE10F86D31DF08DB42CF685B14EB7E7E6004</code></li>
+<li><span>Body hash</span><code>3E771EFF1D204928D31DD9EE2D7CD71E53C5285527D414C95450C3F4CC1B9746</code></li>
+<li><span>IL size</span><span>163</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::get_Length()</code></li>
+<li><code>System.String::get_Chars(System.Int32)</code></li>
+<li><code>Candide.Scripts.DialogueComponents.ElementaryComponents.Pause::.ctor(System.Double)</code></li>
+<li><code>Candide.Scripts.DialogueComponents.ElementaryComponents.ButtonPressWait::.ctor(Candide.Scripts.CandideDialogue)</code></li>
+<li><code>Candide.Scripts.DialogueComponents.ElementaryComponents.InstantContinue::.ctor(Candide.Scripts.CandideDialogue)</code></li>
+<li><code>Candide.Scripts.DialogueComponents.ElementaryComponents.Character::.ctor(System.Char)</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.Scripts.DialogueComponents.IDialogueComponent&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#converttext----system-void"><code>Candide.Scripts.CandideDialogue::ConvertText</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="InvokeFinish public System.Void InvokeFinish() System.Void " id="invokefinish----system-void">
+<div class="method-heading">
+<h3><code>InvokeFinish</code></h3>
+<a class="permalink" href="#invokefinish----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void InvokeFinish()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::InvokeFinish()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void InvokeFinish()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C1AA7458CC41C4E72FC1A3CBE7729989D3A814EEC346F9062A677C77203CD62F</code></li>
+<li><span>Body hash</span><code>1A7E00DA7C58BA596D89384CC1AF73140BED90F5FA98C2DC2FB6AD057E4CC183</code></li>
+<li><span>IL size</span><span>23</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.EventHandler::Invoke(System.Object, System.EventArgs)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_DialogueComponents_ElementaryComponents_InstantContinue.html#update-system-double---candide-scripts-dialogueinfo---system-void"><code>Candide.Scripts.DialogueComponents.ElementaryComponents.InstantContinue::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IsReady public System.Boolean IsReady() System.Boolean " id="isready----system-boolean">
+<div class="method-heading">
+<h3><code>IsReady</code></h3>
+<a class="permalink" href="#isready----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean IsReady()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::IsReady()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean IsReady()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9D190F6125A75844D46B65DA2CC6C950627516D75A405EE368E40A1A85B2D07C</code></li>
+<li><span>Body hash</span><code>8D1EABBDFF1FCFB36A7C038157F5F3F1202E3CA1B34B4532EB064AC09D0017EC</code></li>
+<li><span>IL size</span><span>12</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Scripts_DialogueComponents_AbstractDialogueComponentParent.html#isready----system-boolean">Candide.Scripts.DialogueComponents.AbstractDialogueComponentParent::IsReady()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Dialogue_DialogueRunner.html#continue----system-void"><code>Candide.Dialogue.DialogueRunner::Continue</code></a></li>
+<li><a href="../../types/Romestead/Candide_Dialogue_DialogueRunner.html#update-system-double---system-void"><code>Candide.Dialogue.DialogueRunner::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="IsRichTextLayoutCommand private System.Boolean IsRichTextLayoutCommand(System.Int32 i) System.Boolean i System.Int32" id="isrichtextlayoutcommand-system-int32---system-boolean">
+<div class="method-heading">
+<h3><code>IsRichTextLayoutCommand</code></h3>
+<a class="permalink" href="#isrichtextlayoutcommand-system-int32---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean IsRichTextLayoutCommand(System.Int32 i)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::IsRichTextLayoutCommand(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean IsRichTextLayoutCommand(System.Int32 i)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>95307C30B3FB3415AE589EFCE46AB15FEEAE2777CC9A573DBDEA31CDE893A327</code></li>
+<li><span>Body hash</span><code>555B4D4654847AE84CCCDF85EF88959F403C7E42C3DF90F68E1F084CD9DDDC9A</code></li>
+<li><span>IL size</span><span>320</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::get_Length()</code></li>
+<li><code>System.String::get_Chars(System.Int32)</code></li>
+<li><code>System.String::IndexOf(System.Char)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#hasintegerparam-system-int32---system-boolean">Candide.Scripts.CandideDialogue::HasIntegerParam(System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#converttext----system-void"><code>Candide.Scripts.CandideDialogue::ConvertText</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>cefistv</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ProcessIntegerParam private System.Nullable&lt;System.Int32&gt; ProcessIntegerParam(System.Int32&amp; i) System.Nullable&lt;System.Int32&gt; i System.Int32&amp;" id="processintegerparam-system-int32----system-nullable-1-system-int32-">
+<div class="method-heading">
+<h3><code>ProcessIntegerParam</code></h3>
+<a class="permalink" href="#processintegerparam-system-int32----system-nullable-1-system-int32-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Nullable&lt;System.Int32&gt; ProcessIntegerParam(System.Int32&amp; i)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::ProcessIntegerParam(System.Int32&amp;)">Copy Harmony target</button>
+</div>
+<p><code>private System.Nullable&lt;System.Int32&gt; ProcessIntegerParam(System.Int32&amp; i)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Nullable&lt;System.Int32&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9CFAC6E9610BBE104D18D111E11CF4CAFDDE600BCAE0E4D366AFE18DB23D4B50</code></li>
+<li><span>Body hash</span><code>A0A9FCA7547B6EC6442F09C088388DB06A30C416D7DE74353664D3643C8CA04A</code></li>
+<li><span>IL size</span><span>252</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::get_Chars(System.Int32)</code></li>
+<li><code>System.Char::IsDigit(System.Char)</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code>System.String::get_Length()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_Value()</code></li>
+<li><code>System.String::Substring(System.Int32, System.Int32)</code></li>
+<li><code>System.Int32::Parse(System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#processrichtextcommand-system-int32--system-int32----system-int32"><code>Candide.Scripts.CandideDialogue::ProcessRichTextCommand</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ProcessRichTextCommand private System.Int32 ProcessRichTextCommand(System.Int32 i, out System.Int32&amp; size) System.Int32 i System.Int32 size System.Int32&amp;" id="processrichtextcommand-system-int32--system-int32----system-int32">
+<div class="method-heading">
+<h3><code>ProcessRichTextCommand</code></h3>
+<a class="permalink" href="#processrichtextcommand-system-int32--system-int32----system-int32" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Int32 ProcessRichTextCommand(System.Int32 i, out System.Int32&amp; size)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::ProcessRichTextCommand(System.Int32, System.Int32&amp;)">Copy Harmony target</button>
+</div>
+<p><code>private System.Int32 ProcessRichTextCommand(System.Int32 i, out System.Int32&amp; size)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Int32</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E3CE3BC50D4026E0832DA956A5895536A75CDF2027529707949B67C005B63A69</code></li>
+<li><span>Body hash</span><code>DA3F3ADEC307FAC7B75A28B9A814349264158578D9333E4162288F570A7BF057</code></li>
+<li><span>IL size</span><span>179</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::get_Chars(System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#processintegerparam-system-int32----system-nullable-1-system-int32-">Candide.Scripts.CandideDialogue::ProcessIntegerParam(System.Int32&amp;)</a></code></li>
+<li><code>System.String::get_Length()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Scripts_CandideDialogue.html#identifyrichtextcommand----system-void"><code>Candide.Scripts.CandideDialogue::IdentifyRichTextCommand</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(System.Double&amp; dt) System.Void dt System.Double&amp;" id="update-system-double----system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-system-double----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(System.Double&amp; dt)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Scripts.CandideDialogue::Update(System.Double&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(System.Double&amp; dt)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B049714C8AC288E915D2420F0B7D3FA8B48F06EB6ED09F816929D10B061CF70B</code></li>
+<li><span>Body hash</span><code>450FEAB0F317388FEA0A58916F3183FEBA63FE4BB77DA815C58837B9F20C1BC4</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Scripts_DialogueComponents_AbstractDialogueComponentParent.html#update-system-double---candide-scripts-dialogueinfo---system-void">Candide.Scripts.DialogueComponents.AbstractDialogueComponentParent::Update(System.Double&amp;, Candide.Scripts.DialogueInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Dialogue_CandideDialoguePresenter.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Dialogue.CandideDialoguePresenter::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_Dialogue_DialogueRunner.html#instanttext----system-void"><code>Candide.Dialogue.DialogueRunner::InstantText</code></a></li>
+<li><a href="../../types/Romestead/Candide_Dialogue_DialogueRunner.html#update-system-double---system-void"><code>Candide.Dialogue.DialogueRunner::Update</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

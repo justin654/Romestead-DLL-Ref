@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerServices.CropServerService - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerServices.CropServerService</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.CropServerService">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerServices.CropServerService
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerServices`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 9 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public System.Void OnReceive_ClearCrop(CandideServer.MessageModels.Crops.ClearCropMessage message, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_GetPlaceCrop(CandideServer.MessageModels.Crops.GetPlaceCropRequest request, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_PlaceCrop(CandideServer.MessageModels.Crops.SpawnCropMessage message, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void OnReceive_PlayerHarvestCrop(CandideServer.MessageModels.Crops.HarvestCropMessage message, CandideServer.EventBus.EventBusArgs args)`
+- `public System.Void SendDryFarmland(Microsoft.Xna.Framework.Rectangle tileBounds, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt; tilePositions)`
+- `public System.Void SendRemoveCrop(CandideServer.Models.CropServerModel crop, System.Boolean harvestedByPlayer)`
+- `public System.Void SendSpawnCrop(CandideServer.MessageModels.Crops.SpawnCropMessage message, CandideServer.SyncStrategies.SyncStrategy syncStrategy)`
+- `public System.Void SendUpdateCrop(CandideServer.Models.CropServerModel crop, System.Boolean harvestedByPlayer)`
+- `public System.Void SendWaterCrops(Microsoft.Xna.Framework.Vector2 centerPosition, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt; tilePositions)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerServices_CropServerService.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerServices</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>9</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerServices</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>B715BB74F53ED65CF763DA3FCA8407A8060274B5D0C7F26774E59B94CD40FCBD</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_ClearCrop public System.Void OnReceive_ClearCrop(CandideServer.MessageModels.Crops.ClearCropMessage message, CandideServer.EventBus.EventBusArgs args) System.Void message CandideServer.MessageModels.Crops.ClearCropMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-clearcrop-candideserver-messagemodels-crops-clearcropmessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_ClearCrop</code></h3>
+<a class="permalink" href="#onreceive-clearcrop-candideserver-messagemodels-crops-clearcropmessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_ClearCrop(CandideServer.MessageModels.Crops.ClearCropMessage message, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.CropServerService::OnReceive_ClearCrop(CandideServer.MessageModels.Crops.ClearCropMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_ClearCrop(<a href="../../types/CandideServer/CandideServer_MessageModels_Crops_ClearCropMessage.html">CandideServer.MessageModels.Crops.ClearCropMessage</a> message, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>01EF0125EE708EF4185A4D2E362417FF7361B14A767C0E5CEB158695726DE936</code></li>
+<li><span>Body hash</span><code>ED856B625B3B60ED5D0A5E2494112FB6025455386E6057BCC55F8A30A055A6D0</code></li>
+<li><span>IL size</span><span>94</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#clearcrop-microsoft-xna-framework-point---system-boolean">CandideServer.ServerManagers.CropServerManager::ClearCrop(Microsoft.Xna.Framework.Point)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoplayerswithloadedchunks-system-string--system-object--microsoft-xna-framework-vector2--candideserver-syncstrategies-syncstrategy--system-guid---system-void">CandideServer.Server.BaseServer::SendHostMessageToPlayersWithLoadedChunks(System.String, System.Object, Microsoft.Xna.Framework.Vector2, CandideServer.SyncStrategies.SyncStrategy, System.Guid)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>remove-crop</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_GetPlaceCrop public System.Void OnReceive_GetPlaceCrop(CandideServer.MessageModels.Crops.GetPlaceCropRequest request, CandideServer.EventBus.EventBusArgs args) System.Void request CandideServer.MessageModels.Crops.GetPlaceCropRequest args CandideServer.EventBus.EventBusArgs" id="onreceive-getplacecrop-candideserver-messagemodels-crops-getplacecroprequest--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_GetPlaceCrop</code></h3>
+<a class="permalink" href="#onreceive-getplacecrop-candideserver-messagemodels-crops-getplacecroprequest--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_GetPlaceCrop(CandideServer.MessageModels.Crops.GetPlaceCropRequest request, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.CropServerService::OnReceive_GetPlaceCrop(CandideServer.MessageModels.Crops.GetPlaceCropRequest, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_GetPlaceCrop(<a href="../../types/CandideServer/CandideServer_MessageModels_Crops_GetPlaceCropRequest.html">CandideServer.MessageModels.Crops.GetPlaceCropRequest</a> request, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8D7E96B4382ED7FBE2C8FE268C94335C5F3C5248593079896EBD80E9DDCC7CB2</code></li>
+<li><span>Body hash</span><code>BB8B98EFB712A963768B09D5D4DDC3C7B50A0B610CD95DB83DE69CBD117A6B88</code></li>
+<li><span>IL size</span><span>73</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#tryplacecrop-microsoft-xna-framework-point--system-guid--candideserver-eventbus-eventbusargs---system-nullable-1-system-int32-">CandideServer.ServerManagers.CropServerManager::TryPlaceCrop(Microsoft.Xna.Framework.Point, System.Guid, CandideServer.EventBus.EventBusArgs)</a></code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_HasValue()</code></li>
+<li><code>CandideServer.MessageModels.Crops.GetPlaceCropResponse::.ctor()</code></li>
+<li><code>System.Nullable&lt;System.Int32&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendgetresponsemessage-candideserver-eventbus-eventbusargs--system-object--system-boolean---system-void">CandideServer.Server.BaseServer::SendGetResponseMessage(CandideServer.EventBus.EventBusArgs, System.Object, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendgetresponseerror-candideserver-eventbus-eventbusargs--system-byte---system-void">CandideServer.Server.BaseServer::SendGetResponseError(CandideServer.EventBus.EventBusArgs, System.Byte)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_PlaceCrop public System.Void OnReceive_PlaceCrop(CandideServer.MessageModels.Crops.SpawnCropMessage message, CandideServer.EventBus.EventBusArgs args) System.Void message CandideServer.MessageModels.Crops.SpawnCropMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-placecrop-candideserver-messagemodels-crops-spawncropmessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_PlaceCrop</code></h3>
+<a class="permalink" href="#onreceive-placecrop-candideserver-messagemodels-crops-spawncropmessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_PlaceCrop(CandideServer.MessageModels.Crops.SpawnCropMessage message, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.CropServerService::OnReceive_PlaceCrop(CandideServer.MessageModels.Crops.SpawnCropMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_PlaceCrop(<a href="../../types/CandideServer/CandideServer_MessageModels_Crops_SpawnCropMessage.html">CandideServer.MessageModels.Crops.SpawnCropMessage</a> message, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>27CBEFB881E492D163E79C045F4C0F739D118A6EDE2850D69D8DB21BA0168249</code></li>
+<li><span>Body hash</span><code>71650DD1006B286C41ECF412D28A122A5570764351A043A1E32492505DA135A2</code></li>
+<li><span>IL size</span><span>40</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html#skipplayer-system-int32---candideserver-syncstrategies-syncstrategy">CandideServer.SyncStrategies.SyncStrategy::SkipPlayer(System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#spawncrop-system-string--microsoft-xna-framework-point--system-boolean--candideserver-syncstrategies-syncstrategy---candideserver-models-cropservermodel">CandideServer.ServerManagers.CropServerManager::SpawnCrop(System.String, Microsoft.Xna.Framework.Point, System.Boolean, CandideServer.SyncStrategies.SyncStrategy)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnReceive_PlayerHarvestCrop public System.Void OnReceive_PlayerHarvestCrop(CandideServer.MessageModels.Crops.HarvestCropMessage message, CandideServer.EventBus.EventBusArgs args) System.Void message CandideServer.MessageModels.Crops.HarvestCropMessage args CandideServer.EventBus.EventBusArgs" id="onreceive-playerharvestcrop-candideserver-messagemodels-crops-harvestcropmessage--candideserver-eventbus-eventbusargs---system-void">
+<div class="method-heading">
+<h3><code>OnReceive_PlayerHarvestCrop</code></h3>
+<a class="permalink" href="#onreceive-playerharvestcrop-candideserver-messagemodels-crops-harvestcropmessage--candideserver-eventbus-eventbusargs---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnReceive_PlayerHarvestCrop(CandideServer.MessageModels.Crops.HarvestCropMessage message, CandideServer.EventBus.EventBusArgs args)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.CropServerService::OnReceive_PlayerHarvestCrop(CandideServer.MessageModels.Crops.HarvestCropMessage, CandideServer.EventBus.EventBusArgs)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnReceive_PlayerHarvestCrop(<a href="../../types/CandideServer/CandideServer_MessageModels_Crops_HarvestCropMessage.html">CandideServer.MessageModels.Crops.HarvestCropMessage</a> message, <a href="../../types/CandideServer/CandideServer_EventBus_EventBusArgs.html">CandideServer.EventBus.EventBusArgs</a> args)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C6B45B2E86440E6EAC9DD1BD290C44BE8FCEA9A59C6C273134D667434927D587</code></li>
+<li><span>Body hash</span><code>45F1FA40AC1E52FB37EFD331B43767335A5D945971CC507AAAE812DD64A3E60D</code></li>
+<li><span>IL size</span><span>27</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#harvestcrop-microsoft-xna-framework-point--system-nullable-1-system-int32----system-void">CandideServer.ServerManagers.CropServerManager::HarvestCrop(Microsoft.Xna.Framework.Point, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SendDryFarmland public System.Void SendDryFarmland(Microsoft.Xna.Framework.Rectangle tileBounds, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt; tilePositions) System.Void tileBounds Microsoft.Xna.Framework.Rectangle tilePositions System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt;" id="senddryfarmland-microsoft-xna-framework-rectangle--system-collections-generic-list-1-microsoft-xna-framework-point----system-void">
+<div class="method-heading">
+<h3><code>SendDryFarmland</code></h3>
+<a class="permalink" href="#senddryfarmland-microsoft-xna-framework-rectangle--system-collections-generic-list-1-microsoft-xna-framework-point----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SendDryFarmland(Microsoft.Xna.Framework.Rectangle tileBounds, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt; tilePositions)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.CropServerService::SendDryFarmland(Microsoft.Xna.Framework.Rectangle, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SendDryFarmland(Microsoft.Xna.Framework.Rectangle tileBounds, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt; tilePositions)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E0B380D8A4FD5C3652DE93CAF37A8CAEAB9C9FE46D48020AD157209352E747D2</code></li>
+<li><span>Body hash</span><code>D91D6C4D6C53F8064B7C5DC7ED478B7F3C39B33297C5E787FD8A976C3DC7AC5D</code></li>
+<li><span>IL size</span><span>71</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleExtensions.html#torectanglef-microsoft-xna-framework-rectangle---candidecreator-shared-models-rectanglef">CandideCreator.Shared.Models.RectangleExtensions::ToRectangleF(Microsoft.Xna.Framework.Rectangle)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::op_Multiply(CandideCreator.Shared.Models.RectangleF, System.Single)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoplayerswithloadedchunks-system-string--system-object--candidecreator-shared-models-rectanglef--candideserver-syncstrategies-syncstrategy--system-guid---system-void">CandideServer.Server.BaseServer::SendHostMessageToPlayersWithLoadedChunks(System.String, System.Object, CandideCreator.Shared.Models.RectangleF, CandideServer.SyncStrategies.SyncStrategy, System.Guid)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_CropServerSystem.html#updatewetfarmlandcheck-system-single---system-void"><code>CandideServer.ServerSystems.CropServerSystem::UpdateWetFarmlandCheck</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>dry-farmland</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SendRemoveCrop public System.Void SendRemoveCrop(CandideServer.Models.CropServerModel crop, System.Boolean harvestedByPlayer) System.Void crop CandideServer.Models.CropServerModel harvestedByPlayer System.Boolean" id="sendremovecrop-candideserver-models-cropservermodel--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>SendRemoveCrop</code></h3>
+<a class="permalink" href="#sendremovecrop-candideserver-models-cropservermodel--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SendRemoveCrop(CandideServer.Models.CropServerModel crop, System.Boolean harvestedByPlayer)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.CropServerService::SendRemoveCrop(CandideServer.Models.CropServerModel, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SendRemoveCrop(<a href="../../types/CandideServer/CandideServer_Models_CropServerModel.html">CandideServer.Models.CropServerModel</a> crop, System.Boolean harvestedByPlayer)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1D9215AE8FBEBD884D21BBCC326B7EDE2B06ABA0E998B2785B396BD608E09D24</code></li>
+<li><span>Body hash</span><code>5B700005A69C5AA0034B32B0D6BC0FB606287083C5ACC7C80F154C4552E19D61</code></li>
+<li><span>IL size</span><span>91</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoplayerswithloadedchunks-system-string--system-object--microsoft-xna-framework-vector2--candideserver-syncstrategies-syncstrategy--system-guid---system-void">CandideServer.Server.BaseServer::SendHostMessageToPlayersWithLoadedChunks(System.String, System.Object, Microsoft.Xna.Framework.Vector2, CandideServer.SyncStrategies.SyncStrategy, System.Guid)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#cropgrown-candideserver-models-cropservermodel---system-void"><code>CandideServer.ServerManagers.CropServerManager::CropGrown</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#harvestcrop-microsoft-xna-framework-point--system-nullable-1-system-int32----system-void"><code>CandideServer.ServerManagers.CropServerManager::HarvestCrop</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#harvestcropandgetdroppedgoods-microsoft-xna-framework-point---system-nullable-1-shared-models-droptables-droppedgoods-"><code>CandideServer.ServerManagers.CropServerManager::HarvestCropAndGetDroppedGoods</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>remove-crop</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SendSpawnCrop public System.Void SendSpawnCrop(CandideServer.MessageModels.Crops.SpawnCropMessage message, CandideServer.SyncStrategies.SyncStrategy syncStrategy) System.Void message CandideServer.MessageModels.Crops.SpawnCropMessage syncStrategy CandideServer.SyncStrategies.SyncStrategy" id="sendspawncrop-candideserver-messagemodels-crops-spawncropmessage--candideserver-syncstrategies-syncstrategy---system-void">
+<div class="method-heading">
+<h3><code>SendSpawnCrop</code></h3>
+<a class="permalink" href="#sendspawncrop-candideserver-messagemodels-crops-spawncropmessage--candideserver-syncstrategies-syncstrategy---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SendSpawnCrop(CandideServer.MessageModels.Crops.SpawnCropMessage message, CandideServer.SyncStrategies.SyncStrategy syncStrategy)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.CropServerService::SendSpawnCrop(CandideServer.MessageModels.Crops.SpawnCropMessage, CandideServer.SyncStrategies.SyncStrategy)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SendSpawnCrop(<a href="../../types/CandideServer/CandideServer_MessageModels_Crops_SpawnCropMessage.html">CandideServer.MessageModels.Crops.SpawnCropMessage</a> message, <a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html">CandideServer.SyncStrategies.SyncStrategy</a> syncStrategy)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C2240D25F70F09C7BDA41847ADC64364144C45FA669DAFE8553EC17019DC47EC</code></li>
+<li><span>Body hash</span><code>FDA3F3D335258617DB909F1037F78E51383CE45CEFCD3E94A7F1D900B66BDC31</code></li>
+<li><span>IL size</span><span>49</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoplayerswithloadedchunks-system-string--system-object--microsoft-xna-framework-vector2--candideserver-syncstrategies-syncstrategy--system-guid---system-void">CandideServer.Server.BaseServer::SendHostMessageToPlayersWithLoadedChunks(System.String, System.Object, Microsoft.Xna.Framework.Vector2, CandideServer.SyncStrategies.SyncStrategy, System.Guid)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#spawncrop-system-string--microsoft-xna-framework-point--system-boolean--candideserver-syncstrategies-syncstrategy---candideserver-models-cropservermodel"><code>CandideServer.ServerManagers.CropServerManager::SpawnCrop</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>spawn-crop</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SendUpdateCrop public System.Void SendUpdateCrop(CandideServer.Models.CropServerModel crop, System.Boolean harvestedByPlayer) System.Void crop CandideServer.Models.CropServerModel harvestedByPlayer System.Boolean" id="sendupdatecrop-candideserver-models-cropservermodel--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>SendUpdateCrop</code></h3>
+<a class="permalink" href="#sendupdatecrop-candideserver-models-cropservermodel--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SendUpdateCrop(CandideServer.Models.CropServerModel crop, System.Boolean harvestedByPlayer)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.CropServerService::SendUpdateCrop(CandideServer.Models.CropServerModel, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SendUpdateCrop(<a href="../../types/CandideServer/CandideServer_Models_CropServerModel.html">CandideServer.Models.CropServerModel</a> crop, System.Boolean harvestedByPlayer)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>382CE56877D930B1BA18CE97EABC1C45E4AE5F2F7638A76AAD594A2BAF4B8069</code></li>
+<li><span>Body hash</span><code>1BC189F1A580B48D163D3FDA0D01FE5F77E0C80E838C6F688C5FFBD050D4A76B</code></li>
+<li><span>IL size</span><span>88</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideServer.MessageModels.Crops.CropUpdateMessage::.ctor()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoplayerswithloadedchunks-system-string--system-object--microsoft-xna-framework-vector2--candideserver-syncstrategies-syncstrategy--system-guid---system-void">CandideServer.Server.BaseServer::SendHostMessageToPlayersWithLoadedChunks(System.String, System.Object, Microsoft.Xna.Framework.Vector2, CandideServer.SyncStrategies.SyncStrategy, System.Guid)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#harvestcrop-microsoft-xna-framework-point--system-nullable-1-system-int32----system-void"><code>CandideServer.ServerManagers.CropServerManager::HarvestCrop</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#harvestcropandgetdroppedgoods-microsoft-xna-framework-point---system-nullable-1-shared-models-droptables-droppedgoods-"><code>CandideServer.ServerManagers.CropServerManager::HarvestCropAndGetDroppedGoods</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_CropServerSystem.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.ServerSystems.CropServerSystem::Update</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>update-crop</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SendWaterCrops public System.Void SendWaterCrops(Microsoft.Xna.Framework.Vector2 centerPosition, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt; tilePositions) System.Void centerPosition Microsoft.Xna.Framework.Vector2 tilePositions System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt;" id="sendwatercrops-microsoft-xna-framework-vector2--system-collections-generic-list-1-microsoft-xna-framework-point----system-void">
+<div class="method-heading">
+<h3><code>SendWaterCrops</code></h3>
+<a class="permalink" href="#sendwatercrops-microsoft-xna-framework-vector2--system-collections-generic-list-1-microsoft-xna-framework-point----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SendWaterCrops(Microsoft.Xna.Framework.Vector2 centerPosition, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt; tilePositions)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerServices.CropServerService::SendWaterCrops(Microsoft.Xna.Framework.Vector2, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SendWaterCrops(Microsoft.Xna.Framework.Vector2 centerPosition, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt; tilePositions)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B9D48247A73BBD6113B03266FC9205BCB7CA5EF0481B8A443F3D2701ADCFBB98</code></li>
+<li><span>Body hash</span><code>25402DBA27A2ABE9979F9164A434C8E40088252D2219CDAAE9537D07A79E709C</code></li>
+<li><span>IL size</span><span>167</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt;::get_Item(System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::get_Zero()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::.ctor(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Point&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Microsoft.Xna.Framework.Point&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#include-microsoft-xna-framework-vector2---system-void">CandideCreator.Shared.Models.RectangleF::Include(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>List.Enumerator&lt;Microsoft.Xna.Framework.Point&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoplayerswithloadedchunks-system-string--system-object--candidecreator-shared-models-rectanglef--candideserver-syncstrategies-syncstrategy--system-guid---system-void">CandideServer.Server.BaseServer::SendHostMessageToPlayersWithLoadedChunks(System.String, System.Object, CandideCreator.Shared.Models.RectangleF, CandideServer.SyncStrategies.SyncStrategy, System.Guid)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CropServerManager.html#watertilesandcrops-microsoft-xna-framework-vector2--system-single---system-void"><code>CandideServer.ServerManagers.CropServerManager::WaterTilesAndCrops</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>water-crops</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

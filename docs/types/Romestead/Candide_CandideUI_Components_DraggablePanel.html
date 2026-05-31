@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.CandideUI.Components.DraggablePanel - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.CandideUI.Components.DraggablePanel</h1>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.DraggablePanel">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.CandideUI.Components.DraggablePanel
+
+- Assembly: `Romestead`
+- Namespace: `Candide.CandideUI.Components`
+- Kind: `public class`
+- Base type: `Candide.CandideUI.CandideUiContainerSingleItem`
+- Members: 6 methods, 1 properties, 9 fields, 0 events
+
+## Public Methods
+- `public System.Void InternalArrange()`
+- `public System.Void OnMouseDragEnd()`
+- `public System.Boolean OnMouseDragStart()`
+- `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)`
+">Copy markdown</button>
+<a class="button" href="Candide_CandideUI_Components_DraggablePanel.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.CandideUI.Components</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>6</strong></article>
+<article class="metric"><span>Properties</span><strong>1</strong></article>
+<article class="metric"><span>Fields</span><strong>9</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.CandideUI.Components</code></li>
+<li><span>Base type</span><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerSingleItem.html">Candide.CandideUI.CandideUiContainerSingleItem</a></code></li>
+<li><span>Hash</span><code>BE7BD38C0E6100169C3BF5C0A964532F63A9EB9E3CFAF30CE7215C395214DFB4</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerSingleItem.html">Candide.CandideUI.CandideUiContainerSingleItem</a></code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_SkillsAndFavourUi_FavoursWindow.html"><code>Candide.CandideUI.SkillsAndFavourUi.FavoursWindow</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_SkillsAndFavourUi_FavoursWindow_Console.html"><code>Candide.CandideUI.SkillsAndFavourUi.FavoursWindow_Console</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="PixelScrollDashMultiplier public System.Single PixelScrollDashMultiplier System.Single" id="pixelscrolldashmultiplier-system-single"><td><span class="member-name-cell"><code>PixelScrollDashMultiplier</code><a class="permalink" href="#pixelscrolldashmultiplier-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single PixelScrollDashMultiplier">Copy</button></span></td><td>public</td><td><code>public System.Single PixelScrollDashMultiplier</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="PixelScrollSize public System.Single PixelScrollSize System.Single" id="pixelscrollsize-system-single"><td><span class="member-name-cell"><code>PixelScrollSize</code><a class="permalink" href="#pixelscrollsize-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single PixelScrollSize">Copy</button></span></td><td>public</td><td><code>public System.Single PixelScrollSize</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ZoomLevel public System.Single ZoomLevel System.Single" id="zoomlevel-system-single"><td><span class="member-name-cell"><code>ZoomLevel</code><a class="permalink" href="#zoomlevel-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single ZoomLevel">Copy</button></span></td><td>public</td><td><code>public System.Single ZoomLevel</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_bufferComplete private System.Boolean _bufferComplete System.Boolean" id="-buffercomplete-system-boolean"><td><span class="member-name-cell"><code>_bufferComplete</code><a class="permalink" href="#-buffercomplete-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _bufferComplete">Copy</button></span></td><td>private</td><td><code>private System.Boolean _bufferComplete</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_childMeasure private Microsoft.Xna.Framework.Vector2 _childMeasure Microsoft.Xna.Framework.Vector2" id="-childmeasure-microsoft-xna-framework-vector2"><td><span class="member-name-cell"><code>_childMeasure</code><a class="permalink" href="#-childmeasure-microsoft-xna-framework-vector2" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Vector2 _childMeasure">Copy</button></span></td><td>private</td><td><code>private Microsoft.Xna.Framework.Vector2 _childMeasure</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_dragBuffer private Microsoft.Xna.Framework.Vector2 _dragBuffer Microsoft.Xna.Framework.Vector2" id="-dragbuffer-microsoft-xna-framework-vector2"><td><span class="member-name-cell"><code>_dragBuffer</code><a class="permalink" href="#-dragbuffer-microsoft-xna-framework-vector2" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Vector2 _dragBuffer">Copy</button></span></td><td>private</td><td><code>private Microsoft.Xna.Framework.Vector2 _dragBuffer</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_dragOffset private Microsoft.Xna.Framework.Vector2 _dragOffset Microsoft.Xna.Framework.Vector2" id="-dragoffset-microsoft-xna-framework-vector2"><td><span class="member-name-cell"><code>_dragOffset</code><a class="permalink" href="#-dragoffset-microsoft-xna-framework-vector2" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Vector2 _dragOffset">Copy</button></span></td><td>private</td><td><code>private Microsoft.Xna.Framework.Vector2 _dragOffset</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_dragStart private Microsoft.Xna.Framework.Vector2 _dragStart Microsoft.Xna.Framework.Vector2" id="-dragstart-microsoft-xna-framework-vector2"><td><span class="member-name-cell"><code>_dragStart</code><a class="permalink" href="#-dragstart-microsoft-xna-framework-vector2" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Vector2 _dragStart">Copy</button></span></td><td>private</td><td><code>private Microsoft.Xna.Framework.Vector2 _dragStart</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_isBeingDragged private System.Boolean _isBeingDragged System.Boolean" id="-isbeingdragged-system-boolean"><td><span class="member-name-cell"><code>_isBeingDragged</code><a class="permalink" href="#-isbeingdragged-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Boolean _isBeingDragged">Copy</button></span></td><td>private</td><td><code>private System.Boolean _isBeingDragged</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="DragOffset public Microsoft.Xna.Framework.Vector2 DragOffset Microsoft.Xna.Framework.Vector2" id="dragoffset-microsoft-xna-framework-vector2"><td><span class="member-name-cell"><code>DragOffset</code><a class="permalink" href="#dragoffset-microsoft-xna-framework-vector2" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector2 DragOffset">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Vector2 DragOffset</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="InternalArrange public System.Void InternalArrange() System.Void " id="internalarrange----system-void">
+<div class="method-heading">
+<h3><code>InternalArrange</code></h3>
+<a class="permalink" href="#internalarrange----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void InternalArrange()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.DraggablePanel::InternalArrange()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void InternalArrange()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>8354BE558106329BA952BDBDD3B7098676806724F744F2C6150E06A16986E5B7</code></li>
+<li><span>Body hash</span><code>0B520B8FB03FF412D7912C1156E635A6E6F9F10509C65DD6170631A743F497F9</code></li>
+<li><span>IL size</span><span>96</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Rectangle::.ctor(System.Int32, System.Int32, System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html#arrange-microsoft-xna-framework-rectangle---system-void">Candide.CandideUI.CandideUiElement::Arrange(Microsoft.Xna.Framework.Rectangle)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="InternalDraw protected System.Void InternalDraw(Candide.CandideUI.UiRenderContext context) System.Void context Candide.CandideUI.UiRenderContext" id="internaldraw-candide-candideui-uirendercontext---system-void">
+<div class="method-heading">
+<h3><code>InternalDraw</code></h3>
+<a class="permalink" href="#internaldraw-candide-candideui-uirendercontext---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected System.Void InternalDraw(Candide.CandideUI.UiRenderContext context)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.DraggablePanel::InternalDraw(Candide.CandideUI.UiRenderContext)">Copy Harmony target</button>
+</div>
+<p><code>protected System.Void InternalDraw(<a href="../../types/Romestead/Candide_CandideUI_UiRenderContext.html">Candide.CandideUI.UiRenderContext</a> context)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>38A0045822418EEF46680FCA51BD7FEC8F3B67736FE61B553F5F273EBA4B5740</code></li>
+<li><span>Body hash</span><code>913A9F7E57C4B0D750C0297052C27D1CCD77A790C288DDCBFC6A5328B343FBEF</code></li>
+<li><span>IL size</span><span>33</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.UiRenderContext::get_Scissor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html#draw-candide-candideui-uirendercontext---system-void">Candide.CandideUI.CandideUiElement::Draw(Candide.CandideUI.UiRenderContext)</a></code></li>
+<li><code>Candide.CandideUI.UiRenderContext::set_Scissor(Microsoft.Xna.Framework.Rectangle)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="protected" data-patch-target="true" data-member-text="InternalMeasure protected Microsoft.Xna.Framework.Vector2 InternalMeasure(Microsoft.Xna.Framework.Vector2 availableSize) Microsoft.Xna.Framework.Vector2 availableSize Microsoft.Xna.Framework.Vector2" id="internalmeasure-microsoft-xna-framework-vector2---microsoft-xna-framework-vector2">
+<div class="method-heading">
+<h3><code>InternalMeasure</code></h3>
+<a class="permalink" href="#internalmeasure-microsoft-xna-framework-vector2---microsoft-xna-framework-vector2" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="protected Microsoft.Xna.Framework.Vector2 InternalMeasure(Microsoft.Xna.Framework.Vector2 availableSize)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.DraggablePanel::InternalMeasure(Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>protected Microsoft.Xna.Framework.Vector2 InternalMeasure(Microsoft.Xna.Framework.Vector2 availableSize)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>protected</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector2</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>4155182EEB54F5FE893AF82E4DE2EBBFCE9A5DC5586AFFD6D2FA26D358A72FB3</code></li>
+<li><span>Body hash</span><code>7834DBE7FF5222EEF47D624417776169BD2D892C2B2D2A17452CEBF6817A2183</code></li>
+<li><span>IL size</span><span>37</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector2::.ctor(System.Single)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html#measure-microsoft-xna-framework-vector2---microsoft-xna-framework-vector2">Candide.CandideUI.CandideUiElement::Measure(Microsoft.Xna.Framework.Vector2)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnMouseDragEnd public System.Void OnMouseDragEnd() System.Void " id="onmousedragend----system-void">
+<div class="method-heading">
+<h3><code>OnMouseDragEnd</code></h3>
+<a class="permalink" href="#onmousedragend----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnMouseDragEnd()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.DraggablePanel::OnMouseDragEnd()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnMouseDragEnd()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>B584A9A2DA1C46B5FEBB0D247C36440ABAAD634461241086A5043AD1CDD020FF</code></li>
+<li><span>Body hash</span><code>5EDF4D0BB39F48C50C7C837429E653D32BB939874C4017E2BED8DFA4861933E4</code></li>
+<li><span>IL size</span><span>14</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html#onmousedragend----system-void">Candide.CandideUI.CandideUiElement::OnMouseDragEnd()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnMouseDragStart public System.Boolean OnMouseDragStart() System.Boolean " id="onmousedragstart----system-boolean">
+<div class="method-heading">
+<h3><code>OnMouseDragStart</code></h3>
+<a class="permalink" href="#onmousedragstart----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean OnMouseDragStart()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.DraggablePanel::OnMouseDragStart()">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean OnMouseDragStart()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>F47D579854C0FE87736094F3DD2A4A3C805A2E53823E914B5AF3043CE07C7D8D</code></li>
+<li><span>Body hash</span><code>29C3CC88350C88E5991484AFFC7698C078B92790FA66BE28345BB7F03ADAC210</code></li>
+<li><span>IL size</span><span>48</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiElement.html#onmousedragstart----system-boolean">Candide.CandideUI.CandideUiElement::OnMouseDragStart()</a></code></li>
+<li><code>Candide.CandideUI.MouseUiInputSystem::get_MouseWindowPosition()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::get_Zero()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime) System.Void gameTime Microsoft.Xna.Framework.GameTime" id="update-microsoft-xna-framework-gametime---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-microsoft-xna-framework-gametime---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Components.DraggablePanel::Update(Microsoft.Xna.Framework.GameTime)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>80F4AF27C2B48B5218DB2F95969CB2789593E7D067627BD7CD35D6106D6E72B3</code></li>
+<li><span>Body hash</span><code>52FCD0C25669F3C25FB853629959023C8B7484CADCDF4D14D27ED7C357AF501D</code></li>
+<li><span>IL size</span><span>456</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.CandideUiSystem::get_Scale()</code></li>
+<li><code>Candide.CandideUI.MouseUiInputSystem::get_MouseWindowPosition()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Addition(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#trynormalize-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2----system-boolean">CandideCreator.Shared.Helpers.VectorExtension::TryNormalize(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2&amp;)</a></code></li>
+<li><code>Candide.CandideUI.Components.DraggablePanel::get_DragOffset()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Division(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Candide.CandideUI.Components.DraggablePanel::set_DragOffset(Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::get_Zero()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Length()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::get_IsFocused()</code></li>
+<li><code>Candide.CandideUI.CandideUiSystem::get_ControllerEnabled()</code></li>
+<li><code>Candide.CandideUI.CandideUiSystem::get_InputFocusableElement()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Input_SuperKeybind.html#held----system-boolean">Candide.Input.SuperKeybind::Held()</a></code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

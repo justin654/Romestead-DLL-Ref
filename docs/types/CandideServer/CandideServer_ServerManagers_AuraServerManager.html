@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerManagers.AuraServerManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerManagers.AuraServerManager</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.AuraServerManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerManagers.AuraServerManager
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerManagers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 6 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public System.Void CleanUpAuras(CandideServer.Entities.ServerEntityModel entity)`
+- `public System.Void ReapplyAurasToEntity(CandideServer.Entities.ServerEntityModel entity, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt; auras, System.Boolean skipCalculateState, CandideServer.SyncStrategies.SyncStrategy syncStrategy)`
+- `public System.Void RemoveAuraFromEntity(System.String auraId, System.String auraInstanceTypeId, CandideServer.Entities.ServerEntityModel entity, CandideServer.SyncStrategies.SyncStrategy syncStrategy)`
+- `public System.Boolean TryApplyAuraToEntity(System.String auraId, CandideServer.Entities.ServerEntityModel entity, System.Nullable&lt;System.Guid&gt; ownerEntityId, Shared.Aura.Args.AbstractAuraArgs overrideState, CandideServer.SyncStrategies.SyncStrategy syncStrategy, System.Boolean skipResistanceCheck)`
+- `public System.Void TryApplyAuraToEntity(System.String auraId, System.Guid entityId, System.Nullable&lt;System.Guid&gt; ownerEntityId, Shared.Aura.Args.AbstractAuraArgs overrideState, CandideServer.SyncStrategies.SyncStrategy syncStrategy, System.Boolean skipResistanceCheck)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerManagers_AuraServerManager.json">Type JSON</a>
+<span class="change-badge change-changed">changed</span>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerManagers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>6</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerManagers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>D446B9262C9DEDC222AC8C04E0F60B1B59949047ABB0B1DA8FB6A7EEE356232B</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="CheckAuraIsDone private System.Boolean CheckAuraIsDone(System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt; obj) System.Boolean obj System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;" id="checkauraisdone-system-valuetuple-2-system-string-shared-aura-state-aurabasestate----system-boolean">
+<div class="method-heading">
+<h3><code>CheckAuraIsDone</code></h3>
+<a class="permalink" href="#checkauraisdone-system-valuetuple-2-system-string-shared-aura-state-aurabasestate----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean CheckAuraIsDone(System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt; obj)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.AuraServerManager::CheckAuraIsDone(System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean CheckAuraIsDone(System.ValueTuple&lt;System.String, <a href="../../types/Shared/Shared_Aura_State_AuraBaseState.html">Shared.Aura.State.AuraBaseState</a>&gt; obj)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E7B3937444468C15A6FA85977509A5BC44B1CA92027B6CDB9365B2977C5B923A</code></li>
+<li><span>Body hash</span><code>CF012F4176E5E7B969549BDD62C7678EC3A83316C45DBAFBE4B3E961384DF489</code></li>
+<li><span>IL size</span><span>12</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_AuraServerManager.html#cleanupauras-candideserver-entities-serverentitymodel---system-void"><code>CandideServer.ServerManagers.AuraServerManager::CleanUpAuras</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CleanUpAuras public System.Void CleanUpAuras(CandideServer.Entities.ServerEntityModel entity) System.Void entity CandideServer.Entities.ServerEntityModel" id="cleanupauras-candideserver-entities-serverentitymodel---system-void">
+<div class="method-heading">
+<h3><code>CleanUpAuras</code></h3>
+<a class="permalink" href="#cleanupauras-candideserver-entities-serverentitymodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CleanUpAuras(CandideServer.Entities.ServerEntityModel entity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.AuraServerManager::CleanUpAuras(CandideServer.Entities.ServerEntityModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CleanUpAuras(<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> entity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4538B36C6A9D49B9A04DEC10464BD9D1A87552E9C49A940DDCB9A75471F1E9E7</code></li>
+<li><span>Body hash</span><code>7B6520E56AD84B4195248EC51044B86E159437BAA2D47C97997A60DD2EA8075C</code></li>
+<li><span>IL size</span><span>253</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::get_Current()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::ContainsKey(!0)</code></li>
+<li><code>CandideServer.MessageModels.Auras.RemoveAuraFromEntity::.ctor()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoplayerswithloadedchunks-system-string--system-object--microsoft-xna-framework-vector2--candideserver-syncstrategies-syncstrategy--system-guid---system-void">CandideServer.Server.BaseServer::SendHostMessageToPlayersWithLoadedChunks(System.String, System.Object, Microsoft.Xna.Framework.Vector2, CandideServer.SyncStrategies.SyncStrategy, System.Guid)</a></code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_AuraServerManager.html#checkauraisdone-system-valuetuple-2-system-string-shared-aura-state-aurabasestate----system-boolean">CandideServer.ServerManagers.AuraServerManager::CheckAuraIsDone(System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;)</a></code></li>
+<li><code>System.Predicate&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::RemoveAll(System.Predicate&lt;!0&gt;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ServerEntitySystemManager.html#update-microsoft-xna-framework-gametime--system-boolean---system-void"><code>CandideServer.Entities.ServerEntitySystemManager::Update</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>auras-remove-aura-from-entity</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ReapplyAurasToEntity public System.Void ReapplyAurasToEntity(CandideServer.Entities.ServerEntityModel entity, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt; auras, System.Boolean skipCalculateState, CandideServer.SyncStrategies.SyncStrategy syncStrategy) System.Void entity CandideServer.Entities.ServerEntityModel auras System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt; skipCalculateState System.Boolean syncStrategy CandideServer.SyncStrategies.SyncStrategy" id="reapplyaurastoentity-candideserver-entities-serverentitymodel--system-collections-generic-list-1-system-valuetuple-2-system-string-shared-aura-state-aurabasestate----system-boolean--candideserver-syncstrategies-syncstrategy---system-void">
+<div class="method-heading">
+<h3><code>ReapplyAurasToEntity</code></h3>
+<a class="permalink" href="#reapplyaurastoentity-candideserver-entities-serverentitymodel--system-collections-generic-list-1-system-valuetuple-2-system-string-shared-aura-state-aurabasestate----system-boolean--candideserver-syncstrategies-syncstrategy---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ReapplyAurasToEntity(CandideServer.Entities.ServerEntityModel entity, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt; auras, System.Boolean skipCalculateState, CandideServer.SyncStrategies.SyncStrategy syncStrategy)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.AuraServerManager::ReapplyAurasToEntity(CandideServer.Entities.ServerEntityModel, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;, System.Boolean, CandideServer.SyncStrategies.SyncStrategy)">Copy Harmony target</button>
+<span class="change-badge change-changed">changed</span>
+</div>
+<p><code>public System.Void ReapplyAurasToEntity(<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> entity, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, <a href="../../types/Shared/Shared_Aura_State_AuraBaseState.html">Shared.Aura.State.AuraBaseState</a>&gt;&gt; auras, System.Boolean skipCalculateState, <a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html">CandideServer.SyncStrategies.SyncStrategy</a> syncStrategy)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>66110A4764500727BDF8E91EA5D2E53FF97F1BD87F17B3765446C81727F45BF4</code></li>
+<li><span>Body hash</span><code>FB36EF7BEDE3A6DDEB42A95FDB8689033E81AA77A260FE7AE6941ADAD58BE22A</code></li>
+<li><span>IL size</span><span>380</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_AuraDataBase.html#getauraormissing-system-string---shared-models-auras-entityaurainfo">Shared.Data.AuraDataBase::GetAuraOrMissing(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Func&lt;Shared.Models.Auras.EntityAuraInfo, Shared.Models.Auras.ApplyAuraContext, Shared.Aura.Args.AbstractAuraArgs, Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;&gt;::get_Item(!0)</code></li>
+<li><code>System.Func&lt;Shared.Models.Auras.EntityAuraInfo, Shared.Models.Auras.ApplyAuraContext, Shared.Aura.Args.AbstractAuraArgs, Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;::Invoke(!0, !1, !2)</code></li>
+<li><code><a href="../../types/Shared/Shared_Aura_State_AuraBaseState.html#loadstate-shared-aura-state-aurabasestate---system-void">Shared.Aura.State.AuraBaseState::LoadState(Shared.Aura.State.AuraBaseState)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#tryaddaura-candideserver-entities-serverentitymodel--shared-models-auras-entityaurainfo--shared-aura-abstractaura-1-shared-entity-entitywrapper---system-boolean---system-boolean">CandideServer.ServerControllers.EntitySController::TryAddAura(CandideServer.Entities.ServerEntityModel, Shared.Models.Auras.EntityAuraInfo, Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;, System.Boolean)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsManager.html#trackerror-system-string---system-void">Shared.Analytics.AnalyticsManager::TrackError(System.String)</a></code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#calculatestate-candideserver-entities-serverentitymodel---system-void">CandideServer.ServerControllers.EntitySController::CalculateState(CandideServer.Entities.ServerEntityModel)</a></code></li>
+<li><code>CandideServer.MessageModels.Auras.ReapplyEntityAurasMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoplayerswithloadedchunks-system-string--system-object--microsoft-xna-framework-vector2--candideserver-syncstrategies-syncstrategy--system-guid---system-void">CandideServer.Server.BaseServer::SendHostMessageToPlayersWithLoadedChunks(System.String, System.Object, Microsoft.Xna.Framework.Vector2, CandideServer.SyncStrategies.SyncStrategy, System.Guid)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_PlayerCharacterSController.html#reapplysavedentityauras-candideserver-serverservices-serverjoinedplayermodel--system-boolean---system-void"><code>CandideServer.ServerControllers.PlayerCharacterSController::ReapplySavedEntityAuras</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Error when reapplying aura to entity with id &#39;</code></li>
+<li><code>&#39;. Removed it.
+</code></li>
+<li><code>auras-reapply-entity-auras</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveAuraFromEntity public System.Void RemoveAuraFromEntity(System.String auraId, System.String auraInstanceTypeId, CandideServer.Entities.ServerEntityModel entity, CandideServer.SyncStrategies.SyncStrategy syncStrategy) System.Void auraId System.String auraInstanceTypeId System.String entity CandideServer.Entities.ServerEntityModel syncStrategy CandideServer.SyncStrategies.SyncStrategy" id="removeaurafromentity-system-string--system-string--candideserver-entities-serverentitymodel--candideserver-syncstrategies-syncstrategy---system-void">
+<div class="method-heading">
+<h3><code>RemoveAuraFromEntity</code></h3>
+<a class="permalink" href="#removeaurafromentity-system-string--system-string--candideserver-entities-serverentitymodel--candideserver-syncstrategies-syncstrategy---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemoveAuraFromEntity(System.String auraId, System.String auraInstanceTypeId, CandideServer.Entities.ServerEntityModel entity, CandideServer.SyncStrategies.SyncStrategy syncStrategy)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.AuraServerManager::RemoveAuraFromEntity(System.String, System.String, CandideServer.Entities.ServerEntityModel, CandideServer.SyncStrategies.SyncStrategy)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemoveAuraFromEntity(System.String auraId, System.String auraInstanceTypeId, <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> entity, <a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html">CandideServer.SyncStrategies.SyncStrategy</a> syncStrategy)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>396B897E9C714B40B1023CC37FD9EF3CB60D0CA29E96DB2125D81F5D1BD693C0</code></li>
+<li><span>Body hash</span><code>66B76F28F8AD45BEB72D5C6BA559955A29FEFCB5449701F4AB831520A5AE8C99</code></li>
+<li><span>IL size</span><span>78</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#tryremoveaura-candideserver-entities-serverentitymodel--system-string--system-string---system-boolean">CandideServer.ServerControllers.EntitySController::TryRemoveAura(CandideServer.Entities.ServerEntityModel, System.String, System.String)</a></code></li>
+<li><code>CandideServer.MessageModels.Auras.RemoveAuraFromEntity::.ctor()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoplayerswithloadedchunks-system-string--system-object--microsoft-xna-framework-vector2--candideserver-syncstrategies-syncstrategy--system-guid---system-void">CandideServer.Server.BaseServer::SendHostMessageToPlayersWithLoadedChunks(System.String, System.Object, Microsoft.Xna.Framework.Vector2, CandideServer.SyncStrategies.SyncStrategy, System.Guid)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_FavourServerManager.html#unlearnallfavours-candideserver-models-player-serverplayercharacter---system-void"><code>CandideServer.ServerManagers.FavourServerManager::UnlearnAllFavours</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_AuraServerService.html#onreceive-removeaurafromentity-candideserver-messagemodels-auras-removeaurafromentity--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.AuraServerService::OnReceive_RemoveAuraFromEntity</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>auras-remove-aura-from-entity</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryApplyAuraToEntity public System.Boolean TryApplyAuraToEntity(System.String auraId, CandideServer.Entities.ServerEntityModel entity, System.Nullable&lt;System.Guid&gt; ownerEntityId, Shared.Aura.Args.AbstractAuraArgs overrideState, CandideServer.SyncStrategies.SyncStrategy syncStrategy, System.Boolean skipResistanceCheck) System.Boolean auraId System.String entity CandideServer.Entities.ServerEntityModel ownerEntityId System.Nullable&lt;System.Guid&gt; overrideState Shared.Aura.Args.AbstractAuraArgs syncStrategy CandideServer.SyncStrategies.SyncStrategy skipResistanceCheck System.Boolean" id="tryapplyauratoentity-system-string--candideserver-entities-serverentitymodel--system-nullable-1-system-guid---shared-aura-args-abstractauraargs--candideserver-syncstrategies-syncstrategy--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>TryApplyAuraToEntity</code></h3>
+<a class="permalink" href="#tryapplyauratoentity-system-string--candideserver-entities-serverentitymodel--system-nullable-1-system-guid---shared-aura-args-abstractauraargs--candideserver-syncstrategies-syncstrategy--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryApplyAuraToEntity(System.String auraId, CandideServer.Entities.ServerEntityModel entity, System.Nullable&lt;System.Guid&gt; ownerEntityId, Shared.Aura.Args.AbstractAuraArgs overrideState, CandideServer.SyncStrategies.SyncStrategy syncStrategy, System.Boolean skipResistanceCheck)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.AuraServerManager::TryApplyAuraToEntity(System.String, CandideServer.Entities.ServerEntityModel, System.Nullable&lt;System.Guid&gt;, Shared.Aura.Args.AbstractAuraArgs, CandideServer.SyncStrategies.SyncStrategy, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryApplyAuraToEntity(System.String auraId, <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> entity, System.Nullable&lt;System.Guid&gt; ownerEntityId, <a href="../../types/Shared/Shared_Aura_Args_AbstractAuraArgs.html">Shared.Aura.Args.AbstractAuraArgs</a> overrideState, <a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html">CandideServer.SyncStrategies.SyncStrategy</a> syncStrategy, System.Boolean skipResistanceCheck)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FE6C995DE13FA73A68B6505E0E661F18CB8BBA13E485866FAC8BDE2BB002E4E1</code></li>
+<li><span>Body hash</span><code>95F7535202CE2869777560BB12968E7340C5E3931C6FFD6A2B9F278243A7CB20</code></li>
+<li><span>IL size</span><span>957</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_AuraDataBase.html#getauraornull-system-string---shared-models-auras-entityaurainfo">Shared.Data.AuraDataBase::GetAuraOrNull(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsManager.html#trackerror-system-string---system-void">Shared.Analytics.AnalyticsManager::TrackError(System.String)</a></code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Entities_ServerEntityDataManager.html#trygetentitybasedata-system-guid--shared-entity-entitywrapper----system-boolean">CandideServer.Entities.ServerEntityDataManager::TryGetEntityBaseData(System.Guid, Shared.Entity.EntityWrapper&amp;)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Stats()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetserverentity-system-guid--candideserver-entities-serverentitymodel---system-string---system-boolean">CandideServer.ServerGameState::TryGetServerEntity(System.Guid, CandideServer.Entities.ServerEntityModel&amp;, System.String)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_BaseGuid()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Name()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code>System.Object::ToString()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_EntityStats.html#tryget-system-string--system-single----system-boolean">Shared.Models.Stats.EntityStats::TryGet(System.String, System.Single&amp;)</a></code></li>
+<li><code>System.Random::NextSingle()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Func&lt;Shared.Models.Auras.EntityAuraInfo, Shared.Models.Auras.ApplyAuraContext, Shared.Aura.Args.AbstractAuraArgs, Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Func&lt;Shared.Models.Auras.EntityAuraInfo, Shared.Models.Auras.ApplyAuraContext, Shared.Aura.Args.AbstractAuraArgs, Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;::Invoke(!0, !1, !2)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#tryaddaura-candideserver-entities-serverentitymodel--shared-models-auras-entityaurainfo--shared-aura-abstractaura-1-shared-entity-entitywrapper---system-boolean---system-boolean">CandideServer.ServerControllers.EntitySController::TryAddAura(CandideServer.Entities.ServerEntityModel, Shared.Models.Auras.EntityAuraInfo, Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;, System.Boolean)</a></code></li>
+<li><code>CandideServer.MessageModels.Auras.ApplyEntityAuraMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoplayerswithloadedchunks-system-string--system-object--microsoft-xna-framework-vector2--candideserver-syncstrategies-syncstrategy--system-guid---system-void">CandideServer.Server.BaseServer::SendHostMessageToPlayersWithLoadedChunks(System.String, System.Object, Microsoft.Xna.Framework.Vector2, CandideServer.SyncStrategies.SyncStrategy, System.Guid)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Bear_BearGroup.html#triggermamabearenrage-candideserver-entities-controllers-enemies-serverbearcontroller--shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.ControllerSets.Bear.BearGroup::TriggerMamaBearEnrage</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Catapult_ServerCatapultController.html#targetplayer-system-guid---system-void"><code>CandideServer.Entities.ControllerSets.Catapult.ServerCatapultController::TargetPlayer</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Cyclops_ServerCyclopsArenaController.html#spawnentity-microsoft-xna-framework-vector3--system-guid--system-single--system-boolean---system-boolean"><code>CandideServer.Entities.ControllerSets.Cyclops.ServerCyclopsArenaController::SpawnEntity</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_MaterialStorage_ServerMaterialStoragePitController.html#throwentityout-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.ControllerSets.MaterialStorage.ServerMaterialStoragePitController::ThrowEntityOut</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Talos_ServerTalosFloorPitController.html#spawnqueuedentity----system-void"><code>CandideServer.Entities.ControllerSets.Talos.ServerTalosFloorPitController::SpawnQueuedEntity</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Talos_ServerTalosSideChainController.html#spawnqueuedentity----system-void"><code>CandideServer.Entities.ControllerSets.Talos.ServerTalosSideChainController::SpawnQueuedEntity</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Helpers_ServerSpellHelper.html#onhitapplyaura-shared-combat-projectiles-models-projectilehitdata--shared-combat-spells-casting-castspell--shared-combat-spells-spellapplyauracontext--system-boolean---system-void"><code>CandideServer.Helpers.ServerSpellHelper::OnHitApplyAura</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Spells_ServerAreaOfEffectSpell.html#onhit-shared-combat-projectiles-models-projectilehitdata--shared-combat-spells-casting-castspell---system-void"><code>CandideServer.Models.Spells.ServerAreaOfEffectSpell::OnHit</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Spells_ServerHealSpell.html#docast-shared-combat-projectiles-projectilesystem--candideserver-models-spells-serverspellcastingcontext--shared-helpers-castspellargs---system-void"><code>CandideServer.Models.Spells.ServerHealSpell::DoCast</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Spells_ServerMassHealSpell.html#docast-shared-combat-projectiles-projectilesystem--candideserver-models-spells-serverspellcastingcontext--shared-helpers-castspellargs---system-void"><code>CandideServer.Models.Spells.ServerMassHealSpell::DoCast</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#applyeliteaura-candideserver-entities-serverentitymodel---system-void"><code>CandideServer.ServerControllers.EntitySController::ApplyEliteAura</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_AuraServerManager.html#tryapplyauratoentity-system-string--system-guid--system-nullable-1-system-guid---shared-aura-args-abstractauraargs--candideserver-syncstrategies-syncstrategy--system-boolean---system-void"><code>CandideServer.ServerManagers.AuraServerManager::TryApplyAuraToEntity</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#spawnboss-system-string--system-nullable-1-system-guid---microsoft-xna-framework-vector3--system-guid---system-void"><code>CandideServer.ServerManagers.BossServerManager::SpawnBoss</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#catapultsnapshot-candideserver-entities-serverentitymodel--candideserver-entities-serverentitymodel--microsoft-xna-framework-vector3--microsoft-xna-framework-vector3--shared-helpers-castspellargs--candideserver-syncstrategies-syncstrategy---system-void"><code>CandideServer.ServerManagers.EntityServerManager::CatapultSnapshot</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_AuraServerService.html#onreceive-applyentityaura-candideserver-messagemodels-auras-applyentityauramessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.AuraServerService::OnReceive_ApplyEntityAura</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>TryApplyAuraToEntity: Could not find aura id </code></li>
+<li><code>.</code></li>
+<li><code>status:system</code></li>
+<li><code>TryApplyAuraToEntity</code></li>
+<li><code>: Entity has stats flag but Stats has never been initialized. (Stats dictionary is null)
+EntityId       = </code></li>
+<li><code>
+EntityBaseGuid = </code></li>
+<li><code>
+EntityName     = </code></li>
+<li><code>
+OwnerId        = </code></li>
+<li><code>
+OwnerBaseGuid  = </code></li>
+<li><code>
+OwnerName      = </code></li>
+<li><code>
+AuraId         = </code></li>
+<li><code>
+OwnerBaseGuid  = null
+OwnerName      = null
+AuraId         = </code></li>
+<li><code>TryApplyAuraToEntity: Could not find aura type id </code></li>
+<li><code>TryApplyAuraToEntity: Aura type id </code></li>
+<li><code> was missing an applicator.</code></li>
+<li><code>auras-apply-entity-aura</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryApplyAuraToEntity public System.Void TryApplyAuraToEntity(System.String auraId, System.Guid entityId, System.Nullable&lt;System.Guid&gt; ownerEntityId, Shared.Aura.Args.AbstractAuraArgs overrideState, CandideServer.SyncStrategies.SyncStrategy syncStrategy, System.Boolean skipResistanceCheck) System.Void auraId System.String entityId System.Guid ownerEntityId System.Nullable&lt;System.Guid&gt; overrideState Shared.Aura.Args.AbstractAuraArgs syncStrategy CandideServer.SyncStrategies.SyncStrategy skipResistanceCheck System.Boolean" id="tryapplyauratoentity-system-string--system-guid--system-nullable-1-system-guid---shared-aura-args-abstractauraargs--candideserver-syncstrategies-syncstrategy--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>TryApplyAuraToEntity</code></h3>
+<a class="permalink" href="#tryapplyauratoentity-system-string--system-guid--system-nullable-1-system-guid---shared-aura-args-abstractauraargs--candideserver-syncstrategies-syncstrategy--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void TryApplyAuraToEntity(System.String auraId, System.Guid entityId, System.Nullable&lt;System.Guid&gt; ownerEntityId, Shared.Aura.Args.AbstractAuraArgs overrideState, CandideServer.SyncStrategies.SyncStrategy syncStrategy, System.Boolean skipResistanceCheck)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.AuraServerManager::TryApplyAuraToEntity(System.String, System.Guid, System.Nullable&lt;System.Guid&gt;, Shared.Aura.Args.AbstractAuraArgs, CandideServer.SyncStrategies.SyncStrategy, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void TryApplyAuraToEntity(System.String auraId, System.Guid entityId, System.Nullable&lt;System.Guid&gt; ownerEntityId, <a href="../../types/Shared/Shared_Aura_Args_AbstractAuraArgs.html">Shared.Aura.Args.AbstractAuraArgs</a> overrideState, <a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html">CandideServer.SyncStrategies.SyncStrategy</a> syncStrategy, System.Boolean skipResistanceCheck)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D395C948A420E04944C7A9F2C10A39667203635074C1E145F1CB5E727ACD3146</code></li>
+<li><span>Body hash</span><code>59B9CC847B0DE92D6230E1A3FDE32DC37136225AAB2D3E61CDEA4C7E7252805D</code></li>
+<li><span>IL size</span><span>35</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_AuraServerManager.html#tryapplyauratoentity-system-string--candideserver-entities-serverentitymodel--system-nullable-1-system-guid---shared-aura-args-abstractauraargs--candideserver-syncstrategies-syncstrategy--system-boolean---system-boolean">CandideServer.ServerManagers.AuraServerManager::TryApplyAuraToEntity(System.String, CandideServer.Entities.ServerEntityModel, System.Nullable&lt;System.Guid&gt;, Shared.Aura.Args.AbstractAuraArgs, CandideServer.SyncStrategies.SyncStrategy, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#applyfallenburningaura-shared-entity-entitywrapper---system-void"><code>BM.EnemyUtil::ApplyFallenBurningAura</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerPyzifaxController.html#applyenragedeffects----system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerPyzifaxController::ApplyEnragedEffects</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaController.html#enter-on----system-void"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController::Enter_On</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaController.html#spawnentity-microsoft-xna-framework-vector3--system-guid--system-guid---system-single---system-boolean"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController::SpawnEntity</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Modules_ServerLaserBeam.html#damageentity-shared-entity-entitywrapper--system-nullable-1-system-guid----system-void"><code>CandideServer.Entities.Modules.ServerLaserBeam::DamageEntity</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_OfferingsServerManager.html#trysacrificecitizen-system-guid--system-nullable-1-system-guid----system-void"><code>CandideServer.ServerManagers.OfferingsServerManager::TrySacrificeCitizen</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

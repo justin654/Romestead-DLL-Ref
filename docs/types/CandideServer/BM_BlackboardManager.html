@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BM.BlackboardManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>BM.BlackboardManager</h1>
+<button class="copy-button" type="button" data-copy="BM.BlackboardManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# BM.BlackboardManager
+
+- Assembly: `CandideServer`
+- Namespace: `BM`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 4 methods, 2 properties, 2 fields, 0 events
+
+## Public Methods
+- `public System.ValueTuple&lt;BM.Blackboard, System.Boolean&gt; CreateOrGetGroup(System.String groupName)`
+- `public System.Boolean RemoveGroup(System.String groupName)`
+- `public System.Boolean TryGetGroup(System.String groupName, out BM.Blackboard&amp; outBlackboard)`
+">Copy markdown</button>
+<a class="button" href="BM_BlackboardManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>BM</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>4</strong></article>
+<article class="metric"><span>Properties</span><strong>2</strong></article>
+<article class="metric"><span>Fields</span><strong>2</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>BM</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>F42A8E525EC92AEC2DD9FCE6863E6BC5C85A09F498BCD3AFFC60748769913B87</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_blackboardGroups private System.Collections.Generic.Dictionary&lt;System.String, BM.Blackboard&gt; _blackboardGroups System.Collections.Generic.Dictionary&lt;System.String, BM.Blackboard&gt;" id="-blackboardgroups-system-collections-generic-dictionary-2-system-string-bm-blackboard-"><td><span class="member-name-cell"><code>_blackboardGroups</code><a class="permalink" href="#-blackboardgroups-system-collections-generic-dictionary-2-system-string-bm-blackboard-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;System.String, BM.Blackboard&gt; _blackboardGroups">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;System.String, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a>&gt; _blackboardGroups</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_instance private BM.BlackboardManager _instance BM.BlackboardManager" id="-instance-bm-blackboardmanager"><td><span class="member-name-cell"><code>_instance</code><a class="permalink" href="#-instance-bm-blackboardmanager" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BM.BlackboardManager _instance">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BM_BlackboardManager.html">BM.BlackboardManager</a> _instance</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="GlobalBlackboard public BM.Blackboard GlobalBlackboard BM.Blackboard" id="globalblackboard-bm-blackboard"><td><span class="member-name-cell"><code>GlobalBlackboard</code><a class="permalink" href="#globalblackboard-bm-blackboard" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public BM.Blackboard GlobalBlackboard">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> GlobalBlackboard</code></td></tr>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="public" data-patch-target="false" data-member-text="Instance public BM.BlackboardManager Instance BM.BlackboardManager" id="instance-bm-blackboardmanager"><td><span class="member-name-cell"><code>Instance</code><a class="permalink" href="#instance-bm-blackboardmanager" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public BM.BlackboardManager Instance">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/BM_BlackboardManager.html">BM.BlackboardManager</a> Instance</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateOrGetGroup public System.ValueTuple&lt;BM.Blackboard, System.Boolean&gt; CreateOrGetGroup(System.String groupName) System.ValueTuple&lt;BM.Blackboard, System.Boolean&gt; groupName System.String" id="createorgetgroup-system-string---system-valuetuple-2-bm-blackboard-system-boolean-">
+<div class="method-heading">
+<h3><code>CreateOrGetGroup</code></h3>
+<a class="permalink" href="#createorgetgroup-system-string---system-valuetuple-2-bm-blackboard-system-boolean-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.ValueTuple&lt;BM.Blackboard, System.Boolean&gt; CreateOrGetGroup(System.String groupName)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BlackboardManager::CreateOrGetGroup(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.ValueTuple&lt;<a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a>, System.Boolean&gt; CreateOrGetGroup(System.String groupName)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.ValueTuple&lt;<a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a>, System.Boolean&gt;</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>71BAA0EB0EC94E6BB808DECE0942F9060C45002D0A9254E25868170ABC6BC980</code></li>
+<li><span>Body hash</span><code>C3A07F27B4DA22AC29ACA9943AFF752A504EDAD4EDC7D2AD4DFC5C0D80549C78</code></li>
+<li><span>IL size</span><span>51</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, BM.Blackboard&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.ValueTuple&lt;BM.Blackboard, System.Boolean&gt;::.ctor(!0, !1)</code></li>
+<li><code>BM.Blackboard::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, BM.Blackboard&gt;::set_Item(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerPhoenixController.html#entityinitialize----system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerPhoenixController::EntityInitialize</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerPotmanController.html#entityinitialize----system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerPotmanController::EntityInitialize</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerPotmanController.html#onremove-shared-entity-entityremoveinfo---system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerPotmanController::OnRemove</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerPotmanController.html#trygetnextwritetextpositionandexistingresourcesontext-microsoft-xna-framework-vector2--system-string--system-collections-generic-icollection-1-system-guid---system-collections-generic-list-1-shared-entity-entitywrapper---system-boolean--microsoft-xna-framework-vector2----system-boolean"><code>CandideServer.Entities.Controllers.Enemies.ServerPotmanController::TryGetNextWriteTextPositionAndExistingResourcesOnText</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerVultureController.html#entityinitialize----system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerVultureController::EntityInitialize</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="OnServerGameStateLoaded private System.Void OnServerGameStateLoaded(CandideServer.GameDescription gameDescription) System.Void gameDescription CandideServer.GameDescription" id="onservergamestateloaded-candideserver-gamedescription---system-void">
+<div class="method-heading">
+<h3><code>OnServerGameStateLoaded</code></h3>
+<a class="permalink" href="#onservergamestateloaded-candideserver-gamedescription---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void OnServerGameStateLoaded(CandideServer.GameDescription gameDescription)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BlackboardManager::OnServerGameStateLoaded(CandideServer.GameDescription)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void OnServerGameStateLoaded(<a href="../../types/CandideServer/CandideServer_GameDescription.html">CandideServer.GameDescription</a> gameDescription)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>95CA4C1AF0AF66D9A6CB5C27C202AA48919EE3E6C1380BAFEAE9CB05C07B4B2A</code></li>
+<li><span>Body hash</span><code>B8355FDCD8CB00EEE277907079B0631336F904E0904CE00182FE272A77735E9D</code></li>
+<li><span>IL size</span><span>31</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BM.BlackboardManager::get_Instance()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, BM.Blackboard&gt;::Clear()</code></li>
+<li><code>BM.BlackboardManager::get_GlobalBlackboard()</code></li>
+<li><code><a href="../../types/CandideServer/BM_Blackboard.html#clear----system-void">BM.Blackboard::Clear()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveGroup public System.Boolean RemoveGroup(System.String groupName) System.Boolean groupName System.String" id="removegroup-system-string---system-boolean">
+<div class="method-heading">
+<h3><code>RemoveGroup</code></h3>
+<a class="permalink" href="#removegroup-system-string---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean RemoveGroup(System.String groupName)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BlackboardManager::RemoveGroup(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean RemoveGroup(System.String groupName)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D01C8588795C1E7B4B7166571EDC02374A24A4AC730586110A5AF8016F98EDEB</code></li>
+<li><span>Body hash</span><code>A624EF2578C41B98CBCE99C21599D0BC39AC6D24B18160DDF94C786011D39782</code></li>
+<li><span>IL size</span><span>13</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, BM.Blackboard&gt;::Remove(!0)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetGroup public System.Boolean TryGetGroup(System.String groupName, out BM.Blackboard&amp; outBlackboard) System.Boolean groupName System.String outBlackboard BM.Blackboard&amp;" id="trygetgroup-system-string--bm-blackboard----system-boolean">
+<div class="method-heading">
+<h3><code>TryGetGroup</code></h3>
+<a class="permalink" href="#trygetgroup-system-string--bm-blackboard----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetGroup(System.String groupName, out BM.Blackboard&amp; outBlackboard)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.BlackboardManager::TryGetGroup(System.String, BM.Blackboard&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetGroup(System.String groupName, out <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a>&amp; outBlackboard)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F9FDD50CE364EF28BAEE88B277D673E5A2DD7A1D12B988265BF6EB7D6B7B92FD</code></li>
+<li><span>Body hash</span><code>E51F98DDA73D70B421BD5F67DA5670AA07018578FAD5AD10547EAAED06DD8B53</code></li>
+<li><span>IL size</span><span>26</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, BM.Blackboard&gt;::TryGetValue(!0, !1&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_BlackboardRef.html#gettargetblackboard-bm-blackboard---bm-blackboard"><code>BM.BlackboardRef::GetTargetBlackboard</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerPhoenixController.html#onremove-shared-entity-entityremoveinfo---system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerPhoenixController::OnRemove</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerVultureController.html#onremove-shared-entity-entityremoveinfo---system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerVultureController::OnRemove</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

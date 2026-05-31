@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideCreator.Shared.Helpers.OkColorHelper - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideCreator_Shared.html">CandideCreator.Shared</a></p>
+<div class="title-row">
+<h1>CandideCreator.Shared.Helpers.OkColorHelper</h1>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideCreator.Shared.Helpers.OkColorHelper
+
+- Assembly: `CandideCreator.Shared`
+- Namespace: `CandideCreator.Shared.Helpers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 18 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public Microsoft.Xna.Framework.Vector3 linear_srgb_to_oklab(Microsoft.Xna.Framework.Vector3 c)`
+- `public Microsoft.Xna.Framework.Vector3 linear_srgb_to_srgb(Microsoft.Xna.Framework.Vector3 linear_rgb)`
+- `public Microsoft.Xna.Framework.Vector3 okhsl_to_srgb(Microsoft.Xna.Framework.Vector3 hsl)`
+- `public Microsoft.Xna.Framework.Vector3 okhsv_to_srgb(Microsoft.Xna.Framework.Vector3 hsv)`
+- `public Microsoft.Xna.Framework.Vector3 oklab_to_linear_srgb(Microsoft.Xna.Framework.Vector3 c)`
+- `public Microsoft.Xna.Framework.Vector3 srgb_to_linear_srgb(Microsoft.Xna.Framework.Vector3 rgb)`
+- `public Microsoft.Xna.Framework.Vector3 srgb_to_okhsl(Microsoft.Xna.Framework.Vector3 rgb)`
+- `public Microsoft.Xna.Framework.Vector3 srgb_to_okhsv(Microsoft.Xna.Framework.Vector3 rgb)`
+">Copy markdown</button>
+<a class="button" href="CandideCreator_Shared_Helpers_OkColorHelper.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideCreator.Shared.Helpers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>18</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideCreator.Shared</code></li>
+<li><span>Namespace</span><code>CandideCreator.Shared.Helpers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>A1443B92280714B2A13EE92CA33D2F5C57B11C35F82140F259C6B0F1432C10A9</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="compute_max_saturation private System.Single compute_max_saturation(System.Single a, System.Single b) System.Single a System.Single b System.Single" id="compute-max-saturation-system-single--system-single---system-single">
+<div class="method-heading">
+<h3><code>compute_max_saturation</code></h3>
+<a class="permalink" href="#compute-max-saturation-system-single--system-single---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Single compute_max_saturation(System.Single a, System.Single b)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::compute_max_saturation(System.Single, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private System.Single compute_max_saturation(System.Single a, System.Single b)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4024B4061596E213E5609E3923384BD80DB486D65056BF0A5FF088FF55221DE7</code></li>
+<li><span>Body hash</span><code>2EE208B4918C0E8424F20391F92AB688799AA2A53F6103CD6D1ED2A48F7DD2F9</code></li>
+<li><span>IL size</span><span>562</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#find-cusp-system-single--system-single---microsoft-xna-framework-vector2"><code>CandideCreator.Shared.Helpers.OkColorHelper::find_cusp</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="find_cusp private Microsoft.Xna.Framework.Vector2 find_cusp(System.Single a, System.Single b) Microsoft.Xna.Framework.Vector2 a System.Single b System.Single" id="find-cusp-system-single--system-single---microsoft-xna-framework-vector2">
+<div class="method-heading">
+<h3><code>find_cusp</code></h3>
+<a class="permalink" href="#find-cusp-system-single--system-single---microsoft-xna-framework-vector2" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Vector2 find_cusp(System.Single a, System.Single b)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::find_cusp(System.Single, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private Microsoft.Xna.Framework.Vector2 find_cusp(System.Single a, System.Single b)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector2</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>89CE4B096F3B06665D6BF39CEFF4930CA4D24DDDED22329DA9D18B4CCE87214A</code></li>
+<li><span>Body hash</span><code>F9EFDB904F08D8EC32AAAD2E1C3E6F8BFED67514ADDB276FE36767BB9F5BF146</code></li>
+<li><span>IL size</span><span>89</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#compute-max-saturation-system-single--system-single---system-single">CandideCreator.Shared.Helpers.OkColorHelper::compute_max_saturation(System.Single, System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#oklab-to-linear-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.OkColorHelper::oklab_to_linear_srgb(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>System.MathF::Max(System.Single, System.Single)</code></li>
+<li><code>System.MathF::Cbrt(System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::.ctor(System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#get-cs-system-single--system-single--system-single---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::get_Cs</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#okhsv-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::okhsv_to_srgb</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-okhsv-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_okhsv</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="find_gamut_intersection private System.Single find_gamut_intersection(System.Single a, System.Single b, System.Single L1, System.Single C1, System.Single L0, Microsoft.Xna.Framework.Vector2 cusp) System.Single a System.Single b System.Single L1 System.Single C1 System.Single L0 System.Single cusp Microsoft.Xna.Framework.Vector2" id="find-gamut-intersection-system-single--system-single--system-single--system-single--system-single--microsoft-xna-framework-vector2---system-single">
+<div class="method-heading">
+<h3><code>find_gamut_intersection</code></h3>
+<a class="permalink" href="#find-gamut-intersection-system-single--system-single--system-single--system-single--system-single--microsoft-xna-framework-vector2---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Single find_gamut_intersection(System.Single a, System.Single b, System.Single L1, System.Single C1, System.Single L0, Microsoft.Xna.Framework.Vector2 cusp)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::find_gamut_intersection(System.Single, System.Single, System.Single, System.Single, System.Single, Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>private System.Single find_gamut_intersection(System.Single a, System.Single b, System.Single L1, System.Single C1, System.Single L0, Microsoft.Xna.Framework.Vector2 cusp)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BDF1BA2B6F33D549335BDA94D9F96B70744EDD5B911FD7538704DF92BABEC495</code></li>
+<li><span>Body hash</span><code>EEDB492A54FB6E53008784252248587DE5B2C4909E9D716F7D6DBF13A60530FA</code></li>
+<li><span>IL size</span><span>839</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.MathF::Min(System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#get-cs-system-single--system-single--system-single---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::get_Cs</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="get_Cs private Microsoft.Xna.Framework.Vector3 get_Cs(System.Single L, System.Single a_, System.Single b_) Microsoft.Xna.Framework.Vector3 L System.Single a_ System.Single b_ System.Single" id="get-cs-system-single--system-single--system-single---microsoft-xna-framework-vector3">
+<div class="method-heading">
+<h3><code>get_Cs</code></h3>
+<a class="permalink" href="#get-cs-system-single--system-single--system-single---microsoft-xna-framework-vector3" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Vector3 get_Cs(System.Single L, System.Single a_, System.Single b_)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::get_Cs(System.Single, System.Single, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private Microsoft.Xna.Framework.Vector3 get_Cs(System.Single L, System.Single a_, System.Single b_)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector3</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9CB3960FF449E5986CB772926E4F4BDCE7D578C269B5545616E6208CA4E0BE40</code></li>
+<li><span>Body hash</span><code>3A3DE38DBAA75C1BD62DDA4A9E5B67319635576B2A07892C20B4026446792EE1</code></li>
+<li><span>IL size</span><span>241</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#find-cusp-system-single--system-single---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.OkColorHelper::find_cusp(System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#find-gamut-intersection-system-single--system-single--system-single--system-single--system-single--microsoft-xna-framework-vector2---system-single">CandideCreator.Shared.Helpers.OkColorHelper::find_gamut_intersection(System.Single, System.Single, System.Single, System.Single, System.Single, Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#to-st-microsoft-xna-framework-vector2---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.OkColorHelper::to_ST(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>System.MathF::Min(System.Single, System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#get-st-mid-system-single--system-single---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.OkColorHelper::get_ST_mid(System.Single, System.Single)</a></code></li>
+<li><code>System.MathF::Sqrt(System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#okhsl-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::okhsl_to_srgb</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-okhsl-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_okhsl</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="get_ST_mid private Microsoft.Xna.Framework.Vector2 get_ST_mid(System.Single a_, System.Single b_) Microsoft.Xna.Framework.Vector2 a_ System.Single b_ System.Single" id="get-st-mid-system-single--system-single---microsoft-xna-framework-vector2">
+<div class="method-heading">
+<h3><code>get_ST_mid</code></h3>
+<a class="permalink" href="#get-st-mid-system-single--system-single---microsoft-xna-framework-vector2" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Vector2 get_ST_mid(System.Single a_, System.Single b_)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::get_ST_mid(System.Single, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private Microsoft.Xna.Framework.Vector2 get_ST_mid(System.Single a_, System.Single b_)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector2</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C544A1894B50200B94CA413F1D3AD98F7A186E6968DA56F1EB2255B12D0812A7</code></li>
+<li><span>Body hash</span><code>FB55B7937D279F1B995C59D7284803EC0ABCB318ABFAD673969E65F58DCF9312</code></li>
+<li><span>IL size</span><span>177</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector2::.ctor(System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#get-cs-system-single--system-single--system-single---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::get_Cs</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="linear_srgb_to_oklab public Microsoft.Xna.Framework.Vector3 linear_srgb_to_oklab(Microsoft.Xna.Framework.Vector3 c) Microsoft.Xna.Framework.Vector3 c Microsoft.Xna.Framework.Vector3" id="linear-srgb-to-oklab-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">
+<div class="method-heading">
+<h3><code>linear_srgb_to_oklab</code></h3>
+<a class="permalink" href="#linear-srgb-to-oklab-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector3 linear_srgb_to_oklab(Microsoft.Xna.Framework.Vector3 c)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::linear_srgb_to_oklab(Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Vector3 linear_srgb_to_oklab(Microsoft.Xna.Framework.Vector3 c)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector3</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D6CEA2C4553FBAFABD47E4DFA9C3F529DB5C1ADC5C99C3AA3613152FE2F88AEE</code></li>
+<li><span>Body hash</span><code>0704F2E6D3B48492468D59D42BF37BE78C92E28D01437D7DE82167CAE690B2A2</code></li>
+<li><span>IL size</span><span>228</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.MathF::Cbrt(System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-okhsl-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_okhsl</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-okhsv-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_okhsv</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="linear_srgb_to_srgb public Microsoft.Xna.Framework.Vector3 linear_srgb_to_srgb(Microsoft.Xna.Framework.Vector3 linear_rgb) Microsoft.Xna.Framework.Vector3 linear_rgb Microsoft.Xna.Framework.Vector3" id="linear-srgb-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">
+<div class="method-heading">
+<h3><code>linear_srgb_to_srgb</code></h3>
+<a class="permalink" href="#linear-srgb-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector3 linear_srgb_to_srgb(Microsoft.Xna.Framework.Vector3 linear_rgb)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::linear_srgb_to_srgb(Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Vector3 linear_srgb_to_srgb(Microsoft.Xna.Framework.Vector3 linear_rgb)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector3</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>41934C6496EC7710A78A5ED0468A03BF53F4076D6B5ABC0F7F1D80A8C055DB57</code></li>
+<li><span>Body hash</span><code>87790461CE438C6BAD86E095ED39CF6EB441CB940E1E8674C5595E2AB7CCEA1D</code></li>
+<li><span>IL size</span><span>44</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-transfer-function-system-single---system-single">CandideCreator.Shared.Helpers.OkColorHelper::srgb_transfer_function(System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#okhsl-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::okhsl_to_srgb</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#okhsv-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::okhsv_to_srgb</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="okhsl_to_srgb public Microsoft.Xna.Framework.Vector3 okhsl_to_srgb(Microsoft.Xna.Framework.Vector3 hsl) Microsoft.Xna.Framework.Vector3 hsl Microsoft.Xna.Framework.Vector3" id="okhsl-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">
+<div class="method-heading">
+<h3><code>okhsl_to_srgb</code></h3>
+<a class="permalink" href="#okhsl-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector3 okhsl_to_srgb(Microsoft.Xna.Framework.Vector3 hsl)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::okhsl_to_srgb(Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Vector3 okhsl_to_srgb(Microsoft.Xna.Framework.Vector3 hsl)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector3</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A247360F8961FF07F7D4D1588F907728BF43A3F14312163ABD09CC5EB517CE10</code></li>
+<li><span>Body hash</span><code>8FC35E3472C3BB08A6708AD4B2F91AA5287B74E677911FA9D8DD2DC623342B4F</code></li>
+<li><span>IL size</span><span>381</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code>System.MathF::Cos(System.Single)</code></li>
+<li><code>System.MathF::Sin(System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#toe-inv-system-single---system-single">CandideCreator.Shared.Helpers.OkColorHelper::toe_inv(System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#get-cs-system-single--system-single--system-single---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.OkColorHelper::get_Cs(System.Single, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#oklab-to-linear-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.OkColorHelper::oklab_to_linear_srgb(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#linear-srgb-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.OkColorHelper::linear_srgb_to_srgb(Microsoft.Xna.Framework.Vector3)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="okhsv_to_srgb public Microsoft.Xna.Framework.Vector3 okhsv_to_srgb(Microsoft.Xna.Framework.Vector3 hsv) Microsoft.Xna.Framework.Vector3 hsv Microsoft.Xna.Framework.Vector3" id="okhsv-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">
+<div class="method-heading">
+<h3><code>okhsv_to_srgb</code></h3>
+<a class="permalink" href="#okhsv-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector3 okhsv_to_srgb(Microsoft.Xna.Framework.Vector3 hsv)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::okhsv_to_srgb(Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Vector3 okhsv_to_srgb(Microsoft.Xna.Framework.Vector3 hsv)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector3</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>57D757AAE4DCAC5F83630426E7365A019B6E6047B20242B14841F5B653D306A7</code></li>
+<li><span>Body hash</span><code>0669A9E1EB324DC6CE187528F9DCA045C1BDC660E607F708740F422BA734B03D</code></li>
+<li><span>IL size</span><span>337</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.MathF::Cos(System.Single)</code></li>
+<li><code>System.MathF::Sin(System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#find-cusp-system-single--system-single---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.OkColorHelper::find_cusp(System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#to-st-microsoft-xna-framework-vector2---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.OkColorHelper::to_ST(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#toe-inv-system-single---system-single">CandideCreator.Shared.Helpers.OkColorHelper::toe_inv(System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#oklab-to-linear-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.OkColorHelper::oklab_to_linear_srgb(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>System.MathF::Max(System.Single, System.Single)</code></li>
+<li><code>System.MathF::Cbrt(System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#linear-srgb-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.OkColorHelper::linear_srgb_to_srgb(Microsoft.Xna.Framework.Vector3)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="oklab_to_linear_srgb public Microsoft.Xna.Framework.Vector3 oklab_to_linear_srgb(Microsoft.Xna.Framework.Vector3 c) Microsoft.Xna.Framework.Vector3 c Microsoft.Xna.Framework.Vector3" id="oklab-to-linear-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">
+<div class="method-heading">
+<h3><code>oklab_to_linear_srgb</code></h3>
+<a class="permalink" href="#oklab-to-linear-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector3 oklab_to_linear_srgb(Microsoft.Xna.Framework.Vector3 c)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::oklab_to_linear_srgb(Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Vector3 oklab_to_linear_srgb(Microsoft.Xna.Framework.Vector3 c)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector3</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F2C6D1199700A9B6D78772A9F0309ABD6CB3AAE715AF15FA70476D2269286B2E</code></li>
+<li><span>Body hash</span><code>0756216C1F13AB54EAA6CB79EDF7484F3D0E5BDEBCC5E0B25DA4D666CA8D07B9</code></li>
+<li><span>IL size</span><span>207</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#find-cusp-system-single--system-single---microsoft-xna-framework-vector2"><code>CandideCreator.Shared.Helpers.OkColorHelper::find_cusp</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#okhsl-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::okhsl_to_srgb</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#okhsv-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::okhsv_to_srgb</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-okhsv-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_okhsv</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="srgb_to_linear_srgb public Microsoft.Xna.Framework.Vector3 srgb_to_linear_srgb(Microsoft.Xna.Framework.Vector3 rgb) Microsoft.Xna.Framework.Vector3 rgb Microsoft.Xna.Framework.Vector3" id="srgb-to-linear-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">
+<div class="method-heading">
+<h3><code>srgb_to_linear_srgb</code></h3>
+<a class="permalink" href="#srgb-to-linear-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector3 srgb_to_linear_srgb(Microsoft.Xna.Framework.Vector3 rgb)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_linear_srgb(Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Vector3 srgb_to_linear_srgb(Microsoft.Xna.Framework.Vector3 rgb)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector3</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9A9FAC56DBBDD15E0F66E0AC1E3D103BAB5F6FBE179A6611D187DF0100EFF3AE</code></li>
+<li><span>Body hash</span><code>5EA0BFDED25B3D5F9C238F1F5710D1B8C0EBB4E2D90EEF29AD57ED4D8168D27C</code></li>
+<li><span>IL size</span><span>44</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-transfer-function-inv-system-single---system-single">CandideCreator.Shared.Helpers.OkColorHelper::srgb_transfer_function_inv(System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-okhsl-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_okhsl</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-okhsv-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_okhsv</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="srgb_to_okhsl public Microsoft.Xna.Framework.Vector3 srgb_to_okhsl(Microsoft.Xna.Framework.Vector3 rgb) Microsoft.Xna.Framework.Vector3 rgb Microsoft.Xna.Framework.Vector3" id="srgb-to-okhsl-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">
+<div class="method-heading">
+<h3><code>srgb_to_okhsl</code></h3>
+<a class="permalink" href="#srgb-to-okhsl-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector3 srgb_to_okhsl(Microsoft.Xna.Framework.Vector3 rgb)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_okhsl(Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Vector3 srgb_to_okhsl(Microsoft.Xna.Framework.Vector3 rgb)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector3</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>78080C7EDBF411049F1680366F4B8F65C1716D8277CF1C8A67DB07DB28230C0E</code></li>
+<li><span>Body hash</span><code>AF61F8399C945D850FCA80B8AD9844397279661B2502303C5B32C1E46648C464</code></li>
+<li><span>IL size</span><span>323</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-linear-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_linear_srgb(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#linear-srgb-to-oklab-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.OkColorHelper::linear_srgb_to_oklab(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>System.MathF::Sqrt(System.Single)</code></li>
+<li><code>System.MathF::Atan2(System.Single, System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#get-cs-system-single--system-single--system-single---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.OkColorHelper::get_Cs(System.Single, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#toe-system-single---system-single">CandideCreator.Shared.Helpers.OkColorHelper::toe(System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="srgb_to_okhsv public Microsoft.Xna.Framework.Vector3 srgb_to_okhsv(Microsoft.Xna.Framework.Vector3 rgb) Microsoft.Xna.Framework.Vector3 rgb Microsoft.Xna.Framework.Vector3" id="srgb-to-okhsv-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">
+<div class="method-heading">
+<h3><code>srgb_to_okhsv</code></h3>
+<a class="permalink" href="#srgb-to-okhsv-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector3 srgb_to_okhsv(Microsoft.Xna.Framework.Vector3 rgb)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_okhsv(Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Vector3 srgb_to_okhsv(Microsoft.Xna.Framework.Vector3 rgb)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector3</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0AC25C7AC49C2C9AB899465EDBEC0D56B9CE5856A73DECA8D6D511A8DA82B9BA</code></li>
+<li><span>Body hash</span><code>4717A1FC7A84CCB9F778829D146F2F2894018993FD7DFBD725805607B864985A</code></li>
+<li><span>IL size</span><span>353</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-linear-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_linear_srgb(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#linear-srgb-to-oklab-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.OkColorHelper::linear_srgb_to_oklab(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>System.MathF::Sqrt(System.Single)</code></li>
+<li><code>System.MathF::Atan2(System.Single, System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#find-cusp-system-single--system-single---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.OkColorHelper::find_cusp(System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#to-st-microsoft-xna-framework-vector2---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.OkColorHelper::to_ST(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#toe-inv-system-single---system-single">CandideCreator.Shared.Helpers.OkColorHelper::toe_inv(System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#oklab-to-linear-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.OkColorHelper::oklab_to_linear_srgb(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>System.MathF::Max(System.Single, System.Single)</code></li>
+<li><code>System.MathF::Cbrt(System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#toe-system-single---system-single">CandideCreator.Shared.Helpers.OkColorHelper::toe(System.Single)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="srgb_transfer_function private System.Single srgb_transfer_function(System.Single a) System.Single a System.Single" id="srgb-transfer-function-system-single---system-single">
+<div class="method-heading">
+<h3><code>srgb_transfer_function</code></h3>
+<a class="permalink" href="#srgb-transfer-function-system-single---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Single srgb_transfer_function(System.Single a)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::srgb_transfer_function(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private System.Single srgb_transfer_function(System.Single a)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>817CACC39F9C160F008B8859A8FD62E734C1F315EC1CEF68487B3F62049D335D</code></li>
+<li><span>Body hash</span><code>CE74D8A5BA1C08A450464BF8981C1ADE16111E779D6BFF6E112AB2EAB6EA6AA8</code></li>
+<li><span>IL size</span><span>46</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.MathF::Pow(System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#linear-srgb-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::linear_srgb_to_srgb</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="srgb_transfer_function_inv private System.Single srgb_transfer_function_inv(System.Single a) System.Single a System.Single" id="srgb-transfer-function-inv-system-single---system-single">
+<div class="method-heading">
+<h3><code>srgb_transfer_function_inv</code></h3>
+<a class="permalink" href="#srgb-transfer-function-inv-system-single---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Single srgb_transfer_function_inv(System.Single a)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::srgb_transfer_function_inv(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private System.Single srgb_transfer_function_inv(System.Single a)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5921558EA241C0224C5E5252DDCE95045BD76E248A5445C8E487F2ECFD18983A</code></li>
+<li><span>Body hash</span><code>57AC48C25B75A3ED7946CEE566FDB3FAB6F973369AB550305C80B81D870BAF85</code></li>
+<li><span>IL size</span><span>46</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.MathF::Pow(System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-linear-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_linear_srgb</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="toe private System.Single toe(System.Single x) System.Single x System.Single" id="toe-system-single---system-single">
+<div class="method-heading">
+<h3><code>toe</code></h3>
+<a class="permalink" href="#toe-system-single---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Single toe(System.Single x)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::toe(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private System.Single toe(System.Single x)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FA34A071C3D045CA2BAC6958406C2D1FCDEBE1C67CD496ADE09824D9879EE507</code></li>
+<li><span>Body hash</span><code>59AEBD5EF963315C323DB897E0FA950ED76F3858DDBA13B4936CDEC80A0CAA70</code></li>
+<li><span>IL size</span><span>66</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.MathF::Sqrt(System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-okhsl-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_okhsl</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-okhsv-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_okhsv</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="toe_inv private System.Single toe_inv(System.Single x) System.Single x System.Single" id="toe-inv-system-single---system-single">
+<div class="method-heading">
+<h3><code>toe_inv</code></h3>
+<a class="permalink" href="#toe-inv-system-single---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Single toe_inv(System.Single x)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::toe_inv(System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private System.Single toe_inv(System.Single x)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BACB1CC31072E2D7DF765F384FE107206824F8FF051DBA7E36B65752610156E5</code></li>
+<li><span>Body hash</span><code>5E69E99FA3EDEFD3B1B90612868AA6BD1BD4CD523AA107F78335991BBADD890A</code></li>
+<li><span>IL size</span><span>31</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#okhsl-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::okhsl_to_srgb</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#okhsv-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::okhsv_to_srgb</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-okhsv-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_okhsv</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="to_ST private Microsoft.Xna.Framework.Vector2 to_ST(Microsoft.Xna.Framework.Vector2 cusp) Microsoft.Xna.Framework.Vector2 cusp Microsoft.Xna.Framework.Vector2" id="to-st-microsoft-xna-framework-vector2---microsoft-xna-framework-vector2">
+<div class="method-heading">
+<h3><code>to_ST</code></h3>
+<a class="permalink" href="#to-st-microsoft-xna-framework-vector2---microsoft-xna-framework-vector2" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Vector2 to_ST(Microsoft.Xna.Framework.Vector2 cusp)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.OkColorHelper::to_ST(Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>private Microsoft.Xna.Framework.Vector2 to_ST(Microsoft.Xna.Framework.Vector2 cusp)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Vector2</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F85EA1A079C2E6BC5124DCC41E4BDBE257BCA0F70C335A7AD79CCF0715B58DFB</code></li>
+<li><span>Body hash</span><code>9B762124434C59B21E6E515873CFF1FCAF19C20DE7CB89B24C4A092BEAE9B45D</code></li>
+<li><span>IL size</span><span>37</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector2::.ctor(System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#get-cs-system-single--system-single--system-single---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::get_Cs</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#okhsv-to-srgb-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::okhsv_to_srgb</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_OkColorHelper.html#srgb-to-okhsv-microsoft-xna-framework-vector3---microsoft-xna-framework-vector3"><code>CandideCreator.Shared.Helpers.OkColorHelper::srgb_to_okhsv</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.Terminal.GameTerminal - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.Terminal.GameTerminal</h1>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.Terminal.GameTerminal
+
+- Assembly: `Romestead`
+- Namespace: `Candide.Terminal`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 15 methods, 0 properties, 15 fields, 0 events
+
+## Public Methods
+- `public System.Void Activate()`
+- `public System.Void AddCommand(System.String key, GameTerminal.TerminalCommandAction command)`
+- `public System.Void AddCommand(System.String key, GameTerminal.TerminalCommandAction command, GameTerminal.TerminalCommandSuggestion suggestion)`
+- `public System.Void AddCommand(System.String key, GameTerminal.TerminalCommandAction command, GameTerminal.TerminalCommandSuggestion2 suggestion)`
+- `public System.Void AddLine(System.String text)`
+- `public System.Void CharPressed(System.Char c, Microsoft.Xna.Framework.Input.KeyboardState ks)`
+- `public System.Void Deactivate()`
+- `public System.Void Dispose()`
+- `public System.String DoCommand(System.String input)`
+- `public System.String DoLua(System.String stuff)`
+- `public System.Void Draw()`
+- `public System.Void KeyPressed(Microsoft.Xna.Framework.Input.Keys k, Microsoft.Xna.Framework.Input.KeyboardState ks)`
+- `public System.Void Update(Microsoft.Xna.Framework.GameTime gt)`
+- `public System.String WrapText(FontStashSharp.StaticSpriteFont font, System.String text, System.Single maxLineWidth)`
+">Copy markdown</button>
+<a class="button" href="Candide_Terminal_GameTerminal.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.Terminal</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>15</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>15</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.Terminal</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>E28CA1FC4E4060F37A0D4B0CBE94CA10AB6474FF22E8CA5A84C7ED52BDEE0E1F</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html"><code>Candide.CandideEngine</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Active public System.Boolean Active System.Boolean" id="active-system-boolean"><td><span class="member-name-cell"><code>Active</code><a class="permalink" href="#active-system-boolean" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean Active">Copy</button></span></td><td>public</td><td><code>public System.Boolean Active</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Commands public System.Collections.Generic.Dictionary&lt;System.String, Candide.Terminal.TerminalCommand&gt; Commands System.Collections.Generic.Dictionary&lt;System.String, Candide.Terminal.TerminalCommand&gt;" id="commands-system-collections-generic-dictionary-2-system-string-candide-terminal-terminalcommand-"><td><span class="member-name-cell"><code>Commands</code><a class="permalink" href="#commands-system-collections-generic-dictionary-2-system-string-candide-terminal-terminalcommand-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.String, Candide.Terminal.TerminalCommand&gt; Commands">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.String, <a href="../../types/Romestead/Candide_Terminal_TerminalCommand.html">Candide.Terminal.TerminalCommand</a>&gt; Commands</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_currentInput private System.String _currentInput System.String" id="-currentinput-system-string"><td><span class="member-name-cell"><code>_currentInput</code><a class="permalink" href="#-currentinput-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.String _currentInput">Copy</button></span></td><td>private</td><td><code>private System.String _currentInput</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_cursor private System.Int32 _cursor System.Int32" id="-cursor-system-int32"><td><span class="member-name-cell"><code>_cursor</code><a class="permalink" href="#-cursor-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _cursor">Copy</button></span></td><td>private</td><td><code>private System.Int32 _cursor</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_game private Candide.CandideEngine _game Candide.CandideEngine" id="-game-candide-candideengine"><td><span class="member-name-cell"><code>_game</code><a class="permalink" href="#-game-candide-candideengine" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideEngine _game">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideEngine.html">Candide.CandideEngine</a> _game</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_history private System.Collections.Generic.Stack&lt;GameTerminal.TerminalLine&gt; _history System.Collections.Generic.Stack&lt;GameTerminal.TerminalLine&gt;" id="-history-system-collections-generic-stack-1-gameterminal-terminalline-"><td><span class="member-name-cell"><code>_history</code><a class="permalink" href="#-history-system-collections-generic-stack-1-gameterminal-terminalline-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Stack&lt;GameTerminal.TerminalLine&gt; _history">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Stack&lt;<a href="../../types/Romestead/GameTerminal_TerminalLine.html">GameTerminal.TerminalLine</a>&gt; _history</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_inputHistory private System.Collections.Generic.List&lt;System.String&gt; _inputHistory System.Collections.Generic.List&lt;System.String&gt;" id="-inputhistory-system-collections-generic-list-1-system-string-"><td><span class="member-name-cell"><code>_inputHistory</code><a class="permalink" href="#-inputhistory-system-collections-generic-list-1-system-string-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;System.String&gt; _inputHistory">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;System.String&gt; _inputHistory</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_inputIndex private System.Int32 _inputIndex System.Int32" id="-inputindex-system-int32"><td><span class="member-name-cell"><code>_inputIndex</code><a class="permalink" href="#-inputindex-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _inputIndex">Copy</button></span></td><td>private</td><td><code>private System.Int32 _inputIndex</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_inputLine private System.Text.StringBuilder _inputLine System.Text.StringBuilder" id="-inputline-system-text-stringbuilder"><td><span class="member-name-cell"><code>_inputLine</code><a class="permalink" href="#-inputline-system-text-stringbuilder" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Text.StringBuilder _inputLine">Copy</button></span></td><td>private</td><td><code>private System.Text.StringBuilder _inputLine</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_luaState private NLua.Lua _luaState NLua.Lua" id="-luastate-nlua-lua"><td><span class="member-name-cell"><code>_luaState</code><a class="permalink" href="#-luastate-nlua-lua" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private NLua.Lua _luaState">Copy</button></span></td><td>private</td><td><code>private NLua.Lua _luaState</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_options private Candide.Terminal.GameTerminalOptions _options Candide.Terminal.GameTerminalOptions" id="-options-candide-terminal-gameterminaloptions"><td><span class="member-name-cell"><code>_options</code><a class="permalink" href="#-options-candide-terminal-gameterminaloptions" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.Terminal.GameTerminalOptions _options">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_Terminal_GameTerminalOptions.html">Candide.Terminal.GameTerminalOptions</a> _options</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_pixel private Microsoft.Xna.Framework.Graphics.Texture2D _pixel Microsoft.Xna.Framework.Graphics.Texture2D" id="-pixel-microsoft-xna-framework-graphics-texture2d"><td><span class="member-name-cell"><code>_pixel</code><a class="permalink" href="#-pixel-microsoft-xna-framework-graphics-texture2d" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Graphics.Texture2D _pixel">Copy</button></span></td><td>private</td><td><code>private Microsoft.Xna.Framework.Graphics.Texture2D _pixel</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_spriteBatch private Microsoft.Xna.Framework.Graphics.SpriteBatch _spriteBatch Microsoft.Xna.Framework.Graphics.SpriteBatch" id="-spritebatch-microsoft-xna-framework-graphics-spritebatch"><td><span class="member-name-cell"><code>_spriteBatch</code><a class="permalink" href="#-spritebatch-microsoft-xna-framework-graphics-spritebatch" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Microsoft.Xna.Framework.Graphics.SpriteBatch _spriteBatch">Copy</button></span></td><td>private</td><td><code>private Microsoft.Xna.Framework.Graphics.SpriteBatch _spriteBatch</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_suggestion private System.Text.StringBuilder _suggestion System.Text.StringBuilder" id="-suggestion-system-text-stringbuilder"><td><span class="member-name-cell"><code>_suggestion</code><a class="permalink" href="#-suggestion-system-text-stringbuilder" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Text.StringBuilder _suggestion">Copy</button></span></td><td>private</td><td><code>private System.Text.StringBuilder _suggestion</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_suggestionIndex private System.Int32 _suggestionIndex System.Int32" id="-suggestionindex-system-int32"><td><span class="member-name-cell"><code>_suggestionIndex</code><a class="permalink" href="#-suggestionindex-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Int32 _suggestionIndex">Copy</button></span></td><td>private</td><td><code>private System.Int32 _suggestionIndex</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Activate public System.Void Activate() System.Void " id="activate----system-void">
+<div class="method-heading">
+<h3><code>Activate</code></h3>
+<a class="permalink" href="#activate----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Activate()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::Activate()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Activate()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4526F6A8D3C2301D957C75428D012652789AE64075292CC110ED35E70A537B81</code></li>
+<li><span>Body hash</span><code>E3287D1C4B759F2511AD87CB939EC6224F62239067D76DBDC0C5EDDF878F5E15</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddCommand public System.Void AddCommand(System.String key, GameTerminal.TerminalCommandAction command) System.Void key System.String command GameTerminal.TerminalCommandAction" id="addcommand-system-string--gameterminal-terminalcommandaction---system-void">
+<div class="method-heading">
+<h3><code>AddCommand</code></h3>
+<a class="permalink" href="#addcommand-system-string--gameterminal-terminalcommandaction---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddCommand(System.String key, GameTerminal.TerminalCommandAction command)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::AddCommand(System.String, GameTerminal.TerminalCommandAction)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddCommand(System.String key, <a href="../../types/Romestead/GameTerminal_TerminalCommandAction.html">GameTerminal.TerminalCommandAction</a> command)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>508F87FA4E1ADBD0731FA0D1A1D5E2702CB7C4872DF04ED6BB5CB544102F8ABC</code></li>
+<li><span>Body hash</span><code>A0E2D3B9B3C368CC541950DB0E983EA23D42CB5A511338BDBE928005341A7331</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Terminal.TerminalCommand::.ctor(GameTerminal.TerminalCommandAction)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.Terminal.TerminalCommand&gt;::Add(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#addterminalcommands----system-void"><code>Candide.CandideEngine::AddTerminalCommands</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddCommand public System.Void AddCommand(System.String key, GameTerminal.TerminalCommandAction command, GameTerminal.TerminalCommandSuggestion suggestion) System.Void key System.String command GameTerminal.TerminalCommandAction suggestion GameTerminal.TerminalCommandSuggestion" id="addcommand-system-string--gameterminal-terminalcommandaction--gameterminal-terminalcommandsuggestion---system-void">
+<div class="method-heading">
+<h3><code>AddCommand</code></h3>
+<a class="permalink" href="#addcommand-system-string--gameterminal-terminalcommandaction--gameterminal-terminalcommandsuggestion---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddCommand(System.String key, GameTerminal.TerminalCommandAction command, GameTerminal.TerminalCommandSuggestion suggestion)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::AddCommand(System.String, GameTerminal.TerminalCommandAction, GameTerminal.TerminalCommandSuggestion)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddCommand(System.String key, <a href="../../types/Romestead/GameTerminal_TerminalCommandAction.html">GameTerminal.TerminalCommandAction</a> command, <a href="../../types/Romestead/GameTerminal_TerminalCommandSuggestion.html">GameTerminal.TerminalCommandSuggestion</a> suggestion)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>26BD5A9D748806148C7A4864CC4D471C10F6EAF134BC43585DFF47DE3247F7EA</code></li>
+<li><span>Body hash</span><code>7067354AA5659280AD192BDAF7F4E1275E594A0401E78B4804D2F93EE227D52F</code></li>
+<li><span>IL size</span><span>20</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Terminal.TerminalCommand::.ctor(GameTerminal.TerminalCommandAction, GameTerminal.TerminalCommandSuggestion)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.Terminal.TerminalCommand&gt;::Add(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#addterminalcommands----system-void"><code>Candide.CandideEngine::AddTerminalCommands</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddCommand public System.Void AddCommand(System.String key, GameTerminal.TerminalCommandAction command, GameTerminal.TerminalCommandSuggestion2 suggestion) System.Void key System.String command GameTerminal.TerminalCommandAction suggestion GameTerminal.TerminalCommandSuggestion2" id="addcommand-system-string--gameterminal-terminalcommandaction--gameterminal-terminalcommandsuggestion2---system-void">
+<div class="method-heading">
+<h3><code>AddCommand</code></h3>
+<a class="permalink" href="#addcommand-system-string--gameterminal-terminalcommandaction--gameterminal-terminalcommandsuggestion2---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddCommand(System.String key, GameTerminal.TerminalCommandAction command, GameTerminal.TerminalCommandSuggestion2 suggestion)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::AddCommand(System.String, GameTerminal.TerminalCommandAction, GameTerminal.TerminalCommandSuggestion2)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddCommand(System.String key, <a href="../../types/Romestead/GameTerminal_TerminalCommandAction.html">GameTerminal.TerminalCommandAction</a> command, <a href="../../types/Romestead/GameTerminal_TerminalCommandSuggestion2.html">GameTerminal.TerminalCommandSuggestion2</a> suggestion)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E60E356F76DE158E9BDCEA379B2638F0A5B8FBF2946342B88206D230F0D43F8C</code></li>
+<li><span>Body hash</span><code>CA4D81CA61281A9A418B639E4BC74DBA97460F4E6F4CF5761A1DCF8AC86B146B</code></li>
+<li><span>IL size</span><span>20</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.Terminal.TerminalCommand::.ctor(GameTerminal.TerminalCommandAction, GameTerminal.TerminalCommandSuggestion2)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.Terminal.TerminalCommand&gt;::Add(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#addterminalcommands----system-void"><code>Candide.CandideEngine::AddTerminalCommands</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddLine public System.Void AddLine(System.String text) System.Void text System.String" id="addline-system-string---system-void">
+<div class="method-heading">
+<h3><code>AddLine</code></h3>
+<a class="permalink" href="#addline-system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddLine(System.String text)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::AddLine(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddLine(System.String text)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>14960004840FDA8170CC0D6522EC77BEB597665D1B894A9E73C60CDDF1E0D4AB</code></li>
+<li><span>Body hash</span><code>092BB1D91014914E16D04ADC857322E9F736436C8811409436A51450F557B220</code></li>
+<li><span>IL size</span><span>91</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::Split(System.Char, System.StringSplitOptions)</code></li>
+<li><code>Candide.Scene.GameScene::get_GraphicsDevice()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsDevice::get_Viewport()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.Viewport::get_Width()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Terminal_GameTerminal.html#wraptext-fontstashsharp-staticspritefont--system-string--system-single---system-string">Candide.Terminal.GameTerminal::WrapText(FontStashSharp.StaticSpriteFont, System.String, System.Single)</a></code></li>
+<li><code>GameTerminal.TerminalLine::.ctor(System.String, System.Int32)</code></li>
+<li><code>System.Collections.Generic.Stack&lt;GameTerminal.TerminalLine&gt;::Push(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Terminal_GameTerminal.html#docommand-system-string---system-string"><code>Candide.Terminal.GameTerminal::DoCommand</code></a></li>
+<li><a href="../../types/Romestead/Candide_Terminal_GameTerminal.html#keypressed-microsoft-xna-framework-input-keys--microsoft-xna-framework-input-keyboardstate---system-void"><code>Candide.Terminal.GameTerminal::KeyPressed</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CharPressed public System.Void CharPressed(System.Char c, Microsoft.Xna.Framework.Input.KeyboardState ks) System.Void c System.Char ks Microsoft.Xna.Framework.Input.KeyboardState" id="charpressed-system-char--microsoft-xna-framework-input-keyboardstate---system-void">
+<div class="method-heading">
+<h3><code>CharPressed</code></h3>
+<a class="permalink" href="#charpressed-system-char--microsoft-xna-framework-input-keyboardstate---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CharPressed(System.Char c, Microsoft.Xna.Framework.Input.KeyboardState ks)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::CharPressed(System.Char, Microsoft.Xna.Framework.Input.KeyboardState)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CharPressed(System.Char c, Microsoft.Xna.Framework.Input.KeyboardState ks)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F45FD491C5572643F75E93DC9E8F90096F4DEF8D127CF24455141180A5260944</code></li>
+<li><span>Body hash</span><code>797590ED12C995D18467579A954A309A278F5F582C5C8AC5C8C2645D128A89A8</code></li>
+<li><span>IL size</span><span>89</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Input.KeyboardState::IsKeyDown(Microsoft.Xna.Framework.Input.Keys)</code></li>
+<li><code>FontStashSharp.StaticSpriteFont::get_Glyphs()</code></li>
+<li><code>FontStashSharp.Int32Map&lt;FontStashSharp.FontGlyph&gt;::ContainsKey(System.Int32)</code></li>
+<li><code>System.Text.StringBuilder::Insert(System.Int32, System.Char)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Deactivate public System.Void Deactivate() System.Void " id="deactivate----system-void">
+<div class="method-heading">
+<h3><code>Deactivate</code></h3>
+<a class="permalink" href="#deactivate----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Deactivate()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::Deactivate()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Deactivate()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5AADBBD27EB2AFE66BB9A60816966C08229E8F71CB5AD8620BF5B890DE142D45</code></li>
+<li><span>Body hash</span><code>1205029ED5F824E2F6892F2F76193B5743A57056381A4D19641E4ACD27590051</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Dispose public System.Void Dispose() System.Void " id="dispose----system-void">
+<div class="method-heading">
+<h3><code>Dispose</code></h3>
+<a class="permalink" href="#dispose----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Dispose()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::Dispose()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Dispose()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2409D1FA65D0FC21F763C0FDDFDAB188DDC66DCE10D79E255051B178A470D4C3</code></li>
+<li><span>Body hash</span><code>C9F65874E9511F0F7175779296354DA8983C1B6F5500FE697256B0D79241B56D</code></li>
+<li><span>IL size</span><span>28</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>NLua.Lua::Dispose()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Terminal_KeyboardInput.html#dispose----system-void">Candide.Terminal.KeyboardInput::Dispose()</a></code></li>
+<li><code>System.Collections.Generic.Stack&lt;GameTerminal.TerminalLine&gt;::Clear()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#unloadcontent----system-void"><code>Candide.CandideEngine::UnloadContent</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DoCommand public System.String DoCommand(System.String input) System.String input System.String" id="docommand-system-string---system-string">
+<div class="method-heading">
+<h3><code>DoCommand</code></h3>
+<a class="permalink" href="#docommand-system-string---system-string" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.String DoCommand(System.String input)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::DoCommand(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.String DoCommand(System.String input)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.String</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>ADFE7925CC45D185BD2F1B39BA51CEF8D60E8F40BA2BC336833CB2BCA4A489F8</code></li>
+<li><span>Body hash</span><code>C504416132D547F72CA6A78F513E1ECF9B57F092EC742AB5805C3CA588E9689E</code></li>
+<li><span>IL size</span><span>93</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::Split(System.Char, System.StringSplitOptions)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.Terminal.TerminalCommand&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/Romestead/GameTerminal_TerminalCommandAction.html#invoke-system-string-----system-object">GameTerminal.TerminalCommandAction::Invoke(System.String[])</a></code></li>
+<li><code>System.Object::ToString()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Terminal_GameTerminal.html#addline-system-string---system-void">Candide.Terminal.GameTerminal::AddLine(System.String)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Terminal_GameTerminal.html#keypressed-microsoft-xna-framework-input-keys--microsoft-xna-framework-input-keyboardstate---system-void"><code>Candide.Terminal.GameTerminal::KeyPressed</code></a></li>
+<li><a href="../../types/Romestead/Candide_Toolkit_TerminalWindow.html#createwindow----system-void"><code>Candide.Toolkit.TerminalWindow::CreateWindow</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Command not found.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DoLua public System.String DoLua(System.String stuff) System.String stuff System.String" id="dolua-system-string---system-string">
+<div class="method-heading">
+<h3><code>DoLua</code></h3>
+<a class="permalink" href="#dolua-system-string---system-string" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.String DoLua(System.String stuff)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::DoLua(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.String DoLua(System.String stuff)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.String</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DB268ABE2CDEA314039E23011801AF8F0C05FF8F4CBF01F7E897985D057B4F53</code></li>
+<li><span>Body hash</span><code>4312F52A57CFEE34089AE95B0214798BC18340C23CF7AD3A9AD82E56959A8EA3</code></li>
+<li><span>IL size</span><span>39</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>NLua.Lua::DoString(System.String, System.String)</code></li>
+<li><code>System.Object::ToString()</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>chunk</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Draw public System.Void Draw() System.Void " id="draw----system-void">
+<div class="method-heading">
+<h3><code>Draw</code></h3>
+<a class="permalink" href="#draw----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Draw()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::Draw()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Draw()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B66C7AF43947C696CA0C15FBA999900BDF29D4A6AD0E2D78DDFDD0A8818071E9</code></li>
+<li><span>Body hash</span><code>67DB304BB3AA964763438255FA1925EF89DFA333075EB3D0F0FDD18C5D9C3A70</code></li>
+<li><span>IL size</span><span>688</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>FontStashSharp.SpriteFontBase::get_LineHeight()</code></li>
+<li><code>FontStashSharp.SpriteFontBase::MeasureString(System.String, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;, System.Single, System.Single, FontStashSharp.FontSystemEffect, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::.ctor(System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.SpriteBatch::Begin(Microsoft.Xna.Framework.Graphics.SpriteSortMode, Microsoft.Xna.Framework.Graphics.BlendState, Microsoft.Xna.Framework.Graphics.SamplerState, Microsoft.Xna.Framework.Graphics.DepthStencilState, Microsoft.Xna.Framework.Graphics.RasterizerState, Microsoft.Xna.Framework.Graphics.Effect, System.Nullable&lt;Microsoft.Xna.Framework.Matrix&gt;)</code></li>
+<li><code>Candide.Scene.GameScene::get_GraphicsDevice()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsDevice::get_Viewport()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.Viewport::get_Width()</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::.ctor(System.Int32, System.Int32, System.Int32, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.SpriteBatch::Draw(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Rectangle, Microsoft.Xna.Framework.Color)</code></li>
+<li><code>FontStashSharp.SpriteFontBase::DrawText(Microsoft.Xna.Framework.Graphics.SpriteBatch, System.Text.StringBuilder, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Color, System.Single, Microsoft.Xna.Framework.Vector2, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;, System.Single, System.Single, System.Single, FontStashSharp.TextStyle, FontStashSharp.FontSystemEffect, System.Int32, System.Int32)</code></li>
+<li><code>FontStashSharp.SpriteFontBase::MeasureString(System.Text.StringBuilder, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;, System.Single, System.Single, FontStashSharp.FontSystemEffect, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::get_UnitX()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Addition(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>System.Collections.Generic.Stack&lt;GameTerminal.TerminalLine&gt;::GetEnumerator()</code></li>
+<li><code>Stack.Enumerator&lt;GameTerminal.TerminalLine&gt;::get_Current()</code></li>
+<li><code>FontStashSharp.SpriteFontBase::DrawText(Microsoft.Xna.Framework.Graphics.SpriteBatch, System.String, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Color, System.Single, Microsoft.Xna.Framework.Vector2, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;, System.Single, System.Single, System.Single, FontStashSharp.TextStyle, FontStashSharp.FontSystemEffect, System.Int32, System.Int32)</code></li>
+<li><code>Stack.Enumerator&lt;GameTerminal.TerminalLine&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.SpriteBatch::End()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#enddraw----system-boolean"><code>Candide.CandideEngine::EndDraw</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>HEJSAN</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="KeyPressed public System.Void KeyPressed(Microsoft.Xna.Framework.Input.Keys k, Microsoft.Xna.Framework.Input.KeyboardState ks) System.Void k Microsoft.Xna.Framework.Input.Keys ks Microsoft.Xna.Framework.Input.KeyboardState" id="keypressed-microsoft-xna-framework-input-keys--microsoft-xna-framework-input-keyboardstate---system-void">
+<div class="method-heading">
+<h3><code>KeyPressed</code></h3>
+<a class="permalink" href="#keypressed-microsoft-xna-framework-input-keys--microsoft-xna-framework-input-keyboardstate---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void KeyPressed(Microsoft.Xna.Framework.Input.Keys k, Microsoft.Xna.Framework.Input.KeyboardState ks)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::KeyPressed(Microsoft.Xna.Framework.Input.Keys, Microsoft.Xna.Framework.Input.KeyboardState)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void KeyPressed(Microsoft.Xna.Framework.Input.Keys k, Microsoft.Xna.Framework.Input.KeyboardState ks)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>51DC2A6910FB2AA4D0938DF0DE6A81AD2F6C92515514BB41503B560EE1695F72</code></li>
+<li><span>Body hash</span><code>ADC18183D203994F904C58F9A11DF4B6328D1784B87BD5C40B2B115944AF411A</code></li>
+<li><span>IL size</span><span>1386</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.UserSettings.MiscUserSettings::get_EnableDeveloperConsole()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_GameStateService.html#send-debugactivated-system-boolean---system-void">Candide.GameModels.Services.GameStateService::Send_DebugActivated(System.Boolean)</a></code></li>
+<li><code>System.Text.StringBuilder::get_Length()</code></li>
+<li><code>System.Text.StringBuilder::Append(System.Text.StringBuilder)</code></li>
+<li><code>System.Text.StringBuilder::Clear()</code></li>
+<li><code>System.Object::ToString()</code></li>
+<li><code>System.String::get_Length()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Terminal_GameTerminal.html#addline-system-string---system-void">Candide.Terminal.GameTerminal::AddLine(System.String)</a></code></li>
+<li><code>System.Text.StringBuilder::Append(System.String)</code></li>
+<li><code>System.String::Substring(System.Int32, System.Int32)</code></li>
+<li><code>System.String::get_Chars(System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Terminal_GameTerminal.html#docommand-system-string---system-string">Candide.Terminal.GameTerminal::DoCommand(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code>NLua.Lua::DoString(System.String, System.String)</code></li>
+<li><code>System.Text.StringBuilder::get_Chars(System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Terminal_GameTerminal.html#suggestcommand-system-string---system-void">Candide.Terminal.GameTerminal::SuggestCommand(System.String)</a></code></li>
+<li><code>System.Text.StringBuilder::Remove(System.Int32, System.Int32)</code></li>
+<li><code>Candide.Terminal.KeyboardInput::get_CtrlDown()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Text_TextCopy_Clipboard.html#gettext----system-string">Candide.CandideUI.Text.TextCopy.Clipboard::GetText()</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.String&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.Text.StringBuilder::Insert(System.Int32, System.Object)</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>return </code></li>
+<li><code>chunk</code></li>
+<li><code>null</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SuggestCommand private System.Void SuggestCommand(System.String input) System.Void input System.String" id="suggestcommand-system-string---system-void">
+<div class="method-heading">
+<h3><code>SuggestCommand</code></h3>
+<a class="permalink" href="#suggestcommand-system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SuggestCommand(System.String input)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::SuggestCommand(System.String)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SuggestCommand(System.String input)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A4795EF1C5A9FA5DCCD349B68B60855F66CEBB634C2C0C77D4FC5F1094008D94</code></li>
+<li><span>Body hash</span><code>6697989FDE5F280C84EA87B2A97E0DDE7BCEF0A58DF33533AC184401E6D771F9</code></li>
+<li><span>IL size</span><span>436</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::Split(System.Char, System.StringSplitOptions)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.Terminal.TerminalCommand&gt;::get_Keys()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Candide.Terminal.TerminalCommand&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.String::get_Length()</code></li>
+<li><code>System.String::Substring(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/Romestead/GameTerminal_TerminalCommandSuggestion.html#invoke----system-collections-generic-ireadonlycollection-1-system-string-">GameTerminal.TerminalCommandSuggestion::Invoke()</a></code></li>
+<li><code><a href="../../types/Romestead/GameTerminal_TerminalCommandSuggestion2.html#invoke-system-int32---system-collections-generic-ireadonlycollection-1-system-string-">GameTerminal.TerminalCommandSuggestion2::Invoke(System.Int32)</a></code></li>
+<li><code>System.Text.StringBuilder::get_Length()</code></li>
+<li><code>System.Collections.Generic.IEnumerable&lt;System.String&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;System.String&gt;::get_Current()</code></li>
+<li><code>System.String::StartsWith(System.String)</code></li>
+<li><code>System.Text.StringBuilder::Clear()</code></li>
+<li><code>System.Text.StringBuilder::Append(System.String)</code></li>
+<li><code>System.Collections.IEnumerator::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Terminal_GameTerminal.html#keypressed-microsoft-xna-framework-input-keys--microsoft-xna-framework-input-keyboardstate---system-void"><code>Candide.Terminal.GameTerminal::KeyPressed</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(Microsoft.Xna.Framework.GameTime gt) System.Void gt Microsoft.Xna.Framework.GameTime" id="update-microsoft-xna-framework-gametime---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-microsoft-xna-framework-gametime---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(Microsoft.Xna.Framework.GameTime gt)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::Update(Microsoft.Xna.Framework.GameTime)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(Microsoft.Xna.Framework.GameTime gt)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C1544E50D34A0A70B78F6AB14079E8C4D79D7553E33C67EC11D1EC722424DDA1</code></li>
+<li><span>Body hash</span><code>EB64D7C09D6D6CF9CB6DBE513459607C749E5B4EDBCA7207E65CA446647ADA69</code></li>
+<li><span>IL size</span><span>8</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideEngine::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="WrapText public System.String WrapText(FontStashSharp.StaticSpriteFont font, System.String text, System.Single maxLineWidth) System.String font FontStashSharp.StaticSpriteFont text System.String maxLineWidth System.Single" id="wraptext-fontstashsharp-staticspritefont--system-string--system-single---system-string">
+<div class="method-heading">
+<h3><code>WrapText</code></h3>
+<a class="permalink" href="#wraptext-fontstashsharp-staticspritefont--system-string--system-single---system-string" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.String WrapText(FontStashSharp.StaticSpriteFont font, System.String text, System.Single maxLineWidth)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Terminal.GameTerminal::WrapText(FontStashSharp.StaticSpriteFont, System.String, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.String WrapText(FontStashSharp.StaticSpriteFont font, System.String text, System.Single maxLineWidth)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.String</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1F29EF7DAE7F355CD3FEDEA338B94162FF240BF0A728A7B510B6DAB7B39CEA61</code></li>
+<li><span>Body hash</span><code>AB4620D45C007E2913A0D3249BE7EA7886F87F6FC81A46CF5D047894AC627D9E</code></li>
+<li><span>IL size</span><span>436</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String::Split(System.Char, System.StringSplitOptions)</code></li>
+<li><code>System.Text.StringBuilder::.ctor()</code></li>
+<li><code>FontStashSharp.SpriteFontBase::MeasureString(System.String, System.Nullable&lt;Microsoft.Xna.Framework.Vector2&gt;, System.Single, System.Single, FontStashSharp.FontSystemEffect, System.Int32)</code></li>
+<li><code>StringBuilder.AppendInterpolatedStringHandler::.ctor(System.Int32, System.Int32, System.Text.StringBuilder)</code></li>
+<li><code>StringBuilder.AppendInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>StringBuilder.AppendInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Text.StringBuilder::Append(StringBuilder.AppendInterpolatedStringHandler&amp;)</code></li>
+<li><code>System.Object::ToString()</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>System.String::get_Length()</code></li>
+<li><code>System.String::Insert(System.Int32, System.String)</code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Terminal_GameTerminal.html#wraptext-fontstashsharp-staticspritefont--system-string--system-single---system-string">Candide.Terminal.GameTerminal::WrapText(FontStashSharp.StaticSpriteFont, System.String, System.Single)</a></code></li>
+<li><code>System.Text.StringBuilder::Append(System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Terminal_GameTerminal.html#addline-system-string---system-void"><code>Candide.Terminal.GameTerminal::AddLine</code></a></li>
+<li><a href="../../types/Romestead/Candide_Terminal_GameTerminal.html#wraptext-fontstashsharp-staticspritefont--system-string--system-single---system-string"><code>Candide.Terminal.GameTerminal::WrapText</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

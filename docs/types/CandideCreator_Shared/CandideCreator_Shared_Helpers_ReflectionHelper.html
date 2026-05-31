@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideCreator.Shared.Helpers.ReflectionHelper - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideCreator_Shared.html">CandideCreator.Shared</a></p>
+<div class="title-row">
+<h1>CandideCreator.Shared.Helpers.ReflectionHelper</h1>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ReflectionHelper">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideCreator.Shared.Helpers.ReflectionHelper
+
+- Assembly: `CandideCreator.Shared`
+- Namespace: `CandideCreator.Shared.Helpers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 10 methods, 0 properties, 2 fields, 0 events
+
+## Public Methods
+- `public System.Object CreateInstance(System.Type type)`
+- `public TTarget CreateInstance&lt;TTarget&gt;(System.Type type)`
+- `public ReflectionHelper.ObjectActivator GetActivator(System.Reflection.ConstructorInfo ctor)`
+- `public ReflectionHelper.ObjectActivator GetActivator&lt;T&gt;()`
+- `public ReflectionHelper.ObjectActivator&lt;T&gt; GetActivator&lt;T&gt;(System.Reflection.ConstructorInfo ctor)`
+- `public ReflectionHelper.SimpleObjectActivator GetActivator(System.Type type)`
+- `public System.Collections.Generic.IEnumerable&lt;System.Reflection.FieldInfo&gt; GetAllFields(System.Type t)`
+- `public System.Object GetDefaultValue(System.Type type)`
+- `public T GetDefaultValue&lt;T&gt;()`
+- `public System.Reflection.ConstructorInfo GetEmptyConstructor(System.Type type)`
+">Copy markdown</button>
+<a class="button" href="CandideCreator_Shared_Helpers_ReflectionHelper.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideCreator.Shared.Helpers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>10</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>2</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideCreator.Shared</code></li>
+<li><span>Namespace</span><code>CandideCreator.Shared.Helpers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>342903690E874216EFA8518B2F38D68E9BF65AD9AB7FBA9346A915C2A9B9E07C</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="Activators private System.Collections.Generic.Dictionary&lt;System.Reflection.ConstructorInfo, ReflectionHelper.ObjectActivator&gt; Activators System.Collections.Generic.Dictionary&lt;System.Reflection.ConstructorInfo, ReflectionHelper.ObjectActivator&gt;" id="activators-system-collections-generic-dictionary-2-system-reflection-constructorinfo-reflectionhelper-objectactivator-"><td><span class="member-name-cell"><code>Activators</code><a class="permalink" href="#activators-system-collections-generic-dictionary-2-system-reflection-constructorinfo-reflectionhelper-objectactivator-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;System.Reflection.ConstructorInfo, ReflectionHelper.ObjectActivator&gt; Activators">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;System.Reflection.ConstructorInfo, <a href="../../types/CandideCreator_Shared/ReflectionHelper_ObjectActivator.html">ReflectionHelper.ObjectActivator</a>&gt; Activators</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="SimpleActivators private System.Collections.Generic.Dictionary&lt;System.Type, ReflectionHelper.SimpleObjectActivator&gt; SimpleActivators System.Collections.Generic.Dictionary&lt;System.Type, ReflectionHelper.SimpleObjectActivator&gt;" id="simpleactivators-system-collections-generic-dictionary-2-system-type-reflectionhelper-simpleobjectactivator-"><td><span class="member-name-cell"><code>SimpleActivators</code><a class="permalink" href="#simpleactivators-system-collections-generic-dictionary-2-system-type-reflectionhelper-simpleobjectactivator-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;System.Type, ReflectionHelper.SimpleObjectActivator&gt; SimpleActivators">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;System.Type, <a href="../../types/CandideCreator_Shared/ReflectionHelper_SimpleObjectActivator.html">ReflectionHelper.SimpleObjectActivator</a>&gt; SimpleActivators</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateInstance public System.Object CreateInstance(System.Type type) System.Object type System.Type" id="createinstance-system-type---system-object">
+<div class="method-heading">
+<h3><code>CreateInstance</code></h3>
+<a class="permalink" href="#createinstance-system-type---system-object" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Object CreateInstance(System.Type type)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ReflectionHelper::CreateInstance(System.Type)">Copy Harmony target</button>
+</div>
+<p><code>public System.Object CreateInstance(System.Type type)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Object</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A070776813DF1C75F436EB9CBD6E7962460D3386C5B7B8E0EF297B4DA3858A76</code></li>
+<li><span>Body hash</span><code>395AE7B3000F9F4902EFE1968D1C073DF63F16E1863C565341FEC48AA5260191</code></li>
+<li><span>IL size</span><span>37</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Type::get_IsValueType()</code></li>
+<li><code>System.Runtime.Serialization.FormatterServices::GetUninitializedObject(System.Type)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ReflectionHelper.html#getactivator-system-type---reflectionhelper-simpleobjectactivator">CandideCreator.Shared.Helpers.ReflectionHelper::GetActivator(System.Type)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/ReflectionHelper_SimpleObjectActivator.html#invoke----system-object">ReflectionHelper.SimpleObjectActivator::Invoke()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_Serializers_ObjectSerializer.html#deserialize-candidecreator-shared-serialization-candidereflection--candidecreator-shared-serialization-candidedeserializer--system-type--system-boolean---system-object"><code>CandideCreator.Shared.Serialization.Serializers.ObjectSerializer::Deserialize</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Serialization_ServerControllerTypeHandler.html#customdeserialize-candidecreator-shared-serialization-candidereflection--candidecreator-shared-serialization-candidedeserializer--system-object--system-int32---system-object"><code>CandideServer.Entities.Serialization.ServerControllerTypeHandler::CustomDeserialize</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ServerEntityControllerLoader.html#createai-system-string--shared-entity-base-entitycontrollerbase---shared-entity-base-abstractai"><code>CandideServer.Entities.ServerEntityControllerLoader::CreateAi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ServerEntityControllerLoader.html#createcontroller-system-string--shared-entity-entitywrapper---shared-entity-base-abstractcontroller"><code>CandideServer.Entities.ServerEntityControllerLoader::CreateController</code></a></li>
+<li><a href="../../types/Romestead/Candide_Database_Doodad_ControllerTypeHandler.html#customdeserialize-candidecreator-shared-serialization-candidereflection--candidecreator-shared-serialization-candidedeserializer--system-object--system-int32---system-object"><code>Candide.Database.Doodad.ControllerTypeHandler::CustomDeserialize</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_ClientEntityControllerLoader.html#createai-system-string--shared-entity-base-entitycontrollerbase---shared-entity-base-abstractai"><code>Candide.Entities.ClientEntityControllerLoader::CreateAi</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_ClientEntityControllerLoader.html#createcontroller-system-string--shared-entity-entitywrapper---shared-entity-base-abstractcontroller"><code>Candide.Entities.ClientEntityControllerLoader::CreateController</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateInstance public TTarget CreateInstance&lt;TTarget&gt;(System.Type type) TTarget type System.Type" id="createinstance-1-system-type----ttarget">
+<div class="method-heading">
+<h3><code>CreateInstance</code></h3>
+<a class="permalink" href="#createinstance-1-system-type----ttarget" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public TTarget CreateInstance&lt;TTarget&gt;(System.Type type)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ReflectionHelper::CreateInstance(System.Type)">Copy Harmony target</button>
+</div>
+<p><code>public TTarget CreateInstance&lt;TTarget&gt;(System.Type type)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>TTarget</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BBE3977D1C745750915362D26643A211EAF1772CF187910758F3DB52BD825509</code></li>
+<li><span>Body hash</span><code>AD9440AA9457AF13A1DFCCF4B8817D0ED0E50584BB00409B3DA1384DFAC980FC</code></li>
+<li><span>IL size</span><span>47</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Type::get_IsValueType()</code></li>
+<li><code>System.Runtime.Serialization.FormatterServices::GetUninitializedObject(System.Type)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ReflectionHelper.html#getactivator-system-type---reflectionhelper-simpleobjectactivator">CandideCreator.Shared.Helpers.ReflectionHelper::GetActivator(System.Type)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/ReflectionHelper_SimpleObjectActivator.html#invoke----system-object">ReflectionHelper.SimpleObjectActivator::Invoke()</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetActivator public ReflectionHelper.ObjectActivator GetActivator(System.Reflection.ConstructorInfo ctor) ReflectionHelper.ObjectActivator ctor System.Reflection.ConstructorInfo" id="getactivator-system-reflection-constructorinfo---reflectionhelper-objectactivator">
+<div class="method-heading">
+<h3><code>GetActivator</code></h3>
+<a class="permalink" href="#getactivator-system-reflection-constructorinfo---reflectionhelper-objectactivator" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public ReflectionHelper.ObjectActivator GetActivator(System.Reflection.ConstructorInfo ctor)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ReflectionHelper::GetActivator(System.Reflection.ConstructorInfo)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideCreator_Shared/ReflectionHelper_ObjectActivator.html">ReflectionHelper.ObjectActivator</a> GetActivator(System.Reflection.ConstructorInfo ctor)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideCreator_Shared/ReflectionHelper_ObjectActivator.html">ReflectionHelper.ObjectActivator</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D25719AD304138EEC925B437B55DD2681774591668C33DA761EA8E736893E0DD</code></li>
+<li><span>Body hash</span><code>C68D1E1639838AFF88E4040C9D253BE1033CFB4918F89ED47912A3CD0A97E4C5</code></li>
+<li><span>IL size</span><span>241</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Reflection.ConstructorInfo, ReflectionHelper.ObjectActivator&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Reflection.MethodBase::GetParameters()</code></li>
+<li><code>System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)</code></li>
+<li><code>System.Linq.Expressions.Expression::Parameter(System.Type, System.String)</code></li>
+<li><code>System.Linq.Expressions.Expression::Constant(System.Object)</code></li>
+<li><code>System.Reflection.ParameterInfo::get_ParameterType()</code></li>
+<li><code>System.Linq.Expressions.Expression::ArrayIndex(System.Linq.Expressions.Expression, System.Linq.Expressions.Expression)</code></li>
+<li><code>System.Linq.Expressions.Expression::Convert(System.Linq.Expressions.Expression, System.Type)</code></li>
+<li><code>System.Linq.Expressions.Expression::New(System.Reflection.ConstructorInfo, System.Linq.Expressions.Expression[])</code></li>
+<li><code>System.Reflection.MemberInfo::get_DeclaringType()</code></li>
+<li><code>System.Type::get_IsValueType()</code></li>
+<li><code>System.Linq.Expressions.Expression::Lambda(System.Linq.Expressions.Expression, System.Linq.Expressions.ParameterExpression[])</code></li>
+<li><code>System.Linq.Expressions.Expression&lt;ReflectionHelper.ObjectActivator&gt;::Compile()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Reflection.ConstructorInfo, ReflectionHelper.ObjectActivator&gt;::set_Item(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ReflectionHelper.html#getactivator-1----reflectionhelper-objectactivator"><code>CandideCreator.Shared.Helpers.ReflectionHelper::GetActivator</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideReflection.html#getcreateemptycollectioninstance-system-type---system-func-1-system-object-"><code>CandideCreator.Shared.Serialization.CandideReflection::GetCreateEmptyCollectionInstance</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideReflection.html#register-system-reflection-assembly---system-void"><code>CandideCreator.Shared.Serialization.CandideReflection::Register</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_Serializers_ArraySerializer.html#read-candidecreator-shared-serialization-candidereflection--candidecreator-shared-serialization-candidedeserializer--system-type---system-object"><code>CandideCreator.Shared.Serialization.Serializers.ArraySerializer::Read</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_Serializers_DictionarySerializer.html#read-candidecreator-shared-serialization-candidereflection--candidecreator-shared-serialization-candidedeserializer--system-type---system-object"><code>CandideCreator.Shared.Serialization.Serializers.DictionarySerializer::Read</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_TypeHandlers_CollectionTypeHandler.html#clone-candidecreator-shared-serialization-candidereflection--system-object---system-object"><code>CandideCreator.Shared.Serialization.TypeHandlers.CollectionTypeHandler::Clone</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_TypeHandlers_DictionaryTypeHandler.html#clone-candidecreator-shared-serialization-candidereflection--system-object---system-object"><code>CandideCreator.Shared.Serialization.TypeHandlers.DictionaryTypeHandler::Clone</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_TypeHandlers_MultiDimensionalArrayTypeHandler.html#clone-candidecreator-shared-serialization-candidereflection--system-object---system-object"><code>CandideCreator.Shared.Serialization.TypeHandlers.MultiDimensionalArrayTypeHandler::Clone</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Saving_GameSaveManager.html#getshallowdictionarycopy-system-type--system-object---system-object"><code>CandideServer.Saving.GameSaveManager::GetShallowDictionaryCopy</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerController.html#initializestatemachine----system-void"><code>Candide.Entities.PlayerState.PlayerController::InitializeStateMachine</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>args</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetActivator public ReflectionHelper.ObjectActivator GetActivator&lt;T&gt;() ReflectionHelper.ObjectActivator " id="getactivator-1----reflectionhelper-objectactivator">
+<div class="method-heading">
+<h3><code>GetActivator</code></h3>
+<a class="permalink" href="#getactivator-1----reflectionhelper-objectactivator" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public ReflectionHelper.ObjectActivator GetActivator&lt;T&gt;()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ReflectionHelper::GetActivator()">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideCreator_Shared/ReflectionHelper_ObjectActivator.html">ReflectionHelper.ObjectActivator</a> GetActivator&lt;T&gt;()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideCreator_Shared/ReflectionHelper_ObjectActivator.html">ReflectionHelper.ObjectActivator</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>29FDE352A8B0E3E0839B509463E2FCAF1837D8F5E39FDE8A1BBEC1CA44811354</code></li>
+<li><span>Body hash</span><code>0AE78BE41AB4DE9598009220829DB7A99A44ACEF7581D4CA8A28B868B2919B1B</code></li>
+<li><span>IL size</span><span>26</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ReflectionHelper.html#getemptyconstructor-system-type---system-reflection-constructorinfo">CandideCreator.Shared.Helpers.ReflectionHelper::GetEmptyConstructor(System.Type)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ReflectionHelper.html#getactivator-system-reflection-constructorinfo---reflectionhelper-objectactivator">CandideCreator.Shared.Helpers.ReflectionHelper::GetActivator(System.Reflection.ConstructorInfo)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetActivator public ReflectionHelper.ObjectActivator&lt;T&gt; GetActivator&lt;T&gt;(System.Reflection.ConstructorInfo ctor) ReflectionHelper.ObjectActivator&lt;T&gt; ctor System.Reflection.ConstructorInfo" id="getactivator-1-system-reflection-constructorinfo---reflectionhelper-objectactivator-1--t-">
+<div class="method-heading">
+<h3><code>GetActivator</code></h3>
+<a class="permalink" href="#getactivator-1-system-reflection-constructorinfo---reflectionhelper-objectactivator-1--t-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public ReflectionHelper.ObjectActivator&lt;T&gt; GetActivator&lt;T&gt;(System.Reflection.ConstructorInfo ctor)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ReflectionHelper::GetActivator(System.Reflection.ConstructorInfo)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideCreator_Shared/ReflectionHelper_ObjectActivator.html">ReflectionHelper.ObjectActivator</a>&lt;T&gt; GetActivator&lt;T&gt;(System.Reflection.ConstructorInfo ctor)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideCreator_Shared/ReflectionHelper_ObjectActivator.html">ReflectionHelper.ObjectActivator</a>&lt;T&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F4F3C6EB869D59950FF1CFA055BE16D6B88B86D1366A26F8FC156F744131A036</code></li>
+<li><span>Body hash</span><code>92685873E0B40196256ED827B4429D1AA44F025C5C2093BC2AD84429A4D259DF</code></li>
+<li><span>IL size</span><span>160</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Reflection.MethodBase::GetParameters()</code></li>
+<li><code>System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)</code></li>
+<li><code>System.Linq.Expressions.Expression::Parameter(System.Type, System.String)</code></li>
+<li><code>System.Linq.Expressions.Expression::Constant(System.Object)</code></li>
+<li><code>System.Reflection.ParameterInfo::get_ParameterType()</code></li>
+<li><code>System.Linq.Expressions.Expression::ArrayIndex(System.Linq.Expressions.Expression, System.Linq.Expressions.Expression)</code></li>
+<li><code>System.Linq.Expressions.Expression::Convert(System.Linq.Expressions.Expression, System.Type)</code></li>
+<li><code>System.Linq.Expressions.Expression::New(System.Reflection.ConstructorInfo, System.Linq.Expressions.Expression[])</code></li>
+<li><code>System.Linq.Expressions.Expression::Lambda(System.Linq.Expressions.Expression, System.Linq.Expressions.ParameterExpression[])</code></li>
+<li><code>System.Linq.Expressions.Expression&lt;ReflectionHelper.ObjectActivator&lt;T&gt;&gt;::Compile()</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>args</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetActivator public ReflectionHelper.SimpleObjectActivator GetActivator(System.Type type) ReflectionHelper.SimpleObjectActivator type System.Type" id="getactivator-system-type---reflectionhelper-simpleobjectactivator">
+<div class="method-heading">
+<h3><code>GetActivator</code></h3>
+<a class="permalink" href="#getactivator-system-type---reflectionhelper-simpleobjectactivator" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public ReflectionHelper.SimpleObjectActivator GetActivator(System.Type type)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ReflectionHelper::GetActivator(System.Type)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideCreator_Shared/ReflectionHelper_SimpleObjectActivator.html">ReflectionHelper.SimpleObjectActivator</a> GetActivator(System.Type type)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideCreator_Shared/ReflectionHelper_SimpleObjectActivator.html">ReflectionHelper.SimpleObjectActivator</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F3CE4342F1BCCA2A12404858D0CEC2785AE7D4B11795F105E1556C31F5AA4602</code></li>
+<li><span>Body hash</span><code>92C80EFC1D7BC323E18BDFBBE1C8FB1381D20C360B7D0CE63D2DF8BB157E3B14</code></li>
+<li><span>IL size</span><span>82</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Type, ReflectionHelper.SimpleObjectActivator&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ReflectionHelper.html#getemptyconstructor-system-type---system-reflection-constructorinfo">CandideCreator.Shared.Helpers.ReflectionHelper::GetEmptyConstructor(System.Type)</a></code></li>
+<li><code>System.Linq.Expressions.Expression::New(System.Reflection.ConstructorInfo)</code></li>
+<li><code>System.Array::Empty()</code></li>
+<li><code>System.Linq.Expressions.Expression::Lambda(System.Linq.Expressions.Expression, System.Linq.Expressions.ParameterExpression[])</code></li>
+<li><code>System.Linq.Expressions.Expression&lt;ReflectionHelper.SimpleObjectActivator&gt;::Compile()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Type, ReflectionHelper.SimpleObjectActivator&gt;::set_Item(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ReflectionHelper.html#createinstance-system-type---system-object"><code>CandideCreator.Shared.Helpers.ReflectionHelper::CreateInstance</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ReflectionHelper.html#createinstance-1-system-type----ttarget"><code>CandideCreator.Shared.Helpers.ReflectionHelper::CreateInstance</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetAllFields public System.Collections.Generic.IEnumerable&lt;System.Reflection.FieldInfo&gt; GetAllFields(System.Type t) System.Collections.Generic.IEnumerable&lt;System.Reflection.FieldInfo&gt; t System.Type" id="getallfields-system-type---system-collections-generic-ienumerable-1-system-reflection-fieldinfo-">
+<div class="method-heading">
+<h3><code>GetAllFields</code></h3>
+<a class="permalink" href="#getallfields-system-type---system-collections-generic-ienumerable-1-system-reflection-fieldinfo-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.IEnumerable&lt;System.Reflection.FieldInfo&gt; GetAllFields(System.Type t)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ReflectionHelper::GetAllFields(System.Type)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.IEnumerable&lt;System.Reflection.FieldInfo&gt; GetAllFields(System.Type t)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.IEnumerable&lt;System.Reflection.FieldInfo&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FD5C8C621641115C7F88C6559A8C3568A405AAE9253A10F3B195DB410AEA1F1B</code></li>
+<li><span>Body hash</span><code>F0E384A5052A0260BE089C7018CDCD2F715E409EE854BCEA0DB0EF833F65A22B</code></li>
+<li><span>IL size</span><span>51</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Type::op_Equality(System.Type, System.Type)</code></li>
+<li><code>System.Linq.Enumerable::Empty()</code></li>
+<li><code>System.Type::GetFields(System.Reflection.BindingFlags)</code></li>
+<li><code>System.Type::get_BaseType()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ReflectionHelper.html#getallfields-system-type---system-collections-generic-ienumerable-1-system-reflection-fieldinfo-">CandideCreator.Shared.Helpers.ReflectionHelper::GetAllFields(System.Type)</a></code></li>
+<li><code>System.Linq.Enumerable::Concat(System.Collections.Generic.IEnumerable&lt;!!0&gt;, System.Collections.Generic.IEnumerable&lt;!!0&gt;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ReflectionHelper.html#getallfields-system-type---system-collections-generic-ienumerable-1-system-reflection-fieldinfo-"><code>CandideCreator.Shared.Helpers.ReflectionHelper::GetAllFields</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetDefaultValue public System.Object GetDefaultValue(System.Type type) System.Object type System.Type" id="getdefaultvalue-system-type---system-object">
+<div class="method-heading">
+<h3><code>GetDefaultValue</code></h3>
+<a class="permalink" href="#getdefaultvalue-system-type---system-object" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Object GetDefaultValue(System.Type type)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ReflectionHelper::GetDefaultValue(System.Type)">Copy Harmony target</button>
+</div>
+<p><code>public System.Object GetDefaultValue(System.Type type)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Object</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>836A9D374038F8E7EFD7F75E6DFC365006B877C5953BE22B5BC5D069103C8C59</code></li>
+<li><span>Body hash</span><code>6551E7EE227BC2D0B21A1493B9F4C1EF7F4477BB7B6F2417D3E598B3B61CB63F</code></li>
+<li><span>IL size</span><span>71</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Type::op_Equality(System.Type, System.Type)</code></li>
+<li><code>System.ArgumentNullException::.ctor(System.String)</code></li>
+<li><code>System.Linq.Expressions.Expression::Default(System.Type)</code></li>
+<li><code>System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)</code></li>
+<li><code>System.Linq.Expressions.Expression::Convert(System.Linq.Expressions.Expression, System.Type)</code></li>
+<li><code>System.Array::Empty()</code></li>
+<li><code>System.Linq.Expressions.Expression::Lambda(System.Linq.Expressions.Expression, System.Linq.Expressions.ParameterExpression[])</code></li>
+<li><code>System.Linq.Expressions.Expression&lt;System.Func&lt;System.Object&gt;&gt;::Compile()</code></li>
+<li><code>System.Func&lt;System.Object&gt;::Invoke()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideReflection.html#getdefaultvalue-system-type---system-object"><code>CandideCreator.Shared.Serialization.CandideReflection::GetDefaultValue</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>type</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetDefaultValue public T GetDefaultValue&lt;T&gt;() T " id="getdefaultvalue-1-----t">
+<div class="method-heading">
+<h3><code>GetDefaultValue</code></h3>
+<a class="permalink" href="#getdefaultvalue-1-----t" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public T GetDefaultValue&lt;T&gt;()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ReflectionHelper::GetDefaultValue()">Copy Harmony target</button>
+</div>
+<p><code>public T GetDefaultValue&lt;T&gt;()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>T</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>17BCFF169C0B78A7BFA32FED7BFB9638AD48BA30320D28D7806BB0CC2CD118EC</code></li>
+<li><span>Body hash</span><code>A6C6630D0C9863C1D813E1A0F8F25DC28290EE9C72D402F7463434269C5B7B5D</code></li>
+<li><span>IL size</span><span>43</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)</code></li>
+<li><code>System.Linq.Expressions.Expression::Default(System.Type)</code></li>
+<li><code>System.Array::Empty()</code></li>
+<li><code>System.Linq.Expressions.Expression::Lambda(System.Linq.Expressions.Expression, System.Linq.Expressions.ParameterExpression[])</code></li>
+<li><code>System.Linq.Expressions.Expression&lt;System.Func&lt;T&gt;&gt;::Compile()</code></li>
+<li><code>System.Func&lt;T&gt;::Invoke()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetEmptyConstructor public System.Reflection.ConstructorInfo GetEmptyConstructor(System.Type type) System.Reflection.ConstructorInfo type System.Type" id="getemptyconstructor-system-type---system-reflection-constructorinfo">
+<div class="method-heading">
+<h3><code>GetEmptyConstructor</code></h3>
+<a class="permalink" href="#getemptyconstructor-system-type---system-reflection-constructorinfo" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Reflection.ConstructorInfo GetEmptyConstructor(System.Type type)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideCreator.Shared.Helpers.ReflectionHelper::GetEmptyConstructor(System.Type)">Copy Harmony target</button>
+</div>
+<p><code>public System.Reflection.ConstructorInfo GetEmptyConstructor(System.Type type)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Reflection.ConstructorInfo</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C7B761344F13BB21079834BA93D5A7523D1277F1BE6C1C1111E1E4F7325A2D10</code></li>
+<li><span>Body hash</span><code>95C52A864D75D64B83FDE8CC89814EC3F4213FED9FBF65B495723204FF145AE9</code></li>
+<li><span>IL size</span><span>21</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Type::GetConstructor(System.Reflection.BindingFlags, System.Reflection.Binder, System.Type[], System.Reflection.ParameterModifier[])</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ReflectionHelper.html#getactivator-1----reflectionhelper-objectactivator"><code>CandideCreator.Shared.Helpers.ReflectionHelper::GetActivator</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ReflectionHelper.html#getactivator-system-type---reflectionhelper-simpleobjectactivator"><code>CandideCreator.Shared.Helpers.ReflectionHelper::GetActivator</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_CandideReflection.html#register-system-reflection-assembly---system-void"><code>CandideCreator.Shared.Serialization.CandideReflection::Register</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_Serializers_ObjectSerializer.html#deserialize-candidecreator-shared-serialization-candidereflection--candidecreator-shared-serialization-candidedeserializer--system-type--system-boolean---system-object"><code>CandideCreator.Shared.Serialization.Serializers.ObjectSerializer::Deserialize</code></a></li>
+<li><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Serialization_TypeHandlers_CollectionTypeHandler.html#canhandle-candidecreator-shared-serialization-candidereflection--system-type---system-boolean"><code>CandideCreator.Shared.Serialization.TypeHandlers.CollectionTypeHandler::CanHandle</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

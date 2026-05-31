@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerControllers.BuildingsSController - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerControllers.BuildingsSController</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerControllers.BuildingsSController
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerControllers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 17 methods, 0 properties, 3 fields, 2 events
+
+## Public Methods
+- `public System.Void AfterWorldGameStateLoaded()`
+- `public System.Void BeforeWorldGameStateLoaded()`
+- `public Shared.Models.Items.SharedInventoryModel CreateBuildingInventory(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, Shared.Messages.CreateNewInventoryMessage msg, CandideServer.ServerControllers.IOInventoryCreationType type)`
+- `public System.Nullable&lt;System.Guid&gt; GetOutsideWorldIdFromBuildingId(System.Guid buildingId)`
+- `public System.Void RegisterBuildingCitizenStatModifier(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.StatModificationData&gt; decorationCitizenStatBonuses, System.Guid modifierId, Shared.Models.Stats.StatModifierType type, System.Boolean skipApplyingToCitizen)`
+- `public System.Void RegisterDecoration(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, Shared.Data.Decorations.DecorationData decoration, System.Guid spawnId, System.Boolean skipUpdates)`
+- `public System.Void RegisterInternalResourceStorage(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, System.Guid storageId, CandideServer.ServerControllers.IOStorageCreationType type)`
+- `public CandideServer.MessageModels.Buildings.BuildingRemovedMessage RemoveBuilding(System.Guid buildingId)`
+- `public System.Void RemoveBuildingCitizenStatModifier(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, System.Guid modifierId, System.Boolean skipApplyingToCitizen)`
+- `public CandideServer.SimulationModels.BuildingSimulationModel SpawnNewBuildingConstruction(System.String constructionId, System.Guid newBuildingId, Microsoft.Xna.Framework.Rectangle tileBounds, System.Nullable&lt;System.Guid&gt; townId, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; parameters)`
+- `public System.Void UnregisterDecoration(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, System.Guid decorationId, System.Boolean skipUpdates)`
+- `public System.Void UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage msg)`
+- `public System.Void UpdateCitizenSlotsStatsAndSendUpdates(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance)`
+- `public System.Void UpdateSendBuildingAppeal(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance)`
+- `public System.Void UpgradeBuilding(CandideServer.SimulationModels.BuildingSimulationModel building, Shared.Models.Construction.ConstructionModel construction, Shared.Models.Buildings.BuildingData upgradedBuildingData)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerControllers_BuildingsSController.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerControllers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>17</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>3</strong></article>
+<article class="metric"><span>Events</span><strong>2</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerControllers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>9230272563EF429A34B844DAC221B1BC348E51E5C9FF5413B972F8CFA2663DD0</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="BuildingAppealStatModifierId public System.Guid BuildingAppealStatModifierId System.Guid" id="buildingappealstatmodifierid-system-guid"><td><span class="member-name-cell"><code>BuildingAppealStatModifierId</code><a class="permalink" href="#buildingappealstatmodifierid-system-guid" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Guid BuildingAppealStatModifierId">Copy</button></span></td><td>public</td><td><code>public System.Guid BuildingAppealStatModifierId</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="BuildingRemoved private BuildingsSController.ServerGameStateBuildingRemoved BuildingRemoved BuildingsSController.ServerGameStateBuildingRemoved" id="buildingremoved-buildingsscontroller-servergamestatebuildingremoved"><td><span class="member-name-cell"><code>BuildingRemoved</code><a class="permalink" href="#buildingremoved-buildingsscontroller-servergamestatebuildingremoved" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BuildingsSController.ServerGameStateBuildingRemoved BuildingRemoved">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BuildingsSController_ServerGameStateBuildingRemoved.html">BuildingsSController.ServerGameStateBuildingRemoved</a> BuildingRemoved</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="NewBuildingSpawned private BuildingsSController.ServerGameStateBuildingAdded NewBuildingSpawned BuildingsSController.ServerGameStateBuildingAdded" id="newbuildingspawned-buildingsscontroller-servergamestatebuildingadded"><td><span class="member-name-cell"><code>NewBuildingSpawned</code><a class="permalink" href="#newbuildingspawned-buildingsscontroller-servergamestatebuildingadded" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private BuildingsSController.ServerGameStateBuildingAdded NewBuildingSpawned">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/CandideServer/BuildingsSController_ServerGameStateBuildingAdded.html">BuildingsSController.ServerGameStateBuildingAdded</a> NewBuildingSpawned</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Events</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="BuildingRemoved public BuildingsSController.ServerGameStateBuildingRemoved BuildingRemoved BuildingsSController.ServerGameStateBuildingRemoved" id="buildingremoved-buildingsscontroller-servergamestatebuildingremoved"><td><span class="member-name-cell"><code>BuildingRemoved</code><a class="permalink" href="#buildingremoved-buildingsscontroller-servergamestatebuildingremoved" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public BuildingsSController.ServerGameStateBuildingRemoved BuildingRemoved">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/BuildingsSController_ServerGameStateBuildingRemoved.html">BuildingsSController.ServerGameStateBuildingRemoved</a> BuildingRemoved</code></td></tr>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="NewBuildingSpawned public BuildingsSController.ServerGameStateBuildingAdded NewBuildingSpawned BuildingsSController.ServerGameStateBuildingAdded" id="newbuildingspawned-buildingsscontroller-servergamestatebuildingadded"><td><span class="member-name-cell"><code>NewBuildingSpawned</code><a class="permalink" href="#newbuildingspawned-buildingsscontroller-servergamestatebuildingadded" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public BuildingsSController.ServerGameStateBuildingAdded NewBuildingSpawned">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/BuildingsSController_ServerGameStateBuildingAdded.html">BuildingsSController.ServerGameStateBuildingAdded</a> NewBuildingSpawned</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AfterWorldGameStateLoaded public System.Void AfterWorldGameStateLoaded() System.Void " id="afterworldgamestateloaded----system-void">
+<div class="method-heading">
+<h3><code>AfterWorldGameStateLoaded</code></h3>
+<a class="permalink" href="#afterworldgamestateloaded----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AfterWorldGameStateLoaded()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::AfterWorldGameStateLoaded()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AfterWorldGameStateLoaded()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>350B753A739EF083E6A07A7369FA0C153C5CF6D06FBD51EAB7021F3C72F3CEB7</code></li>
+<li><span>Body hash</span><code>5B674B3EBC2108AFECA4D21E262FC3BF9C7E435616DDEFF036E5D57BF95334BD</code></li>
+<li><span>IL size</span><span>234</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_AbstractBuildingController.html#onloaded----system-void">CandideServer.Buildings.BuildingControllers.AbstractBuildingController::OnLoaded()</a></code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.JobModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Models.JobModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.JobModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.WorkOrders.WorkOrderModel&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;CandideServer.Models.WorkOrders.WorkOrderModel&gt;::get_Current()</code></li>
+<li><code>System.Array::Empty()</code></li>
+<li><code>List.Enumerator&lt;CandideServer.Models.WorkOrders.WorkOrderModel&gt;::MoveNext()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Models.JobModel&gt;::MoveNext()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="BeforeWorldGameStateLoaded public System.Void BeforeWorldGameStateLoaded() System.Void " id="beforeworldgamestateloaded----system-void">
+<div class="method-heading">
+<h3><code>BeforeWorldGameStateLoaded</code></h3>
+<a class="permalink" href="#beforeworldgamestateloaded----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void BeforeWorldGameStateLoaded()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::BeforeWorldGameStateLoaded()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void BeforeWorldGameStateLoaded()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>516551A3C81B426A98C7C19A504EB5EBA2200E8689EFB6BAB130AC078CAE43A9</code></li>
+<li><span>Body hash</span><code>C1677654388180740C45C7EE003EC1B43E0E0CD2CE73E15360BE4DA740C087F8</code></li>
+<li><span>IL size</span><span>259</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Helpers_ServerBiomeCategoryHelper.html#getbiomecategoryserver-microsoft-xna-framework-rectangle--system-guid---system-string">CandideServer.Helpers.ServerBiomeCategoryHelper::GetBiomeCategoryServer(Microsoft.Xna.Framework.Rectangle, System.Guid)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Data_BuildingDataBase.html#getbuildingornull-system-string---shared-models-buildings-buildingdata">Shared.Data.BuildingDataBase::GetBuildingOrNull(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Buildings_BuildingData.html#getexteriormap-system-string---system-string">Shared.Models.Buildings.BuildingData::GetExteriorMap(System.String)</a></code></li>
+<li><code>System.String::IsNullOrWhiteSpace(System.String)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.World.ServerWorldData&gt;::ContainsKey(!0)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_WorldSController.html#onservergamestateloaded-candideserver-gamedescription---system-void"><code>CandideServer.ServerControllers.WorldSController::OnServerGameStateLoaded</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="CalculateAndApplyBuildingAppeal private System.Void CalculateAndApplyBuildingAppeal(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstanceModel, System.Boolean skipApplyingToCitizen) System.Void buildingInstanceModel CandideServer.Models.Buildings.BuildingInstanceModel skipApplyingToCitizen System.Boolean" id="calculateandapplybuildingappeal-candideserver-models-buildings-buildinginstancemodel--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>CalculateAndApplyBuildingAppeal</code></h3>
+<a class="permalink" href="#calculateandapplybuildingappeal-candideserver-models-buildings-buildinginstancemodel--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void CalculateAndApplyBuildingAppeal(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstanceModel, System.Boolean skipApplyingToCitizen)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::CalculateAndApplyBuildingAppeal(CandideServer.Models.Buildings.BuildingInstanceModel, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void CalculateAndApplyBuildingAppeal(<a href="../../types/CandideServer/CandideServer_Models_Buildings_BuildingInstanceModel.html">CandideServer.Models.Buildings.BuildingInstanceModel</a> buildingInstanceModel, System.Boolean skipApplyingToCitizen)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>107ED31C63D176969A600C3DFC18FF13213B07C00D96ADEEF85318BDC1869728</code></li>
+<li><span>Body hash</span><code>7FE3A5264AFDCC7ACE4C4EDD1EA082B00179F52BFF7F1D460EB2B1617B96E49E</code></li>
+<li><span>IL size</span><span>286</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Single&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_WorldStats.html#get-system-string---system-single">Shared.Models.WorldStats::Get(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_BuildingAppealHelper.html#getmaxappealforbuilding-system-string--system-single---system-nullable-1-system-single-">Shared.Helpers.BuildingAppealHelper::GetMaxAppealForBuilding(System.String, System.Single)</a></code></li>
+<li><code>System.Nullable&lt;System.Single&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.Single&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, System.Single&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.Guid, System.Single&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, System.Single&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.MathF::Min(System.Single, System.Single)</code></li>
+<li><code>System.Runtime.CompilerServices.RuntimeHelpers::InitializeArray(System.Array, System.RuntimeFieldHandle)</code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_BuildingAppealHelper.html#calculatehappinessfromappeal-system-single--system-single----system-single---system-single">Shared.Helpers.BuildingAppealHelper::CalculateHappinessFromAppeal(System.Single, System.Single[], System.Single)</a></code></li>
+<li><code>System.Nullable&lt;System.Single&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#removebuildingcitizenstatmodifier-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-void">CandideServer.ServerControllers.BuildingsSController::RemoveBuildingCitizenStatModifier(CandideServer.Models.Buildings.BuildingInstanceModel, System.Guid, System.Boolean)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.StatModificationData&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.StatModificationData&gt;::Add(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#registerbuildingcitizenstatmodifier-candideserver-models-buildings-buildinginstancemodel--system-collections-generic-dictionary-2-system-string-shared-models-stats-statmodificationdata---system-guid--shared-models-stats-statmodifiertype--system-boolean---system-void">CandideServer.ServerControllers.BuildingsSController::RegisterBuildingCitizenStatModifier(CandideServer.Models.Buildings.BuildingInstanceModel, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.StatModificationData&gt;, System.Guid, Shared.Models.Stats.StatModifierType, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#registerdecoration-candideserver-models-buildings-buildinginstancemodel--shared-data-decorations-decorationdata--system-guid--system-boolean---system-void"><code>CandideServer.ServerControllers.BuildingsSController::RegisterDecoration</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#removebuildingappealmodifier-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-boolean"><code>CandideServer.ServerControllers.BuildingsSController::RemoveBuildingAppealModifier</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#upgradebuilding-candideserver-simulationmodels-buildingsimulationmodel--shared-models-construction-constructionmodel--shared-models-buildings-buildingdata---system-void"><code>CandideServer.ServerControllers.BuildingsSController::UpgradeBuilding</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>WorldStats_MaxBuildingAppealModifier</code></li>
+<li><code>Citizen_Happiness</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateBuildingInventory public Shared.Models.Items.SharedInventoryModel CreateBuildingInventory(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, Shared.Messages.CreateNewInventoryMessage msg, CandideServer.ServerControllers.IOInventoryCreationType type) Shared.Models.Items.SharedInventoryModel buildingInstance CandideServer.Models.Buildings.BuildingInstanceModel msg Shared.Messages.CreateNewInventoryMessage type CandideServer.ServerControllers.IOInventoryCreationType" id="createbuildinginventory-candideserver-models-buildings-buildinginstancemodel--shared-messages-createnewinventorymessage--candideserver-servercontrollers-ioinventorycreationtype---shared-models-items-sharedinventorymodel">
+<div class="method-heading">
+<h3><code>CreateBuildingInventory</code></h3>
+<a class="permalink" href="#createbuildinginventory-candideserver-models-buildings-buildinginstancemodel--shared-messages-createnewinventorymessage--candideserver-servercontrollers-ioinventorycreationtype---shared-models-items-sharedinventorymodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Models.Items.SharedInventoryModel CreateBuildingInventory(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, Shared.Messages.CreateNewInventoryMessage msg, CandideServer.ServerControllers.IOInventoryCreationType type)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::CreateBuildingInventory(CandideServer.Models.Buildings.BuildingInstanceModel, Shared.Messages.CreateNewInventoryMessage, CandideServer.ServerControllers.IOInventoryCreationType)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a> CreateBuildingInventory(<a href="../../types/CandideServer/CandideServer_Models_Buildings_BuildingInstanceModel.html">CandideServer.Models.Buildings.BuildingInstanceModel</a> buildingInstance, <a href="../../types/Shared/Shared_Messages_CreateNewInventoryMessage.html">Shared.Messages.CreateNewInventoryMessage</a> msg, <a href="../../types/CandideServer/CandideServer_ServerControllers_IOInventoryCreationType.html">CandideServer.ServerControllers.IOInventoryCreationType</a> type)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Models_Items_SharedInventoryModel.html">Shared.Models.Items.SharedInventoryModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BDD57E884866B40D1FEC8534BD27FCF0791BB9F02A209E81E7A1CFD92D74FADC</code></li>
+<li><span>Body hash</span><code>64FB7F68DF69A9393899DBAAEB98B48BDFED82249BA9B375EDAF9C3A5E5C0C0F</code></li>
+<li><span>IL size</span><span>323</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>CandideServer.ServerControllers.ServerSimpleInventoryException::.ctor(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_SimpleInventorySController.html#createnewinventory-shared-messages-createnewinventorymessage--system-boolean---shared-models-items-sharedinventorymodel">CandideServer.ServerControllers.SimpleInventorySController::CreateNewInventory(Shared.Messages.CreateNewInventoryMessage, System.Boolean)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code>System.ArgumentOutOfRangeException::.ctor(System.String, System.Object, System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_AltarBuildingController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.AltarBuildingController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_BakeryController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.BakeryController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_BeehiveBuildingController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.BeehiveBuildingController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_BlacksmithController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.BlacksmithController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_CarpenterController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.CarpenterController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_ClaypitController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.ClaypitController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_DoliumController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.DoliumController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_FarmsteadController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.FarmsteadController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_FoodStorageController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.FoodStorageController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_LeatherworkerController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.LeatherworkerController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_LumberYardController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.LumberYardController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_MaterialStorageController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.MaterialStorageController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_MillController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.MillController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_PotteryController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.PotteryController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_QuarryController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.QuarryController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_SculptorController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.SculptorController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_TradingPostController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.TradingPostController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_UniversityController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.UniversityController::OnNewlyCreated</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_WaterMillController.html#onnewlycreated----system-void"><code>CandideServer.Buildings.BuildingControllers.WaterMillController::OnNewlyCreated</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Building </code></li>
+<li><code> already has a Storage Inventory and creation type is set to </code></li>
+<li><code> already has an Output Inventory and creation type is set to </code></li>
+<li><code>type</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetOutsideWorldIdFromBuildingId public System.Nullable&lt;System.Guid&gt; GetOutsideWorldIdFromBuildingId(System.Guid buildingId) System.Nullable&lt;System.Guid&gt; buildingId System.Guid" id="getoutsideworldidfrombuildingid-system-guid---system-nullable-1-system-guid-">
+<div class="method-heading">
+<h3><code>GetOutsideWorldIdFromBuildingId</code></h3>
+<a class="permalink" href="#getoutsideworldidfrombuildingid-system-guid---system-nullable-1-system-guid-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Nullable&lt;System.Guid&gt; GetOutsideWorldIdFromBuildingId(System.Guid buildingId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::GetOutsideWorldIdFromBuildingId(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Nullable&lt;System.Guid&gt; GetOutsideWorldIdFromBuildingId(System.Guid buildingId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Nullable&lt;System.Guid&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B5C3AD9E27A0FCC34082C068A731A889154B7CAC5A3DAFAF6554879021D27F3E</code></li>
+<li><span>Body hash</span><code>987D4C311EF0BA2871FBCDA3EFD050C5CAD9F4DFFFE5AAC09E35B3B783C97E28</code></li>
+<li><span>IL size</span><span>103</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_MillController.html#ejectinventory----system-void"><code>CandideServer.Buildings.BuildingControllers.MillController::EjectInventory</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RegisterBuildingCitizenStatModifier public System.Void RegisterBuildingCitizenStatModifier(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.StatModificationData&gt; decorationCitizenStatBonuses, System.Guid modifierId, Shared.Models.Stats.StatModifierType type, System.Boolean skipApplyingToCitizen) System.Void buildingInstance CandideServer.Models.Buildings.BuildingInstanceModel decorationCitizenStatBonuses System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.StatModificationData&gt; modifierId System.Guid type Shared.Models.Stats.StatModifierType skipApplyingToCitizen System.Boolean" id="registerbuildingcitizenstatmodifier-candideserver-models-buildings-buildinginstancemodel--system-collections-generic-dictionary-2-system-string-shared-models-stats-statmodificationdata---system-guid--shared-models-stats-statmodifiertype--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>RegisterBuildingCitizenStatModifier</code></h3>
+<a class="permalink" href="#registerbuildingcitizenstatmodifier-candideserver-models-buildings-buildinginstancemodel--system-collections-generic-dictionary-2-system-string-shared-models-stats-statmodificationdata---system-guid--shared-models-stats-statmodifiertype--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RegisterBuildingCitizenStatModifier(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.StatModificationData&gt; decorationCitizenStatBonuses, System.Guid modifierId, Shared.Models.Stats.StatModifierType type, System.Boolean skipApplyingToCitizen)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::RegisterBuildingCitizenStatModifier(CandideServer.Models.Buildings.BuildingInstanceModel, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.StatModificationData&gt;, System.Guid, Shared.Models.Stats.StatModifierType, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RegisterBuildingCitizenStatModifier(<a href="../../types/CandideServer/CandideServer_Models_Buildings_BuildingInstanceModel.html">CandideServer.Models.Buildings.BuildingInstanceModel</a> buildingInstance, System.Collections.Generic.Dictionary&lt;System.String, <a href="../../types/Shared/Shared_Models_Stats_StatModificationData.html">Shared.Models.Stats.StatModificationData</a>&gt; decorationCitizenStatBonuses, System.Guid modifierId, <a href="../../types/Shared/Shared_Models_Stats_StatModifierType.html">Shared.Models.Stats.StatModifierType</a> type, System.Boolean skipApplyingToCitizen)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>23649C0A54AE8D2C88A5BA99302ED1B82D08FC74253C8AF6FA3C09C9A6D5FB11</code></li>
+<li><span>Body hash</span><code>2F258A4AB88E55C8D222BDF6E6798673725A6C8DDCB0E6CAAC8361901BFC1EA1</code></li>
+<li><span>IL size</span><span>150</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.StatModificationData&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, Shared.Models.Stats.StatModificationData&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, Shared.Models.Stats.StatModificationData&gt;::get_Key()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.Stat&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Models.Stats.Stat::.ctor(System.String)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.Stat&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, Shared.Models.Stats.StatModificationData&gt;::get_Value()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_Stat.html#setstatmodifier-system-guid--shared-models-stats-statmodifier---system-void">Shared.Models.Stats.Stat::SetStatModifier(System.Guid, Shared.Models.Stats.StatModifier)</a></code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, Shared.Models.Stats.StatModificationData&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#updatecitizenslotsstatsandsendupdates-candideserver-models-buildings-buildinginstancemodel---system-void">CandideServer.ServerControllers.BuildingsSController::UpdateCitizenSlotsStatsAndSendUpdates(CandideServer.Models.Buildings.BuildingInstanceModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#calculateandapplybuildingappeal-candideserver-models-buildings-buildinginstancemodel--system-boolean---system-void"><code>CandideServer.ServerControllers.BuildingsSController::CalculateAndApplyBuildingAppeal</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#registerdecoration-candideserver-models-buildings-buildinginstancemodel--shared-data-decorations-decorationdata--system-guid--system-boolean---system-void"><code>CandideServer.ServerControllers.BuildingsSController::RegisterDecoration</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RegisterDecoration public System.Void RegisterDecoration(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, Shared.Data.Decorations.DecorationData decoration, System.Guid spawnId, System.Boolean skipUpdates) System.Void buildingInstance CandideServer.Models.Buildings.BuildingInstanceModel decoration Shared.Data.Decorations.DecorationData spawnId System.Guid skipUpdates System.Boolean" id="registerdecoration-candideserver-models-buildings-buildinginstancemodel--shared-data-decorations-decorationdata--system-guid--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>RegisterDecoration</code></h3>
+<a class="permalink" href="#registerdecoration-candideserver-models-buildings-buildinginstancemodel--shared-data-decorations-decorationdata--system-guid--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RegisterDecoration(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, Shared.Data.Decorations.DecorationData decoration, System.Guid spawnId, System.Boolean skipUpdates)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::RegisterDecoration(CandideServer.Models.Buildings.BuildingInstanceModel, Shared.Data.Decorations.DecorationData, System.Guid, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RegisterDecoration(<a href="../../types/CandideServer/CandideServer_Models_Buildings_BuildingInstanceModel.html">CandideServer.Models.Buildings.BuildingInstanceModel</a> buildingInstance, <a href="../../types/Shared/Shared_Data_Decorations_DecorationData.html">Shared.Data.Decorations.DecorationData</a> decoration, System.Guid spawnId, System.Boolean skipUpdates)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>11E26E7FDA6A260F6E41E2B7211B59C719A6D8028C0B657C5BF35E81F16CE0F3</code></li>
+<li><span>Body hash</span><code>D8EAB01DAEDA04BFC185F1EF6B06B14D2AC16DC2480C4BE676B49E8545EEE686</code></li>
+<li><span>IL size</span><span>96</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Single&gt;::get_HasValue()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.Single&gt;::set_Item(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#calculateandapplybuildingappeal-candideserver-models-buildings-buildinginstancemodel--system-boolean---system-void">CandideServer.ServerControllers.BuildingsSController::CalculateAndApplyBuildingAppeal(CandideServer.Models.Buildings.BuildingInstanceModel, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#registerbuildingcitizenstatmodifier-candideserver-models-buildings-buildinginstancemodel--system-collections-generic-dictionary-2-system-string-shared-models-stats-statmodificationdata---system-guid--shared-models-stats-statmodifiertype--system-boolean---system-void">CandideServer.ServerControllers.BuildingsSController::RegisterBuildingCitizenStatModifier(CandideServer.Models.Buildings.BuildingInstanceModel, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.StatModificationData&gt;, System.Guid, Shared.Models.Stats.StatModifierType, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#updatesendbuildingappeal-candideserver-models-buildings-buildinginstancemodel---system-void">CandideServer.ServerControllers.BuildingsSController::UpdateSendBuildingAppeal(CandideServer.Models.Buildings.BuildingInstanceModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#updatecitizenslotsstatsandsendupdates-candideserver-models-buildings-buildinginstancemodel---system-void">CandideServer.ServerControllers.BuildingsSController::UpdateCitizenSlotsStatsAndSendUpdates(CandideServer.Models.Buildings.BuildingInstanceModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_DecorationsSController.html#newbuildingcreatedgetdecorations-candideserver-simulationmodels-buildingsimulationmodel---system-void"><code>CandideServer.ServerControllers.DecorationsSController::NewBuildingCreatedGetDecorations</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_DecorationsSController.html#updatenearbybuildingstats-shared-data-decorations-decorationdata--microsoft-xna-framework-rectangle--system-guid--system-boolean---system-void"><code>CandideServer.ServerControllers.DecorationsSController::UpdateNearbyBuildingStats</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RegisterInternalResourceStorage public System.Void RegisterInternalResourceStorage(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, System.Guid storageId, CandideServer.ServerControllers.IOStorageCreationType type) System.Void buildingInstance CandideServer.Models.Buildings.BuildingInstanceModel storageId System.Guid type CandideServer.ServerControllers.IOStorageCreationType" id="registerinternalresourcestorage-candideserver-models-buildings-buildinginstancemodel--system-guid--candideserver-servercontrollers-iostoragecreationtype---system-void">
+<div class="method-heading">
+<h3><code>RegisterInternalResourceStorage</code></h3>
+<a class="permalink" href="#registerinternalresourcestorage-candideserver-models-buildings-buildinginstancemodel--system-guid--candideserver-servercontrollers-iostoragecreationtype---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RegisterInternalResourceStorage(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, System.Guid storageId, CandideServer.ServerControllers.IOStorageCreationType type)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::RegisterInternalResourceStorage(CandideServer.Models.Buildings.BuildingInstanceModel, System.Guid, CandideServer.ServerControllers.IOStorageCreationType)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RegisterInternalResourceStorage(<a href="../../types/CandideServer/CandideServer_Models_Buildings_BuildingInstanceModel.html">CandideServer.Models.Buildings.BuildingInstanceModel</a> buildingInstance, System.Guid storageId, <a href="../../types/CandideServer/CandideServer_ServerControllers_IOStorageCreationType.html">CandideServer.ServerControllers.IOStorageCreationType</a> type)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>75707F8F9BFD2A9368DF4293217728C7E5FD3F3177406B056E0F620828F0AD08</code></li>
+<li><span>Body hash</span><code>6CA6444080CB5E12567C0BD7A35A2D5E26646DDCAC8B206FACB6029CF8F12E8F</code></li>
+<li><span>IL size</span><span>177</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Exception::.ctor(System.String)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code>System.ArgumentOutOfRangeException::.ctor(System.String, System.Object, System.String)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#createinternalresourcestorageforbuilding-candideserver-models-buildings-buildinginstancemodel--candideserver-messagemodels-internalresourcestorage-createnewinternalresourcestoragemessage--candideserver-servercontrollers-iostoragecreationtype---candideserver-models-internalresourcestoragemodel"><code>CandideServer.ServerManagers.BuildingsServerManager::CreateInternalResourceStorageForBuilding</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Building instance already has a storage ID set</code></li>
+<li><code>Building instance already has a output ID set</code></li>
+<li><code>Building instance already has a storage ID and output ID set</code></li>
+<li><code>type</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveBuilding public CandideServer.MessageModels.Buildings.BuildingRemovedMessage RemoveBuilding(System.Guid buildingId) CandideServer.MessageModels.Buildings.BuildingRemovedMessage buildingId System.Guid" id="removebuilding-system-guid---candideserver-messagemodels-buildings-buildingremovedmessage">
+<div class="method-heading">
+<h3><code>RemoveBuilding</code></h3>
+<a class="permalink" href="#removebuilding-system-guid---candideserver-messagemodels-buildings-buildingremovedmessage" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.MessageModels.Buildings.BuildingRemovedMessage RemoveBuilding(System.Guid buildingId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::RemoveBuilding(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_BuildingRemovedMessage.html">CandideServer.MessageModels.Buildings.BuildingRemovedMessage</a> RemoveBuilding(System.Guid buildingId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_BuildingRemovedMessage.html">CandideServer.MessageModels.Buildings.BuildingRemovedMessage</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>88CC2B8066926FD7B9CE5D2E68AA3B89E67F8C400184B6F09124AE9ADA69FC1B</code></li>
+<li><span>Body hash</span><code>BEC28A098AC06F9DAC1B9515C5679F6B23EABD1C21A992E0BDE1EBBCA8D88931</code></li>
+<li><span>IL size</span><span>2855</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygettown-system-guid--candideserver-models-town-servertownmodel----system-boolean">CandideServer.ServerGameState::TryGetTown(System.Guid, CandideServer.Models.Town.ServerTownModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetworld-system-guid--candideserver-models-worlds-worldmodel----system-boolean">CandideServer.ServerGameState::TryGetWorld(System.Guid, CandideServer.Models.Worlds.WorldModel&amp;)</a></code></li>
+<li><code>CandideServer.Exceptions.CorruptServerGameStateException::.ctor(System.String)</code></li>
+<li><code>System.NotImplementedException::.ctor(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Toolkit_TileBoundsHelper.html#getcenteredpositionfromtilebounds-microsoft-xna-framework-rectangle---microsoft-xna-framework-vector2">CandideServer.Toolkit.TileBoundsHelper::GetCenteredPositionFromTileBounds(Microsoft.Xna.Framework.Rectangle)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector3xy-microsoft-xna-framework-vector2---microsoft-xna-framework-vector3">CandideCreator.Shared.Helpers.VectorExtension::ToVector3Xy(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.MessageModels.Towns.CitizenTownOverviewData&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.Citizen.CitizenModel&gt;::.ctor()</code></li>
+<li><code>CandideServer.MessageModels.Buildings.BuildingRemovedMessage::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Citizens.Jobs.UpdateJobMessage&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Text.StringId&gt;::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_LogisticsServerController.html#removebuildingconnections-candideserver-simulationmodels-buildingsimulationmodel---system-collections-generic-list-1-system-guid-">CandideServer.ServerControllers.LogisticsServerController::RemoveBuildingConnections(CandideServer.SimulationModels.BuildingSimulationModel)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizenslot-system-guid--candideserver-simulationmodels-citizenslotsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizenSlot(System.Guid, CandideServer.SimulationModels.CitizenSlotSimulationModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizen-system-guid--candideserver-models-citizen-citizenmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizen(System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)</a></code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Contains(!0)</code></li>
+<li><code>CandideServer.ServerControllers.UnassignCitizenSlotMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#unassigncitizenslot-candideserver-servercontrollers-unassigncitizenslotmessage---system-void">CandideServer.ServerControllers.CitizenSlotsSController::UnassignCitizenSlot(CandideServer.ServerControllers.UnassignCitizenSlotMessage)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Models.Citizen.CitizenModel&gt;::Add(!0)</code></li>
+<li><code>CandideServer.ServerControllers.BuildingsSController::&lt;RemoveBuilding&gt;g__FindNewSlot|13_0(BuildingsSController.&lt;&gt;c__DisplayClass13_0&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_WorldSController.html#removeworld-system-guid--system-boolean---system-void"><code>CandideServer.ServerControllers.WorldSController::RemoveWorld</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#tryremovebuilding-system-guid--candideserver-syncstrategies-syncstrategy---system-boolean"><code>CandideServer.ServerManagers.BuildingsServerManager::TryRemoveBuilding</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Building does not have a town ID </code></li>
+<li><code>, </code></li>
+<li><code>Trying to remove building </code></li>
+<li><code> but the storage inventory associated no longer exists. Server game state is corrupt</code></li>
+<li><code>Buildings can only be removed from the main world right now</code></li>
+<li><code> but the citizen slots associated no longer exists. Server game state is corrupt</code></li>
+<li><code> but the citizen </code></li>
+<li><code> associated no longer exists. Server game state is corrupt</code></li>
+<li><code> associated is not listed in its associated town. Server game state is corrupt</code></li>
+<li><code>wild_citizen_id</code></li>
+<li><code> but the output inventory associated no longer exists. Server game state is corrupt</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="RemoveBuildingAppealModifier private System.Boolean RemoveBuildingAppealModifier(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstanceModel, System.Guid decorationId, System.Boolean skipApplyingToCitizen) System.Boolean buildingInstanceModel CandideServer.Models.Buildings.BuildingInstanceModel decorationId System.Guid skipApplyingToCitizen System.Boolean" id="removebuildingappealmodifier-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>RemoveBuildingAppealModifier</code></h3>
+<a class="permalink" href="#removebuildingappealmodifier-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean RemoveBuildingAppealModifier(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstanceModel, System.Guid decorationId, System.Boolean skipApplyingToCitizen)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::RemoveBuildingAppealModifier(CandideServer.Models.Buildings.BuildingInstanceModel, System.Guid, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean RemoveBuildingAppealModifier(<a href="../../types/CandideServer/CandideServer_Models_Buildings_BuildingInstanceModel.html">CandideServer.Models.Buildings.BuildingInstanceModel</a> buildingInstanceModel, System.Guid decorationId, System.Boolean skipApplyingToCitizen)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B53A43590C2CCA7AD0E76FB555F78DA557D47F44F760604C3009D36117098967</code></li>
+<li><span>Body hash</span><code>81AA38D293F974377CB829666D9199DABC4EE55E0D57644E75C1694500F4F472</code></li>
+<li><span>IL size</span><span>25</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.Single&gt;::Remove(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#calculateandapplybuildingappeal-candideserver-models-buildings-buildinginstancemodel--system-boolean---system-void">CandideServer.ServerControllers.BuildingsSController::CalculateAndApplyBuildingAppeal(CandideServer.Models.Buildings.BuildingInstanceModel, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#unregisterdecoration-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-void"><code>CandideServer.ServerControllers.BuildingsSController::UnregisterDecoration</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveBuildingCitizenStatModifier public System.Void RemoveBuildingCitizenStatModifier(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, System.Guid modifierId, System.Boolean skipApplyingToCitizen) System.Void buildingInstance CandideServer.Models.Buildings.BuildingInstanceModel modifierId System.Guid skipApplyingToCitizen System.Boolean" id="removebuildingcitizenstatmodifier-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>RemoveBuildingCitizenStatModifier</code></h3>
+<a class="permalink" href="#removebuildingcitizenstatmodifier-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemoveBuildingCitizenStatModifier(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, System.Guid modifierId, System.Boolean skipApplyingToCitizen)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::RemoveBuildingCitizenStatModifier(CandideServer.Models.Buildings.BuildingInstanceModel, System.Guid, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemoveBuildingCitizenStatModifier(<a href="../../types/CandideServer/CandideServer_Models_Buildings_BuildingInstanceModel.html">CandideServer.Models.Buildings.BuildingInstanceModel</a> buildingInstance, System.Guid modifierId, System.Boolean skipApplyingToCitizen)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FD9A3B8D8955C1B310679A3BA24DD47F09C4B3F45E2106B4461E23CF561ECAD1</code></li>
+<li><span>Body hash</span><code>943FCD7A7668503BE651F8F3E70181872036D6AA5B3D038C0D15C1FEC6C33F1E</code></li>
+<li><span>IL size</span><span>76</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.Stat&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, Shared.Models.Stats.Stat&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, Shared.Models.Stats.Stat&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_Stat.html#removestatmodifier-system-guid---system-void">Shared.Models.Stats.Stat::RemoveStatModifier(System.Guid)</a></code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, Shared.Models.Stats.Stat&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#updatecitizenslotsstatsandsendupdates-candideserver-models-buildings-buildinginstancemodel---system-void">CandideServer.ServerControllers.BuildingsSController::UpdateCitizenSlotsStatsAndSendUpdates(CandideServer.Models.Buildings.BuildingInstanceModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#calculateandapplybuildingappeal-candideserver-models-buildings-buildinginstancemodel--system-boolean---system-void"><code>CandideServer.ServerControllers.BuildingsSController::CalculateAndApplyBuildingAppeal</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#unregisterdecoration-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-void"><code>CandideServer.ServerControllers.BuildingsSController::UnregisterDecoration</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnNewBuildingConstruction public CandideServer.SimulationModels.BuildingSimulationModel SpawnNewBuildingConstruction(System.String constructionId, System.Guid newBuildingId, Microsoft.Xna.Framework.Rectangle tileBounds, System.Nullable&lt;System.Guid&gt; townId, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; parameters) CandideServer.SimulationModels.BuildingSimulationModel constructionId System.String newBuildingId System.Guid tileBounds Microsoft.Xna.Framework.Rectangle townId System.Nullable&lt;System.Guid&gt; parameters System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;" id="spawnnewbuildingconstruction-system-string--system-guid--microsoft-xna-framework-rectangle--system-nullable-1-system-guid---system-collections-generic-dictionary-2-system-string-system-string----candideserver-simulationmodels-buildingsimulationmodel">
+<div class="method-heading">
+<h3><code>SpawnNewBuildingConstruction</code></h3>
+<a class="permalink" href="#spawnnewbuildingconstruction-system-string--system-guid--microsoft-xna-framework-rectangle--system-nullable-1-system-guid---system-collections-generic-dictionary-2-system-string-system-string----candideserver-simulationmodels-buildingsimulationmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.SimulationModels.BuildingSimulationModel SpawnNewBuildingConstruction(System.String constructionId, System.Guid newBuildingId, Microsoft.Xna.Framework.Rectangle tileBounds, System.Nullable&lt;System.Guid&gt; townId, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; parameters)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::SpawnNewBuildingConstruction(System.String, System.Guid, Microsoft.Xna.Framework.Rectangle, System.Nullable&lt;System.Guid&gt;, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> SpawnNewBuildingConstruction(System.String constructionId, System.Guid newBuildingId, Microsoft.Xna.Framework.Rectangle tileBounds, System.Nullable&lt;System.Guid&gt; townId, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; parameters)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E0ABCB7E1158A6C944A7E1CCB05FD129AE8AB1A79885939F4E40A69868545098</code></li>
+<li><span>Body hash</span><code>63F7C8A762DD3D3C83DC526F8D5F4AECEF684D4656E6E4138BE1AFD4FF7B26E9</code></li>
+<li><span>IL size</span><span>1190</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_ConstructionDataBase.html#getconstructionormissing-system-string---shared-models-construction-constructionmodel">Shared.Data.ConstructionDataBase::GetConstructionOrMissing(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Data_BuildingDataBase.html#getbuildingormissing-system-string---shared-models-buildings-buildingdata">Shared.Data.BuildingDataBase::GetBuildingOrMissing(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Helpers_ServerBiomeCategoryHelper.html#getbiomecategoryserver-microsoft-xna-framework-rectangle--system-guid---system-string">CandideServer.Helpers.ServerBiomeCategoryHelper::GetBiomeCategoryServer(Microsoft.Xna.Framework.Rectangle, System.Guid)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Buildings_BuildingData.html#getexteriormap-system-string---system-string">Shared.Models.Buildings.BuildingData::GetExteriorMap(System.String)</a></code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>CandideServer.MessageModels.Worlds.NewWorldMessage::.ctor()</code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_WorldSController.html#newworld-candideserver-messagemodels-worlds-newworldmessage--system-func-3-candideserver-servercontrollers-spawnentityargs-candideserver-world-serverentityspawndata-system-boolean----candideserver-models-worlds-worldmodel">CandideServer.ServerControllers.WorldSController::NewWorld(CandideServer.MessageModels.Worlds.NewWorldMessage, System.Func&lt;CandideServer.ServerControllers.SpawnEntityArgs, CandideServer.World.ServerEntitySpawnData, System.Boolean&gt;)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#toidstring-system-string---system-string">Shared.Analytics.AnalyticsHandler::ToIdString(System.String)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Center()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_ServerAnalyticsManager.html#setanalyticeventtile-microsoft-xna-framework-point--system-nullable-1-system-guid----system-void">CandideServer.ServerManagers.ServerAnalyticsManager::SetAnalyticEventTile(Microsoft.Xna.Framework.Point, System.Nullable&lt;System.Guid&gt;)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#getworldplaytimehours----system-double">CandideServer.ServerGameState::GetWorldPlayTimeHours()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#log-system-string--system-double--analyticshandler-logtype--system-single---system-void">Shared.Analytics.AnalyticsHandler::Log(System.String, System.Double, AnalyticsHandler.LogType, System.Single)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Citizens.CreateCitizenSlotMessage&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Buildings.CitizenSlotData&gt;::get_Item(System.Int32)</code></li>
+<li><code>CandideServer.MessageModels.Citizens.CreateCitizenSlotMessage::.ctor()</code></li>
+<li><code>System.String::IsNullOrEmpty(System.String)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Citizens.CreateCitizenSlotMessage&gt;::Add(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Buildings.CitizenSlotData&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#createcitizenslots-system-collections-generic-ienumerable-1-candideserver-messagemodels-citizens-createcitizenslotmessage---system-int32---system-collections-generic-list-1-system-guid-">CandideServer.ServerControllers.CitizenSlotsSController::CreateCitizenSlots(System.Collections.Generic.IEnumerable&lt;CandideServer.MessageModels.Citizens.CreateCitizenSlotMessage&gt;, System.Int32)</a></code></li>
+<li><code>CandideServer.Models.Buildings.BuildingInstanceModel::.ctor()</code></li>
+<li><code>System.Nullable&lt;System.Single&gt;::.ctor(!0)</code></li>
+<li><code>CandideServer.SimulationModels.BuildingSimulationModel::.ctor(CandideServer.Models.Buildings.BuildingInstanceModel)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.String&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.String&gt;::get_Key()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.String&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::set_Item(!0, !1)</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.String&gt;::MoveNext()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_ConstructionsServerManager.html#spawnconstruction-shared-models-construction-constructionmodel--microsoft-xna-framework-rectangle--system-guid--system-guid--system-collections-generic-dictionary-2-system-string-system-string---system-nullable-1-system-guid---system-nullable-1-system-guid---system-nullable-1-system-guid----system-void"><code>CandideServer.ServerManagers.ConstructionsServerManager::SpawnConstruction</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code> Exterior Map</code></li>
+<li><code>building:</code></li>
+<li><code>:first</code></li>
+<li><code>:count</code></li>
+<li><code>Did not place down any tiles when constructing building &#39;</code></li>
+<li><code>&#39; with exterior map &#39;</code></li>
+<li><code>&#39;</code></li>
+<li><code> Interior Map</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UnregisterDecoration public System.Void UnregisterDecoration(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, System.Guid decorationId, System.Boolean skipUpdates) System.Void buildingInstance CandideServer.Models.Buildings.BuildingInstanceModel decorationId System.Guid skipUpdates System.Boolean" id="unregisterdecoration-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>UnregisterDecoration</code></h3>
+<a class="permalink" href="#unregisterdecoration-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UnregisterDecoration(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance, System.Guid decorationId, System.Boolean skipUpdates)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::UnregisterDecoration(CandideServer.Models.Buildings.BuildingInstanceModel, System.Guid, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UnregisterDecoration(<a href="../../types/CandideServer/CandideServer_Models_Buildings_BuildingInstanceModel.html">CandideServer.Models.Buildings.BuildingInstanceModel</a> buildingInstance, System.Guid decorationId, System.Boolean skipUpdates)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>47C8258BB706B3818EC5CAB23EEA8F79B39503F0BAE2551CCF931E0A0C260BB4</code></li>
+<li><span>Body hash</span><code>AF955AC209F92E374B11AF40725A42A71A216370B204666A72D3223259E47CC1</code></li>
+<li><span>IL size</span><span>37</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#removebuildingappealmodifier-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-boolean">CandideServer.ServerControllers.BuildingsSController::RemoveBuildingAppealModifier(CandideServer.Models.Buildings.BuildingInstanceModel, System.Guid, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#removebuildingcitizenstatmodifier-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-void">CandideServer.ServerControllers.BuildingsSController::RemoveBuildingCitizenStatModifier(CandideServer.Models.Buildings.BuildingInstanceModel, System.Guid, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#updatesendbuildingappeal-candideserver-models-buildings-buildinginstancemodel---system-void">CandideServer.ServerControllers.BuildingsSController::UpdateSendBuildingAppeal(CandideServer.Models.Buildings.BuildingInstanceModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#updatecitizenslotsstatsandsendupdates-candideserver-models-buildings-buildinginstancemodel---system-void">CandideServer.ServerControllers.BuildingsSController::UpdateCitizenSlotsStatsAndSendUpdates(CandideServer.Models.Buildings.BuildingInstanceModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_DecorationsSController.html#removedecoration-candideserver-models-decorations-decorationinstancemodel--system-boolean---system-void"><code>CandideServer.ServerControllers.DecorationsSController::RemoveDecoration</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateBuildingParameters public System.Void UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage msg) System.Void msg CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage" id="updatebuildingparameters-candideserver-messagemodels-buildings-updatebuildingparametersmessage---system-void">
+<div class="method-heading">
+<h3><code>UpdateBuildingParameters</code></h3>
+<a class="permalink" href="#updatebuildingparameters-candideserver-messagemodels-buildings-updatebuildingparametersmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage msg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::UpdateBuildingParameters(CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateBuildingParameters(<a href="../../types/CandideServer/CandideServer_MessageModels_Buildings_UpdateBuildingParametersMessage.html">CandideServer.MessageModels.Buildings.UpdateBuildingParametersMessage</a> msg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E4CFA9B3D089247506D6448587C31AEC0D6E01B9A2894C369838B3E1C3065134</code></li>
+<li><span>Body hash</span><code>2CA66A7B8FCCE5984D2EFD45432A1CDC30E5E56B6C83CE22DF073D5E2304FDD0</code></li>
+<li><span>IL size</span><span>94</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.String&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.String&gt;::get_Key()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.String, System.String&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::set_Item(!0, !1)</code></li>
+<li><code>Dictionary.Enumerator&lt;System.String, System.String&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#updatebuildingparameters-candideserver-messagemodels-buildings-updatebuildingparametersmessage---system-void"><code>CandideServer.ServerManagers.BuildingsServerManager::UpdateBuildingParameters</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateCitizenSlotsStatsAndSendUpdates public System.Void UpdateCitizenSlotsStatsAndSendUpdates(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance) System.Void buildingInstance CandideServer.Models.Buildings.BuildingInstanceModel" id="updatecitizenslotsstatsandsendupdates-candideserver-models-buildings-buildinginstancemodel---system-void">
+<div class="method-heading">
+<h3><code>UpdateCitizenSlotsStatsAndSendUpdates</code></h3>
+<a class="permalink" href="#updatecitizenslotsstatsandsendupdates-candideserver-models-buildings-buildinginstancemodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateCitizenSlotsStatsAndSendUpdates(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::UpdateCitizenSlotsStatsAndSendUpdates(CandideServer.Models.Buildings.BuildingInstanceModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateCitizenSlotsStatsAndSendUpdates(<a href="../../types/CandideServer/CandideServer_Models_Buildings_BuildingInstanceModel.html">CandideServer.Models.Buildings.BuildingInstanceModel</a> buildingInstance)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>04B080A0993C132E5C94F7635A4BC3D471530EAD117D4D5CBB0C973355FEC4EC</code></li>
+<li><span>Body hash</span><code>7047B9DD478FC1D05E5FD0CE05E0D4AA1C2E14C5F125381AE6BDCD3C641F678E</code></li>
+<li><span>IL size</span><span>106</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizenslot-system-guid--candideserver-simulationmodels-citizenslotsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizenSlot(System.Guid, CandideServer.SimulationModels.CitizenSlotSimulationModel&amp;)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizen-system-guid--candideserver-models-citizen-citizenmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizen(System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#updatestatsandsendupdate-candideserver-models-citizen-citizenmodel--candideserver-models-buildings-buildinginstancemodel---system-void">CandideServer.ServerManagers.CitizenServerManager::UpdateStatsAndSendUpdate(CandideServer.Models.Citizen.CitizenModel, CandideServer.Models.Buildings.BuildingInstanceModel)</a></code></li>
+<li><code>List.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#registerbuildingcitizenstatmodifier-candideserver-models-buildings-buildinginstancemodel--system-collections-generic-dictionary-2-system-string-shared-models-stats-statmodificationdata---system-guid--shared-models-stats-statmodifiertype--system-boolean---system-void"><code>CandideServer.ServerControllers.BuildingsSController::RegisterBuildingCitizenStatModifier</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#registerdecoration-candideserver-models-buildings-buildinginstancemodel--shared-data-decorations-decorationdata--system-guid--system-boolean---system-void"><code>CandideServer.ServerControllers.BuildingsSController::RegisterDecoration</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#removebuildingcitizenstatmodifier-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-void"><code>CandideServer.ServerControllers.BuildingsSController::RemoveBuildingCitizenStatModifier</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#unregisterdecoration-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-void"><code>CandideServer.ServerControllers.BuildingsSController::UnregisterDecoration</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_DecorationsSController.html#newbuildingcreatedgetdecorations-candideserver-simulationmodels-buildingsimulationmodel---system-void"><code>CandideServer.ServerControllers.DecorationsSController::NewBuildingCreatedGetDecorations</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateSendBuildingAppeal public System.Void UpdateSendBuildingAppeal(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance) System.Void buildingInstance CandideServer.Models.Buildings.BuildingInstanceModel" id="updatesendbuildingappeal-candideserver-models-buildings-buildinginstancemodel---system-void">
+<div class="method-heading">
+<h3><code>UpdateSendBuildingAppeal</code></h3>
+<a class="permalink" href="#updatesendbuildingappeal-candideserver-models-buildings-buildinginstancemodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateSendBuildingAppeal(CandideServer.Models.Buildings.BuildingInstanceModel buildingInstance)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::UpdateSendBuildingAppeal(CandideServer.Models.Buildings.BuildingInstanceModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateSendBuildingAppeal(<a href="../../types/CandideServer/CandideServer_Models_Buildings_BuildingInstanceModel.html">CandideServer.Models.Buildings.BuildingInstanceModel</a> buildingInstance)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2BFEF836EF942B60EF16053C6B3A2C5129A751444470A1B538E299067A7C77A4</code></li>
+<li><span>Body hash</span><code>115FCEB15D7982BDA1C44E1514B2A72CCBEC536663B1EA06D10F015DD7378148</code></li>
+<li><span>IL size</span><span>49</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Single&gt;::get_HasValue()</code></li>
+<li><code>CandideServer.MessageModels.Buildings.UpdateBuildingAppealMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_BuildingsServerService.html#send-updatebuildingappeal-candideserver-messagemodels-buildings-updatebuildingappealmessage---system-void">CandideServer.ServerServices.BuildingsServerService::Send_UpdateBuildingAppeal(CandideServer.MessageModels.Buildings.UpdateBuildingAppealMessage)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#registerdecoration-candideserver-models-buildings-buildinginstancemodel--shared-data-decorations-decorationdata--system-guid--system-boolean---system-void"><code>CandideServer.ServerControllers.BuildingsSController::RegisterDecoration</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#unregisterdecoration-candideserver-models-buildings-buildinginstancemodel--system-guid--system-boolean---system-void"><code>CandideServer.ServerControllers.BuildingsSController::UnregisterDecoration</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_DecorationsSController.html#newbuildingcreatedgetdecorations-candideserver-simulationmodels-buildingsimulationmodel---system-void"><code>CandideServer.ServerControllers.DecorationsSController::NewBuildingCreatedGetDecorations</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpgradeBuilding public System.Void UpgradeBuilding(CandideServer.SimulationModels.BuildingSimulationModel building, Shared.Models.Construction.ConstructionModel construction, Shared.Models.Buildings.BuildingData upgradedBuildingData) System.Void building CandideServer.SimulationModels.BuildingSimulationModel construction Shared.Models.Construction.ConstructionModel upgradedBuildingData Shared.Models.Buildings.BuildingData" id="upgradebuilding-candideserver-simulationmodels-buildingsimulationmodel--shared-models-construction-constructionmodel--shared-models-buildings-buildingdata---system-void">
+<div class="method-heading">
+<h3><code>UpgradeBuilding</code></h3>
+<a class="permalink" href="#upgradebuilding-candideserver-simulationmodels-buildingsimulationmodel--shared-models-construction-constructionmodel--shared-models-buildings-buildingdata---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpgradeBuilding(CandideServer.SimulationModels.BuildingSimulationModel building, Shared.Models.Construction.ConstructionModel construction, Shared.Models.Buildings.BuildingData upgradedBuildingData)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.BuildingsSController::UpgradeBuilding(CandideServer.SimulationModels.BuildingSimulationModel, Shared.Models.Construction.ConstructionModel, Shared.Models.Buildings.BuildingData)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpgradeBuilding(<a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> building, <a href="../../types/Shared/Shared_Models_Construction_ConstructionModel.html">Shared.Models.Construction.ConstructionModel</a> construction, <a href="../../types/Shared/Shared_Models_Buildings_BuildingData.html">Shared.Models.Buildings.BuildingData</a> upgradedBuildingData)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>744C59A135C96ADEE540B7500C04A830832F4595A9D3DC9AF12897D9185A3E16</code></li>
+<li><span>Body hash</span><code>A45AE8BD699F994135AA926F9ABD88C7D9DF114F6F29858BAF580F2531093664</code></li>
+<li><span>IL size</span><span>597</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#toidstring-system-string---system-string">Shared.Analytics.AnalyticsHandler::ToIdString(System.String)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Center()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_ServerAnalyticsManager.html#setanalyticeventtile-microsoft-xna-framework-point--system-nullable-1-system-guid----system-void">CandideServer.ServerManagers.ServerAnalyticsManager::SetAnalyticEventTile(Microsoft.Xna.Framework.Point, System.Nullable&lt;System.Guid&gt;)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#getworldplaytimehours----system-double">CandideServer.ServerGameState::GetWorldPlayTimeHours()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsHandler.html#log-system-string--system-double--analyticshandler-logtype--system-single---system-void">Shared.Analytics.AnalyticsHandler::Log(System.String, System.Double, AnalyticsHandler.LogType, System.Single)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Buildings_BuildingData.html#getexteriormap-system-string---system-string">Shared.Models.Buildings.BuildingData::GetExteriorMap(System.String)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Buildings.CitizenSlotData&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Citizens.CreateCitizenSlotMessage&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Buildings.CitizenSlotData&gt;::get_Item(System.Int32)</code></li>
+<li><code>CandideServer.MessageModels.Citizens.CreateCitizenSlotMessage::.ctor()</code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code>System.String::IsNullOrEmpty(System.String)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.MessageModels.Citizens.CreateCitizenSlotMessage&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#createcitizenslots-system-collections-generic-ienumerable-1-candideserver-messagemodels-citizens-createcitizenslotmessage---system-int32---system-collections-generic-list-1-system-guid-">CandideServer.ServerControllers.CitizenSlotsSController::CreateCitizenSlots(System.Collections.Generic.IEnumerable&lt;CandideServer.MessageModels.Citizens.CreateCitizenSlotMessage&gt;, System.Int32)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::Add(!0)</code></li>
+<li><code>List.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_BuildingsSController.html#calculateandapplybuildingappeal-candideserver-models-buildings-buildinginstancemodel--system-boolean---system-void">CandideServer.ServerControllers.BuildingsSController::CalculateAndApplyBuildingAppeal(CandideServer.Models.Buildings.BuildingInstanceModel, System.Boolean)</a></code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html#setupcontroller----system-void">CandideServer.SimulationModels.BuildingSimulationModel::SetupController()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_AbstractBuildingController.html#onupgraded-shared-models-construction-constructionmodel--shared-models-buildings-buildingdata---system-void">CandideServer.Buildings.BuildingControllers.AbstractBuildingController::OnUpgraded(Shared.Models.Construction.ConstructionModel, Shared.Models.Buildings.BuildingData)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_BuildingsServerManager.html#tryupgradebuilding-system-guid--system-string--system-boolean---system-boolean"><code>CandideServer.ServerManagers.BuildingsServerManager::TryUpgradeBuilding</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>building:</code></li>
+<li><code>:first</code></li>
+<li><code>:count</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

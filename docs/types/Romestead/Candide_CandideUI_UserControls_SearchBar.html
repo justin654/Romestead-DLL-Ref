@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.CandideUI.UserControls.SearchBar - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.CandideUI.UserControls.SearchBar</h1>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.SearchBar">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.CandideUI.UserControls.SearchBar
+
+- Assembly: `Romestead`
+- Namespace: `Candide.CandideUI.UserControls`
+- Kind: `public class`
+- Base type: `Candide.CandideUI.Containers.CandidePanel`
+- Members: 2 methods, 0 properties, 7 fields, 1 events
+
+## Public Methods
+- `public System.Boolean MatchesText(System.String text)`
+- `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)`
+">Copy markdown</button>
+<a class="button" href="Candide_CandideUI_UserControls_SearchBar.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.CandideUI.UserControls</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>2</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>7</strong></article>
+<article class="metric"><span>Events</span><strong>1</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.CandideUI.UserControls</code></li>
+<li><span>Base type</span><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandidePanel.html">Candide.CandideUI.Containers.CandidePanel</a></code></li>
+<li><span>Hash</span><code>88EC78A3D3EB478B6F5443046F3E0A60D81C298268DA504D71F49D79A64AF45F</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandidePanel.html">Candide.CandideUI.Containers.CandidePanel</a></code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_JobUiNew_UserControls_MiddleFurnitureUserControl.html"><code>Candide.CandideUI.JobUiNew.UserControls.MiddleFurnitureUserControl</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_JobUiNew_UserControls_MiddleRecipesUserControl.html"><code>Candide.CandideUI.JobUiNew.UserControls.MiddleRecipesUserControl</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Grid public Candide.CandideUI.TradingPost.Components.ItemSearchControlHolderGridScrollView Grid Candide.CandideUI.TradingPost.Components.ItemSearchControlHolderGridScrollView" id="grid-candide-candideui-tradingpost-components-itemsearchcontrolholdergridscrollview"><td><span class="member-name-cell"><code>Grid</code><a class="permalink" href="#grid-candide-candideui-tradingpost-components-itemsearchcontrolholdergridscrollview" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.CandideUI.TradingPost.Components.ItemSearchControlHolderGridScrollView Grid">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_CandideUI_TradingPost_Components_ItemSearchControlHolderGridScrollView.html">Candide.CandideUI.TradingPost.Components.ItemSearchControlHolderGridScrollView</a> Grid</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="SearchTextInput public Candide.CandideUI.Input.CandideTextInputBox SearchTextInput Candide.CandideUI.Input.CandideTextInputBox" id="searchtextinput-candide-candideui-input-candidetextinputbox"><td><span class="member-name-cell"><code>SearchTextInput</code><a class="permalink" href="#searchtextinput-candide-candideui-input-candidetextinputbox" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.CandideUI.Input.CandideTextInputBox SearchTextInput">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_CandideUI_Input_CandideTextInputBox.html">Candide.CandideUI.Input.CandideTextInputBox</a> SearchTextInput</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="SearchUpdated private System.EventHandler&lt;Candide.CandideUI.ValueChangedEventArgs&lt;System.String&gt;&gt; SearchUpdated System.EventHandler&lt;Candide.CandideUI.ValueChangedEventArgs&lt;System.String&gt;&gt;" id="searchupdated-system-eventhandler-1-candide-candideui-valuechangedeventargs-1-system-string--"><td><span class="member-name-cell"><code>SearchUpdated</code><a class="permalink" href="#searchupdated-system-eventhandler-1-candide-candideui-valuechangedeventargs-1-system-string--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.EventHandler&lt;Candide.CandideUI.ValueChangedEventArgs&lt;System.String&gt;&gt; SearchUpdated">Copy</button></span></td><td>private</td><td><code>private System.EventHandler&lt;<a href="../../types/Romestead/Candide_CandideUI_ValueChangedEventArgs_1.html">Candide.CandideUI.ValueChangedEventArgs</a>&lt;System.String&gt;&gt; SearchUpdated</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_craftBtnPanel private Candide.CandideUI.Containers.CandideGrid _craftBtnPanel Candide.CandideUI.Containers.CandideGrid" id="-craftbtnpanel-candide-candideui-containers-candidegrid"><td><span class="member-name-cell"><code>_craftBtnPanel</code><a class="permalink" href="#-craftbtnpanel-candide-candideui-containers-candidegrid" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Containers.CandideGrid _craftBtnPanel">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Containers_CandideGrid.html">Candide.CandideUI.Containers.CandideGrid</a> _craftBtnPanel</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_lastSearch private System.String _lastSearch System.String" id="-lastsearch-system-string"><td><span class="member-name-cell"><code>_lastSearch</code><a class="permalink" href="#-lastsearch-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.String _lastSearch">Copy</button></span></td><td>private</td><td><code>private System.String _lastSearch</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_searchButton private Candide.CandideUI.Components.Buttons.CandideIconButton _searchButton Candide.CandideUI.Components.Buttons.CandideIconButton" id="-searchbutton-candide-candideui-components-buttons-candideiconbutton"><td><span class="member-name-cell"><code>_searchButton</code><a class="permalink" href="#-searchbutton-candide-candideui-components-buttons-candideiconbutton" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.Components.Buttons.CandideIconButton _searchButton">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_Components_Buttons_CandideIconButton.html">Candide.CandideUI.Components.Buttons.CandideIconButton</a> _searchButton</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_searchTimer private System.Single _searchTimer System.Single" id="-searchtimer-system-single"><td><span class="member-name-cell"><code>_searchTimer</code><a class="permalink" href="#-searchtimer-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single _searchTimer">Copy</button></span></td><td>private</td><td><code>private System.Single _searchTimer</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Events</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="event" data-member-visibility="public" data-patch-target="false" data-member-text="SearchUpdated public System.EventHandler&lt;Candide.CandideUI.ValueChangedEventArgs&lt;System.String&gt;&gt; SearchUpdated System.EventHandler&lt;Candide.CandideUI.ValueChangedEventArgs&lt;System.String&gt;&gt;" id="searchupdated-system-eventhandler-1-candide-candideui-valuechangedeventargs-1-system-string--"><td><span class="member-name-cell"><code>SearchUpdated</code><a class="permalink" href="#searchupdated-system-eventhandler-1-candide-candideui-valuechangedeventargs-1-system-string--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.EventHandler&lt;Candide.CandideUI.ValueChangedEventArgs&lt;System.String&gt;&gt; SearchUpdated">Copy</button></span></td><td>public</td><td><code>public System.EventHandler&lt;<a href="../../types/Romestead/Candide_CandideUI_ValueChangedEventArgs_1.html">Candide.CandideUI.ValueChangedEventArgs</a>&lt;System.String&gt;&gt; SearchUpdated</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MatchesText public System.Boolean MatchesText(System.String text) System.Boolean text System.String" id="matchestext-system-string---system-boolean">
+<div class="method-heading">
+<h3><code>MatchesText</code></h3>
+<a class="permalink" href="#matchestext-system-string---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean MatchesText(System.String text)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.SearchBar::MatchesText(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean MatchesText(System.String text)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E7E77E16A6A558E616AB722FE6D237FA8734FD46CCC8004DF1FC7FE8B4A57E42</code></li>
+<li><span>Body hash</span><code>50C4AE6A666B2E321C74F568E95BF24947EAB05EC28A8E29D645AB343D3C6F2D</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.Input.CandideTextInputBox::get_Text()</code></li>
+<li><code>System.String::Contains(System.String, System.StringComparison)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_JobUiNew_UserControls_MiddleRecipesUserControl.html#onrecipeschanged----system-void"><code>Candide.CandideUI.JobUiNew.UserControls.MiddleRecipesUserControl::OnRecipesChanged</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime) System.Void gameTime Microsoft.Xna.Framework.GameTime" id="update-microsoft-xna-framework-gametime---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-microsoft-xna-framework-gametime---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.UserControls.SearchBar::Update(Microsoft.Xna.Framework.GameTime)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>True</span></li>
+<li><span>Hash</span><code>CC4BE601FCFF3FDAFC9A3BD2CF2539FA19466499BE764A5CA6D420496766EE6A</code></li>
+<li><span>Body hash</span><code>19D00F91F5ED55468A0FC2D7243C22FA509420DD5C3E6E5057A77F0F335EE5DE</code></li>
+<li><span>IL size</span><span>144</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideUiContainerMultipleItems.html#update-microsoft-xna-framework-gametime---system-void">Candide.CandideUI.CandideUiContainerMultipleItems::Update(Microsoft.Xna.Framework.GameTime)</a></code></li>
+<li><code>Microsoft.Xna.Framework.GameTime::get_ElapsedGameTime()</code></li>
+<li><code>System.TimeSpan::get_TotalSeconds()</code></li>
+<li><code>Candide.CandideUI.Input.CandideTextInputBox::get_Text()</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>Candide.CandideUI.ValueChangedEventArgs&lt;System.String&gt;::.ctor(T, T)</code></li>
+<li><code>System.EventHandler&lt;Candide.CandideUI.ValueChangedEventArgs&lt;System.String&gt;&gt;::Invoke(System.Object, !0)</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerControllers.CitizensSController - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerControllers.CitizensSController</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerControllers.CitizensSController
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerControllers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 21 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public System.Void AddCitizenAura(System.Guid newInstanceId, System.String citizenAuraDataId, CandideServer.Models.Citizen.CitizenModel citizen, System.Boolean updateStats, System.Boolean fromTown)`
+- `public System.Void AddLoyalty(CandideServer.Models.Citizen.CitizenModel citizen, System.Single loyalty, System.Boolean updateStats)`
+- `public CandideServer.Models.Citizen.CitizenModel CreateCitizenForTown(System.Guid newCitizenId, System.Guid townId)`
+- `public CandideServer.Models.Citizen.CitizenModel CreateCitizenForTownFromWildCitizen(CandideServer.Models.Citizen.WildCitizenInstanceModel wildCitizen, System.Guid townId)`
+- `public System.Void MakeAbstractCitizenController(CandideServer.SimulationModels.CitizenSlotSimulationModel slot, CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.SimulationModels.BuildingSimulationModel building, CandideServer.Entities.ServerEntityModel entityModel, CandideServer.Citizens.Base.CitizenControllerState state)`
+- `public System.Void MoveCitizen(CandideServer.Models.Citizen.CitizenModel citizen, Microsoft.Xna.Framework.Vector3 position, System.Guid worldId)`
+- `public System.Void OnWorldEntitiesLoaded()`
+- `public System.Void RemoveCitizen(System.Guid id)`
+- `public System.Void RemoveCitizenAura(System.String citizenAuraDataId, CandideServer.Models.Citizen.CitizenModel citizen, System.Boolean updateStats)`
+- `public System.Void RemoveCitizenInstanceTypeAura(System.String instanceId, CandideServer.Models.Citizen.CitizenModel citizen, System.Boolean updateStats)`
+- `public System.Void SetActiveRequestState(CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.Models.Citizen.CitizenRequestStatus status)`
+- `public System.Void SetCitizenDead(System.Guid citizenId)`
+- `public CandideServer.Models.Citizen.CitizenModel SetCitizenStatus(System.Guid citizenId, CandideServer.Models.Citizen.CitizenStatus status)`
+- `public System.Void SetNewCitizenActiveRequest(CandideServer.Models.Citizen.CitizenModel citizen, System.String newRequestId)`
+- `public CandideServer.Entities.ServerEntityModel SpawnCitizen(CandideServer.Models.Citizen.CitizenModel citizen, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; parameters)`
+- `public System.Boolean TryAddJobLevel(CandideServer.Models.Citizen.CitizenModel citizen, System.String jobId, System.Int32 levels)`
+- `public System.Void UpdateCitizenSpawnLocation(CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.Models.Citizen.CitizenSlotModel slotModel, CandideServer.SimulationModels.BuildingSimulationModel building)`
+- `public System.Void UpdateStats(CandideServer.Models.Citizen.CitizenModel citizen)`
+- `public System.Void UpdateStats(CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.Models.Buildings.BuildingInstanceModel building)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerControllers_CitizensSController.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerControllers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>21</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerControllers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>A1EF474D2A2244040E0F29BBCEE68B8DAB254B30E0DFC7E45FB8D14AD0139CC2</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddCitizenAura public System.Void AddCitizenAura(System.Guid newInstanceId, System.String citizenAuraDataId, CandideServer.Models.Citizen.CitizenModel citizen, System.Boolean updateStats, System.Boolean fromTown) System.Void newInstanceId System.Guid citizenAuraDataId System.String citizen CandideServer.Models.Citizen.CitizenModel updateStats System.Boolean fromTown System.Boolean" id="addcitizenaura-system-guid--system-string--candideserver-models-citizen-citizenmodel--system-boolean--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>AddCitizenAura</code></h3>
+<a class="permalink" href="#addcitizenaura-system-guid--system-string--candideserver-models-citizen-citizenmodel--system-boolean--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddCitizenAura(System.Guid newInstanceId, System.String citizenAuraDataId, CandideServer.Models.Citizen.CitizenModel citizen, System.Boolean updateStats, System.Boolean fromTown)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::AddCitizenAura(System.Guid, System.String, CandideServer.Models.Citizen.CitizenModel, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddCitizenAura(System.Guid newInstanceId, System.String citizenAuraDataId, <a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen, System.Boolean updateStats, System.Boolean fromTown)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C816638022B8A5A9C9BC9F36ED4F8B8DFC32CA661379A5DC2E46C4C0D444489E</code></li>
+<li><span>Body hash</span><code>DA80AAA78F71BBC3255C93374F253FE570DFB7341DE20EAF4B3E8A297976CEDB</code></li>
+<li><span>IL size</span><span>179</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_CitizenAuraDatabase.html#getauraornull-system-string---shared-models-auras-citizenaurainfo">Shared.Data.CitizenAuraDatabase::GetAuraOrNull(System.String)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.String::IsNullOrEmpty(System.String)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Auras.CitizenAuraModel&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Auras.CitizenAuraModel&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Auras.CitizenAuraModel&gt;::RemoveAt(System.Int32)</code></li>
+<li><code>Shared.Models.Auras.CitizenAuraModel::.ctor(System.Guid, System.String, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.StatModificationData&gt;, System.Boolean, Shared.Models.Auras.CitizenAuraType, System.Single, System.String, System.Single, System.Boolean)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Auras.CitizenAuraModel&gt;::Add(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#updatestats-candideserver-models-citizen-citizenmodel---system-void">CandideServer.ServerControllers.CitizensSController::UpdateStats(CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#addloyalty-candideserver-models-citizen-citizenmodel--system-single--system-boolean---system-void"><code>CandideServer.ServerControllers.CitizensSController::AddLoyalty</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#updatestats-candideserver-models-citizen-citizenmodel--candideserver-models-buildings-buildinginstancemodel---system-void"><code>CandideServer.ServerControllers.CitizensSController::UpdateStats</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_FoodSourceServerController.html#consumefoodforcitizen-candideserver-models-citizen-citizenmodel--candideserver-models-foodsourcemodel---system-boolean"><code>CandideServer.ServerControllers.FoodSourceServerController::ConsumeFoodForCitizen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#trygivegifttocitizen-candideserver-messagemodels-citizens-givecitizengiftrequest---system-nullable-1-shared-models-citizens-citizengiftresult-"><code>CandideServer.ServerManagers.CitizenServerManager::TryGiveGiftToCitizen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_ServerState_CitizensPlayerListenersController.html#onreceive-applycitizenaura-candideserver-messagemodels-citizens-applycitizenauramessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.ServerState_CitizensPlayerListenersController::OnReceive_ApplyCitizenAura</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>AddCitizenAura: Couldn&#39;t find aura with ID </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddLoyalty public System.Void AddLoyalty(CandideServer.Models.Citizen.CitizenModel citizen, System.Single loyalty, System.Boolean updateStats) System.Void citizen CandideServer.Models.Citizen.CitizenModel loyalty System.Single updateStats System.Boolean" id="addloyalty-candideserver-models-citizen-citizenmodel--system-single--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>AddLoyalty</code></h3>
+<a class="permalink" href="#addloyalty-candideserver-models-citizen-citizenmodel--system-single--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddLoyalty(CandideServer.Models.Citizen.CitizenModel citizen, System.Single loyalty, System.Boolean updateStats)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::AddLoyalty(CandideServer.Models.Citizen.CitizenModel, System.Single, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddLoyalty(<a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen, System.Single loyalty, System.Boolean updateStats)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>36B9A27B08AE9ABB36916F0426E12DF569A67EF966814093BBC41570F063B7C3</code></li>
+<li><span>Body hash</span><code>D11560670D9BF84DACC8A552329E05C9F1D2C1DE27007966187FA76C8FA48993</code></li>
+<li><span>IL size</span><span>322</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html#loyaltyrequiredforlevel-system-int32---system-single">CandideServer.Models.Citizen.CitizenModel::LoyaltyRequiredForLevel(System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html#loyaltyrequiredtolevelup-system-int32---system-single">CandideServer.Models.Citizen.CitizenModel::LoyaltyRequiredToLevelUp(System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#removecitizeninstancetypeaura-system-string--candideserver-models-citizen-citizenmodel--system-boolean---system-void">CandideServer.ServerControllers.CitizensSController::RemoveCitizenInstanceTypeAura(System.String, CandideServer.Models.Citizen.CitizenModel, System.Boolean)</a></code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#addcitizenaura-system-guid--system-string--candideserver-models-citizen-citizenmodel--system-boolean--system-boolean---system-void">CandideServer.ServerControllers.CitizensSController::AddCitizenAura(System.Guid, System.String, CandideServer.Models.Citizen.CitizenModel, System.Boolean, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#updatestats-candideserver-models-citizen-citizenmodel---system-void">CandideServer.ServerControllers.CitizensSController::UpdateStats(CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#trygivegifttocitizen-candideserver-messagemodels-citizens-givecitizengiftrequest---system-nullable-1-shared-models-citizens-citizengiftresult-"><code>CandideServer.ServerManagers.CitizenServerManager::TryGiveGiftToCitizen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_RaidsServerManager.html#onraidbeaten-shared-models-raids-raidinstancemodel--candideserver-models-town-servertownmodel---system-void"><code>CandideServer.ServerManagers.RaidsServerManager::OnRaidBeaten</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>favour</code></li>
+<li><code>citizen_aura:loyalty:</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="BeforeServerGameStateSaved private System.Void BeforeServerGameStateSaved(CandideServer.GameDescription gameDescription) System.Void gameDescription CandideServer.GameDescription" id="beforeservergamestatesaved-candideserver-gamedescription---system-void">
+<div class="method-heading">
+<h3><code>BeforeServerGameStateSaved</code></h3>
+<a class="permalink" href="#beforeservergamestatesaved-candideserver-gamedescription---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void BeforeServerGameStateSaved(CandideServer.GameDescription gameDescription)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::BeforeServerGameStateSaved(CandideServer.GameDescription)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void BeforeServerGameStateSaved(<a href="../../types/CandideServer/CandideServer_GameDescription.html">CandideServer.GameDescription</a> gameDescription)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BB82BBF6AAED80CF7E6A9473435543014ADE866D295AEA719118258F0740B62A</code></li>
+<li><span>Body hash</span><code>0408642B4358004816501AD3E03F6D259674D2F77955A095C6CD65777005E258</code></li>
+<li><span>IL size</span><span>56</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Citizens.Base.AbstractCitizenController&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.Citizens.Base.AbstractCitizenController&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Citizens.Base.AbstractCitizenController&gt;::get_Current()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Citizens_Base_AbstractCitizenController.html#beforeservergamestatesaved----system-void">CandideServer.Citizens.Base.AbstractCitizenController::BeforeServerGameStateSaved()</a></code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.Citizens.Base.AbstractCitizenController&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateCitizenForTown public CandideServer.Models.Citizen.CitizenModel CreateCitizenForTown(System.Guid newCitizenId, System.Guid townId) CandideServer.Models.Citizen.CitizenModel newCitizenId System.Guid townId System.Guid" id="createcitizenfortown-system-guid--system-guid---candideserver-models-citizen-citizenmodel">
+<div class="method-heading">
+<h3><code>CreateCitizenForTown</code></h3>
+<a class="permalink" href="#createcitizenfortown-system-guid--system-guid---candideserver-models-citizen-citizenmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Citizen.CitizenModel CreateCitizenForTown(System.Guid newCitizenId, System.Guid townId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::CreateCitizenForTown(System.Guid, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> CreateCitizenForTown(System.Guid newCitizenId, System.Guid townId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F1D3CD6B0926EE287EE992B1DF3539D5599813A22384DF2B3456ACFB0D76A316</code></li>
+<li><span>Body hash</span><code>C657AFB091492128FC8AF8AD6D6A6109EA8BA10D5B92D5ADDD7E311DD176A94C</code></li>
+<li><span>IL size</span><span>81</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygettown-system-guid--candideserver-models-town-servertownmodel----system-boolean">CandideServer.ServerGameState::TryGetTown(System.Guid, CandideServer.Models.Town.ServerTownModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_CitizenDataBase.html#trycreatecitizenmodel-system-string--system-guid--candideserver-models-citizen-citizenmodel----system-boolean">CandideServer.Database.CitizenDataBase::TryCreateCitizenModel(System.String, System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Citizen.CitizenModel&gt;::Add(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#addcitizen-system-guid--system-guid---system-void">CandideServer.ServerControllers.TownsServerController::AddCitizen(System.Guid, System.Guid)</a></code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#addnewcitizentotown-candideserver-models-town-servertownmodel---system-void"><code>CandideServer.ServerManagers.CitizenServerManager::AddNewCitizenToTown</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>citizen:generic</code></li>
+<li><code>Failed creating citizen model</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreateCitizenForTownFromWildCitizen public CandideServer.Models.Citizen.CitizenModel CreateCitizenForTownFromWildCitizen(CandideServer.Models.Citizen.WildCitizenInstanceModel wildCitizen, System.Guid townId) CandideServer.Models.Citizen.CitizenModel wildCitizen CandideServer.Models.Citizen.WildCitizenInstanceModel townId System.Guid" id="createcitizenfortownfromwildcitizen-candideserver-models-citizen-wildcitizeninstancemodel--system-guid---candideserver-models-citizen-citizenmodel">
+<div class="method-heading">
+<h3><code>CreateCitizenForTownFromWildCitizen</code></h3>
+<a class="permalink" href="#createcitizenfortownfromwildcitizen-candideserver-models-citizen-wildcitizeninstancemodel--system-guid---candideserver-models-citizen-citizenmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Citizen.CitizenModel CreateCitizenForTownFromWildCitizen(CandideServer.Models.Citizen.WildCitizenInstanceModel wildCitizen, System.Guid townId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::CreateCitizenForTownFromWildCitizen(CandideServer.Models.Citizen.WildCitizenInstanceModel, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> CreateCitizenForTownFromWildCitizen(<a href="../../types/CandideServer/CandideServer_Models_Citizen_WildCitizenInstanceModel.html">CandideServer.Models.Citizen.WildCitizenInstanceModel</a> wildCitizen, System.Guid townId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1E8C857EC8C6F10BACE9FEEC550D5410E94F448660D2F544864990BB4ACCB16E</code></li>
+<li><span>Body hash</span><code>58D077566F2F755BF493ABA089462DA65712ECDBB6C122E554E27D311AA4FF16</code></li>
+<li><span>IL size</span><span>89</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygettown-system-guid--candideserver-models-town-servertownmodel----system-boolean">CandideServer.ServerGameState::TryGetTown(System.Guid, CandideServer.Models.Town.ServerTownModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_CitizenDataBase.html#getcitizenormissing-system-string---candideserver-data-datamodels-citizendata">CandideServer.Database.CitizenDataBase::GetCitizenOrMissing(System.String)</a></code></li>
+<li><code>CandideServer.Models.Citizen.CitizenModel::.ctor(CandideServer.Models.Citizen.WildCitizenInstanceModel, System.Guid)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_WildCitizensSController.html#removewildcitizen-system-guid---system-void">CandideServer.ServerControllers.WildCitizensSController::RemoveWildCitizen(System.Guid)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Citizen.CitizenModel&gt;::Add(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#addcitizen-system-guid--system-guid---system-void">CandideServer.ServerControllers.TownsServerController::AddCitizen(System.Guid, System.Guid)</a></code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#convertwildcitizentotowncitizen-candideserver-models-town-servertownmodel--system-guid--system-guid---system-void"><code>CandideServer.ServerManagers.CitizenServerManager::ConvertWildCitizenToTownCitizen</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>citizen:generic</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MakeAbstractCitizenController public System.Void MakeAbstractCitizenController(CandideServer.SimulationModels.CitizenSlotSimulationModel slot, CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.SimulationModels.BuildingSimulationModel building, CandideServer.Entities.ServerEntityModel entityModel, CandideServer.Citizens.Base.CitizenControllerState state) System.Void slot CandideServer.SimulationModels.CitizenSlotSimulationModel citizen CandideServer.Models.Citizen.CitizenModel building CandideServer.SimulationModels.BuildingSimulationModel entityModel CandideServer.Entities.ServerEntityModel state CandideServer.Citizens.Base.CitizenControllerState" id="makeabstractcitizencontroller-candideserver-simulationmodels-citizenslotsimulationmodel--candideserver-models-citizen-citizenmodel--candideserver-simulationmodels-buildingsimulationmodel--candideserver-entities-serverentitymodel--candideserver-citizens-base-citizencontrollerstate---system-void">
+<div class="method-heading">
+<h3><code>MakeAbstractCitizenController</code></h3>
+<a class="permalink" href="#makeabstractcitizencontroller-candideserver-simulationmodels-citizenslotsimulationmodel--candideserver-models-citizen-citizenmodel--candideserver-simulationmodels-buildingsimulationmodel--candideserver-entities-serverentitymodel--candideserver-citizens-base-citizencontrollerstate---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void MakeAbstractCitizenController(CandideServer.SimulationModels.CitizenSlotSimulationModel slot, CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.SimulationModels.BuildingSimulationModel building, CandideServer.Entities.ServerEntityModel entityModel, CandideServer.Citizens.Base.CitizenControllerState state)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::MakeAbstractCitizenController(CandideServer.SimulationModels.CitizenSlotSimulationModel, CandideServer.Models.Citizen.CitizenModel, CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.Entities.ServerEntityModel, CandideServer.Citizens.Base.CitizenControllerState)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void MakeAbstractCitizenController(<a href="../../types/CandideServer/CandideServer_SimulationModels_CitizenSlotSimulationModel.html">CandideServer.SimulationModels.CitizenSlotSimulationModel</a> slot, <a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen, <a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> building, <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> entityModel, <a href="../../types/CandideServer/CandideServer_Citizens_Base_CitizenControllerState.html">CandideServer.Citizens.Base.CitizenControllerState</a> state)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>3434F0B6BD7C1D7EF936E11323A18777A3A58F9F1A996C6D59F4FF0109D0582B</code></li>
+<li><span>Body hash</span><code>A7FF7707014882C0EE34C8A948ABA494E6A7EE4ACA9CCDF7481339E1C319D2A9</code></li>
+<li><span>IL size</span><span>140</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Database_CitizenControllerDataBase.html#getcontrollerornullforjob-system-string---candideserver-citizens-base-abstractcitizencontroller">CandideServer.Database.CitizenControllerDataBase::GetControllerOrNullForJob(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Citizens.Base.AbstractCitizenController&gt;::Add(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Citizens_Base_AbstractCitizenController.html#initialize----system-void">CandideServer.Citizens.Base.AbstractCitizenController::Initialize()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#assigncitizentoslot-system-guid--candideserver-models-citizen-citizenmodel---system-void"><code>CandideServer.ServerControllers.CitizenSlotsSController::AssignCitizenToSlot</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#onworldentitiesloaded----system-void"><code>CandideServer.ServerControllers.CitizensSController::OnWorldEntitiesLoaded</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MoveCitizen public System.Void MoveCitizen(CandideServer.Models.Citizen.CitizenModel citizen, Microsoft.Xna.Framework.Vector3 position, System.Guid worldId) System.Void citizen CandideServer.Models.Citizen.CitizenModel position Microsoft.Xna.Framework.Vector3 worldId System.Guid" id="movecitizen-candideserver-models-citizen-citizenmodel--microsoft-xna-framework-vector3--system-guid---system-void">
+<div class="method-heading">
+<h3><code>MoveCitizen</code></h3>
+<a class="permalink" href="#movecitizen-candideserver-models-citizen-citizenmodel--microsoft-xna-framework-vector3--system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void MoveCitizen(CandideServer.Models.Citizen.CitizenModel citizen, Microsoft.Xna.Framework.Vector3 position, System.Guid worldId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::MoveCitizen(CandideServer.Models.Citizen.CitizenModel, Microsoft.Xna.Framework.Vector3, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void MoveCitizen(<a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen, Microsoft.Xna.Framework.Vector3 position, System.Guid worldId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4A0257574C3597A94270330A59A6E9CADC0960EB759E94A6F1B4B83BE5575AF0</code></li>
+<li><span>Body hash</span><code>B0BAB4D388100B6058063975A568186821943482D95FE73E6DBE186B3AEB14B7</code></li>
+<li><span>IL size</span><span>88</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Citizens.Base.AbstractCitizenController&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#moveentity-system-guid--microsoft-xna-framework-vector3--system-guid---system-void">CandideServer.ServerManagers.EntityServerManager::MoveEntity(System.Guid, Microsoft.Xna.Framework.Vector3, System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#moveentity-candideserver-entities-serverentitymodel--microsoft-xna-framework-vector3--system-guid---system-void">CandideServer.ServerControllers.EntitySController::MoveEntity(CandideServer.Entities.ServerEntityModel, Microsoft.Xna.Framework.Vector3, System.Guid)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Citizens_GenericServerCitizenController.html#resetcitizen----system-void"><code>CandideServer.Citizens.GenericServerCitizenController::ResetCitizen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Schedule.html#resetcitizen----system-void"><code>CandideServer.Entities.ScheduleSystem.Schedule::ResetCitizen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#enterbuilding-candideserver-models-citizen-citizenmodel--candideserver-simulationmodels-buildingsimulationmodel---system-boolean"><code>CandideServer.ServerManagers.CitizenServerManager::EnterBuilding</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#exitbuilding-candideserver-models-citizen-citizenmodel---system-boolean"><code>CandideServer.ServerManagers.CitizenServerManager::ExitBuilding</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_WorldServerManager.html#ejectplayersandcitizens-candideserver-simulationmodels-buildingsimulationmodel---system-void"><code>CandideServer.ServerManagers.WorldServerManager::EjectPlayersAndCitizens</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#followpath-system-single---system-void"><code>ScheduleSystem.CitizenMovementHandler::FollowPath</code></a></li>
+<li><a href="../../types/CandideServer/ScheduleSystem_CitizenMovementHandler.html#nextstage----system-void"><code>ScheduleSystem.CitizenMovementHandler::NextStage</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnWorldEntitiesLoaded public System.Void OnWorldEntitiesLoaded() System.Void " id="onworldentitiesloaded----system-void">
+<div class="method-heading">
+<h3><code>OnWorldEntitiesLoaded</code></h3>
+<a class="permalink" href="#onworldentitiesloaded----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnWorldEntitiesLoaded()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::OnWorldEntitiesLoaded()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnWorldEntitiesLoaded()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CD6C68D094A494624539EF6E8BCA880838A735DD373691D16798D0B4A03D4414</code></li>
+<li><span>Body hash</span><code>BA4BEFA8DF80F8E3BD4A76F65EFBC31EF53589EBB22128146413522C7A44D76F</code></li>
+<li><span>IL size</span><span>589</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Citizen.CitizenModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, CandideServer.Models.Citizen.CitizenModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.Guid, CandideServer.Models.Citizen.CitizenModel&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_CitizenStats.html#onload----system-void">Shared.Models.Stats.CitizenStats::OnLoad()</a></code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, CandideServer.Models.Citizen.CitizenModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Guid, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Guid, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;::get_Current()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizen-system-guid--candideserver-models-citizen-citizenmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizen(System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Citizens.Base.CitizenControllerState&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Shared.Text.StringId::op_Equality(Shared.Text.StringId, Shared.Text.StringId)</code></li>
+<li><code>CandideServer.Models.Citizen.CitizenModel::get_IsMale()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenNameServerManager.html#getrandomname-system-string---shared-text-stringid">CandideServer.ServerManagers.CitizenNameServerManager::GetRandomName(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Contains(!0)</code></li>
+<li><code>CandideServer.ServerControllers.CitizensSController::&lt;OnWorldEntitiesLoaded&gt;g__HandleInvalidlyAssignedCitizen|9_0(CandideServer.Models.Citizen.CitizenModel, CandideServer.Models.Town.ServerTownModel)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#updatestats-candideserver-models-citizen-citizenmodel--candideserver-models-buildings-buildinginstancemodel---system-void">CandideServer.ServerControllers.CitizensSController::UpdateStats(CandideServer.Models.Citizen.CitizenModel, CandideServer.Models.Buildings.BuildingInstanceModel)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#spawncitizen-candideserver-models-citizen-citizenmodel--system-collections-generic-dictionary-2-system-string-system-string----candideserver-entities-serverentitymodel">CandideServer.ServerControllers.CitizensSController::SpawnCitizen(CandideServer.Models.Citizen.CitizenModel, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#removeentity-system-guid--shared-entity-entityremoveinfo---candideserver-entities-serverentitymodel">CandideServer.ServerControllers.EntitySController::RemoveEntity(System.Guid, Shared.Entity.EntityRemoveInfo)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#updatecitizenspawnlocation-candideserver-models-citizen-citizenmodel--candideserver-models-citizen-citizenslotmodel--candideserver-simulationmodels-buildingsimulationmodel---system-void">CandideServer.ServerControllers.CitizensSController::UpdateCitizenSpawnLocation(CandideServer.Models.Citizen.CitizenModel, CandideServer.Models.Citizen.CitizenSlotModel, CandideServer.SimulationModels.BuildingSimulationModel)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>System.Exception::.ctor(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Citizens_Base_CitizenControllerState.html#ongameloaded----system-void">CandideServer.Citizens.Base.CitizenControllerState::OnGameLoaded()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#makeabstractcitizencontroller-candideserver-simulationmodels-citizenslotsimulationmodel--candideserver-models-citizen-citizenmodel--candideserver-simulationmodels-buildingsimulationmodel--candideserver-entities-serverentitymodel--candideserver-citizens-base-citizencontrollerstate---system-void">CandideServer.ServerControllers.CitizensSController::MakeAbstractCitizenController(CandideServer.SimulationModels.CitizenSlotSimulationModel, CandideServer.Models.Citizen.CitizenModel, CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.Entities.ServerEntityModel, CandideServer.Citizens.Base.CitizenControllerState)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>female</code></li>
+<li><code>male</code></li>
+<li><code>Failed to spawn citizen entity for citizen </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveCitizen public System.Void RemoveCitizen(System.Guid id) System.Void id System.Guid" id="removecitizen-system-guid---system-void">
+<div class="method-heading">
+<h3><code>RemoveCitizen</code></h3>
+<a class="permalink" href="#removecitizen-system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemoveCitizen(System.Guid id)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::RemoveCitizen(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemoveCitizen(System.Guid id)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7D7EDCE560F291CDB147449C97E8FA44782F6C9EF46550E44F65518822E12E0E</code></li>
+<li><span>Body hash</span><code>726EA2E23D7F2E354771B1E892FA029CF633EA835DCA1DAC7ED9D7C46D744031</code></li>
+<li><span>IL size</span><span>386</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Citizen.CitizenModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code>CandideServer.ServerControllers.UnassignCitizenSlotMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#unassigncitizenslot-candideserver-servercontrollers-unassigncitizenslotmessage---system-void">CandideServer.ServerControllers.CitizenSlotsSController::UnassignCitizenSlot(CandideServer.ServerControllers.UnassignCitizenSlotMessage)</a></code></li>
+<li><code>List.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#removecitizen-system-guid---system-void">CandideServer.ServerControllers.TownsServerController::RemoveCitizen(System.Guid)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Citizen.CitizenModel&gt;::Remove(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#citizendied-candideserver-models-citizen-citizenmodel--shared-models-citizens-citizendeathtype---system-void"><code>CandideServer.ServerManagers.CitizenServerManager::CitizenDied</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Couldn&#39;t find citizen with ID </code></li>
+<li><code> in the gamestate.</code></li>
+<li><code>Couldn&#39;t find building with ID </code></li>
+<li><code>Weird thing happened. Removed citizen had a HomeBuildingId but was not associated with a citizen slot of it. Citizen ID </code></li>
+<li><code> with building ID </code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveCitizenAura public System.Void RemoveCitizenAura(System.String citizenAuraDataId, CandideServer.Models.Citizen.CitizenModel citizen, System.Boolean updateStats) System.Void citizenAuraDataId System.String citizen CandideServer.Models.Citizen.CitizenModel updateStats System.Boolean" id="removecitizenaura-system-string--candideserver-models-citizen-citizenmodel--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>RemoveCitizenAura</code></h3>
+<a class="permalink" href="#removecitizenaura-system-string--candideserver-models-citizen-citizenmodel--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemoveCitizenAura(System.String citizenAuraDataId, CandideServer.Models.Citizen.CitizenModel citizen, System.Boolean updateStats)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::RemoveCitizenAura(System.String, CandideServer.Models.Citizen.CitizenModel, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemoveCitizenAura(System.String citizenAuraDataId, <a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen, System.Boolean updateStats)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>749EFB709D6D5234CC9586E2C830EC7375122FEB11E5B7F90A57DAD306E81249</code></li>
+<li><span>Body hash</span><code>032A2DCBF07A01CB1894B1C4CBF2813952C3205EE141DCFAB24857AADD5598BD</code></li>
+<li><span>IL size</span><span>80</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Auras.CitizenAuraModel&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Auras.CitizenAuraModel&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Auras.CitizenAuraModel&gt;::RemoveAt(System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#updatestats-candideserver-models-citizen-citizenmodel---system-void">CandideServer.ServerControllers.CitizensSController::UpdateStats(CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemoveCitizenInstanceTypeAura public System.Void RemoveCitizenInstanceTypeAura(System.String instanceId, CandideServer.Models.Citizen.CitizenModel citizen, System.Boolean updateStats) System.Void instanceId System.String citizen CandideServer.Models.Citizen.CitizenModel updateStats System.Boolean" id="removecitizeninstancetypeaura-system-string--candideserver-models-citizen-citizenmodel--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>RemoveCitizenInstanceTypeAura</code></h3>
+<a class="permalink" href="#removecitizeninstancetypeaura-system-string--candideserver-models-citizen-citizenmodel--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemoveCitizenInstanceTypeAura(System.String instanceId, CandideServer.Models.Citizen.CitizenModel citizen, System.Boolean updateStats)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::RemoveCitizenInstanceTypeAura(System.String, CandideServer.Models.Citizen.CitizenModel, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemoveCitizenInstanceTypeAura(System.String instanceId, <a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen, System.Boolean updateStats)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A9572C45FE00F2351B4BBFB9106FC16AABA6043A3FB12FF651C7496C0754E2DB</code></li>
+<li><span>Body hash</span><code>60E12008C17D009159EAE641912C29A890D9ECA6DDBBCF709FF7C749A0B4AD80</code></li>
+<li><span>IL size</span><span>80</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Auras.CitizenAuraModel&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.String::op_Inequality(System.String, System.String)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Auras.CitizenAuraModel&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Auras.CitizenAuraModel&gt;::RemoveAt(System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#updatestats-candideserver-models-citizen-citizenmodel---system-void">CandideServer.ServerControllers.CitizensSController::UpdateStats(CandideServer.Models.Citizen.CitizenModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#addloyalty-candideserver-models-citizen-citizenmodel--system-single--system-boolean---system-void"><code>CandideServer.ServerControllers.CitizensSController::AddLoyalty</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetActiveRequestState public System.Void SetActiveRequestState(CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.Models.Citizen.CitizenRequestStatus status) System.Void citizen CandideServer.Models.Citizen.CitizenModel status CandideServer.Models.Citizen.CitizenRequestStatus" id="setactiverequeststate-candideserver-models-citizen-citizenmodel--candideserver-models-citizen-citizenrequeststatus---system-void">
+<div class="method-heading">
+<h3><code>SetActiveRequestState</code></h3>
+<a class="permalink" href="#setactiverequeststate-candideserver-models-citizen-citizenmodel--candideserver-models-citizen-citizenrequeststatus---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetActiveRequestState(CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.Models.Citizen.CitizenRequestStatus status)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::SetActiveRequestState(CandideServer.Models.Citizen.CitizenModel, CandideServer.Models.Citizen.CitizenRequestStatus)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetActiveRequestState(<a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen, <a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenRequestStatus.html">CandideServer.Models.Citizen.CitizenRequestStatus</a> status)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1E45F0C5446899F02567D14AC8EFD4188BECC966E2549F4AD1C3DF5DFB6BDA0E</code></li>
+<li><span>Body hash</span><code>F8D79FDBC706372F242711E54BAC67151A3D83F99311909EBDD81F8837575192</code></li>
+<li><span>IL size</span><span>157</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Random::Next(System.Int32, System.Int32)</code></li>
+<li><code>System.ArgumentOutOfRangeException::.ctor()</code></li>
+<li><code>System.Object::ToString()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#updateentityparameter-system-guid--system-string--system-string--candideserver-syncstrategies-syncstrategy--system-boolean---system-void">CandideServer.ServerManagers.EntityServerManager::UpdateEntityParameter(System.Guid, System.String, System.String, CandideServer.SyncStrategies.SyncStrategy, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Citizens_ServerCitizenEntityController.html#oninteract-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController::OnInteract</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#setnewcitizenactiverequest-candideserver-models-citizen-citizenmodel--system-string---system-void"><code>CandideServer.ServerControllers.CitizensSController::SetNewCitizenActiveRequest</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#trygivegifttocitizen-candideserver-messagemodels-citizens-givecitizengiftrequest---system-nullable-1-shared-models-citizens-citizengiftresult-"><code>CandideServer.ServerManagers.CitizenServerManager::TryGiveGiftToCitizen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Simulations_CitizenServerSystem.html#newday----system-void"><code>CandideServer.Simulations.CitizenServerSystem::NewDay</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>active_request_status</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetCitizenDead public System.Void SetCitizenDead(System.Guid citizenId) System.Void citizenId System.Guid" id="setcitizendead-system-guid---system-void">
+<div class="method-heading">
+<h3><code>SetCitizenDead</code></h3>
+<a class="permalink" href="#setcitizendead-system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetCitizenDead(System.Guid citizenId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::SetCitizenDead(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetCitizenDead(System.Guid citizenId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E8A7F6C2AB19F79930B413CFA8006DF4D39C012D70C07986B27594411BEB5C58</code></li>
+<li><span>Body hash</span><code>C08BE9D0C0E295016D0800B51E607C293027EE162348CEAA6D3EF4D82A7C59EA</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizen-system-guid--candideserver-models-citizen-citizenmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizen(System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerLumberjackCitizenController.html#onkilled-shared-entity-entitykillinfo---shared-entity-base-onkilledbehaviour"><code>CandideServer.Entities.Controllers.ServerLumberjackCitizenController::OnKilled</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#oncitizenentitydied-system-guid---system-void"><code>CandideServer.ServerManagers.CitizenServerManager::OnCitizenEntityDied</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetCitizenStatus public CandideServer.Models.Citizen.CitizenModel SetCitizenStatus(System.Guid citizenId, CandideServer.Models.Citizen.CitizenStatus status) CandideServer.Models.Citizen.CitizenModel citizenId System.Guid status CandideServer.Models.Citizen.CitizenStatus" id="setcitizenstatus-system-guid--candideserver-models-citizen-citizenstatus---candideserver-models-citizen-citizenmodel">
+<div class="method-heading">
+<h3><code>SetCitizenStatus</code></h3>
+<a class="permalink" href="#setcitizenstatus-system-guid--candideserver-models-citizen-citizenstatus---candideserver-models-citizen-citizenmodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Models.Citizen.CitizenModel SetCitizenStatus(System.Guid citizenId, CandideServer.Models.Citizen.CitizenStatus status)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::SetCitizenStatus(System.Guid, CandideServer.Models.Citizen.CitizenStatus)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> SetCitizenStatus(System.Guid citizenId, <a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenStatus.html">CandideServer.Models.Citizen.CitizenStatus</a> status)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8DDCE2485A5AFC18EA718808AAB08E93A3774386874ED8C63A54E06CC630A53D</code></li>
+<li><span>Body hash</span><code>A7361755FC019066492E22DE96558CBE06CBA75071D00736D43CA9480048787E</code></li>
+<li><span>IL size</span><span>36</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.ArgumentException::.ctor(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetcitizen-system-guid--candideserver-models-citizen-citizenmodel----system-boolean">CandideServer.ServerGameState::TryGetCitizen(System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#setcitizenstatusandsendupdate-system-guid--candideserver-models-citizen-citizenstatus---system-void"><code>CandideServer.ServerManagers.CitizenServerManager::SetCitizenStatusAndSendUpdate</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Use SetCitizenDead</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetNewCitizenActiveRequest public System.Void SetNewCitizenActiveRequest(CandideServer.Models.Citizen.CitizenModel citizen, System.String newRequestId) System.Void citizen CandideServer.Models.Citizen.CitizenModel newRequestId System.String" id="setnewcitizenactiverequest-candideserver-models-citizen-citizenmodel--system-string---system-void">
+<div class="method-heading">
+<h3><code>SetNewCitizenActiveRequest</code></h3>
+<a class="permalink" href="#setnewcitizenactiverequest-candideserver-models-citizen-citizenmodel--system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetNewCitizenActiveRequest(CandideServer.Models.Citizen.CitizenModel citizen, System.String newRequestId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::SetNewCitizenActiveRequest(CandideServer.Models.Citizen.CitizenModel, System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetNewCitizenActiveRequest(<a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen, System.String newRequestId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AEE9DDD400998BBC8A20C4BAB78B62CAE881DFFD967DC06B148B895A0450185B</code></li>
+<li><span>Body hash</span><code>A33FF07C15DCDAF564735AB2243A4BBD50BAEE2C1C5DA750AD0C205B10F4EEE6</code></li>
+<li><span>IL size</span><span>20</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#setactiverequeststate-candideserver-models-citizen-citizenmodel--candideserver-models-citizen-citizenrequeststatus---system-void">CandideServer.ServerControllers.CitizensSController::SetActiveRequestState(CandideServer.Models.Citizen.CitizenModel, CandideServer.Models.Citizen.CitizenRequestStatus)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Simulations_CitizenServerSystem.html#newday----system-void"><code>CandideServer.Simulations.CitizenServerSystem::NewDay</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnCitizen public CandideServer.Entities.ServerEntityModel SpawnCitizen(CandideServer.Models.Citizen.CitizenModel citizen, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; parameters) CandideServer.Entities.ServerEntityModel citizen CandideServer.Models.Citizen.CitizenModel parameters System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;" id="spawncitizen-candideserver-models-citizen-citizenmodel--system-collections-generic-dictionary-2-system-string-system-string----candideserver-entities-serverentitymodel">
+<div class="method-heading">
+<h3><code>SpawnCitizen</code></h3>
+<a class="permalink" href="#spawncitizen-candideserver-models-citizen-citizenmodel--system-collections-generic-dictionary-2-system-string-system-string----candideserver-entities-serverentitymodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Entities.ServerEntityModel SpawnCitizen(CandideServer.Models.Citizen.CitizenModel citizen, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; parameters)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::SpawnCitizen(CandideServer.Models.Citizen.CitizenModel, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> SpawnCitizen(<a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen, System.Collections.Generic.Dictionary&lt;System.String, System.String&gt; parameters)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8DB15192F41BA7663D9CD81DE64E209BB3AE15DE2EADA5FEC00FCC88055EF48B</code></li>
+<li><span>Body hash</span><code>807B5B4B0B76470FB991DAB107AF9C2C5752B33B5AFF1A587B75EBF16F98D5E1</code></li>
+<li><span>IL size</span><span>206</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::.ctor()</code></li>
+<li><code>System.Object::ToString()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::Add(!0, !1)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::set_Item(!0, !1)</code></li>
+<li><code>CandideServer.ServerControllers.SpawnEntityArgs::.ctor()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::get_Zero()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#spawnentity-candideserver-servercontrollers-spawnentityargs---candideserver-entities-serverentitymodel">CandideServer.ServerManagers.EntityServerManager::SpawnEntity(CandideServer.ServerControllers.SpawnEntityArgs)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#assigncitizentoslot-system-guid--candideserver-models-citizen-citizenmodel---system-void"><code>CandideServer.ServerControllers.CitizenSlotsSController::AssignCitizenToSlot</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#onworldentitiesloaded----system-void"><code>CandideServer.ServerControllers.CitizensSController::OnWorldEntitiesLoaded</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>citizen_id</code></li>
+<li><code>citizen_name</code></li>
+<li><code>active_request_status</code></li>
+<li><code>citizen_job</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryAddJobLevel public System.Boolean TryAddJobLevel(CandideServer.Models.Citizen.CitizenModel citizen, System.String jobId, System.Int32 levels) System.Boolean citizen CandideServer.Models.Citizen.CitizenModel jobId System.String levels System.Int32" id="tryaddjoblevel-candideserver-models-citizen-citizenmodel--system-string--system-int32---system-boolean">
+<div class="method-heading">
+<h3><code>TryAddJobLevel</code></h3>
+<a class="permalink" href="#tryaddjoblevel-candideserver-models-citizen-citizenmodel--system-string--system-int32---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryAddJobLevel(CandideServer.Models.Citizen.CitizenModel citizen, System.String jobId, System.Int32 levels)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::TryAddJobLevel(CandideServer.Models.Citizen.CitizenModel, System.String, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryAddJobLevel(<a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen, System.String jobId, System.Int32 levels)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8B113957944085E04B6C9398C44AFE3E81223A19A7C82059882951BE36771F8E</code></li>
+<li><span>Body hash</span><code>A63085FBC81EE77F135887B3CC735061141D01236201ADAEC2D0807053843B79</code></li>
+<li><span>IL size</span><span>103</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Data_JobDataBase.html#getjobornull-system-string---shared-data-datamodels-jobdata">Shared.Data.JobDataBase::GetJobOrNull(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.Models.Citizen.JobProgress&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>CandideServer.Models.Citizen.JobProgress::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.Models.Citizen.JobProgress&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.Math::Min(System.Int32, System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#trygivegifttocitizen-candideserver-messagemodels-citizens-givecitizengiftrequest---system-nullable-1-shared-models-citizens-citizengiftresult-"><code>CandideServer.ServerManagers.CitizenServerManager::TryGiveGiftToCitizen</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="UnassignAndRemoveAllReferencesToCitizen private System.Void UnassignAndRemoveAllReferencesToCitizen(CandideServer.Models.Citizen.CitizenModel citizen) System.Void citizen CandideServer.Models.Citizen.CitizenModel" id="unassignandremoveallreferencestocitizen-candideserver-models-citizen-citizenmodel---system-void">
+<div class="method-heading">
+<h3><code>UnassignAndRemoveAllReferencesToCitizen</code></h3>
+<a class="permalink" href="#unassignandremoveallreferencestocitizen-candideserver-models-citizen-citizenmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void UnassignAndRemoveAllReferencesToCitizen(CandideServer.Models.Citizen.CitizenModel citizen)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::UnassignAndRemoveAllReferencesToCitizen(CandideServer.Models.Citizen.CitizenModel)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void UnassignAndRemoveAllReferencesToCitizen(<a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>66FDBEF6022216447280D166BFE5FA43310106CF723D318EFCD4B13736FB897D</code></li>
+<li><span>Body hash</span><code>EAE21308704B964DD7DB4BCBD346AB32AC9C0846AA1FA97246499AECF75A9294</code></li>
+<li><span>IL size</span><span>247</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Contains(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#removecitizen-system-guid--system-guid---system-boolean">CandideServer.ServerControllers.TownsServerController::RemoveCitizen(System.Guid, System.Guid)</a></code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, CandideServer.Models.Town.ServerTownModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.Guid, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code>CandideServer.ServerControllers.UnassignCitizenSlotMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#unassigncitizenslot-candideserver-servercontrollers-unassigncitizenslotmessage---system-void">CandideServer.ServerControllers.CitizenSlotsSController::UnassignCitizenSlot(CandideServer.ServerControllers.UnassignCitizenSlotMessage)</a></code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, CandideServer.SimulationModels.CitizenSlotSimulationModel&gt;::MoveNext()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateCitizenSpawnLocation public System.Void UpdateCitizenSpawnLocation(CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.Models.Citizen.CitizenSlotModel slotModel, CandideServer.SimulationModels.BuildingSimulationModel building) System.Void citizen CandideServer.Models.Citizen.CitizenModel slotModel CandideServer.Models.Citizen.CitizenSlotModel building CandideServer.SimulationModels.BuildingSimulationModel" id="updatecitizenspawnlocation-candideserver-models-citizen-citizenmodel--candideserver-models-citizen-citizenslotmodel--candideserver-simulationmodels-buildingsimulationmodel---system-void">
+<div class="method-heading">
+<h3><code>UpdateCitizenSpawnLocation</code></h3>
+<a class="permalink" href="#updatecitizenspawnlocation-candideserver-models-citizen-citizenmodel--candideserver-models-citizen-citizenslotmodel--candideserver-simulationmodels-buildingsimulationmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateCitizenSpawnLocation(CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.Models.Citizen.CitizenSlotModel slotModel, CandideServer.SimulationModels.BuildingSimulationModel building)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::UpdateCitizenSpawnLocation(CandideServer.Models.Citizen.CitizenModel, CandideServer.Models.Citizen.CitizenSlotModel, CandideServer.SimulationModels.BuildingSimulationModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateCitizenSpawnLocation(<a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen, <a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenSlotModel.html">CandideServer.Models.Citizen.CitizenSlotModel</a> slotModel, <a href="../../types/CandideServer/CandideServer_SimulationModels_BuildingSimulationModel.html">CandideServer.SimulationModels.BuildingSimulationModel</a> building)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E92F8B74F6204E97AA279B50E768A0A5F73A92905543DF50A1E59D405B406992</code></li>
+<li><span>Body hash</span><code>A3ECDDCCC61B8D41D475D0212EC1B42AB9A9FE7D77D656199C0E244CE372D432</code></li>
+<li><span>IL size</span><span>51</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_AbstractBuildingController.html#getspawnpositionforcitizen-candideserver-models-citizen-citizenmodel--candideserver-models-citizen-citizenslotmodel---candideserver-buildings-buildingcontrollers-citizenpositiondata">CandideServer.Buildings.BuildingControllers.AbstractBuildingController::GetSpawnPositionForCitizen(CandideServer.Models.Citizen.CitizenModel, CandideServer.Models.Citizen.CitizenSlotModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#assigncitizentoslot-system-guid--candideserver-models-citizen-citizenmodel---system-void"><code>CandideServer.ServerControllers.CitizenSlotsSController::AssignCitizenToSlot</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#onworldentitiesloaded----system-void"><code>CandideServer.ServerControllers.CitizensSController::OnWorldEntitiesLoaded</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#onbuildingbuilt-candideserver-simulationmodels-buildingsimulationmodel---system-void"><code>CandideServer.ServerManagers.CitizenServerManager::OnBuildingBuilt</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#onbuildingupgraded-candideserver-simulationmodels-buildingsimulationmodel---system-void"><code>CandideServer.ServerManagers.CitizenServerManager::OnBuildingUpgraded</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateStats public System.Void UpdateStats(CandideServer.Models.Citizen.CitizenModel citizen) System.Void citizen CandideServer.Models.Citizen.CitizenModel" id="updatestats-candideserver-models-citizen-citizenmodel---system-void">
+<div class="method-heading">
+<h3><code>UpdateStats</code></h3>
+<a class="permalink" href="#updatestats-candideserver-models-citizen-citizenmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateStats(CandideServer.Models.Citizen.CitizenModel citizen)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::UpdateStats(CandideServer.Models.Citizen.CitizenModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateStats(<a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>68CAA280613A5261527C17F26E44DA4B51E4D961FD8A36954E43B3F492C53B78</code></li>
+<li><span>Body hash</span><code>D80782161966110B4593199FB3730EBB1EA8175FD77517FA0DD222E770A03F4B</code></li>
+<li><span>IL size</span><span>54</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetbuilding-system-guid--candideserver-simulationmodels-buildingsimulationmodel----system-boolean">CandideServer.ServerGameState::TryGetBuilding(System.Guid, CandideServer.SimulationModels.BuildingSimulationModel&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#updatestats-candideserver-models-citizen-citizenmodel--candideserver-models-buildings-buildinginstancemodel---system-void">CandideServer.ServerControllers.CitizensSController::UpdateStats(CandideServer.Models.Citizen.CitizenModel, CandideServer.Models.Buildings.BuildingInstanceModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#addcitizenaura-system-guid--system-string--candideserver-models-citizen-citizenmodel--system-boolean--system-boolean---system-void"><code>CandideServer.ServerControllers.CitizensSController::AddCitizenAura</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#addloyalty-candideserver-models-citizen-citizenmodel--system-single--system-boolean---system-void"><code>CandideServer.ServerControllers.CitizensSController::AddLoyalty</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#removecitizenaura-system-string--candideserver-models-citizen-citizenmodel--system-boolean---system-void"><code>CandideServer.ServerControllers.CitizensSController::RemoveCitizenAura</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#removecitizeninstancetypeaura-system-string--candideserver-models-citizen-citizenmodel--system-boolean---system-void"><code>CandideServer.ServerControllers.CitizensSController::RemoveCitizenInstanceTypeAura</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#addtowncitizensaura-candideserver-models-town-servertownmodel--system-string--system-boolean---system-void"><code>CandideServer.ServerControllers.TownsServerController::AddTownCitizensAura</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_TownsServerController.html#removetowncitizensaura-candideserver-models-town-servertownmodel--system-string--system-boolean---system-void"><code>CandideServer.ServerControllers.TownsServerController::RemoveTownCitizensAura</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#trygivegifttocitizen-candideserver-messagemodels-citizens-givecitizengiftrequest---system-nullable-1-shared-models-citizens-citizengiftresult-"><code>CandideServer.ServerManagers.CitizenServerManager::TryGiveGiftToCitizen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Simulations_CitizenServerSystem.html#updatecitizen-candideserver-models-citizen-citizenmodel--system-single---system-boolean"><code>CandideServer.Simulations.CitizenServerSystem::UpdateCitizen</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateStats public System.Void UpdateStats(CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.Models.Buildings.BuildingInstanceModel building) System.Void citizen CandideServer.Models.Citizen.CitizenModel building CandideServer.Models.Buildings.BuildingInstanceModel" id="updatestats-candideserver-models-citizen-citizenmodel--candideserver-models-buildings-buildinginstancemodel---system-void">
+<div class="method-heading">
+<h3><code>UpdateStats</code></h3>
+<a class="permalink" href="#updatestats-candideserver-models-citizen-citizenmodel--candideserver-models-buildings-buildinginstancemodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateStats(CandideServer.Models.Citizen.CitizenModel citizen, CandideServer.Models.Buildings.BuildingInstanceModel building)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerControllers.CitizensSController::UpdateStats(CandideServer.Models.Citizen.CitizenModel, CandideServer.Models.Buildings.BuildingInstanceModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateStats(<a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a> citizen, <a href="../../types/CandideServer/CandideServer_Models_Buildings_BuildingInstanceModel.html">CandideServer.Models.Buildings.BuildingInstanceModel</a> building)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>25EF0278BA736C7862DF6299199439193CE80962111C87A0BED37D989BBB1709</code></li>
+<li><span>Body hash</span><code>ED0BFE3C5D70B1A49DA74B0638BBA9BD8478315C6FB235A7D9B7B87DA3D0AF77</code></li>
+<li><span>IL size</span><span>388</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Models_Stats_CitizenStats.html#resetmodifiers----system-void">Shared.Models.Stats.CitizenStats::ResetModifiers()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_CitizenStats.html#addbuildingstats-system-collections-generic-dictionary-2-system-string-shared-models-stats-stat----system-void">Shared.Models.Stats.CitizenStats::AddBuildingStats(System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.Stat&gt;)</a></code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygettown-system-guid--candideserver-models-town-servertownmodel----system-boolean">CandideServer.ServerGameState::TryGetTown(System.Guid, CandideServer.Models.Town.ServerTownModel&amp;)</a></code></li>
+<li><code>CitizensSController.&lt;&gt;c::&lt;UpdateStats&gt;b__13_0(Shared.Models.Auras.CitizenAuraModel)</code></li>
+<li><code>System.Predicate&lt;Shared.Models.Auras.CitizenAuraModel&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Auras.CitizenAuraModel&gt;::RemoveAll(System.Predicate&lt;!0&gt;)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.String&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.String&gt;::get_Current()</code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#addcitizenaura-system-guid--system-string--candideserver-models-citizen-citizenmodel--system-boolean--system-boolean---system-void">CandideServer.ServerControllers.CitizensSController::AddCitizenAura(System.Guid, System.String, CandideServer.Models.Citizen.CitizenModel, System.Boolean, System.Boolean)</a></code></li>
+<li><code>HashSet.Enumerator&lt;System.String&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Auras.CitizenAuraModel&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Auras.CitizenAuraModel&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_CitizenStats.html#addaurastats-system-guid--shared-models-auras-citizenauramodel---system-void">Shared.Models.Stats.CitizenStats::AddAuraStats(System.Guid, Shared.Models.Auras.CitizenAuraModel)</a></code></li>
+<li><code>List.Enumerator&lt;Shared.Models.Auras.CitizenAuraModel&gt;::MoveNext()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.String&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, System.String&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.Guid, System.String&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_CitizenAuraDatabase.html#getauraormissing-system-string---shared-models-auras-citizenaurainfo">Shared.Data.CitizenAuraDatabase::GetAuraOrMissing(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_CitizenStats.html#addaurastats-system-guid--system-collections-generic-dictionary-2-system-string-shared-models-stats-statmodificationdata---shared-models-stats-statmodifiertype--system-int32---system-void">Shared.Models.Stats.CitizenStats::AddAuraStats(System.Guid, System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Stats.StatModificationData&gt;, Shared.Models.Stats.StatModifierType, System.Int32)</a></code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, System.String&gt;::MoveNext()</code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_CitizenHelper.html#gethungerstatmodifiers-system-single---system-valuetuple-2-system-string-shared-models-stats-statmodifier---">Shared.Helpers.CitizenHelper::GetHungerStatModifiers(System.Single)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_CitizenStats.html#addhungerstats-system-valuetuple-2-system-string-shared-models-stats-statmodifier------system-void">Shared.Models.Stats.CitizenStats::AddHungerStats(System.ValueTuple&lt;System.String, Shared.Models.Stats.StatModifier&gt;[])</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_CitizenStats.html#get-system-string---system-single">Shared.Models.Stats.CitizenStats::Get(System.String)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_CitizenHelper.html#gethappinessstatmodifiers-system-single---system-valuetuple-2-system-string-shared-models-stats-statmodifier---">Shared.Helpers.CitizenHelper::GetHappinessStatModifiers(System.Single)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_CitizenStats.html#addhappinessstats-system-valuetuple-2-system-string-shared-models-stats-statmodifier------system-void">Shared.Models.Stats.CitizenStats::AddHappinessStats(System.ValueTuple&lt;System.String, Shared.Models.Stats.StatModifier&gt;[])</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#assigncitizentoslot-system-guid--candideserver-models-citizen-citizenmodel---system-void"><code>CandideServer.ServerControllers.CitizenSlotsSController::AssignCitizenToSlot</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizenSlotsSController.html#unassigncitizenslot-candideserver-servercontrollers-unassigncitizenslotmessage---system-void"><code>CandideServer.ServerControllers.CitizenSlotsSController::UnassignCitizenSlot</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#onworldentitiesloaded----system-void"><code>CandideServer.ServerControllers.CitizensSController::OnWorldEntitiesLoaded</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#updatestats-candideserver-models-citizen-citizenmodel---system-void"><code>CandideServer.ServerControllers.CitizensSController::UpdateStats</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#updatecitizenhunger----system-void"><code>CandideServer.ServerManagers.CitizenServerManager::UpdateCitizenHunger</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenServerManager.html#updatestatsandsendupdate-candideserver-models-citizen-citizenmodel--candideserver-models-buildings-buildinginstancemodel---system-void"><code>CandideServer.ServerManagers.CitizenServerManager::UpdateStatsAndSendUpdate</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_GlobalCitizenAurasServerManager.html#addglobalcitizenaura-system-string--system-boolean---system-void"><code>CandideServer.ServerManagers.GlobalCitizenAurasServerManager::AddGlobalCitizenAura</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Citizen_Happiness</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

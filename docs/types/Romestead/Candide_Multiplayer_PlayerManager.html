@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.Multiplayer.PlayerManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.Multiplayer.PlayerManager</h1>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.Multiplayer.PlayerManager
+
+- Assembly: `Romestead`
+- Namespace: `Candide.Multiplayer`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 14 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public Microsoft.Xna.Framework.Point CalculateViewArea()`
+- `public System.Void ChangePlayerHealth(CandideServer.MessageModels.PlayerCharacters.ChangePlayerHealthMessage message)`
+- `public System.Void ClientLoggedIn(CandideServer.MessageModels.Players.LoginResponseMessage message)`
+- `public Shared.Entity.EntityWrapper CreatePlayerEntity(Candide.Multiplayer.Models.ClientPlayerCharacter model, Candide.Entities.PlayerState.PlayerAnimationController controller)`
+- `public System.Void Disconnected(Candide.Multiplayer.Services.DisconnectReason reason)`
+- `public System.Void LocalPlayerDied()`
+- `public System.Void MovePlayer(Microsoft.Xna.Framework.Vector3 position)`
+- `public System.Void RemovePlayersGrave(CandideServer.MessageModels.PlayerCharacters.RemovePlayersGraveMessage message)`
+- `public System.Void RespawnPlayer(System.Int32 playerId, System.Guid worldId, Microsoft.Xna.Framework.Vector3 position)`
+- `public System.Boolean SpawnLocalPlayer(Microsoft.Xna.Framework.Vector3 position)`
+- `public System.Void StartClient()`
+- `public System.Boolean TryGetPlayerFromEntity(Shared.Entity.EntityWrapper entity, out Candide.Multiplayer.Models.ClientPlayerCharacter&amp; playerCharacter)`
+- `public System.Void UpdatePlayersGrave(CandideServer.MessageModels.PlayerCharacters.UpdatePlayersGraveMessage message)`
+- `public System.Void UpdatePlayerViewArea(System.Boolean allowAnySize)`
+">Copy markdown</button>
+<a class="button" href="Candide_Multiplayer_PlayerManager.json">Type JSON</a>
+<span class="change-badge change-changed">changed</span>
+</div>
+<p class="lede">public class in <code>Candide.Multiplayer</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>14</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.Multiplayer</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>5F1A419801C0A801138F086D6BD86C9E7CC063C9618000DF00B56B33FA70399B</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CalculateViewArea public Microsoft.Xna.Framework.Point CalculateViewArea() Microsoft.Xna.Framework.Point " id="calculateviewarea----microsoft-xna-framework-point">
+<div class="method-heading">
+<h3><code>CalculateViewArea</code></h3>
+<a class="permalink" href="#calculateviewarea----microsoft-xna-framework-point" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point CalculateViewArea()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::CalculateViewArea()">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Point CalculateViewArea()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Point</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8FEBDBA0B1C0E8676C9512EA5FAA6644DC10CB09283DE4235638BC0512A9CDA2</code></li>
+<li><span>Body hash</span><code>787C95A82BBD42FEA26CDDC396E3E3CA8FA7B6EB83EE1E053F44C3A4FC01066B</code></li>
+<li><span>IL size</span><span>70</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Graphics.GraphicsDevice::get_Viewport()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.Viewport::get_Width()</code></li>
+<li><code>Microsoft.Xna.Framework.Graphics.Viewport::get_Height()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_PlayerManager.html#updateplayerviewarea-system-boolean---system-void"><code>Candide.Multiplayer.PlayerManager::UpdatePlayerViewArea</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#sendlogin-system-string---system-void"><code>Candide.Multiplayer.Services.ConnectService::SendLogin</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ChangePlayerHealth public System.Void ChangePlayerHealth(CandideServer.MessageModels.PlayerCharacters.ChangePlayerHealthMessage message) System.Void message CandideServer.MessageModels.PlayerCharacters.ChangePlayerHealthMessage" id="changeplayerhealth-candideserver-messagemodels-playercharacters-changeplayerhealthmessage---system-void">
+<div class="method-heading">
+<h3><code>ChangePlayerHealth</code></h3>
+<a class="permalink" href="#changeplayerhealth-candideserver-messagemodels-playercharacters-changeplayerhealthmessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ChangePlayerHealth(CandideServer.MessageModels.PlayerCharacters.ChangePlayerHealthMessage message)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::ChangePlayerHealth(CandideServer.MessageModels.PlayerCharacters.ChangePlayerHealthMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ChangePlayerHealth(<a href="../../types/CandideServer/CandideServer_MessageModels_PlayerCharacters_ChangePlayerHealthMessage.html">CandideServer.MessageModels.PlayerCharacters.ChangePlayerHealthMessage</a> message)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2F23807F5D15B3A4C1D2BB4EF7383D436D60843034C86AC8C211EA3C17CD910F</code></li>
+<li><span>Body hash</span><code>91F79A9C55A91B8E972F73C6506A8FF85CC461689B1552AE7CFE391D7B53C095</code></li>
+<li><span>IL size</span><span>144</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, Candide.Multiplayer.Models.ClientPlayerCharacter&gt;::get_Item(!0)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Health(System.Single)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Health()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_PlayerService.html#onreceive-changeplayerhealth-candideserver-messagemodels-playercharacters-changeplayerhealthmessage---system-void"><code>Candide.Multiplayer.Services.PlayerService::OnReceive_ChangePlayerHealth</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ClientLoggedIn public System.Void ClientLoggedIn(CandideServer.MessageModels.Players.LoginResponseMessage message) System.Void message CandideServer.MessageModels.Players.LoginResponseMessage" id="clientloggedin-candideserver-messagemodels-players-loginresponsemessage---system-void">
+<div class="method-heading">
+<h3><code>ClientLoggedIn</code></h3>
+<a class="permalink" href="#clientloggedin-candideserver-messagemodels-players-loginresponsemessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ClientLoggedIn(CandideServer.MessageModels.Players.LoginResponseMessage message)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::ClientLoggedIn(CandideServer.MessageModels.Players.LoginResponseMessage)">Copy Harmony target</button>
+<span class="change-badge change-changed">changed</span>
+</div>
+<p><code>public System.Void ClientLoggedIn(<a href="../../types/CandideServer/CandideServer_MessageModels_Players_LoginResponseMessage.html">CandideServer.MessageModels.Players.LoginResponseMessage</a> message)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F782CCC82EC48D16E810555719C73B4924B269BC23C93F440B08F4E22C0CBBDF</code></li>
+<li><span>Body hash</span><code>E727F51CF1AB5FEC04A67391176C556B134107CAE1BE8EDF280DDF41DE9A859A</code></li>
+<li><span>IL size</span><span>879</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Int32&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringDefinitions.html#getformatstring-system-string--system-string---system-string">Shared.Text.StringDefinitions::GetFormatString(System.String, System.String)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#errordisconnect-candide-multiplayer-services-disconnectreason--system-string---system-void">Candide.Multiplayer.Services.ConnectService::ErrorDisconnect(Candide.Multiplayer.Services.DisconnectReason, System.String)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>Steamworks.SteamFriends::SetRichPresence(System.String, System.String)</code></li>
+<li><code>System.Globalization.CultureInfo::get_InvariantCulture()</code></li>
+<li><code>System.Int32::ToString(System.IFormatProvider)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_PlayerDataController.html#addplayermodel-candideserver-messagemodels-players-serverplayermessage---candide-multiplayer-models-clientplayercharacter">Candide.Multiplayer.PlayerDataController::AddPlayerModel(CandideServer.MessageModels.Players.ServerPlayerMessage)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::get_Current()</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_AuraDataBase.html#getauraormissing-system-string---shared-models-auras-entityaurainfo">Shared.Data.AuraDataBase::GetAuraOrMissing(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.Func&lt;Shared.Models.Auras.EntityAuraInfo, Shared.Models.Auras.ApplyAuraContext, Shared.Aura.Args.AbstractAuraArgs, Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;&gt;::get_Item(!0)</code></li>
+<li><code>System.Func&lt;Shared.Models.Auras.EntityAuraInfo, Shared.Models.Auras.ApplyAuraContext, Shared.Aura.Args.AbstractAuraArgs, Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;::Invoke(!0, !1, !2)</code></li>
+<li><code><a href="../../types/Shared/Shared_Aura_State_AuraBaseState.html#loadstate-shared-aura-state-aurabasestate---system-void">Shared.Aura.State.AuraBaseState::LoadState(Shared.Aura.State.AuraBaseState)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Aura.AbstractAura&lt;Shared.Entity.EntityWrapper&gt;&gt;::Add(!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code><a href="../../types/Shared/Shared_Analytics_AnalyticsManager.html#trackerror-system-string---system-void">Shared.Analytics.AnalyticsManager::TrackError(System.String)</a></code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntityWrapper.html#delete-shared-entity-entityremoveinfo---system-void">Shared.Entity.EntityWrapper::Delete(Shared.Entity.EntityRemoveInfo)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_WorldManager.html#moveplayertoworldandposition-system-guid--microsoft-xna-framework-vector3---system-boolean">Candide.GameModels.Managers.WorldManager::MovePlayerToWorldAndPosition(System.Guid, Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_WorldManager.html#switchworld-system-guid---system-boolean">Candide.GameModels.Managers.WorldManager::SwitchWorld(System.Guid)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_PlayerManager.html#spawnlocalplayer-microsoft-xna-framework-vector3---system-boolean">Candide.Multiplayer.PlayerManager::SpawnLocalPlayer(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_PlayerCharacterManager.html#setup----system-void">Candide.GameModels.Managers.PlayerCharacterManager::Setup()</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Helpers_SamsPlayerDebuggerHelper.html#client-initialize-system-guid---system-void">Shared.Helpers.SamsPlayerDebuggerHelper::Client_Initialize(System.Guid)</a></code></li>
+<li><code>CandideServer.MessageModels.PlayerCharacters.GetCharacterInventoryMessage::.ctor()</code></li>
+<li><code>Candide.Multiplayer.Models.LocalPlayer::get_EntityId()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#loggedin-candideserver-messagemodels-players-loginresponsemessage---system-void"><code>Candide.Multiplayer.Services.ConnectService::LoggedIn</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>ConnectionError_Login</code></li>
+<li><code>0x1</code></li>
+<li><code>steam_player_group</code></li>
+<li><code>game</code></li>
+<li><code>steam_player_group_size</code></li>
+<li><code>Error when loading player aura with id &#39;</code></li>
+<li><code>&#39;. Removed it.
+</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CreatePlayerEntity public Shared.Entity.EntityWrapper CreatePlayerEntity(Candide.Multiplayer.Models.ClientPlayerCharacter model, Candide.Entities.PlayerState.PlayerAnimationController controller) Shared.Entity.EntityWrapper model Candide.Multiplayer.Models.ClientPlayerCharacter controller Candide.Entities.PlayerState.PlayerAnimationController" id="createplayerentity-candide-multiplayer-models-clientplayercharacter--candide-entities-playerstate-playeranimationcontroller---shared-entity-entitywrapper">
+<div class="method-heading">
+<h3><code>CreatePlayerEntity</code></h3>
+<a class="permalink" href="#createplayerentity-candide-multiplayer-models-clientplayercharacter--candide-entities-playerstate-playeranimationcontroller---shared-entity-entitywrapper" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Shared.Entity.EntityWrapper CreatePlayerEntity(Candide.Multiplayer.Models.ClientPlayerCharacter model, Candide.Entities.PlayerState.PlayerAnimationController controller)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::CreatePlayerEntity(Candide.Multiplayer.Models.ClientPlayerCharacter, Candide.Entities.PlayerState.PlayerAnimationController)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> CreatePlayerEntity(<a href="../../types/Romestead/Candide_Multiplayer_Models_ClientPlayerCharacter.html">Candide.Multiplayer.Models.ClientPlayerCharacter</a> model, <a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerAnimationController.html">Candide.Entities.PlayerState.PlayerAnimationController</a> controller)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>072C20F8483830D61A2A0A01929772A3834172B6E65AD7761C47844973D32020</code></li>
+<li><span>Body hash</span><code>985DE683A842FD2A3D77D9B542691113C7EBF36927E8B78D665996F0D1B55560</code></li>
+<li><span>IL size</span><span>408</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>PlayerManager.&lt;&gt;c__DisplayClass0_0::.ctor()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Database_Doodad_DoodadDatabaseManager.html#spawndoodad-system-guid--shared-entity-entitysystem--system-boolean--system-boolean---shared-entity-entitywrapper">Candide.Database.Doodad.DoodadDatabaseManager::SpawnDoodad(System.Guid, Shared.Entity.EntitySystem, System.Boolean, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Id(System.Guid)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Stats()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_EntityStats.html#onload----system-void">Shared.Models.Stats.EntityStats::OnLoad()</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_MaskRef()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#setflag-shared-entity-components-component---shared-entity-components-component---system-void">Shared.Entity.Components.ComponentExtension::SetFlag(Shared.Entity.Components.Component&amp;, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Controller(Shared.Entity.Base.AbstractController)</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#attachentity-shared-entity-entitywrapper---system-void">Shared.Entity.Base.AbstractController::AttachEntity(Shared.Entity.EntityWrapper)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Position(Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Direction(System.Single)</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#entityinitialize----system-void">Shared.Entity.Base.AbstractController::EntityInitialize()</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_EntityManager.html#syncregister-system-guid--shared-entity-entitywrapper---system-void">Candide.GameModels.Managers.EntityManager::SyncRegister(System.Guid, Shared.Entity.EntityWrapper)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_AuraManager.html#syncreapplyentityauras-system-guid--system-collections-generic-list-1-system-valuetuple-2-system-string-shared-aura-state-aurabasestate-----system-void">Candide.GameModels.Managers.AuraManager::SyncReapplyEntityAuras(System.Guid, System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_SharedEntityAuraManager.html#calculatestate-shared-entity-entitywrapper---system-void">Shared.Entity.SharedEntityAuraManager::CalculateState(Shared.Entity.EntityWrapper)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Health(System.Single)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_GameState.html#trygetactiveinventory-system-guid--candide-gamemodels-models-items-simpleinventory----system-boolean">Candide.GameModels.GameState::TryGetActiveInventory(System.Guid, Candide.GameModels.Models.Items.SimpleInventory&amp;)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_PlayerSkinManager.html#applyskin-candide-entities-playerstate-playeranimationcontroller--shared-models-player-playerappearancedata--candide-gamemodels-models-items-simpleinventory---system-void">Candide.GameModels.Managers.PlayerSkinManager::ApplySkin(Candide.Entities.PlayerState.PlayerAnimationController, Shared.Models.Player.PlayerAppearanceData, Candide.GameModels.Models.Items.SimpleInventory)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Network_NetworkManager.html#sendmessage-system-string--system-object--system-byte---system-void">Candide.Multiplayer.Network.NetworkManager::SendMessage(System.String, System.Object, System.Byte)</a></code></li>
+<li><code>PlayerManager.&lt;&gt;c__DisplayClass0_0::&lt;CreatePlayerEntity&gt;b__0(System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;)</code></li>
+<li><code>System.Action&lt;System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Services_AuraService.html#trygetentityauras-system-guid--system-action-1-system-collections-generic-list-1-system-valuetuple-2-system-string-shared-aura-state-aurabasestate------system-void">Candide.GameModels.Services.AuraService::TryGetEntityAuras(System.Guid, System.Action&lt;System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_PlayerManager.html#spawnlocalplayer-microsoft-xna-framework-vector3---system-boolean"><code>Candide.Multiplayer.PlayerManager::SpawnLocalPlayer</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_PlayerSystem.html#update----system-void"><code>Candide.Multiplayer.PlayerSystem::Update</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>CreatePlayerEntity: System is full, can&#39;t load player :(</code></li>
+<li><code>request-player-action</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Disconnected public System.Void Disconnected(Candide.Multiplayer.Services.DisconnectReason reason) System.Void reason Candide.Multiplayer.Services.DisconnectReason" id="disconnected-candide-multiplayer-services-disconnectreason---system-void">
+<div class="method-heading">
+<h3><code>Disconnected</code></h3>
+<a class="permalink" href="#disconnected-candide-multiplayer-services-disconnectreason---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Disconnected(Candide.Multiplayer.Services.DisconnectReason reason)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::Disconnected(Candide.Multiplayer.Services.DisconnectReason)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Disconnected(<a href="../../types/Romestead/Candide_Multiplayer_Services_DisconnectReason.html">Candide.Multiplayer.Services.DisconnectReason</a> reason)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B3E9089347FAED3184C39CD1E43B6488A37E179B0D5D1E15736E5E4CD8925870</code></li>
+<li><span>Body hash</span><code>551CA81C6024DABF9DDCCFFC1387ADC1DC909D32ACD6865AC3E8EF752EFE3016</code></li>
+<li><span>IL size</span><span>28</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, Candide.Multiplayer.Models.ClientPlayerCharacter&gt;::Clear()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LocalPlayerDied public System.Void LocalPlayerDied() System.Void " id="localplayerdied----system-void">
+<div class="method-heading">
+<h3><code>LocalPlayerDied</code></h3>
+<a class="permalink" href="#localplayerdied----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void LocalPlayerDied()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::LocalPlayerDied()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void LocalPlayerDied()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DA82D515D3C5DA1A57681D37B426525F5CF7389BF9E40291A89B2612206AB342</code></li>
+<li><span>Body hash</span><code>804E2C9C0FA7EB62E786A233DDD8FBE838BD61481816F4C9D04045BD23B22066</code></li>
+<li><span>IL size</span><span>75</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, Candide.Multiplayer.Models.ClientPlayerCharacter&gt;::get_Item(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_PlayerDataController.html#localplayerdied----system-void">Candide.Multiplayer.PlayerDataController::LocalPlayerDied()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_PlayerService.html#sendlocalplayerdied----system-void">Candide.Multiplayer.Services.PlayerService::SendLocalPlayerDied()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideEngine.html#setmodemanager-candide-playermode-abstractmodemanager---system-void">Candide.CandideEngine::SetModeManager(Candide.PlayerMode.AbstractModeManager)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Graphics_Camera.html#followtarget-shared-entity-entitywrapper---system-void">Candide.Graphics.Camera::FollowTarget(Shared.Entity.EntityWrapper)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Save_SaveSystem.html#queuesave-system-single---system-void">Candide.Save.SaveSystem::QueueSave(System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerController.html#onkilled-shared-entity-entitykillinfo---shared-entity-base-onkilledbehaviour"><code>Candide.Entities.PlayerState.PlayerController::OnKilled</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_PlayerService.html#onreceive-playerdied-candideserver-messagemodels-playercharacters-playerdiedmessage---system-void"><code>Candide.Multiplayer.Services.PlayerService::OnReceive_PlayerDied</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MovePlayer public System.Void MovePlayer(Microsoft.Xna.Framework.Vector3 position) System.Void position Microsoft.Xna.Framework.Vector3" id="moveplayer-microsoft-xna-framework-vector3---system-void">
+<div class="method-heading">
+<h3><code>MovePlayer</code></h3>
+<a class="permalink" href="#moveplayer-microsoft-xna-framework-vector3---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void MovePlayer(Microsoft.Xna.Framework.Vector3 position)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::MovePlayer(Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void MovePlayer(Microsoft.Xna.Framework.Vector3 position)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>01A250AD5FFD3C6B5451AB89692AA859B110240524481CB0C7CE486D2913F16E</code></li>
+<li><span>Body hash</span><code>23A55F1555085CA4F5617FF5D642EEE5ED22A1C661EBE12DBF6E6668FBA8C495</code></li>
+<li><span>IL size</span><span>27</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, Candide.Multiplayer.Models.ClientPlayerCharacter&gt;::get_Item(!0)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemovePlayersGrave public System.Void RemovePlayersGrave(CandideServer.MessageModels.PlayerCharacters.RemovePlayersGraveMessage message) System.Void message CandideServer.MessageModels.PlayerCharacters.RemovePlayersGraveMessage" id="removeplayersgrave-candideserver-messagemodels-playercharacters-removeplayersgravemessage---system-void">
+<div class="method-heading">
+<h3><code>RemovePlayersGrave</code></h3>
+<a class="permalink" href="#removeplayersgrave-candideserver-messagemodels-playercharacters-removeplayersgravemessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemovePlayersGrave(CandideServer.MessageModels.PlayerCharacters.RemovePlayersGraveMessage message)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::RemovePlayersGrave(CandideServer.MessageModels.PlayerCharacters.RemovePlayersGraveMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemovePlayersGrave(<a href="../../types/CandideServer/CandideServer_MessageModels_PlayerCharacters_RemovePlayersGraveMessage.html">CandideServer.MessageModels.PlayerCharacters.RemovePlayersGraveMessage</a> message)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0E1A5C89515431841BE371233B139044D94D66DD43AFC3BD7FD035173D4166D5</code></li>
+<li><span>Body hash</span><code>38C0A1582DF8AE125F5057B482C0DFAB9A29A4A80A1C06B23DB6AC9B0F288607</code></li>
+<li><span>IL size</span><span>18</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Candide.World.ClientWorldMapMarker&gt;::Remove(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_PlayerService.html#onreceive-removeplayersgrave-candideserver-messagemodels-playercharacters-removeplayersgravemessage---system-void"><code>Candide.Multiplayer.Services.PlayerService::OnReceive_RemovePlayersGrave</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RespawnPlayer public System.Void RespawnPlayer(System.Int32 playerId, System.Guid worldId, Microsoft.Xna.Framework.Vector3 position) System.Void playerId System.Int32 worldId System.Guid position Microsoft.Xna.Framework.Vector3" id="respawnplayer-system-int32--system-guid--microsoft-xna-framework-vector3---system-void">
+<div class="method-heading">
+<h3><code>RespawnPlayer</code></h3>
+<a class="permalink" href="#respawnplayer-system-int32--system-guid--microsoft-xna-framework-vector3---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RespawnPlayer(System.Int32 playerId, System.Guid worldId, Microsoft.Xna.Framework.Vector3 position)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::RespawnPlayer(System.Int32, System.Guid, Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RespawnPlayer(System.Int32 playerId, System.Guid worldId, Microsoft.Xna.Framework.Vector3 position)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B28BBEF7E0B05022E30E7D4C988C9EBC44BE07C07CA79052E9E02BB9653845BF</code></li>
+<li><span>Body hash</span><code>8EEBAC51AF027B3683A4C07179E0293E5C6F05DFD3A50496E4BBB6FB11AC43D1</code></li>
+<li><span>IL size</span><span>119</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, Candide.Multiplayer.Models.ClientPlayerCharacter&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_GameModels_Managers_WorldManager.html#moveplayertoworldandposition-system-guid--microsoft-xna-framework-vector3---system-boolean">Candide.GameModels.Managers.WorldManager::MovePlayerToWorldAndPosition(System.Guid, Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Text_StringDefinitions.html#getstring-system-string---system-string">Shared.Text.StringDefinitions::GetString(System.String)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#errordisconnect-candide-multiplayer-services-disconnectreason--system-string---system-void">Candide.Multiplayer.Services.ConnectService::ErrorDisconnect(Candide.Multiplayer.Services.DisconnectReason, System.String)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Graphics_Camera.html#fix----system-void">Candide.Graphics.Camera::Fix()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_PlayerSystem.html#update----system-void"><code>Candide.Multiplayer.PlayerSystem::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_PlayerService.html#onreceive-respawnplayer-candideserver-messagemodels-playercharacters-respawnplayermessage---system-void"><code>Candide.Multiplayer.Services.PlayerService::OnReceive_RespawnPlayer</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>ConnectionError_ClientError</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnLocalPlayer public System.Boolean SpawnLocalPlayer(Microsoft.Xna.Framework.Vector3 position) System.Boolean position Microsoft.Xna.Framework.Vector3" id="spawnlocalplayer-microsoft-xna-framework-vector3---system-boolean">
+<div class="method-heading">
+<h3><code>SpawnLocalPlayer</code></h3>
+<a class="permalink" href="#spawnlocalplayer-microsoft-xna-framework-vector3---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean SpawnLocalPlayer(Microsoft.Xna.Framework.Vector3 position)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::SpawnLocalPlayer(Microsoft.Xna.Framework.Vector3)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean SpawnLocalPlayer(Microsoft.Xna.Framework.Vector3 position)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>10858A5576DD9757EF9257A93E529B5099BAF2E299045E1817E3A1D7891AA2E6</code></li>
+<li><span>Body hash</span><code>0D9A32214D11C1C6571BFEE02F3817811CD0A926DB07CFDFA0F233E42C90762A</code></li>
+<li><span>IL size</span><span>272</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, Candide.Multiplayer.Models.ClientPlayerCharacter&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Entities_PlayerState_PlayerController.html#reset----system-void">Candide.Entities.PlayerState.PlayerController::Reset()</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Direction()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Velocity()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Acceleration()</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_PlayerManager.html#createplayerentity-candide-multiplayer-models-clientplayercharacter--candide-entities-playerstate-playeranimationcontroller---shared-entity-entitywrapper">Candide.Multiplayer.PlayerManager::CreatePlayerEntity(Candide.Multiplayer.Models.ClientPlayerCharacter, Candide.Entities.PlayerState.PlayerAnimationController)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_SharedEntityAuraManager.html#calculatestate-shared-entity-entitywrapper---system-void">Shared.Entity.SharedEntityAuraManager::CalculateState(Shared.Entity.EntityWrapper)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_Graphics_Camera.html#jumptotarget----system-void">Candide.Graphics.Camera::JumpToTarget()</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Position(Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Stats()</code></li>
+<li><code><a href="../../types/Shared/Shared_Models_Stats_EntityStats.html#get-system-string---system-single">Shared.Models.Stats.EntityStats::Get(System.String)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Energy(System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_WorldManager.html#moveplayertoworldandposition-system-guid--microsoft-xna-framework-vector3---system-boolean"><code>Candide.GameModels.Managers.WorldManager::MovePlayerToWorldAndPosition</code></a></li>
+<li><a href="../../types/Romestead/Candide_Multiplayer_PlayerManager.html#clientloggedin-candideserver-messagemodels-players-loginresponsemessage---system-void"><code>Candide.Multiplayer.PlayerManager::ClientLoggedIn</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Energy</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="StartClient public System.Void StartClient() System.Void " id="startclient----system-void">
+<div class="method-heading">
+<h3><code>StartClient</code></h3>
+<a class="permalink" href="#startclient----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void StartClient()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::StartClient()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void StartClient()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>14CE53FD063E338B4FEB3BF1124B9BDED65D144218B63655F9391F5FEA0AA4AE</code></li>
+<li><span>Body hash</span><code>8B763461CD08A749FFC27B062FD1F3D00AF598C22808EB2B2A91557D0763C4DC</code></li>
+<li><span>IL size</span><span>11</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, Candide.Multiplayer.Models.ClientPlayerCharacter&gt;::Clear()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_ConnectService.html#connect----system-void"><code>Candide.Multiplayer.Services.ConnectService::Connect</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetPlayerFromEntity public System.Boolean TryGetPlayerFromEntity(Shared.Entity.EntityWrapper entity, out Candide.Multiplayer.Models.ClientPlayerCharacter&amp; playerCharacter) System.Boolean entity Shared.Entity.EntityWrapper playerCharacter Candide.Multiplayer.Models.ClientPlayerCharacter&amp;" id="trygetplayerfromentity-shared-entity-entitywrapper--candide-multiplayer-models-clientplayercharacter----system-boolean">
+<div class="method-heading">
+<h3><code>TryGetPlayerFromEntity</code></h3>
+<a class="permalink" href="#trygetplayerfromentity-shared-entity-entitywrapper--candide-multiplayer-models-clientplayercharacter----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetPlayerFromEntity(Shared.Entity.EntityWrapper entity, out Candide.Multiplayer.Models.ClientPlayerCharacter&amp; playerCharacter)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::TryGetPlayerFromEntity(Shared.Entity.EntityWrapper, Candide.Multiplayer.Models.ClientPlayerCharacter&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetPlayerFromEntity(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, out <a href="../../types/Romestead/Candide_Multiplayer_Models_ClientPlayerCharacter.html">Candide.Multiplayer.Models.ClientPlayerCharacter</a>&amp; playerCharacter)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B0C356F57C8A1C9F607ECF8789EDFEDA2FDC1373CB2F3ED712275ED1FA3E4E9F</code></li>
+<li><span>Body hash</span><code>505769038865575BD399CE5DE37ED6513BC4F6A8CE880A460B3D38B680075CEB</code></li>
+<li><span>IL size</span><span>94</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, Candide.Multiplayer.Models.ClientPlayerCharacter&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Int32, Candide.Multiplayer.Models.ClientPlayerCharacter&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Int32, Candide.Multiplayer.Models.ClientPlayerCharacter&gt;::get_Current()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Int32, Candide.Multiplayer.Models.ClientPlayerCharacter&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Entities_Auras_FlagBasedStatsChangeAura.html#checkrequirement-shared-entity-entitywrapper--shared-aura-args-flagbasedstatschangeauraargs---system-boolean"><code>Candide.Entities.Auras.FlagBasedStatsChangeAura::CheckRequirement</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_Cart2Controller.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Entities.Controllers.Other.Cart2Controller::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdatePlayersGrave public System.Void UpdatePlayersGrave(CandideServer.MessageModels.PlayerCharacters.UpdatePlayersGraveMessage message) System.Void message CandideServer.MessageModels.PlayerCharacters.UpdatePlayersGraveMessage" id="updateplayersgrave-candideserver-messagemodels-playercharacters-updateplayersgravemessage---system-void">
+<div class="method-heading">
+<h3><code>UpdatePlayersGrave</code></h3>
+<a class="permalink" href="#updateplayersgrave-candideserver-messagemodels-playercharacters-updateplayersgravemessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdatePlayersGrave(CandideServer.MessageModels.PlayerCharacters.UpdatePlayersGraveMessage message)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::UpdatePlayersGrave(CandideServer.MessageModels.PlayerCharacters.UpdatePlayersGraveMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdatePlayersGrave(<a href="../../types/CandideServer/CandideServer_MessageModels_PlayerCharacters_UpdatePlayersGraveMessage.html">CandideServer.MessageModels.PlayerCharacters.UpdatePlayersGraveMessage</a> message)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>15A299246145D30F168C341A7464E4D109B62766F0D630D201797A6B7EE06B33</code></li>
+<li><span>Body hash</span><code>F128904F96221942CAE7F5C683352A23CDBC229D46BFD0C1DB96105612F5FA65</code></li>
+<li><span>IL size</span><span>123</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Candide.World.ClientWorldMapMarker&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>Candide.World.ClientWorldMapMarker::.ctor()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#toscreenspace-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToScreenSpace(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Candide.World.ClientWorldMapMarker&gt;::set_Item(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_Multiplayer_Services_PlayerService.html#onreceive-updateplayersgrave-candideserver-messagemodels-playercharacters-updateplayersgravemessage---system-void"><code>Candide.Multiplayer.Services.PlayerService::OnReceive_UpdatePlayersGrave</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>map_marker:gravestone</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdatePlayerViewArea public System.Void UpdatePlayerViewArea(System.Boolean allowAnySize) System.Void allowAnySize System.Boolean" id="updateplayerviewarea-system-boolean---system-void">
+<div class="method-heading">
+<h3><code>UpdatePlayerViewArea</code></h3>
+<a class="permalink" href="#updateplayerviewarea-system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdatePlayerViewArea(System.Boolean allowAnySize)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.Multiplayer.PlayerManager::UpdatePlayerViewArea(System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdatePlayerViewArea(System.Boolean allowAnySize)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>66B3956630844516DA210B3C888A4CBB2F8C35A19A0C9470CBAA384A98BFFE68</code></li>
+<li><span>Body hash</span><code>A4DEEDF71305E903BC95C44DBDF56F3A5F7EAE57573042DE268B5B1496836D84</code></li>
+<li><span>IL size</span><span>167</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_PlayerManager.html#calculateviewarea----microsoft-xna-framework-point">Candide.Multiplayer.PlayerManager::CalculateViewArea()</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Addition(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Equality(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code><a href="../../types/Romestead/Candide_World_ChunkedWorld.html#dispose----system-void">Candide.World.ChunkedWorld::Dispose()</a></code></li>
+<li><code>Candide.World.ChunkedWorld::.ctor(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code><a href="../../types/Romestead/Candide_Multiplayer_Services_PlayerService.html#sendsetplayerviewarea-microsoft-xna-framework-point---system-void">Candide.Multiplayer.Services.PlayerService::SendSetPlayerViewArea(Microsoft.Xna.Framework.Point)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#doscreensizestuff----system-void"><code>Candide.CandideEngine::DoScreensizeStuff</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_GameStateManager.html#receivefullgamestate-candideserver-serverservices-getfullgamestateresponse---system-void"><code>Candide.GameModels.Managers.GameStateManager::ReceiveFullGameState</code></a></li>
+<li><a href="../../types/Romestead/Candide_UserSettings_MiscUserSettings.html#applysettings----system-void"><code>Candide.UserSettings.MiscUserSettings::ApplySettings</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

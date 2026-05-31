@@ -63,6 +63,26 @@ internal static class Program
             }
         }
 
+        var knownCleanPath = command.GetSingle("--known-clean");
+        if (command.HasFlag("--require-known-clean") && string.IsNullOrWhiteSpace(knownCleanPath))
+        {
+            knownCleanPath = Path.Combine(currentDirectory, "known-clean-romestead.json");
+        }
+
+        if (!string.IsNullOrWhiteSpace(knownCleanPath))
+        {
+            var knownCleanCheck = CheckKnownCleanRomesteadDll(
+                resolvedRoots,
+                Path.GetFullPath(knownCleanPath, currentDirectory),
+                command.GetSingle("--expected-manifest"));
+            if (!knownCleanCheck.IsClean)
+            {
+                return Fail(knownCleanCheck.Message);
+            }
+
+            Console.WriteLine(knownCleanCheck.Message);
+        }
+
         var buildResult = new CatalogBuilder().Build(new CatalogBuildOptions
         {
             BaseDirectory = currentDirectory,
@@ -544,6 +564,56 @@ internal static class Program
             $"CLEAN CHECK passed: no mod-loader markers detected in {Path.GetFileName(romesteadPath)}.");
     }
 
+    private static CleanDllCheckResult CheckKnownCleanRomesteadDll(
+        IReadOnlyList<string> resolvedRoots,
+        string knownCleanPath,
+        string? expectedManifest)
+    {
+        var romesteadPath = FindRomesteadDllPath(resolvedRoots);
+        if (string.IsNullOrWhiteSpace(romesteadPath) || !File.Exists(romesteadPath))
+        {
+            return new CleanDllCheckResult(false, "Known-clean verification failed: Romestead.dll was not found in the requested scan roots.");
+        }
+
+        if (!File.Exists(knownCleanPath))
+        {
+            return new CleanDllCheckResult(false, $"Known-clean verification failed: hash allowlist not found at '{knownCleanPath}'.");
+        }
+
+        var entries = JsonSerializer.Deserialize<List<KnownCleanRomesteadFile>>(
+            File.ReadAllText(knownCleanPath),
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? [];
+        var fileInfo = new FileInfo(romesteadPath);
+        var sha1 = ComputeFileSha1(romesteadPath);
+        var candidates = entries
+            .Where(entry => string.IsNullOrWhiteSpace(entry.File) || entry.File.Equals("Romestead.dll", StringComparison.OrdinalIgnoreCase))
+            .Where(entry => string.IsNullOrWhiteSpace(expectedManifest) || string.Equals(entry.ManifestId, expectedManifest, StringComparison.OrdinalIgnoreCase))
+            .ToArray();
+
+        if (candidates.Length == 0)
+        {
+            return new CleanDllCheckResult(
+                false,
+                string.IsNullOrWhiteSpace(expectedManifest)
+                    ? $"Known-clean verification failed: no Romestead.dll entries exist in '{knownCleanPath}'."
+                    : $"Known-clean verification failed: manifest {expectedManifest} is not listed in '{knownCleanPath}'.");
+        }
+
+        var match = candidates.FirstOrDefault(entry =>
+            entry.Size == fileInfo.Length &&
+            entry.Sha1.Equals(sha1, StringComparison.OrdinalIgnoreCase));
+        if (match is null)
+        {
+            return new CleanDllCheckResult(
+                false,
+                $"Known-clean verification failed: Romestead.dll size/SHA1 {fileInfo.Length}/{sha1} does not match {(string.IsNullOrWhiteSpace(expectedManifest) ? "any known clean entry" : $"manifest {expectedManifest}")}.");
+        }
+
+        return new CleanDllCheckResult(
+            true,
+            $"KNOWN CLEAN passed: {Path.GetFileName(romesteadPath)} matches {match.Label ?? match.ManifestId ?? "known clean entry"} ({match.Size}/{match.Sha1}).");
+    }
+
     private static string? FindRomesteadDllPath(IReadOnlyList<string> resolvedRoots)
     {
         foreach (var root in resolvedRoots)
@@ -603,6 +673,13 @@ internal static class Program
         return Convert.ToHexString(sha256.ComputeHash(stream));
     }
 
+    private static string ComputeFileSha1(string path)
+    {
+        using var stream = File.OpenRead(path);
+        using var sha1 = SHA1.Create();
+        return Convert.ToHexString(sha1.ComputeHash(stream));
+    }
+
     private static bool MatchesAny(string? value, IReadOnlyCollection<string> patterns)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -617,9 +694,10 @@ internal static class Program
     {
         Console.WriteLine(
             """
-            romestead-ref scan [--root <dir-or-dll>] [--out <dir>] [--baseline <snapshot.json>] [--patch-label <label>] [--assembly <pattern>] [--assembly-exact <name>] [--include-all-assemblies] [--include-compiler-generated] [--allow-modded]
+            romestead-ref scan [--root <dir-or-dll>] [--out <dir>] [--baseline <snapshot.json>] [--patch-label <label>] [--known-clean <json>] [--expected-manifest <id>] [--require-known-clean] [--assembly <pattern>] [--assembly-exact <name>] [--include-all-assemblies] [--include-compiler-generated] [--allow-modded]
               Builds a stable API snapshot plus a searchable HTML wiki.
               By default it refuses to scan Romestead.dll when it differs from Romestead.dll.modloader-backup or mod-loader markers are detected.
+              Use --require-known-clean or --known-clean to verify Romestead.dll size/SHA1 against a manifest allowlist before scanning.
               If --baseline is omitted and <out>/snapshot.json already exists, it diffs against the previous run automatically.
 
             romestead-ref diff --old <snapshot.json> --new <snapshot.json> [--out <dir>] [--patch-label <label>]
@@ -644,6 +722,15 @@ internal static class Program
     }
 
     private sealed record CleanDllCheckResult(bool IsClean, string Message);
+
+    private sealed record KnownCleanRomesteadFile(
+        string? Label,
+        string? AppId,
+        string? DepotId,
+        string? ManifestId,
+        string? File,
+        long Size,
+        string Sha1);
 
     private static int Fail(string message)
     {

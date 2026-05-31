@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Candide.CandideUI.Tutorial.NewTutorialManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Romestead.html">Romestead</a></p>
+<div class="title-row">
+<h1>Candide.CandideUI.Tutorial.NewTutorialManager</h1>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Tutorial.NewTutorialManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Candide.CandideUI.Tutorial.NewTutorialManager
+
+- Assembly: `Romestead`
+- Namespace: `Candide.CandideUI.Tutorial`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 9 methods, 0 properties, 7 fields, 0 events
+
+## Public Methods
+- `public System.Void AddImmediateTutorial(Candide.CandideUI.Tutorial.Tutorials id, Candide.CandideUI.Tutorial.TutorialDisplayData data)`
+- `public System.Void AddTutorial(Candide.CandideUI.Tutorial.TutorialDisplayData tutorialDisplayData)`
+- `public System.Void FinishCurrentTutorial()`
+- `public System.Void FinishTutorial(Candide.CandideUI.Tutorial.Tutorials id)`
+- `public System.Void NotificationWindowTutorial(Candide.CandideUI.Tutorial.Tutorials tutorial)`
+- `public System.Void OnTutorialSettingsLoaded()`
+- `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)`
+">Copy markdown</button>
+<a class="button" href="Candide_CandideUI_Tutorial_NewTutorialManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Candide.CandideUI.Tutorial</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>9</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>7</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Romestead</code></li>
+<li><span>Namespace</span><code>Candide.CandideUI.Tutorial</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>E6619E3CF64F40ED568409832E99F896CE9D6D9FE2AAAB48CC2CB3FB076499F8</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ActiveTutorials private System.Collections.Generic.HashSet&lt;Candide.CandideUI.Tutorial.Tutorials&gt; ActiveTutorials System.Collections.Generic.HashSet&lt;Candide.CandideUI.Tutorial.Tutorials&gt;" id="activetutorials-system-collections-generic-hashset-1-candide-candideui-tutorial-tutorials-"><td><span class="member-name-cell"><code>ActiveTutorials</code><a class="permalink" href="#activetutorials-system-collections-generic-hashset-1-candide-candideui-tutorial-tutorials-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.HashSet&lt;Candide.CandideUI.Tutorial.Tutorials&gt; ActiveTutorials">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.HashSet&lt;<a href="../../types/Romestead/Candide_CandideUI_Tutorial_Tutorials.html">Candide.CandideUI.Tutorial.Tutorials</a>&gt; ActiveTutorials</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ImmediateTutorial private System.Collections.Generic.Dictionary&lt;Candide.CandideUI.Tutorial.Tutorials, Candide.CandideUI.Tutorial.SmallTutorialWindow&gt; ImmediateTutorial System.Collections.Generic.Dictionary&lt;Candide.CandideUI.Tutorial.Tutorials, Candide.CandideUI.Tutorial.SmallTutorialWindow&gt;" id="immediatetutorial-system-collections-generic-dictionary-2-candide-candideui-tutorial-tutorials-candide-candideui-tutorial-smalltutorialwindow-"><td><span class="member-name-cell"><code>ImmediateTutorial</code><a class="permalink" href="#immediatetutorial-system-collections-generic-dictionary-2-candide-candideui-tutorial-tutorials-candide-candideui-tutorial-smalltutorialwindow-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Dictionary&lt;Candide.CandideUI.Tutorial.Tutorials, Candide.CandideUI.Tutorial.SmallTutorialWindow&gt; ImmediateTutorial">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Dictionary&lt;<a href="../../types/Romestead/Candide_CandideUI_Tutorial_Tutorials.html">Candide.CandideUI.Tutorial.Tutorials</a>, <a href="../../types/Romestead/Candide_CandideUI_Tutorial_SmallTutorialWindow.html">Candide.CandideUI.Tutorial.SmallTutorialWindow</a>&gt; ImmediateTutorial</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ReuseImmediateTutorialsRemoveList private System.Collections.Generic.List&lt;Candide.CandideUI.Tutorial.Tutorials&gt; ReuseImmediateTutorialsRemoveList System.Collections.Generic.List&lt;Candide.CandideUI.Tutorial.Tutorials&gt;" id="reuseimmediatetutorialsremovelist-system-collections-generic-list-1-candide-candideui-tutorial-tutorials-"><td><span class="member-name-cell"><code>ReuseImmediateTutorialsRemoveList</code><a class="permalink" href="#reuseimmediatetutorialsremovelist-system-collections-generic-list-1-candide-candideui-tutorial-tutorials-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;Candide.CandideUI.Tutorial.Tutorials&gt; ReuseImmediateTutorialsRemoveList">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;<a href="../../types/Romestead/Candide_CandideUI_Tutorial_Tutorials.html">Candide.CandideUI.Tutorial.Tutorials</a>&gt; ReuseImmediateTutorialsRemoveList</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="TutorialWindow public Candide.CandideUI.Tutorial.TutorialWindow TutorialWindow Candide.CandideUI.Tutorial.TutorialWindow" id="tutorialwindow-candide-candideui-tutorial-tutorialwindow"><td><span class="member-name-cell"><code>TutorialWindow</code><a class="permalink" href="#tutorialwindow-candide-candideui-tutorial-tutorialwindow" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Candide.CandideUI.Tutorial.TutorialWindow TutorialWindow">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialWindow.html">Candide.CandideUI.Tutorial.TutorialWindow</a> TutorialWindow</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_currentTutorial private System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt; _currentTutorial System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;" id="-currenttutorial-system-nullable-1-candide-candideui-tutorial-tutorialdisplaydata-"><td><span class="member-name-cell"><code>_currentTutorial</code><a class="permalink" href="#-currenttutorial-system-nullable-1-candide-candideui-tutorial-tutorialdisplaydata-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt; _currentTutorial">Copy</button></span></td><td>private</td><td><code>private System.Nullable&lt;<a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialDisplayData.html">Candide.CandideUI.Tutorial.TutorialDisplayData</a>&gt; _currentTutorial</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_oldDesktop private Candide.CandideUI.CandideDesktop _oldDesktop Candide.CandideUI.CandideDesktop" id="-olddesktop-candide-candideui-candidedesktop"><td><span class="member-name-cell"><code>_oldDesktop</code><a class="permalink" href="#-olddesktop-candide-candideui-candidedesktop" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private Candide.CandideUI.CandideDesktop _oldDesktop">Copy</button></span></td><td>private</td><td><code>private <a href="../../types/Romestead/Candide_CandideUI_CandideDesktop.html">Candide.CandideUI.CandideDesktop</a> _oldDesktop</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_tutorialQueue private System.Collections.Generic.Queue&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt; _tutorialQueue System.Collections.Generic.Queue&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;" id="-tutorialqueue-system-collections-generic-queue-1-candide-candideui-tutorial-tutorialdisplaydata-"><td><span class="member-name-cell"><code>_tutorialQueue</code><a class="permalink" href="#-tutorialqueue-system-collections-generic-queue-1-candide-candideui-tutorial-tutorialdisplaydata-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.Queue&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt; _tutorialQueue">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.Queue&lt;<a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialDisplayData.html">Candide.CandideUI.Tutorial.TutorialDisplayData</a>&gt; _tutorialQueue</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddImmediateTutorial public System.Void AddImmediateTutorial(Candide.CandideUI.Tutorial.Tutorials id, Candide.CandideUI.Tutorial.TutorialDisplayData data) System.Void id Candide.CandideUI.Tutorial.Tutorials data Candide.CandideUI.Tutorial.TutorialDisplayData" id="addimmediatetutorial-candide-candideui-tutorial-tutorials--candide-candideui-tutorial-tutorialdisplaydata---system-void">
+<div class="method-heading">
+<h3><code>AddImmediateTutorial</code></h3>
+<a class="permalink" href="#addimmediatetutorial-candide-candideui-tutorial-tutorials--candide-candideui-tutorial-tutorialdisplaydata---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddImmediateTutorial(Candide.CandideUI.Tutorial.Tutorials id, Candide.CandideUI.Tutorial.TutorialDisplayData data)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Tutorial.NewTutorialManager::AddImmediateTutorial(Candide.CandideUI.Tutorial.Tutorials, Candide.CandideUI.Tutorial.TutorialDisplayData)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddImmediateTutorial(<a href="../../types/Romestead/Candide_CandideUI_Tutorial_Tutorials.html">Candide.CandideUI.Tutorial.Tutorials</a> id, <a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialDisplayData.html">Candide.CandideUI.Tutorial.TutorialDisplayData</a> data)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C2546526347D3139C36A1EE25C30B5909D906C6D0119C4F6861F09FFBDEE0A42</code></li>
+<li><span>Body hash</span><code>1A7307609BD9636E3B9204F4CDF33B52508F3BC86ECDFF94E10A5B8186B6C604</code></li>
+<li><span>IL size</span><span>44</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;Candide.CandideUI.Tutorial.Tutorials&gt;::Add(!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;Candide.CandideUI.Tutorial.Tutorials, Candide.CandideUI.Tutorial.SmallTutorialWindow&gt;::ContainsKey(!0)</code></li>
+<li><code>Candide.CandideUI.Tutorial.SmallTutorialWindow::.ctor(Candide.CandideUI.Tutorial.TutorialDisplayData)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;Candide.CandideUI.Tutorial.Tutorials, Candide.CandideUI.Tutorial.SmallTutorialWindow&gt;::Add(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#update----system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddTutorial public System.Void AddTutorial(Candide.CandideUI.Tutorial.TutorialDisplayData tutorialDisplayData) System.Void tutorialDisplayData Candide.CandideUI.Tutorial.TutorialDisplayData" id="addtutorial-candide-candideui-tutorial-tutorialdisplaydata---system-void">
+<div class="method-heading">
+<h3><code>AddTutorial</code></h3>
+<a class="permalink" href="#addtutorial-candide-candideui-tutorial-tutorialdisplaydata---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddTutorial(Candide.CandideUI.Tutorial.TutorialDisplayData tutorialDisplayData)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Tutorial.NewTutorialManager::AddTutorial(Candide.CandideUI.Tutorial.TutorialDisplayData)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddTutorial(<a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialDisplayData.html">Candide.CandideUI.Tutorial.TutorialDisplayData</a> tutorialDisplayData)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C8031CA9BC9818487AD4A2850E67E615C597A98682539ADAE9B31F3BDFBE59D8</code></li>
+<li><span>Body hash</span><code>7A15C67A3F06001F89E643D0FC5165A87C7E8740BFCD49280563D2A405F2B819</code></li>
+<li><span>IL size</span><span>145</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>NewTutorialManager.&lt;&gt;c__DisplayClass9_0::.ctor()</code></li>
+<li><code>Candide.UserSettings.TutorialUserSettings::get_ShowTutorial()</code></li>
+<li><code><a href="../../types/Romestead/Candide_UserSettings_TutorialUserSettings.html#istutorialdone-candide-candideui-tutorial-tutorials---system-boolean">Candide.UserSettings.TutorialUserSettings::IsTutorialDone(Candide.CandideUI.Tutorial.Tutorials)</a></code></li>
+<li><code>NewTutorialManager.&lt;&gt;c__DisplayClass9_0::&lt;AddTutorial&gt;b__0(Candide.CandideUI.Tutorial.TutorialDisplayData)</code></li>
+<li><code>System.Func&lt;Candide.CandideUI.Tutorial.TutorialDisplayData, System.Boolean&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Linq.Enumerable::Any(System.Collections.Generic.IEnumerable&lt;!!0&gt;, System.Func&lt;!!0, System.Boolean&gt;)</code></li>
+<li><code>System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Queue&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::Enqueue(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-constructionuiopened-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_ConstructionUiOpened</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-itemlooted-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_ItemLooted</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-playercharacterloaded-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_PlayerCharacterLoaded</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-questcompleted-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_QuestCompleted</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#update----system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Windows_PlayerInventoryWindow.html#checkshowcraftingtutorial----system-void"><code>Candide.CandideUI.Windows.PlayerInventoryWindow::CheckShowCraftingTutorial</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="CloseWindow private System.Void CloseWindow() System.Void " id="closewindow----system-void">
+<div class="method-heading">
+<h3><code>CloseWindow</code></h3>
+<a class="permalink" href="#closewindow----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void CloseWindow()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Tutorial.NewTutorialManager::CloseWindow()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void CloseWindow()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8B4E32F6E43F5BD60B2F77928DAF06FEAC12EB312F37E85FC27E9F4DE1EA715B</code></li>
+<li><span>Body hash</span><code>A151286055C68BBAE73E8C837FBBB4228303DD8745E69CB06828C442F4AAD5CD</code></li>
+<li><span>IL size</span><span>23</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideWindow.html#close----system-void">Candide.CandideUI.Containers.CandideWindow::Close()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_NewTutorialManager.html#finishcurrenttutorial----system-void"><code>Candide.CandideUI.Tutorial.NewTutorialManager::FinishCurrentTutorial</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_NewTutorialManager.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideUI.Tutorial.NewTutorialManager::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="FinishCurrentTutorial public System.Void FinishCurrentTutorial() System.Void " id="finishcurrenttutorial----system-void">
+<div class="method-heading">
+<h3><code>FinishCurrentTutorial</code></h3>
+<a class="permalink" href="#finishcurrenttutorial----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void FinishCurrentTutorial()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Tutorial.NewTutorialManager::FinishCurrentTutorial()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void FinishCurrentTutorial()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9246FADE12F615F397532740EA48B2721D0F1B28D9B3FB0483056976AC17541B</code></li>
+<li><span>Body hash</span><code>3EF50C9B1CD1BA92E9EB3C8EF4D07ABBCA485AB93672FD09D93A866E6FD3A1B5</code></li>
+<li><span>IL size</span><span>195</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::get_Value()</code></li>
+<li><code><a href="../../types/Romestead/Candide_UserSettings_TutorialUserSettings.html#istutorialdone-candide-candideui-tutorial-tutorials---system-boolean">Candide.UserSettings.TutorialUserSettings::IsTutorialDone(Candide.CandideUI.Tutorial.Tutorials)</a></code></li>
+<li><code>System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Tutorial_NewTutorialManager.html#closewindow----system-void">Candide.CandideUI.Tutorial.NewTutorialManager::CloseWindow()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_UserSettings_TutorialUserSettings.html#settutorialdone-candide-candideui-tutorial-tutorials---system-void">Candide.UserSettings.TutorialUserSettings::SetTutorialDone(Candide.CandideUI.Tutorial.Tutorials)</a></code></li>
+<li><code>Candide.UserSettings.UserSettingsCategory&lt;Candide.UserSettings.TutorialUserSettings&gt;::SaveToFile(T)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_NewTutorialManager.html#finishtutorial-candide-candideui-tutorial-tutorials---system-void"><code>Candide.CandideUI.Tutorial.NewTutorialManager::FinishTutorial</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="FinishTutorial public System.Void FinishTutorial(Candide.CandideUI.Tutorial.Tutorials id) System.Void id Candide.CandideUI.Tutorial.Tutorials" id="finishtutorial-candide-candideui-tutorial-tutorials---system-void">
+<div class="method-heading">
+<h3><code>FinishTutorial</code></h3>
+<a class="permalink" href="#finishtutorial-candide-candideui-tutorial-tutorials---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void FinishTutorial(Candide.CandideUI.Tutorial.Tutorials id)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Tutorial.NewTutorialManager::FinishTutorial(Candide.CandideUI.Tutorial.Tutorials)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void FinishTutorial(<a href="../../types/Romestead/Candide_CandideUI_Tutorial_Tutorials.html">Candide.CandideUI.Tutorial.Tutorials</a> id)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C7D6B512D1A6C595816E71AAC335E68B2E71D0D986A79E2A97CB40B4DCB8B85D</code></li>
+<li><span>Body hash</span><code>8CF1344770AAB0121052E036755CE885A889A6E72D15758F2CA33DDB99820A05</code></li>
+<li><span>IL size</span><span>95</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::get_Value()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Tutorial_NewTutorialManager.html#finishcurrenttutorial----system-void">Candide.CandideUI.Tutorial.NewTutorialManager::FinishCurrentTutorial()</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_UserSettings_TutorialUserSettings.html#istutorialdone-candide-candideui-tutorial-tutorials---system-boolean">Candide.UserSettings.TutorialUserSettings::IsTutorialDone(Candide.CandideUI.Tutorial.Tutorials)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_UserSettings_TutorialUserSettings.html#settutorialdone-candide-candideui-tutorial-tutorials---system-void">Candide.UserSettings.TutorialUserSettings::SetTutorialDone(Candide.CandideUI.Tutorial.Tutorials)</a></code></li>
+<li><code>Candide.UserSettings.UserSettingsCategory&lt;Candide.UserSettings.TutorialUserSettings&gt;::SaveToFile(T)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;Candide.CandideUI.Tutorial.Tutorials&gt;::Remove(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-inventoryitempickedup-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_InventoryItemPickedUp</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-inventoryitemquickequip-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_InventoryItemQuickEquip</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-inventoryitemuse-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_InventoryItemUse</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-playercharactergrabbedsomething-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_PlayerCharacterGrabbedSomething</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-playerdashed-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_PlayerDashed</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-splitstackwindowopened-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_SplitStackWindowOpened</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#update----system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialJournalView.html#settutorial-candide-candideui-tutorial-tutorials---system-void"><code>Candide.CandideUI.Tutorial.TutorialJournalView::SetTutorial</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="NotificationWindowTutorial public System.Void NotificationWindowTutorial(Candide.CandideUI.Tutorial.Tutorials tutorial) System.Void tutorial Candide.CandideUI.Tutorial.Tutorials" id="notificationwindowtutorial-candide-candideui-tutorial-tutorials---system-void">
+<div class="method-heading">
+<h3><code>NotificationWindowTutorial</code></h3>
+<a class="permalink" href="#notificationwindowtutorial-candide-candideui-tutorial-tutorials---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void NotificationWindowTutorial(Candide.CandideUI.Tutorial.Tutorials tutorial)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Tutorial.NewTutorialManager::NotificationWindowTutorial(Candide.CandideUI.Tutorial.Tutorials)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void NotificationWindowTutorial(<a href="../../types/Romestead/Candide_CandideUI_Tutorial_Tutorials.html">Candide.CandideUI.Tutorial.Tutorials</a> tutorial)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E58196DE9C91A9D143C87D0E25226337D3CD2892E79F8214E0C7BD75074F1094</code></li>
+<li><span>Body hash</span><code>AB6A0EB7BA75099507660CDB706C619098485018E1D18FCBE69C7C8B0DF8E0FD</code></li>
+<li><span>IL size</span><span>80</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.UserSettings.TutorialUserSettings::get_ShowTutorial()</code></li>
+<li><code><a href="../../types/Romestead/Candide_UserSettings_TutorialUserSettings.html#istutorialdone-candide-candideui-tutorial-tutorials---system-boolean">Candide.UserSettings.TutorialUserSettings::IsTutorialDone(Candide.CandideUI.Tutorial.Tutorials)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_UISystems_Notification_NotificationSystem.html#ontutorialnotification-candide-candideui-tutorial-tutorials---system-void">Candide.UISystems.Notification.NotificationSystem::OnTutorialNotification(Candide.CandideUI.Tutorial.Tutorials)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_UserSettings_TutorialUserSettings.html#istutorialfound-candide-candideui-tutorial-tutorials---system-boolean">Candide.UserSettings.TutorialUserSettings::IsTutorialFound(Candide.CandideUI.Tutorial.Tutorials)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_UserSettings_TutorialUserSettings.html#settutorialfound-candide-candideui-tutorial-tutorials---system-void">Candide.UserSettings.TutorialUserSettings::SetTutorialFound(Candide.CandideUI.Tutorial.Tutorials)</a></code></li>
+<li><code>Candide.UserSettings.UserSettingsCategory&lt;Candide.UserSettings.TutorialUserSettings&gt;::SaveToFile(T)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-furnitureplaced-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_FurniturePlaced</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-playerbuiltconstruction-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_PlayerBuiltConstruction</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#tutorial-questcompleted-system-string---system-void"><code>Candide.CandideUI.Tutorial.TutorialHandler::Tutorial_QuestCompleted</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnTutorialSettingsLoaded public System.Void OnTutorialSettingsLoaded() System.Void " id="ontutorialsettingsloaded----system-void">
+<div class="method-heading">
+<h3><code>OnTutorialSettingsLoaded</code></h3>
+<a class="permalink" href="#ontutorialsettingsloaded----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnTutorialSettingsLoaded()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Tutorial.NewTutorialManager::OnTutorialSettingsLoaded()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnTutorialSettingsLoaded()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>08BCBEA0E97514156FD7917A17C4C69946FF80BF5E6FA51A338C94239161759A</code></li>
+<li><span>Body hash</span><code>8A6F127E0053EB13AFDA0F394E4CD706376ECB1E15358DC72521A636A4B8AD55</code></li>
+<li><span>IL size</span><span>1</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_UserSettings_TutorialUserSettings.html#applysettings----system-void"><code>Candide.UserSettings.TutorialUserSettings::ApplySettings</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ShowCurrentTutorial private System.Void ShowCurrentTutorial() System.Void " id="showcurrenttutorial----system-void">
+<div class="method-heading">
+<h3><code>ShowCurrentTutorial</code></h3>
+<a class="permalink" href="#showcurrenttutorial----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void ShowCurrentTutorial()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Tutorial.NewTutorialManager::ShowCurrentTutorial()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void ShowCurrentTutorial()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E02EF30F03CE29F8E034DD41304AE76033790ED9A1FBDDCF1F994B778A1565A0</code></li>
+<li><span>Body hash</span><code>5558F9C631448BC59A4F4A3309DFA22D42176387DF2F706EE848CDD4FF1C4535</code></li>
+<li><span>IL size</span><span>291</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.UserSettings.TutorialUserSettings::get_ShowTutorial()</code></li>
+<li><code>System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::get_Value()</code></li>
+<li><code><a href="../../types/Romestead/Candide_UserSettings_TutorialUserSettings.html#istutorialdone-candide-candideui-tutorial-tutorials---system-boolean">Candide.UserSettings.TutorialUserSettings::IsTutorialDone(Candide.CandideUI.Tutorial.Tutorials)</a></code></li>
+<li><code>Candide.CandideUI.Tutorial.TutorialWindow::.ctor(Candide.CandideUI.Tutorial.TutorialDisplayData)</code></li>
+<li><code>Candide.CandideUI.CandideThickness::.ctor(System.Int32)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_Margin(Candide.CandideUI.CandideThickness)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_VerticalAlignment(Candide.CandideUI.VerticalAlignment)</code></li>
+<li><code>Candide.CandideUI.CandideUiElement::set_HorizontalAlignment(Candide.CandideUI.HorizontalAlignment)</code></li>
+<li><code>NewTutorialManager.&lt;&gt;c::&lt;ShowCurrentTutorial&gt;b__10_0(System.Object, System.EventArgs)</code></li>
+<li><code>System.EventHandler::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>Candide.CandideUI.Containers.CandideWindow::add_Showed(System.EventHandler)</code></li>
+<li><code>NewTutorialManager.&lt;&gt;c::&lt;ShowCurrentTutorial&gt;b__10_1(System.Object, System.EventArgs)</code></li>
+<li><code>Candide.CandideUI.Containers.CandideWindow::add_Closed(System.EventHandler)</code></li>
+<li><code>NewTutorialManager.&lt;&gt;c::&lt;ShowCurrentTutorial&gt;b__10_2(System.Object, System.EventArgs)</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideWindow.html#show-candide-candideui-candidedesktop--system-nullable-1-system-int32---system-nullable-1-system-int32----system-void">Candide.CandideUI.Containers.CandideWindow::Show(Candide.CandideUI.CandideDesktop, System.Nullable&lt;System.Int32&gt;, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_CandideDesktop.html#updatelayout----system-void">Candide.CandideUI.CandideDesktop::UpdateLayout()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideUI_Tutorial_NewTutorialManager.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideUI.Tutorial.NewTutorialManager::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="Update public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime) System.Void gameTime Microsoft.Xna.Framework.GameTime" id="update-microsoft-xna-framework-gametime---system-void">
+<div class="method-heading">
+<h3><code>Update</code></h3>
+<a class="permalink" href="#update-microsoft-xna-framework-gametime---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Candide.CandideUI.Tutorial.NewTutorialManager::Update(Microsoft.Xna.Framework.GameTime)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C453B5DD5794A8FB4D343DA53B812A1313DA199D75B6327D3F33953DBC97F5CE</code></li>
+<li><span>Body hash</span><code>25218EBB14C01FB50A1AE59E736FFB1FA5AF5B67E8BF85FC7BBFE0267723E7FE</code></li>
+<li><span>IL size</span><span>733</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Candide.CandideUI.CandideUiElement::get_Visible()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Tutorial_NewTutorialManager.html#closewindow----system-void">Candide.CandideUI.Tutorial.NewTutorialManager::CloseWindow()</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;Candide.CandideUI.Tutorial.Tutorials, Candide.CandideUI.Tutorial.SmallTutorialWindow&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;Candide.CandideUI.Tutorial.Tutorials, Candide.CandideUI.Tutorial.SmallTutorialWindow&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;Candide.CandideUI.Tutorial.Tutorials, Candide.CandideUI.Tutorial.SmallTutorialWindow&gt;::get_Value()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideWindow.html#close----system-void">Candide.CandideUI.Containers.CandideWindow::Close()</a></code></li>
+<li><code>Dictionary.Enumerator&lt;Candide.CandideUI.Tutorial.Tutorials, Candide.CandideUI.Tutorial.SmallTutorialWindow&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Tutorial_NewTutorialManager.html#showcurrenttutorial----system-void">Candide.CandideUI.Tutorial.NewTutorialManager::ShowCurrentTutorial()</a></code></li>
+<li><code>System.Collections.Generic.Queue&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.Queue&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::Dequeue()</code></li>
+<li><code>System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::.ctor(!0)</code></li>
+<li><code>System.Nullable&lt;Candide.CandideUI.Tutorial.TutorialDisplayData&gt;::get_Value()</code></li>
+<li><code><a href="../../types/Romestead/Candide_UserSettings_TutorialUserSettings.html#istutorialdone-candide-candideui-tutorial-tutorials---system-boolean">Candide.UserSettings.TutorialUserSettings::IsTutorialDone(Candide.CandideUI.Tutorial.Tutorials)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialWindow.html#tutorialupdate-microsoft-xna-framework-gametime---system-void">Candide.CandideUI.Tutorial.TutorialWindow::TutorialUpdate(Microsoft.Xna.Framework.GameTime)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Containers_CandideWindow.html#show-candide-candideui-candidedesktop--system-nullable-1-system-int32---system-nullable-1-system-int32----system-void">Candide.CandideUI.Containers.CandideWindow::Show(Candide.CandideUI.CandideDesktop, System.Nullable&lt;System.Int32&gt;, System.Nullable&lt;System.Int32&gt;)</a></code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Tutorial_SmallTutorialWindow.html#tutorialupdate-microsoft-xna-framework-gametime---system-void">Candide.CandideUI.Tutorial.SmallTutorialWindow::TutorialUpdate(Microsoft.Xna.Framework.GameTime)</a></code></li>
+<li><code>System.Collections.Generic.HashSet&lt;Candide.CandideUI.Tutorial.Tutorials&gt;::Clear()</code></li>
+<li><code><a href="../../types/Romestead/Candide_CandideUI_Tutorial_TutorialHandler.html#update----system-void">Candide.CandideUI.Tutorial.TutorialHandler::Update()</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.CandideUI.Tutorial.Tutorials&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;Candide.CandideUI.Tutorial.Tutorials, Candide.CandideUI.Tutorial.SmallTutorialWindow&gt;::get_Key()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;Candide.CandideUI.Tutorial.Tutorials&gt;::Contains(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.CandideUI.Tutorial.Tutorials&gt;::Add(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;Candide.CandideUI.Tutorial.Tutorials&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Candide.CandideUI.Tutorial.Tutorials&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;Candide.CandideUI.Tutorial.Tutorials, Candide.CandideUI.Tutorial.SmallTutorialWindow&gt;::get_Item(!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;Candide.CandideUI.Tutorial.Tutorials, Candide.CandideUI.Tutorial.SmallTutorialWindow&gt;::Remove(!0)</code></li>
+<li><code>List.Enumerator&lt;Candide.CandideUI.Tutorial.Tutorials&gt;::MoveNext()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_CandideEngine.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.CandideEngine::Update</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

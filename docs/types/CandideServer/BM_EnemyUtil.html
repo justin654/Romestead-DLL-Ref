@@ -1,0 +1,1169 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BM.EnemyUtil - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>BM.EnemyUtil</h1>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil">Copy type</button>
+<button class="copy-button" type="button" data-copy="# BM.EnemyUtil
+
+- Assembly: `CandideServer`
+- Namespace: `BM`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 35 methods, 0 properties, 2 fields, 0 events
+
+## Public Methods
+- `public System.Void ApplyFallenBurningAura(Shared.Entity.EntityWrapper entity)`
+- `public System.Single DistanceBetween(Microsoft.Xna.Framework.Vector2 pos1, Microsoft.Xna.Framework.Vector2 pos2, Shared.Entity.EntityWrapper colliderSource1, Shared.Entity.EntityWrapper colliderSource2)`
+- `public System.Single DistanceBetween(Microsoft.Xna.Framework.Vector2 position, Shared.Entity.EntityWrapper entity, System.Boolean useCollider)`
+- `public System.Single DistanceBetween(Shared.Entity.EntityWrapper entity, Microsoft.Xna.Framework.Vector2 position, System.Boolean useCollider)`
+- `public System.Single DistanceBetween(Shared.Entity.EntityWrapper entity1, Shared.Entity.EntityWrapper entity2, System.Boolean useCollider1, System.Boolean useCollider2)`
+- `public System.Void GetEntitiesInCircleAreaWithBaseGuids(Shared.Entity.EntitySystem system, Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Collections.Generic.List&lt;System.Guid&gt; baseGuids, System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt; outEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeGuids)`
+- `public System.Void GetEntitiesInCircleAreaWithBaseGuidsSortedByDistance(Shared.Entity.EntitySystem system, Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Collections.Generic.List&lt;System.Guid&gt; baseGuids, System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt; outEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeGuids)`
+- `public System.Collections.Generic.HashSet&lt;System.Guid&gt; GetPlayerTargetAvoidSet()`
+- `public System.Void GetServerEntitiesInCircleAreaWithBaseIds(Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities)`
+- `public System.Void GetServerEntitiesInCircleAreaWithBaseIdsSortedByDistance(Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeIds)`
+- `public System.Void GetServerEntitiesInRectangleAreaWithBaseIds(CandideCreator.Shared.Models.RectangleF rectangle, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities)`
+- `public System.Void GetServerEntitiesInRectangleAreaWithBaseIdsSortedByDistance(CandideCreator.Shared.Models.RectangleF rectangle, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeIds)`
+- `public System.Boolean HasNearbyAllies(Shared.Entity.EntityWrapper entity, System.Single searchRadius)`
+- `public System.Boolean IsEntityOk(Shared.Entity.EntitySystem system, System.Nullable&lt;System.Guid&gt; entityId, out Shared.Entity.EntityWrapper&amp; outEntity)`
+- `public System.Boolean IsFacingDirection(Shared.Entity.EntityWrapper source, Microsoft.Xna.Framework.Vector2 direction, System.Single facingDirectionAngleThresholdDeg)`
+- `public System.Boolean IsFacingTarget(Shared.Entity.EntityWrapper source, Shared.Entity.EntityWrapper target, System.Single facingTargetAngleThresholdDeg)`
+- `public System.Boolean IsGroundTile(Microsoft.Xna.Framework.Vector2 position, System.Guid worldId)`
+- `public System.Boolean IsOutsideFoW(Shared.Entity.EntityWrapper entity)`
+- `public System.Void ResetCooldown(BM.Blackboard blackboard, System.String writeTimer, System.String writeIsOnCooldown, System.Single resetTime)`
+- `public System.Void SetMaxThreat(Shared.Entity.EntityWrapper threatenedEntity, Shared.Entity.EntityWrapper threateningEntity, System.Single extraThreat)`
+- `public System.Void SortEntitiesByDistance(System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt; entities, Microsoft.Xna.Framework.Vector2 center)`
+- `public System.Void SortServerEntitiesByDistance(System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; entities, Microsoft.Xna.Framework.Vector2 center)`
+- `public T SyncBlackboardValue&lt;T&gt;(BM.Blackboard blackboard, System.String key, T value)`
+- `public T SyncParameter&lt;T&gt;(CandideCreator.Shared.Helpers.Parameters parameters, System.String key, T value)`
+- `public T SyncParameterAndBlackboardValue&lt;T&gt;(CandideCreator.Shared.Helpers.Parameters parameters, System.String parameterKey, BM.Blackboard blackboard, System.String blackboardKey, T value)`
+- `public System.Boolean TryGetAttackPositionAndDirection(Shared.Entity.EntityWrapper entity, System.String directionalOffsetId, out Microsoft.Xna.Framework.Vector3&amp; spawnPosition, out System.Single&amp; direction)`
+- `public System.Boolean TryGetClosestEntityInCircleAreaWithBaseGuids(Shared.Entity.EntitySystem system, Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Collections.Generic.HashSet&lt;System.Guid&gt; baseGuids, out Shared.Entity.EntityWrapper&amp; closestEntity, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeGuids, System.Boolean excludeCarriedEntities, System.Boolean excludeAirborneEntities)`
+- `public System.Boolean TryGetClosestServerEntityInCircleAreaWithBaseIds(Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Guid worldId, System.Collections.Generic.HashSet&lt;System.Guid&gt; baseIds, out CandideServer.Entities.ServerEntityModel&amp; closestServerEntity, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities)`
+- `public System.Boolean TryGetClosestServerEntityInRectangleAreaWithBaseIds(CandideCreator.Shared.Models.RectangleF rectangle, System.Guid worldId, System.Collections.Generic.HashSet&lt;System.Guid&gt; baseIds, out CandideServer.Entities.ServerEntityModel&amp; closestServerEntity, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities)`
+- `public System.Boolean TryGetDirectionalOffset(Shared.Entity.EntityWrapper entity, System.String directionalOffsetId, out Microsoft.Xna.Framework.Vector3&amp; outOffset, System.Boolean useHeight, System.Nullable&lt;System.Single&gt; direction, System.Boolean useNewOrigin)`
+- `public System.Boolean TrySelectAndSetRandomPlayerTarget(System.Guid&amp; selectedTargetId, Shared.Entity.EntitySystem system, System.Collections.Generic.HashSet&lt;System.Guid&gt; avoidTargetIds, BM.Blackboard blackboard, System.String targetBlackboardKey, System.Nullable&lt;CandideCreator.Shared.Models.RectangleF&gt; searchArea)`
+- `public System.Boolean TrySelectAndSetRandomPlayerTarget(System.Guid&amp; selectedTargetId, out Shared.Entity.EntityWrapper&amp; outSelectedTarget, Shared.Entity.EntitySystem system, System.Collections.Generic.HashSet&lt;System.Guid&gt; avoidTargetIds, BM.Blackboard blackboard, System.String targetBlackboardKey, System.Nullable&lt;CandideCreator.Shared.Models.RectangleF&gt; searchArea)`
+">Copy markdown</button>
+<a class="button" href="BM_EnemyUtil.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>BM</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>35</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>2</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>BM</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>4C7F2D44EB02A1A58D0378C954BDF1A025D9558D6D92DE574CEBE7070D0158A8</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="TrySelectRandomPlayerAsTargetAvoidList public System.Collections.Generic.HashSet&lt;System.Guid&gt; TrySelectRandomPlayerAsTargetAvoidList System.Collections.Generic.HashSet&lt;System.Guid&gt;" id="tryselectrandomplayerastargetavoidlist-system-collections-generic-hashset-1-system-guid-"><td><span class="member-name-cell"><code>TrySelectRandomPlayerAsTargetAvoidList</code><a class="permalink" href="#tryselectrandomplayerastargetavoidlist-system-collections-generic-hashset-1-system-guid-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.HashSet&lt;System.Guid&gt; TrySelectRandomPlayerAsTargetAvoidList">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.HashSet&lt;System.Guid&gt; TrySelectRandomPlayerAsTargetAvoidList</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_candidateTargetsReuseList private System.Collections.Generic.List&lt;System.Guid&gt; _candidateTargetsReuseList System.Collections.Generic.List&lt;System.Guid&gt;" id="-candidatetargetsreuselist-system-collections-generic-list-1-system-guid-"><td><span class="member-name-cell"><code>_candidateTargetsReuseList</code><a class="permalink" href="#-candidatetargetsreuselist-system-collections-generic-list-1-system-guid-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;System.Guid&gt; _candidateTargetsReuseList">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;System.Guid&gt; _candidateTargetsReuseList</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ApplyFallenBurningAura public System.Void ApplyFallenBurningAura(Shared.Entity.EntityWrapper entity) System.Void entity Shared.Entity.EntityWrapper" id="applyfallenburningaura-shared-entity-entitywrapper---system-void">
+<div class="method-heading">
+<h3><code>ApplyFallenBurningAura</code></h3>
+<a class="permalink" href="#applyfallenburningaura-shared-entity-entitywrapper---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ApplyFallenBurningAura(Shared.Entity.EntityWrapper entity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::ApplyFallenBurningAura(Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ApplyFallenBurningAura(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>717074ED3D18446EB7A24341A3E998BDE3CAA9E6CB0792BC706E68275A844E51</code></li>
+<li><span>Body hash</span><code>6348F82164F7F8BF8F47F6078D39D8AAAE3B37B75C1A4D278701F54A68A2199F</code></li>
+<li><span>IL size</span><span>117</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::get_Current()</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.String, Shared.Aura.State.AuraBaseState&gt;&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html#nosync----candideserver-syncstrategies-syncstrategy">CandideServer.SyncStrategies.SyncStrategy::NoSync()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_AuraServerManager.html#tryapplyauratoentity-system-string--system-guid--system-nullable-1-system-guid---shared-aura-args-abstractauraargs--candideserver-syncstrategies-syncstrategy--system-boolean---system-void">CandideServer.ServerManagers.AuraServerManager::TryApplyAuraToEntity(System.String, System.Guid, System.Nullable&lt;System.Guid&gt;, Shared.Aura.Args.AbstractAuraArgs, CandideServer.SyncStrategies.SyncStrategy, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenBloatController.html#entityinitialize----system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenBloatController::EntityInitialize</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenCenturionController.html#entityinitialize----system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenCenturionController::EntityInitialize</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenController.html#entityinitialize----system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenController::EntityInitialize</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenCrawlerController.html#entityinitialize----system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenCrawlerController::EntityInitialize</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerFallenSwordController.html#entityinitialize----system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerFallenSwordController::EntityInitialize</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>aura:special:burning_zombie</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DistanceBetween public System.Single DistanceBetween(Microsoft.Xna.Framework.Vector2 pos1, Microsoft.Xna.Framework.Vector2 pos2, Shared.Entity.EntityWrapper colliderSource1, Shared.Entity.EntityWrapper colliderSource2) System.Single pos1 Microsoft.Xna.Framework.Vector2 pos2 Microsoft.Xna.Framework.Vector2 colliderSource1 Shared.Entity.EntityWrapper colliderSource2 Shared.Entity.EntityWrapper" id="distancebetween-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--shared-entity-entitywrapper--shared-entity-entitywrapper---system-single">
+<div class="method-heading">
+<h3><code>DistanceBetween</code></h3>
+<a class="permalink" href="#distancebetween-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--shared-entity-entitywrapper--shared-entity-entitywrapper---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single DistanceBetween(Microsoft.Xna.Framework.Vector2 pos1, Microsoft.Xna.Framework.Vector2 pos2, Shared.Entity.EntityWrapper colliderSource1, Shared.Entity.EntityWrapper colliderSource2)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::DistanceBetween(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single DistanceBetween(Microsoft.Xna.Framework.Vector2 pos1, Microsoft.Xna.Framework.Vector2 pos2, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> colliderSource1, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> colliderSource2)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FD539A669414CDB9F076542FE77C09C09D4EC17D538669F930BD3ACA9461E8C3</code></li>
+<li><span>Body hash</span><code>EEAC488C5AA1B6A0C44AD6AD657208ABE0976787DFECED1A8E91F4860E042702</code></li>
+<li><span>IL size</span><span>114</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Length()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Mask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#hasflags-shared-entity-components-component--shared-entity-components-component---system-boolean">Shared.Entity.Components.ComponentExtension::HasFlags(Shared.Entity.Components.Component, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Shape()</code></li>
+<li><code>System.MathF::Max(System.Single, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#distancebetween-microsoft-xna-framework-vector2--shared-entity-entitywrapper--system-boolean---system-single"><code>BM.EnemyUtil::DistanceBetween</code></a></li>
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#distancebetween-shared-entity-entitywrapper--microsoft-xna-framework-vector2--system-boolean---system-single"><code>BM.EnemyUtil::DistanceBetween</code></a></li>
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#distancebetween-shared-entity-entitywrapper--shared-entity-entitywrapper--system-boolean--system-boolean---system-single"><code>BM.EnemyUtil::DistanceBetween</code></a></li>
+<li><a href="../../types/CandideServer/BM_IsInRange_2.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.IsInRange::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DistanceBetween public System.Single DistanceBetween(Microsoft.Xna.Framework.Vector2 position, Shared.Entity.EntityWrapper entity, System.Boolean useCollider) System.Single position Microsoft.Xna.Framework.Vector2 entity Shared.Entity.EntityWrapper useCollider System.Boolean" id="distancebetween-microsoft-xna-framework-vector2--shared-entity-entitywrapper--system-boolean---system-single">
+<div class="method-heading">
+<h3><code>DistanceBetween</code></h3>
+<a class="permalink" href="#distancebetween-microsoft-xna-framework-vector2--shared-entity-entitywrapper--system-boolean---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single DistanceBetween(Microsoft.Xna.Framework.Vector2 position, Shared.Entity.EntityWrapper entity, System.Boolean useCollider)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::DistanceBetween(Microsoft.Xna.Framework.Vector2, Shared.Entity.EntityWrapper, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single DistanceBetween(Microsoft.Xna.Framework.Vector2 position, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, System.Boolean useCollider)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>243B94B5415E125EAED31CDAC15BBA6AE52DF1F9A2877254CE648DFF6788390F</code></li>
+<li><span>Body hash</span><code>4783F4FD0481B46B69BB24E3BD094AA24EBD4B0D1867BC07CD11E2607954ABA2</code></li>
+<li><span>IL size</span><span>21</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Position2()</code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#distancebetween-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--shared-entity-entitywrapper--shared-entity-entitywrapper---system-single">BM.EnemyUtil::DistanceBetween(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DistanceBetween public System.Single DistanceBetween(Shared.Entity.EntityWrapper entity, Microsoft.Xna.Framework.Vector2 position, System.Boolean useCollider) System.Single entity Shared.Entity.EntityWrapper position Microsoft.Xna.Framework.Vector2 useCollider System.Boolean" id="distancebetween-shared-entity-entitywrapper--microsoft-xna-framework-vector2--system-boolean---system-single">
+<div class="method-heading">
+<h3><code>DistanceBetween</code></h3>
+<a class="permalink" href="#distancebetween-shared-entity-entitywrapper--microsoft-xna-framework-vector2--system-boolean---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single DistanceBetween(Shared.Entity.EntityWrapper entity, Microsoft.Xna.Framework.Vector2 position, System.Boolean useCollider)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::DistanceBetween(Shared.Entity.EntityWrapper, Microsoft.Xna.Framework.Vector2, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single DistanceBetween(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, Microsoft.Xna.Framework.Vector2 position, System.Boolean useCollider)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>FEBE09C8A2E430491B49DB70BED4D228F094B998D8DF24CD73BEC81747247CCA</code></li>
+<li><span>Body hash</span><code>7EE59085FEDD563361A037F3C017835689B582A3C98C0B3D3E8CFAF65E109D8C</code></li>
+<li><span>IL size</span><span>21</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Position2()</code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#distancebetween-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--shared-entity-entitywrapper--shared-entity-entitywrapper---system-single">BM.EnemyUtil::DistanceBetween(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DistanceBetween public System.Single DistanceBetween(Shared.Entity.EntityWrapper entity1, Shared.Entity.EntityWrapper entity2, System.Boolean useCollider1, System.Boolean useCollider2) System.Single entity1 Shared.Entity.EntityWrapper entity2 Shared.Entity.EntityWrapper useCollider1 System.Boolean useCollider2 System.Boolean" id="distancebetween-shared-entity-entitywrapper--shared-entity-entitywrapper--system-boolean--system-boolean---system-single">
+<div class="method-heading">
+<h3><code>DistanceBetween</code></h3>
+<a class="permalink" href="#distancebetween-shared-entity-entitywrapper--shared-entity-entitywrapper--system-boolean--system-boolean---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single DistanceBetween(Shared.Entity.EntityWrapper entity1, Shared.Entity.EntityWrapper entity2, System.Boolean useCollider1, System.Boolean useCollider2)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::DistanceBetween(Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single DistanceBetween(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity1, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity2, System.Boolean useCollider1, System.Boolean useCollider2)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6A7D0CF81BF2BF3A572120745BABD87CAD89D463E3D146F7AAE553A46898D3B0</code></li>
+<li><span>Body hash</span><code>129635BBF68F0C38FB2B970616B514274F1C62F6290978EFF0D31EFF3483274C</code></li>
+<li><span>IL size</span><span>32</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Position2()</code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#distancebetween-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--shared-entity-entitywrapper--shared-entity-entitywrapper---system-single">BM.EnemyUtil::DistanceBetween(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="FilterEntities private System.Void FilterEntities(System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt; source, System.Collections.Generic.ICollection&lt;System.Guid&gt; baseIds, System.Collections.Generic.ICollection&lt;CandideServer.Entities.ServerEntityModel&gt; output, System.Collections.Generic.ICollection&lt;System.Guid&gt; excludeIds, System.Boolean excludeCarried, System.Boolean excludeThrown) System.Void source System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt; baseIds System.Collections.Generic.ICollection&lt;System.Guid&gt; output System.Collections.Generic.ICollection&lt;CandideServer.Entities.ServerEntityModel&gt; excludeIds System.Collections.Generic.ICollection&lt;System.Guid&gt; excludeCarried System.Boolean excludeThrown System.Boolean" id="filterentities-system-collections-generic-ienumerable-1-candideserver-entities-serverentitymodel---system-collections-generic-icollection-1-system-guid---system-collections-generic-icollection-1-candideserver-entities-serverentitymodel---system-collections-generic-icollection-1-system-guid---system-boolean--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>FilterEntities</code></h3>
+<a class="permalink" href="#filterentities-system-collections-generic-ienumerable-1-candideserver-entities-serverentitymodel---system-collections-generic-icollection-1-system-guid---system-collections-generic-icollection-1-candideserver-entities-serverentitymodel---system-collections-generic-icollection-1-system-guid---system-boolean--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void FilterEntities(System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt; source, System.Collections.Generic.ICollection&lt;System.Guid&gt; baseIds, System.Collections.Generic.ICollection&lt;CandideServer.Entities.ServerEntityModel&gt; output, System.Collections.Generic.ICollection&lt;System.Guid&gt; excludeIds, System.Boolean excludeCarried, System.Boolean excludeThrown)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::FilterEntities(System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt;, System.Collections.Generic.ICollection&lt;System.Guid&gt;, System.Collections.Generic.ICollection&lt;CandideServer.Entities.ServerEntityModel&gt;, System.Collections.Generic.ICollection&lt;System.Guid&gt;, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void FilterEntities(System.Collections.Generic.IEnumerable&lt;<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a>&gt; source, System.Collections.Generic.ICollection&lt;System.Guid&gt; baseIds, System.Collections.Generic.ICollection&lt;<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a>&gt; output, System.Collections.Generic.ICollection&lt;System.Guid&gt; excludeIds, System.Boolean excludeCarried, System.Boolean excludeThrown)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>01F5B8F2ED38AC1B9819FFA3C4233FB1EEFCB6304E5DC0B7BA233DDC8BFE6409</code></li>
+<li><span>Body hash</span><code>8CA053FF36945386DB380887F6F28C44BE09777691FA5E1EF1024BD489581C78</code></li>
+<li><span>IL size</span><span>110</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.ICollection&lt;CandideServer.Entities.ServerEntityModel&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;CandideServer.Entities.ServerEntityModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.ICollection&lt;System.Guid&gt;::Contains(!0)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Collections.Generic.ICollection&lt;CandideServer.Entities.ServerEntityModel&gt;::Add(!0)</code></li>
+<li><code>System.Collections.IEnumerator::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#getserverentitiesincircleareawithbaseids-microsoft-xna-framework-vector2--system-single--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-void"><code>BM.EnemyUtil::GetServerEntitiesInCircleAreaWithBaseIds</code></a></li>
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#getserverentitiesinrectangleareawithbaseids-candidecreator-shared-models-rectanglef--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-void"><code>BM.EnemyUtil::GetServerEntitiesInRectangleAreaWithBaseIds</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetEntitiesInCircleAreaWithBaseGuids public System.Void GetEntitiesInCircleAreaWithBaseGuids(Shared.Entity.EntitySystem system, Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Collections.Generic.List&lt;System.Guid&gt; baseGuids, System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt; outEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeGuids) System.Void system Shared.Entity.EntitySystem center Microsoft.Xna.Framework.Vector2 radius System.Single baseGuids System.Collections.Generic.List&lt;System.Guid&gt; outEntities System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt; excludeGuids System.Collections.Generic.HashSet&lt;System.Guid&gt;" id="getentitiesincircleareawithbaseguids-shared-entity-entitysystem--microsoft-xna-framework-vector2--system-single--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-shared-entity-entitywrapper---system-collections-generic-hashset-1-system-guid----system-void">
+<div class="method-heading">
+<h3><code>GetEntitiesInCircleAreaWithBaseGuids</code></h3>
+<a class="permalink" href="#getentitiesincircleareawithbaseguids-shared-entity-entitysystem--microsoft-xna-framework-vector2--system-single--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-shared-entity-entitywrapper---system-collections-generic-hashset-1-system-guid----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GetEntitiesInCircleAreaWithBaseGuids(Shared.Entity.EntitySystem system, Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Collections.Generic.List&lt;System.Guid&gt; baseGuids, System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt; outEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeGuids)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::GetEntitiesInCircleAreaWithBaseGuids(Shared.Entity.EntitySystem, Microsoft.Xna.Framework.Vector2, System.Single, System.Collections.Generic.List&lt;System.Guid&gt;, System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;, System.Collections.Generic.HashSet&lt;System.Guid&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GetEntitiesInCircleAreaWithBaseGuids(<a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> system, Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Collections.Generic.List&lt;System.Guid&gt; baseGuids, System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a>&gt; outEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeGuids)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>01BDA946E6FCD7233B1C86AEC3EE01BEDDF26C8E3215C28636B87FF0914BA01A</code></li>
+<li><span>Body hash</span><code>822EC81D5F1ECD842804C5484DAB046AAD8A0AF71109507AE5DD2D2B7A483CBF</code></li>
+<li><span>IL size</span><span>109</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::Clear()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#getentitiesincirclearea-microsoft-xna-framework-vector2--system-single---system-collections-generic-list-1-shared-entity-entitywrapper-">Shared.Entity.EntitySystem::GetEntitiesInCircleArea(Microsoft.Xna.Framework.Vector2, System.Single)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Entity.EntityWrapper&gt;::get_Current()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_BaseGuid()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::Contains(!0)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Contains(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::Add(!0)</code></li>
+<li><code>List.Enumerator&lt;Shared.Entity.EntityWrapper&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#getentitiesincircleareawithbaseguidssortedbydistance-shared-entity-entitysystem--microsoft-xna-framework-vector2--system-single--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-shared-entity-entitywrapper---system-collections-generic-hashset-1-system-guid----system-void"><code>BM.EnemyUtil::GetEntitiesInCircleAreaWithBaseGuidsSortedByDistance</code></a></li>
+<li><a href="../../types/CandideServer/BM_TryGetEntitiesWithBaseGuid_1.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.TryGetEntitiesWithBaseGuid::Update</code></a></li>
+<li><a href="../../types/CandideServer/BM_TryGetEntityWithBaseGuid_1.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.TryGetEntityWithBaseGuid::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetEntitiesInCircleAreaWithBaseGuidsSortedByDistance public System.Void GetEntitiesInCircleAreaWithBaseGuidsSortedByDistance(Shared.Entity.EntitySystem system, Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Collections.Generic.List&lt;System.Guid&gt; baseGuids, System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt; outEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeGuids) System.Void system Shared.Entity.EntitySystem center Microsoft.Xna.Framework.Vector2 radius System.Single baseGuids System.Collections.Generic.List&lt;System.Guid&gt; outEntities System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt; excludeGuids System.Collections.Generic.HashSet&lt;System.Guid&gt;" id="getentitiesincircleareawithbaseguidssortedbydistance-shared-entity-entitysystem--microsoft-xna-framework-vector2--system-single--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-shared-entity-entitywrapper---system-collections-generic-hashset-1-system-guid----system-void">
+<div class="method-heading">
+<h3><code>GetEntitiesInCircleAreaWithBaseGuidsSortedByDistance</code></h3>
+<a class="permalink" href="#getentitiesincircleareawithbaseguidssortedbydistance-shared-entity-entitysystem--microsoft-xna-framework-vector2--system-single--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-shared-entity-entitywrapper---system-collections-generic-hashset-1-system-guid----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GetEntitiesInCircleAreaWithBaseGuidsSortedByDistance(Shared.Entity.EntitySystem system, Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Collections.Generic.List&lt;System.Guid&gt; baseGuids, System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt; outEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeGuids)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::GetEntitiesInCircleAreaWithBaseGuidsSortedByDistance(Shared.Entity.EntitySystem, Microsoft.Xna.Framework.Vector2, System.Single, System.Collections.Generic.List&lt;System.Guid&gt;, System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;, System.Collections.Generic.HashSet&lt;System.Guid&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GetEntitiesInCircleAreaWithBaseGuidsSortedByDistance(<a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> system, Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Collections.Generic.List&lt;System.Guid&gt; baseGuids, System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a>&gt; outEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeGuids)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BD46B1B1B5515AA43F844D725C9D2B3345B80C139F0866F0275344E71D6A6C3D</code></li>
+<li><span>Body hash</span><code>30C7FBFF012A04C8334864CB90D8B4A3391716FEABF96537CBE465FADF379C39</code></li>
+<li><span>IL size</span><span>33</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#getentitiesincircleareawithbaseguids-shared-entity-entitysystem--microsoft-xna-framework-vector2--system-single--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-shared-entity-entitywrapper---system-collections-generic-hashset-1-system-guid----system-void">BM.EnemyUtil::GetEntitiesInCircleAreaWithBaseGuids(Shared.Entity.EntitySystem, Microsoft.Xna.Framework.Vector2, System.Single, System.Collections.Generic.List&lt;System.Guid&gt;, System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;, System.Collections.Generic.HashSet&lt;System.Guid&gt;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#sortentitiesbydistance-system-collections-generic-list-1-shared-entity-entitywrapper---microsoft-xna-framework-vector2---system-void">BM.EnemyUtil::SortEntitiesByDistance(System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;, Microsoft.Xna.Framework.Vector2)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_TryGetEntitiesWithBaseGuid_1.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.TryGetEntitiesWithBaseGuid::Update</code></a></li>
+<li><a href="../../types/CandideServer/BM_TryGetEntityWithBaseGuid_1.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.TryGetEntityWithBaseGuid::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetPlayerTargetAvoidSet public System.Collections.Generic.HashSet&lt;System.Guid&gt; GetPlayerTargetAvoidSet() System.Collections.Generic.HashSet&lt;System.Guid&gt; " id="getplayertargetavoidset----system-collections-generic-hashset-1-system-guid-">
+<div class="method-heading">
+<h3><code>GetPlayerTargetAvoidSet</code></h3>
+<a class="permalink" href="#getplayertargetavoidset----system-collections-generic-hashset-1-system-guid-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.HashSet&lt;System.Guid&gt; GetPlayerTargetAvoidSet()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::GetPlayerTargetAvoidSet()">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.HashSet&lt;System.Guid&gt; GetPlayerTargetAvoidSet()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5A923152F635094734927059E9A8FDFE0A009A82FA8FD4F3FE9ED1A1C85ECE40</code></li>
+<li><span>Body hash</span><code>875D0854CBE5AD0AB6261DBF5162D0D60FE6B4D038DE1E2CD70F52FE874AA7BB</code></li>
+<li><span>IL size</span><span>12</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Clear()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaController.html#spawnentity-microsoft-xna-framework-vector3--system-guid--system-guid---system-single---system-boolean"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController::SpawnEntity</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetServerEntitiesInCircleAreaWithBaseIds public System.Void GetServerEntitiesInCircleAreaWithBaseIds(Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities) System.Void center Microsoft.Xna.Framework.Vector2 radius System.Single worldId System.Guid baseIds System.Collections.Generic.List&lt;System.Guid&gt; outServerEntities System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; excludeBaseIds System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeCarriedEntities System.Boolean excludeThrownEntities System.Boolean" id="getserverentitiesincircleareawithbaseids-microsoft-xna-framework-vector2--system-single--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>GetServerEntitiesInCircleAreaWithBaseIds</code></h3>
+<a class="permalink" href="#getserverentitiesincircleareawithbaseids-microsoft-xna-framework-vector2--system-single--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GetServerEntitiesInCircleAreaWithBaseIds(Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::GetServerEntitiesInCircleAreaWithBaseIds(Microsoft.Xna.Framework.Vector2, System.Single, System.Guid, System.Collections.Generic.List&lt;System.Guid&gt;, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;, System.Collections.Generic.HashSet&lt;System.Guid&gt;, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GetServerEntitiesInCircleAreaWithBaseIds(Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a>&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>99BF5977DB93FF2ED7C148B2B8AF469DDBBFCD0D3858142DBE2B873EE573127C</code></li>
+<li><span>Body hash</span><code>4B79EC389EAFB268C92B98D2DFB7BC72F9CDC02B12B1A36005152710734F1A3C</code></li>
+<li><span>IL size</span><span>41</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;::Clear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#getentitiesincirclearea-microsoft-xna-framework-vector2--system-single--system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel-">CandideServer.ServerControllers.EntitySController::GetEntitiesInCircleArea(Microsoft.Xna.Framework.Vector2, System.Single, System.Guid)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#filterentities-system-collections-generic-ienumerable-1-candideserver-entities-serverentitymodel---system-collections-generic-icollection-1-system-guid---system-collections-generic-icollection-1-candideserver-entities-serverentitymodel---system-collections-generic-icollection-1-system-guid---system-boolean--system-boolean---system-void">BM.EnemyUtil::FilterEntities(System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt;, System.Collections.Generic.ICollection&lt;System.Guid&gt;, System.Collections.Generic.ICollection&lt;CandideServer.Entities.ServerEntityModel&gt;, System.Collections.Generic.ICollection&lt;System.Guid&gt;, System.Boolean, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#getserverentitiesincircleareawithbaseidssortedbydistance-microsoft-xna-framework-vector2--system-single--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid----system-void"><code>BM.EnemyUtil::GetServerEntitiesInCircleAreaWithBaseIdsSortedByDistance</code></a></li>
+<li><a href="../../types/CandideServer/BM_TryGetServerEntityWithBaseId_1.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.TryGetServerEntityWithBaseId::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetServerEntitiesInCircleAreaWithBaseIdsSortedByDistance public System.Void GetServerEntitiesInCircleAreaWithBaseIdsSortedByDistance(Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeIds) System.Void center Microsoft.Xna.Framework.Vector2 radius System.Single worldId System.Guid baseIds System.Collections.Generic.List&lt;System.Guid&gt; outServerEntities System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; excludeIds System.Collections.Generic.HashSet&lt;System.Guid&gt;" id="getserverentitiesincircleareawithbaseidssortedbydistance-microsoft-xna-framework-vector2--system-single--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid----system-void">
+<div class="method-heading">
+<h3><code>GetServerEntitiesInCircleAreaWithBaseIdsSortedByDistance</code></h3>
+<a class="permalink" href="#getserverentitiesincircleareawithbaseidssortedbydistance-microsoft-xna-framework-vector2--system-single--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GetServerEntitiesInCircleAreaWithBaseIdsSortedByDistance(Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeIds)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::GetServerEntitiesInCircleAreaWithBaseIdsSortedByDistance(Microsoft.Xna.Framework.Vector2, System.Single, System.Guid, System.Collections.Generic.List&lt;System.Guid&gt;, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;, System.Collections.Generic.HashSet&lt;System.Guid&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GetServerEntitiesInCircleAreaWithBaseIdsSortedByDistance(Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a>&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeIds)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>70665D9BE2F14D4FF2BD661DA7AF359466CB0AF3314A6660FE88C0D38C055FE9</code></li>
+<li><span>Body hash</span><code>707A16669A1E686981941977CF7B4834AF335E1B0F82DD8C781BE76EAB77A22E</code></li>
+<li><span>IL size</span><span>35</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#getserverentitiesincircleareawithbaseids-microsoft-xna-framework-vector2--system-single--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-void">BM.EnemyUtil::GetServerEntitiesInCircleAreaWithBaseIds(Microsoft.Xna.Framework.Vector2, System.Single, System.Guid, System.Collections.Generic.List&lt;System.Guid&gt;, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;, System.Collections.Generic.HashSet&lt;System.Guid&gt;, System.Boolean, System.Boolean)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#sortserverentitiesbydistance-system-collections-generic-list-1-candideserver-entities-serverentitymodel---microsoft-xna-framework-vector2---system-void">BM.EnemyUtil::SortServerEntitiesByDistance(System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;, Microsoft.Xna.Framework.Vector2)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_TryGetServerEntityWithBaseId_1.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.TryGetServerEntityWithBaseId::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Citizens_GenericServerCitizenController.html#tryfindnearbyemptybucket-candideserver-entities-serverentitymodel----system-boolean"><code>CandideServer.Citizens.GenericServerCitizenController::TryFindNearbyEmptyBucket</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Citizens_GenericServerCitizenController.html#tryfindnearbyresourcetopickup-candideserver-entities-serverentitymodel----system-boolean"><code>CandideServer.Citizens.GenericServerCitizenController::TryFindNearbyResourceToPickUp</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetServerEntitiesInRectangleAreaWithBaseIds public System.Void GetServerEntitiesInRectangleAreaWithBaseIds(CandideCreator.Shared.Models.RectangleF rectangle, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities) System.Void rectangle CandideCreator.Shared.Models.RectangleF worldId System.Guid baseIds System.Collections.Generic.List&lt;System.Guid&gt; outServerEntities System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; excludeBaseIds System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeCarriedEntities System.Boolean excludeThrownEntities System.Boolean" id="getserverentitiesinrectangleareawithbaseids-candidecreator-shared-models-rectanglef--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>GetServerEntitiesInRectangleAreaWithBaseIds</code></h3>
+<a class="permalink" href="#getserverentitiesinrectangleareawithbaseids-candidecreator-shared-models-rectanglef--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GetServerEntitiesInRectangleAreaWithBaseIds(CandideCreator.Shared.Models.RectangleF rectangle, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::GetServerEntitiesInRectangleAreaWithBaseIds(CandideCreator.Shared.Models.RectangleF, System.Guid, System.Collections.Generic.List&lt;System.Guid&gt;, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;, System.Collections.Generic.HashSet&lt;System.Guid&gt;, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GetServerEntitiesInRectangleAreaWithBaseIds(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> rectangle, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a>&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F4E4C55C86194532E63DD2A850D09F6D796DD074A64766ED48297EFAF8BC5A9A</code></li>
+<li><span>Body hash</span><code>56C66AD2C4B438AFAF77880DABDE19964892AC7588BFEE48652E0C5CA294690A</code></li>
+<li><span>IL size</span><span>39</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;::Clear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#getentitiesinrectanglearea-candidecreator-shared-models-rectanglef--system-guid--system-collections-generic-list-1-candideserver-entities-serverentitymodel----system-collections-generic-list-1-candideserver-entities-serverentitymodel-">CandideServer.ServerControllers.EntitySController::GetEntitiesInRectangleArea(CandideCreator.Shared.Models.RectangleF, System.Guid, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#filterentities-system-collections-generic-ienumerable-1-candideserver-entities-serverentitymodel---system-collections-generic-icollection-1-system-guid---system-collections-generic-icollection-1-candideserver-entities-serverentitymodel---system-collections-generic-icollection-1-system-guid---system-boolean--system-boolean---system-void">BM.EnemyUtil::FilterEntities(System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt;, System.Collections.Generic.ICollection&lt;System.Guid&gt;, System.Collections.Generic.ICollection&lt;CandideServer.Entities.ServerEntityModel&gt;, System.Collections.Generic.ICollection&lt;System.Guid&gt;, System.Boolean, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#getserverentitiesinrectangleareawithbaseidssortedbydistance-candidecreator-shared-models-rectanglef--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid----system-void"><code>BM.EnemyUtil::GetServerEntitiesInRectangleAreaWithBaseIdsSortedByDistance</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetServerEntitiesInRectangleAreaWithBaseIdsSortedByDistance public System.Void GetServerEntitiesInRectangleAreaWithBaseIdsSortedByDistance(CandideCreator.Shared.Models.RectangleF rectangle, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeIds) System.Void rectangle CandideCreator.Shared.Models.RectangleF worldId System.Guid baseIds System.Collections.Generic.List&lt;System.Guid&gt; outServerEntities System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; excludeIds System.Collections.Generic.HashSet&lt;System.Guid&gt;" id="getserverentitiesinrectangleareawithbaseidssortedbydistance-candidecreator-shared-models-rectanglef--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid----system-void">
+<div class="method-heading">
+<h3><code>GetServerEntitiesInRectangleAreaWithBaseIdsSortedByDistance</code></h3>
+<a class="permalink" href="#getserverentitiesinrectangleareawithbaseidssortedbydistance-candidecreator-shared-models-rectanglef--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GetServerEntitiesInRectangleAreaWithBaseIdsSortedByDistance(CandideCreator.Shared.Models.RectangleF rectangle, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeIds)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::GetServerEntitiesInRectangleAreaWithBaseIdsSortedByDistance(CandideCreator.Shared.Models.RectangleF, System.Guid, System.Collections.Generic.List&lt;System.Guid&gt;, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;, System.Collections.Generic.HashSet&lt;System.Guid&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GetServerEntitiesInRectangleAreaWithBaseIdsSortedByDistance(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> rectangle, System.Guid worldId, System.Collections.Generic.List&lt;System.Guid&gt; baseIds, System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a>&gt; outServerEntities, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeIds)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>1E40750CF586D15248FB7A8784956A45EB5741DD489BB56C66519BC774298BD2</code></li>
+<li><span>Body hash</span><code>D43DF8332B5BBCABA03993884DCF0A4D656E31E917A7628C0577B8985C8C5C0C</code></li>
+<li><span>IL size</span><span>37</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#getserverentitiesinrectangleareawithbaseids-candidecreator-shared-models-rectanglef--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-void">BM.EnemyUtil::GetServerEntitiesInRectangleAreaWithBaseIds(CandideCreator.Shared.Models.RectangleF, System.Guid, System.Collections.Generic.List&lt;System.Guid&gt;, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;, System.Collections.Generic.HashSet&lt;System.Guid&gt;, System.Boolean, System.Boolean)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;::get_Count()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Center()</code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#sortserverentitiesbydistance-system-collections-generic-list-1-candideserver-entities-serverentitymodel---microsoft-xna-framework-vector2---system-void">BM.EnemyUtil::SortServerEntitiesByDistance(System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;, Microsoft.Xna.Framework.Vector2)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Citizens_GenericServerCitizenController.html#trygetclosestemptybucketintown-candideserver-models-constructionsitemodel--candideserver-entities-serverentitymodel----system-boolean"><code>CandideServer.Citizens.GenericServerCitizenController::TryGetClosestEmptyBucketInTown</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="HasNearbyAllies public System.Boolean HasNearbyAllies(Shared.Entity.EntityWrapper entity, System.Single searchRadius) System.Boolean entity Shared.Entity.EntityWrapper searchRadius System.Single" id="hasnearbyallies-shared-entity-entitywrapper--system-single---system-boolean">
+<div class="method-heading">
+<h3><code>HasNearbyAllies</code></h3>
+<a class="permalink" href="#hasnearbyallies-shared-entity-entitywrapper--system-single---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean HasNearbyAllies(Shared.Entity.EntityWrapper entity, System.Single searchRadius)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::HasNearbyAllies(Shared.Entity.EntityWrapper, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean HasNearbyAllies(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, System.Single searchRadius)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>20E7ED540A0AB1E3F5D540AD7F5E3B47E979230DAECC8DB2E21AD69AA7487848</code></li>
+<li><span>Body hash</span><code>0FDBC7DB9048D58328967896F09F1E2486611DBA7E44D33F3F2F264371DAA107</code></li>
+<li><span>IL size</span><span>155</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_MaskRef()</code></li>
+<li><code>System.Enum::HasFlag(System.Enum)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position2()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#getentitiesincirclearea-microsoft-xna-framework-vector2--system-single---system-collections-generic-list-1-shared-entity-entitywrapper-">Shared.Entity.EntitySystem::GetEntitiesInCircleArea(Microsoft.Xna.Framework.Vector2, System.Single)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Entity.EntityWrapper&gt;::get_Current()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_FactionMask()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_FactionMaskNewExtension.html#hasanyflags-shared-entity-components-factionmask--shared-entity-components-factionmask---system-boolean">Shared.Entity.Components.FactionMaskNewExtension::HasAnyFlags(Shared.Entity.Components.FactionMask, Shared.Entity.Components.FactionMask)</a></code></li>
+<li><code>System.Object::Equals(System.Object)</code></li>
+<li><code>List.Enumerator&lt;Shared.Entity.EntityWrapper&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IsEntityOk public System.Boolean IsEntityOk(Shared.Entity.EntitySystem system, System.Nullable&lt;System.Guid&gt; entityId, out Shared.Entity.EntityWrapper&amp; outEntity) System.Boolean system Shared.Entity.EntitySystem entityId System.Nullable&lt;System.Guid&gt; outEntity Shared.Entity.EntityWrapper&amp;" id="isentityok-shared-entity-entitysystem--system-nullable-1-system-guid---shared-entity-entitywrapper----system-boolean">
+<div class="method-heading">
+<h3><code>IsEntityOk</code></h3>
+<a class="permalink" href="#isentityok-shared-entity-entitysystem--system-nullable-1-system-guid---shared-entity-entitywrapper----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean IsEntityOk(Shared.Entity.EntitySystem system, System.Nullable&lt;System.Guid&gt; entityId, out Shared.Entity.EntityWrapper&amp; outEntity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::IsEntityOk(Shared.Entity.EntitySystem, System.Nullable&lt;System.Guid&gt;, Shared.Entity.EntityWrapper&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean IsEntityOk(<a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> system, System.Nullable&lt;System.Guid&gt; entityId, out <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a>&amp; outEntity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>331DCE3144104049DD8F1C50CDB1799DA0A018763568AD8C8135B3F64219F084</code></li>
+<li><span>Body hash</span><code>A3321CBD88AFEA5084DCFA9CCA7F4DE9A9A0C0EAE52095D3B3551DCF0F98F64A</code></li>
+<li><span>IL size</span><span>78</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#getentitybyid-system-nullable-1-system-guid----shared-entity-entitywrapper">Shared.Entity.EntitySystem::GetEntityById(System.Nullable&lt;System.Guid&gt;)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Health()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_WorldId()</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#tryselectandsetrandomplayertarget-system-guid---shared-entity-entitywrapper---shared-entity-entitysystem--system-collections-generic-hashset-1-system-guid---bm-blackboard--system-string--system-nullable-1-candidecreator-shared-models-rectanglef----system-boolean"><code>BM.EnemyUtil::TrySelectAndSetRandomPlayerTarget</code></a></li>
+<li><a href="../../types/CandideServer/BM_InteractingEntitiesHelper.html#removeinvalid-shared-entity-entitywrapper---system-void"><code>BM.InteractingEntitiesHelper::RemoveInvalid</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerPyzifaxController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerPyzifaxController::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IsFacingDirection public System.Boolean IsFacingDirection(Shared.Entity.EntityWrapper source, Microsoft.Xna.Framework.Vector2 direction, System.Single facingDirectionAngleThresholdDeg) System.Boolean source Shared.Entity.EntityWrapper direction Microsoft.Xna.Framework.Vector2 facingDirectionAngleThresholdDeg System.Single" id="isfacingdirection-shared-entity-entitywrapper--microsoft-xna-framework-vector2--system-single---system-boolean">
+<div class="method-heading">
+<h3><code>IsFacingDirection</code></h3>
+<a class="permalink" href="#isfacingdirection-shared-entity-entitywrapper--microsoft-xna-framework-vector2--system-single---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean IsFacingDirection(Shared.Entity.EntityWrapper source, Microsoft.Xna.Framework.Vector2 direction, System.Single facingDirectionAngleThresholdDeg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::IsFacingDirection(Shared.Entity.EntityWrapper, Microsoft.Xna.Framework.Vector2, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean IsFacingDirection(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> source, Microsoft.Xna.Framework.Vector2 direction, System.Single facingDirectionAngleThresholdDeg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4C6FFA5F6F9D1D35C5FE4BE76F834E25FFDB2540B3A93D545650200FE3C8C66A</code></li>
+<li><span>Body hash</span><code>9CACAD923021B435E7463479117B2BD6210A7455E105CA66016FE44D7D813D6D</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Direction()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#directiontovector2-system-single---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::DirectionToVector2(System.Single)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#isfacingvector-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--system-single---system-boolean">BM.EnemyUtil::IsFacingVector(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#isfacingtarget-shared-entity-entitywrapper--shared-entity-entitywrapper--system-single---system-boolean"><code>BM.EnemyUtil::IsFacingTarget</code></a></li>
+<li><a href="../../types/CandideServer/BM_IsFacingTarget_1.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.IsFacingTarget::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IsFacingTarget public System.Boolean IsFacingTarget(Shared.Entity.EntityWrapper source, Shared.Entity.EntityWrapper target, System.Single facingTargetAngleThresholdDeg) System.Boolean source Shared.Entity.EntityWrapper target Shared.Entity.EntityWrapper facingTargetAngleThresholdDeg System.Single" id="isfacingtarget-shared-entity-entitywrapper--shared-entity-entitywrapper--system-single---system-boolean">
+<div class="method-heading">
+<h3><code>IsFacingTarget</code></h3>
+<a class="permalink" href="#isfacingtarget-shared-entity-entitywrapper--shared-entity-entitywrapper--system-single---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean IsFacingTarget(Shared.Entity.EntityWrapper source, Shared.Entity.EntityWrapper target, System.Single facingTargetAngleThresholdDeg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::IsFacingTarget(Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean IsFacingTarget(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> source, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> target, System.Single facingTargetAngleThresholdDeg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AFC0BA19E1CE9E61A92A9B04DD442A8DC5C808FB8CC2C34861487193C345528F</code></li>
+<li><span>Body hash</span><code>C6CD3E68E908D838AB3D1E179E1622FA41A2962649BFBB4059EA216E8DB723BF</code></li>
+<li><span>IL size</span><span>32</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_Position2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#normalizereturnsafe-microsoft-xna-framework-vector2---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::NormalizeReturnSafe(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#isfacingdirection-shared-entity-entitywrapper--microsoft-xna-framework-vector2--system-single---system-boolean">BM.EnemyUtil::IsFacingDirection(Shared.Entity.EntityWrapper, Microsoft.Xna.Framework.Vector2, System.Single)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="IsFacingVector private System.Boolean IsFacingVector(Microsoft.Xna.Framework.Vector2 fromDirection, Microsoft.Xna.Framework.Vector2 toDirection, System.Single angleThresholdDeg) System.Boolean fromDirection Microsoft.Xna.Framework.Vector2 toDirection Microsoft.Xna.Framework.Vector2 angleThresholdDeg System.Single" id="isfacingvector-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--system-single---system-boolean">
+<div class="method-heading">
+<h3><code>IsFacingVector</code></h3>
+<a class="permalink" href="#isfacingvector-microsoft-xna-framework-vector2--microsoft-xna-framework-vector2--system-single---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean IsFacingVector(Microsoft.Xna.Framework.Vector2 fromDirection, Microsoft.Xna.Framework.Vector2 toDirection, System.Single angleThresholdDeg)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::IsFacingVector(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean IsFacingVector(Microsoft.Xna.Framework.Vector2 fromDirection, Microsoft.Xna.Framework.Vector2 toDirection, System.Single angleThresholdDeg)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8A45A1B0B7FD12E8386FE3324A54A06831045E9D08323B27E1801A04526CFA34</code></li>
+<li><span>Body hash</span><code>7380E9540A55E96634EFED82E0FDC3529BB42215C5F3331754A82F53CE4B810B</code></li>
+<li><span>IL size</span><span>32</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector2::Dot(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.MathHelper::ToRadians(System.Single)</code></li>
+<li><code>System.MathF::Cos(System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#isfacingdirection-shared-entity-entitywrapper--microsoft-xna-framework-vector2--system-single---system-boolean"><code>BM.EnemyUtil::IsFacingDirection</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IsGroundTile public System.Boolean IsGroundTile(Microsoft.Xna.Framework.Vector2 position, System.Guid worldId) System.Boolean position Microsoft.Xna.Framework.Vector2 worldId System.Guid" id="isgroundtile-microsoft-xna-framework-vector2--system-guid---system-boolean">
+<div class="method-heading">
+<h3><code>IsGroundTile</code></h3>
+<a class="permalink" href="#isgroundtile-microsoft-xna-framework-vector2--system-guid---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean IsGroundTile(Microsoft.Xna.Framework.Vector2 position, System.Guid worldId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::IsGroundTile(Microsoft.Xna.Framework.Vector2, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean IsGroundTile(Microsoft.Xna.Framework.Vector2 position, System.Guid worldId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>173B669B481396EA2A8C14B2F51CB2595DAC8580AE3B7DC3F436AC727F1C7BAC</code></li>
+<li><span>Body hash</span><code>5BA7B3ED038ED780B67E0795FB3E67C870011356C6B65828A0540B9F9036C00B</code></li>
+<li><span>IL size</span><span>49</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Helpers_WorldTileHelper.html#gettileposition-system-single--system-single---system-valuetuple-2-system-int32-system-int32-">Shared.Helpers.WorldTileHelper::GetTilePosition(System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Helpers_ServerWorldTileHelper.html#trygetworldtileheight-system-guid--system-int32--system-int32--system-sbyte----system-boolean">CandideServer.Helpers.ServerWorldTileHelper::TryGetWorldTileHeight(System.Guid, System.Int32, System.Int32, System.SByte&amp;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerTreeController.html#getvalidspawnposition-microsoft-xna-framework-vector3--system-int32---system-boolean----microsoft-xna-framework-vector3"><code>CandideServer.Entities.Controllers.ServerTreeController::GetValidSpawnPosition</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IsOutsideFoW public System.Boolean IsOutsideFoW(Shared.Entity.EntityWrapper entity) System.Boolean entity Shared.Entity.EntityWrapper" id="isoutsidefow-shared-entity-entitywrapper---system-boolean">
+<div class="method-heading">
+<h3><code>IsOutsideFoW</code></h3>
+<a class="permalink" href="#isoutsidefow-shared-entity-entitywrapper---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean IsOutsideFoW(Shared.Entity.EntityWrapper entity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::IsOutsideFoW(Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean IsOutsideFoW(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>02C73C72E4B066A0105C74771026306442819C7E619D475606D04FFA0B67C5EC</code></li>
+<li><span>Body hash</span><code>3F44EBC195F9AECF5FAE3C8C8385D4237D56A9828F8F3A33F26AE27FDECE2513</code></li>
+<li><span>IL size</span><span>117</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#getplayersinworld-system-guid---system-collections-generic-ireadonlycollection-1-shared-entity-entitywrapper-">CandideServer.ServerManagers.PlayerServerManager::GetPlayersInWorld(System.Guid)</a></code></li>
+<li><code>System.Collections.Generic.IEnumerable&lt;Shared.Entity.EntityWrapper&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;Shared.Entity.EntityWrapper&gt;::get_Current()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#toscreenspace-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToScreenSpace(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::LengthSquared()</code></li>
+<li><code>System.Collections.IEnumerator::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ResetCooldown public System.Void ResetCooldown(BM.Blackboard blackboard, System.String writeTimer, System.String writeIsOnCooldown, System.Single resetTime) System.Void blackboard BM.Blackboard writeTimer System.String writeIsOnCooldown System.String resetTime System.Single" id="resetcooldown-bm-blackboard--system-string--system-string--system-single---system-void">
+<div class="method-heading">
+<h3><code>ResetCooldown</code></h3>
+<a class="permalink" href="#resetcooldown-bm-blackboard--system-string--system-string--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void ResetCooldown(BM.Blackboard blackboard, System.String writeTimer, System.String writeIsOnCooldown, System.Single resetTime)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::ResetCooldown(BM.Blackboard, System.String, System.String, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void ResetCooldown(<a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard, System.String writeTimer, System.String writeIsOnCooldown, System.Single resetTime)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E104B358A5166C96F2CD5403FC8111BC66C72C120F48451AF81CE75412100326</code></li>
+<li><span>Body hash</span><code>186678C09861FB32885C93C7653E5D2BE571A1EC675E852CC3CB19A77D78A8CC</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BM.Blackboard::SetValue(System.String, T)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_ResetCooldownTimer.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.ResetCooldownTimer::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerPyzifaxController.html#resetcommandtargetplayercooldown----system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerPyzifaxController::ResetCommandTargetPlayerCooldown</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetMaxThreat public System.Void SetMaxThreat(Shared.Entity.EntityWrapper threatenedEntity, Shared.Entity.EntityWrapper threateningEntity, System.Single extraThreat) System.Void threatenedEntity Shared.Entity.EntityWrapper threateningEntity Shared.Entity.EntityWrapper extraThreat System.Single" id="setmaxthreat-shared-entity-entitywrapper--shared-entity-entitywrapper--system-single---system-void">
+<div class="method-heading">
+<h3><code>SetMaxThreat</code></h3>
+<a class="permalink" href="#setmaxthreat-shared-entity-entitywrapper--shared-entity-entitywrapper--system-single---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetMaxThreat(Shared.Entity.EntityWrapper threatenedEntity, Shared.Entity.EntityWrapper threateningEntity, System.Single extraThreat)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::SetMaxThreat(Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper, System.Single)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetMaxThreat(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> threatenedEntity, <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> threateningEntity, System.Single extraThreat)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>13293EF14D041B673AF7A64FE72EFEB3576E41A76CE09CF18443BF3C9E468B52</code></li>
+<li><span>Body hash</span><code>079DC44AD3C248074855235FA5B61C57D47F906F2D969905AE5A15DAA5D85BF7</code></li>
+<li><span>IL size</span><span>41</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Entity.EntityWrapper::get_MaskRef()</code></li>
+<li><code>System.Enum::HasFlag(System.Enum)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_AggressiveComponent()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_AggressiveComponent.html#setentitythreattomax-shared-entity-entitywrapper--shared-entity-entitywrapper--system-single---system-void">Shared.Entity.Components.AggressiveComponent::SetEntityThreatToMax(Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaController.html#spawnentity-microsoft-xna-framework-vector3--system-guid--system-guid---system-single---system-boolean"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController::SpawnEntity</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SortEntitiesByDistance public System.Void SortEntitiesByDistance(System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt; entities, Microsoft.Xna.Framework.Vector2 center) System.Void entities System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt; center Microsoft.Xna.Framework.Vector2" id="sortentitiesbydistance-system-collections-generic-list-1-shared-entity-entitywrapper---microsoft-xna-framework-vector2---system-void">
+<div class="method-heading">
+<h3><code>SortEntitiesByDistance</code></h3>
+<a class="permalink" href="#sortentitiesbydistance-system-collections-generic-list-1-shared-entity-entitywrapper---microsoft-xna-framework-vector2---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SortEntitiesByDistance(System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt; entities, Microsoft.Xna.Framework.Vector2 center)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::SortEntitiesByDistance(System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;, Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SortEntitiesByDistance(System.Collections.Generic.List&lt;<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a>&gt; entities, Microsoft.Xna.Framework.Vector2 center)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E47054AEF143A724EF3C3FF1459632FDC21F8C4B83B0CABDE2020B996C9AEEBC</code></li>
+<li><span>Body hash</span><code>F456E0351FFE8E1168768AF1AC1C85C73E9D9D9738D80715057CFA5B42DCA4CB</code></li>
+<li><span>IL size</span><span>32</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>EnemyUtil.&lt;&gt;c__DisplayClass13_0::.ctor()</code></li>
+<li><code>EnemyUtil.&lt;&gt;c__DisplayClass13_0::&lt;SortEntitiesByDistance&gt;b__0(Shared.Entity.EntityWrapper, Shared.Entity.EntityWrapper)</code></li>
+<li><code>System.Comparison&lt;Shared.Entity.EntityWrapper&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::Sort(System.Comparison&lt;!0&gt;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#getentitiesincircleareawithbaseguidssortedbydistance-shared-entity-entitysystem--microsoft-xna-framework-vector2--system-single--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-shared-entity-entitywrapper---system-collections-generic-hashset-1-system-guid----system-void"><code>BM.EnemyUtil::GetEntitiesInCircleAreaWithBaseGuidsSortedByDistance</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SortServerEntitiesByDistance public System.Void SortServerEntitiesByDistance(System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; entities, Microsoft.Xna.Framework.Vector2 center) System.Void entities System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; center Microsoft.Xna.Framework.Vector2" id="sortserverentitiesbydistance-system-collections-generic-list-1-candideserver-entities-serverentitymodel---microsoft-xna-framework-vector2---system-void">
+<div class="method-heading">
+<h3><code>SortServerEntitiesByDistance</code></h3>
+<a class="permalink" href="#sortserverentitiesbydistance-system-collections-generic-list-1-candideserver-entities-serverentitymodel---microsoft-xna-framework-vector2---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SortServerEntitiesByDistance(System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt; entities, Microsoft.Xna.Framework.Vector2 center)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::SortServerEntitiesByDistance(System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;, Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SortServerEntitiesByDistance(System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a>&gt; entities, Microsoft.Xna.Framework.Vector2 center)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0AA77482150FF80BC2D810AE5DFF5EEC3B70B24A6651CD6A7420D03001F70607</code></li>
+<li><span>Body hash</span><code>4B607EEF113ECC27349609467EE969E792ECAD094EC687B9262DDD415234A190</code></li>
+<li><span>IL size</span><span>32</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>EnemyUtil.&lt;&gt;c__DisplayClass17_0::.ctor()</code></li>
+<li><code>EnemyUtil.&lt;&gt;c__DisplayClass17_0::&lt;SortServerEntitiesByDistance&gt;b__0(CandideServer.Entities.ServerEntityModel, CandideServer.Entities.ServerEntityModel)</code></li>
+<li><code>System.Comparison&lt;CandideServer.Entities.ServerEntityModel&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;::Sort(System.Comparison&lt;!0&gt;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#getserverentitiesincircleareawithbaseidssortedbydistance-microsoft-xna-framework-vector2--system-single--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid----system-void"><code>BM.EnemyUtil::GetServerEntitiesInCircleAreaWithBaseIdsSortedByDistance</code></a></li>
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#getserverentitiesinrectangleareawithbaseidssortedbydistance-candidecreator-shared-models-rectanglef--system-guid--system-collections-generic-list-1-system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid----system-void"><code>BM.EnemyUtil::GetServerEntitiesInRectangleAreaWithBaseIdsSortedByDistance</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SyncBlackboardValue public T SyncBlackboardValue&lt;T&gt;(BM.Blackboard blackboard, System.String key, T value) T blackboard BM.Blackboard key System.String value T" id="syncblackboardvalue-1-bm-blackboard--system-string---t----t">
+<div class="method-heading">
+<h3><code>SyncBlackboardValue</code></h3>
+<a class="permalink" href="#syncblackboardvalue-1-bm-blackboard--system-string---t----t" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public T SyncBlackboardValue&lt;T&gt;(BM.Blackboard blackboard, System.String key, T value)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::SyncBlackboardValue(BM.Blackboard, System.String, T)">Copy Harmony target</button>
+</div>
+<p><code>public T SyncBlackboardValue&lt;T&gt;(<a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard, System.String key, T value)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>T</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F00525098942876625AD77D4CBF9BE8254CB10AB8362A822166244FAEBA48D01</code></li>
+<li><span>Body hash</span><code>9910A26A62298B9FAAF2C59ED44FDAF81CE157BBBB9DED0800C37837281861BC</code></li>
+<li><span>IL size</span><span>10</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BM.Blackboard::SetValue(System.String, T)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SyncParameter public T SyncParameter&lt;T&gt;(CandideCreator.Shared.Helpers.Parameters parameters, System.String key, T value) T parameters CandideCreator.Shared.Helpers.Parameters key System.String value T" id="syncparameter-1-candidecreator-shared-helpers-parameters--system-string---t----t">
+<div class="method-heading">
+<h3><code>SyncParameter</code></h3>
+<a class="permalink" href="#syncparameter-1-candidecreator-shared-helpers-parameters--system-string---t----t" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public T SyncParameter&lt;T&gt;(CandideCreator.Shared.Helpers.Parameters parameters, System.String key, T value)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::SyncParameter(CandideCreator.Shared.Helpers.Parameters, System.String, T)">Copy Harmony target</button>
+</div>
+<p><code>public T SyncParameter&lt;T&gt;(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html">CandideCreator.Shared.Helpers.Parameters</a> parameters, System.String key, T value)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>T</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BEA351F550245699954A6F7820AB46031CDB9C5916D372A2ADAB6A2F3A16E73B</code></li>
+<li><span>Body hash</span><code>F1C98880AF0054FA81B6B66F75445A21122E64DA80E694000B3C44E8E113854F</code></li>
+<li><span>IL size</span><span>67</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Object::ToString()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html#set-system-string--system-string---system-void">CandideCreator.Shared.Helpers.Parameters::Set(System.String, System.String)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SyncParameterAndBlackboardValue public T SyncParameterAndBlackboardValue&lt;T&gt;(CandideCreator.Shared.Helpers.Parameters parameters, System.String parameterKey, BM.Blackboard blackboard, System.String blackboardKey, T value) T parameters CandideCreator.Shared.Helpers.Parameters parameterKey System.String blackboard BM.Blackboard blackboardKey System.String value T" id="syncparameterandblackboardvalue-1-candidecreator-shared-helpers-parameters--system-string--bm-blackboard--system-string---t----t">
+<div class="method-heading">
+<h3><code>SyncParameterAndBlackboardValue</code></h3>
+<a class="permalink" href="#syncparameterandblackboardvalue-1-candidecreator-shared-helpers-parameters--system-string--bm-blackboard--system-string---t----t" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public T SyncParameterAndBlackboardValue&lt;T&gt;(CandideCreator.Shared.Helpers.Parameters parameters, System.String parameterKey, BM.Blackboard blackboard, System.String blackboardKey, T value)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::SyncParameterAndBlackboardValue(CandideCreator.Shared.Helpers.Parameters, System.String, BM.Blackboard, System.String, T)">Copy Harmony target</button>
+</div>
+<p><code>public T SyncParameterAndBlackboardValue&lt;T&gt;(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_Parameters.html">CandideCreator.Shared.Helpers.Parameters</a> parameters, System.String parameterKey, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard, System.String blackboardKey, T value)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>T</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C30AEE5161C3782E072526CA7C204C4A8FF536F541C49A8084E3A24BFAA88B1B</code></li>
+<li><span>Body hash</span><code>B58CE4CAA1F2D0C328DCE6FE2632824ECB6BB662DFC1E1F9815C69D8F173CF52</code></li>
+<li><span>IL size</span><span>23</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>BM.EnemyUtil::SyncParameter(CandideCreator.Shared.Helpers.Parameters, System.String, T)</code></li>
+<li><code>BM.EnemyUtil::SyncBlackboardValue(BM.Blackboard, System.String, T)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetAttackPositionAndDirection public System.Boolean TryGetAttackPositionAndDirection(Shared.Entity.EntityWrapper entity, System.String directionalOffsetId, out Microsoft.Xna.Framework.Vector3&amp; spawnPosition, out System.Single&amp; direction) System.Boolean entity Shared.Entity.EntityWrapper directionalOffsetId System.String spawnPosition Microsoft.Xna.Framework.Vector3&amp; direction System.Single&amp;" id="trygetattackpositionanddirection-shared-entity-entitywrapper--system-string--microsoft-xna-framework-vector3---system-single----system-boolean">
+<div class="method-heading">
+<h3><code>TryGetAttackPositionAndDirection</code></h3>
+<a class="permalink" href="#trygetattackpositionanddirection-shared-entity-entitywrapper--system-string--microsoft-xna-framework-vector3---system-single----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetAttackPositionAndDirection(Shared.Entity.EntityWrapper entity, System.String directionalOffsetId, out Microsoft.Xna.Framework.Vector3&amp; spawnPosition, out System.Single&amp; direction)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::TryGetAttackPositionAndDirection(Shared.Entity.EntityWrapper, System.String, Microsoft.Xna.Framework.Vector3&amp;, System.Single&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetAttackPositionAndDirection(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, System.String directionalOffsetId, out Microsoft.Xna.Framework.Vector3&amp; spawnPosition, out System.Single&amp; direction)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F1AC5EE4FFA390031657AF1FEDC16865C96F46D2F881EA450C1FF815805E1B95</code></li>
+<li><span>Body hash</span><code>A6E8C422916F17FB6F465876FBAABDA776B1AC230FA8E7183289178D2B6FD572</code></li>
+<li><span>IL size</span><span>186</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector3::get_Zero()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Direction()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_TargetOfAggro()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_DirectionalOffsetsDataBase.html#trygetdirectionaloffsetdata-system-string--candideserver-data-datamodels-directionaloffsetdata----system-boolean">CandideServer.Database.DirectionalOffsetsDataBase::TryGetDirectionalOffsetData(System.String, CandideServer.Data.DataModels.DirectionalOffsetData&amp;)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#directionto8intdirection-system-single---system-int32">CandideCreator.Shared.Helpers.VectorExtension::DirectionTo8IntDirection(System.Single)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Shape()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Addition(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Subtraction(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tofloatdirection-microsoft-xna-framework-vector2---system-single">CandideCreator.Shared.Helpers.VectorExtension::ToFloatDirection(Microsoft.Xna.Framework.Vector2)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="TryGetClosest private System.Boolean TryGetClosest(System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt; source, Microsoft.Xna.Framework.Vector2 center, System.Collections.Generic.ICollection&lt;System.Guid&gt; baseIds, out CandideServer.Entities.ServerEntityModel&amp; closest, System.Collections.Generic.ICollection&lt;System.Guid&gt; excludeIds, System.Boolean excludeCarried, System.Boolean excludeThrown) System.Boolean source System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt; center Microsoft.Xna.Framework.Vector2 baseIds System.Collections.Generic.ICollection&lt;System.Guid&gt; closest CandideServer.Entities.ServerEntityModel&amp; excludeIds System.Collections.Generic.ICollection&lt;System.Guid&gt; excludeCarried System.Boolean excludeThrown System.Boolean" id="trygetclosest-system-collections-generic-ienumerable-1-candideserver-entities-serverentitymodel---microsoft-xna-framework-vector2--system-collections-generic-icollection-1-system-guid---candideserver-entities-serverentitymodel---system-collections-generic-icollection-1-system-guid---system-boolean--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>TryGetClosest</code></h3>
+<a class="permalink" href="#trygetclosest-system-collections-generic-ienumerable-1-candideserver-entities-serverentitymodel---microsoft-xna-framework-vector2--system-collections-generic-icollection-1-system-guid---candideserver-entities-serverentitymodel---system-collections-generic-icollection-1-system-guid---system-boolean--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Boolean TryGetClosest(System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt; source, Microsoft.Xna.Framework.Vector2 center, System.Collections.Generic.ICollection&lt;System.Guid&gt; baseIds, out CandideServer.Entities.ServerEntityModel&amp; closest, System.Collections.Generic.ICollection&lt;System.Guid&gt; excludeIds, System.Boolean excludeCarried, System.Boolean excludeThrown)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::TryGetClosest(System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt;, Microsoft.Xna.Framework.Vector2, System.Collections.Generic.ICollection&lt;System.Guid&gt;, CandideServer.Entities.ServerEntityModel&amp;, System.Collections.Generic.ICollection&lt;System.Guid&gt;, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>private System.Boolean TryGetClosest(System.Collections.Generic.IEnumerable&lt;<a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a>&gt; source, Microsoft.Xna.Framework.Vector2 center, System.Collections.Generic.ICollection&lt;System.Guid&gt; baseIds, out <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a>&amp; closest, System.Collections.Generic.ICollection&lt;System.Guid&gt; excludeIds, System.Boolean excludeCarried, System.Boolean excludeThrown)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D88981FE36AC3EEF60F4157E587BC9B7E4E4A9818B365997EE789CBBB0595AB5</code></li>
+<li><span>Body hash</span><code>79D13E414183600F3050D17B222F7FB9EE015B4E8509B512EC88277DC1178E71</code></li>
+<li><span>IL size</span><span>140</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;CandideServer.Entities.ServerEntityModel&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.ICollection&lt;System.Guid&gt;::Contains(!0)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tovector2-microsoft-xna-framework-vector3---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.VectorExtension::ToVector2(Microsoft.Xna.Framework.Vector3)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::DistanceSquared(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>System.Collections.IEnumerator::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#trygetclosestserverentityincircleareawithbaseids-microsoft-xna-framework-vector2--system-single--system-guid--system-collections-generic-hashset-1-system-guid---candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-boolean"><code>BM.EnemyUtil::TryGetClosestServerEntityInCircleAreaWithBaseIds</code></a></li>
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#trygetclosestserverentityinrectangleareawithbaseids-candidecreator-shared-models-rectanglef--system-guid--system-collections-generic-hashset-1-system-guid---candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-boolean"><code>BM.EnemyUtil::TryGetClosestServerEntityInRectangleAreaWithBaseIds</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetClosestEntityInCircleAreaWithBaseGuids public System.Boolean TryGetClosestEntityInCircleAreaWithBaseGuids(Shared.Entity.EntitySystem system, Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Collections.Generic.HashSet&lt;System.Guid&gt; baseGuids, out Shared.Entity.EntityWrapper&amp; closestEntity, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeGuids, System.Boolean excludeCarriedEntities, System.Boolean excludeAirborneEntities) System.Boolean system Shared.Entity.EntitySystem center Microsoft.Xna.Framework.Vector2 radius System.Single baseGuids System.Collections.Generic.HashSet&lt;System.Guid&gt; closestEntity Shared.Entity.EntityWrapper&amp; excludeGuids System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeCarriedEntities System.Boolean excludeAirborneEntities System.Boolean" id="trygetclosestentityincircleareawithbaseguids-shared-entity-entitysystem--microsoft-xna-framework-vector2--system-single--system-collections-generic-hashset-1-system-guid---shared-entity-entitywrapper---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>TryGetClosestEntityInCircleAreaWithBaseGuids</code></h3>
+<a class="permalink" href="#trygetclosestentityincircleareawithbaseguids-shared-entity-entitysystem--microsoft-xna-framework-vector2--system-single--system-collections-generic-hashset-1-system-guid---shared-entity-entitywrapper---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetClosestEntityInCircleAreaWithBaseGuids(Shared.Entity.EntitySystem system, Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Collections.Generic.HashSet&lt;System.Guid&gt; baseGuids, out Shared.Entity.EntityWrapper&amp; closestEntity, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeGuids, System.Boolean excludeCarriedEntities, System.Boolean excludeAirborneEntities)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::TryGetClosestEntityInCircleAreaWithBaseGuids(Shared.Entity.EntitySystem, Microsoft.Xna.Framework.Vector2, System.Single, System.Collections.Generic.HashSet&lt;System.Guid&gt;, Shared.Entity.EntityWrapper&amp;, System.Collections.Generic.HashSet&lt;System.Guid&gt;, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetClosestEntityInCircleAreaWithBaseGuids(<a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> system, Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Collections.Generic.HashSet&lt;System.Guid&gt; baseGuids, out <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a>&amp; closestEntity, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeGuids, System.Boolean excludeCarriedEntities, System.Boolean excludeAirborneEntities)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>17075E3818FFBF7AADFB5EE42356C390D3E5A2AE58F9EC668377C457154DD6F2</code></li>
+<li><span>Body hash</span><code>7FEBEF9D6E0A3906AAD80A813A87023B2B85A6E59852FCACB242D8A57E2A8124</code></li>
+<li><span>IL size</span><span>175</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Entity_EntitySystem.html#getentitiesincirclearea-microsoft-xna-framework-vector2--system-single---system-collections-generic-list-1-shared-entity-entitywrapper-">Shared.Entity.EntitySystem::GetEntitiesInCircleArea(Microsoft.Xna.Framework.Vector2, System.Single)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Entity.EntityWrapper&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Shared.Entity.EntityWrapper&gt;::get_Current()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_BaseGuid()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Contains(!0)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_CarrierId()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_HeightFromFloor()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::DistanceSquared(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>List.Enumerator&lt;Shared.Entity.EntityWrapper&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetClosestServerEntityInCircleAreaWithBaseIds public System.Boolean TryGetClosestServerEntityInCircleAreaWithBaseIds(Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Guid worldId, System.Collections.Generic.HashSet&lt;System.Guid&gt; baseIds, out CandideServer.Entities.ServerEntityModel&amp; closestServerEntity, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities) System.Boolean center Microsoft.Xna.Framework.Vector2 radius System.Single worldId System.Guid baseIds System.Collections.Generic.HashSet&lt;System.Guid&gt; closestServerEntity CandideServer.Entities.ServerEntityModel&amp; excludeBaseIds System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeCarriedEntities System.Boolean excludeThrownEntities System.Boolean" id="trygetclosestserverentityincircleareawithbaseids-microsoft-xna-framework-vector2--system-single--system-guid--system-collections-generic-hashset-1-system-guid---candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>TryGetClosestServerEntityInCircleAreaWithBaseIds</code></h3>
+<a class="permalink" href="#trygetclosestserverentityincircleareawithbaseids-microsoft-xna-framework-vector2--system-single--system-guid--system-collections-generic-hashset-1-system-guid---candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetClosestServerEntityInCircleAreaWithBaseIds(Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Guid worldId, System.Collections.Generic.HashSet&lt;System.Guid&gt; baseIds, out CandideServer.Entities.ServerEntityModel&amp; closestServerEntity, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::TryGetClosestServerEntityInCircleAreaWithBaseIds(Microsoft.Xna.Framework.Vector2, System.Single, System.Guid, System.Collections.Generic.HashSet&lt;System.Guid&gt;, CandideServer.Entities.ServerEntityModel&amp;, System.Collections.Generic.HashSet&lt;System.Guid&gt;, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetClosestServerEntityInCircleAreaWithBaseIds(Microsoft.Xna.Framework.Vector2 center, System.Single radius, System.Guid worldId, System.Collections.Generic.HashSet&lt;System.Guid&gt; baseIds, out <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a>&amp; closestServerEntity, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>CCD2A5B5A89D4115C8AB7A4D8BF65FFD360C063D7497408AAD3580531B41E798</code></li>
+<li><span>Body hash</span><code>B8679B6AFC807CA93E31F2428A1C078FD12E44E1448893246DB2F1621A9D4B78</code></li>
+<li><span>IL size</span><span>40</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#getentitiesincirclearea-microsoft-xna-framework-vector2--system-single--system-guid---system-collections-generic-list-1-candideserver-entities-serverentitymodel-">CandideServer.ServerControllers.EntitySController::GetEntitiesInCircleArea(Microsoft.Xna.Framework.Vector2, System.Single, System.Guid)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#trygetclosest-system-collections-generic-ienumerable-1-candideserver-entities-serverentitymodel---microsoft-xna-framework-vector2--system-collections-generic-icollection-1-system-guid---candideserver-entities-serverentitymodel---system-collections-generic-icollection-1-system-guid---system-boolean--system-boolean---system-boolean">BM.EnemyUtil::TryGetClosest(System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt;, Microsoft.Xna.Framework.Vector2, System.Collections.Generic.ICollection&lt;System.Guid&gt;, CandideServer.Entities.ServerEntityModel&amp;, System.Collections.Generic.ICollection&lt;System.Guid&gt;, System.Boolean, System.Boolean)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetClosestServerEntityInRectangleAreaWithBaseIds public System.Boolean TryGetClosestServerEntityInRectangleAreaWithBaseIds(CandideCreator.Shared.Models.RectangleF rectangle, System.Guid worldId, System.Collections.Generic.HashSet&lt;System.Guid&gt; baseIds, out CandideServer.Entities.ServerEntityModel&amp; closestServerEntity, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities) System.Boolean rectangle CandideCreator.Shared.Models.RectangleF worldId System.Guid baseIds System.Collections.Generic.HashSet&lt;System.Guid&gt; closestServerEntity CandideServer.Entities.ServerEntityModel&amp; excludeBaseIds System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeCarriedEntities System.Boolean excludeThrownEntities System.Boolean" id="trygetclosestserverentityinrectangleareawithbaseids-candidecreator-shared-models-rectanglef--system-guid--system-collections-generic-hashset-1-system-guid---candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>TryGetClosestServerEntityInRectangleAreaWithBaseIds</code></h3>
+<a class="permalink" href="#trygetclosestserverentityinrectangleareawithbaseids-candidecreator-shared-models-rectanglef--system-guid--system-collections-generic-hashset-1-system-guid---candideserver-entities-serverentitymodel---system-collections-generic-hashset-1-system-guid---system-boolean--system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetClosestServerEntityInRectangleAreaWithBaseIds(CandideCreator.Shared.Models.RectangleF rectangle, System.Guid worldId, System.Collections.Generic.HashSet&lt;System.Guid&gt; baseIds, out CandideServer.Entities.ServerEntityModel&amp; closestServerEntity, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::TryGetClosestServerEntityInRectangleAreaWithBaseIds(CandideCreator.Shared.Models.RectangleF, System.Guid, System.Collections.Generic.HashSet&lt;System.Guid&gt;, CandideServer.Entities.ServerEntityModel&amp;, System.Collections.Generic.HashSet&lt;System.Guid&gt;, System.Boolean, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetClosestServerEntityInRectangleAreaWithBaseIds(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> rectangle, System.Guid worldId, System.Collections.Generic.HashSet&lt;System.Guid&gt; baseIds, out <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a>&amp; closestServerEntity, System.Collections.Generic.HashSet&lt;System.Guid&gt; excludeBaseIds, System.Boolean excludeCarriedEntities, System.Boolean excludeThrownEntities)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>93FB1C2ED6389757052721492EAECE7C077B4B8CBD4340CC9E137E3E86B3885A</code></li>
+<li><span>Body hash</span><code>A093E20EA7BECA39E7285E9EFD10DC95D2EED5E8185B34BE590E3409F60EB19C</code></li>
+<li><span>IL size</span><span>56</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#getentitiesinrectanglearea-candidecreator-shared-models-rectanglef--system-guid--system-collections-generic-list-1-candideserver-entities-serverentitymodel----system-collections-generic-list-1-candideserver-entities-serverentitymodel-">CandideServer.ServerControllers.EntitySController::GetEntitiesInRectangleArea(CandideCreator.Shared.Models.RectangleF, System.Guid, System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.Entities.ServerEntityModel&gt;::get_Count()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Center()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#trygetclosest-system-collections-generic-ienumerable-1-candideserver-entities-serverentitymodel---microsoft-xna-framework-vector2--system-collections-generic-icollection-1-system-guid---candideserver-entities-serverentitymodel---system-collections-generic-icollection-1-system-guid---system-boolean--system-boolean---system-boolean">BM.EnemyUtil::TryGetClosest(System.Collections.Generic.IEnumerable&lt;CandideServer.Entities.ServerEntityModel&gt;, Microsoft.Xna.Framework.Vector2, System.Collections.Generic.ICollection&lt;System.Guid&gt;, CandideServer.Entities.ServerEntityModel&amp;, System.Collections.Generic.ICollection&lt;System.Guid&gt;, System.Boolean, System.Boolean)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetDirectionalOffset public System.Boolean TryGetDirectionalOffset(Shared.Entity.EntityWrapper entity, System.String directionalOffsetId, out Microsoft.Xna.Framework.Vector3&amp; outOffset, System.Boolean useHeight, System.Nullable&lt;System.Single&gt; direction, System.Boolean useNewOrigin) System.Boolean entity Shared.Entity.EntityWrapper directionalOffsetId System.String outOffset Microsoft.Xna.Framework.Vector3&amp; useHeight System.Boolean direction System.Nullable&lt;System.Single&gt; useNewOrigin System.Boolean" id="trygetdirectionaloffset-shared-entity-entitywrapper--system-string--microsoft-xna-framework-vector3---system-boolean--system-nullable-1-system-single---system-boolean---system-boolean">
+<div class="method-heading">
+<h3><code>TryGetDirectionalOffset</code></h3>
+<a class="permalink" href="#trygetdirectionaloffset-shared-entity-entitywrapper--system-string--microsoft-xna-framework-vector3---system-boolean--system-nullable-1-system-single---system-boolean---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetDirectionalOffset(Shared.Entity.EntityWrapper entity, System.String directionalOffsetId, out Microsoft.Xna.Framework.Vector3&amp; outOffset, System.Boolean useHeight, System.Nullable&lt;System.Single&gt; direction, System.Boolean useNewOrigin)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::TryGetDirectionalOffset(Shared.Entity.EntityWrapper, System.String, Microsoft.Xna.Framework.Vector3&amp;, System.Boolean, System.Nullable&lt;System.Single&gt;, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetDirectionalOffset(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, System.String directionalOffsetId, out Microsoft.Xna.Framework.Vector3&amp; outOffset, System.Boolean useHeight, System.Nullable&lt;System.Single&gt; direction, System.Boolean useNewOrigin)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>C3B7581435C6AB289204E9A641B6836F200668CC97793ED3272DDAE9DB91FACA</code></li>
+<li><span>Body hash</span><code>797A8B0F198B2C2C2760422D7D9372B809B23621CC5BAFC4E60F78ACAD0A5F30</code></li>
+<li><span>IL size</span><span>166</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector3::get_Zero()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_DirectionalOffsetsDataBase.html#trygetdirectionaloffsetdata-system-string--candideserver-data-datamodels-directionaloffsetdata----system-boolean">CandideServer.Database.DirectionalOffsetsDataBase::TryGetDirectionalOffsetData(System.String, CandideServer.Data.DataModels.DirectionalOffsetData&amp;)</a></code></li>
+<li><code>System.Nullable&lt;System.Single&gt;::get_HasValue()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Direction()</code></li>
+<li><code>System.Nullable&lt;System.Single&gt;::GetValueOrDefault()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#directionto8intdirection-system-single---system-int32">CandideCreator.Shared.Helpers.VectorExtension::DirectionTo8IntDirection(System.Single)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Shape()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector3::op_Addition(Microsoft.Xna.Framework.Vector3, Microsoft.Xna.Framework.Vector3)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_BehaviorMachine_ServerLaserStatueController.html#updatelaseroffsetposition----system-void"><code>CandideServer.Entities.BehaviorMachine.ServerLaserStatueController::UpdateLaserOffsetPosition</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerPotmanController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerPotmanController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Fallen_SkeletonArcher_ServerMagusMinervaController.html#updatelaseroffsetposition----system-void"><code>CandideServer.Entities.ControllerSets.Fallen.SkeletonArcher.ServerMagusMinervaController::UpdateLaserOffsetPosition</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_BoarController_BoarController.html#receiveentityvfxmessage-system-byte---system-void"><code>Candide.Entities.Controllers.BoarController.BoarController::ReceiveEntityVfxMessage</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Creatures_MagusDianaController.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Entities.Controllers.Creatures.MagusDianaController::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_GoatController_GoatController.html#receiveentityvfxmessage-system-byte---system-void"><code>Candide.Entities.Controllers.GoatController.GoatController::ReceiveEntityVfxMessage</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_LaserStatueController_LaserStatueController.html#updatelaseroffsetposition----system-void"><code>Candide.Entities.Controllers.LaserStatueController.LaserStatueController::UpdateLaserOffsetPosition</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_BehaviorMachine_BigScorpionController.html#handleemitter----system-void"><code>Candide.Entities.Controllers.Other.BehaviorMachine.BigScorpionController::HandleEmitter</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_BehaviorMachine_PhoenixController.html#receiveentityvfxmessage-system-byte---system-void"><code>Candide.Entities.Controllers.Other.BehaviorMachine.PhoenixController::ReceiveEntityVfxMessage</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_BehaviorMachine_PotManController.html#update-microsoft-xna-framework-gametime---system-void"><code>Candide.Entities.Controllers.Other.BehaviorMachine.PotManController::Update</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_BehaviorMachine_SnakeController.html#receiveentityvfxmessage-system-byte---system-void"><code>Candide.Entities.Controllers.Other.BehaviorMachine.SnakeController::ReceiveEntityVfxMessage</code></a></li>
+<li><a href="../../types/Romestead/Candide_Entities_Controllers_Other_BehaviorMachine_VultureController.html#receiveentityvfxmessage-system-byte---system-void"><code>Candide.Entities.Controllers.Other.BehaviorMachine.VultureController::ReceiveEntityVfxMessage</code></a></li>
+<li><a href="../../types/Romestead/MagusCeresController.html#update-microsoft-xna-framework-gametime---system-void"><code>MagusCeresController::Update</code></a></li>
+<li><a href="../../types/Romestead/MagusMarsController.html#update-microsoft-xna-framework-gametime---system-void"><code>MagusMarsController::Update</code></a></li>
+<li><a href="../../types/Romestead/MagusMercuryController.html#update-microsoft-xna-framework-gametime---system-void"><code>MagusMercuryController::Update</code></a></li>
+<li><a href="../../types/Romestead/MagusMinervaController.html#update-microsoft-xna-framework-gametime---system-void"><code>MagusMinervaController::Update</code></a></li>
+<li><a href="../../types/Romestead/MagusMinervaController.html#updatelaseroffsetposition----system-void"><code>MagusMinervaController::UpdateLaserOffsetPosition</code></a></li>
+<li><a href="../../types/Romestead/MagusOrcusController.html#update-microsoft-xna-framework-gametime---system-void"><code>MagusOrcusController::Update</code></a></li>
+<li><a href="../../types/Romestead/MagusVenusController.html#update-microsoft-xna-framework-gametime---system-void"><code>MagusVenusController::Update</code></a></li>
+<li><a href="../../types/Romestead/MagusVulcanController.html#update-microsoft-xna-framework-gametime---system-void"><code>MagusVulcanController::Update</code></a></li>
+<li><a href="../../types/Romestead/SkeletonWarriorController.html#updatewindupparticle----system-void"><code>SkeletonWarriorController::UpdateWindupParticle</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TrySelectAndSetRandomPlayerTarget public System.Boolean TrySelectAndSetRandomPlayerTarget(System.Guid&amp; selectedTargetId, Shared.Entity.EntitySystem system, System.Collections.Generic.HashSet&lt;System.Guid&gt; avoidTargetIds, BM.Blackboard blackboard, System.String targetBlackboardKey, System.Nullable&lt;CandideCreator.Shared.Models.RectangleF&gt; searchArea) System.Boolean selectedTargetId System.Guid&amp; system Shared.Entity.EntitySystem avoidTargetIds System.Collections.Generic.HashSet&lt;System.Guid&gt; blackboard BM.Blackboard targetBlackboardKey System.String searchArea System.Nullable&lt;CandideCreator.Shared.Models.RectangleF&gt;" id="tryselectandsetrandomplayertarget-system-guid---shared-entity-entitysystem--system-collections-generic-hashset-1-system-guid---bm-blackboard--system-string--system-nullable-1-candidecreator-shared-models-rectanglef----system-boolean">
+<div class="method-heading">
+<h3><code>TrySelectAndSetRandomPlayerTarget</code></h3>
+<a class="permalink" href="#tryselectandsetrandomplayertarget-system-guid---shared-entity-entitysystem--system-collections-generic-hashset-1-system-guid---bm-blackboard--system-string--system-nullable-1-candidecreator-shared-models-rectanglef----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TrySelectAndSetRandomPlayerTarget(System.Guid&amp; selectedTargetId, Shared.Entity.EntitySystem system, System.Collections.Generic.HashSet&lt;System.Guid&gt; avoidTargetIds, BM.Blackboard blackboard, System.String targetBlackboardKey, System.Nullable&lt;CandideCreator.Shared.Models.RectangleF&gt; searchArea)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::TrySelectAndSetRandomPlayerTarget(System.Guid&amp;, Shared.Entity.EntitySystem, System.Collections.Generic.HashSet&lt;System.Guid&gt;, BM.Blackboard, System.String, System.Nullable&lt;CandideCreator.Shared.Models.RectangleF&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TrySelectAndSetRandomPlayerTarget(System.Guid&amp; selectedTargetId, <a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> system, System.Collections.Generic.HashSet&lt;System.Guid&gt; avoidTargetIds, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard, System.String targetBlackboardKey, System.Nullable&lt;<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a>&gt; searchArea)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>41296314FCADBF8217CDF2E4E60AACC92D92CEE68415175655C25E8A37A585DC</code></li>
+<li><span>Body hash</span><code>B42B35AB232043EF269DF66DF0B0D3D94424EB267FD0CCBE7AE7DCDDB48EEAF6</code></li>
+<li><span>IL size</span><span>16</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#tryselectandsetrandomplayertarget-system-guid---shared-entity-entitywrapper---shared-entity-entitysystem--system-collections-generic-hashset-1-system-guid---bm-blackboard--system-string--system-nullable-1-candidecreator-shared-models-rectanglef----system-boolean">BM.EnemyUtil::TrySelectAndSetRandomPlayerTarget(System.Guid&amp;, Shared.Entity.EntityWrapper&amp;, Shared.Entity.EntitySystem, System.Collections.Generic.HashSet&lt;System.Guid&gt;, BM.Blackboard, System.String, System.Nullable&lt;CandideCreator.Shared.Models.RectangleF&gt;)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TrySelectAndSetRandomPlayerTarget public System.Boolean TrySelectAndSetRandomPlayerTarget(System.Guid&amp; selectedTargetId, out Shared.Entity.EntityWrapper&amp; outSelectedTarget, Shared.Entity.EntitySystem system, System.Collections.Generic.HashSet&lt;System.Guid&gt; avoidTargetIds, BM.Blackboard blackboard, System.String targetBlackboardKey, System.Nullable&lt;CandideCreator.Shared.Models.RectangleF&gt; searchArea) System.Boolean selectedTargetId System.Guid&amp; outSelectedTarget Shared.Entity.EntityWrapper&amp; system Shared.Entity.EntitySystem avoidTargetIds System.Collections.Generic.HashSet&lt;System.Guid&gt; blackboard BM.Blackboard targetBlackboardKey System.String searchArea System.Nullable&lt;CandideCreator.Shared.Models.RectangleF&gt;" id="tryselectandsetrandomplayertarget-system-guid---shared-entity-entitywrapper---shared-entity-entitysystem--system-collections-generic-hashset-1-system-guid---bm-blackboard--system-string--system-nullable-1-candidecreator-shared-models-rectanglef----system-boolean">
+<div class="method-heading">
+<h3><code>TrySelectAndSetRandomPlayerTarget</code></h3>
+<a class="permalink" href="#tryselectandsetrandomplayertarget-system-guid---shared-entity-entitywrapper---shared-entity-entitysystem--system-collections-generic-hashset-1-system-guid---bm-blackboard--system-string--system-nullable-1-candidecreator-shared-models-rectanglef----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TrySelectAndSetRandomPlayerTarget(System.Guid&amp; selectedTargetId, out Shared.Entity.EntityWrapper&amp; outSelectedTarget, Shared.Entity.EntitySystem system, System.Collections.Generic.HashSet&lt;System.Guid&gt; avoidTargetIds, BM.Blackboard blackboard, System.String targetBlackboardKey, System.Nullable&lt;CandideCreator.Shared.Models.RectangleF&gt; searchArea)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="BM.EnemyUtil::TrySelectAndSetRandomPlayerTarget(System.Guid&amp;, Shared.Entity.EntityWrapper&amp;, Shared.Entity.EntitySystem, System.Collections.Generic.HashSet&lt;System.Guid&gt;, BM.Blackboard, System.String, System.Nullable&lt;CandideCreator.Shared.Models.RectangleF&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TrySelectAndSetRandomPlayerTarget(System.Guid&amp; selectedTargetId, out <a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a>&amp; outSelectedTarget, <a href="../../types/Shared/Shared_Entity_EntitySystem.html">Shared.Entity.EntitySystem</a> system, System.Collections.Generic.HashSet&lt;System.Guid&gt; avoidTargetIds, <a href="../../types/CandideServer/BM_Blackboard.html">BM.Blackboard</a> blackboard, System.String targetBlackboardKey, System.Nullable&lt;<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a>&gt; searchArea)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B601009ACFAB2C244D4926A7A9DA8784664511B2CE9935E44C8CDD3F40C90F89</code></li>
+<li><span>Body hash</span><code>BE28D325A61FE872C1331C2CAE8B23DFE7AF1E9E017936822CCD0E36FBC55913</code></li>
+<li><span>IL size</span><span>339</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#getplayersinworld-system-guid---system-collections-generic-ireadonlycollection-1-shared-entity-entitywrapper-">CandideServer.ServerManagers.PlayerServerManager::GetPlayersInWorld(System.Guid)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.IEnumerable&lt;Shared.Entity.EntityWrapper&gt;::GetEnumerator()</code></li>
+<li><code>System.Collections.Generic.IEnumerator&lt;Shared.Entity.EntityWrapper&gt;::get_Current()</code></li>
+<li><code>System.Nullable&lt;CandideCreator.Shared.Models.RectangleF&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;CandideCreator.Shared.Models.RectangleF&gt;::GetValueOrDefault()</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Position2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::ToPoint()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#contains-microsoft-xna-framework-point---system-boolean">CandideCreator.Shared.Models.RectangleF::Contains(Microsoft.Xna.Framework.Point)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::get_Id()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Contains(!0)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::Add(!0)</code></li>
+<li><code>System.Collections.IEnumerator::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::GetEnumerator()</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::Remove(!0)</code></li>
+<li><code>HashSet.Enumerator&lt;System.Guid&gt;::MoveNext()</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;System.Guid&gt;::Clear()</code></li>
+<li><code>System.Random::Next(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;System.Guid&gt;::get_Item(System.Int32)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/BM_EnemyUtil.html#isentityok-shared-entity-entitysystem--system-nullable-1-system-guid---shared-entity-entitywrapper----system-boolean">BM.EnemyUtil::IsEntityOk(Shared.Entity.EntitySystem, System.Nullable&lt;System.Guid&gt;, Shared.Entity.EntityWrapper&amp;)</a></code></li>
+<li><code>System.String::IsNullOrEmpty(System.String)</code></li>
+<li><code>BM.Blackboard::SetValue(System.String, T)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#tryselectandsetrandomplayertarget-system-guid---shared-entity-entitysystem--system-collections-generic-hashset-1-system-guid---bm-blackboard--system-string--system-nullable-1-candidecreator-shared-models-rectanglef----system-boolean"><code>BM.EnemyUtil::TrySelectAndSetRandomPlayerTarget</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaController.html#spawnentity-microsoft-xna-framework-vector3--system-guid--system-guid---system-single---system-boolean"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController::SpawnEntity</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

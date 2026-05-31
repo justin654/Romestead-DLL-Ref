@@ -1,0 +1,977 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.ServerManagers.PlayerServerManager - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.ServerManagers.PlayerServerManager</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.ServerManagers.PlayerServerManager
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.ServerManagers`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 25 methods, 0 properties, 0 fields, 0 events
+
+## Public Methods
+- `public System.Boolean AnyPlayerInWorld(System.Guid worldId)`
+- `public System.Boolean AnyPlayerInWorld(System.Guid worldId, System.Int32 doNotCountPlayerId)`
+- `public CandideServer.ServerServices.ServerJoinedPlayerModel GetPlayerFromEntity(Shared.Entity.EntityWrapper entity)`
+- `public Microsoft.Xna.Framework.Rectangle GetPlayerLoadedChunksWorldRectangle(Microsoft.Xna.Framework.Vector2 playerPos, CandideServer.ServerServices.ServerJoinedPlayerModel model)`
+- `public System.Collections.Generic.IReadOnlyCollection&lt;Shared.Entity.EntityWrapper&gt; GetPlayersInWorld(System.Guid worldId)`
+- `public System.Boolean IsPlayerEntity(Shared.Entity.EntityWrapper entity)`
+- `public System.Boolean IsPlayerEntityId(System.Nullable&lt;System.Guid&gt; entityId)`
+- `public System.Void LoadInPlayerGravesInDungeon(CandideServer.Models.Dungeons.DungeonLocationModel location)`
+- `public System.Void MovePlayerCharacter(CandideServer.ServerServices.ServerJoinedPlayerModel player, Microsoft.Xna.Framework.Vector3 position, System.Nullable&lt;System.Guid&gt; worldId, System.Boolean sendToPlayer)`
+- `public System.Void OnPlayerDied(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, CandideServer.MessageModels.PlayerCharacters.PlayerDiedMessage message, System.Nullable&lt;CandideServer.Server.Network.ConnectedPeer&gt; skipNetPeer)`
+- `public System.Void PlayerDisconnected(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel)`
+- `public System.Void PlayerEntityKilled(Shared.Entity.EntityWrapper entity, Shared.Entity.EntityKillInfo info)`
+- `public System.Void PlayerJoined(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel)`
+- `public System.Void PlayerSwitchWorld(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, System.Guid newWorldId, Microsoft.Xna.Framework.Vector3 newPosition, CandideServer.SyncStrategies.SyncStrategy syncStrategy)`
+- `public System.Void RemovePlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, Shared.Entity.EntityRemoveInfo info)`
+- `public System.Void RemovePlayerGrave(System.Guid graveEntityId)`
+- `public System.Void RespawnPlayer(CandideServer.ServerServices.ServerJoinedPlayerModel joinedPlayer)`
+- `public System.Void SpawnPlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel)`
+- `public System.Boolean TryGetPlayerFromEntity(Shared.Entity.EntityWrapper entity, out CandideServer.ServerServices.ServerJoinedPlayerModel&amp; player)`
+- `public System.Boolean TryGetPlayerSkillFromEntity(Shared.Entity.EntityWrapper entity, System.String skillId, out Shared.Models.Skill.CharacterSkill&amp; skill)`
+- `public System.Void UpdatePlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, Shared.Models.Player.PlayerCharacterModel characterModel, CandideServer.MessageModels.Players.PlayerUpdateMessage message)`
+- `public System.Void UpdatePlayerEquipment(CandideServer.ServerServices.ServerJoinedPlayerModel player)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_ServerManagers_PlayerServerManager.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.ServerManagers</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>25</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>0</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.ServerManagers</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>BE03A25DB04E68268CC5B1C89A90EC4E28C61ED82BBC5AF90EEC59286DD4A264</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AnyPlayerInWorld public System.Boolean AnyPlayerInWorld(System.Guid worldId) System.Boolean worldId System.Guid" id="anyplayerinworld-system-guid---system-boolean">
+<div class="method-heading">
+<h3><code>AnyPlayerInWorld</code></h3>
+<a class="permalink" href="#anyplayerinworld-system-guid---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean AnyPlayerInWorld(System.Guid worldId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::AnyPlayerInWorld(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean AnyPlayerInWorld(System.Guid worldId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AE34AE24CDED3CA62C4D9E05436FAD30A83CFA3EAA60FCC1D0DD33381DB56E47</code></li>
+<li><span>Body hash</span><code>90B0A2A7F736C8ACDA2BA6F0C80156E00EC85EADA997658A1C3E2538D4A7E79F</code></li>
+<li><span>IL size</span><span>81</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Int32, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Int32, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::get_Current()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Int32, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Buildings_BuildingControllers_WaterMillController.html#update-system-single---system-void"><code>CandideServer.Buildings.BuildingControllers.WaterMillController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Citizens_GenericServerCitizenController.html#update-microsoft-xna-framework-gametime--system-single---system-void"><code>CandideServer.Citizens.GenericServerCitizenController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ScheduleSystem_Schedule.html#updateisbeinginteractedwith-system-single---system-void"><code>CandideServer.Entities.ScheduleSystem.Schedule::UpdateIsBeingInteractedWith</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#playerswitchworld-candideserver-serverservices-serverjoinedplayermodel--system-guid--microsoft-xna-framework-vector3--candideserver-syncstrategies-syncstrategy---system-void"><code>CandideServer.ServerManagers.PlayerServerManager::PlayerSwitchWorld</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_BossServerSystem.html#update-system-single---system-void"><code>CandideServer.ServerSystems.BossServerSystem::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerSystems_EntitySpawnServerSystem.html#updatedespawn-system-single---system-void"><code>CandideServer.ServerSystems.EntitySpawnServerSystem::UpdateDespawn</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AnyPlayerInWorld public System.Boolean AnyPlayerInWorld(System.Guid worldId, System.Int32 doNotCountPlayerId) System.Boolean worldId System.Guid doNotCountPlayerId System.Int32" id="anyplayerinworld-system-guid--system-int32---system-boolean">
+<div class="method-heading">
+<h3><code>AnyPlayerInWorld</code></h3>
+<a class="permalink" href="#anyplayerinworld-system-guid--system-int32---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean AnyPlayerInWorld(System.Guid worldId, System.Int32 doNotCountPlayerId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::AnyPlayerInWorld(System.Guid, System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean AnyPlayerInWorld(System.Guid worldId, System.Int32 doNotCountPlayerId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>41D534579655A61B28C88EA11E07F98F637815640997A37D2037D3149ACA914C</code></li>
+<li><span>Body hash</span><code>794E2B15E8A725235E37F04012C36A24874E9C5DC90BF68A1A8C2B45177DC705</code></li>
+<li><span>IL size</span><span>92</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Int32, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::get_Values()</code></li>
+<li><code>Dictionary.ValueCollection&lt;System.Int32, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Int32, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::get_Current()</code></li>
+<li><code>System.Guid::op_Equality(System.Guid, System.Guid)</code></li>
+<li><code>Dictionary.ValueCollection.Enumerator&lt;System.Int32, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#onplayerdied-candideserver-serverservices-serverjoinedplayermodel--candideserver-messagemodels-playercharacters-playerdiedmessage--system-nullable-1-candideserver-server-network-connectedpeer----system-void"><code>CandideServer.ServerManagers.PlayerServerManager::OnPlayerDied</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetPlayerFromEntity public CandideServer.ServerServices.ServerJoinedPlayerModel GetPlayerFromEntity(Shared.Entity.EntityWrapper entity) CandideServer.ServerServices.ServerJoinedPlayerModel entity Shared.Entity.EntityWrapper" id="getplayerfromentity-shared-entity-entitywrapper---candideserver-serverservices-serverjoinedplayermodel">
+<div class="method-heading">
+<h3><code>GetPlayerFromEntity</code></h3>
+<a class="permalink" href="#getplayerfromentity-shared-entity-entitywrapper---candideserver-serverservices-serverjoinedplayermodel" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.ServerServices.ServerJoinedPlayerModel GetPlayerFromEntity(Shared.Entity.EntityWrapper entity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::GetPlayerFromEntity(Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> GetPlayerFromEntity(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0D30FAF0CE1238ABB03865FEE7B976D4353A705FD5092FDF970A7BD0EF55D0D4</code></li>
+<li><span>Body hash</span><code>DD5D333C35D826576B3864D0EAFFB080622BF6D7063B54B079BC66EF155A8F6A</code></li>
+<li><span>IL size</span><span>24</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;Shared.Entity.EntityWrapper, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Bridges_ServerEntitySystemBridge.html#getequippeditems-shared-entity-entitywrapper---system-collections-generic-ireadonlycollection-1-shared-models-items-iteminstancemodel-"><code>CandideServer.Entities.Bridges.ServerEntitySystemBridge::GetEquippedItems</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Bridges_ServerEntitySystemBridge.html#getfavourandglobalauras-shared-entity-entitywrapper---system-collections-generic-ireadonlycollection-1-shared-aura-abstractaura-1-shared-entity-entitywrapper--"><code>CandideServer.Entities.Bridges.ServerEntitySystemBridge::GetFavourAndGlobalAuras</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Bridges_ServerEntitySystemBridge.html#onentitykilled-shared-combat-damageinfo--shared-entity-base-onkilledbehaviour--system-single---system-void"><code>CandideServer.Entities.Bridges.ServerEntitySystemBridge::OnEntityKilled</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerBedController.html#onentitydetached-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.ServerBedController::OnEntityDetached</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerBedController.html#oninteract-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.ServerBedController::OnInteract</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerFruitTreeController.html#dropfruit-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.ServerFruitTreeController::DropFruit</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerFurnitureController.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.Controllers.ServerFurnitureController::OnDamaged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerItemStandController.html#drophelditem-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.ServerItemStandController::DropHeldItem</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerWildCitizenEntityController.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.Controllers.ServerWildCitizenEntityController::OnDamaged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_MinervasOwl_ServerOwlBossEggController.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.ControllerSets.MinervasOwl.ServerOwlBossEggController::OnDamaged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_PhoenixBoss_ServerPhoenixBossEggController.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.ControllerSets.PhoenixBoss.ServerPhoenixBossEggController::OnDamaged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Helpers_ServerEquipmentHelper.html#getequippeditemfortype-shared-entity-entitywrapper--shared-models-items-equipmenttype---shared-models-items-iteminstancemodel"><code>CandideServer.Helpers.ServerEquipmentHelper::GetEquippedItemForType</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Helpers_ServerEquipmentHelper.html#getequippeditemfortypeslot-shared-entity-entitywrapper--shared-models-items-equipmenttype---shared-models-items-iteminstancemodel"><code>CandideServer.Helpers.ServerEquipmentHelper::GetEquippedItemForTypeSlot</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Helpers_ServerEquipmentHelper.html#getplayerequipment-shared-entity-entitywrapper---shared-models-items-sharedinventorymodel"><code>CandideServer.Helpers.ServerEquipmentHelper::GetPlayerEquipment</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Helpers_ServerEquipmentHelper.html#isitemequipped-shared-entity-entitywrapper--shared-models-items-equipmenttype--system-string---system-boolean"><code>CandideServer.Helpers.ServerEquipmentHelper::IsItemEquipped</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#playerentitykilled-shared-entity-entitywrapper--shared-entity-entitykillinfo---system-void"><code>CandideServer.ServerManagers.PlayerServerManager::PlayerEntityKilled</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetPlayerLoadedChunksWorldRectangle public Microsoft.Xna.Framework.Rectangle GetPlayerLoadedChunksWorldRectangle(Microsoft.Xna.Framework.Vector2 playerPos, CandideServer.ServerServices.ServerJoinedPlayerModel model) Microsoft.Xna.Framework.Rectangle playerPos Microsoft.Xna.Framework.Vector2 model CandideServer.ServerServices.ServerJoinedPlayerModel" id="getplayerloadedchunksworldrectangle-microsoft-xna-framework-vector2--candideserver-serverservices-serverjoinedplayermodel---microsoft-xna-framework-rectangle">
+<div class="method-heading">
+<h3><code>GetPlayerLoadedChunksWorldRectangle</code></h3>
+<a class="permalink" href="#getplayerloadedchunksworldrectangle-microsoft-xna-framework-vector2--candideserver-serverservices-serverjoinedplayermodel---microsoft-xna-framework-rectangle" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Rectangle GetPlayerLoadedChunksWorldRectangle(Microsoft.Xna.Framework.Vector2 playerPos, CandideServer.ServerServices.ServerJoinedPlayerModel model)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::GetPlayerLoadedChunksWorldRectangle(Microsoft.Xna.Framework.Vector2, CandideServer.ServerServices.ServerJoinedPlayerModel)">Copy Harmony target</button>
+</div>
+<p><code>public Microsoft.Xna.Framework.Rectangle GetPlayerLoadedChunksWorldRectangle(Microsoft.Xna.Framework.Vector2 playerPos, <a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> model)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>Microsoft.Xna.Framework.Rectangle</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>350728D5B945E645EECDBCAFC00910F684C67BD63342564CCC6C41A8EE6BF644</code></li>
+<li><span>Body hash</span><code>3542BC686A03A400780A17DE4F6E5A10E8DD824FBC0F29DC2C1340911A7FB058</code></li>
+<li><span>IL size</span><span>107</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#offset-microsoft-xna-framework-vector2---system-void">CandideCreator.Shared.Models.RectangleF::Offset(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_TopLeft()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_ServerChunkedWorld.html#worldtochunkposition-microsoft-xna-framework-vector2---microsoft-xna-framework-point">CandideServer.Models.ServerChunkedWorld::WorldToChunkPosition(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_BottomRight()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Models_ServerChunkedWorld.html#worldtochunkpositionroundup-microsoft-xna-framework-vector2---microsoft-xna-framework-point">CandideServer.Models.ServerChunkedWorld::WorldToChunkPositionRoundUp(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Multiply(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Subtraction(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::.ctor(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoplayerswithloadedchunks-system-string--system-object--candidecreator-shared-models-rectanglef--candideserver-syncstrategies-syncstrategy--system-guid---system-void"><code>CandideServer.Server.BaseServer::SendHostMessageToPlayersWithLoadedChunks</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoplayerswithloadedchunks-system-string--system-object--microsoft-xna-framework-vector2--candideserver-syncstrategies-syncstrategy--system-guid---system-void"><code>CandideServer.Server.BaseServer::SendHostMessageToPlayersWithLoadedChunks</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetPlayersInWorld public System.Collections.Generic.IReadOnlyCollection&lt;Shared.Entity.EntityWrapper&gt; GetPlayersInWorld(System.Guid worldId) System.Collections.Generic.IReadOnlyCollection&lt;Shared.Entity.EntityWrapper&gt; worldId System.Guid" id="getplayersinworld-system-guid---system-collections-generic-ireadonlycollection-1-shared-entity-entitywrapper-">
+<div class="method-heading">
+<h3><code>GetPlayersInWorld</code></h3>
+<a class="permalink" href="#getplayersinworld-system-guid---system-collections-generic-ireadonlycollection-1-shared-entity-entitywrapper-" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Collections.Generic.IReadOnlyCollection&lt;Shared.Entity.EntityWrapper&gt; GetPlayersInWorld(System.Guid worldId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::GetPlayersInWorld(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Collections.Generic.IReadOnlyCollection&lt;<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a>&gt; GetPlayersInWorld(System.Guid worldId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Collections.Generic.IReadOnlyCollection&lt;<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a>&gt;</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A4F7467BBAAD4892B2D0961FB922CD3005CE6966CA939EF17B00C9E9322D9DAE</code></li>
+<li><span>Body hash</span><code>276A1AFFA6104D15C0091A98B43451B7A4C70BFD16169DFC46CF849B6029B2D6</code></li>
+<li><span>IL size</span><span>23</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;Shared.Entity.EntityWrapper&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Array::Empty()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#isoutsidefow-shared-entity-entitywrapper---system-boolean"><code>BM.EnemyUtil::IsOutsideFoW</code></a></li>
+<li><a href="../../types/CandideServer/BM_EnemyUtil.html#tryselectandsetrandomplayertarget-system-guid---shared-entity-entitywrapper---shared-entity-entitysystem--system-collections-generic-hashset-1-system-guid---bm-blackboard--system-string--system-nullable-1-candidecreator-shared-models-rectanglef----system-boolean"><code>BM.EnemyUtil::TrySelectAndSetRandomPlayerTarget</code></a></li>
+<li><a href="../../types/CandideServer/BM_PlayerIsOnScreen.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.PlayerIsOnScreen::Update</code></a></li>
+<li><a href="../../types/CandideServer/BM_TryGetBestCorpseToFlyTo.html#update-bm-btupdatecontext--bm-blackboard---node-status"><code>BM.TryGetBestCorpseToFlyTo::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_Enemies_ServerEnemySpawner.html#updateidle----system-void"><code>CandideServer.Entities.Controllers.Enemies.ServerEnemySpawner::UpdateIdle</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Cyclops_ServerCyclopsArenaController.html#getrandomplayertotarget-shared-entity-entitywrapper--system-nullable-1-system-guid----system-nullable-1-system-guid-"><code>CandideServer.Entities.ControllerSets.Cyclops.ServerCyclopsArenaController::GetRandomPlayerToTarget</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Cyclops_ServerCyclopsArenaController.html#updateeyeattack----system-void"><code>CandideServer.Entities.ControllerSets.Cyclops.ServerCyclopsArenaController::UpdateEyeAttack</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_PuzzleMechanics_ServerVulcanTempleBlackTrapController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.ControllerSets.PuzzleMechanics.ServerVulcanTempleBlackTrapController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_RobotBoss_ServerRobotBossController.html#selectrandomplayerastarget----system-void"><code>CandideServer.Entities.ControllerSets.RobotBoss.ServerRobotBossController::SelectRandomPlayerAsTarget</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_RobotBoss_ServerRobotBossController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.ControllerSets.RobotBoss.ServerRobotBossController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_RobotBoss_ServerRobotBossController2.html#selectrandomtarget----system-void"><code>CandideServer.Entities.ControllerSets.RobotBoss.ServerRobotBossController2::SelectRandomTarget</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaController.html#getplayercount----system-int32"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController::GetPlayerCount</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaController.html#handlearenawipereset-system-single---system-void"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController::HandleArenaWipeReset</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaDummyThrower.html#enter-on----system-void"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaDummyThrower::Enter_On</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaDummyThrower.html#getrandomplayer----shared-entity-entitywrapper"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaDummyThrower::GetRandomPlayer</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaTurretSpawner.html#enter-on----system-void"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaTurretSpawner::Enter_On</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Talos_ServerTalosArenaController.html#startfight----system-void"><code>CandideServer.Entities.ControllerSets.Talos.ServerTalosArenaController::StartFight</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Talos_ServerTalosArenaController.html#updateinactive-system-single---system-void"><code>CandideServer.Entities.ControllerSets.Talos.ServerTalosArenaController::UpdateInactive</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Spells_ServerMassHealSpell.html#docast-shared-combat-projectiles-projectilesystem--candideserver-models-spells-serverspellcastingcontext--shared-helpers-castspellargs---system-void"><code>CandideServer.Models.Spells.ServerMassHealSpell::DoCast</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="HandlePlayerGraveInDungeon private System.Void HandlePlayerGraveInDungeon(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, CandideServer.Entities.ServerEntityModel grave) System.Void playerModel CandideServer.ServerServices.ServerJoinedPlayerModel grave CandideServer.Entities.ServerEntityModel" id="handleplayergraveindungeon-candideserver-serverservices-serverjoinedplayermodel--candideserver-entities-serverentitymodel---system-void">
+<div class="method-heading">
+<h3><code>HandlePlayerGraveInDungeon</code></h3>
+<a class="permalink" href="#handleplayergraveindungeon-candideserver-serverservices-serverjoinedplayermodel--candideserver-entities-serverentitymodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void HandlePlayerGraveInDungeon(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, CandideServer.Entities.ServerEntityModel grave)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::HandlePlayerGraveInDungeon(CandideServer.ServerServices.ServerJoinedPlayerModel, CandideServer.Entities.ServerEntityModel)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void HandlePlayerGraveInDungeon(<a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> playerModel, <a href="../../types/CandideServer/CandideServer_Entities_ServerEntityModel.html">CandideServer.Entities.ServerEntityModel</a> grave)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D43B7A9947B2C3D271C286E55C10EC55AB3875589C8B2540625FA008EABA326F</code></li>
+<li><span>Body hash</span><code>417CE9D4F8A7E86195754ABC300065E949BF19D31D236FFDE799B4AA2E01CAFA</code></li>
+<li><span>IL size</span><span>248</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>CandideServer.ServerManagers.PlayerServerManager::&lt;HandlePlayerGraveInDungeon&gt;g__MoveGraveToDefaultLocation|21_0(PlayerServerManager.&lt;&gt;c__DisplayClass21_0&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.ValueTuple&lt;Microsoft.Xna.Framework.Vector3, System.Guid, System.Guid&gt;&gt;::.ctor()</code></li>
+<li><code>System.ValueTuple&lt;Microsoft.Xna.Framework.Vector3, System.Guid, System.Guid&gt;::.ctor(!0, !1, !2)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.ValueTuple&lt;Microsoft.Xna.Framework.Vector3, System.Guid, System.Guid&gt;&gt;::set_Item(!0, !1)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#moveplayersgrave-candideserver-serverservices-serverjoinedplayermodel--microsoft-xna-framework-vector3--system-guid---system-void"><code>CandideServer.ServerManagers.PlayerServerManager::MovePlayersGrave</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#spawngrave-candideserver-serverservices-serverjoinedplayermodel--system-nullable-1-microsoft-xna-framework-vector3----system-void"><code>CandideServer.ServerManagers.PlayerServerManager::SpawnGrave</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IsPlayerEntity public System.Boolean IsPlayerEntity(Shared.Entity.EntityWrapper entity) System.Boolean entity Shared.Entity.EntityWrapper" id="isplayerentity-shared-entity-entitywrapper---system-boolean">
+<div class="method-heading">
+<h3><code>IsPlayerEntity</code></h3>
+<a class="permalink" href="#isplayerentity-shared-entity-entitywrapper---system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean IsPlayerEntity(Shared.Entity.EntityWrapper entity)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::IsPlayerEntity(Shared.Entity.EntityWrapper)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean IsPlayerEntity(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DC25FC235843D65C3FA08C7813F64F46135B853ED74E3BFC94E53B9E6B0AFF67</code></li>
+<li><span>Body hash</span><code>CB9B028F2144DC32FC91F0B7702FF10351FEFDC10B7E864CBE8817F9847EE7E7</code></li>
+<li><span>IL size</span><span>17</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;Shared.Entity.EntityWrapper, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::ContainsKey(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerBasicFurnitureController.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.Controllers.ServerBasicFurnitureController::OnDamaged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerCart2Controller.html#oninteract-shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.ServerCart2Controller::OnInteract</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Pots_ExplosivePot_ServerExplosivePotController.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.ControllerSets.Pots.ExplosivePot.ServerExplosivePotController::OnDamaged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_SatyrBoss_ServerSatyrBossArenaController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Talos_ServerTalosArenaController.html#tookweakspotdamage-system-single--shared-entity-entitywrapper--candideserver-entities-controllersets-talos-servertalosweakspotcontroller---system-void"><code>CandideServer.Entities.ControllerSets.Talos.ServerTalosArenaController::TookWeakSpotDamage</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Veins_ServerVeinController.html#onoutofhealth-shared-combat-damageresult---system-boolean"><code>CandideServer.Entities.ControllerSets.Veins.ServerVeinController::OnOutOfHealth</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Helpers_EntityRepairHelper.html#shouldrepairserver-shared-entity-entitywrapper--shared-entity-entitywrapper---system-boolean"><code>CandideServer.Helpers.EntityRepairHelper::ShouldRepairServer</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IsPlayerEntityId public System.Boolean IsPlayerEntityId(System.Nullable&lt;System.Guid&gt; entityId) System.Boolean entityId System.Nullable&lt;System.Guid&gt;" id="isplayerentityid-system-nullable-1-system-guid----system-boolean">
+<div class="method-heading">
+<h3><code>IsPlayerEntityId</code></h3>
+<a class="permalink" href="#isplayerentityid-system-nullable-1-system-guid----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean IsPlayerEntityId(System.Nullable&lt;System.Guid&gt; entityId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::IsPlayerEntityId(System.Nullable&lt;System.Guid&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean IsPlayerEntityId(System.Nullable&lt;System.Guid&gt; entityId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>42C79F0AA40C9BDFA2983903F319B9495116B539FD642580B2D7E6E2CC765FEA</code></li>
+<li><span>Body hash</span><code>87B02BB386B07DB891489074FB51C7E225611300CE719C226F29581C0EBC29B4</code></li>
+<li><span>IL size</span><span>29</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Player.ServerPlayerCharacter&gt;::ContainsKey(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerFruitTreeController.html#onthrownentitycollision-shared-entity-entitywrapper---system-boolean"><code>CandideServer.Entities.Controllers.ServerFruitTreeController::OnThrownEntityCollision</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerTreeController.html#onthrownentitycollision-shared-entity-entitywrapper---system-boolean"><code>CandideServer.Entities.Controllers.ServerTreeController::OnThrownEntityCollision</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Catapult_ServerCatapultController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.ControllerSets.Catapult.ServerCatapultController::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="LoadInPlayerGravesInDungeon public System.Void LoadInPlayerGravesInDungeon(CandideServer.Models.Dungeons.DungeonLocationModel location) System.Void location CandideServer.Models.Dungeons.DungeonLocationModel" id="loadinplayergravesindungeon-candideserver-models-dungeons-dungeonlocationmodel---system-void">
+<div class="method-heading">
+<h3><code>LoadInPlayerGravesInDungeon</code></h3>
+<a class="permalink" href="#loadinplayergravesindungeon-candideserver-models-dungeons-dungeonlocationmodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void LoadInPlayerGravesInDungeon(CandideServer.Models.Dungeons.DungeonLocationModel location)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::LoadInPlayerGravesInDungeon(CandideServer.Models.Dungeons.DungeonLocationModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void LoadInPlayerGravesInDungeon(<a href="../../types/CandideServer/CandideServer_Models_Dungeons_DungeonLocationModel.html">CandideServer.Models.Dungeons.DungeonLocationModel</a> location)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6BA651F0146DCE2609B493C17E121F5B29CDB39281C7FF3FD3FC89559C967E08</code></li>
+<li><span>Body hash</span><code>1DE988D44BC1268A945139CEB3FE6ED6AE56B425317C0238639205D62F11AB22</code></li>
+<li><span>IL size</span><span>307</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.ValueTuple&lt;Microsoft.Xna.Framework.Vector3, System.Guid, System.Guid&gt;&gt;::GetEnumerator()</code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, System.ValueTuple&lt;Microsoft.Xna.Framework.Vector3, System.Guid, System.Guid&gt;&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.KeyValuePair&lt;System.Guid, System.ValueTuple&lt;Microsoft.Xna.Framework.Vector3, System.Guid, System.Guid&gt;&gt;::Deconstruct(!0&amp;, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, Shared.Models.Items.SharedInventoryModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.ValueTuple&lt;Microsoft.Xna.Framework.Vector3, System.Guid, System.Guid&gt;&gt;::Remove(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#sendremoveplayersgrave-system-guid---system-void">CandideServer.ServerServices.PlayerServerService::SendRemovePlayersGrave(System.Guid)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_SimpleInventorySController.html#removeinventory-system-guid--system-boolean---system-void">CandideServer.ServerControllers.SimpleInventorySController::RemoveInventory(System.Guid, System.Boolean)</a></code></li>
+<li><code>CandideServer.ServerControllers.SpawnEntityArgs::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::.ctor()</code></li>
+<li><code>System.Object::ToString()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::Add(!0, !1)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#spawnentity-candideserver-servercontrollers-spawnentityargs---candideserver-entities-serverentitymodel">CandideServer.ServerManagers.EntityServerManager::SpawnEntity(CandideServer.ServerControllers.SpawnEntityArgs)</a></code></li>
+<li><code>Dictionary.Enumerator&lt;System.Guid, System.ValueTuple&lt;Microsoft.Xna.Framework.Vector3, System.Guid, System.Guid&gt;&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerChallengeDungeonSetup.html#resetroom-candideserver-models-dungeons-dungeonlocationmodel--candideserver-models-dungeons-dungeonlocationroommodel---system-void"><code>CandideServer.Generators.Dungeon.ServerChallengeDungeonSetup::ResetRoom</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerChallengeDungeonSetup.html#setupchallengedungeon-candideserver-models-dungeons-dungeonlocationmodel--candideserver-data-dungeons-challengedungeondata--candideserver-data-dungeons-enemiesbaseconfig--candideserver-data-dungeons-destructablesbaseconfig--candideserver-data-dungeons-propsbaseconfig--candideserver-models-worlds-worldmodel---candideserver-models-dungeons-activedungeonmodel----system-boolean"><code>CandideServer.Generators.Dungeon.ServerChallengeDungeonSetup::SetupChallengeDungeon</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerDungeonLoader.html#tryloadindungeonlayout-candideserver-models-dungeons-dungeonlocationmodel--candideserver-models-worlds-worldmodel---candideserver-models-dungeons-activedungeonmodel----system-boolean"><code>CandideServer.Generators.Dungeon.ServerDungeonLoader::TryLoadInDungeonLayout</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>inventory_id</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="MovePlayerCharacter public System.Void MovePlayerCharacter(CandideServer.ServerServices.ServerJoinedPlayerModel player, Microsoft.Xna.Framework.Vector3 position, System.Nullable&lt;System.Guid&gt; worldId, System.Boolean sendToPlayer) System.Void player CandideServer.ServerServices.ServerJoinedPlayerModel position Microsoft.Xna.Framework.Vector3 worldId System.Nullable&lt;System.Guid&gt; sendToPlayer System.Boolean" id="moveplayercharacter-candideserver-serverservices-serverjoinedplayermodel--microsoft-xna-framework-vector3--system-nullable-1-system-guid---system-boolean---system-void">
+<div class="method-heading">
+<h3><code>MovePlayerCharacter</code></h3>
+<a class="permalink" href="#moveplayercharacter-candideserver-serverservices-serverjoinedplayermodel--microsoft-xna-framework-vector3--system-nullable-1-system-guid---system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void MovePlayerCharacter(CandideServer.ServerServices.ServerJoinedPlayerModel player, Microsoft.Xna.Framework.Vector3 position, System.Nullable&lt;System.Guid&gt; worldId, System.Boolean sendToPlayer)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::MovePlayerCharacter(CandideServer.ServerServices.ServerJoinedPlayerModel, Microsoft.Xna.Framework.Vector3, System.Nullable&lt;System.Guid&gt;, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void MovePlayerCharacter(<a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> player, Microsoft.Xna.Framework.Vector3 position, System.Nullable&lt;System.Guid&gt; worldId, System.Boolean sendToPlayer)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7624F1B87842893D32614231E695E232ECE12EE50B917A474EE22A729DA1AB96</code></li>
+<li><span>Body hash</span><code>7CD0B5587B55B74AFF353C45B07D8A72EB88483F6E100565F89F6061374266E4</code></li>
+<li><span>IL size</span><span>188</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html#skipplayer-system-int32---candideserver-syncstrategies-syncstrategy">CandideServer.SyncStrategies.SyncStrategy::SkipPlayer(System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#playerswitchworld-candideserver-serverservices-serverjoinedplayermodel--system-guid--microsoft-xna-framework-vector3--candideserver-syncstrategies-syncstrategy---system-void">CandideServer.ServerManagers.PlayerServerManager::PlayerSwitchWorld(CandideServer.ServerServices.ServerJoinedPlayerModel, System.Guid, Microsoft.Xna.Framework.Vector3, CandideServer.SyncStrategies.SyncStrategy)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Position(Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>CandideServer.MessageModels.PlayerCharacters.MovePlayerMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerCharacterServerService.html#sendmoveplayer-candideserver-messagemodels-playercharacters-moveplayermessage--candideserver-server-network-connectedpeer---system-void">CandideServer.ServerServices.PlayerCharacterServerService::SendMovePlayer(CandideServer.MessageModels.PlayerCharacters.MovePlayerMessage, CandideServer.Server.Network.ConnectedPeer)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Models_Spells_ServerScriptedSpell.html#docast-shared-combat-projectiles-projectilesystem--candideserver-models-spells-serverspellcastingcontext--shared-helpers-castspellargs---system-void"><code>CandideServer.Models.Spells.ServerScriptedSpell::DoCast</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerCharacterServerManager.html#movecharacter-candideserver-models-player-serverplayercharacter--microsoft-xna-framework-vector3--system-guid--system-boolean---system-void"><code>CandideServer.ServerManagers.PlayerCharacterServerManager::MoveCharacter</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_ChatLogServerService.html#onreceive-playerchatcommandmessage-candideserver-messagemodels-playerchatlogcommandmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.ChatLogServerService::OnReceive_PlayerChatCommandMessage</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#onreceive-teleport-candideserver-messagemodels-players-teleportmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.PlayerServerService::OnReceive_Teleport</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="MovePlayersGrave private System.Void MovePlayersGrave(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, Microsoft.Xna.Framework.Vector3 position, System.Guid graveId) System.Void playerModel CandideServer.ServerServices.ServerJoinedPlayerModel position Microsoft.Xna.Framework.Vector3 graveId System.Guid" id="moveplayersgrave-candideserver-serverservices-serverjoinedplayermodel--microsoft-xna-framework-vector3--system-guid---system-void">
+<div class="method-heading">
+<h3><code>MovePlayersGrave</code></h3>
+<a class="permalink" href="#moveplayersgrave-candideserver-serverservices-serverjoinedplayermodel--microsoft-xna-framework-vector3--system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void MovePlayersGrave(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, Microsoft.Xna.Framework.Vector3 position, System.Guid graveId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::MovePlayersGrave(CandideServer.ServerServices.ServerJoinedPlayerModel, Microsoft.Xna.Framework.Vector3, System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void MovePlayersGrave(<a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> playerModel, Microsoft.Xna.Framework.Vector3 position, System.Guid graveId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>6F24FFD573CD81343F22F6319A7F1F2B12F5EE1822F88A9C3825A4EDFACFD55D</code></li>
+<li><span>Body hash</span><code>FCD9BDE01AA91EEFF5361675BB8A281E80A58433A15C17B0060A67121A46D63B</code></li>
+<li><span>IL size</span><span>79</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Guid::op_Inequality(System.Guid, System.Guid)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#moveentity-system-guid--microsoft-xna-framework-vector3--system-guid---system-void">CandideServer.ServerManagers.EntityServerManager::MoveEntity(System.Guid, Microsoft.Xna.Framework.Vector3, System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#sendupdateplayersgrave-candideserver-entities-serverentitymodel--candideserver-serverservices-serverjoinedplayermodel---system-void">CandideServer.ServerServices.PlayerServerService::SendUpdatePlayersGrave(CandideServer.Entities.ServerEntityModel, CandideServer.ServerServices.ServerJoinedPlayerModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#handleplayergraveindungeon-candideserver-serverservices-serverjoinedplayermodel--candideserver-entities-serverentitymodel---system-void">CandideServer.ServerManagers.PlayerServerManager::HandlePlayerGraveInDungeon(CandideServer.ServerServices.ServerJoinedPlayerModel, CandideServer.Entities.ServerEntityModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#onplayerdied-candideserver-serverservices-serverjoinedplayermodel--candideserver-messagemodels-playercharacters-playerdiedmessage--system-nullable-1-candideserver-server-network-connectedpeer----system-void"><code>CandideServer.ServerManagers.PlayerServerManager::OnPlayerDied</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="OnPlayerDied public System.Void OnPlayerDied(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, CandideServer.MessageModels.PlayerCharacters.PlayerDiedMessage message, System.Nullable&lt;CandideServer.Server.Network.ConnectedPeer&gt; skipNetPeer) System.Void playerModel CandideServer.ServerServices.ServerJoinedPlayerModel message CandideServer.MessageModels.PlayerCharacters.PlayerDiedMessage skipNetPeer System.Nullable&lt;CandideServer.Server.Network.ConnectedPeer&gt;" id="onplayerdied-candideserver-serverservices-serverjoinedplayermodel--candideserver-messagemodels-playercharacters-playerdiedmessage--system-nullable-1-candideserver-server-network-connectedpeer----system-void">
+<div class="method-heading">
+<h3><code>OnPlayerDied</code></h3>
+<a class="permalink" href="#onplayerdied-candideserver-serverservices-serverjoinedplayermodel--candideserver-messagemodels-playercharacters-playerdiedmessage--system-nullable-1-candideserver-server-network-connectedpeer----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void OnPlayerDied(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, CandideServer.MessageModels.PlayerCharacters.PlayerDiedMessage message, System.Nullable&lt;CandideServer.Server.Network.ConnectedPeer&gt; skipNetPeer)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::OnPlayerDied(CandideServer.ServerServices.ServerJoinedPlayerModel, CandideServer.MessageModels.PlayerCharacters.PlayerDiedMessage, System.Nullable&lt;CandideServer.Server.Network.ConnectedPeer&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void OnPlayerDied(<a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> playerModel, <a href="../../types/CandideServer/CandideServer_MessageModels_PlayerCharacters_PlayerDiedMessage.html">CandideServer.MessageModels.PlayerCharacters.PlayerDiedMessage</a> message, System.Nullable&lt;<a href="../../types/CandideServer/CandideServer_Server_Network_ConnectedPeer.html">CandideServer.Server.Network.ConnectedPeer</a>&gt; skipNetPeer)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F37150DDE96537683CBDDE84A5F3BDE9F6C30E7F8A9867DB894509EAA1F5AFF9</code></li>
+<li><span>Body hash</span><code>A6FEC1C5AA7D2D8959F9B3EEEB652D19BEEF06E2751E0760E64749ADF8E0D7DD</code></li>
+<li><span>IL size</span><span>391</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>PlayerServerManager.&lt;&gt;c__DisplayClass18_0::.ctor()</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#moveplayersgrave-candideserver-serverservices-serverjoinedplayermodel--microsoft-xna-framework-vector3--system-guid---system-void">CandideServer.ServerManagers.PlayerServerManager::MovePlayersGrave(CandideServer.ServerServices.ServerJoinedPlayerModel, Microsoft.Xna.Framework.Vector3, System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#spawngrave-candideserver-serverservices-serverjoinedplayermodel--system-nullable-1-microsoft-xna-framework-vector3----system-void">CandideServer.ServerManagers.PlayerServerManager::SpawnGrave(CandideServer.ServerServices.ServerJoinedPlayerModel, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#removeplayerentity-candideserver-serverservices-serverjoinedplayermodel--shared-entity-entityremoveinfo---system-void">CandideServer.ServerManagers.PlayerServerManager::RemovePlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel, Shared.Entity.EntityRemoveInfo)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_ChatLogMessage.html#format-system-string--system-string--candideserver-models-chatmessagetype---candideserver-messagemodels-chatlogmessage">CandideServer.MessageModels.ChatLogMessage::Format(System.String, System.String, CandideServer.Models.ChatMessageType)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_ChatLogServerService.html#sendchatlogmessage-candideserver-messagemodels-chatlogmessage---system-void">CandideServer.ServerServices.ChatLogServerService::SendChatLogMessage(CandideServer.MessageModels.ChatLogMessage)</a></code></li>
+<li><code>System.Nullable&lt;CandideServer.Server.Network.ConnectedPeer&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html#skippeer-system-int32---candideserver-syncstrategies-syncstrategy">CandideServer.SyncStrategies.SyncStrategy::SkipPeer(System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#sendplayerdiedmessage-candideserver-messagemodels-playercharacters-playerdiedmessage--candideserver-syncstrategies-syncstrategy---system-void">CandideServer.ServerServices.PlayerServerService::SendPlayerDiedMessage(CandideServer.MessageModels.PlayerCharacters.PlayerDiedMessage, CandideServer.SyncStrategies.SyncStrategy)</a></code></li>
+<li><code>CandideServer.MessageModels.PlayerCharacters.PlayerDiedMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html#everyone----candideserver-syncstrategies-syncstrategy">CandideServer.SyncStrategies.SyncStrategy::Everyone()</a></code></li>
+<li><code>PlayerServerManager.&lt;&gt;c__DisplayClass18_0::&lt;OnPlayerDied&gt;b__0()</code></li>
+<li><code>System.Action::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerSystems_DelayedActionsServerSystem.html#delay-system-single--system-action---system-void">CandideServer.ServerSystems.DelayedActionsServerSystem::Delay(System.Single, System.Action)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#getdungeonlocationfromworldid-system-guid---candideserver-models-dungeons-dungeonlocationmodel">CandideServer.ServerManagers.DungeonServerManager::GetDungeonLocationFromWorldId(System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_DungeonServerManager.html#getdungeonroomfromworldid-system-guid---candideserver-models-dungeons-dungeonlocationroommodel">CandideServer.ServerManagers.DungeonServerManager::GetDungeonRoomFromWorldId(System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#anyplayerinworld-system-guid--system-int32---system-boolean">CandideServer.ServerManagers.PlayerServerManager::AnyPlayerInWorld(System.Guid, System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Generators_Dungeon_ServerChallengeDungeonSetup.html#resetroom-candideserver-models-dungeons-dungeonlocationmodel--candideserver-models-dungeons-dungeonlocationroommodel---system-void">CandideServer.Generators.Dungeon.ServerChallengeDungeonSetup::ResetRoom(CandideServer.Models.Dungeons.DungeonLocationModel, CandideServer.Models.Dungeons.DungeonLocationRoomModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#playerentitykilled-shared-entity-entitywrapper--shared-entity-entitykillinfo---system-void"><code>CandideServer.ServerManagers.PlayerServerManager::PlayerEntityKilled</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#playerdied-candideserver-messagemodels-playercharacters-playerdiedmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.PlayerServerService::PlayerDied</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Player_Chat_Died</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="PlayerDisconnected public System.Void PlayerDisconnected(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel) System.Void playerModel CandideServer.ServerServices.ServerJoinedPlayerModel" id="playerdisconnected-candideserver-serverservices-serverjoinedplayermodel---system-void">
+<div class="method-heading">
+<h3><code>PlayerDisconnected</code></h3>
+<a class="permalink" href="#playerdisconnected-candideserver-serverservices-serverjoinedplayermodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void PlayerDisconnected(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::PlayerDisconnected(CandideServer.ServerServices.ServerJoinedPlayerModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void PlayerDisconnected(<a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> playerModel)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>41E614B588583EBDEAA04747B37EFFA5E03154D4950CA35A3F50B13462D58401</code></li>
+<li><span>Body hash</span><code>37F5282C127E4110909DBC16F0FB03081A45211D72AAA35B7A74D4D99612F634</code></li>
+<li><span>IL size</span><span>32</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Entities_ServerEntitySystemManager.html#speedupnextloadinoutcheck----system-void">CandideServer.Entities.ServerEntitySystemManager::SpeedUpNextLoadInOutCheck()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#removeplayerentity-candideserver-serverservices-serverjoinedplayermodel--shared-entity-entityremoveinfo---system-void">CandideServer.ServerManagers.PlayerServerManager::RemovePlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel, Shared.Entity.EntityRemoveInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#removeplayer-candideserver-serverservices-serverjoinedplayermodel---system-void"><code>CandideServer.ServerServices.PlayerServerService::RemovePlayer</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="PlayerEntityKilled public System.Void PlayerEntityKilled(Shared.Entity.EntityWrapper entity, Shared.Entity.EntityKillInfo info) System.Void entity Shared.Entity.EntityWrapper info Shared.Entity.EntityKillInfo" id="playerentitykilled-shared-entity-entitywrapper--shared-entity-entitykillinfo---system-void">
+<div class="method-heading">
+<h3><code>PlayerEntityKilled</code></h3>
+<a class="permalink" href="#playerentitykilled-shared-entity-entitywrapper--shared-entity-entitykillinfo---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void PlayerEntityKilled(Shared.Entity.EntityWrapper entity, Shared.Entity.EntityKillInfo info)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::PlayerEntityKilled(Shared.Entity.EntityWrapper, Shared.Entity.EntityKillInfo)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void PlayerEntityKilled(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, <a href="../../types/Shared/Shared_Entity_EntityKillInfo.html">Shared.Entity.EntityKillInfo</a> info)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>9C191978B1A0BAA4598F7A19117B9419B47AF665157EB58ED2FA98B09E94D077</code></li>
+<li><span>Body hash</span><code>1ABB1F4E6268D6C3FF539846B50B1921EA46E40BB7C16CCEE2EF27B2B249EAE0</code></li>
+<li><span>IL size</span><span>28</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#getplayerfromentity-shared-entity-entitywrapper---candideserver-serverservices-serverjoinedplayermodel">CandideServer.ServerManagers.PlayerServerManager::GetPlayerFromEntity(Shared.Entity.EntityWrapper)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#onplayerdied-candideserver-serverservices-serverjoinedplayermodel--candideserver-messagemodels-playercharacters-playerdiedmessage--system-nullable-1-candideserver-server-network-connectedpeer----system-void">CandideServer.ServerManagers.PlayerServerManager::OnPlayerDied(CandideServer.ServerServices.ServerJoinedPlayerModel, CandideServer.MessageModels.PlayerCharacters.PlayerDiedMessage, System.Nullable&lt;CandideServer.Server.Network.ConnectedPeer&gt;)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerPlayerEntityController.html#onkilled-shared-entity-entitykillinfo---shared-entity-base-onkilledbehaviour"><code>CandideServer.Entities.Controllers.ServerPlayerEntityController::OnKilled</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="PlayerJoined public System.Void PlayerJoined(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel) System.Void playerModel CandideServer.ServerServices.ServerJoinedPlayerModel" id="playerjoined-candideserver-serverservices-serverjoinedplayermodel---system-void">
+<div class="method-heading">
+<h3><code>PlayerJoined</code></h3>
+<a class="permalink" href="#playerjoined-candideserver-serverservices-serverjoinedplayermodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void PlayerJoined(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::PlayerJoined(CandideServer.ServerServices.ServerJoinedPlayerModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void PlayerJoined(<a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> playerModel)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0D60E0DCC7F7092B9FDD142048E978C15EE8E6D52448B7B4BE76A8F940D493DD</code></li>
+<li><span>Body hash</span><code>4EC10836D7F53E3EDA4B3A598915C54F8BD2F0CE5C0A1F734734920C25558826</code></li>
+<li><span>IL size</span><span>7</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#spawnplayerentity-candideserver-serverservices-serverjoinedplayermodel---system-void">CandideServer.ServerManagers.PlayerServerManager::SpawnPlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="PlayerSwitchWorld public System.Void PlayerSwitchWorld(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, System.Guid newWorldId, Microsoft.Xna.Framework.Vector3 newPosition, CandideServer.SyncStrategies.SyncStrategy syncStrategy) System.Void playerModel CandideServer.ServerServices.ServerJoinedPlayerModel newWorldId System.Guid newPosition Microsoft.Xna.Framework.Vector3 syncStrategy CandideServer.SyncStrategies.SyncStrategy" id="playerswitchworld-candideserver-serverservices-serverjoinedplayermodel--system-guid--microsoft-xna-framework-vector3--candideserver-syncstrategies-syncstrategy---system-void">
+<div class="method-heading">
+<h3><code>PlayerSwitchWorld</code></h3>
+<a class="permalink" href="#playerswitchworld-candideserver-serverservices-serverjoinedplayermodel--system-guid--microsoft-xna-framework-vector3--candideserver-syncstrategies-syncstrategy---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void PlayerSwitchWorld(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, System.Guid newWorldId, Microsoft.Xna.Framework.Vector3 newPosition, CandideServer.SyncStrategies.SyncStrategy syncStrategy)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::PlayerSwitchWorld(CandideServer.ServerServices.ServerJoinedPlayerModel, System.Guid, Microsoft.Xna.Framework.Vector3, CandideServer.SyncStrategies.SyncStrategy)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void PlayerSwitchWorld(<a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> playerModel, System.Guid newWorldId, Microsoft.Xna.Framework.Vector3 newPosition, <a href="../../types/CandideServer/CandideServer_SyncStrategies_SyncStrategy.html">CandideServer.SyncStrategies.SyncStrategy</a> syncStrategy)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>4020F7764AE958389B0F2E4109092F32E1261DBA20C6FDE5689F2A3897BE98D2</code></li>
+<li><span>Body hash</span><code>EBE6100EF9A972F89F4EC5780168BD1F5CC40188CB2B83873747A65D71AFE730</code></li>
+<li><span>IL size</span><span>114</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Entities_ServerEntitySystemManager.html#speedupnextloadinoutcheck----system-void">CandideServer.Entities.ServerEntitySystemManager::SpeedUpNextLoadInOutCheck()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_PlayerCharacterSController.html#saveentityaurastocharactermodel-candideserver-serverservices-serverjoinedplayermodel---system-void">CandideServer.ServerControllers.PlayerCharacterSController::SaveEntityAurasToCharacterModel(CandideServer.ServerServices.ServerJoinedPlayerModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#removeplayerentity-candideserver-serverservices-serverjoinedplayermodel--shared-entity-entityremoveinfo---system-void">CandideServer.ServerManagers.PlayerServerManager::RemovePlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel, Shared.Entity.EntityRemoveInfo)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#spawnplayerentity-candideserver-serverservices-serverjoinedplayermodel---system-void">CandideServer.ServerManagers.PlayerServerManager::SpawnPlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#anyplayerinworld-system-guid---system-boolean">CandideServer.ServerManagers.PlayerServerManager::AnyPlayerInWorld(System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Entities_ServerEntitySystemManager.html#onlastplayerleftworld-system-guid---system-void">CandideServer.Entities.ServerEntitySystemManager::OnLastPlayerLeftWorld(System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#send-playerswitchworld-candideserver-serverservices-serverjoinedplayermodel--candideserver-syncstrategies-syncstrategy---system-void">CandideServer.ServerServices.PlayerServerService::Send_PlayerSwitchWorld(CandideServer.ServerServices.ServerJoinedPlayerModel, CandideServer.SyncStrategies.SyncStrategy)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#moveplayercharacter-candideserver-serverservices-serverjoinedplayermodel--microsoft-xna-framework-vector3--system-nullable-1-system-guid---system-boolean---system-void"><code>CandideServer.ServerManagers.PlayerServerManager::MovePlayerCharacter</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#playerswitchworld-candideserver-messagemodels-playercharacters-playerswitchworldmessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.PlayerServerService::PlayerSwitchWorld</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemovePlayerEntity public System.Void RemovePlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, Shared.Entity.EntityRemoveInfo info) System.Void playerModel CandideServer.ServerServices.ServerJoinedPlayerModel info Shared.Entity.EntityRemoveInfo" id="removeplayerentity-candideserver-serverservices-serverjoinedplayermodel--shared-entity-entityremoveinfo---system-void">
+<div class="method-heading">
+<h3><code>RemovePlayerEntity</code></h3>
+<a class="permalink" href="#removeplayerentity-candideserver-serverservices-serverjoinedplayermodel--shared-entity-entityremoveinfo---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemovePlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, Shared.Entity.EntityRemoveInfo info)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::RemovePlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel, Shared.Entity.EntityRemoveInfo)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemovePlayerEntity(<a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> playerModel, <a href="../../types/Shared/Shared_Entity_EntityRemoveInfo.html">Shared.Entity.EntityRemoveInfo</a> info)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>720CC62C0A73DEF2F431CC3036910625EE52FBBAFFC43A04C67EC8B27E947025</code></li>
+<li><span>Body hash</span><code>1B163E9292F49077FD5D286DAEABE24AFCA09E050E41C02B0E24FE91857D855C</code></li>
+<li><span>IL size</span><span>124</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Entities_ServerEntitySystemManager.html#speedupnextloadinoutcheck----system-void">CandideServer.Entities.ServerEntitySystemManager::SpeedUpNextLoadInOutCheck()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#removeentity-candideserver-entities-serverentitymodel--shared-entity-entityremoveinfo---system-void">CandideServer.ServerControllers.EntitySController::RemoveEntity(CandideServer.Entities.ServerEntityModel, Shared.Entity.EntityRemoveInfo)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;Shared.Entity.EntityWrapper, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::Remove(!0)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;Shared.Entity.EntityWrapper&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;Shared.Entity.EntityWrapper&gt;::Remove(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Entities_ServerEntitySystemManager.html#removeplayerentity-candideserver-serverservices-serverjoinedplayermodel--shared-entity-entityremoveinfo---system-void">CandideServer.Entities.ServerEntitySystemManager::RemovePlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel, Shared.Entity.EntityRemoveInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#onplayerdied-candideserver-serverservices-serverjoinedplayermodel--candideserver-messagemodels-playercharacters-playerdiedmessage--system-nullable-1-candideserver-server-network-connectedpeer----system-void"><code>CandideServer.ServerManagers.PlayerServerManager::OnPlayerDied</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#playerdisconnected-candideserver-serverservices-serverjoinedplayermodel---system-void"><code>CandideServer.ServerManagers.PlayerServerManager::PlayerDisconnected</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#playerswitchworld-candideserver-serverservices-serverjoinedplayermodel--system-guid--microsoft-xna-framework-vector3--candideserver-syncstrategies-syncstrategy---system-void"><code>CandideServer.ServerManagers.PlayerServerManager::PlayerSwitchWorld</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#updateplayerentity-candideserver-serverservices-serverjoinedplayermodel--shared-models-player-playercharactermodel--candideserver-messagemodels-players-playerupdatemessage---system-void"><code>CandideServer.ServerManagers.PlayerServerManager::UpdatePlayerEntity</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemovePlayerGrave public System.Void RemovePlayerGrave(System.Guid graveEntityId) System.Void graveEntityId System.Guid" id="removeplayergrave-system-guid---system-void">
+<div class="method-heading">
+<h3><code>RemovePlayerGrave</code></h3>
+<a class="permalink" href="#removeplayergrave-system-guid---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemovePlayerGrave(System.Guid graveEntityId)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::RemovePlayerGrave(System.Guid)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemovePlayerGrave(System.Guid graveEntityId)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F697C862B1D5B6ABA8D4372AF323DCB75A8D31305B949106A3AE0F5EFFDFBEE9</code></li>
+<li><span>Body hash</span><code>3B528B343C6293684CFBE9A588CEFEA452FFCE26DC470DCF251BF15572E3C2E8</code></li>
+<li><span>IL size</span><span>155</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Entities.ServerEntityModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Dungeons.DungeonLocationModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.ValueTuple&lt;Microsoft.Xna.Framework.Vector3, System.Guid, System.Guid&gt;&gt;::Remove(!0)</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::get_Value()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_SimpleInventorySController.html#removeinventory-system-guid--system-boolean---system-void">CandideServer.ServerControllers.SimpleInventorySController::RemoveInventory(System.Guid, System.Boolean)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#sendremoveplayersgrave-system-guid---system-void">CandideServer.ServerServices.PlayerServerService::SendRemovePlayersGrave(System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#removeentity-system-guid--shared-entity-entityremoveinfo---system-void">CandideServer.ServerManagers.EntityServerManager::RemoveEntity(System.Guid, Shared.Entity.EntityRemoveInfo)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerPlayerGraveController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.Controllers.ServerPlayerGraveController::Update</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RespawnPlayer public System.Void RespawnPlayer(CandideServer.ServerServices.ServerJoinedPlayerModel joinedPlayer) System.Void joinedPlayer CandideServer.ServerServices.ServerJoinedPlayerModel" id="respawnplayer-candideserver-serverservices-serverjoinedplayermodel---system-void">
+<div class="method-heading">
+<h3><code>RespawnPlayer</code></h3>
+<a class="permalink" href="#respawnplayer-candideserver-serverservices-serverjoinedplayermodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RespawnPlayer(CandideServer.ServerServices.ServerJoinedPlayerModel joinedPlayer)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::RespawnPlayer(CandideServer.ServerServices.ServerJoinedPlayerModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RespawnPlayer(<a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> joinedPlayer)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0945D63AE40C9E272B50D7B6A7690CB85C9A0E24171C59911DA130FDBE5E6509</code></li>
+<li><span>Body hash</span><code>C67D82B85147875527DE5EDFAB96A6BDEBE9EE0148FEBDF214B4B065D0B66D4D</code></li>
+<li><span>IL size</span><span>138</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerCharacterServerManager.html#respawncharacter-candideserver-models-player-serverplayercharacter---system-void">CandideServer.ServerManagers.PlayerCharacterServerManager::RespawnCharacter(CandideServer.Models.Player.ServerPlayerCharacter)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_MessageModels_ChatLogMessage.html#format-system-string--system-string--candideserver-models-chatmessagetype---candideserver-messagemodels-chatlogmessage">CandideServer.MessageModels.ChatLogMessage::Format(System.String, System.String, CandideServer.Models.ChatMessageType)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_ChatLogServerService.html#sendchatlogmessage-candideserver-messagemodels-chatlogmessage---system-void">CandideServer.ServerServices.ChatLogServerService::SendChatLogMessage(CandideServer.MessageModels.ChatLogMessage)</a></code></li>
+<li><code>CandideServer.MessageModels.PlayerCharacters.RespawnPlayerMessage::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Server_BaseServer.html#sendhostmessagetoall-system-string--system-object---system-void">CandideServer.Server.BaseServer::SendHostMessageToAll(System.String, System.Object)</a></code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Player_Chat_Respawn</code></li>
+<li><code>respawn-player</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SpawnGrave private System.Void SpawnGrave(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position) System.Void playerModel CandideServer.ServerServices.ServerJoinedPlayerModel position System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;" id="spawngrave-candideserver-serverservices-serverjoinedplayermodel--system-nullable-1-microsoft-xna-framework-vector3----system-void">
+<div class="method-heading">
+<h3><code>SpawnGrave</code></h3>
+<a class="permalink" href="#spawngrave-candideserver-serverservices-serverjoinedplayermodel--system-nullable-1-microsoft-xna-framework-vector3----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SpawnGrave(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::SpawnGrave(CandideServer.ServerServices.ServerJoinedPlayerModel, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SpawnGrave(<a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> playerModel, System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt; position)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E59C62B8DA0558BCE99C97E835FB32297CE99AF6FCFACE243A222AB45F570313</code></li>
+<li><span>Body hash</span><code>1769F1E70855A7B1FC20432C92FEAB016BCB5D123CE72A41258405823257C237</code></li>
+<li><span>IL size</span><span>285</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerGameState.html#trygetinventory-system-guid--shared-models-items-sharedinventorymodel----system-boolean">CandideServer.ServerGameState::TryGetInventory(System.Guid, Shared.Models.Items.SharedInventoryModel&amp;)</a></code></li>
+<li><code>System.String::Concat(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_SimpleInventoryServerManager.html#dumpinventorycontentintonewlootonlyinventory-system-boolean--shared-models-items-sharedinventorymodel--system-string---shared-models-items-sharedinventorymodel">CandideServer.ServerManagers.SimpleInventoryServerManager::DumpInventoryContentIntoNewLootOnlyInventory(System.Boolean, Shared.Models.Items.SharedInventoryModel, System.String)</a></code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code>CandideServer.ServerControllers.SpawnEntityArgs::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::.ctor()</code></li>
+<li><code>System.Object::ToString()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, System.String&gt;::Add(!0, !1)</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;::get_HasValue()</code></li>
+<li><code>System.Nullable&lt;Microsoft.Xna.Framework.Vector3&gt;::GetValueOrDefault()</code></li>
+<li><code>System.Nullable&lt;System.Guid&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_EntityServerManager.html#spawnentity-candideserver-servercontrollers-spawnentityargs---candideserver-entities-serverentitymodel">CandideServer.ServerManagers.EntityServerManager::SpawnEntity(CandideServer.ServerControllers.SpawnEntityArgs)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#sendupdateplayersgrave-candideserver-entities-serverentitymodel--candideserver-serverservices-serverjoinedplayermodel---system-void">CandideServer.ServerServices.PlayerServerService::SendUpdatePlayersGrave(CandideServer.Entities.ServerEntityModel, CandideServer.ServerServices.ServerJoinedPlayerModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#handleplayergraveindungeon-candideserver-serverservices-serverjoinedplayermodel--candideserver-entities-serverentitymodel---system-void">CandideServer.ServerManagers.PlayerServerManager::HandlePlayerGraveInDungeon(CandideServer.ServerServices.ServerJoinedPlayerModel, CandideServer.Entities.ServerEntityModel)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#onplayerdied-candideserver-serverservices-serverjoinedplayermodel--candideserver-messagemodels-playercharacters-playerdiedmessage--system-nullable-1-candideserver-server-network-connectedpeer----system-void"><code>CandideServer.ServerManagers.PlayerServerManager::OnPlayerDied</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Dis Manibus </code></li>
+<li><code>inventory_id</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnPlayerEntity public System.Void SpawnPlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel) System.Void playerModel CandideServer.ServerServices.ServerJoinedPlayerModel" id="spawnplayerentity-candideserver-serverservices-serverjoinedplayermodel---system-void">
+<div class="method-heading">
+<h3><code>SpawnPlayerEntity</code></h3>
+<a class="permalink" href="#spawnplayerentity-candideserver-serverservices-serverjoinedplayermodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SpawnPlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::SpawnPlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SpawnPlayerEntity(<a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> playerModel)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0BF06A02568A9AC5DF78A2C17CE866F5143EC498643D3076AAAB6EFF7391A0EB</code></li>
+<li><span>Body hash</span><code>441AC0D7043AC3615FB6473DD5F3F127392AB2ED48ACC94AB64108C76B1655CC</code></li>
+<li><span>IL size</span><span>436</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Entities_ServerEntitySystemManager.html#speedupnextloadinoutcheck----system-void">CandideServer.Entities.ServerEntitySystemManager::SpeedUpNextLoadInOutCheck()</a></code></li>
+<li><code>CandideServer.Entities.ServerEntityModel::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_EntitySController.html#forceaddplayerentity-candideserver-entities-serverentitymodel---system-void">CandideServer.ServerControllers.EntitySController::ForceAddPlayerEntity(CandideServer.Entities.ServerEntityModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Entities_ServerEntitySystemManager.html#spawnentity-candideserver-entities-serverentitymodel--system-boolean--system-boolean---shared-entity-entitywrapper">CandideServer.Entities.ServerEntitySystemManager::SpawnEntity(CandideServer.Entities.ServerEntityModel, System.Boolean, System.Boolean)</a></code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Name(System.String)</code></li>
+<li><code>Shared.Entity.EntityWrapper::get_MaskRef()</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Components_ComponentExtension.html#setflag-shared-entity-components-component---shared-entity-components-component---system-void">Shared.Entity.Components.ComponentExtension::SetFlag(Shared.Entity.Components.Component&amp;, Shared.Entity.Components.Component)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Controller(Shared.Entity.Base.AbstractController)</code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_Base_AbstractController.html#attachentity-shared-entity-entitywrapper---system-void">Shared.Entity.Base.AbstractController::AttachEntity(Shared.Entity.EntityWrapper)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;Shared.Entity.EntityWrapper, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::set_Item(!0, !1)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;Shared.Entity.EntityWrapper&gt;&gt;::TryGetValue(!0, !1&amp;)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;Shared.Entity.EntityWrapper&gt;::Add(!0)</code></li>
+<li><code>System.Collections.Generic.HashSet&lt;Shared.Entity.EntityWrapper&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, System.Collections.Generic.HashSet&lt;Shared.Entity.EntityWrapper&gt;&gt;::set_Item(!0, !1)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_PlayerCharacterSController.html#reapplysavedentityauras-candideserver-serverservices-serverjoinedplayermodel--system-boolean---system-void">CandideServer.ServerControllers.PlayerCharacterSController::ReapplySavedEntityAuras(CandideServer.ServerServices.ServerJoinedPlayerModel, System.Boolean)</a></code></li>
+<li><code><a href="../../types/Shared/Shared_Entity_SharedEntityAuraManager.html#calculatestate-shared-entity-entitywrapper---system-void">Shared.Entity.SharedEntityAuraManager::CalculateState(Shared.Entity.EntityWrapper)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Health(System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#playerjoined-candideserver-serverservices-serverjoinedplayermodel---system-void"><code>CandideServer.ServerManagers.PlayerServerManager::PlayerJoined</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#playerswitchworld-candideserver-serverservices-serverjoinedplayermodel--system-guid--microsoft-xna-framework-vector3--candideserver-syncstrategies-syncstrategy---system-void"><code>CandideServer.ServerManagers.PlayerServerManager::PlayerSwitchWorld</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#updateplayerentity-candideserver-serverservices-serverjoinedplayermodel--shared-models-player-playercharactermodel--candideserver-messagemodels-players-playerupdatemessage---system-void"><code>CandideServer.ServerManagers.PlayerServerManager::UpdatePlayerEntity</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code> (Player </code></li>
+<li><code>)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetPlayerFromEntity public System.Boolean TryGetPlayerFromEntity(Shared.Entity.EntityWrapper entity, out CandideServer.ServerServices.ServerJoinedPlayerModel&amp; player) System.Boolean entity Shared.Entity.EntityWrapper player CandideServer.ServerServices.ServerJoinedPlayerModel&amp;" id="trygetplayerfromentity-shared-entity-entitywrapper--candideserver-serverservices-serverjoinedplayermodel----system-boolean">
+<div class="method-heading">
+<h3><code>TryGetPlayerFromEntity</code></h3>
+<a class="permalink" href="#trygetplayerfromentity-shared-entity-entitywrapper--candideserver-serverservices-serverjoinedplayermodel----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetPlayerFromEntity(Shared.Entity.EntityWrapper entity, out CandideServer.ServerServices.ServerJoinedPlayerModel&amp; player)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::TryGetPlayerFromEntity(Shared.Entity.EntityWrapper, CandideServer.ServerServices.ServerJoinedPlayerModel&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetPlayerFromEntity(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, out <a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a>&amp; player)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D36E46AF31E04CC25D99DD7389E3A7D948C9CBAE4C9BC943C9770775A518B9AC</code></li>
+<li><span>Body hash</span><code>B1BDDABE46B9A07B4C0A9C433024CED7D3AD294BCD39A9CDF4EAD781C377150E</code></li>
+<li><span>IL size</span><span>21</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;Shared.Entity.EntityWrapper, CandideServer.ServerServices.ServerJoinedPlayerModel&gt;::TryGetValue(!0, !1&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Entities_Bridges_ServerEntitySystemBridge.html#ignoredodamage-shared-combat-damageinfo---system-boolean"><code>CandideServer.Entities.Bridges.ServerEntitySystemBridge::IgnoreDoDamage</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Bridges_ServerSpellManagerBridge.html#shouldapplydamage-system-boolean--shared-entity-entitywrapper---system-boolean"><code>CandideServer.Entities.Bridges.ServerSpellManagerBridge::ShouldApplyDamage</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerActivatedSpikeTrapController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.Controllers.ServerActivatedSpikeTrapController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerCart2Controller.html#followtarget----system-void"><code>CandideServer.Entities.Controllers.ServerCart2Controller::FollowTarget</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerFlintController.html#sharpen-shared-entity-entitywrapper--system-single---system-void"><code>CandideServer.Entities.Controllers.ServerFlintController::Sharpen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerFruitTreeController.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.Controllers.ServerFruitTreeController::OnDamaged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerFruitTreeController.html#onoutofhealth-shared-combat-damageresult---system-boolean"><code>CandideServer.Entities.Controllers.ServerFruitTreeController::OnOutOfHealth</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerHiddenTreasureController.html#ondamaged-shared-combat-damageresult---system-void"><code>CandideServer.Entities.Controllers.ServerHiddenTreasureController::OnDamaged</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerSkinnyTreeController.html#handleskinnytreedamage-shared-combat-damageresult--shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.ServerSkinnyTreeController::HandleSkinnyTreeDamage</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerSpikeTrapController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.Controllers.ServerSpikeTrapController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerTreeController.html#handletreedamage-shared-combat-damageresult--shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.Controllers.ServerTreeController::HandleTreeDamage</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_Controllers_ServerTreeController.html#onoutofhealth-shared-combat-damageresult---system-boolean"><code>CandideServer.Entities.Controllers.ServerTreeController::OnOutOfHealth</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_PuzzleMechanics_ServerFlagActivatedSpikeTrapController.html#update-microsoft-xna-framework-gametime---system-void"><code>CandideServer.Entities.ControllerSets.PuzzleMechanics.ServerFlagActivatedSpikeTrapController::Update</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Entities_ControllerSets_Veins_ServerVeinController.html#handleveindamage-shared-combat-damageresult--shared-entity-entitywrapper---system-void"><code>CandideServer.Entities.ControllerSets.Veins.ServerVeinController::HandleVeinDamage</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_Models_Auras_ServerFlagBasedStatsChangeAura.html#checkrequirement-shared-entity-entitywrapper--shared-aura-args-flagbasedstatschangeauraargs---system-boolean"><code>CandideServer.Models.Auras.ServerFlagBasedStatsChangeAura::CheckRequirement</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#trygetplayerskillfromentity-shared-entity-entitywrapper--system-string--shared-models-skill-characterskill----system-boolean"><code>CandideServer.ServerManagers.PlayerServerManager::TryGetPlayerSkillFromEntity</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryGetPlayerSkillFromEntity public System.Boolean TryGetPlayerSkillFromEntity(Shared.Entity.EntityWrapper entity, System.String skillId, out Shared.Models.Skill.CharacterSkill&amp; skill) System.Boolean entity Shared.Entity.EntityWrapper skillId System.String skill Shared.Models.Skill.CharacterSkill&amp;" id="trygetplayerskillfromentity-shared-entity-entitywrapper--system-string--shared-models-skill-characterskill----system-boolean">
+<div class="method-heading">
+<h3><code>TryGetPlayerSkillFromEntity</code></h3>
+<a class="permalink" href="#trygetplayerskillfromentity-shared-entity-entitywrapper--system-string--shared-models-skill-characterskill----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryGetPlayerSkillFromEntity(Shared.Entity.EntityWrapper entity, System.String skillId, out Shared.Models.Skill.CharacterSkill&amp; skill)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::TryGetPlayerSkillFromEntity(Shared.Entity.EntityWrapper, System.String, Shared.Models.Skill.CharacterSkill&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryGetPlayerSkillFromEntity(<a href="../../types/Shared/Shared_Entity_EntityWrapper.html">Shared.Entity.EntityWrapper</a> entity, System.String skillId, out <a href="../../types/Shared/Shared_Models_Skill_CharacterSkill.html">Shared.Models.Skill.CharacterSkill</a>&amp; skill)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>7F88C64A5F74B6AA7F69A8980A0D49655B6A8C46B4626DB6E173DB8AB49CAA4C</code></li>
+<li><span>Body hash</span><code>3A809DC2F269A77BCD90DD9B2C2509D1AF64D36226DD1F9152A352EEAEE3819E</code></li>
+<li><span>IL size</span><span>44</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#trygetplayerfromentity-shared-entity-entitywrapper--candideserver-serverservices-serverjoinedplayermodel----system-boolean">CandideServer.ServerManagers.PlayerServerManager::TryGetPlayerFromEntity(Shared.Entity.EntityWrapper, CandideServer.ServerServices.ServerJoinedPlayerModel&amp;)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, Shared.Models.Skill.CharacterSkill&gt;::TryGetValue(!0, !1&amp;)</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdatePlayerEntity public System.Void UpdatePlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, Shared.Models.Player.PlayerCharacterModel characterModel, CandideServer.MessageModels.Players.PlayerUpdateMessage message) System.Void playerModel CandideServer.ServerServices.ServerJoinedPlayerModel characterModel Shared.Models.Player.PlayerCharacterModel message CandideServer.MessageModels.Players.PlayerUpdateMessage" id="updateplayerentity-candideserver-serverservices-serverjoinedplayermodel--shared-models-player-playercharactermodel--candideserver-messagemodels-players-playerupdatemessage---system-void">
+<div class="method-heading">
+<h3><code>UpdatePlayerEntity</code></h3>
+<a class="permalink" href="#updateplayerentity-candideserver-serverservices-serverjoinedplayermodel--shared-models-player-playercharactermodel--candideserver-messagemodels-players-playerupdatemessage---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdatePlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, Shared.Models.Player.PlayerCharacterModel characterModel, CandideServer.MessageModels.Players.PlayerUpdateMessage message)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::UpdatePlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel, Shared.Models.Player.PlayerCharacterModel, CandideServer.MessageModels.Players.PlayerUpdateMessage)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdatePlayerEntity(<a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> playerModel, <a href="../../types/Shared/Shared_Models_Player_PlayerCharacterModel.html">Shared.Models.Player.PlayerCharacterModel</a> characterModel, <a href="../../types/CandideServer/CandideServer_MessageModels_Players_PlayerUpdateMessage.html">CandideServer.MessageModels.Players.PlayerUpdateMessage</a> message)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D4AE9D444BE41E79E8FD4936CC1FCCF39A822C100C1D33FC2FA0582126FDE606</code></li>
+<li><span>Body hash</span><code>539A7B6EC5BEB6581F6E5739167FF72F802F8A9905C736C25D353EBB569D270E</code></li>
+<li><span>IL size</span><span>202</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#spawnplayerentity-candideserver-serverservices-serverjoinedplayermodel---system-void">CandideServer.ServerManagers.PlayerServerManager::SpawnPlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PlayerServerManager.html#removeplayerentity-candideserver-serverservices-serverjoinedplayermodel--shared-entity-entityremoveinfo---system-void">CandideServer.ServerManagers.PlayerServerManager::RemovePlayerEntity(CandideServer.ServerServices.ServerJoinedPlayerModel, Shared.Entity.EntityRemoveInfo)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Position(Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Velocity(Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Acceleration(Microsoft.Xna.Framework.Vector3)</code></li>
+<li><code>Shared.Entity.EntityWrapper::set_Direction(System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_PlayerServerService.html#playerupdate-candideserver-messagemodels-players-playerupdatemessage--candideserver-eventbus-eventbusargs---system-void"><code>CandideServer.ServerServices.PlayerServerService::PlayerUpdate</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Player entity model or simulation entity has gone bad, recreating entity.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdatePlayerEquipment public System.Void UpdatePlayerEquipment(CandideServer.ServerServices.ServerJoinedPlayerModel player) System.Void player CandideServer.ServerServices.ServerJoinedPlayerModel" id="updateplayerequipment-candideserver-serverservices-serverjoinedplayermodel---system-void">
+<div class="method-heading">
+<h3><code>UpdatePlayerEquipment</code></h3>
+<a class="permalink" href="#updateplayerequipment-candideserver-serverservices-serverjoinedplayermodel---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdatePlayerEquipment(CandideServer.ServerServices.ServerJoinedPlayerModel player)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.ServerManagers.PlayerServerManager::UpdatePlayerEquipment(CandideServer.ServerServices.ServerJoinedPlayerModel)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdatePlayerEquipment(<a href="../../types/CandideServer/CandideServer_ServerServices_ServerJoinedPlayerModel.html">CandideServer.ServerServices.ServerJoinedPlayerModel</a> player)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>15D02A943A8245768B4A5CA777918793A21C02D7A13C76C4EADA97E1959AA1E6</code></li>
+<li><span>Body hash</span><code>E4A92C89B3B1A4647C420E1841F10BD29DBB6D199E7D7B77C6FD5FC17221FCED</code></li>
+<li><span>IL size</span><span>21</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/Shared/Shared_Entity_SharedEntityAuraManager.html#calculatestate-shared-entity-entitywrapper---system-void">Shared.Entity.SharedEntityAuraManager::CalculateState(Shared.Entity.EntityWrapper)</a></code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

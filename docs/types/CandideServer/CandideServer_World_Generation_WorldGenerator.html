@@ -1,0 +1,1262 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.World.Generation.WorldGenerator - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.World.Generation.WorldGenerator</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.World.Generation.WorldGenerator
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.World.Generation`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 31 methods, 0 properties, 36 fields, 0 events
+
+## Public Methods
+- `public System.Void CleanUpWorldTiles()`
+- `public System.Void DecideSpawnPosition()`
+- `public System.Void GenerateAll(CandideServer.Game.GameConfig config, System.Boolean onlyTiles)`
+- `public System.Void GenerateBaseMaps(CandideServer.Game.GameConfig config)`
+- `public System.Void GenerateEntities()`
+- `public System.Void GenerateEntitiesInRectangle(Microsoft.Xna.Framework.Rectangle rect)`
+- `public System.Void GenerateEntitySpots(CandideServer.Game.GameConfig config)`
+- `public System.Void GenerateResourceMap(CandideServer.Game.GameConfig config)`
+- `public System.Void GenerateSingleBiome(CandideServer.Game.GameConfig config, CandideServer.Data.DataModels.BiomeData biome)`
+- `public System.Void GenerateSpawnArea(Microsoft.Xna.Framework.Vector2 estimatedSpawnPosTile)`
+- `public System.Void GenerateTiles(CandideServer.Game.GameConfig config)`
+- `public System.Void GenerateTileValues(System.Int32 seed)`
+- `public System.Void GenerateWorld(CandideServer.Game.GameConfig config)`
+- `public System.Boolean IsTooClose(Microsoft.Xna.Framework.Vector2 position, System.Single minimumDistance, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt; list)`
+- `public System.Void RemovePoisFromArea(CandideCreator.Shared.Models.RectangleF tileBounds)`
+- `public System.Void SetupDebugTestArea()`
+- `public System.Void SetupTileHeights()`
+- `public System.Void SpawnCrop(System.String cropId, Microsoft.Xna.Framework.Point tile)`
+- `public System.Void SpawnWildCrops()`
+- `public System.Void TryAddPointOfInterest(System.String name, CandideCreator.Shared.Models.RectangleF tileBounds, System.String biomeId, CandideServer.Models.PoiLocationType poiType, System.Boolean forceSpace)`
+- `public System.Void UpdateProgress(System.Single progress, System.String text)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_World_Generation_WorldGenerator.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.World.Generation</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>31</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>36</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.World.Generation</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>16A01DF6289BB1DDF931BDB5B1B5C2188AC50437F64DC9CE67CDA77DC6AA35C1</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html"><code>CandideServer.ServerManagers.PoiServerManager</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_ForestBiomeTileGenerator.html"><code>CandideServer.World.Generation.BiomeGenerators.ForestBiomeTileGenerator</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_ForestLightBiomeTileGenerator.html"><code>CandideServer.World.Generation.BiomeGenerators.ForestLightBiomeTileGenerator</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_PlainsBiomeTileGenerator.html"><code>CandideServer.World.Generation.BiomeGenerators.PlainsBiomeTileGenerator</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_VolcanicBiomeTileGenerator.html"><code>CandideServer.World.Generation.BiomeGenerators.VolcanicBiomeTileGenerator</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_VolcanicEdgeBiomeTileGenerator.html"><code>CandideServer.World.Generation.BiomeGenerators.VolcanicEdgeBiomeTileGenerator</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_GhostTownGenerator.html"><code>CandideServer.World.Generation.GhostTownGenerator</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGeneratorContext.html"><code>CandideServer.World.Generation.WorldGeneratorContext</code></a></li>
+<li><a href="../../types/Romestead/Candide_TestAndDebug.html"><code>Candide.TestAndDebug</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Biomes public CandideServer.Data.DataModels.BiomeData[] Biomes CandideServer.Data.DataModels.BiomeData[]" id="biomes-candideserver-data-datamodels-biomedata--"><td><span class="member-name-cell"><code>Biomes</code><a class="permalink" href="#biomes-candideserver-data-datamodels-biomedata--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public CandideServer.Data.DataModels.BiomeData[] Biomes">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/CandideServer_Data_DataModels_BiomeData.html">CandideServer.Data.DataModels.BiomeData</a>[] Biomes</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="BlockSpawn public System.Boolean[,] BlockSpawn System.Boolean[,]" id="blockspawn-system-boolean---"><td><span class="member-name-cell"><code>BlockSpawn</code><a class="permalink" href="#blockspawn-system-boolean---" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Boolean[,] BlockSpawn">Copy</button></span></td><td>public</td><td><code>public System.Boolean[,] BlockSpawn</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Colors public Microsoft.Xna.Framework.Color[] Colors Microsoft.Xna.Framework.Color[]" id="colors-microsoft-xna-framework-color--"><td><span class="member-name-cell"><code>Colors</code><a class="permalink" href="#colors-microsoft-xna-framework-color--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Color[] Colors">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Color[] Colors</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="DesertCenterTile public Microsoft.Xna.Framework.Vector2 DesertCenterTile Microsoft.Xna.Framework.Vector2" id="desertcentertile-microsoft-xna-framework-vector2"><td><span class="member-name-cell"><code>DesertCenterTile</code><a class="permalink" href="#desertcentertile-microsoft-xna-framework-vector2" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector2 DesertCenterTile">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Vector2 DesertCenterTile</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="DesertToSpawnDirection public Microsoft.Xna.Framework.Vector2 DesertToSpawnDirection Microsoft.Xna.Framework.Vector2" id="deserttospawndirection-microsoft-xna-framework-vector2"><td><span class="member-name-cell"><code>DesertToSpawnDirection</code><a class="permalink" href="#deserttospawndirection-microsoft-xna-framework-vector2" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector2 DesertToSpawnDirection">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Vector2 DesertToSpawnDirection</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Difficulty public System.Single[] Difficulty System.Single[]" id="difficulty-system-single--"><td><span class="member-name-cell"><code>Difficulty</code><a class="permalink" href="#difficulty-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] Difficulty">Copy</button></span></td><td>public</td><td><code>public System.Single[] Difficulty</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="DifficultyColorMap public Microsoft.Xna.Framework.Color[] DifficultyColorMap Microsoft.Xna.Framework.Color[]" id="difficultycolormap-microsoft-xna-framework-color--"><td><span class="member-name-cell"><code>DifficultyColorMap</code><a class="permalink" href="#difficultycolormap-microsoft-xna-framework-color--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Color[] DifficultyColorMap">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Color[] DifficultyColorMap</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="EntitySpots public System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, System.Single&gt;[] EntitySpots System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, System.Single&gt;[]" id="entityspots-system-valuetuple-2-microsoft-xna-framework-vector2-system-single---"><td><span class="member-name-cell"><code>EntitySpots</code><a class="permalink" href="#entityspots-system-valuetuple-2-microsoft-xna-framework-vector2-system-single---" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, System.Single&gt;[] EntitySpots">Copy</button></span></td><td>public</td><td><code>public System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, System.Single&gt;[] EntitySpots</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="GhostTownCenterTile public Microsoft.Xna.Framework.Vector2 GhostTownCenterTile Microsoft.Xna.Framework.Vector2" id="ghosttowncentertile-microsoft-xna-framework-vector2"><td><span class="member-name-cell"><code>GhostTownCenterTile</code><a class="permalink" href="#ghosttowncentertile-microsoft-xna-framework-vector2" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector2 GhostTownCenterTile">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Vector2 GhostTownCenterTile</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="GroundValues public System.Single[] GroundValues System.Single[]" id="groundvalues-system-single--"><td><span class="member-name-cell"><code>GroundValues</code><a class="permalink" href="#groundvalues-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] GroundValues">Copy</button></span></td><td>public</td><td><code>public System.Single[] GroundValues</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="GroundValues2 public System.Single[] GroundValues2 System.Single[]" id="groundvalues2-system-single--"><td><span class="member-name-cell"><code>GroundValues2</code><a class="permalink" href="#groundvalues2-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] GroundValues2">Copy</button></span></td><td>public</td><td><code>public System.Single[] GroundValues2</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="GroundValues4 public System.Single[] GroundValues4 System.Single[]" id="groundvalues4-system-single--"><td><span class="member-name-cell"><code>GroundValues4</code><a class="permalink" href="#groundvalues4-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] GroundValues4">Copy</button></span></td><td>public</td><td><code>public System.Single[] GroundValues4</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="GroundValuesHalf public System.Single[] GroundValuesHalf System.Single[]" id="groundvalueshalf-system-single--"><td><span class="member-name-cell"><code>GroundValuesHalf</code><a class="permalink" href="#groundvalueshalf-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] GroundValuesHalf">Copy</button></span></td><td>public</td><td><code>public System.Single[] GroundValuesHalf</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="GroundValuesQuart public System.Single[] GroundValuesQuart System.Single[]" id="groundvaluesquart-system-single--"><td><span class="member-name-cell"><code>GroundValuesQuart</code><a class="permalink" href="#groundvaluesquart-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] GroundValuesQuart">Copy</button></span></td><td>public</td><td><code>public System.Single[] GroundValuesQuart</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Height public System.Int32 Height System.Int32" id="height-system-int32"><td><span class="member-name-cell"><code>Height</code><a class="permalink" href="#height-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 Height">Copy</button></span></td><td>public</td><td><code>public System.Int32 Height</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Humidity public Microsoft.Xna.Framework.Color[] Humidity Microsoft.Xna.Framework.Color[]" id="humidity-microsoft-xna-framework-color--"><td><span class="member-name-cell"><code>Humidity</code><a class="permalink" href="#humidity-microsoft-xna-framework-color--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Color[] Humidity">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Color[] Humidity</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="HumidityValues public System.Single[] HumidityValues System.Single[]" id="humidityvalues-system-single--"><td><span class="member-name-cell"><code>HumidityValues</code><a class="permalink" href="#humidityvalues-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] HumidityValues">Copy</button></span></td><td>public</td><td><code>public System.Single[] HumidityValues</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="HumidityValues2 public System.Single[] HumidityValues2 System.Single[]" id="humidityvalues2-system-single--"><td><span class="member-name-cell"><code>HumidityValues2</code><a class="permalink" href="#humidityvalues2-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] HumidityValues2">Copy</button></span></td><td>public</td><td><code>public System.Single[] HumidityValues2</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="PoiPotentialPositions public System.Collections.Generic.List&lt;CandideServer.ServerManagers.PotentialPoiSpaceModel&gt; PoiPotentialPositions System.Collections.Generic.List&lt;CandideServer.ServerManagers.PotentialPoiSpaceModel&gt;" id="poipotentialpositions-system-collections-generic-list-1-candideserver-servermanagers-potentialpoispacemodel-"><td><span class="member-name-cell"><code>PoiPotentialPositions</code><a class="permalink" href="#poipotentialpositions-system-collections-generic-list-1-candideserver-servermanagers-potentialpoispacemodel-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.List&lt;CandideServer.ServerManagers.PotentialPoiSpaceModel&gt; PoiPotentialPositions">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_ServerManagers_PotentialPoiSpaceModel.html">CandideServer.ServerManagers.PotentialPoiSpaceModel</a>&gt; PoiPotentialPositions</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="PoiTree public CandideCreator.Shared.Algorithms.AabbTree&lt;CandideServer.ServerManagers.PoiSpaceModel&gt; PoiTree CandideCreator.Shared.Algorithms.AabbTree&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;" id="poitree-candidecreator-shared-algorithms-aabbtree-1-candideserver-servermanagers-poispacemodel-"><td><span class="member-name-cell"><code>PoiTree</code><a class="permalink" href="#poitree-candidecreator-shared-algorithms-aabbtree-1-candideserver-servermanagers-poispacemodel-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public CandideCreator.Shared.Algorithms.AabbTree&lt;CandideServer.ServerManagers.PoiSpaceModel&gt; PoiTree">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Algorithms_AabbTree_1.html">CandideCreator.Shared.Algorithms.AabbTree</a>&lt;<a href="../../types/CandideServer/CandideServer_ServerManagers_PoiSpaceModel.html">CandideServer.ServerManagers.PoiSpaceModel</a>&gt; PoiTree</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Random public System.Random Random System.Random" id="random-system-random"><td><span class="member-name-cell"><code>Random</code><a class="permalink" href="#random-system-random" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Random Random">Copy</button></span></td><td>public</td><td><code>public System.Random Random</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="ResourceValues public Microsoft.Xna.Framework.Vector4[] ResourceValues Microsoft.Xna.Framework.Vector4[]" id="resourcevalues-microsoft-xna-framework-vector4--"><td><span class="member-name-cell"><code>ResourceValues</code><a class="permalink" href="#resourcevalues-microsoft-xna-framework-vector4--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector4[] ResourceValues">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Vector4[] ResourceValues</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="RoadHitDesertWallPoint public Microsoft.Xna.Framework.Point RoadHitDesertWallPoint Microsoft.Xna.Framework.Point" id="roadhitdesertwallpoint-microsoft-xna-framework-point"><td><span class="member-name-cell"><code>RoadHitDesertWallPoint</code><a class="permalink" href="#roadhitdesertwallpoint-microsoft-xna-framework-point" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point RoadHitDesertWallPoint">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Point RoadHitDesertWallPoint</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Seed public System.Int32 Seed System.Int32" id="seed-system-int32"><td><span class="member-name-cell"><code>Seed</code><a class="permalink" href="#seed-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 Seed">Copy</button></span></td><td>public</td><td><code>public System.Int32 Seed</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Size public Microsoft.Xna.Framework.Point Size Microsoft.Xna.Framework.Point" id="size-microsoft-xna-framework-point"><td><span class="member-name-cell"><code>Size</code><a class="permalink" href="#size-microsoft-xna-framework-point" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Point Size">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Point Size</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="StructureValues public System.Single[] StructureValues System.Single[]" id="structurevalues-system-single--"><td><span class="member-name-cell"><code>StructureValues</code><a class="permalink" href="#structurevalues-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] StructureValues">Copy</button></span></td><td>public</td><td><code>public System.Single[] StructureValues</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="StructureValues2 public System.Single[] StructureValues2 System.Single[]" id="structurevalues2-system-single--"><td><span class="member-name-cell"><code>StructureValues2</code><a class="permalink" href="#structurevalues2-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] StructureValues2">Copy</button></span></td><td>public</td><td><code>public System.Single[] StructureValues2</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="StructureValues4 public System.Single[] StructureValues4 System.Single[]" id="structurevalues4-system-single--"><td><span class="member-name-cell"><code>StructureValues4</code><a class="permalink" href="#structurevalues4-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] StructureValues4">Copy</button></span></td><td>public</td><td><code>public System.Single[] StructureValues4</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="StructureValuesHalf public System.Single[] StructureValuesHalf System.Single[]" id="structurevalueshalf-system-single--"><td><span class="member-name-cell"><code>StructureValuesHalf</code><a class="permalink" href="#structurevalueshalf-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] StructureValuesHalf">Copy</button></span></td><td>public</td><td><code>public System.Single[] StructureValuesHalf</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="StructureValuesQuart public System.Single[] StructureValuesQuart System.Single[]" id="structurevaluesquart-system-single--"><td><span class="member-name-cell"><code>StructureValuesQuart</code><a class="permalink" href="#structurevaluesquart-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] StructureValuesQuart">Copy</button></span></td><td>public</td><td><code>public System.Single[] StructureValuesQuart</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Terrain public Microsoft.Xna.Framework.Color[] Terrain Microsoft.Xna.Framework.Color[]" id="terrain-microsoft-xna-framework-color--"><td><span class="member-name-cell"><code>Terrain</code><a class="permalink" href="#terrain-microsoft-xna-framework-color--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Color[] Terrain">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Color[] Terrain</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="TerrainValues public System.Single[] TerrainValues System.Single[]" id="terrainvalues-system-single--"><td><span class="member-name-cell"><code>TerrainValues</code><a class="permalink" href="#terrainvalues-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single[] TerrainValues">Copy</button></span></td><td>public</td><td><code>public System.Single[] TerrainValues</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="TileToWorldScale public System.Single TileToWorldScale System.Single" id="tiletoworldscale-system-single"><td><span class="member-name-cell"><code>TileToWorldScale</code><a class="permalink" href="#tiletoworldscale-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single TileToWorldScale">Copy</button></span></td><td>public</td><td><code>public System.Single TileToWorldScale</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="VolcanoCenterTile public Microsoft.Xna.Framework.Vector2 VolcanoCenterTile Microsoft.Xna.Framework.Vector2" id="volcanocentertile-microsoft-xna-framework-vector2"><td><span class="member-name-cell"><code>VolcanoCenterTile</code><a class="permalink" href="#volcanocentertile-microsoft-xna-framework-vector2" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public Microsoft.Xna.Framework.Vector2 VolcanoCenterTile">Copy</button></span></td><td>public</td><td><code>public Microsoft.Xna.Framework.Vector2 VolcanoCenterTile</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Width public System.Int32 Width System.Int32" id="width-system-int32"><td><span class="member-name-cell"><code>Width</code><a class="permalink" href="#width-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 Width">Copy</button></span></td><td>public</td><td><code>public System.Int32 Width</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="_reusePoiSlotList private System.Collections.Generic.List&lt;CandideServer.ServerManagers.PoiSpaceModel&gt; _reusePoiSlotList System.Collections.Generic.List&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;" id="-reusepoislotlist-system-collections-generic-list-1-candideserver-servermanagers-poispacemodel-"><td><span class="member-name-cell"><code>_reusePoiSlotList</code><a class="permalink" href="#-reusepoislotlist-system-collections-generic-list-1-candideserver-servermanagers-poispacemodel-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Collections.Generic.List&lt;CandideServer.ServerManagers.PoiSpaceModel&gt; _reusePoiSlotList">Copy</button></span></td><td>private</td><td><code>private System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_ServerManagers_PoiSpaceModel.html">CandideServer.ServerManagers.PoiSpaceModel</a>&gt; _reusePoiSlotList</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="AddDesertSatyrCampPoi private System.Void AddDesertSatyrCampPoi() System.Void " id="adddesertsatyrcamppoi----system-void">
+<div class="method-heading">
+<h3><code>AddDesertSatyrCampPoi</code></h3>
+<a class="permalink" href="#adddesertsatyrcamppoi----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void AddDesertSatyrCampPoi()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::AddDesertSatyrCampPoi()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void AddDesertSatyrCampPoi()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>2137499B9AA06370C25343190FFC27B4213ABCE02BF9D33DA6F0E3941BF024F9</code></li>
+<li><span>Body hash</span><code>A8B5CBF2AF4598DB571DE6E977F1235909E564FD75162279F7F29DC742ED9C06</code></li>
+<li><span>IL size</span><span>235</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector2::op_Equality(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_UnaryNegation(Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_PoiDataBase.html#trygetpoidata-system-string--candideserver-models-poidata----system-boolean">CandideServer.Database.PoiDataBase::TryGetPoiData(System.String, CandideServer.Models.PoiData&amp;)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ExceptionHelper.html#throwexception-system-string---system-void">CandideCreator.Shared.Helpers.ExceptionHelper::ThrowException(System.String)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Addition(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::ToPoint()</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::.ctor(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::op_Implicit(Microsoft.Xna.Framework.Rectangle)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#clearpoispace-system-string--candidecreator-shared-models-rectanglef---system-void">CandideServer.World.Generation.WorldGenerator::ClearPoiSpace(System.String, CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean----system-void">CandideServer.ServerManagers.PoiServerManager::SpawnPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, System.Random, System.Nullable&lt;System.Boolean&gt;)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleExtensions.html#torectanglef-microsoft-xna-framework-rectangle---candidecreator-shared-models-rectanglef">CandideCreator.Shared.Models.RectangleExtensions::ToRectangleF(Microsoft.Xna.Framework.Rectangle)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::op_Multiply(CandideCreator.Shared.Models.RectangleF, System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#inflate-system-single--system-single---system-void">CandideCreator.Shared.Models.RectangleF::Inflate(System.Single, System.Single)</a></code></li>
+<li><code>CandideServer.Models.SpawnSystem.SpawnRule::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerSystems_EntitySpawnServerSystem.html#addspawnrule-candideserver-models-spawnsystem-spawnrule---system-void">CandideServer.ServerSystems.EntitySpawnServerSystem::AddSpawnRule(CandideServer.Models.SpawnSystem.SpawnRule)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>desert:giant:dungeon:pyzifax_camp</code></li>
+<li><code>Could not find desert massive camp poi</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="AddDesertWallEntrancePoi private System.Void AddDesertWallEntrancePoi() System.Void " id="adddesertwallentrancepoi----system-void">
+<div class="method-heading">
+<h3><code>AddDesertWallEntrancePoi</code></h3>
+<a class="permalink" href="#adddesertwallentrancepoi----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void AddDesertWallEntrancePoi()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::AddDesertWallEntrancePoi()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void AddDesertWallEntrancePoi()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>40C13F03E18F12EA2133F0449A7B02A6D86BC73AE227C75BF149E7C86E2297EB</code></li>
+<li><span>Body hash</span><code>05EA44DA36AFB283AFF111B8B8E7B636ABACAD6229E6D35180637254E973E22D</code></li>
+<li><span>IL size</span><span>310</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Point::op_Equality(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#tofloatdirection-microsoft-xna-framework-vector2---system-single">CandideCreator.Shared.Helpers.VectorExtension::ToFloatDirection(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_VectorExtension.html#directionto8intdirection-system-single---system-int32">CandideCreator.Shared.Helpers.VectorExtension::DirectionTo8IntDirection(System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_PoiDataBase.html#trygetpoidata-system-string--candideserver-models-poidata----system-boolean">CandideServer.Database.PoiDataBase::TryGetPoiData(System.String, CandideServer.Models.PoiData&amp;)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ExceptionHelper.html#throwexception-system-string---system-void">CandideCreator.Shared.Helpers.ExceptionHelper::ThrowException(System.String)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::op_Addition(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::.ctor(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::op_Implicit(Microsoft.Xna.Framework.Rectangle)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#clearpoispace-system-string--candidecreator-shared-models-rectanglef---system-void">CandideServer.World.Generation.WorldGenerator::ClearPoiSpace(System.String, CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean----system-void">CandideServer.ServerManagers.PoiServerManager::SpawnPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, System.Random, System.Nullable&lt;System.Boolean&gt;)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleExtensions.html#torectanglef-microsoft-xna-framework-rectangle---candidecreator-shared-models-rectanglef">CandideCreator.Shared.Models.RectangleExtensions::ToRectangleF(Microsoft.Xna.Framework.Rectangle)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::op_Multiply(CandideCreator.Shared.Models.RectangleF, System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#inflate-system-single--system-single---system-void">CandideCreator.Shared.Models.RectangleF::Inflate(System.Single, System.Single)</a></code></li>
+<li><code>CandideServer.Models.SpawnSystem.SpawnRule::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerSystems_EntitySpawnServerSystem.html#addspawnrule-candideserver-models-spawnsystem-spawnrule---system-void">CandideServer.ServerSystems.EntitySpawnServerSystem::AddSpawnRule(CandideServer.Models.SpawnSystem.SpawnRule)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>special:desert_entrance_northwest</code></li>
+<li><code>special:desert_entrance_north</code></li>
+<li><code>special:desert_entrance_northeast</code></li>
+<li><code>Could not find desert entrance poi</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="AddPhoenixArenaPoi private System.Void AddPhoenixArenaPoi() System.Void " id="addphoenixarenapoi----system-void">
+<div class="method-heading">
+<h3><code>AddPhoenixArenaPoi</code></h3>
+<a class="permalink" href="#addphoenixarenapoi----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void AddPhoenixArenaPoi()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::AddPhoenixArenaPoi()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void AddPhoenixArenaPoi()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>B1C39FB0CE1648E84DE84A617112EF76CF0DAAB1EC0777EF78207422FA95AE0A</code></li>
+<li><span>Body hash</span><code>0049BE84C873063B2ADB56D8104E3025DBF3651992EAFEEF89B7763310678E75</code></li>
+<li><span>IL size</span><span>312</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector2::op_Equality(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextpointinhollowcircle-system-random--system-single---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.RandomHelper::NextPointInHollowCircle(System.Random, System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Addition(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_UnaryNegation(Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::ToPoint()</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::.ctor(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::op_Implicit(Microsoft.Xna.Framework.Rectangle)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#clearpoispace-system-string--candidecreator-shared-models-rectanglef---system-void">CandideServer.World.Generation.WorldGenerator::ClearPoiSpace(System.String, CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code>System.Guid::Parse(System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_BossServerManager.html#addbossspawnlocation-system-guid--candidecreator-shared-models-rectanglef--system-string--system-string--system-guid---system-void">CandideServer.ServerManagers.BossServerManager::AddBossSpawnLocation(System.Guid, CandideCreator.Shared.Models.RectangleF, System.String, System.String, System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleExtensions.html#torectanglef-microsoft-xna-framework-rectangle---candidecreator-shared-models-rectanglef">CandideCreator.Shared.Models.RectangleExtensions::ToRectangleF(Microsoft.Xna.Framework.Rectangle)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::op_Multiply(CandideCreator.Shared.Models.RectangleF, System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#inflate-system-single--system-single---system-void">CandideCreator.Shared.Models.RectangleF::Inflate(System.Single, System.Single)</a></code></li>
+<li><code>CandideServer.Models.SpawnSystem.SpawnRule::.ctor()</code></li>
+<li><code>System.Guid::.ctor(System.Int32, System.Int16, System.Int16, System.Byte, System.Byte, System.Byte, System.Byte, System.Byte, System.Byte, System.Byte, System.Byte)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerSystems_EntitySpawnServerSystem.html#addspawnrule-candideserver-models-spawnsystem-spawnrule---system-void">CandideServer.ServerSystems.EntitySpawnServerSystem::AddSpawnRule(CandideServer.Models.SpawnSystem.SpawnRule)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>maps/poi/volcanic/g_phoenix</code></li>
+<li><code>boss:phoenix</code></li>
+<li><code>d785ecef-17a6-4363-95f3-98188e4663e2</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="AddVulcanTemplePoi private System.Void AddVulcanTemplePoi() System.Void " id="addvulcantemplepoi----system-void">
+<div class="method-heading">
+<h3><code>AddVulcanTemplePoi</code></h3>
+<a class="permalink" href="#addvulcantemplepoi----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void AddVulcanTemplePoi()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::AddVulcanTemplePoi()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void AddVulcanTemplePoi()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>890D273C44BDBA8BC0D53F4E6ED7FD92D4984A4F67E4D0C4C3FB94F9166C80AA</code></li>
+<li><span>Body hash</span><code>FB624FD39B37AEEB51ECC9401FA4EDAF877752B03E1105BCEAB717563ED0BACE</code></li>
+<li><span>IL size</span><span>1126</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Vector2::op_Equality(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::.ctor(System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_UnaryNegation(Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Addition(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::ToPoint()</code></li>
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::.ctor(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#clearpoispace-system-string--candidecreator-shared-models-rectanglef---system-void">CandideServer.World.Generation.WorldGenerator::ClearPoiSpace(System.String, CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_PoiDataBase.html#trygetpoidata-system-string--candideserver-models-poidata----system-boolean">CandideServer.Database.PoiDataBase::TryGetPoiData(System.String, CandideServer.Models.PoiData&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#spawnpoi-candideserver-models-poidata--candidecreator-shared-models-rectanglef--system-single--system-random--system-nullable-1-system-boolean----system-void">CandideServer.ServerManagers.PoiServerManager::SpawnPoi(CandideServer.Models.PoiData, CandideCreator.Shared.Models.RectangleF, System.Single, System.Random, System.Nullable&lt;System.Boolean&gt;)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::op_Multiply(CandideCreator.Shared.Models.RectangleF, System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#inflate-system-single--system-single---system-void">CandideCreator.Shared.Models.RectangleF::Inflate(System.Single, System.Single)</a></code></li>
+<li><code>CandideServer.Models.SpawnSystem.SpawnRule::.ctor()</code></li>
+<li><code>System.Guid::.ctor(System.Int32, System.Int16, System.Int16, System.Byte, System.Byte, System.Byte, System.Byte, System.Byte, System.Byte, System.Byte, System.Byte)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerSystems_EntitySpawnServerSystem.html#addspawnrule-candideserver-models-spawnsystem-spawnrule---system-void">CandideServer.ServerSystems.EntitySpawnServerSystem::AddSpawnRule(CandideServer.Models.SpawnSystem.SpawnRule)</a></code></li>
+<li><code>System.Random::Next()</code></li>
+<li><code>System.Random::.ctor(System.Int32)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideCreator.Shared.Models.RectangleF&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideCreator.Shared.Models.RectangleF&gt;::get_Count()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_CandideMathHelper.html#from0to1between-system-single--system-single--system-single---system-single">CandideCreator.Shared.Helpers.CandideMathHelper::From0To1Between(System.Single, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_CandideMathHelper.html#interpolatebetween-system-single--system-single--system-single---system-single">CandideCreator.Shared.Helpers.CandideMathHelper::InterpolateBetween(System.Single, System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextpointinhollowcircle-system-random--system-single---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.RandomHelper::NextPointInHollowCircle(System.Random, System.Single)</a></code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::.ctor(Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#halfinflate-system-single--system-single---system-void">CandideCreator.Shared.Models.RectangleF::HalfInflate(System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#intersects-candidecreator-shared-models-rectanglef---system-boolean">CandideCreator.Shared.Models.RectangleF::Intersects(CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;CandideCreator.Shared.Models.RectangleF&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;CandideCreator.Shared.Models.RectangleF&gt;::get_Current()</code></li>
+<li><code>List.Enumerator&lt;CandideCreator.Shared.Models.RectangleF&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#torectangle----microsoft-xna-framework-rectangle">CandideCreator.Shared.Models.RectangleF::ToRectangle()</a></code></li>
+<li><code>Shared.Models.WorldTile[,]::Address(System.Int32, System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>maps/poi/volcanic/boss_vulcan_entrance</code></li>
+<li><code>boss:vulcan</code></li>
+<li><code>vulcan_lever</code></li>
+<li><code>maps/poi/volcanic/special_platform</code></li>
+<li><code>maps/poi/volcanic/special_lever</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="CleanUpWorldTiles public System.Void CleanUpWorldTiles() System.Void " id="cleanupworldtiles----system-void">
+<div class="method-heading">
+<h3><code>CleanUpWorldTiles</code></h3>
+<a class="permalink" href="#cleanupworldtiles----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void CleanUpWorldTiles()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::CleanUpWorldTiles()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void CleanUpWorldTiles()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>03F5544E2F08F4151E766F3A8B2BD870A048BEA472E036A1CFDB5B8D9EB7B598</code></li>
+<li><span>Body hash</span><code>D758CEFB78D06A38392C081E27F148C90B59EDF13730533396F09C2F9D8A7C3D</code></li>
+<li><span>IL size</span><span>12</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#setworldtilessecondpass-shared-models-worldtile------system-void">CandideServer.World.Generation.WorldGenerator::SetWorldTilesSecondPass(Shared.Models.WorldTile[,])</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="ClearPoiSpace private System.Void ClearPoiSpace(System.String mapName, CandideCreator.Shared.Models.RectangleF bounds) System.Void mapName System.String bounds CandideCreator.Shared.Models.RectangleF" id="clearpoispace-system-string--candidecreator-shared-models-rectanglef---system-void">
+<div class="method-heading">
+<h3><code>ClearPoiSpace</code></h3>
+<a class="permalink" href="#clearpoispace-system-string--candidecreator-shared-models-rectanglef---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void ClearPoiSpace(System.String mapName, CandideCreator.Shared.Models.RectangleF bounds)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::ClearPoiSpace(System.String, CandideCreator.Shared.Models.RectangleF)">Copy Harmony target</button>
+</div>
+<p><code>private System.Void ClearPoiSpace(System.String mapName, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> bounds)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>E15E50F4C7DEDC712362DA11BAADBCCCB57C58E51FF3F287E767174DED802A16</code></li>
+<li><span>Body hash</span><code>37F2B5462FAB1D6A5CF7C0E143971FAECBFD8FA55137B22C7454C7FBCFCDEB78</code></li>
+<li><span>IL size</span><span>78</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideServer.ServerManagers.PoiSpaceModel::.ctor()</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Center()</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::Add(CandideCreator.Shared.Models.RectangleF, !0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#adddesertsatyrcamppoi----system-void"><code>CandideServer.World.Generation.WorldGenerator::AddDesertSatyrCampPoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#adddesertwallentrancepoi----system-void"><code>CandideServer.World.Generation.WorldGenerator::AddDesertWallEntrancePoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#addphoenixarenapoi----system-void"><code>CandideServer.World.Generation.WorldGenerator::AddPhoenixArenaPoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#addvulcantemplepoi----system-void"><code>CandideServer.World.Generation.WorldGenerator::AddVulcanTemplePoi</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>biome:test</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="CopyValuesToGameState private System.Void CopyValuesToGameState() System.Void " id="copyvaluestogamestate----system-void">
+<div class="method-heading">
+<h3><code>CopyValuesToGameState</code></h3>
+<a class="permalink" href="#copyvaluestogamestate----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void CopyValuesToGameState()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::CopyValuesToGameState()">Copy Harmony target</button>
+</div>
+<p><code>private System.Void CopyValuesToGameState()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>45973D2DC747EC5F9A7A662B6123EF9A2D2BBD4F5C2245B1BA9898BC089210D4</code></li>
+<li><span>Body hash</span><code>95A1FF46C250C2F4B821124980DE9DA3CC775E0B4CB1CDA4E9E59808CC5885FB</code></li>
+<li><span>IL size</span><span>90</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.String[,]::Set(System.Int32, System.Int32, System.String)</code></li>
+<li><code>System.Single[,]::Set(System.Int32, System.Int32, System.Single)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generatetiles-candideserver-game-gameconfig---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateTiles</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="DecideKeyPoints private System.Void DecideKeyPoints(CandideServer.World.Generation.KeyBiomes[] keyPoints, System.Random random, Microsoft.Xna.Framework.Vector2[] corners) System.Void keyPoints CandideServer.World.Generation.KeyBiomes[] random System.Random corners Microsoft.Xna.Framework.Vector2[]" id="decidekeypoints-candideserver-world-generation-keybiomes----system-random--microsoft-xna-framework-vector2-----system-void">
+<div class="method-heading">
+<h3><code>DecideKeyPoints</code></h3>
+<a class="permalink" href="#decidekeypoints-candideserver-world-generation-keybiomes----system-random--microsoft-xna-framework-vector2-----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void DecideKeyPoints(CandideServer.World.Generation.KeyBiomes[] keyPoints, System.Random random, Microsoft.Xna.Framework.Vector2[] corners)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::DecideKeyPoints(CandideServer.World.Generation.KeyBiomes[], System.Random, Microsoft.Xna.Framework.Vector2[])">Copy Harmony target</button>
+</div>
+<p><code>private System.Void DecideKeyPoints(<a href="../../types/CandideServer/CandideServer_World_Generation_KeyBiomes.html">CandideServer.World.Generation.KeyBiomes</a>[] keyPoints, System.Random random, Microsoft.Xna.Framework.Vector2[] corners)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D7D84723B11A0E88F5B47A58BB0543EB8536B06221D3FB4BA89E252D17E03E4B</code></li>
+<li><span>Body hash</span><code>CA64C65D7D22B8A15303D31C8963218FCBB63EB67F3723DCC95734922D439042</code></li>
+<li><span>IL size</span><span>306</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextfloat-system-random---system-single">CandideCreator.Shared.Helpers.RandomHelper::NextFloat(System.Random)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextfloat-system-random--system-single--system-single---system-single">CandideCreator.Shared.Helpers.RandomHelper::NextFloat(System.Random, System.Single, System.Single)</a></code></li>
+<li><code>System.MathF::Cos(System.Single)</code></li>
+<li><code>System.MathF::Sin(System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::.ctor(System.Single, System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_WarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.WarningHelper::Warning(System.String)</a></code></li>
+<li><code>CandideCreator.Shared.Helpers.RandomHelper::Shuffle(!!0[], System.Random)</code></li>
+<li><code>System.Array::IndexOf(!!0[], !!0)</code></li>
+<li><code>System.Math::Abs(System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_CandideMathHelper.html#circulardifference-system-single--system-single--system-single---system-single">CandideCreator.Shared.Helpers.CandideMathHelper::CircularDifference(System.Single, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generatebasemaps-candideserver-game-gameconfig---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateBaseMaps</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Could not generate a valid configuration of key pois</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="DecideSpawnPosition public System.Void DecideSpawnPosition() System.Void " id="decidespawnposition----system-void">
+<div class="method-heading">
+<h3><code>DecideSpawnPosition</code></h3>
+<a class="permalink" href="#decidespawnposition----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void DecideSpawnPosition()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::DecideSpawnPosition()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void DecideSpawnPosition()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>38D952F50A10DA0B629B2C92C52248D1CFE9061784DC75A6CDBFED20F18D9FA4</code></li>
+<li><span>Body hash</span><code>16DE04CC95F21A1AC796604989562237BC1C6E3C64A0588C5F57F33C585945CE</code></li>
+<li><span>IL size</span><span>97</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_WorldSController.html#validatespawntile-system-boolean---system-void">CandideServer.ServerControllers.WorldSController::ValidateSpawnTile(System.Boolean)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::.ctor(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::Inflate(System.Int32, System.Int32)</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Left()</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Top()</code></li>
+<li><code>System.Boolean[,]::Set(System.Int32, System.Int32, System.Boolean)</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Bottom()</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Right()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateAll public System.Void GenerateAll(CandideServer.Game.GameConfig config, System.Boolean onlyTiles) System.Void config CandideServer.Game.GameConfig onlyTiles System.Boolean" id="generateall-candideserver-game-gameconfig--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>GenerateAll</code></h3>
+<a class="permalink" href="#generateall-candideserver-game-gameconfig--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GenerateAll(CandideServer.Game.GameConfig config, System.Boolean onlyTiles)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::GenerateAll(CandideServer.Game.GameConfig, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GenerateAll(<a href="../../types/CandideServer/CandideServer_Game_GameConfig.html">CandideServer.Game.GameConfig</a> config, System.Boolean onlyTiles)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F93CF81647974291DF952823B465474401732F475431E8F3E368877127321578</code></li>
+<li><span>Body hash</span><code>6E82DA1ADF666A4C490FAC913D6EB0A46FE5818AC730074A4598E689C05C8D69</code></li>
+<li><span>IL size</span><span>395</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Diagnostics.Stopwatch::StartNew()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#updateprogress-system-single--system-string---system-void">CandideServer.World.Generation.WorldGenerator::UpdateProgress(System.Single, System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_BiomeDataBase.html#trygetbiomedata-system-string--candideserver-data-datamodels-biomedata----system-boolean">CandideServer.Database.BiomeDataBase::TryGetBiomeData(System.String, CandideServer.Data.DataModels.BiomeData&amp;)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generatesinglebiome-candideserver-game-gameconfig--candideserver-data-datamodels-biomedata---system-void">CandideServer.World.Generation.WorldGenerator::GenerateSingleBiome(CandideServer.Game.GameConfig, CandideServer.Data.DataModels.BiomeData)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generatebasemaps-candideserver-game-gameconfig---system-void">CandideServer.World.Generation.WorldGenerator::GenerateBaseMaps(CandideServer.Game.GameConfig)</a></code></li>
+<li><code>System.Diagnostics.Stopwatch::Restart()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateresourcemap-candideserver-game-gameconfig---system-void">CandideServer.World.Generation.WorldGenerator::GenerateResourceMap(CandideServer.Game.GameConfig)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generatetiles-candideserver-game-gameconfig---system-void">CandideServer.World.Generation.WorldGenerator::GenerateTiles(CandideServer.Game.GameConfig)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Division(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>CandideCreator.Shared.Models.RectangleF::.ctor(Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html#inflate-system-single--system-single---system-void">CandideCreator.Shared.Models.RectangleF::Inflate(System.Single, System.Single)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#clearpoispace-system-string--candidecreator-shared-models-rectanglef---system-void">CandideServer.World.Generation.WorldGenerator::ClearPoiSpace(System.String, CandideCreator.Shared.Models.RectangleF)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#adddesertsatyrcamppoi----system-void">CandideServer.World.Generation.WorldGenerator::AddDesertSatyrCampPoi()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#adddesertwallentrancepoi----system-void">CandideServer.World.Generation.WorldGenerator::AddDesertWallEntrancePoi()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#addphoenixarenapoi----system-void">CandideServer.World.Generation.WorldGenerator::AddPhoenixArenaPoi()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#addvulcantemplepoi----system-void">CandideServer.World.Generation.WorldGenerator::AddVulcanTemplePoi()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_PoiServerManager.html#generatepois-candideserver-world-generation-worldgenerator--microsoft-xna-framework-vector2--system-guid--candideserver-game-gameconfig---system-void">CandideServer.ServerManagers.PoiServerManager::GeneratePois(CandideServer.World.Generation.WorldGenerator, Microsoft.Xna.Framework.Vector2, System.Guid, CandideServer.Game.GameConfig)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generatespawnarea-microsoft-xna-framework-vector2---system-void">CandideServer.World.Generation.WorldGenerator::GenerateSpawnArea(Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#decidespawnposition----system-void">CandideServer.World.Generation.WorldGenerator::DecideSpawnPosition()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#cleanupworldtiles----system-void">CandideServer.World.Generation.WorldGenerator::CleanUpWorldTiles()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateentityspots-candideserver-game-gameconfig---system-void">CandideServer.World.Generation.WorldGenerator::GenerateEntitySpots(CandideServer.Game.GameConfig)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateentities----system-void">CandideServer.World.Generation.WorldGenerator::GenerateEntities()</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#spawnwildcrops----system-void">CandideServer.World.Generation.WorldGenerator::SpawnWildCrops()</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateworld-candideserver-game-gameconfig---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateWorld</code></a></li>
+<li><a href="../../types/Romestead/Candide_TestAndDebug.html#ghosttowngentesting----system-void"><code>Candide.TestAndDebug::GhostTownGenTesting</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>CreateWorld_GeneratingWorldLayout</code></li>
+<li><code>CreateWorld_GeneratingResourceMap</code></li>
+<li><code>CreateWorld_ShapingTerrain</code></li>
+<li><code>CreateWorld_PlacingPois</code></li>
+<li><code>world-center</code></li>
+<li><code>CreateWorld_PreparingStartingArea</code></li>
+<li><code>CreateWorld_CleaningUpTerrain</code></li>
+<li><code>CreateWorld_GeneratingEntityDistribution</code></li>
+<li><code>CreateWorld_SpawningEntities</code></li>
+<li><code>CreateWorld_SpawningWildCrops</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateBaseMaps public System.Void GenerateBaseMaps(CandideServer.Game.GameConfig config) System.Void config CandideServer.Game.GameConfig" id="generatebasemaps-candideserver-game-gameconfig---system-void">
+<div class="method-heading">
+<h3><code>GenerateBaseMaps</code></h3>
+<a class="permalink" href="#generatebasemaps-candideserver-game-gameconfig---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GenerateBaseMaps(CandideServer.Game.GameConfig config)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::GenerateBaseMaps(CandideServer.Game.GameConfig)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GenerateBaseMaps(<a href="../../types/CandideServer/CandideServer_Game_GameConfig.html">CandideServer.Game.GameConfig</a> config)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BAFE57991EBE695DE8B021BE62B803C8BBF669F28DD8DD21B4E2E6E729B3D399</code></li>
+<li><span>Body hash</span><code>8CAA258C54A79DACAEDF17F1A75FB85EBD7BC042C2794F6929B29A95005E04B3</code></li>
+<li><span>IL size</span><span>6083</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Random::.ctor(System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.RuntimeHelpers::InitializeArray(System.Array, System.RuntimeFieldHandle)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#decidekeypoints-candideserver-world-generation-keybiomes----system-random--microsoft-xna-framework-vector2-----system-void">CandideServer.World.Generation.WorldGenerator::DecideKeyPoints(CandideServer.World.Generation.KeyBiomes[], System.Random, Microsoft.Xna.Framework.Vector2[])</a></code></li>
+<li><code>Microsoft.Xna.Framework.Point::ToVector2()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Addition(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>System.Array::IndexOf(!!0[], !!0)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Distance(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Color::.ctor(System.Int32, System.Int32, System.Int32)</code></li>
+<li><code>CandideServer.Helpers.NoiseHelper::.ctor()</code></li>
+<li><code>System.MemoryExtensions::AsSpan(!!0[])</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Helpers_NoiseHelper.html#genuniformgrid2d-system-span-1-system-single---system-int32--system-int32--system-int32--system-int32--system-single--system-int32---sharpfastnoise2-outputminmax">CandideServer.Helpers.NoiseHelper::GenUniformGrid2D(System.Span&lt;System.Single&gt;, System.Int32, System.Int32, System.Int32, System.Int32, System.Single, System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_BiomeDataBase.html#getbiomedataorerror-system-string---candideserver-data-datamodels-biomedata">CandideServer.Database.BiomeDataBase::GetBiomeDataOrError(System.String)</a></code></li>
+<li><code>System.Math::Max(System.Single, System.Single)</code></li>
+<li><code>System.Math::Abs(System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_InterpolationHelper.html#quadin-system-single---system-single">CandideCreator.Shared.Helpers.InterpolationHelper::QuadIn(System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::.ctor(System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.MathHelper::Clamp(System.Single, System.Single, System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_InterpolationHelper.html#cubeinout-system-single---system-single">CandideCreator.Shared.Helpers.InterpolationHelper::CubeInOut(System.Single)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_InterpolationHelper.html#sinein-system-single---system-single">CandideCreator.Shared.Helpers.InterpolationHelper::SineIn(System.Single)</a></code></li>
+<li><code>System.MathF::Abs(System.Single)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_InterpolationHelper.html#quadinout-system-single---system-single">CandideCreator.Shared.Helpers.InterpolationHelper::QuadInOut(System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.MathHelper::Lerp(System.Single, System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Color::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Division(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>System.Random::Next()</code></li>
+<li><code>WorldGenerator.RiverBlender::.ctor(Microsoft.Xna.Framework.Color[], Microsoft.Xna.Framework.Color, CandideServer.Data.DataModels.BiomeData[], CandideServer.Data.DataModels.BiomeData)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGeneratorHelpers.html#createroadpoints-system-single--system-single--system-single--system-single--system-single--system-random---microsoft-xna-framework-vector2--">CandideServer.World.Generation.WorldGeneratorHelpers::CreateRoadPoints(System.Single, System.Single, System.Single, System.Single, System.Single, System.Random)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGeneratorHelpers.html#fillellipsoid-system-single--system-single--system-single--system-single--microsoft-xna-framework-color--microsoft-xna-framework-color----system-int32--system-int32---system-void">CandideServer.World.Generation.WorldGeneratorHelpers::FillEllipsoid(System.Single, System.Single, System.Single, System.Single, Microsoft.Xna.Framework.Color, Microsoft.Xna.Framework.Color[], System.Int32, System.Int32)</a></code></li>
+<li><code>CandideServer.World.Generation.WorldGeneratorHelpers::FillEllipsoid(System.Single, System.Single, System.Single, System.Single, T, T[], System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/WorldGenerator_RiverBlender.html#riverblend-system-single--system-int32--system-int32--system-int32---system-void">WorldGenerator.RiverBlender::RiverBlend(System.Single, System.Int32, System.Int32, System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+<li><a href="../../types/Romestead/Candide_TestAndDebug.html#worldgentesting----system-void"><code>Candide.TestAndDebug::WorldGenTesting</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>biome:swamp</code></li>
+<li><code>biome:forest_light</code></li>
+<li><code>biome:desert_edge</code></li>
+<li><code>biome:ghosttown_center</code></li>
+<li><code>biome:lake_island</code></li>
+<li><code>biome:lake_small</code></li>
+<li><code>biome:volcanic_center</code></li>
+<li><code>biome:volcanic_edge</code></li>
+<li><code>biome:volcanic_tendril</code></li>
+<li><code>biome:volcanic_tendril_desert</code></li>
+<li><code>biome:volcanic_tendril_volcano</code></li>
+<li><code>biome:beach</code></li>
+<li><code>biome:desert</code></li>
+<li><code>biome:plains_dry</code></li>
+<li><code>biome:forest</code></li>
+<li><code>biome:forest_deep</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateEntities public System.Void GenerateEntities() System.Void " id="generateentities----system-void">
+<div class="method-heading">
+<h3><code>GenerateEntities</code></h3>
+<a class="permalink" href="#generateentities----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GenerateEntities()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::GenerateEntities()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GenerateEntities()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8DA877160FC93A1D7AE088052AB515E1C01D9C8E4D41FE1838D175F0FD020164</code></li>
+<li><span>Body hash</span><code>01507B2957FF3183864B222832BB3B6DD01902B95DE809548BF86DF9912BA1C3</code></li>
+<li><span>IL size</span><span>114</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_IBiomeEntityGenerator.html#spawnentity-system-uint32--system-uint32--system-uint32--microsoft-xna-framework-vector2--system-single---system-void">CandideServer.World.Generation.BiomeGenerators.IBiomeEntityGenerator::SpawnEntity(System.UInt32, System.UInt32, System.UInt32, Microsoft.Xna.Framework.Vector2, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateEntitiesInRectangle public System.Void GenerateEntitiesInRectangle(Microsoft.Xna.Framework.Rectangle rect) System.Void rect Microsoft.Xna.Framework.Rectangle" id="generateentitiesinrectangle-microsoft-xna-framework-rectangle---system-void">
+<div class="method-heading">
+<h3><code>GenerateEntitiesInRectangle</code></h3>
+<a class="permalink" href="#generateentitiesinrectangle-microsoft-xna-framework-rectangle---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GenerateEntitiesInRectangle(Microsoft.Xna.Framework.Rectangle rect)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::GenerateEntitiesInRectangle(Microsoft.Xna.Framework.Rectangle)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GenerateEntitiesInRectangle(Microsoft.Xna.Framework.Rectangle rect)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>D625E56D3496DD0B9A662250DFF819C4DF3E88EF5C1DFADE45D825B407AB7EE1</code></li>
+<li><span>Body hash</span><code>CC1CAC048ABCD76EB7D112AC44799210B39C482DC5E5E4A3C719F8D875517F0A</code></li>
+<li><span>IL size</span><span>142</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Left()</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Top()</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Right()</code></li>
+<li><code>Microsoft.Xna.Framework.Rectangle::get_Bottom()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_IBiomeEntityGenerator.html#spawnentity-system-uint32--system-uint32--system-uint32--microsoft-xna-framework-vector2--system-single---system-void">CandideServer.World.Generation.BiomeGenerators.IBiomeEntityGenerator::SpawnEntity(System.UInt32, System.UInt32, System.UInt32, Microsoft.Xna.Framework.Vector2, System.Single)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateEntitySpots public System.Void GenerateEntitySpots(CandideServer.Game.GameConfig config) System.Void config CandideServer.Game.GameConfig" id="generateentityspots-candideserver-game-gameconfig---system-void">
+<div class="method-heading">
+<h3><code>GenerateEntitySpots</code></h3>
+<a class="permalink" href="#generateentityspots-candideserver-game-gameconfig---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GenerateEntitySpots(CandideServer.Game.GameConfig config)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::GenerateEntitySpots(CandideServer.Game.GameConfig)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GenerateEntitySpots(<a href="../../types/CandideServer/CandideServer_Game_GameConfig.html">CandideServer.Game.GameConfig</a> config)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DE882C021A39ADED2E9F79F6A854BD2B1257BD8BEBF8089000F192C6E69EA673</code></li>
+<li><span>Body hash</span><code>0DFED930A1A96FD00A9C47FE76D4ADDB71E6C03159DE0F18DF6619EF77D5D0A0</code></li>
+<li><span>IL size</span><span>57</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Diagnostics.Stopwatch::StartNew()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_EntitySizeSpotsGenerator.html#generateentitysizemap-system-int32--system-int32--system-single--system-int32--candideserver-data-datamodels-biomedata----system-valuetuple-2-microsoft-xna-framework-vector2-system-single------system-single--system-single---system-void">CandideServer.World.Generation.EntitySizeSpotsGenerator::GenerateEntitySizeMap(System.Int32, System.Int32, System.Single, System.Int32, CandideServer.Data.DataModels.BiomeData[], System.ValueTuple&lt;Microsoft.Xna.Framework.Vector2, System.Single&gt;[]&amp;, System.Single, System.Single)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+<li><a href="../../types/Romestead/Candide_TestAndDebug.html#worldgentesting----system-void"><code>Candide.TestAndDebug::WorldGenTesting</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateResourceMap public System.Void GenerateResourceMap(CandideServer.Game.GameConfig config) System.Void config CandideServer.Game.GameConfig" id="generateresourcemap-candideserver-game-gameconfig---system-void">
+<div class="method-heading">
+<h3><code>GenerateResourceMap</code></h3>
+<a class="permalink" href="#generateresourcemap-candideserver-game-gameconfig---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GenerateResourceMap(CandideServer.Game.GameConfig config)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::GenerateResourceMap(CandideServer.Game.GameConfig)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GenerateResourceMap(<a href="../../types/CandideServer/CandideServer_Game_GameConfig.html">CandideServer.Game.GameConfig</a> config)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0E79FD3006F6510D2F2E1A210ED976A56D5A5509E4D8AA848923F026B1688069</code></li>
+<li><span>Body hash</span><code>68A9F936B3BFAA8A9C124CBF54EC7CD691228E0A7843E9E5F1A87B3506C15ED4</code></li>
+<li><span>IL size</span><span>44</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideServer.World.Generation.ResourceDistributionGenerator::.ctor()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_ResourceDistributionGenerator.html#generate-system-int32--system-int32--system-int32--system-boolean---system-void">CandideServer.World.Generation.ResourceDistributionGenerator::Generate(System.Int32, System.Int32, System.Int32, System.Boolean)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateSingleBiome public System.Void GenerateSingleBiome(CandideServer.Game.GameConfig config, CandideServer.Data.DataModels.BiomeData biome) System.Void config CandideServer.Game.GameConfig biome CandideServer.Data.DataModels.BiomeData" id="generatesinglebiome-candideserver-game-gameconfig--candideserver-data-datamodels-biomedata---system-void">
+<div class="method-heading">
+<h3><code>GenerateSingleBiome</code></h3>
+<a class="permalink" href="#generatesinglebiome-candideserver-game-gameconfig--candideserver-data-datamodels-biomedata---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GenerateSingleBiome(CandideServer.Game.GameConfig config, CandideServer.Data.DataModels.BiomeData biome)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::GenerateSingleBiome(CandideServer.Game.GameConfig, CandideServer.Data.DataModels.BiomeData)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GenerateSingleBiome(<a href="../../types/CandideServer/CandideServer_Game_GameConfig.html">CandideServer.Game.GameConfig</a> config, <a href="../../types/CandideServer/CandideServer_Data_DataModels_BiomeData.html">CandideServer.Data.DataModels.BiomeData</a> biome)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>A3164EFAD1927F296704BC7BD7D68E4990A330C94AE632E05B046FA4CA7F03A0</code></li>
+<li><span>Body hash</span><code>7090571859B1CC7CBB181954A3895EB0A8046723B8977D3B03FCA1AA391EE2D1</code></li>
+<li><span>IL size</span><span>593</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Random::.ctor(System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Database_BiomeDataBase.html#getbiomedataorerror-system-string---candideserver-data-datamodels-biomedata">CandideServer.Database.BiomeDataBase::GetBiomeDataOrError(System.String)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Color::.ctor(System.Single, System.Single, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Color::.ctor(System.Int32, System.Int32, System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>biome:mountains</code></li>
+<li><code>biome:ocean</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateSpawnArea public System.Void GenerateSpawnArea(Microsoft.Xna.Framework.Vector2 estimatedSpawnPosTile) System.Void estimatedSpawnPosTile Microsoft.Xna.Framework.Vector2" id="generatespawnarea-microsoft-xna-framework-vector2---system-void">
+<div class="method-heading">
+<h3><code>GenerateSpawnArea</code></h3>
+<a class="permalink" href="#generatespawnarea-microsoft-xna-framework-vector2---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GenerateSpawnArea(Microsoft.Xna.Framework.Vector2 estimatedSpawnPosTile)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::GenerateSpawnArea(Microsoft.Xna.Framework.Vector2)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GenerateSpawnArea(Microsoft.Xna.Framework.Vector2 estimatedSpawnPosTile)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F07E4D636A9B699C3C41DD5FD8D696A9BFB0050F667F23F992125CF6BD54D092</code></li>
+<li><span>Body hash</span><code>EF7DEDD5F00B95ADDF7B217F22FF3B4C8805F3EF5D545C22D8B7D07F680C4FD7</code></li>
+<li><span>IL size</span><span>351</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_World_ServerWorldDataManager.html#getworlddataornull-system-string---candideserver-world-serverworlddata">CandideServer.World.ServerWorldDataManager::GetWorldDataOrNull(System.String)</a></code></li>
+<li><code>System.Exception::.ctor(System.String)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::.ctor(System.Single, System.Single)</code></li>
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;::.ctor()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::ToPoint()</code></li>
+<li><code>WorldGenerator.&lt;&gt;c::&lt;GenerateSpawnArea&gt;b__48_0(CandideServer.ServerControllers.SpawnEntityArgs)</code></li>
+<li><code>System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt;::.ctor(System.Object, System.IntPtr)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_PointOfInterestInserter.html#loadinworldat-system-string--microsoft-xna-framework-point--system-boolean--system-action-1-candideserver-servercontrollers-spawnentityargs----system-void">CandideServer.World.Generation.PointOfInterestInserter::LoadInWorldAt(System.String, Microsoft.Xna.Framework.Point, System.Boolean, System.Action&lt;CandideServer.ServerControllers.SpawnEntityArgs&gt;)</a></code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_RandomHelper.html#nextpointinhollowcircle-system-random--system-single---microsoft-xna-framework-vector2">CandideCreator.Shared.Helpers.RandomHelper::NextPointInHollowCircle(System.Random, System.Single)</a></code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Multiply(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Division(Microsoft.Xna.Framework.Vector2, System.Single)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Addition(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#istooclose-microsoft-xna-framework-vector2--system-single--system-collections-generic-list-1-microsoft-xna-framework-vector2----system-boolean">CandideServer.World.Generation.WorldGenerator::IsTooClose(Microsoft.Xna.Framework.Vector2, System.Single, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;::Add(!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted(!!0)</code></li>
+<li><code>System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()</code></li>
+<li><code>WorldGenerator.&lt;&gt;c::&lt;GenerateSpawnArea&gt;b__48_1(CandideServer.ServerControllers.SpawnEntityArgs)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>maps/poi/plains_dry/spawn_poi</code></li>
+<li><code>Missing Spawn PoI</code></li>
+<li><code>_extras_</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateTiles public System.Void GenerateTiles(CandideServer.Game.GameConfig config) System.Void config CandideServer.Game.GameConfig" id="generatetiles-candideserver-game-gameconfig---system-void">
+<div class="method-heading">
+<h3><code>GenerateTiles</code></h3>
+<a class="permalink" href="#generatetiles-candideserver-game-gameconfig---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GenerateTiles(CandideServer.Game.GameConfig config)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::GenerateTiles(CandideServer.Game.GameConfig)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GenerateTiles(<a href="../../types/CandideServer/CandideServer_Game_GameConfig.html">CandideServer.Game.GameConfig</a> config)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>BD7EE6120733C8CE09113C88DA6C8A374F32E3799742B4203A35F50CCAB797DA</code></li>
+<li><span>Body hash</span><code>BF1EFA1AB7ABE729E931796CC99B457C60B7AE4FAAD7CDB052C516E9E35C5C6B</code></li>
+<li><span>IL size</span><span>157</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Models.WorldTile[,]::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.String[,]::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Single[,]::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.SpawnSystem.SpawnRule&gt;::Clear()</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#copyvaluestogamestate----system-void">CandideServer.World.Generation.WorldGenerator::CopyValuesToGameState()</a></code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::Clear()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.PotentialPoiSpaceModel&gt;::Clear()</code></li>
+<li><code>System.Boolean[,]::.ctor(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generatetilevalues-system-int32---system-void">CandideServer.World.Generation.WorldGenerator::GenerateTileValues(System.Int32)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#setworldtilesfirstpass-shared-models-worldtile------system-void">CandideServer.World.Generation.WorldGenerator::SetWorldTilesFirstPass(Shared.Models.WorldTile[,])</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateTileValues public System.Void GenerateTileValues(System.Int32 seed) System.Void seed System.Int32" id="generatetilevalues-system-int32---system-void">
+<div class="method-heading">
+<h3><code>GenerateTileValues</code></h3>
+<a class="permalink" href="#generatetilevalues-system-int32---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GenerateTileValues(System.Int32 seed)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::GenerateTileValues(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GenerateTileValues(System.Int32 seed)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>14867B59E7C877C5DCEA5A9B8AA8B74274DBAA1DE0D9E93F9490D4DEB4B92470</code></li>
+<li><span>Body hash</span><code>50D6B1F249B14F192C105B8B9F2D10BB61BAA7111C6381D84A0BBCE5AAA35EE4</code></li>
+<li><span>IL size</span><span>748</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideServer.Helpers.NoiseHelper::.ctor()</code></li>
+<li><code>System.MemoryExtensions::AsSpan(!!0[])</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Helpers_NoiseHelper.html#genuniformgrid2d-system-span-1-system-single---system-int32--system-int32--system-int32--system-int32--system-single--system-int32---sharpfastnoise2-outputminmax">CandideServer.Helpers.NoiseHelper::GenUniformGrid2D(System.Span&lt;System.Single&gt;, System.Int32, System.Int32, System.Int32, System.Int32, System.Single, System.Int32)</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generatetiles-candideserver-game-gameconfig---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateTiles</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GenerateWorld public System.Void GenerateWorld(CandideServer.Game.GameConfig config) System.Void config CandideServer.Game.GameConfig" id="generateworld-candideserver-game-gameconfig---system-void">
+<div class="method-heading">
+<h3><code>GenerateWorld</code></h3>
+<a class="permalink" href="#generateworld-candideserver-game-gameconfig---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void GenerateWorld(CandideServer.Game.GameConfig config)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::GenerateWorld(CandideServer.Game.GameConfig)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void GenerateWorld(<a href="../../types/CandideServer/CandideServer_Game_GameConfig.html">CandideServer.Game.GameConfig</a> config)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5E66346A08902FBA0740EB94E35A49ACFC9A7D511405B728C763335D4E4212C6</code></li>
+<li><span>Body hash</span><code>51BC114773B7DDBA92F53ABEE6E034D949101FC258C2067ECECD636A09EC7DEA</code></li>
+<li><span>IL size</span><span>242</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#updateprogress-system-single--system-string---system-void">CandideServer.World.Generation.WorldGenerator::UpdateProgress(System.Single, System.String)</a></code></li>
+<li><code>CandideServer.World.Generation.WorldGenerator::.ctor()</code></li>
+<li><code>CandideServer.Models.Worlds.WorldModel::.ctor()</code></li>
+<li><code>System.Guid::NewGuid()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.Guid, CandideServer.Models.Worlds.WorldModel&gt;::set_Item(!0, !1)</code></li>
+<li><code>CandideServer.Models.ServerChunkedWorld::.ctor(Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point, Microsoft.Xna.Framework.Point)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void">CandideServer.World.Generation.WorldGenerator::GenerateAll(CandideServer.Game.GameConfig, System.Boolean)</a></code></li>
+<li><code>System.String[,]::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>Shared.Models.WorldTile[,]::.ctor(System.Int32, System.Int32)</code></li>
+<li><code>System.Single[,]::.ctor(System.Int32, System.Int32)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Game_ServerGameSetup.html#setupnewgamestate-candideserver-game-gameconfig---system-void"><code>CandideServer.Game.ServerGameSetup::SetupNewGameState</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>CreateWorld_PreparingGenerator</code></li>
+<li><code>Outside</code></li>
+<li><code>CreateWorld_Complete</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="IsTooClose public System.Boolean IsTooClose(Microsoft.Xna.Framework.Vector2 position, System.Single minimumDistance, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt; list) System.Boolean position Microsoft.Xna.Framework.Vector2 minimumDistance System.Single list System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;" id="istooclose-microsoft-xna-framework-vector2--system-single--system-collections-generic-list-1-microsoft-xna-framework-vector2----system-boolean">
+<div class="method-heading">
+<h3><code>IsTooClose</code></h3>
+<a class="permalink" href="#istooclose-microsoft-xna-framework-vector2--system-single--system-collections-generic-list-1-microsoft-xna-framework-vector2----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean IsTooClose(Microsoft.Xna.Framework.Vector2 position, System.Single minimumDistance, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt; list)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::IsTooClose(Microsoft.Xna.Framework.Vector2, System.Single, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean IsTooClose(Microsoft.Xna.Framework.Vector2 position, System.Single minimumDistance, System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt; list)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>AC6850BCDAB8B9CE37305F0BE7E12D776B1912EFC5884F8FB7404A4F3DCBD72E</code></li>
+<li><span>Body hash</span><code>CD7D6EBE18760324505DE48AE1862360F064AF989FEE54B27961804F9AD38292</code></li>
+<li><span>IL size</span><span>76</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;Microsoft.Xna.Framework.Vector2&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;Microsoft.Xna.Framework.Vector2&gt;::get_Current()</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::op_Subtraction(Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Vector2)</code></li>
+<li><code>Microsoft.Xna.Framework.Vector2::Length()</code></li>
+<li><code>List.Enumerator&lt;Microsoft.Xna.Framework.Vector2&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generatespawnarea-microsoft-xna-framework-vector2---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateSpawnArea</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="RemovePoisFromArea public System.Void RemovePoisFromArea(CandideCreator.Shared.Models.RectangleF tileBounds) System.Void tileBounds CandideCreator.Shared.Models.RectangleF" id="removepoisfromarea-candidecreator-shared-models-rectanglef---system-void">
+<div class="method-heading">
+<h3><code>RemovePoisFromArea</code></h3>
+<a class="permalink" href="#removepoisfromarea-candidecreator-shared-models-rectanglef---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void RemovePoisFromArea(CandideCreator.Shared.Models.RectangleF tileBounds)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::RemovePoisFromArea(CandideCreator.Shared.Models.RectangleF)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void RemovePoisFromArea(<a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> tileBounds)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>03A56008714FE0550C6144D19BA9B0ADBE0D4AF7B07129D35A999C6427639E19</code></li>
+<li><span>Body hash</span><code>91A859B54A533555FA9A61A1B03C945BD93CE2B4B2C39FE3E5E2EFD83D45CD63</code></li>
+<li><span>IL size</span><span>118</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::Clear()</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::QueryFast(CandideCreator.Shared.Models.RectangleF)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::AddRange(System.Collections.Generic.IEnumerable&lt;!0&gt;)</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::get_Current()</code></li>
+<li><code>CandideCreator.Shared.Algorithms.AabbTree&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::Remove(System.Int32)</code></li>
+<li><code>List.Enumerator&lt;CandideServer.ServerManagers.PoiSpaceModel&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetupDebugTestArea public System.Void SetupDebugTestArea() System.Void " id="setupdebugtestarea----system-void">
+<div class="method-heading">
+<h3><code>SetupDebugTestArea</code></h3>
+<a class="permalink" href="#setupdebugtestarea----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetupDebugTestArea()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::SetupDebugTestArea()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetupDebugTestArea()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>00DB83E43AE954CE558AB2335808F768367C3A7BA93CAEF4D3DBBE73872FD38C</code></li>
+<li><span>Body hash</span><code>5DB142FE448D87226A969CA07FD2E02FD9DA19E93150258264CEE71714B0C5BE</code></li>
+<li><span>IL size</span><span>115</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Microsoft.Xna.Framework.Rectangle::.ctor(System.Int32, System.Int32, System.Int32, System.Int32)</code></li>
+<li><code>System.Nullable&lt;WorldTile.GroundType&gt;::.ctor(!0)</code></li>
+<li><code>System.Nullable&lt;WorldTile.StructureType&gt;::.ctor(!0)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_WorldTilesServerController.html#fillrectangle-microsoft-xna-framework-rectangle--system-nullable-1-worldtile-groundtype---system-nullable-1-worldtile-structuretype----system-void">CandideServer.ServerControllers.WorldTilesServerController::FillRectangle(Microsoft.Xna.Framework.Rectangle, System.Nullable&lt;WorldTile.GroundType&gt;, System.Nullable&lt;WorldTile.StructureType&gt;)</a></code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SetupTileHeights public System.Void SetupTileHeights() System.Void " id="setuptileheights----system-void">
+<div class="method-heading">
+<h3><code>SetupTileHeights</code></h3>
+<a class="permalink" href="#setuptileheights----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SetupTileHeights()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::SetupTileHeights()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SetupTileHeights()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>672A6CF3CB4A265CCEED5D2E0E62602312C9ECE71C3E854F5D88783EE78AA56C</code></li>
+<li><span>Body hash</span><code>9A13FCEE8E58B7B0E92842EECEF135D5571C60F67458C853B91399D251E9AF07</code></li>
+<li><span>IL size</span><span>39</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.SByte[,]::.ctor(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#setworldtileheights-shared-models-worldtile-----system-sbyte------system-void">CandideServer.World.Generation.WorldGenerator::SetWorldTileHeights(Shared.Models.WorldTile[,], System.SByte[,])</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/Romestead/Candide_TestAndDebug.html#ghosttowngentesting----system-void"><code>Candide.TestAndDebug::GhostTownGenTesting</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SetWorldTileHeights private System.Void SetWorldTileHeights(Shared.Models.WorldTile[,] tiles, System.SByte[,] tileHeights) System.Void tiles Shared.Models.WorldTile[,] tileHeights System.SByte[,]" id="setworldtileheights-shared-models-worldtile-----system-sbyte------system-void">
+<div class="method-heading">
+<h3><code>SetWorldTileHeights</code></h3>
+<a class="permalink" href="#setworldtileheights-shared-models-worldtile-----system-sbyte------system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SetWorldTileHeights(Shared.Models.WorldTile[,] tiles, System.SByte[,] tileHeights)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::SetWorldTileHeights(Shared.Models.WorldTile[,], System.SByte[,])">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SetWorldTileHeights(<a href="../../types/Shared/Shared_Models_WorldTile.html">Shared.Models.WorldTile</a>[,] tiles, System.SByte[,] tileHeights)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5B52A81507E08F0376DD12BE5D1C878AD5B01016AAB03FADF830CC092389416D</code></li>
+<li><span>Body hash</span><code>2710F5540376E220F70B47F892AD9994ADA34B54A2993DAAA16A4CDD29EDFD9E</code></li>
+<li><span>IL size</span><span>71</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Models.WorldTile[,]::Address(System.Int32, System.Int32)</code></li>
+<li><code>System.SByte[,]::Set(System.Int32, System.Int32, System.SByte)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#setuptileheights----system-void"><code>CandideServer.World.Generation.WorldGenerator::SetupTileHeights</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SetWorldTilesFirstPass private System.Void SetWorldTilesFirstPass(Shared.Models.WorldTile[,] tiles) System.Void tiles Shared.Models.WorldTile[,]" id="setworldtilesfirstpass-shared-models-worldtile------system-void">
+<div class="method-heading">
+<h3><code>SetWorldTilesFirstPass</code></h3>
+<a class="permalink" href="#setworldtilesfirstpass-shared-models-worldtile------system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SetWorldTilesFirstPass(Shared.Models.WorldTile[,] tiles)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::SetWorldTilesFirstPass(Shared.Models.WorldTile[,])">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SetWorldTilesFirstPass(<a href="../../types/Shared/Shared_Models_WorldTile.html">Shared.Models.WorldTile</a>[,] tiles)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>DCF7BCC610D62A32D0B6CBF2D5767C362818222DF8FDCCB93D022A297C361443</code></li>
+<li><span>Body hash</span><code>100D345DD56B18EA58A63ECDBA93C8D50A8CFB1E29E5AD5047296D9EE28FDBB6</code></li>
+<li><span>IL size</span><span>67</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_IBiomeTileGenerator.html#setworldtile-system-uint32--system-uint32--system-uint32--shared-models-worldtile------system-void">CandideServer.World.Generation.BiomeGenerators.IBiomeTileGenerator::SetWorldTile(System.UInt32, System.UInt32, System.UInt32, Shared.Models.WorldTile[,])</a></code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generatetiles-candideserver-game-gameconfig---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateTiles</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="private" data-patch-target="true" data-member-text="SetWorldTilesSecondPass private System.Void SetWorldTilesSecondPass(Shared.Models.WorldTile[,] tiles) System.Void tiles Shared.Models.WorldTile[,]" id="setworldtilessecondpass-shared-models-worldtile------system-void">
+<div class="method-heading">
+<h3><code>SetWorldTilesSecondPass</code></h3>
+<a class="permalink" href="#setworldtilessecondpass-shared-models-worldtile------system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="private System.Void SetWorldTilesSecondPass(Shared.Models.WorldTile[,] tiles)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::SetWorldTilesSecondPass(Shared.Models.WorldTile[,])">Copy Harmony target</button>
+</div>
+<p><code>private System.Void SetWorldTilesSecondPass(<a href="../../types/Shared/Shared_Models_WorldTile.html">Shared.Models.WorldTile</a>[,] tiles)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>private</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>60357FCE75FCEC5C9674E00802E1962A0E49906F204A694C17587BF58C167318</code></li>
+<li><span>Body hash</span><code>A91120DC143D1D5D303310F8F3E51B063C1B9E70E98ED275966A9CE75B043F07</code></li>
+<li><span>IL size</span><span>256</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.UInt32, System.UInt32&gt;&gt;::.ctor(System.Int32)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_IBiomeTileSecondPass.html#setworldtile-system-uint32--system-uint32--system-uint32--shared-models-worldtile-----system-collections-generic-list-1-system-valuetuple-2-system-uint32-system-uint32-----system-void">CandideServer.World.Generation.BiomeGenerators.IBiomeTileSecondPass::SetWorldTile(System.UInt32, System.UInt32, System.UInt32, Shared.Models.WorldTile[,], System.Collections.Generic.List&lt;System.ValueTuple&lt;System.UInt32, System.UInt32&gt;&gt;)</a></code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.UInt32, System.UInt32&gt;&gt;::get_Count()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.UInt32, System.UInt32&gt;&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.UInt32, System.UInt32&gt;&gt;::get_Current()</code></li>
+<li><code>List.Enumerator&lt;System.ValueTuple&lt;System.UInt32, System.UInt32&gt;&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+<li><code>System.Collections.Generic.List&lt;System.ValueTuple&lt;System.UInt32, System.UInt32&gt;&gt;::Clear()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#cleanupworldtiles----system-void"><code>CandideServer.World.Generation.WorldGenerator::CleanUpWorldTiles</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnCrop public System.Void SpawnCrop(System.String cropId, Microsoft.Xna.Framework.Point tile) System.Void cropId System.String tile Microsoft.Xna.Framework.Point" id="spawncrop-system-string--microsoft-xna-framework-point---system-void">
+<div class="method-heading">
+<h3><code>SpawnCrop</code></h3>
+<a class="permalink" href="#spawncrop-system-string--microsoft-xna-framework-point---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SpawnCrop(System.String cropId, Microsoft.Xna.Framework.Point tile)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::SpawnCrop(System.String, Microsoft.Xna.Framework.Point)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SpawnCrop(System.String cropId, Microsoft.Xna.Framework.Point tile)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>094B82152F4022C7BD1073985EA660884472A8FA2827F29EA3350F7BBDD3E264</code></li>
+<li><span>Body hash</span><code>B0C4B65EDD068B4A0E7A0E315B4C190917DEAE0318D614D1F22336DFBDE405CB</code></li>
+<li><span>IL size</span><span>223</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>Shared.Models.WorldTile[,]::Get(System.Int32, System.Int32)</code></li>
+<li><code>System.Boolean[,]::Get(System.Int32, System.Int32)</code></li>
+<li><code><a href="../../types/Shared/Shared_Data_GroundTileFlagsExtension.html#hasflags-shared-data-groundtileflags--shared-data-groundtileflags---system-boolean">Shared.Data.GroundTileFlagsExtension::HasFlags(Shared.Data.GroundTileFlags, Shared.Data.GroundTileFlags)</a></code></li>
+<li><code>System.String[,]::Get(System.Int32, System.Int32)</code></li>
+<li><code>System.String::op_Equality(System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerControllers_CropServerController.html#spawncrop-microsoft-xna-framework-point--system-string--system-boolean--system-boolean--microsoft-xna-framework-vector2---candideserver-models-cropservermodel">CandideServer.ServerControllers.CropServerController::SpawnCrop(Microsoft.Xna.Framework.Point, System.String, System.Boolean, System.Boolean, Microsoft.Xna.Framework.Vector2)</a></code></li>
+<li><code>Shared.Models.WorldTile[,]::Address(System.Int32, System.Int32)</code></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>biome:plains</code></li>
+<li><code>biome:plains_dry</code></li>
+<li><code>biome:forest_light</code></li>
+<li><code>biome:forest</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="SpawnWildCrops public System.Void SpawnWildCrops() System.Void " id="spawnwildcrops----system-void">
+<div class="method-heading">
+<h3><code>SpawnWildCrops</code></h3>
+<a class="permalink" href="#spawnwildcrops----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void SpawnWildCrops()">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::SpawnWildCrops()">Copy Harmony target</button>
+</div>
+<p><code>public System.Void SpawnWildCrops()</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>62E1E1326BB84C3F9ED814BCDD1C3A19A7F2594CDCD521C0275CC5760B385E07</code></li>
+<li><span>Body hash</span><code>B578D293457AB8B3CE14FA81583C9C075201D6318351ED782D9DE5487251A3C5</code></li>
+<li><span>IL size</span><span>29</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryAddPointOfInterest public System.Void TryAddPointOfInterest(System.String name, CandideCreator.Shared.Models.RectangleF tileBounds, System.String biomeId, CandideServer.Models.PoiLocationType poiType, System.Boolean forceSpace) System.Void name System.String tileBounds CandideCreator.Shared.Models.RectangleF biomeId System.String poiType CandideServer.Models.PoiLocationType forceSpace System.Boolean" id="tryaddpointofinterest-system-string--candidecreator-shared-models-rectanglef--system-string--candideserver-models-poilocationtype--system-boolean---system-void">
+<div class="method-heading">
+<h3><code>TryAddPointOfInterest</code></h3>
+<a class="permalink" href="#tryaddpointofinterest-system-string--candidecreator-shared-models-rectanglef--system-string--candideserver-models-poilocationtype--system-boolean---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void TryAddPointOfInterest(System.String name, CandideCreator.Shared.Models.RectangleF tileBounds, System.String biomeId, CandideServer.Models.PoiLocationType poiType, System.Boolean forceSpace)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::TryAddPointOfInterest(System.String, CandideCreator.Shared.Models.RectangleF, System.String, CandideServer.Models.PoiLocationType, System.Boolean)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void TryAddPointOfInterest(System.String name, <a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Models_RectangleF.html">CandideCreator.Shared.Models.RectangleF</a> tileBounds, System.String biomeId, <a href="../../types/CandideServer/CandideServer_Models_PoiLocationType.html">CandideServer.Models.PoiLocationType</a> poiType, System.Boolean forceSpace)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>38086EEFE015CFB3FA900B017256F1E46D06FFCCF015601E995F758D985D2703</code></li>
+<li><span>Body hash</span><code>022F282749D4305C7449B0E36E420DC5E0C897011A75B20EE161720EA50636C3</code></li>
+<li><span>IL size</span><span>63</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>CandideCreator.Shared.Models.RectangleF::get_Area()</code></li>
+<li><code>CandideServer.ServerManagers.PotentialPoiSpaceModel::.ctor()</code></li>
+<li><code>System.Collections.Generic.List&lt;CandideServer.ServerManagers.PotentialPoiSpaceModel&gt;::Add(!0)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_DesertBiomeTileGenerator.html#poicheck-system-uint32--system-uint32--system-uint32---system-void"><code>CandideServer.World.Generation.BiomeGenerators.DesertBiomeTileGenerator::PoiCheck</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_DryPlainsBiomeTileGenerator.html#poicheck-system-uint32--system-uint32--system-uint32---system-void"><code>CandideServer.World.Generation.BiomeGenerators.DryPlainsBiomeTileGenerator::PoiCheck</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_ForestBiomeTileGenerator.html#poicheck-system-uint32--system-uint32--system-uint32---system-void"><code>CandideServer.World.Generation.BiomeGenerators.ForestBiomeTileGenerator::PoiCheck</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_ForestLightBiomeTileGenerator.html#poicheck-system-uint32--system-uint32--system-uint32---system-void"><code>CandideServer.World.Generation.BiomeGenerators.ForestLightBiomeTileGenerator::PoiCheck</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_GhostTownBiomeTileGenerator.html#poicheck-system-uint32--system-uint32--system-uint32---system-void"><code>CandideServer.World.Generation.BiomeGenerators.GhostTownBiomeTileGenerator::PoiCheck</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_GhostTownCenterBiomeTileGenerator.html#poicheck-system-uint32--system-uint32--system-uint32---system-void"><code>CandideServer.World.Generation.BiomeGenerators.GhostTownCenterBiomeTileGenerator::PoiCheck</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_PlainsBiomeTileGenerator.html#poicheck-system-uint32--system-uint32--system-uint32---system-void"><code>CandideServer.World.Generation.BiomeGenerators.PlainsBiomeTileGenerator::PoiCheck</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_VolcanicBiomeTileGenerator.html#poicheck-system-uint32--system-uint32--system-uint32---system-void"><code>CandideServer.World.Generation.BiomeGenerators.VolcanicBiomeTileGenerator::PoiCheck</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_BiomeGenerators_VolcanicEdgeBiomeTileGenerator.html#poicheck-system-uint32--system-uint32--system-uint32---system-void"><code>CandideServer.World.Generation.BiomeGenerators.VolcanicEdgeBiomeTileGenerator::PoiCheck</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="UpdateProgress public System.Void UpdateProgress(System.Single progress, System.String text) System.Void progress System.Single text System.String" id="updateprogress-system-single--system-string---system-void">
+<div class="method-heading">
+<h3><code>UpdateProgress</code></h3>
+<a class="permalink" href="#updateprogress-system-single--system-string---system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void UpdateProgress(System.Single progress, System.String text)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.World.Generation.WorldGenerator::UpdateProgress(System.Single, System.String)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void UpdateProgress(System.Single progress, System.String text)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5C43854715133BE7CB8D1EAE6046BFB7ED016C7CC3EE431C3B2262E69242C282</code></li>
+<li><span>Body hash</span><code>24487C49BF45AF3F2ED7F140B99AE99B8B07A81299690DDF2CFF25F6C93CEE6B</code></li>
+<li><span>IL size</span><span>32</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Action&lt;System.Single, System.String&gt;::Invoke(!0, !1)</code></li>
+<li><code>CandideServer.Exceptions.WorldGeneratorStopException::.ctor()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateall-candideserver-game-gameconfig--system-boolean---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateAll</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_World_Generation_WorldGenerator.html#generateworld-candideserver-game-gameconfig---system-void"><code>CandideServer.World.Generation.WorldGenerator::GenerateWorld</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CandideServer.Database.CitizenDataBase - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/CandideServer.html">CandideServer</a></p>
+<div class="title-row">
+<h1>CandideServer.Database.CitizenDataBase</h1>
+<button class="copy-button" type="button" data-copy="CandideServer.Database.CitizenDataBase">Copy type</button>
+<button class="copy-button" type="button" data-copy="# CandideServer.Database.CitizenDataBase
+
+- Assembly: `CandideServer`
+- Namespace: `CandideServer.Database`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 4 methods, 0 properties, 2 fields, 0 events
+
+## Public Methods
+- `public System.Void AddCitizens(System.Collections.Generic.List&lt;CandideServer.Data.DataModels.CitizenData&gt; citizensList)`
+- `public CandideServer.Data.DataModels.CitizenData GetCitizenOrMissing(System.String id)`
+- `public CandideServer.Data.DataModels.CitizenData GetCitizenOrNull(System.String id)`
+- `public System.Boolean TryCreateCitizenModel(System.String citizenId, System.Guid newId, out CandideServer.Models.Citizen.CitizenModel&amp; citizenModel)`
+">Copy markdown</button>
+<a class="button" href="CandideServer_Database_CitizenDataBase.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>CandideServer.Database</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>4</strong></article>
+<article class="metric"><span>Properties</span><strong>0</strong></article>
+<article class="metric"><span>Fields</span><strong>2</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>CandideServer</code></li>
+<li><span>Namespace</span><code>CandideServer.Database</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>56196A72D634DB358C5488E272C3AC71CD4657FE7152E7A800F69D6BDA5A808D</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="CitizenDataMap public System.Collections.Generic.Dictionary&lt;System.String, CandideServer.Data.DataModels.CitizenData&gt; CitizenDataMap System.Collections.Generic.Dictionary&lt;System.String, CandideServer.Data.DataModels.CitizenData&gt;" id="citizendatamap-system-collections-generic-dictionary-2-system-string-candideserver-data-datamodels-citizendata-"><td><span class="member-name-cell"><code>CitizenDataMap</code><a class="permalink" href="#citizendatamap-system-collections-generic-dictionary-2-system-string-candideserver-data-datamodels-citizendata-" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Collections.Generic.Dictionary&lt;System.String, CandideServer.Data.DataModels.CitizenData&gt; CitizenDataMap">Copy</button></span></td><td>public</td><td><code>public System.Collections.Generic.Dictionary&lt;System.String, <a href="../../types/CandideServer/CandideServer_Data_DataModels_CitizenData.html">CandideServer.Data.DataModels.CitizenData</a>&gt; CitizenDataMap</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="MissingData public CandideServer.Data.DataModels.CitizenData MissingData CandideServer.Data.DataModels.CitizenData" id="missingdata-candideserver-data-datamodels-citizendata"><td><span class="member-name-cell"><code>MissingData</code><a class="permalink" href="#missingdata-candideserver-data-datamodels-citizendata" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public CandideServer.Data.DataModels.CitizenData MissingData">Copy</button></span></td><td>public</td><td><code>public <a href="../../types/CandideServer/CandideServer_Data_DataModels_CitizenData.html">CandideServer.Data.DataModels.CitizenData</a> MissingData</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="AddCitizens public System.Void AddCitizens(System.Collections.Generic.List&lt;CandideServer.Data.DataModels.CitizenData&gt; citizensList) System.Void citizensList System.Collections.Generic.List&lt;CandideServer.Data.DataModels.CitizenData&gt;" id="addcitizens-system-collections-generic-list-1-candideserver-data-datamodels-citizendata----system-void">
+<div class="method-heading">
+<h3><code>AddCitizens</code></h3>
+<a class="permalink" href="#addcitizens-system-collections-generic-list-1-candideserver-data-datamodels-citizendata----system-void" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Void AddCitizens(System.Collections.Generic.List&lt;CandideServer.Data.DataModels.CitizenData&gt; citizensList)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Database.CitizenDataBase::AddCitizens(System.Collections.Generic.List&lt;CandideServer.Data.DataModels.CitizenData&gt;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Void AddCitizens(System.Collections.Generic.List&lt;<a href="../../types/CandideServer/CandideServer_Data_DataModels_CitizenData.html">CandideServer.Data.DataModels.CitizenData</a>&gt; citizensList)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Void</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>0D9A689C5AD299B6D52B86555FF761B376011BDC0F78BEA131DFB1B1A612BBFB</code></li>
+<li><span>Body hash</span><code>36158C5127A0C650FCFAF27BDEC65F396846252024A43C93A98FCEA482B1CB54</code></li>
+<li><span>IL size</span><span>96</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.List&lt;CandideServer.Data.DataModels.CitizenData&gt;::GetEnumerator()</code></li>
+<li><code>List.Enumerator&lt;CandideServer.Data.DataModels.CitizenData&gt;::get_Current()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.Data.DataModels.CitizenData&gt;::ContainsKey(!0)</code></li>
+<li><code>System.String::Concat(System.String, System.String, System.String)</code></li>
+<li><code><a href="../../types/CandideCreator_Shared/CandideCreator_Shared_Helpers_ServerWarningHelper.html#warning-system-string---system-void">CandideCreator.Shared.Helpers.ServerWarningHelper::Warning(System.String)</a></code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.Data.DataModels.CitizenData&gt;::set_Item(!0, !1)</code></li>
+<li><code>List.Enumerator&lt;CandideServer.Data.DataModels.CitizenData&gt;::MoveNext()</code></li>
+<li><code>System.IDisposable::Dispose()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Data_SharedDataSetups_SharedDataSetup.html#sharedsetup----system-void"><code>CandideServer.Data.SharedDataSetups.SharedDataSetup::SharedSetup</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>Detected duplicate citizen id &#39;</code></li>
+<li><code>&#39;.</code></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetCitizenOrMissing public CandideServer.Data.DataModels.CitizenData GetCitizenOrMissing(System.String id) CandideServer.Data.DataModels.CitizenData id System.String" id="getcitizenormissing-system-string---candideserver-data-datamodels-citizendata">
+<div class="method-heading">
+<h3><code>GetCitizenOrMissing</code></h3>
+<a class="permalink" href="#getcitizenormissing-system-string---candideserver-data-datamodels-citizendata" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Data.DataModels.CitizenData GetCitizenOrMissing(System.String id)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Database.CitizenDataBase::GetCitizenOrMissing(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Data_DataModels_CitizenData.html">CandideServer.Data.DataModels.CitizenData</a> GetCitizenOrMissing(System.String id)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Data_DataModels_CitizenData.html">CandideServer.Data.DataModels.CitizenData</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>5BA191B853170F1DA97BE237623A5F2C4A47C6EBF495F6BEB506C3D77D64CD9F</code></li>
+<li><span>Body hash</span><code>EC04A28A103657EADD1003CC48E65CC0417958A8B1C48D48A487C78161AA4949</code></li>
+<li><span>IL size</span><span>26</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.Data.DataModels.CitizenData&gt;::TryGetValue(!0, !1&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Helpers_RandomCitizenGenerator.html#generaterandomcitizen-candideserver-helpers-citizentier--system-guid--system-guid---candideserver-models-citizen-wildcitizeninstancemodel"><code>CandideServer.Helpers.RandomCitizenGenerator::GenerateRandomCitizen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#createcitizenfortownfromwildcitizen-candideserver-models-citizen-wildcitizeninstancemodel--system-guid---candideserver-models-citizen-citizenmodel"><code>CandideServer.ServerControllers.CitizensSController::CreateCitizenForTownFromWildCitizen</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerManagers_WildCitizensServerManager.html#creategaiussolinus-system-guid--system-guid---system-void"><code>CandideServer.ServerManagers.WildCitizensServerManager::CreateGaiusSolinus</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tooltip_CandideTooltipHelper.html#buildactivecitizentooltipcontent-candide-gamemodels-models-citizens-citizen---system-collections-generic-ienumerable-1-candide-candideui-candideuielement-"><code>Candide.CandideUI.Tooltip.CandideTooltipHelper::BuildActiveCitizenTooltipContent</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_Tooltip_CandideTooltipHelper.html#buildcitizentooltipcontent-candideserver-messagemodels-towns-citizentownoverviewdata---system-collections-generic-ienumerable-1-candide-candideui-candideuielement-"><code>Candide.CandideUI.Tooltip.CandideTooltipHelper::BuildCitizenTooltipContent</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_TownOverview_Components_CitizenSlotHolder.html#oncitizenslotchanged----system-void"><code>Candide.CandideUI.TownOverview.Components.CitizenSlotHolder::OnCitizenSlotChanged</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_TownOverview_Components_TownOverviewCitizenHolder.html#oncitizenchanged----system-void"><code>Candide.CandideUI.TownOverview.Components.TownOverviewCitizenHolder::OnCitizenChanged</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="GetCitizenOrNull public CandideServer.Data.DataModels.CitizenData GetCitizenOrNull(System.String id) CandideServer.Data.DataModels.CitizenData id System.String" id="getcitizenornull-system-string---candideserver-data-datamodels-citizendata">
+<div class="method-heading">
+<h3><code>GetCitizenOrNull</code></h3>
+<a class="permalink" href="#getcitizenornull-system-string---candideserver-data-datamodels-citizendata" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public CandideServer.Data.DataModels.CitizenData GetCitizenOrNull(System.String id)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Database.CitizenDataBase::GetCitizenOrNull(System.String)">Copy Harmony target</button>
+</div>
+<p><code>public <a href="../../types/CandideServer/CandideServer_Data_DataModels_CitizenData.html">CandideServer.Data.DataModels.CitizenData</a> GetCitizenOrNull(System.String id)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code><a href="../../types/CandideServer/CandideServer_Data_DataModels_CitizenData.html">CandideServer.Data.DataModels.CitizenData</a></code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>8708439B27049265313295278E5A32CE5CE3B946BCAF856271E59E62F24F19C9</code></li>
+<li><span>Body hash</span><code>61BB60847FA71E1B99EEA6FB2DF6416F3B4C1F0B7DB9B0A54D1551AF4C00A9E7</code></li>
+<li><span>IL size</span><span>22</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.Data.DataModels.CitizenData&gt;::TryGetValue(!0, !1&amp;)</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_Database_CitizenDataBase.html#trycreatecitizenmodel-system-string--system-guid--candideserver-models-citizen-citizenmodel----system-boolean"><code>CandideServer.Database.CitizenDataBase::TryCreateCitizenModel</code></a></li>
+</ul></details>
+</article>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="TryCreateCitizenModel public System.Boolean TryCreateCitizenModel(System.String citizenId, System.Guid newId, out CandideServer.Models.Citizen.CitizenModel&amp; citizenModel) System.Boolean citizenId System.String newId System.Guid citizenModel CandideServer.Models.Citizen.CitizenModel&amp;" id="trycreatecitizenmodel-system-string--system-guid--candideserver-models-citizen-citizenmodel----system-boolean">
+<div class="method-heading">
+<h3><code>TryCreateCitizenModel</code></h3>
+<a class="permalink" href="#trycreatecitizenmodel-system-string--system-guid--candideserver-models-citizen-citizenmodel----system-boolean" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Boolean TryCreateCitizenModel(System.String citizenId, System.Guid newId, out CandideServer.Models.Citizen.CitizenModel&amp; citizenModel)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="CandideServer.Database.CitizenDataBase::TryCreateCitizenModel(System.String, System.Guid, CandideServer.Models.Citizen.CitizenModel&amp;)">Copy Harmony target</button>
+</div>
+<p><code>public System.Boolean TryCreateCitizenModel(System.String citizenId, System.Guid newId, out <a href="../../types/CandideServer/CandideServer_Models_Citizen_CitizenModel.html">CandideServer.Models.Citizen.CitizenModel</a>&amp; citizenModel)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Boolean</code></li>
+<li><span>Static</span><span>True</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>94124D4CA407C028526131EE36F5DAADE5F6D379073B7F8EAFCD62BC03676F5A</code></li>
+<li><span>Body hash</span><code>F47DA8EFB22977FBC0A39E799DD7DCE377338808B8A0985F8EF7C9DE8C37E6D1</code></li>
+<li><span>IL size</span><span>312</span></li>
+</ul></details>
+<details><summary>Referenced calls</summary><ul class="list compact">
+<li><code><a href="../../types/CandideServer/CandideServer_Database_CitizenDataBase.html#getcitizenornull-system-string---candideserver-data-datamodels-citizendata">CandideServer.Database.CitizenDataBase::GetCitizenOrNull(System.String)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_Helpers_RandomCitizenGenerator.html#generaterandomcitizenappearance-system-guid---shared-models-citizens-citizenappearance">CandideServer.Helpers.RandomCitizenGenerator::GenerateRandomCitizenAppearance(System.Guid)</a></code></li>
+<li><code><a href="../../types/CandideServer/CandideServer_ServerManagers_CitizenNameServerManager.html#getrandomname-system-string---shared-text-stringid">CandideServer.ServerManagers.CitizenNameServerManager::GetRandomName(System.String)</a></code></li>
+<li><code>System.Random::Next(System.Int32, System.Int32)</code></li>
+<li><code>CandideServer.Models.Citizen.CitizenModel::.ctor(CandideServer.Models.Citizen.CitizenArgs)</code></li>
+<li><code>System.Collections.Generic.List&lt;Shared.Models.Auras.CitizenAuraModel&gt;::.ctor()</code></li>
+<li><code>System.Collections.Generic.Dictionary&lt;System.String, CandideServer.Models.Citizen.JobProgress&gt;::.ctor()</code></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_CitizensSController.html#createcitizenfortown-system-guid--system-guid---candideserver-models-citizen-citizenmodel"><code>CandideServer.ServerControllers.CitizensSController::CreateCitizenForTown</code></a></li>
+</ul></details>
+<details><summary>String literals</summary><ul class="list compact">
+<li><code>female</code></li>
+<li><code>male</code></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>

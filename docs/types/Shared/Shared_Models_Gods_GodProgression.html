@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shared.Models.Gods.GodProgression - Romestead Assembly Reference</title>
+<link rel="stylesheet" href="../../style.css">
+<script defer>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("memberSearch");
+  const publicOnly = document.getElementById("publicOnly");
+  const patchTargetsOnly = document.getElementById("patchTargetsOnly");
+  const kind = document.getElementById("memberKind");
+  const entries = Array.from(document.querySelectorAll(".member-entry"));
+  const apply = () => {
+    const query = (search?.value || "").trim().toLowerCase();
+    const selectedKind = kind?.value || "all";
+    const onlyPublic = publicOnly?.checked ?? false;
+    const onlyPatchTargets = patchTargetsOnly?.checked ?? false;
+    for (const entry of entries) {
+      const text = (entry.dataset.memberText || "").toLowerCase();
+      const visibility = entry.dataset.memberVisibility || "";
+      const entryKind = entry.dataset.memberKind || "";
+      const visible = (!query || text.includes(query)) &&
+        (selectedKind === "all" || selectedKind === entryKind) &&
+        (!onlyPublic || visibility === "public") &&
+        (!onlyPatchTargets || entry.dataset.patchTarget === "true");
+      entry.hidden = !visible;
+    }
+  };
+  search?.addEventListener("input", apply);
+  publicOnly?.addEventListener("change", apply);
+  patchTargetsOnly?.addEventListener("change", apply);
+  kind?.addEventListener("change", apply);
+  apply();
+});
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) {
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    const originalText = button.textContent;
+    button.textContent = "Copied";
+    button.classList.add("copied");
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove("copied");
+    }, 1200);
+  } catch {
+    button.textContent = "Copy failed";
+  }
+});
+</script>
+</head><body>
+<div class="site-frame">
+<header class="topbar">
+<a class="brand" href="../../index.html">Romestead Assembly Reference</a>
+<nav class="topnav" aria-label="Primary navigation">
+<a href="../../index.html">Home</a>
+<a href="../../guide.html">Guide</a>
+<a href="../../namespaces.html">Namespaces</a>
+<a href="../../topics.html">Topics</a>
+<a href="../../about.html">About</a>
+<a href="../../diff.html">Diff</a>
+</nav>
+</header>
+<main class="page">
+<p class="breadcrumb"><a href="../../index.html">Catalog</a> / <a href="../../assemblies/Shared.html">Shared</a></p>
+<div class="title-row">
+<h1>Shared.Models.Gods.GodProgression</h1>
+<button class="copy-button" type="button" data-copy="Shared.Models.Gods.GodProgression">Copy type</button>
+<button class="copy-button" type="button" data-copy="# Shared.Models.Gods.GodProgression
+
+- Assembly: `Shared`
+- Namespace: `Shared.Models.Gods`
+- Kind: `public class`
+- Base type: `System.Object`
+- Members: 1 methods, 1 properties, 8 fields, 0 events
+
+## Public Methods
+- `public System.Single ExperienceRequiredToLevelUp(System.Int32 currentLevel)`
+">Copy markdown</button>
+<a class="button" href="Shared_Models_Gods_GodProgression.json">Type JSON</a>
+</div>
+<p class="lede">public class in <code>Shared.Models.Gods</code></p>
+<section class="panel">
+<div class="member-summary">
+<article class="metric"><span>Methods</span><strong>1</strong></article>
+<article class="metric"><span>Properties</span><strong>1</strong></article>
+<article class="metric"><span>Fields</span><strong>8</strong></article>
+<article class="metric"><span>Events</span><strong>0</strong></article>
+</div>
+<details class="debug-details">
+<summary>Type metadata</summary>
+<ul class="list compact">
+<li><span>Assembly</span><code>Shared</code></li>
+<li><span>Namespace</span><code>Shared.Models.Gods</code></li>
+<li><span>Base type</span><code>System.Object</code></li>
+<li><span>Hash</span><code>20FB6D5DF6760420425D20538F2AB9A13712054B03DFD7F22D3720CBEA31F7C1</code></li>
+</ul>
+</details>
+</section>
+<section class="panel">
+<h2>Relationships</h2>
+<div class="relationship-grid">
+<article><h3>Base type</h3>
+<p><code>System.Object</code></p></article>
+<article><h3>Referenced by types</h3><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_MessageModels_Gods_Worship_GodProgressionChangedMessage.html"><code>CandideServer.MessageModels.Gods.Worship.GodProgressionChangedMessage</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerGameState.html"><code>CandideServer.ServerGameState</code></a></li>
+<li><a href="../../types/CandideServer/CandideServer_ServerServices_GetFullGameStateResponse.html"><code>CandideServer.ServerServices.GetFullGameStateResponse</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_GameState.html"><code>Candide.GameModels.GameState</code></a></li>
+<li><a href="../../types/Romestead/Candide_GameModels_Managers_GodProgressionChangedArgs.html"><code>Candide.GameModels.Managers.GodProgressionChangedArgs</code></a></li>
+<li><a href="../../types/Shared/Shared_Models_Quests_QuestRequirementsMetArgs.html"><code>Shared.Models.Quests.QuestRequirementsMetArgs</code></a></li>
+</ul></article>
+</div></section>
+<section class="panel member-tools">
+<div class="member-toolbar">
+<label for="memberSearch">Filter members</label>
+<input id="memberSearch" type="search" placeholder="method, field, return type, or parameter">
+<label><input id="publicOnly" type="checkbox" checked> Public only</label>
+<label><input id="patchTargetsOnly" type="checkbox"> Patch targets</label>
+<select id="memberKind"><option value="all">All members</option><option value="method">Methods</option><option value="property">Properties</option><option value="field">Fields</option><option value="event">Events</option></select>
+</div>
+</section>
+<section class="panel">
+<h2>Fields</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="BaseExperienceRequirement private System.Single BaseExperienceRequirement System.Single" id="baseexperiencerequirement-system-single"><td><span class="member-name-cell"><code>BaseExperienceRequirement</code><a class="permalink" href="#baseexperiencerequirement-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single BaseExperienceRequirement">Copy</button></span></td><td>private</td><td><code>private System.Single BaseExperienceRequirement</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="CurrentExperience public System.Single CurrentExperience System.Single" id="currentexperience-system-single"><td><span class="member-name-cell"><code>CurrentExperience</code><a class="permalink" href="#currentexperience-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Single CurrentExperience">Copy</button></span></td><td>public</td><td><code>public System.Single CurrentExperience</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ExpCurvePowIncrease private System.Single ExpCurvePowIncrease System.Single" id="expcurvepowincrease-system-single"><td><span class="member-name-cell"><code>ExpCurvePowIncrease</code><a class="permalink" href="#expcurvepowincrease-system-single" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single ExpCurvePowIncrease">Copy</button></span></td><td>private</td><td><code>private System.Single ExpCurvePowIncrease</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="private" data-patch-target="false" data-member-text="ExpRequiredForNextLevel private System.Single[] ExpRequiredForNextLevel System.Single[]" id="exprequiredfornextlevel-system-single--"><td><span class="member-name-cell"><code>ExpRequiredForNextLevel</code><a class="permalink" href="#exprequiredfornextlevel-system-single--" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Single[] ExpRequiredForNextLevel">Copy</button></span></td><td>private</td><td><code>private System.Single[] ExpRequiredForNextLevel</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="GodId public System.String GodId System.String" id="godid-system-string"><td><span class="member-name-cell"><code>GodId</code><a class="permalink" href="#godid-system-string" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.String GodId">Copy</button></span></td><td>public</td><td><code>public System.String GodId</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="Level public System.Int32 Level System.Int32" id="level-system-int32"><td><span class="member-name-cell"><code>Level</code><a class="permalink" href="#level-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 Level">Copy</button></span></td><td>public</td><td><code>public System.Int32 Level</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="MaxLevel public System.Int32 MaxLevel System.Int32" id="maxlevel-system-int32"><td><span class="member-name-cell"><code>MaxLevel</code><a class="permalink" href="#maxlevel-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 MaxLevel">Copy</button></span></td><td>public</td><td><code>public System.Int32 MaxLevel</code></td></tr>
+<tr class="member-entry" data-member-kind="field" data-member-visibility="public" data-patch-target="false" data-member-text="TotalWorshipPoints public System.Int32 TotalWorshipPoints System.Int32" id="totalworshippoints-system-int32"><td><span class="member-name-cell"><code>TotalWorshipPoints</code><a class="permalink" href="#totalworshippoints-system-int32" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="public System.Int32 TotalWorshipPoints">Copy</button></span></td><td>public</td><td><code>public System.Int32 TotalWorshipPoints</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Properties</h2>
+<table class="reference-table"><thead><tr><th>Name</th><th>Visibility</th><th>Signature</th></tr></thead><tbody>
+<tr class="member-entry" data-member-kind="property" data-member-visibility="private" data-patch-target="false" data-member-text="RoughExperienceRequiredToLevelUp private System.Double RoughExperienceRequiredToLevelUp System.Double" id="roughexperiencerequiredtolevelup-system-double"><td><span class="member-name-cell"><code>RoughExperienceRequiredToLevelUp</code><a class="permalink" href="#roughexperiencerequiredtolevelup-system-double" aria-label="Permalink">#</a><button class="copy-button" type="button" data-copy="private System.Double RoughExperienceRequiredToLevelUp">Copy</button></span></td><td>private</td><td><code>private System.Double RoughExperienceRequiredToLevelUp</code></td></tr>
+</tbody></table>
+</section>
+<section class="panel">
+<h2>Methods</h2>
+<article class="member-entry method" data-member-kind="method" data-member-visibility="public" data-patch-target="true" data-member-text="ExperienceRequiredToLevelUp public System.Single ExperienceRequiredToLevelUp(System.Int32 currentLevel) System.Single currentLevel System.Int32" id="experiencerequiredtolevelup-system-int32---system-single">
+<div class="method-heading">
+<h3><code>ExperienceRequiredToLevelUp</code></h3>
+<a class="permalink" href="#experiencerequiredtolevelup-system-int32---system-single" aria-label="Permalink">#</a>
+<button class="copy-button" type="button" data-copy="public System.Single ExperienceRequiredToLevelUp(System.Int32 currentLevel)">Copy signature</button>
+<button class="copy-button" type="button" data-copy="Shared.Models.Gods.GodProgression::ExperienceRequiredToLevelUp(System.Int32)">Copy Harmony target</button>
+</div>
+<p><code>public System.Single ExperienceRequiredToLevelUp(System.Int32 currentLevel)</code></p>
+<details class="debug-details"><summary>Method metadata</summary><ul class="list compact">
+<li><span>Visibility</span><span>public</span></li>
+<li><span>Return type</span><code>System.Single</code></li>
+<li><span>Static</span><span>False</span></li>
+<li><span>Virtual</span><span>False</span></li>
+<li><span>Hash</span><code>F2C508D8831EFAFCB3C29667F1E3F7C2416C47EFE172ABACD2E70DF0B25969BC</code></li>
+<li><span>Body hash</span><code>6368FA64C4EC356344CCB39558245024FD1E9E91B7BF95769DE00B3101D7EFE0</code></li>
+<li><span>IL size</span><span>19</span></li>
+</ul></details>
+<details><summary>Called by</summary><ul class="list compact">
+<li><a href="../../types/CandideServer/CandideServer_ServerControllers_GodProgressionSController.html#addgodprogress-system-string--system-single--system-collections-generic-dictionary-2-system-string-candideserver-messagemodels-gods-worship-godprogressiondelta----system-void"><code>CandideServer.ServerControllers.GodProgressionSController::AddGodProgress</code></a></li>
+<li><a href="../../types/Romestead/Candide_CandideUI_WorshipUi_Altar2_AltarTopBar.html#worshipmanagerongodprogressionchanged-candide-gamemodels-managers-godprogressionchangedargs---system-void"><code>Candide.CandideUI.WorshipUi.Altar2.AltarTopBar::WorshipManagerOnGodProgressionChanged</code></a></li>
+</ul></details>
+</article>
+</section>
+<footer class="footer site-footer">
+<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<a href="../../about.html">about.html</a>
+<a href="../../README.md">README.md</a>
+<a href="../../site-manifest.json">site-manifest.json</a>
+</footer>
+
+</main></div></body></html>
