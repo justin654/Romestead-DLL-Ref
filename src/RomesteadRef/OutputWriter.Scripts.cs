@@ -65,7 +65,7 @@ internal static partial class OutputWriter
     private static string BuildJsonDownloadPromptScript() =>
         """
         document.addEventListener("click", event => {
-          const link = event.target.closest("a[href$='.json']");
+          const link = event.target.closest("a[href$='snapshot.json']");
           if (!link || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
             return;
           }
