@@ -269,7 +269,7 @@ internal static partial class OutputWriter
             builder.AppendLine("</section>");
         }
 
-        AppendDocumentEnd(builder, $"Catalog generated {snapshot.Metadata.GeneratedAtUtc:u}", "../../", "about.html", "README.md", "site-manifest.json");
+        AppendDocumentEnd(builder, "Type reference", "../../", "about.html", "README.md", "site-manifest.json");
         return builder.ToString();
     }
 }

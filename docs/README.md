@@ -14,7 +14,7 @@ Generated static reference for Romestead modding. This site indexes scanned game
 
 ## Current Snapshot
 
-- Generated: `2026-05-31 00:24:32Z`
+- Build metadata: `site-manifest.json`
 - Assemblies: `4`
 - Types: `4794`
 - Methods: `16138`

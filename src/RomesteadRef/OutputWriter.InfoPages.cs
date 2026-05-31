@@ -83,7 +83,7 @@ internal static partial class OutputWriter
 
         builder.AppendLine("<section class=\"panel docs-panel\"><h2>Current Snapshot</h2>");
         builder.AppendLine("<ul class=\"list compact\">");
-        builder.AppendLine($"<li><span>Generated</span><code>{Encode(snapshot.Metadata.GeneratedAtUtc.ToString("u"))}</code></li>");
+        builder.AppendLine("<li><span>Build metadata</span><code>site-manifest.json</code></li>");
         builder.AppendLine($"<li><span>Assemblies</span><span>{snapshot.Metadata.AssemblyCount:N0}</span></li>");
         builder.AppendLine($"<li><span>Types</span><span>{snapshot.Metadata.TypeCount:N0}</span></li>");
         builder.AppendLine($"<li><span>Methods</span><span>{snapshot.Metadata.MethodCount:N0}</span></li>");
@@ -112,7 +112,7 @@ internal static partial class OutputWriter
         builder.AppendLine();
         builder.AppendLine("## Current Snapshot");
         builder.AppendLine();
-        builder.AppendLine($"- Generated: `{snapshot.Metadata.GeneratedAtUtc:u}`");
+        builder.AppendLine("- Build metadata: `site-manifest.json`");
         builder.AppendLine($"- Assemblies: `{snapshot.Metadata.AssemblyCount}`");
         builder.AppendLine($"- Types: `{snapshot.Metadata.TypeCount}`");
         builder.AppendLine($"- Methods: `{snapshot.Metadata.MethodCount}`");

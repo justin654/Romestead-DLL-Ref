@@ -31,7 +31,7 @@ internal static partial class OutputWriter
         builder.AppendLine("<header class=\"site-header\">");
         builder.AppendLine("<div>");
         builder.AppendLine("<h1>Romestead Assembly Reference</h1>");
-        builder.AppendLine($"<p class=\"lede\">{snapshot.Metadata.AssemblyCount} assemblies, {snapshot.Metadata.TypeCount:N0} types, {snapshot.Metadata.MethodCount:N0} methods. Generated {Encode(snapshot.Metadata.GeneratedAtUtc.ToString("u"))}.</p>");
+        builder.AppendLine($"<p class=\"lede\">{snapshot.Metadata.AssemblyCount} assemblies, {snapshot.Metadata.TypeCount:N0} types, {snapshot.Metadata.MethodCount:N0} methods. See <a href=\"site-manifest.json\">site manifest</a> for build metadata.</p>");
         builder.AppendLine("<p class=\"notice\">Unofficial generated reference for modding. Use public members first; treat private/internal members as patch targets that can change between updates.</p>");
         builder.AppendLine("</div>");
         builder.AppendLine("<nav class=\"header-actions\">");

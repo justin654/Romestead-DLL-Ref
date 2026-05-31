@@ -62,6 +62,30 @@ internal static partial class OutputWriter
         });
         """;
 
+    private static string BuildJsonDownloadPromptScript() =>
+        """
+        document.addEventListener("click", event => {
+          const link = event.target.closest("a[href$='.json']");
+          if (!link || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+            return;
+          }
+
+          event.preventDefault();
+          const fileName = link.getAttribute("href").split("/").pop() || "export.json";
+          const shouldDownload = window.confirm(`${fileName} is a JSON export and may be too large to display in the browser. Download it instead?`);
+          if (!shouldDownload) {
+            return;
+          }
+
+          const download = document.createElement("a");
+          download.href = link.href;
+          download.download = fileName;
+          document.body.appendChild(download);
+          download.click();
+          download.remove();
+        });
+        """;
+
     private static string BuildSearchIndexScript(
         CatalogSnapshot snapshot,
         IReadOnlyList<RemovedTypePageEntry> removedTypePages,

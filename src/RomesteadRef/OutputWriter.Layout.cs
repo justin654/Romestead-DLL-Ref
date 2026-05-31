@@ -28,10 +28,13 @@ internal static partial class OutputWriter
             builder.AppendLine($"<script defer src=\"{Encode(externalScriptPath)}\"></script>");
         }
 
-        if (!string.IsNullOrWhiteSpace(inlineScript))
+        var pageScript = string.IsNullOrWhiteSpace(inlineScript)
+            ? BuildJsonDownloadPromptScript()
+            : $"{BuildJsonDownloadPromptScript()}{Environment.NewLine}{inlineScript}";
+        if (!string.IsNullOrWhiteSpace(pageScript))
         {
             builder.AppendLine("<script defer>");
-            builder.AppendLine(inlineScript);
+            builder.AppendLine(pageScript);
             builder.AppendLine("</script>");
         }
 

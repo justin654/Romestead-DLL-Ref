@@ -5,6 +5,26 @@
 <title>Shared.Models.Items.ItemAmount - Romestead Assembly Reference</title>
 <link rel="stylesheet" href="../../style.css">
 <script defer>
+document.addEventListener("click", event => {
+  const link = event.target.closest("a[href$='.json']");
+  if (!link || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+    return;
+  }
+
+  event.preventDefault();
+  const fileName = link.getAttribute("href").split("/").pop() || "export.json";
+  const shouldDownload = window.confirm(`${fileName} is a JSON export and may be too large to display in the browser. Download it instead?`);
+  if (!shouldDownload) {
+    return;
+  }
+
+  const download = document.createElement("a");
+  download.href = link.href;
+  download.download = fileName;
+  document.body.appendChild(download);
+  download.click();
+  download.remove();
+});
 document.addEventListener("DOMContentLoaded", () => {
   const search = document.getElementById("memberSearch");
   const publicOnly = document.getElementById("publicOnly");
@@ -136,7 +156,7 @@ document.addEventListener("click", async (event) => {
 </tbody></table>
 </section>
 <footer class="footer site-footer">
-<span>Catalog generated 2026-05-31 00:24:32Z</span>
+<span>Type reference</span>
 <a href="../../about.html">about.html</a>
 <a href="../../README.md">README.md</a>
 <a href="../../site-manifest.json">site-manifest.json</a>
