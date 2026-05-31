@@ -2,6 +2,11 @@
 
 Generated static reference for Romestead modding. This site indexes scanned game assemblies so mod authors can find types, inspect members, copy Harmony target strings, and follow best-effort call relationships.
 
+Community links:
+
+- Romestead Wiki: <https://romestead.wiki.gg/>
+- Official Romestead Discord: <https://discord.gg/q7DP3GGrgZ>
+
 ## Entry Points
 
 - `index.html` - main reference home and search

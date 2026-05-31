@@ -21,18 +21,17 @@ internal static partial class OutputWriter
         builder.AppendLine("<p class=\"notice\">This is not official game documentation. It is a generated reference built from scanned DLL metadata and should be verified against the game version you are targeting.</p>");
         builder.AppendLine("</section>");
 
+        builder.AppendLine("<section class=\"panel docs-panel\"><h2>Community Links</h2>");
+        builder.AppendLine("<ul class=\"list\">");
+        builder.AppendLine("<li><span>Romestead Wiki</span><a href=\"https://romestead.wiki.gg/\">romestead.wiki.gg</a></li>");
+        builder.AppendLine("<li><span>Official Romestead Discord</span><a href=\"https://discord.gg/q7DP3GGrgZ\">discord.gg/q7DP3GGrgZ</a></li>");
+        builder.AppendLine("</ul></section>");
+
         builder.AppendLine("<section class=\"panel docs-panel\"><h2>What Is Included</h2><div class=\"docs-grid\">");
         builder.AppendLine($"<article><h3>Assemblies</h3><p>{Encode(string.Join(", ", snapshot.Assemblies.Select(assembly => assembly.Name)))}</p></article>");
         builder.AppendLine($"<article><h3>Catalog Size</h3><p>{snapshot.Metadata.TypeCount:N0} types, {snapshot.Metadata.MethodCount:N0} methods, {snapshot.Metadata.PropertyCount:N0} properties, {snapshot.Metadata.FieldCount:N0} fields.</p></article>");
         builder.AppendLine("<article><h3>Exports</h3><p>Every type page has a matching JSON file. The full snapshot is available as <code>snapshot.json</code>.</p></article>");
         builder.AppendLine("</div></section>");
-
-        builder.AppendLine("<section class=\"panel docs-panel\"><h2>Stability Notes</h2><ul class=\"list\">");
-        builder.AppendLine("<li><span>Public members are usually safer integration points, but this catalog does not guarantee official API stability.</span></li>");
-        builder.AppendLine("<li><span>Private and internal members are included because Harmony patch authors often need them. Treat them as patch targets, not contracts.</span></li>");
-        builder.AppendLine("<li><span>Caller/callee relationships are best-effort and based on IL references captured during scanning.</span></li>");
-        builder.AppendLine("<li><span>Topic pages are heuristic groupings based on type names, namespaces, base types, and interfaces.</span></li>");
-        builder.AppendLine("</ul></section>");
 
         if (diff is not null)
         {
@@ -99,6 +98,11 @@ internal static partial class OutputWriter
         builder.AppendLine("# Romestead Assembly Reference");
         builder.AppendLine();
         builder.AppendLine("Generated static reference for Romestead modding. This site indexes scanned game assemblies so mod authors can find types, inspect members, copy Harmony target strings, and follow best-effort call relationships.");
+        builder.AppendLine();
+        builder.AppendLine("Community links:");
+        builder.AppendLine();
+        builder.AppendLine("- Romestead Wiki: <https://romestead.wiki.gg/>");
+        builder.AppendLine("- Official Romestead Discord: <https://discord.gg/q7DP3GGrgZ>");
         builder.AppendLine();
         builder.AppendLine("## Entry Points");
         builder.AppendLine();
