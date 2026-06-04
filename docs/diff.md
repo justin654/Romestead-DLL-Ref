@@ -1,140 +1,318 @@
 # Catalog Diff
 
-- Assemblies: +0 / -0 / ~4
-- Types: +1 / -0 / ~46
-- Methods: +9 / -4 / ~56
-- Properties: +0 / -0 / ~0
-- Fields: +1 / -0 / ~0
+- Assemblies: +0 / -0 / ~3
+- Types: +1 / -1 / ~80
+- Methods: +28 / -7 / ~111
+- Properties: +2 / -0 / ~0
+- Fields: +54 / -9 / ~0
 
 ## Changed Assemblies
 
-- `changed` `CandideCreator.Shared` C9DC11CC -> BA463E34
-- `changed` `CandideServer` 6B91BADE -> FD325307
-- `changed` `Romestead` 8A107A9D -> C410325D
-- `changed` `Shared` EE7E8D00 -> 4C912F8B
+- `changed` `CandideServer` FD325307 -> 3F1EFE60
+- `changed` `Romestead` C410325D -> 90B97E0A
+- `changed` `Shared` 4C912F8B -> 1BDADEAF
 
 ## Changed Types
 
-- `changed` `CandideCreator.Shared` `CandideCreator.Shared.Tiled.TiledMap` A2EC9341 -> 6CF10282
-- `changed` `CandideServer` `CandideServer.Data.Dungeons.ServerDataSetup_DungeonRooms` 543970B6 -> 91022520
-- `changed` `CandideServer` `CandideServer.Data.SharedDataSetups.SharedDataSetup` 4FDCB6C4 -> D5CA37E8
-- `changed` `CandideServer` `CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController` 2512A3A2 -> B164A85F
-- `changed` `CandideServer` `CandideServer.Entities.ControllerSets.Cyclops.ServerCyclopsArenaController` 607A44A6 -> BA095F43
-- `changed` `CandideServer` `CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController` 0AB6360A -> 002E326B
-- `changed` `CandideServer` `CandideServer.Entities.ControllerSets.Talos.ServerTalosArenaController` 8FFDE7EF -> D842A64C
-- `changed` `CandideServer` `CandideServer.Game.ServerGameSetup` D0E43B5E -> C5F72577
-- `changed` `CandideServer` `CandideServer.PathFinding.ThreadRoadPathFinder` 78429FE8 -> 19F8190E
-- `changed` `CandideServer` `CandideServer.Server.BaseServer` 9B3040FC -> A31260A9
-- `changed` `CandideServer` `CandideServer.ServerControllers.ItemInstanceSController` 072A4BE5 -> 0364F666
-- `changed` `CandideServer` `CandideServer.ServerControllers.QuestsSController` 72ABF4C9 -> D3CC553D
-- `changed` `CandideServer` `CandideServer.ServerControllers.RewardsSController` 3C43DA98 -> 2718C2A2
-- `changed` `CandideServer` `CandideServer.ServerControllers.WorldItemServerController` B64E71A9 -> 560AAB0E
-- `changed` `CandideServer` `CandideServer.ServerManagers.AuraServerManager` D61FC1E1 -> D446B926
-- `changed` `CandideServer` `CandideServer.ServerManagers.BossServerManager` FAC1C585 -> 0AF263E8
-- `changed` `CandideServer` `CandideServer.ServerManagers.ConstructionSitesServerManager` 2BA36783 -> 4208E2BC
-- `changed` `CandideServer` `CandideServer.ServerManagers.RewardsServerManager` 1F6E0D0C -> 02A8DEA5
-- `changed` `CandideServer` `CandideServer.ServerManagers.WorldStatsServerManager` E8321611 -> 140F4607
-- `changed` `CandideServer` `CandideServer.ServerSystems.BossServerSystem` F0840241 -> 26948F63
-- `added` `CandideServer` `CandideServer.Testing.ServerTesting` none -> 8A85C028
-- `changed` `CandideServer` `ServerSatyrBossArenaController+States` 1C8D24A5 -> 7A723CEF
-- `changed` `CandideServer` `WorldGenerator+VolcanicTendrilBlender` 653DB14B -> 83FA8D82
-- `changed` `Romestead` `Candide.CandideUI.CandideExtendedInteractionsHandler` C4DB6593 -> EEB01190
-- `changed` `Romestead` `Candide.Data.Icons.ClientDataSetup` 48FD7767 -> 064B147B
-- `changed` `Romestead` `Candide.Entities.Controllers.CitizenController.CitizenController` ACEE6CC4 -> F662E606
-- `changed` `Romestead` `Candide.Entities.Controllers.Other.SatyrBoss.SatyrBossArenaController` A0A1C65F -> 8C4F2DB2
-- `changed` `Romestead` `Candide.Entities.PlayerState.PlayerStates.CarryState` 3B731069 -> E347A8D9
-- `changed` `Romestead` `Candide.Multiplayer.PlayerManager` 412B75B9 -> 5F1A4198
-- `changed` `Romestead` `Candide.TestAndDebug` 76B07968 -> A227849E
-- `changed` `Romestead` `Candide.World.World` F422A91A -> 0EC6C8AE
-- `changed` `Romestead` `Candide.World.WorldMap` 4661BA1F -> 31EDC393
-- `changed` `Shared` `AuraArgsHelper+AuraArgumentsException` A4CDC250 -> 3F89E379
-- `changed` `Shared` `Shared.Aura.Args.DamageOverTimeAuraArgs` F6A70FC3 -> 053C14A9
-- `changed` `Shared` `Shared.Aura.Args.EliteAuraArgs` 18A56C72 -> 96EB695E
-- `changed` `Shared` `Shared.Aura.Args.EnragedAuraArgs` 93B62775 -> 80E4BB50
-- `changed` `Shared` `Shared.Aura.Args.HealingOverTimeAuraArgs` 73BDF2F3 -> 12241057
-- `changed` `Shared` `Shared.Aura.Args.HitCastSpellAuraArgs` 6123A66A -> B3D7A881
-- `changed` `Shared` `Shared.Aura.Args.IgnoreCollisionsAuraArgs` 175E9160 -> A26CF427
-- `changed` `Shared` `Shared.Aura.Args.ItemStatsChangeAuraArgs` 7A05DA26 -> B3E20129
-- `changed` `Shared` `Shared.Aura.Args.LootAuraArgs` 0A69CE30 -> A723D6CC
-- `changed` `Shared` `Shared.Aura.AuraArgsHelper` 0195A723 -> 8019A4E7
-- `changed` `Shared` `Shared.Data.Favour.VulcanFavours` 40899B9A -> 1D662E1A
-- `changed` `Shared` `Shared.Data.Items.SharedDataSetup` 280F6B5C -> 3D2633C3
-- `changed` `Shared` `Shared.Data.SharedDataSetup` A842E668 -> 687FE6B3
-- `changed` `Shared` `Shared.Data.Spells.SharedDataSetup` 6C57CE39 -> 37012289
-- `changed` `Shared` `Shared.Inventory.ComplexInventoryDeltaEngine` 222C5D3E -> 45B28D01
+- `changed` `CandideServer` `BM.EnemyUtil` 4C7F2D44 -> 863F65F2
+- `changed` `CandideServer` `BM.MoveCitizen` 958D4EBC -> 4DC7CB0B
+- `changed` `CandideServer` `BM.StateMachine` 1C881552 -> 50A4C758
+- `changed` `CandideServer` `CandideServer.Buildings.BuildingControllers.FarmsteadController` 929E0613 -> 5D618F70
+- `changed` `CandideServer` `CandideServer.Buildings.BuildingControllers.LumberYardController` D466B8FB -> 5D91BC72
+- `changed` `CandideServer` `CandideServer.Buildings.BuildingControllers.MaterialStorageController` 43E8B7B8 -> 8E24728E
+- `changed` `CandideServer` `CandideServer.Buildings.BuildingControllers.QuarryController` FE19E805 -> 605BA3E9
+- `changed` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` 75663C82 -> 955F72D4
+- `changed` `CandideServer` `CandideServer.Data.ServerDataSetups.ServerDataSetup` C321F332 -> C77C7B9D
+- `changed` `CandideServer` `CandideServer.Data.SharedDataSetups.SharedDataSetup` D5CA37E8 -> EA6AE30E
+- `changed` `CandideServer` `CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController` B164A85F -> 60F9A10F
+- `changed` `CandideServer` `CandideServer.Entities.Controllers.ServerGateController` DF74DCA4 -> 283AE2EE
+- `changed` `CandideServer` `CandideServer.Entities.Controllers.ServerPlayerGraveController` F4A723BF -> 22E7331C
+- `changed` `CandideServer` `CandideServer.GetResponseErrorTypes` 9B98B51C -> D0124D81
+- `changed` `CandideServer` `CandideServer.Helpers.RandomCitizenGenerator` 97C3C4BA -> 0BBB1AF6
+- `changed` `CandideServer` `CandideServer.Models.Dungeons.DungeonLocationModel` 7B38455E -> A1181C43
+- `changed` `CandideServer` `CandideServer.Models.Inventory.InventorySaveModel` BC879C32 -> 404518E4
+- `changed` `CandideServer` `CandideServer.Models.PoiLocationType` BC82CE2F -> 775A7F28
+- `changed` `CandideServer` `CandideServer.Models.Rewards.MultiWorkRecipeRewardStrategy` 2FFF20CC -> 89348E96
+- `changed` `CandideServer` `CandideServer.NetworkKeys` F9371414 -> EAE68FE5
+- `changed` `CandideServer` `CandideServer.PathFinding.PathFindArgs` 8D71E224 -> 1A16A2A5
+- `changed` `CandideServer` `CandideServer.Saving.GameSaveManager` C6A72085 -> 761FCF69
+- `changed` `CandideServer` `CandideServer.ServerControllers.CitizensSController` A1EF474D -> C69E7AEB
+- `changed` `CandideServer` `CandideServer.ServerControllers.EntitySController` BCB1B9A3 -> 386187E7
+- `changed` `CandideServer` `CandideServer.ServerControllers.SimpleInventorySController` 36EF6131 -> 025BC0FD
+- `changed` `CandideServer` `CandideServer.ServerManagers.CitizenServerManager` 2DF45B4E -> 262A26DC
+- `changed` `CandideServer` `CandideServer.ServerManagers.DungeonServerManager` DF2A8628 -> 5311DE7E
+- `changed` `CandideServer` `CandideServer.ServerManagers.EntityServerManager` DF23BEFC -> B074366E
+- `changed` `CandideServer` `CandideServer.ServerManagers.JobServerManager` CC7F27E2 -> D25B7B48
+- `changed` `CandideServer` `CandideServer.ServerManagers.PlayerCharacterServerManager` 8F53FE7E -> B533DA34
+- `changed` `CandideServer` `CandideServer.ServerManagers.PlayerServerManager` BE03A25D -> B5A0DB8E
+- `changed` `CandideServer` `CandideServer.ServerManagers.PoiServerManager` 16C9FDFA -> F80C5739
+- `changed` `CandideServer` `CandideServer.ServerManagers.SimpleInventoryServerManager` 2950413C -> 4E6F5D4E
+- `changed` `CandideServer` `CandideServer.ServerServices.EntityServerService` 8676C2DD -> B68A2A23
+- `changed` `CandideServer` `CandideServer.ServerServices.PlayerServerService` 33074B08 -> 1E1DE629
+- `changed` `CandideServer` `CandideServer.World.Generation.WorldGenerator` 16A01DF6 -> 1AC6D727
+- `changed` `CandideServer` `ScheduleSystem.CitizenMovementHandler` B939D633 -> 3CD60394
+- `added` `CandideServer` `ServerCitizenEntityController+Signal` none -> 13FBBCFF
+- `removed` `Romestead` `Candide.CandideUI.Components.Displays.SecondaryEquipmentSlotDisplay` A0D2409F -> none
+- `changed` `Romestead` `Candide.CandideUI.Components.Holder.CandideEquipmentSlot` 54B06C08 -> 5CF303CF
+- `changed` `Romestead` `Candide.CandideUI.Components.Holder.CandideInventorySlot` F103DCB6 -> F7F2BE3C
+- `changed` `Romestead` `Candide.CandideUI.JobUiNew.UserControls.SubControls.RecipeDetailsUserControl` 71E4729E -> 4494F910
+- `changed` `Romestead` `Candide.CandideUI.TradingPost.Components.TradeRouteModal` 784A7027 -> 307EF340
+- `changed` `Romestead` `Candide.CandideUI.TradingPost.Components.TradeRouteSelectCitizenControl` 9E5F6A05 -> 7B2A208C
+- `changed` `Romestead` `Candide.CandideUI.UserControls.EquipmentControl` 3101DAF1 -> 6702289E
+- `changed` `Romestead` `Candide.Data.ClientDataSetup` 79EAABB0 -> A1E57A7D
+- `changed` `Romestead` `Candide.Entities.Controllers.CitizenController.CitizenController` F662E606 -> F9B3BF1C
+- `changed` `Romestead` `Candide.Entities.Controllers.Other.ConcreteMixerController` C6CE6D21 -> B9533474
+- `changed` `Romestead` `Candide.Entities.Controllers.Other.GateController` 5E25EDAA -> 6671AFE8
+- `changed` `Romestead` `Candide.Entities.Controllers.Other.MaterialStorageFluidContainerController` 3CA48235 -> 4ED0B6BA
+- `changed` `Romestead` `Candide.Entities.Controllers.Other.PlayerGraveController` E0E2E5BF -> 732E6BFE
+- `changed` `Romestead` `Candide.Entities.PlayerState.PlayerController` A6D7AEDC -> 7DD68572
+- `changed` `Romestead` `Candide.Entities.PlayerState.PlayerStateHelper` 53AB9882 -> C12763E2
+- `changed` `Romestead` `Candide.GameModels.Services.EntityService` DD6563B8 -> 5353FEE9
+- `changed` `Romestead` `Candide.Graphics.DeferredRenderer` FD04A6F9 -> 7C5241F1
+- `changed` `Romestead` `Candide.MainMenu.Ui.Steps.ConnectingStatusWindow` 9370378B -> 0BEBEFE3
+- `changed` `Romestead` `Candide.MainMenu.Ui.Steps.CreateWorldWindow` 3AA7C8B8 -> 7356E1E7
+- `changed` `Romestead` `Candide.Multiplayer.Network.LocalHostServerManager` 2F5ACD7B -> 081162AF
+- `changed` `Romestead` `Candide.Multiplayer.PlayerHelper` 74155CB2 -> B6FBCDEF
+- `changed` `Romestead` `Candide.Multiplayer.Services.PlayerService` A10D66BD -> 127943D4
+- `changed` `Romestead` `Candide.Program` 8A0B2D38 -> CEF5E647
+- `changed` `Romestead` `Candide.Sound.MusicAmbienceSystems.MusicSoundState` C9F4D23B -> 157FF184
+- `changed` `Romestead` `Candide.Sound.SoundPlayer` 994C4EF4 -> 35ED5A77
+- `changed` `Romestead` `Candide.World.World` 0EC6C8AE -> 3224A87E
+- `changed` `Romestead` `Candide.World.WorldMap` 31EDC393 -> 69BE462C
+- `changed` `Shared` `Shared.Data.Items.SharedDataSetup` 3D2633C3 -> 44274DC8
+- `changed` `Shared` `Shared.Data.SharedDataSetup` 687FE6B3 -> 8E1C1E05
+- `changed` `Shared` `Shared.Data.Spells.SharedDataSetup` 37012289 -> E449BF86
+- `changed` `Shared` `Shared.Entity.Components.GeneralComponent` 1D3DAB39 -> 56C8B4BA
+- `changed` `Shared` `Shared.Entity.EntitySystem` EBC236A7 -> 45FDA7D9
+- `changed` `Shared` `Shared.Entity.EntityWrapper` F45E8DE7 -> 2E412CB2
+- `changed` `Shared` `Shared.Helpers.SharedWeaponSpellHelper` 50FD318E -> 5AAB41B6
+- `changed` `Shared` `Shared.Inventory.Models.DeltaTransaction` 089189C6 -> 2672C171
+- `changed` `Shared` `Shared.Messages.CreateNewInventoryMessage` 01EDEEB2 -> DC8AE2B2
+- `changed` `Shared` `Shared.Models.Interaction.Interaction` 33F36255 -> C2B2BEAB
+- `changed` `Shared` `Shared.Models.Interaction.InteractionType` D7D61452 -> 7FE8068A
+- `changed` `Shared` `Shared.Models.Items.InventoryType` BDFDB713 -> 9DD0A5ED
+- `changed` `Shared` `Shared.Models.Items.SharedInventoryModel` 6A29BDB5 -> B1AE09E2
+- `changed` `Shared` `Shared.Models.WorldTile` 742D7567 -> 0F4453A0
+- `changed` `Shared` `Shared.Text.TimeTextHelper` 25E7D0D0 -> 4E81EBD6
+- `changed` `Shared` `Shared.World.SharedWorldHandler` 178C29DD -> 345FFCD5
+- `changed` `Shared` `WorldTile+StructureType` C4E03E99 -> BFE69C87
 
 ## Changed Methods
 
-- `added` `CandideCreator.Shared` `CandideCreator.Shared.Tiled.TiledMap` `public CandideCreator.Shared.Tiled.TiledLayer GetOverLayer(System.String name)` none -> CC545F6F
-- `changed` `CandideServer` `CandideServer.Data.Dungeons.ServerDataSetup_DungeonRooms` `public System.Collections.Generic.List<CandideServer.Models.Dungeons.DungeonRoomDataModel> SetupDungeonRoomData()` 94890020 -> 1A49C36C
-- `changed` `CandideServer` `CandideServer.Data.SharedDataSetups.SharedDataSetup` `public System.Collections.Generic.List<CandideServer.Models.PoiData> SetupPoiData()` AFC7729A -> C9465802
-- `changed` `CandideServer` `CandideServer.Data.SharedDataSetups.SharedDataSetup` `private System.Void SetupQuestRewards()` DD4E808F -> BE1D6C74
-- `changed` `CandideServer` `CandideServer.Data.SharedDataSetups.SharedDataSetup` `private System.Void SetupSpawnTables()` D1A0C3D5 -> 3470EA19
-- `changed` `CandideServer` `CandideServer.Data.SharedDataSetups.SharedDataSetup` `private System.Void SetupWorkRecipeGroups()` 08C3F7E1 -> 56B326B5
-- `changed` `CandideServer` `CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController` `public System.Void OnDamaged(Shared.Combat.DamageResult damageResult)` 0BC9D3DE -> A3651CAC
-- `changed` `CandideServer` `CandideServer.Entities.ControllerSets.Cyclops.ServerCyclopsArenaController` `public System.Void EntityInitialize()` B846D3FA -> 28B5E7B3
-- `changed` `CandideServer` `CandideServer.Entities.ControllerSets.Cyclops.ServerCyclopsArenaController` `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)` 7FAEED6C -> F76A2427
-- `changed` `CandideServer` `CandideServer.Entities.ControllerSets.Cyclops.ServerCyclopsArenaController` `public System.Void ValidateSituation(System.Single dt)` 335C1410 -> E6189B73
-- `changed` `CandideServer` `CandideServer.Entities.ControllerSets.SatyrBoss.ServerSatyrBossArenaController` `public System.Void EntityInitialize()` 8818F8B1 -> D3242CC9
-- `changed` `CandideServer` `CandideServer.Entities.ControllerSets.Talos.ServerTalosArenaController` `public System.Void EntityInitialize()` 459A64A2 -> B1ABDBF2
-- `changed` `CandideServer` `CandideServer.Game.ServerGameSetup` `public System.Void SetupNewGameState(CandideServer.Game.GameConfig config)` CC0D1624 -> AB006A4E
-- `changed` `CandideServer` `CandideServer.PathFinding.ThreadRoadPathFinder` `public System.Boolean FindPath(CandideServer.PathFinding.PathFindArgs args, CandideServer.PathFinding.PathFindTaskInfo[] activeTasks, CandideServer.PathFinding.PathFindTaskInfo startInfo, System.Threading.CancellationToken ct)` C191F36C -> BD43F5CE
-- `removed` `CandideServer` `CandideServer.PathFinding.ThreadRoadPathFinder` `private System.Boolean IsPointOk(Microsoft.Xna.Framework.Vector2 point, CandideServer.PathFinding.PathFindCollisionData data, System.Boolean ignoreEntities, CandideServer.PathFinding.PathFindArgs args, CandideServer.Models.Worlds.WorldModel world)` 8C3477AC -> none
-- `added` `CandideServer` `CandideServer.PathFinding.ThreadRoadPathFinder` `private System.Boolean IsPointOk(Microsoft.Xna.Framework.Vector2 point, CandideServer.PathFinding.PathFindCollisionData data, System.Boolean ignoreEntities, CandideServer.PathFinding.PathFindArgs args, CandideServer.Models.Worlds.WorldModel world, System.Single stepSize)` none -> 7D1D7011
-- `changed` `CandideServer` `CandideServer.Server.BaseServer` `private System.Void RunLoop3()` DD268AFD -> 18CF6F84
-- `changed` `CandideServer` `CandideServer.ServerControllers.ItemInstanceSController` `public System.Void BeforeWorldGameStateLoaded()` 0114B0BA -> E4366801
-- `changed` `CandideServer` `CandideServer.ServerControllers.QuestsSController` `public System.Void OnGameStateLoaded(CandideServer.GameDescription gameDescription)` D9D29767 -> 30706621
-- `removed` `CandideServer` `CandideServer.ServerControllers.RewardsSController` `public System.Boolean RegisterReward(System.String rewardId)` DF885887 -> none
-- `added` `CandideServer` `CandideServer.ServerControllers.RewardsSController` `public System.Boolean RegisterReward(System.String rewardId, System.Boolean sendEvent)` none -> 7CFFC2AF
-- `changed` `CandideServer` `CandideServer.ServerControllers.WorldItemServerController` `private CandideServer.Models.Items.ServerWorldItemModel SpawnWorldItem(System.String dataId, System.Int32 stackCount, System.Nullable<System.Guid> itemInstanceId, Microsoft.Xna.Framework.Vector3 position, Microsoft.Xna.Framework.Vector3 velocity, System.Guid worldId, WorldItemModel.WorldItemType worldItemType, System.Nullable<System.Int32> ownerPlayerId, System.Nullable<System.Int32> antiPriority)` 046B7778 -> 5EE43C27
-- `changed` `CandideServer` `CandideServer.ServerManagers.AuraServerManager` `public System.Void ReapplyAurasToEntity(CandideServer.Entities.ServerEntityModel entity, System.Collections.Generic.List<System.ValueTuple<System.String, Shared.Aura.State.AuraBaseState>> auras, System.Boolean skipCalculateState, CandideServer.SyncStrategies.SyncStrategy syncStrategy)` DF6E5067 -> 66110A47
-- `added` `CandideServer` `CandideServer.ServerManagers.BossServerManager` `public System.Boolean IsBossDead(System.String bossId)` none -> C430A315
-- `changed` `CandideServer` `CandideServer.ServerManagers.ConstructionSitesServerManager` `public System.Void StartConstructActionInProgress(System.Guid constructionSiteId, CandideServer.Server.Network.ConnectedPeer peer)` 75432099 -> 0ED8C144
-- `changed` `CandideServer` `CandideServer.ServerManagers.ConstructionSitesServerManager` `public System.Void TryBuildConstructionSite(System.Guid constructionSiteId, Shared.Models.Player.PlayerCharacterModel characterModel, System.Boolean allowBuildNearby)` D4061B19 -> 6E8C33B9
-- `changed` `CandideServer` `CandideServer.ServerManagers.RewardsServerManager` `public System.Boolean UnlockReward(System.String rewardId, System.Nullable<System.Guid> playerCharacterId, CandideServer.SyncStrategies.SyncStrategy syncStrategy, CandideServer.MessageModels.RewardUnlockType type)` 38883893 -> AD515CAE
-- `added` `CandideServer` `CandideServer.ServerManagers.WorldStatsServerManager` `public System.Void AfterQuestsGameStateLoaded()` none -> 72ED1DD8
-- `removed` `CandideServer` `CandideServer.ServerManagers.WorldStatsServerManager` `private System.Void OnServerGameStateLoaded(CandideServer.GameDescription gameDescription)` 13A15068 -> none
-- `changed` `CandideServer` `CandideServer.ServerSystems.BossServerSystem` `public System.Void NewDay()` 6E8B48D8 -> 8BFC575B
-- `added` `CandideServer` `CandideServer.Testing.ServerTesting` `public System.Void CreateTestDetachedInventoryItem()` none -> 68311ECB
-- `added` `CandideServer` `CandideServer.Testing.ServerTesting` `public System.Void CreateTestInvalidItemAmount()` none -> 8EE8FCC4
-- `changed` `CandideServer` `WorldGenerator+VolcanicTendrilBlender` `public System.Void VolcanicTendrilBlend(System.Single distance, System.Int32 x, System.Int32 y, System.Int32 i)` 129EFF73 -> 5EC459B0
-- `changed` `Romestead` `Candide.CandideUI.CandideExtendedInteractionsHandler` `public System.Void TakeDraggedContent()` 6BEA9632 -> 83CB5D6E
-- `changed` `Romestead` `Candide.Data.Icons.ClientDataSetup` `public System.Void SetupGeneralIcons(System.Collections.Generic.List<CandideCreator.Shared.Graphics.IconData> icons)` 2F988563 -> 275C6617
-- `changed` `Romestead` `Candide.Data.Icons.ClientDataSetup` `public System.Void SetupNewStatsIcons(System.Collections.Generic.List<CandideCreator.Shared.Graphics.IconData> icons)` A9CC9DA7 -> 0C3790E8
-- `changed` `Romestead` `Candide.Data.Icons.ClientDataSetup` `public System.Void SetupStatsAndSkillsIcons(System.Collections.Generic.List<CandideCreator.Shared.Graphics.IconData> icons)` F6889563 -> 710EF6F7
-- `changed` `Romestead` `Candide.Entities.Controllers.CitizenController.CitizenController` `public System.Void OnDamaged(Shared.Combat.DamageResult damageResult)` 168AEE68 -> BE98C271
-- `changed` `Romestead` `Candide.Entities.Controllers.Other.SatyrBoss.SatyrBossArenaController` `private System.Void CheckBossMusic()` AFD82F63 -> 5D03F2D8
-- `changed` `Romestead` `Candide.Entities.PlayerState.PlayerStates.CarryState` `private System.Boolean ActionDrop()` 6D64A928 -> FC9833D0
-- `changed` `Romestead` `Candide.Multiplayer.PlayerManager` `public System.Void ClientLoggedIn(CandideServer.MessageModels.Players.LoginResponseMessage message)` 673BF65A -> F782CCC8
-- `added` `Romestead` `Candide.TestAndDebug` `private System.Void ExportDungeonsPoisList()` none -> 284C34EA
-- `changed` `Romestead` `Candide.TestAndDebug` `private System.Void GhostTownGenTesting()` DBB6AFEA -> D7EE78E7
-- `changed` `Romestead` `Candide.TestAndDebug` `private System.Void WorldGenTesting()` 32A45A95 -> 7818B769
-- `changed` `Romestead` `Candide.World.World` `public System.Void GenerateAutoTileLayer(Microsoft.Xna.Framework.Graphics.GraphicsDevice graphics, Candide.World.AutoTile.AutoTiler tiler, CandideCreator.Shared.Tiled.TiledMap map, Shared.Models.WorldTile[,] worldTiles, System.SByte[,] tileHeights)` 6DFA42DA -> ABEF5091
-- `changed` `Romestead` `Candide.World.WorldMap` `public System.Void DrawExteriorMap(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Vector2 size, System.Single scale, Microsoft.Xna.Framework.Vector2 centerTile, System.Single opacity)` 88CD20E3 -> A73C6228
-- `changed` `Romestead` `Candide.World.WorldMap` `public System.Void DrawInteriorMap(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Vector2 size, System.Single scale, System.Single opacity)` D0FD26E2 -> 2D4C32A1
-- `changed` `Shared` `Shared.Aura.Args.DamageOverTimeAuraArgs` `public System.Boolean Merge(Shared.Aura.Args.AbstractAuraArgs other)` 15BBBBA9 -> 74622DFC
-- `changed` `Shared` `Shared.Aura.Args.EliteAuraArgs` `public System.Boolean Merge(Shared.Aura.Args.AbstractAuraArgs other)` 897F9A17 -> 5F7D4911
-- `changed` `Shared` `Shared.Aura.Args.EnragedAuraArgs` `public System.Boolean Merge(Shared.Aura.Args.AbstractAuraArgs other)` F6043C9B -> 8C5A0EF2
-- `changed` `Shared` `Shared.Aura.Args.HealingOverTimeAuraArgs` `public System.Boolean Merge(Shared.Aura.Args.AbstractAuraArgs other)` E9DD0172 -> 2C83DFCF
-- `changed` `Shared` `Shared.Aura.Args.HitCastSpellAuraArgs` `public System.Boolean Merge(Shared.Aura.Args.AbstractAuraArgs other)` AFF1ED90 -> F772D14D
-- `changed` `Shared` `Shared.Aura.Args.IgnoreCollisionsAuraArgs` `public System.Boolean Merge(Shared.Aura.Args.AbstractAuraArgs other)` 01C603F8 -> F86001B4
-- `changed` `Shared` `Shared.Aura.Args.ItemStatsChangeAuraArgs` `public System.Boolean Merge(Shared.Aura.Args.AbstractAuraArgs other)` 87DD6C15 -> A5370B20
-- `changed` `Shared` `Shared.Aura.Args.LootAuraArgs` `public System.Boolean Merge(Shared.Aura.Args.AbstractAuraArgs other)` 6A6D5079 -> 8910D977
-- `added` `Shared` `Shared.Aura.AuraArgsHelper` `public T GetArgs<T>(System.Object args)` none -> 7FE491E2
-- `removed` `Shared` `Shared.Aura.AuraArgsHelper` `public T GetArgs<T>(System.Object args, System.String caller)` 2CC7C0EF -> none
-- `changed` `Shared` `Shared.Data.Favour.VulcanFavours` `protected System.Void Column1(System.Collections.Generic.List<Shared.Data.Favour.FavourSetupData> column)` D775A73A -> 7000D821
-- `changed` `Shared` `Shared.Data.Items.SharedDataSetup` `public System.Void SetupEquipmentItems(System.Collections.Generic.List<Shared.Models.Items.ItemData> items)` 9995CFDE -> E8503106
-- `changed` `Shared` `Shared.Data.Items.SharedDataSetup` `public System.Void SetupFurnitureItems(System.Collections.Generic.List<Shared.Models.Items.ItemData> items)` 81700820 -> 47C5796C
-- `changed` `Shared` `Shared.Data.Items.SharedDataSetup` `public System.Void SetupMaterialItems(System.Collections.Generic.List<Shared.Models.Items.ItemData> items)` 8FA855B7 -> 44302ED9
-- `changed` `Shared` `Shared.Data.Items.SharedDataSetup` `public System.Void SetupWeaponItems(System.Collections.Generic.List<Shared.Models.Items.ItemData> items)` 2CF9618A -> 4C823AB9
-- `changed` `Shared` `Shared.Data.SharedDataSetup` `public System.Collections.Generic.List<Shared.Models.Construction.ConstructionResourceDataModel> SetupConstructionResources()` E5BCF078 -> 2BB864AE
-- `changed` `Shared` `Shared.Data.SharedDataSetup` `public System.Collections.Generic.List<Shared.Models.Construction.ConstructionModel> SetupConstructions()` 3FFFD3EB -> 8F4E9E36
-- `changed` `Shared` `Shared.Data.SharedDataSetup` `public System.Collections.Generic.List<Shared.Models.Stats.StatDescription> SetupEntityStats()` 8F9C799D -> 36289939
-- `changed` `Shared` `Shared.Data.SharedDataSetup` `private System.Void SetupGodQuests(System.Collections.Generic.List<Shared.Models.Quests.QuestData> quests)` 70B60AC9 -> BD5B96F6
-- `changed` `Shared` `Shared.Data.SharedDataSetup` `public System.Collections.Generic.List<Shared.Data.SkillData> SetupSkills()` BBADD8D9 -> BBCE8641
-- `changed` `Shared` `Shared.Data.Spells.SharedDataSetup` `public System.Void SetupItemSpells(System.Collections.Generic.List<Shared.Models.Spells.SpellDataModel> spells)` 8204BE9F -> 3E36AFC6
-- `changed` `Shared` `Shared.Inventory.ComplexInventoryDeltaEngine` `public Shared.Inventory.DeltaModels.DeltaComplexResult FulfillAmountsFromInventoriesToInventory(System.Collections.Generic.IReadOnlyCollection<Shared.Models.Items.ItemAmount> itemAmounts, Shared.Models.Items.SharedInventoryModel[] allInventories, System.Int32 targetInventoryIndex, System.Nullable<System.UInt64> moveMoney, System.Boolean deductAmountsFromTarget, System.Boolean allowPartialStack)` C5FA54E2 -> DF2602D8
+- `added` `CandideServer` `BM.EnemyUtil` `public System.Void SendSignal(Shared.Entity.EntityWrapper entity, System.Byte signal)` none -> 3D42248E
+- `changed` `CandideServer` `BM.MoveCitizen` `protected System.Void Initialize(BM.BTUpdateContext updateCtx, BM.Blackboard blackboard)` 085139DC -> EA395F4E
+- `added` `CandideServer` `BM.StateMachine` `private System.Void ApplyStateTransition(BM.State state, BM.Blackboard blackboard, System.Boolean initializeCurrentChildStates)` none -> BFE23149
+- `changed` `CandideServer` `BM.StateMachine` `public System.Void SetCurrentState(BM.State state, BM.Blackboard blackboard, System.Boolean initializeCurrentChildStates)` 00144F23 -> 3DB04A26
+- `added` `CandideServer` `BM.StateMachine` `private System.Void SetCurrentStateInternal(BM.State state, BM.Blackboard blackboard, System.Boolean initializeCurrentChildStates)` none -> 287D3504
+- `added` `CandideServer` `BM.StateMachine` `public System.Void SetCurrentStateNextUpdateLoop(BM.State state, BM.Blackboard blackboard, System.Boolean initializeCurrentChildStates)` none -> 102DD6B4
+- `changed` `CandideServer` `BM.StateMachine` `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime, Shared.Entity.EntityWrapper entity, CandideServer.Entities.ServerEntityModel serverEntity, BM.Blackboard blackboard)` BFDFBE9A -> 3A7AD650
+- `changed` `CandideServer` `CandideServer.Buildings.BuildingControllers.FarmsteadController` `private System.Void CheckForCropTiles()` F7FC53FC -> E6AA0F54
+- `changed` `CandideServer` `CandideServer.Buildings.BuildingControllers.LumberYardController` `public System.Collections.Generic.Dictionary<System.String, System.Int32> GetStorageMaximumForLevel(System.Int32 level)` 5D46DB85 -> FD5EAA6F
+- `changed` `CandideServer` `CandideServer.Buildings.BuildingControllers.MaterialStorageController` `public System.Collections.Generic.Dictionary<System.String, System.Int32> GetStorageMaximumForLevel(System.Int32 level)` E6A11999 -> 5BD24A20
+- `changed` `CandideServer` `CandideServer.Buildings.BuildingControllers.QuarryController` `public System.Collections.Generic.Dictionary<System.String, System.Int32> GetStorageMaximumForLevel(System.Int32 level)` 0A71A71A -> 6A87ADF1
+- `changed` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `public BM.StateMachine CreateStateMachine()` 5481B294 -> 9C7D93D3
+- `added` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.Void HandleStuckLogic(System.Single dt)` none -> 91AB43D6
+- `changed` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `public System.Void ResetCitizen()` 10C0D99F -> E9BFB6D7
+- `changed` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `public System.Void SortConstructionSitesByDistance(Microsoft.Xna.Framework.Vector2 center, System.Collections.Generic.List<CandideServer.Models.ConstructionSiteModel> constructionSites)` 5C848887 -> 74CF0B58
+- `changed` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `public System.Void SortMaterialStoragesByDistance(System.Collections.Generic.List<System.ValueTuple<CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.Models.InternalResourceStorageModel>> materialStorages, System.Func<CandideServer.SimulationModels.BuildingSimulationModel, System.Single> getDistance)` 3A56E15B -> 9EA3075B
+- `changed` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.Boolean TryFindNearbyResourceToPickUp(out CandideServer.Entities.ServerEntityModel& outEntityToPickUp)` 32BA13D1 -> 4F12F692
+- `removed` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `public System.Boolean TryGetConstructionSitesInTown(System.Nullable<System.Guid> townId, System.Collections.Generic.List<CandideServer.Models.ConstructionSiteModel> constructionSites)` 25B182F0 -> none
+- `added` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `public System.Boolean TryGetConstructionSitesInTownWithinDistance(System.Nullable<System.Guid> townId, Microsoft.Xna.Framework.Vector2 center, System.Single distance, System.Collections.Generic.List<CandideServer.Models.ConstructionSiteModel> constructionSites)` none -> CF00B955
+- `changed` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.Boolean TrySortLiquidMaterialStoragesForConstructionDelivery(System.Collections.Generic.List<System.ValueTuple<CandideServer.SimulationModels.BuildingSimulationModel, CandideServer.Models.InternalResourceStorageModel>> liquidMaterialStorages, Microsoft.Xna.Framework.Vector2 resourcePosition)` AE9CF83F -> 74084BC8
+- `changed` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.Boolean TryStartConstruction(System.Collections.Generic.List<CandideServer.Models.ConstructionSiteModel> constructionSites, Microsoft.Xna.Framework.Vector2 center)` D799A3E0 -> C27D0143
+- `changed` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime, System.Single dt)` E93B2EDA -> 6A4B937E
+- `changed` `CandideServer` `CandideServer.Data.ServerDataSetups.ServerDataSetup` `public System.Collections.Generic.List<CandideServer.Data.ServerDataSetups.ServerDropTableData> SetupServerDropTables()` D3AF4929 -> 48FEA838
+- `changed` `CandideServer` `CandideServer.Data.SharedDataSetups.SharedDataSetup` `public System.Collections.Generic.List<CandideServer.Models.PoiData> SetupPoiData()` C9465802 -> 98913710
+- `changed` `CandideServer` `CandideServer.Data.SharedDataSetups.SharedDataSetup` `private System.Void SetupQuestRewards()` BE1D6C74 -> 96C4A2D3
+- `added` `CandideServer` `CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController` `private System.Void HandleCollisionRemoval()` none -> 23AEB7C3
+- `added` `CandideServer` `CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController` `public System.Boolean OnEntityCollision(Shared.Entity.EntityWrapper otherEntity, Microsoft.Xna.Framework.Vector3 thisOldVelocity, Microsoft.Xna.Framework.Vector3 thisNewVelocity, Microsoft.Xna.Framework.Vector3 otherOldVelocity, Microsoft.Xna.Framework.Vector3 otherNewVelocity, out Microsoft.Xna.Framework.Vector3& overrideVelocity)` none -> CB42D152
+- `changed` `CandideServer` `CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController` `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)` 01533DB4 -> 680194E6
+- `changed` `CandideServer` `CandideServer.Entities.Controllers.ServerGateController` `public System.Void OnServerSetState(System.Int32 state)` F3760337 -> E4F87795
+- `added` `CandideServer` `CandideServer.Entities.Controllers.ServerGateController` `public System.Void ReceiveEntitySignalMessage(System.Byte message)` none -> BC443D30
+- `changed` `CandideServer` `CandideServer.Entities.Controllers.ServerGateController` `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)` 2699759E -> 2CC590A4
+- `changed` `CandideServer` `CandideServer.Entities.Controllers.ServerPlayerGraveController` `public System.Void EntityInitialize()` 10956749 -> 6197DB1B
+- `changed` `CandideServer` `CandideServer.Helpers.RandomCitizenGenerator` `public CandideServer.Models.Citizen.WildCitizenInstanceModel GenerateRandomCitizen(CandideServer.Helpers.CitizenTier citizenTier, System.Guid citizenId, System.Guid entityId)` F7512515 -> B4F1A62D
+- `changed` `CandideServer` `CandideServer.Models.Inventory.InventorySaveModel` `public CandideServer.Models.Inventory.InventorySaveModel FromInventoryModel(Shared.Models.Items.SharedInventoryModel model)` 4E705143 -> CE84AE09
+- `changed` `CandideServer` `CandideServer.Models.Inventory.InventorySaveModel` `public Shared.Models.Items.SharedInventoryModel ToSharedInventoryModel()` 3C3CBCB6 -> 86E006B6
+- `changed` `CandideServer` `CandideServer.Models.Rewards.MultiWorkRecipeRewardStrategy` `public System.Void GetName(System.Text.StringBuilder sb)` 5DEBF59F -> 1A9568E9
+- `added` `CandideServer` `CandideServer.PathFinding.PathFindArgs` `public CandideServer.PathFinding.PathFindArgs CitizenPathFind(CandideServer.Citizens.Base.AbstractCitizenController controller, System.Nullable<Microsoft.Xna.Framework.Vector2> startPosition, System.Nullable<Microsoft.Xna.Framework.Vector2> endPosition, System.Guid worldId, CandideServer.SimulationModels.BuildingSimulationModel fromBuilding, CandideServer.SimulationModels.BuildingSimulationModel toBuilding, System.Nullable<System.Guid> targetEntityId, System.Boolean preferToFollowRoads)` none -> 0F90B489
+- `removed` `CandideServer` `CandideServer.PathFinding.PathFindArgs` `public CandideServer.PathFinding.PathFindArgs RoadPathFind(CandideServer.Citizens.Base.AbstractCitizenController controller, System.Nullable<Microsoft.Xna.Framework.Vector2> startPosition, System.Nullable<Microsoft.Xna.Framework.Vector2> endPosition, System.Guid worldId, CandideServer.SimulationModels.BuildingSimulationModel fromBuilding, CandideServer.SimulationModels.BuildingSimulationModel toBuilding, System.Nullable<System.Guid> targetEntityId)` D075E83B -> none
+- `added` `CandideServer` `CandideServer.Saving.GameSaveManager` `public System.Void ClearSaveManager()` none -> DD6CA70E
+- `changed` `CandideServer` `CandideServer.Saving.GameSaveManager` `public System.Void LoadGame(CandideServer.GameDescription gameDescription, System.Collections.Generic.List<System.ValueTuple<System.String, System.Object>> state)` 4FE548EA -> CBFBB5DA
+- `changed` `CandideServer` `CandideServer.Saving.GameSaveManager` `public System.Boolean LoadGameFromFile(CandideServer.GameDescription description, System.String gameStateFilePath)` 00FF6027 -> 7F25D992
+- `changed` `CandideServer` `CandideServer.Saving.GameSaveManager` `private System.Void LoadGameState(System.Collections.Generic.List<System.ValueTuple<System.String, System.Object>> state)` E8EF6735 -> 86F18E42
+- `changed` `CandideServer` `CandideServer.Saving.GameSaveManager` `public System.Threading.Tasks.Task SaveGameToDirectory(System.String directoryPath, System.Collections.Generic.List<System.ValueTuple<System.String, System.Object>> gameState, System.Boolean sendNetworkMessages, System.Boolean sendLockInMessage)` 134A391C -> 8BD6F153
+- `changed` `CandideServer` `CandideServer.Saving.GameSaveManager` `public System.Threading.Tasks.Task SaveWithCallbacks(System.String saveDirectoryPath, System.Action<System.Int32> saveStepCallback)` E1FC958E -> D69B9B9D
+- `changed` `CandideServer` `CandideServer.Saving.GameSaveManager` `public System.Threading.Tasks.Task SaveWorldDescToDirectory(System.String directoryPath, CandideServer.GameDescription desc)` 0F337636 -> 0712CB69
+- `changed` `CandideServer` `CandideServer.ServerControllers.CitizensSController` `public System.Void OnWorldEntitiesLoaded()` CD6C68D0 -> ED59C7B9
+- `changed` `CandideServer` `CandideServer.ServerControllers.EntitySController` `private System.Void OnServerGameStateLoaded(CandideServer.GameDescription gameDescription)` BBCF404E -> 680F04E8
+- `changed` `CandideServer` `CandideServer.ServerControllers.EntitySController` `public System.Void OnWorldGameStateLoaded()` 5C6DFF7B -> D8EDCBB3
+- `changed` `CandideServer` `CandideServer.ServerControllers.SimpleInventorySController` `public Shared.Models.Items.SharedInventoryModel CreateNewInventory(Shared.Messages.CreateNewInventoryMessage msg, System.Boolean isTemporary)` 6833EB81 -> A888DAB3
+- `added` `CandideServer` `CandideServer.ServerControllers.SimpleInventorySController` `public System.Void OnEntitiesLoaded()` none -> 86D49730
+- `added` `CandideServer` `CandideServer.ServerControllers.SimpleInventorySController` `public System.Void SetAccessedFromEntityId(System.Guid inventoryId, System.Guid accessedFromEntityId)` none -> B8484A63
+- `changed` `CandideServer` `CandideServer.ServerManagers.CitizenServerManager` `public System.Void UpdateCitizenHunger2()` 7B314BD5 -> AB8C1A82
+- `changed` `CandideServer` `CandideServer.ServerManagers.DungeonServerManager` `private System.Void EnterRoom(CandideServer.Models.Dungeons.DungeonLocationRoomModel model, System.Int32 exitDirection, System.Single distanceForwardFromTransitionZoneEdge, System.Boolean enterDungeon)` 322BB463 -> D45591E1
+- `added` `CandideServer` `CandideServer.ServerManagers.DungeonServerManager` `public Microsoft.Xna.Framework.Vector3 GetTransitionAreaPosition(CandideServer.Models.Dungeons.DungeonTransitionArea area, System.Single distanceForwardFromTransitionZoneEdge)` none -> CF0BB232
+- `changed` `CandideServer` `CandideServer.ServerManagers.EntityServerManager` `public System.Void HandleEntityControllerMessage(CandideServer.MessageModels.Entities.EntitiesControllerMessage msg)` D0E88775 -> 0EE82BF5
+- `added` `CandideServer` `CandideServer.ServerManagers.EntityServerManager` `public System.Void HandleEntitySignalMessage(CandideServer.MessageModels.Entities.EntitySignalMessage msg)` none -> E5B94B26
+- `changed` `CandideServer` `CandideServer.ServerManagers.JobServerManager` `public System.Boolean TryCreateWorkOrder(System.Guid newGuid, System.String recipeId, System.Guid jobId, System.Boolean isRepeating, System.Boolean startWorkingImmediatelyIfNoCurrentOrder)` 53362651 -> A3B5BB96
+- `changed` `CandideServer` `CandideServer.ServerManagers.PlayerCharacterServerManager` `public System.ValueTuple<System.Guid, Microsoft.Xna.Framework.Vector3> GetCharacterSpawn(CandideServer.Models.Player.ServerPlayerCharacter serverCharacter)` E0D8AB56 -> BD245E79
+- `added` `CandideServer` `CandideServer.ServerManagers.PlayerServerManager` `public System.Void CreateBackupPlayerGrave(System.Guid inventoryId)` none -> ED91F247
+- `changed` `CandideServer` `CandideServer.ServerManagers.PlayerServerManager` `private System.Void HandlePlayerGraveInDungeon(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, CandideServer.Entities.ServerEntityModel grave)` D43B7A99 -> 9C7515B9
+- `changed` `CandideServer` `CandideServer.ServerManagers.PlayerServerManager` `public System.Void LoadInPlayerGravesInDungeon(CandideServer.Models.Dungeons.DungeonLocationModel location)` 6BA651F0 -> 7A08AC0A
+- `changed` `CandideServer` `CandideServer.ServerManagers.PlayerServerManager` `public System.Void RemovePlayerGrave(System.Guid graveEntityId)` F697C862 -> 25A8C983
+- `changed` `CandideServer` `CandideServer.ServerManagers.PlayerServerManager` `private System.Void SpawnGrave(CandideServer.ServerServices.ServerJoinedPlayerModel playerModel, System.Nullable<Microsoft.Xna.Framework.Vector3> position)` E59C62B8 -> 5C8BA435
+- `changed` `CandideServer` `CandideServer.ServerManagers.PoiServerManager` `private CandideServer.Models.PoiData FindPoiForSlot(CandideServer.ServerManagers.PoiSpaceModel poiSlot, CandideServer.Database.PoiFastLookupTable dataLookup, System.String biomeId, System.Single difficulty, System.Random random)` 714756FD -> 42E4C0B9
+- `removed` `CandideServer` `CandideServer.ServerManagers.SimpleInventoryServerManager` `public Shared.Models.Items.SharedInventoryModel DumpInventoryContentIntoNewLootOnlyInventory(System.Boolean onlyMoney, Shared.Models.Items.SharedInventoryModel inventory, System.String newInventoryName)` 380321F4 -> none
+- `added` `CandideServer` `CandideServer.ServerManagers.SimpleInventoryServerManager` `public Shared.Models.Items.SharedInventoryModel DumpInventoryContentIntoNewLootOnlyInventory(System.Boolean onlyMoney, Shared.Models.Items.SharedInventoryModel inventory, System.String newInventoryName, Shared.Models.Items.InventoryType inventoryType, System.Nullable<System.Guid> accessedFromEntityId)` none -> 62226B97
+- `added` `CandideServer` `CandideServer.ServerServices.EntityServerService` `public System.Void OnReceive_EntitySignalMessage(CandideServer.MessageModels.Entities.EntitySignalMessage msg, CandideServer.EventBus.EventBusArgs args)` none -> E395F185
+- `added` `CandideServer` `CandideServer.ServerServices.PlayerServerService` `public System.Void OnReceive_GetCheckGraves(System.Collections.Generic.List<System.Guid> graves, CandideServer.EventBus.EventBusArgs args)` none -> E367129A
+- `changed` `CandideServer` `CandideServer.World.Generation.WorldGenerator` `private System.Void ClearPoiSpace(System.String mapName, CandideCreator.Shared.Models.RectangleF bounds)` E15E50F4 -> FA5258AB
+- `changed` `CandideServer` `CandideServer.World.Generation.WorldGenerator` `public System.Void GenerateAll(CandideServer.Game.GameConfig config, System.Boolean onlyTiles)` F93CF816 -> E73C9D00
+- `changed` `CandideServer` `CandideServer.World.Generation.WorldGenerator` `public System.Void GenerateSpawnArea(Microsoft.Xna.Framework.Vector2 estimatedSpawnPosTile)` F07E4D63 -> DD22D128
+- `changed` `CandideServer` `ScheduleSystem.CitizenMovementHandler` `public System.Void ClearGoal()` B6FB555A -> B6960B3F
+- `changed` `CandideServer` `ScheduleSystem.CitizenMovementHandler` `private ScheduleSystem.PathStage OutsidePathStage(Microsoft.Xna.Framework.Vector2 startPosition, Microsoft.Xna.Framework.Vector2 endPosition, CandideServer.Models.Worlds.WorldModel worldModel, CandideServer.SimulationModels.BuildingSimulationModel fromBuilding, CandideServer.SimulationModels.BuildingSimulationModel toBuilding)` F4A98EB0 -> 3F217EAE
+- `removed` `Romestead` `Candide.CandideUI.Components.Displays.SecondaryEquipmentSlotDisplay` `protected System.Void OnDismount()` E730A896 -> none
+- `removed` `Romestead` `Candide.CandideUI.Components.Displays.SecondaryEquipmentSlotDisplay` `protected System.Void OnMount()` 5902C023 -> none
+- `removed` `Romestead` `Candide.CandideUI.Components.Displays.SecondaryEquipmentSlotDisplay` `private System.Void Set(Shared.Models.Items.ItemInstanceModel item, Shared.Models.Items.SharedInventoryModel inventory, System.Boolean onMount)` BF1458B5 -> none
+- `removed` `Romestead` `Candide.CandideUI.Components.Displays.SecondaryEquipmentSlotDisplay` `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)` C632DBF1 -> none
+- `changed` `Romestead` `Candide.CandideUI.Components.Holder.CandideEquipmentSlot` `public System.Void Update()` BB4FDC93 -> 05A0B717
+- `changed` `Romestead` `Candide.CandideUI.Components.Holder.CandideInventorySlot` `private System.Void SetEmptyIcon()` 8DA014FC -> A376F7FF
+- `changed` `Romestead` `Candide.CandideUI.Components.Holder.CandideInventorySlot` `public System.Void Update()` 365DADEA -> D4916662
+- `changed` `Romestead` `Candide.CandideUI.Components.Holder.CandideInventorySlot` `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)` 21887B14 -> A651F1DC
+- `changed` `Romestead` `Candide.CandideUI.JobUiNew.UserControls.SubControls.RecipeDetailsUserControl` `private System.Void OnCurrentRecipeChanged()` 631FD6AC -> E06F5E17
+- `changed` `Romestead` `Candide.CandideUI.TradingPost.Components.TradeRouteModal` `private System.Void CreateBtn_OnClick()` 9457D978 -> A88701D3
+- `changed` `Romestead` `Candide.CandideUI.TradingPost.Components.TradeRouteModal` `private System.Boolean IsTradeRouteComplete()` C98B499A -> 871E134F
+- `changed` `Romestead` `Candide.CandideUI.TradingPost.Components.TradeRouteSelectCitizenControl` `private System.Void SetCitizen(Candide.GameModels.Models.Citizens.Citizen citizen)` CBA765D3 -> 047708B6
+- `changed` `Romestead` `Candide.CandideUI.TradingPost.Components.TradeRouteSelectCitizenControl` `private System.Void SetNoCitizen()` 99AC1A7A -> 0C1BE810
+- `changed` `Romestead` `Candide.CandideUI.UserControls.EquipmentControl` `private Candide.CandideUI.Components.Holder.CandideEquipmentSlot CreateSlot(System.Int32 x, System.Int32 y, System.Int32 i)` 008A5F10 -> 9CD5D759
+- `added` `Romestead` `Candide.CandideUI.UserControls.EquipmentControl` `private System.Void InvalidateSecondarySlots()` none -> D5CBCEAE
+- `changed` `Romestead` `Candide.CandideUI.UserControls.EquipmentControl` `private System.Void InvalidateSlots()` 8DBFEDAD -> 90C8A82B
+- `changed` `Romestead` `Candide.CandideUI.UserControls.EquipmentControl` `private System.Void OnInventoryChanged(Candide.GameModels.Controllers.GameStateActiveInventoriesArgs args)` 757DF947 -> 40BD3989
+- `changed` `Romestead` `Candide.CandideUI.UserControls.EquipmentControl` `protected System.Void OnMount()` C241541B -> 3E1CD8C2
+- `added` `Romestead` `Candide.CandideUI.UserControls.EquipmentControl` `private System.Boolean SecondarySlot_OnMouseRightClick(Candide.CandideUI.Components.Holder.CandideInventorySlot slot)` none -> B74C8FE3
+- `added` `Romestead` `Candide.CandideUI.UserControls.EquipmentControl` `public System.Void UpdateSecondarySlots()` none -> 4E7776B1
+- `changed` `Romestead` `Candide.Data.ClientDataSetup` `public System.Void CreateImGui()` DD6175DF -> 8D9B9D68
+- `changed` `Romestead` `Candide.Data.ClientDataSetup` `private System.Collections.Generic.List<Candide.Data.CharacterDisplayData> SetupCharacterDisplayData()` B318A8D8 -> 5086BCF7
+- `changed` `Romestead` `Candide.Data.ClientDataSetup` `private System.Void ValidateData(System.Boolean ignoreIcons, System.Boolean ignoreDroptables)` 35847A62 -> CB470245
+- `changed` `Romestead` `Candide.Entities.Controllers.CitizenController.CitizenController` `public System.Void OnInteract(Shared.Entity.EntityWrapper otherEntity)` 6F2A402B -> 8440CFE7
+- `added` `Romestead` `Candide.Entities.Controllers.CitizenController.CitizenController` `public System.Void ReceiveEntitySignalMessage(System.Byte message)` none -> 2F7383AA
+- `changed` `Romestead` `Candide.Entities.Controllers.CitizenController.CitizenController` `public System.Void Update(Microsoft.Xna.Framework.GameTime gameTime)` 9B805BEA -> 88D9C8EC
+- `changed` `Romestead` `Candide.Entities.Controllers.Other.ConcreteMixerController` `public System.Void BeforeRender()` F37C0603 -> BF799D8F
+- `added` `Romestead` `Candide.Entities.Controllers.Other.GateController` `public System.Boolean OnEntityCollision(Shared.Entity.EntityWrapper otherEntity, Microsoft.Xna.Framework.Vector3 thisOldVelocity, Microsoft.Xna.Framework.Vector3 thisNewVelocity, Microsoft.Xna.Framework.Vector3 otherOldVelocity, Microsoft.Xna.Framework.Vector3 otherNewVelocity, out Microsoft.Xna.Framework.Vector3& overrideVelocity)` none -> A04E6C52
+- `changed` `Romestead` `Candide.Entities.Controllers.Other.MaterialStorageFluidContainerController` `public System.Void BeforeRender()` 7D9864E6 -> 08E7E9A3
+- `changed` `Romestead` `Candide.Entities.Controllers.Other.PlayerGraveController` `public System.Void EntityInitialize()` 3540174C -> CB9B976E
+- `changed` `Romestead` `Candide.Entities.Controllers.Other.PlayerGraveController` `public System.Void OnInteract(Shared.Entity.EntityWrapper otherEntity)` 9C06DDE7 -> E29DD29E
+- `changed` `Romestead` `Candide.Entities.PlayerState.PlayerController` `public Shared.Models.Interaction.Interaction GetInteraction()` 87EB1D45 -> 31980057
+- `changed` `Romestead` `Candide.Entities.PlayerState.PlayerController` `public System.Boolean Interact(System.Boolean repeated, System.Boolean grabInteraction)` 1C851AA0 -> 13B15BC8
+- `changed` `Romestead` `Candide.Entities.PlayerState.PlayerStateHelper` `public System.Void DrawInteractionsUI(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Shared.Entity.EntityWrapper entity, Candide.Entities.PlayerState.PlayerController controller)` D4F8C5EC -> 2CBCDB62
+- `added` `Romestead` `Candide.GameModels.Services.EntityService` `public System.Void SendEntitySignalMessage(CandideServer.MessageModels.Entities.EntitySignalMessage msg)` none -> 39020B4F
+- `changed` `Romestead` `Candide.Graphics.DeferredRenderer` `public System.Void DrawEntitiesForPointLight(Microsoft.Xna.Framework.Graphics.Effect effect, Microsoft.Xna.Framework.Vector3 lookAtPos)` 7A30855A -> 5D31799E
+- `changed` `Romestead` `Candide.Graphics.DeferredRenderer` `private System.Void RenderDof()` 0E5A16F4 -> 4B7D4C0A
+- `changed` `Romestead` `Candide.MainMenu.Ui.Steps.ConnectingStatusWindow` `private System.Void CancelConnection()` 9BF862CA -> 6D537209
+- `changed` `Romestead` `Candide.MainMenu.Ui.Steps.ConnectingStatusWindow` `protected System.Void InternalDraw(Candide.CandideUI.UiRenderContext context)` 0907A108 -> 4C687175
+- `changed` `Romestead` `Candide.MainMenu.Ui.Steps.ConnectingStatusWindow` `protected System.Void OnWindowShown()` 88C65C27 -> FD4B100E
+- `changed` `Romestead` `Candide.MainMenu.Ui.Steps.CreateWorldWindow` `private System.Void SaveNewWorld()` 341C7D4A -> C55EFBA0
+- `changed` `Romestead` `Candide.Multiplayer.Network.LocalHostServerManager` `private System.Void RunServer(CandideServer.Server.MultiplayerConfiguration config)` F4EAA47D -> 2BBEDC2A
+- `changed` `Romestead` `Candide.Multiplayer.Network.LocalHostServerManager` `public System.Void StartServer(CandideServer.GameDescription description, System.String gameStateFilePath, CandideServer.Server.MultiplayerConfiguration config)` 798F8B85 -> 22D2831B
+- `changed` `Romestead` `Candide.Multiplayer.Network.LocalHostServerManager` `public System.Void StopServer()` 27889B5B -> 098E6096
+- `added` `Romestead` `Candide.Multiplayer.PlayerHelper` `public System.Boolean IsLocalPlayerCharacterId(System.Nullable<System.Guid> characterId)` none -> 9E950278
+- `added` `Romestead` `Candide.Multiplayer.Services.PlayerService` `public System.Void SendCheckGraves(System.Collections.Generic.List<System.Guid> graves)` none -> 4E1A467C
+- `changed` `Romestead` `Candide.Program` `private System.Boolean CrossplatformErrorMessageBox(System.String text, System.String caption, System.Boolean allowContinue)` 09DD1113 -> 3B7BAA5E
+- `changed` `Romestead` `Candide.Program` `private System.Boolean Game_UnhandledExceptionHandler(System.Exception exception)` DD023A6A -> C0F80419
+- `changed` `Romestead` `Candide.Program` `private System.Void Main(System.String[] args)` B86ADCB4 -> A96B0C6A
+- `changed` `Romestead` `Candide.Sound.MusicAmbienceSystems.MusicSoundState` `public Candide.Sound.FadingTrackArgs GetTrackArgs(System.Single dt)` 482C993C -> 9C26FCC1
+- `added` `Romestead` `Candide.Sound.SoundPlayer` `public System.Single GetEventLengthSeconds(System.String eventName)` none -> ABFE5DAB
+- `changed` `Romestead` `Candide.World.World` `public System.Void GenerateAutoTileLayer(Microsoft.Xna.Framework.Graphics.GraphicsDevice graphics, Candide.World.AutoTile.AutoTiler tiler, CandideCreator.Shared.Tiled.TiledMap map, Shared.Models.WorldTile[,] worldTiles, System.SByte[,] tileHeights)` ABEF5091 -> A362904D
+- `changed` `Romestead` `Candide.World.WorldMap` `public System.Void DrawExteriorMap(Microsoft.Xna.Framework.Graphics.SpriteBatch batch, Microsoft.Xna.Framework.Vector2 position, Microsoft.Xna.Framework.Vector2 size, System.Single scale, System.Single opacity)` 6C823EE8 -> 21DFF62D
+- `changed` `Shared` `Shared.Data.Items.SharedDataSetup` `public System.Void SetupWeaponItems(System.Collections.Generic.List<Shared.Models.Items.ItemData> items)` 4C823AB9 -> 10F38202
+- `changed` `Shared` `Shared.Data.SharedDataSetup` `private System.Void SetupBlacksmithRecipes(System.Collections.Generic.List<Shared.Data.DataModels.WorkRecipeModel> BlacksmithRecipes)` D741FECB -> 77E504EB
+- `changed` `Shared` `Shared.Data.SharedDataSetup` `public System.Collections.Generic.List<Shared.Models.Construction.ConstructionResourceDataModel> SetupConstructionResources()` 2BB864AE -> 018AEA5F
+- `changed` `Shared` `Shared.Data.SharedDataSetup` `public System.Collections.Generic.List<Shared.Models.Construction.ConstructionModel> SetupConstructions()` 8F4E9E36 -> 4A9D4434
+- `changed` `Shared` `Shared.Data.SharedDataSetup` `private System.Void SetupLeatherworkerRecipes(System.Collections.Generic.List<Shared.Data.DataModels.WorkRecipeModel> LeatherworkerRecipes)` 5B9991C7 -> B7BCBE98
+- `changed` `Shared` `Shared.Data.SharedDataSetup` `private System.Void SetupPhilosopherRecipes(System.Collections.Generic.List<Shared.Data.DataModels.WorkRecipeModel> philosopherRecipes)` 376C0A90 -> D09236EE
+- `changed` `Shared` `Shared.Data.SharedDataSetup` `public System.Collections.Generic.List<Shared.Data.StructureTileData> SetupStructureTileData()` C0196269 -> A2621F89
+- `changed` `Shared` `Shared.Data.Spells.SharedDataSetup` `public System.Void SetupNpcSpells(System.Collections.Generic.List<Shared.Models.Spells.SpellDataModel> spells)` CD556C3E -> 8797B4A9
+- `changed` `Shared` `Shared.Entity.EntitySystem` `public System.Void UpdateCarriedEntityPosition(System.Int32 i)` F7894FC1 -> 15E51267
+- `changed` `Shared` `Shared.Helpers.SharedWeaponSpellHelper` `public Shared.Helpers.WeaponSpellsData CreateShieldDashAttackSpell(Shared.Models.Items.ShieldStats shield, System.Single attackTypeBonusScale, System.Single damageMultiplier, System.String skillId, System.Single duration, System.ValueTuple<Shared.Helpers.SpellEvent, System.String>[] spellChain)` 4A82D1BE -> D3C07C79
+- `changed` `Shared` `Shared.Helpers.SharedWeaponSpellHelper` `private System.ValueTuple<Shared.Combat.DamageTypesArray, Shared.Combat.DamageTypesArray> DoDamageAndExtraSpellsCalculations(Shared.Models.Items.WeaponStats weapon, Shared.Models.Items.WeaponStats ammo, System.ValueTuple<Shared.Helpers.SpellEvent, System.String, Shared.Aura.Args.Target>[] spellChain)` B3158D90 -> BE2D4D75
+- `changed` `Shared` `Shared.Inventory.Models.DeltaTransaction` `private Shared.Models.Items.SharedInventoryModel CloneInventory(Shared.Models.Items.SharedInventoryModel inventory)` EC3AF1AE -> 35C44B64
+- `changed` `Shared` `Shared.Models.Interaction.Interaction` `public Shared.Entity.EntityWrapper GetEntity()` 0C292A4A -> FA9C881D
+- `changed` `Shared` `Shared.Models.Interaction.Interaction` `public Shared.Entity.EntityWrapper GetEntityOrNull()` 8B03C962 -> F05BAB13
+- `changed` `Shared` `Shared.Models.Items.SharedInventoryModel` `public System.Boolean AcceptsMoney()` AC017B8C -> 209C4BFC
+- `changed` `Shared` `Shared.Models.Items.SharedInventoryModel` `private System.Boolean EquipmentCheck(System.Nullable<Shared.Models.Items.EquipmentType> equippableEquipmentType, Shared.Models.Items.EquipmentType expectedType)` 4FBAF637 -> 768EA98C
+- `changed` `Shared` `Shared.Models.Items.SharedInventoryModel` `internal System.Boolean FilterAcceptsItemData(Shared.Models.Items.ItemData itemData)` 1364C4DB -> D8A88779
+- `changed` `Shared` `Shared.Models.Items.SharedInventoryModel` `public Shared.Models.Items.ItemAmount[] ToItemAmountsArray()` 3A06E337 -> 7A80EF8F
+- `changed` `Shared` `Shared.Text.TimeTextHelper` `public System.String SecondsToDescriptionText(System.Single seconds)` A1032D79 -> 313FEE4A
+- `changed` `Shared` `Shared.World.SharedWorldHandler` `public System.Void GetHeightAtFloor(Shared.Models.WorldTile[,] worldTiles, System.SByte[,] tileHeights, Microsoft.Xna.Framework.Vector2 position, System.Single z, Microsoft.Xna.Framework.Point tilePos, Microsoft.Xna.Framework.Point worldSize, System.Single& height)` 07BCF0D0 -> 8370668B
+
+## Changed Properties
+
+- `added` `Romestead` `Candide.CandideUI.UserControls.EquipmentControl` `public Candide.GameModels.Models.Items.SimpleInventory SecondaryInventory` none -> BA117454
+- `added` `Shared` `Shared.Entity.EntityWrapper` `public System.Boolean BlockLight` none -> BE6AFB80
 
 ## Changed Fields
 
-- `added` `CandideServer` `CandideServer.Server.BaseServer` `public System.TimeSpan SleepThreshold` none -> 859C1474
+- `added` `CandideServer` `BM.StateMachine` `private System.Boolean _forcedTransition` none -> D7B79C8A
+- `added` `CandideServer` `BM.StateMachine` `private BM.State _forcedTransitionState` none -> 6A174D9B
+- `added` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.Single StuckRadius` none -> FA9BB68D
+- `added` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.Single StuckThreshold` none -> 4FBFD34D
+- `added` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.String ToConstructionConditionCooldownTimer` none -> 2FA78B15
+- `added` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.String ToConstructionConditionOnCooldown` none -> AE939620
+- `added` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.Single _maxConstructionSiteSearchDistance` none -> 33A20D03
+- `added` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.Single _resetDelayTimer` none -> 2F48194C
+- `added` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.Boolean _shouldBeMoving` none -> 7085A09F
+- `added` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private Microsoft.Xna.Framework.Vector2 _stuckAnchorPosition` none -> 5EB8BF3E
+- `added` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.Single _stuckTimer` none -> 9FBB8326
+- `added` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.Single _toConstructionConditionCooldown` none -> ADCBC2F1
+- `added` `CandideServer` `CandideServer.Citizens.GenericServerCitizenController` `private System.Boolean _waitingForReset` none -> FF33C924
+- `added` `CandideServer` `CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController` `public System.Single ColliderRemovedDuration` none -> 0AB118DE
+- `added` `CandideServer` `CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController` `private System.TimeSpan ContactBreakThreshold` none -> 278A7990
+- `added` `CandideServer` `CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController` `private System.TimeSpan RequiredContactDuration` none -> ABBB0729
+- `added` `CandideServer` `CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController` `private System.Single _colliderRemovedDurationTimer` none -> 0674A6F3
+- `added` `CandideServer` `CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController` `private System.TimeSpan _lastPlayerContactTime` none -> D52E0343
+- `added` `CandideServer` `CandideServer.Entities.Controllers.Citizens.ServerCitizenEntityController` `private System.TimeSpan _playerContactStartTime` none -> 4BA4C9AB
+- `added` `CandideServer` `CandideServer.Entities.Controllers.ServerGateController` `public System.Boolean AutoClose` none -> D51EE297
+- `added` `CandideServer` `CandideServer.Entities.Controllers.ServerGateController` `public System.Single AutoCloseTimer` none -> 69B742C2
+- `added` `CandideServer` `CandideServer.Entities.Controllers.ServerGateController` `private System.Collections.Generic.List<Shared.Entity.EntityWrapper> ReUseEntityList` none -> 7A41B217
+- `added` `CandideServer` `CandideServer.Entities.Controllers.ServerPlayerGraveController` `public System.String InventoryIdParameterName` none -> 94AF202D
+- `removed` `CandideServer` `CandideServer.Entities.Controllers.ServerPlayerGraveController` `public System.String ParameterValue1Name` 090DFAF6 -> none
+- `added` `CandideServer` `CandideServer.Entities.Controllers.ServerPlayerGraveController` `public System.String PlayerCharacterParameterName` none -> AD54BAE7
+- `added` `CandideServer` `CandideServer.GetResponseErrorTypes` `public System.Byte NoError` none -> F1678B51
+- `added` `CandideServer` `CandideServer.Models.Dungeons.DungeonLocationModel` `public System.Collections.Generic.Dictionary<System.Guid, System.ValueTuple<Microsoft.Xna.Framework.Vector3, System.Guid, System.Guid, System.Guid>> PlayerGraves2` none -> CB16A977
+- `added` `CandideServer` `CandideServer.Models.Inventory.InventorySaveModel` `public System.Nullable<System.Guid> AccessedFromEntityId` none -> 40381B41
+- `added` `CandideServer` `CandideServer.Models.PoiLocationType` `public CandideServer.Models.PoiLocationType HiddenOrNormal` none -> BF059515
+- `added` `CandideServer` `CandideServer.NetworkKeys` `public System.String GetCheckGraves` none -> 6C818F46
+- `added` `CandideServer` `ScheduleSystem.CitizenMovementHandler` `public System.Boolean PreferToFollowRoads` none -> 88EB43B8
+- `added` `CandideServer` `ServerCitizenEntityController+Signal` `public System.Byte RemoveCollision` none -> 7BFE04CF
+- `removed` `Romestead` `Candide.CandideUI.Components.Displays.SecondaryEquipmentSlotDisplay` `private System.String _baseItemId` E00E04E5 -> none
+- `removed` `Romestead` `Candide.CandideUI.Components.Displays.SecondaryEquipmentSlotDisplay` `private Shared.Models.Items.EquipmentType _equipmentType` AF574BA7 -> none
+- `removed` `Romestead` `Candide.CandideUI.Components.Displays.SecondaryEquipmentSlotDisplay` `private Candide.CandideUI.Components.CandideIcon _icon` 212716D8 -> none
+- `removed` `Romestead` `Candide.CandideUI.Components.Displays.SecondaryEquipmentSlotDisplay` `private Candide.GameModels.Models.Items.SimpleInventory _inventory` AB4B3E4B -> none
+- `removed` `Romestead` `Candide.CandideUI.Components.Displays.SecondaryEquipmentSlotDisplay` `private System.Boolean _isLocked` 900C70C9 -> none
+- `removed` `Romestead` `Candide.CandideUI.Components.Displays.SecondaryEquipmentSlotDisplay` `private System.Int32 _slotIndex` 4F38B4BA -> none
+- `added` `Romestead` `Candide.CandideUI.Components.Holder.CandideEquipmentSlot` `private System.Boolean _isSecondaryEquipment` none -> FF68865C
+- `added` `Romestead` `Candide.CandideUI.Components.Holder.CandideInventorySlot` `protected Candide.CandideUI.Components.CandideIcon Icon` none -> DABF9777
+- `removed` `Romestead` `Candide.CandideUI.Components.Holder.CandideInventorySlot` `private Candide.CandideUI.Components.CandideIcon _icon` 212716D8 -> none
+- `added` `Romestead` `Candide.CandideUI.TradingPost.Components.TradeRouteModal` `private Candide.CandideUI.Components.TranslationCenteredLabel _errorLabel` none -> DD1903E9
+- `added` `Romestead` `Candide.CandideUI.TradingPost.Components.TradeRouteSelectCitizenControl` `public System.Boolean CitizenOk` none -> 7BD21DD9
+- `added` `Romestead` `Candide.CandideUI.UserControls.EquipmentControl` `private Candide.GameModels.Models.Items.SimpleInventory _secondaryInventory` none -> 90056524
+- `added` `Romestead` `Candide.CandideUI.UserControls.EquipmentControl` `private Candide.CandideUI.Components.Holder.CandideEquipmentSlot _secondaryOffHand` none -> 7CA3AFF2
+- `added` `Romestead` `Candide.CandideUI.UserControls.EquipmentControl` `private Candide.CandideUI.Containers.CandidePanel _secondarySlotsPanel` none -> 9D09274F
+- `added` `Romestead` `Candide.CandideUI.UserControls.EquipmentControl` `private Candide.CandideUI.Components.Holder.CandideEquipmentSlot _secondaryWeapon` none -> 717AA4C5
+- `added` `Romestead` `Candide.Entities.Controllers.CitizenController.CitizenController` `private System.Single _colliderRemovedDurationTimer` none -> 0674A6F3
+- `added` `Romestead` `Candide.Entities.Controllers.Other.PlayerGraveController` `public System.Guid PlayerCharacterId` none -> 18F73F5F
+- `added` `Romestead` `Candide.MainMenu.Ui.Steps.ConnectingStatusWindow` `private Candide.CandideUI.Components.CandideTextLabel _extraErrorText` none -> AA41A91D
+- `added` `Romestead` `Candide.MainMenu.Ui.Steps.ConnectingStatusWindow` `private Candide.CandideUI.Containers.CandideExtendedWindow _extraErrorWindow` none -> 7B755F1D
+- `added` `Romestead` `Candide.MainMenu.Ui.Steps.ConnectingStatusWindow` `private Candide.CandideUI.Components.Buttons.CandideIconButton _showExtraErrorWindowButton` none -> AB40CDCB
+- `added` `Romestead` `Candide.Multiplayer.Network.LocalHostServerManager` `public System.String ExtraErrorInfo` none -> CED4D08B
+- `removed` `Romestead` `Candide.Multiplayer.Network.LocalHostServerManager` `public Shared.Text.StringId Status` 9F048B1C -> none
+- `added` `Romestead` `Candide.Multiplayer.Network.LocalHostServerManager` `public Shared.Text.StringId StatusStringId` none -> 1124AB19
+- `added` `Shared` `Shared.Entity.Components.GeneralComponent` `public System.Boolean BlockLight` none -> B00312BE
+- `added` `Shared` `Shared.Messages.CreateNewInventoryMessage` `public System.Nullable<System.Guid> AccessedFromEntityId` none -> 40381B41
+- `added` `Shared` `Shared.Models.Interaction.InteractionType` `public Shared.Models.Interaction.InteractionType ExtendedGravestone` none -> 15FAABB0
+- `added` `Shared` `Shared.Models.Items.InventoryType` `public Shared.Models.Items.InventoryType PlayerGrave` none -> 3C4139E8
+- `added` `Shared` `Shared.Models.Items.SharedInventoryModel` `public System.Nullable<System.Guid> AccessedFromEntityId` none -> 40381B41
+- `added` `Shared` `Shared.Models.WorldTile` `public Shared.Models.WorldTile None` none -> 355327E3
+- `added` `Shared` `WorldTile+StructureType` `public WorldTile.StructureType NoTexturePit2Deep` none -> C027FD5A
+- `added` `Shared` `WorldTile+StructureType` `public WorldTile.StructureType NoTexturePit3Deep` none -> 161EAA26

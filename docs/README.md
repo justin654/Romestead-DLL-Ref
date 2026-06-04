@@ -24,16 +24,16 @@ Community links:
 - Build metadata: `site-manifest.json`
 - Assemblies: `4`
 - Types: `4794`
-- Methods: `16138`
-- Properties: `1563`
-- Fields: `22349`
+- Methods: `16159`
+- Properties: `1565`
+- Fields: `22394`
 - Scanned assemblies: `CandideCreator.Shared`, `CandideServer`, `Romestead`, `Shared`
 
 ## Latest Diff
 
-- Types: `+1 / -0 / ~46`
-- Methods: `+9 / -4 / ~56`
-- Fields: `+1 / -0 / ~0`
+- Types: `+1 / -1 / ~80`
+- Methods: `+28 / -7 / ~111`
+- Fields: `+54 / -9 / ~0`
 
 ## Hosting On GitHub Pages
 

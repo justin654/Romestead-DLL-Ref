@@ -1,6 +1,6 @@
 # Romestead Terminal Dot Commands
 
-Generated: `2026-05-31 09:04:49Z`
+Generated: `2026-06-04 05:42:43Z`
 Command count: `92`
 
 ## How Commands Work
@@ -9,6 +9,12 @@ Command count: `92`
 - Storage: `Candide.Terminal.GameTerminal.Commands: Dictionary<string, TerminalCommand>`
 - Dispatch: `Candide.Terminal.GameTerminal.DoCommand(string) after stripping the leading dot`
 - Autocomplete: `Candide.Terminal.GameTerminal.SuggestCommand(string), using Commands.Keys plus per-command suggestion delegates`
+
+## Latest Command Diff
+
+- Added: `0`
+- Removed: `0`
+- Changed: `0`
 
 ## Full Command List
 
